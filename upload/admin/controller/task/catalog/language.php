@@ -21,82 +21,58 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/language');
 
 		$this->load->model('setting/store');
-		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'language.list.' . $store_id,
-				'action' => 'task/catalog/language.list',
-				'args'   => ['store_id' => $store_id]
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
 			];
 
-			$this->model_setting_task->addTask($task_data);
+			if ($args['store_id']) {
+				$this->load->model('setting/store');
+
+				$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
+			}
+
+			$language_data = [];
+
+			$this->load->model('setting/setting');
+			$this->load->model('localisation/language');
+
+			$languages = (array)$this->model_setting_setting->getValue('config_language_list', $store_info['store_id']);
+
+			foreach ($languages as $code) {
+				$language_info = $this->model_localisation_language->getLanguageByCode((string)$code);
+
+				if ($language_info && $language_info['status']) {
+					$language_data[$language_info['code']] = [
+						'name '     => $language_info['name'],
+						'code'      => $language_info['code'],
+						'locale'    => $language_info['locale'],
+						'extension' => $language_info['extension']
+					];
+				}
+			}
+
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+			$filename = 'language.yaml';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($language_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
 		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
-	 * List
-	 *
-	 * Generate language list.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array|void
-	 */
-	public function list(array $args = []): array {
-		$this->load->language('task/catalog/language');
-
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-		}
-
-		$language_data = [];
-
-		$this->load->model('setting/setting');
-		$this->load->model('localisation/language');
-
-		$languages = (array)$this->model_setting_setting->getValue('config_language_list', $store_info['store_id']);
-
-		foreach ($languages as $code) {
-			$language_info = $this->model_localisation_language->getLanguageByCode((string)$code);
-
-			if ($language_info && $language_info['status']) {
-				$language_data[$language_info['code']] = [
-					'name '     => $language_info['name'],
-					'code'      => $language_info['code'],
-					'locale'    => $language_info['locale'],
-					'extension' => $language_info['extension']
-				];
-			}
-		}
-
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'language.yaml';
-
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
-
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($language_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
-
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 }

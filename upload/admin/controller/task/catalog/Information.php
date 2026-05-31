@@ -68,37 +68,31 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$information_data = [];
 
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
 		$this->load->model('catalog/information');
 
-		$information_ids = $this->model_catalog_information->getStoresByStoreId($store_info['store_id']);
+		$results = $this->model_catalog_information->getInformations($filter_data);
 
-		foreach ($information_ids as $information_id) {
-			$information_info = $this->model_catalog_information->getInformation((int)$information_id);
+		foreach ($results as $result) {
+			$description_data = [];
 
-			if ($information_info && $information_info['status']) {
-				$description_data = [];
+			$descriptions = $this->model_catalog_information->getDescriptions($result['information_id']);
 
-				$descriptions = $this->model_catalog_information->getDescriptions($information_info['information_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = ['title' => $description['title']];
-				}
-
-				$information_data[] = [
-					'information_id' => $information_info['information_id'],
-					'description'    => $description_data,
-					'sort_order'     => $information_info['sort_order']
-				];
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['title' => $description['title']];
 			}
+
+			$information_data[] = [
+				'information_id' => $result['information_id'],
+				'description'    => $description_data
+			];
 		}
-
-		$sort_order = [];
-
-		foreach ($information_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $information_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'information.yaml';

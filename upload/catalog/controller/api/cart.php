@@ -118,8 +118,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 								if (!$product_option_value_info) {
 									$output['error']['product_' . (int)$key . '_option_' . (int)$product_option_id] = $this->language->get('error_option');
-								}
-								elseif ($product_option_value_info['subtract'] && (!$this->config->get('config_stock_checkout') && (!$option_stock || ($option_stock < $product['quantity'])))) {
+								} elseif ($product_option_value_info['subtract'] && (!$this->config->get('config_stock_checkout') && (!$option_stock || ($option_stock < $product['quantity'])))) {
 									$output['error']['product_' . (int)$key . '_option_' . (int)$product_option_id] = $this->language->get('error_option_stock');
 								}
 							}

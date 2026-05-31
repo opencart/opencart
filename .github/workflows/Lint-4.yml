@@ -23,6 +23,15 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2, cs2pr
 
+      - name: Tools Cache
+        uses: actions/cache@v5
+        with:
+            path: |
+                ./.cache
+                ./.php-cs-fixer.cache
+            key: ${{ matrix.php }}-tools-${{ github.sha }}
+            restore-keys: ${{ matrix.php }}-tools-
+
       - name: Check Code Style
         if: matrix.php == '8.3'
         run: |

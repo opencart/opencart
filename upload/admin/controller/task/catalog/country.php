@@ -21,89 +21,60 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/country');
 
 		$this->load->model('setting/store');
-		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'country.list.' . $store_id,
-				'action' => 'task/catalog/country.list',
-				'args'   => ['store_id' => $store_id]
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
 			];
 
-			$this->model_setting_task->addTask($task_data);
+			if ($store_id) {
+				$this->load->model('setting/store');
+
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
+			}
+
+			$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
+
+			foreach ($country_ids as $country_id) {
+				$country_info = $this->model_localisation_country->getCountry((int)$country_id);
+
+				if ($country_info && $country_info['status']) {
+					$description_data = [];
+
+					$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
+
+					foreach ($descriptions as $code => $description) {
+						$description_data[$code] = ['name' => $description['name']];
+					}
+
+					$country_data[] = [
+						'country_id'  => $country_info['country_id'],
+						'description' => $description_data
+					];
+				}
+			}
+
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+			$filename = 'country.yaml';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($country_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
 		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
-	 * list
-	 *
-	 * Generate country list by store and language.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function list(array $args = []): array {
-		$this->load->language('task/catalog/country');
-
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-		}
-
-		$country_data = [];
-
-		$this->load->model('setting/setting');
-		$this->load->model('localisation/country');
-
-		$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
-
-		foreach ($country_ids as $country_id) {
-			$country_info = $this->model_localisation_country->getCountry((int)$country_id);
-
-			if ($country_info && $country_info['status']) {
-				$description_data = [];
-
-				$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = ['name' => $description['name']];
-				}
-
-				$country_data[] = [
-					'country_id'  => $country_info['country_id'],
-					'description' => $description_data
-				];
-			}
-		}
-
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'country.yaml';
-
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
-
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($country_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
-
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 
 	/**
@@ -136,6 +107,33 @@ class Country extends \Opencart\System\Engine\Controller {
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
+			// Store
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
+			];
+
+			if ($store_id) {
+				$this->load->model('setting/store');
+
+				$store_info = $this->model_setting_store->getStore($store_id);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
+			}
+
+
+
+
+
+
+
+
+
+
+
 			$task_data = [
 				'code'   => 'country._info.' . $store_id . '.' . $country_info['country_id'],
 				'action' => 'task/catalog/country._info',
@@ -167,22 +165,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Store
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
 
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore($args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-		}
 
 		// Country
 		$this->load->model('localisation/country');

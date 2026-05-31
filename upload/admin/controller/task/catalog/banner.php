@@ -47,7 +47,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
-		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

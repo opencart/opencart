@@ -124,125 +124,75 @@ class Country extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Description
+			$description_data = [];
 
+			$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
 
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['name' => $description['name']];
+			}
 
+			// Zones
+			$zone_data = [];
 
+			$this->load->model('localisation/zone');
 
+			$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
 
+			foreach ($zones as $zone) {
+				if ($zone['status']) {
+					$description_data = [];
 
+					$descriptions = $this->model_localisation_zone->getDescriptions($zone['zone_id']);
 
+					foreach ($descriptions as $code => $description) {
+						$description_data[$code] = ['name' => $description['name']];
+					}
 
+					$zone_data[] = [
+						'zone_id'     => $zone['zone_id'],
+						'description' => $description_data,
+						'code'        => $zone['code']
+					];
+				}
+			}
 
-			$task_data = [
-				'code'   => 'country._info.' . $store_id . '.' . $country_info['country_id'],
-				'action' => 'task/catalog/country._info',
-				'args'   => [
-					'country_id' => $country_info['country_id'],
-					'store_id'   => $store_id
-				]
+			// Geo Zones
+			$geo_zone_data = [];
+
+			$this->load->model('localisation/geo_zone');
+
+			$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
+
+			foreach ($geo_zones as $geo_zone) {
+				$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
+			}
+
+			$country_data = [
+				'country_id'        => $country_info['country_id'],
+				'description'       => $description_data,
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format_id' => $country_info['address_format_id'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zones'             => $zone_data,
+				'geo_zones'         => $geo_zone_data
 			];
 
-			$this->model_setting_task->addTask($task_data);
-		}
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+			$filename = 'country-' . $country_info['country_id'] . '.yaml';
 
-		return ['success' => sprintf($this->language->get('text_info'), $country_info['name'])];
-	}
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
 
-	/**
-	 * Info
-	 *
-	 * Generate country information.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function _info(array $args = []): array {
-		$this->load->language('task/catalog/country');
-
-		if (!array_key_exists('country_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
-		}
-
-
-
-		// Country
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
-
-		if (!$country_info || !$country_info['status']) {
-			return ['error' => $this->language->get('error_country')];
-		}
-
-		$description_data = [];
-
-		$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
-
-		foreach ($descriptions as $code => $description) {
-			$description_data[$code] = ['name' => $description['name']];
-		}
-
-		// Zones
-		$zone_data = [];
-
-		$this->load->model('localisation/zone');
-
-		$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
-
-		foreach ($zones as $zone) {
-			if ($zone['status']) {
-				$description_data = [];
-
-				$descriptions = $this->model_localisation_zone->getDescriptions($zone['zone_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = ['name' => $description['name']];
-				}
-
-				$zone_data[] = [
-					'zone_id'     => $zone['zone_id'],
-					'description' => $description_data,
-					'code'        => $zone['code']
-				];
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($country_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 			}
 		}
 
-		// Geo Zones
-		$geo_zone_data = [];
-
-		$this->load->model('localisation/geo_zone');
-
-		$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
-
-		foreach ($geo_zones as $geo_zone) {
-			$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
-		}
-
-		$country_data = [
-			'country_id'        => $country_info['country_id'],
-			'description'       => $description_data,
-			'iso_code_2'        => $country_info['iso_code_2'],
-			'iso_code_3'        => $country_info['iso_code_3'],
-			'address_format_id' => $country_info['address_format_id'],
-			'postcode_required' => $country_info['postcode_required'],
-			'zones'             => $zone_data,
-			'geo_zones'         => $geo_zone_data
-		];
-
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'country-' . $country_info['country_id'] . '.yaml';
-
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
-
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($country_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
-
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $country_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $country_info['name'])];
 	}
 
 	/*

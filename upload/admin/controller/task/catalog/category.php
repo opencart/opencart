@@ -205,21 +205,6 @@ class Category extends \Opencart\System\Engine\Controller {
 	}
 
 	/*
-	 *
-	 */
-	public function _info(array $args = []): array {
-		$this->load->language('task/catalog/category');
-
-		if (!array_key_exists('category_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
-		}
-
-
-
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $category_info['name'])];
-	}
-
-	/*
 	 * Delete files based on country ID
 	 *
 	 */

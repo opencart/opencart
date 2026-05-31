@@ -8,6 +8,8 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Topic extends \Opencart\System\Engine\Controller {
+	private ?object $load;
+
 	/**
 	 * List
 	 *
@@ -68,41 +70,35 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$topic_data = [];
 
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
 		$this->load->model('cms/topic');
 
-		$topic_ids = $this->model_cms_topic->getStoresByStoreId($store_info['store_id']);
+		$results = $this->model_cms_topic->getTopics($filter_data);
 
-		foreach ($topic_ids as $topic_id) {
-			$topic_info = $this->model_cms_topic->getTopic($topic_id);
+		foreach ($results as $result) {
+			$description_data = [];
 
-			if ($topic_info && $topic_info['status']) {
-				$description_data = [];
+			$descriptions = $this->model_cms_topic->getDescriptions($result['topic_id']);
 
-				$descriptions = $this->model_cms_topic->getDescriptions($topic_info['topic_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = [
-						'name'        => $description['name'],
-						'description' => $description['description'],
-						'image'       => $description['image']
-					];
-				}
-
-				$topic_data[] = [
-					'topic_id'    => $topic_info['topic_id'],
-					'description' => $description_data,
-					'sort_order'  => $topic_info['sort_order']
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = [
+					'name'        => $description['name'],
+					'description' => $description['description'],
+					'image'       => $description['image']
 				];
 			}
+
+			$topic_data[] = [
+				'topic_id'    => $result['topic_id'],
+				'description' => $description_data
+			];
 		}
-
-		$sort_order = [];
-
-		foreach ($topic_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $topic_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'topic.yaml';

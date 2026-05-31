@@ -319,7 +319,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ((in_array($post_info['type'], ['select', 'radio', 'checkbox', 'image'])) && !isset($post_info['option_value'])) {
+		if ((in_array($post_info['type'], ['select', 'radio', 'checkbox'])) && !isset($post_info['option_value'])) {
 			$json['error']['warning'] = $this->language->get('error_type');
 		}
 
@@ -449,7 +449,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			foreach ($options as $option) {
 				$option_value_data = [];
 
-				if (in_array($option['type'], ['select', 'radio', 'checkbox', 'image'])) {
+				if (in_array($option['type'], ['select', 'radio', 'checkbox'])) {
 					$option_values = $this->model_catalog_option->getValues($option['option_id']);
 
 					foreach ($option_values as $option_value) {
@@ -477,7 +477,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 				$type = '';
 
-				if (in_array($option['type'], ['select', 'radio', 'checkbox', 'image'])) {
+				if (in_array($option['type'], ['select', 'radio', 'checkbox'])) {
 					$type = $this->language->get('text_choose');
 				}
 

@@ -130,7 +130,7 @@ class Product extends \Opencart\System\Engine\Model {
 		// Options
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
-				if ((in_array($product_option['type'], ['select', 'radio', 'checkbox', 'image'])) && empty($product_option['product_option_value'])) {
+				if ((in_array($product_option['type'], ['select', 'radio', 'checkbox'])) && empty($product_option['product_option_value'])) {
 					continue;
 				}
 
@@ -328,7 +328,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
-				if (in_array($product_option['type'], ['select', 'radio', 'checkbox', 'image']) && empty($product_option['product_option_value'])) {
+				if (in_array($product_option['type'], ['select', 'radio', 'checkbox']) && empty($product_option['product_option_value'])) {
 					continue;
 				}
 

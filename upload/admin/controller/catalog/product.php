@@ -996,7 +996,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['option_values'] = [];
 
 		foreach ($data['product_options'] as $product_option) {
-			if (in_array($product_option['type'], ['select', 'radio', 'checkbox', 'image'])) {
+			if (in_array($product_option['type'], ['select', 'radio', 'checkbox'])) {
 				if (!isset($data['option_values'][$product_option['option_id']])) {
 					$data['option_values'][$product_option['option_id']] = $this->model_catalog_option->getValues($product_option['option_id']);
 				}
@@ -1246,7 +1246,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Options
 		if (!empty($post_info['product_option'])) {
 			foreach ($post_info['product_option'] as $row_idx => $option) {
-				if ((in_array($option['type'], ['select', 'radio', 'checkbox', 'image'])) && empty($option['product_option_value'])) {
+				if ((in_array($option['type'], ['select', 'radio', 'checkbox'])) && empty($option['product_option_value'])) {
 					$json['error']['option-row-' . $row_idx] = sprintf($this->language->get('error_option_value'), $option['name']);
 				}
 			}

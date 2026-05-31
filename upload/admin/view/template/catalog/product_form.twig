@@ -707,6 +707,7 @@
 
                     <fieldset id="option-row-{{ option_row }}">
                       <legend>{{ product_option.name }}</legend>
+                      <div id="error-option-row-{{ option_row }}" class="invalid-feedback"></div>
                       <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
 
                       <div class="row align-items-center">
@@ -1586,6 +1587,7 @@ $('#input-option').autocomplete({
     'select': function(item) {
         html = '<fieldset id="option-row-' + option_row + '">';
         html += '  <legend class="float-none">' + item['label'] + '</legend>';
+        html += '  <div id="error-option-row-' + option_row + '" class="invalid-feedback"></div>';
         html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + decodeHTMLEntities(item['label']) + '" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';

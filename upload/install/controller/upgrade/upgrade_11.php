@@ -24,7 +24,7 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field'], ['allowed_classes' => false]))) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
 				}
 			}
 
@@ -33,7 +33,7 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['data'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data'], ['allowed_classes' => false]))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
 				}
 			}
 
@@ -42,7 +42,7 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field'], ['allowed_classes' => false]))) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
 				}
 			}
 

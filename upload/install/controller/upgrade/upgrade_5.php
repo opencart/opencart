@@ -35,7 +35,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['value'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode(unserialize($result['value']))) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode(unserialize($result['value'], ['allowed_classes' => false]))) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
 				}
 			}
 

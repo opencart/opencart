@@ -22,15 +22,15 @@ class Upgrade12 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field'], ['allowed_classes' => false]))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
 				}
 
 				if (preg_match('/^(a:)/', $result['payment_custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['payment_custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['payment_custom_field'], ['allowed_classes' => false]))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
 				}
 
 				if (preg_match('/^(a:)/', $result['shipping_custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['shipping_custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['shipping_custom_field'], ['allowed_classes' => false]))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
 				}
 			}
 

@@ -22,7 +22,7 @@ class Upgrade17 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['permission'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode(unserialize($result['permission']))) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode(unserialize($result['permission'], ['allowed_classes' => false]))) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
 				}
 			}
 		} catch (\ErrorException $exception) {

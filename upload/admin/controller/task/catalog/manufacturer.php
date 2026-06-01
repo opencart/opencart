@@ -21,159 +21,74 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/manufacturer');
 
 		$this->load->model('setting/store');
-		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'manufacturer.list.' . $store_id,
-				'action' => 'task/catalog/manufacturer.list',
-				'args'   => ['store_id' => $store_id]
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
 			];
 
-			$this->model_setting_task->addTask($task_data);
+			if ($store_id) {
+				$this->load->model('setting/store');
+
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
+			}
+
+			$manufacturer_data = [];
+
+			$filter_data = [
+				'filter_store_id' => $store_info['store_id'],
+				'filter_status'   => true,
+				'sort'            => 'sort_order',
+				'order'           => 'ASC',
+			];
+
+			$this->load->model('catalog/manufacturer');
+
+			$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
+
+			foreach ($results as $result) {
+				$description_data = [];
+
+				$descriptions = $this->model_catalog_manufacturer->getDescriptions($result['manufacturer_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = ['name' => $description['name']];
+				}
+
+				$manufacturer_data[] = [
+					'manufacturer_id' => $result['manufacturer_id'],
+					'description'     => $description_data
+				];
+			}
+
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+			$filename = 'manufacturer.yaml';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($manufacturer_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
 		return ['success' => $this->language->get('text_task')];
 	}
 
-	/**
-	 * List
-	 *
-	 * Generate manufacturer list.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function list(array $args = []): array {
-		$this->load->language('task/catalog/manufacturer');
-
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-		}
-
-		$manufacturer_data = [];
-
-		$filter_data = [
-			'filter_store_id' => $store_info['store_id'],
-			'filter_status'   => true,
-			'sort'            => 'sort_order',
-			'order'           => 'ASC',
-		];
-
-		$this->load->model('catalog/manufacturer');
-
-		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
-
-		foreach ($results as $result) {
-			$description_data = [];
-
-			$descriptions = $this->model_catalog_manufacturer->getDescriptions($result['manufacturer_id']);
-
-			foreach ($descriptions as $code => $description) {
-				$description_data[$code] = ['name' => $description['name']];
-			}
-
-			$manufacturer_data[] = [
-				'manufacturer_id' => $result['manufacturer_id'],
-				'description'     => $description_data,
-				'sort_order'      => $result['sort_order']
-			];
-		}
-
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'manufacturer.yaml';
-
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
-
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($manufacturer_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
-
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
-	}
-
-	/**
-	 * Info
-	 *
-	 * Generate manufacturer information.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
 		if (!array_key_exists('manufacturer_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
-		}
-
-		$this->load->model('catalog/manufacturer');
-
-		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
-
-		if (!$manufacturer_info || !$manufacturer_info['status']) {
-			return ['error' => $this->language->get('error_manufacturer')];
-		}
-
-		$this->load->model('setting/task');
-
-		$store_ids = $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']);
-
-		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'manufacturer._info.' . $store_id . '.' . $manufacturer_info['manufacturer_id'],
-				'action' => 'task/catalog/manufacturer._info',
-				'args'   => [
-					'manufacturer_id' => $manufacturer_info['manufacturer_id'],
-					'store_id'        => $store_id
-				]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
-
-		return ['success' => sprintf($this->language->get('text_info'), $manufacturer_info['name'])];
-	}
-
-	public function _info(array $args = []): array {
-		$this->load->language('task/catalog/manufacturer');
-
-		if (!array_key_exists('manufacturer_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
-		}
-
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
 		}
 
 		$this->load->model('catalog/manufacturer');
@@ -204,15 +119,35 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'image'           => $manufacturer_info['image']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
+		$store_ids = $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']);
 
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
+		foreach ($store_ids as $store_id) {
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
+			];
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($manufacturer_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			if ($store_id) {
+				$this->load->model('setting/store');
+
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
+			}
+
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+			$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($manufacturer_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
 		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $manufacturer_info['name'])];

@@ -178,10 +178,10 @@ class Country extends \Opencart\System\Engine\Controller {
 					return ['error' => $this->language->get('error_store')];
 				}
 			}
-			
+
 			$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
 
-			if (!in_array($store_id, $country_ids)) {
+			if (!in_array($country_info['country_id'], $country_ids)) {
 				continue;
 			}
 

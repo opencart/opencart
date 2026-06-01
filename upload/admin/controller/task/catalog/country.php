@@ -101,6 +101,62 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
+		// Description
+		$description_data = [];
+
+		$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
+
+		foreach ($descriptions as $code => $description) {
+			$description_data[$code] = ['name' => $description['name']];
+		}
+
+		// Zones
+		$zone_data = [];
+
+		$this->load->model('localisation/zone');
+
+		$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
+
+		foreach ($zones as $zone) {
+			if ($zone['status']) {
+				$description_data = [];
+
+				$descriptions = $this->model_localisation_zone->getDescriptions($zone['zone_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = ['name' => $description['name']];
+				}
+
+				$zone_data[] = [
+					'zone_id'     => $zone['zone_id'],
+					'description' => $description_data,
+					'code'        => $zone['code']
+				];
+			}
+		}
+
+		// Geo Zones
+		$geo_zone_data = [];
+
+		$this->load->model('localisation/geo_zone');
+
+		$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
+
+		foreach ($geo_zones as $geo_zone) {
+			$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
+		}
+
+		$country_data = [
+			'country_id'        => $country_info['country_id'],
+			'description'       => $description_data,
+			'iso_code_2'        => $country_info['iso_code_2'],
+			'iso_code_3'        => $country_info['iso_code_3'],
+			'address_format_id' => $country_info['address_format_id'],
+			'postcode_required' => $country_info['postcode_required'],
+			'zones'             => $zone_data,
+			'geo_zones'         => $geo_zone_data
+		];
+
 		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
@@ -122,62 +178,12 @@ class Country extends \Opencart\System\Engine\Controller {
 					return ['error' => $this->language->get('error_store')];
 				}
 			}
+			
+			$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
 
-			// Description
-			$description_data = [];
-
-			$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
-
-			foreach ($descriptions as $code => $description) {
-				$description_data[$code] = ['name' => $description['name']];
+			if (!in_array($store_id, $country_ids)) {
+				continue;
 			}
-
-			// Zones
-			$zone_data = [];
-
-			$this->load->model('localisation/zone');
-
-			$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
-
-			foreach ($zones as $zone) {
-				if ($zone['status']) {
-					$description_data = [];
-
-					$descriptions = $this->model_localisation_zone->getDescriptions($zone['zone_id']);
-
-					foreach ($descriptions as $code => $description) {
-						$description_data[$code] = ['name' => $description['name']];
-					}
-
-					$zone_data[] = [
-						'zone_id'     => $zone['zone_id'],
-						'description' => $description_data,
-						'code'        => $zone['code']
-					];
-				}
-			}
-
-			// Geo Zones
-			$geo_zone_data = [];
-
-			$this->load->model('localisation/geo_zone');
-
-			$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
-
-			foreach ($geo_zones as $geo_zone) {
-				$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
-			}
-
-			$country_data = [
-				'country_id'        => $country_info['country_id'],
-				'description'       => $description_data,
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format_id' => $country_info['address_format_id'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zones'             => $zone_data,
-				'geo_zones'         => $geo_zone_data
-			];
 
 			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 			$filename = 'country-' . $country_info['country_id'] . '.yaml';

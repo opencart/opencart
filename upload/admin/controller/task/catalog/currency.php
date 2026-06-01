@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Currency
  *
- * Generates currencyinformation for all stores.
+ * Generates currency information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */

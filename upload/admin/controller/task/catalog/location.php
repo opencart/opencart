@@ -47,23 +47,21 @@ class Location extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/setting');
 			$this->load->model('localisation/location');
 
-			$location_ids = $this->model_setting_setting->getValue('config_location_list', $store_info['store_id']);
+			$location_ids = (array)$this->model_setting_setting->getValue('config_location_list', $store_info['store_id']);
 
-			if ($location_ids) {
-				foreach ($location_ids as $location_id) {
-					$location_info = $this->model_localisation_location->getLocation($location_id);
+			foreach ($location_ids as $location_id) {
+				$location_info = $this->model_localisation_location->getLocation($location_id);
 
-					if ($location_info) {
-						$location_data[] = [
-							'location_id' => $location_info['location_id'],
-							'name'        => $location_info['name'],
-							'address'     => $location_info['address'],
-							'telephone'   => $location_info['telephone'],
-							'image'       => $location_info['image'],
-							'open'        => $location_info['open'],
-							'comment'     => $location_info['comment']
-						];
-					}
+				if ($location_info) {
+					$location_data[] = [
+						'location_id' => $location_info['location_id'],
+						'name'        => $location_info['name'],
+						'address'     => $location_info['address'],
+						'telephone'   => $location_info['telephone'],
+						'image'       => $location_info['image'],
+						'open'        => $location_info['open'],
+						'comment'     => $location_info['comment']
+					];
 				}
 			}
 

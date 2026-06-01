@@ -21,7 +21,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/category');
 
 		$this->load->model('setting/store');
-		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -128,8 +127,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$path = $this->model_catalog_category->getPath($category_info['category_id']);
-
-		$this->load->model('setting/task');
 
 		$store_ids = $this->model_catalog_category->getStores($category_info['category_id']);
 

@@ -32,10 +32,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 				'url'      => HTTP_CATALOG
 			];
 
-			if ($args['store_id']) {
+			if ($store_id) {
 				$this->load->model('setting/store');
 
-				$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
 
 				if (!$store_info) {
 					return ['error' => $this->language->get('error_store')];
@@ -131,6 +131,80 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Custom Field
+		$custom_field_data = [];
+
+		$this->load->model('customer/custom_field');
+
+		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
+
+		foreach ($custom_fields as $custom_field) {
+			$custom_field_description_data = [];
+
+			$custom_field_descriptions = $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id']);
+
+			foreach ($custom_field_descriptions as $code => $custom_field_description) {
+				$custom_field_description_data[$code] = ['name' => $custom_field_description['name']];
+			}
+
+			$custom_field_value_data = [];
+
+			if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio' || $custom_field['type'] == 'checkbox') {
+				$custom_field_values = $this->model_customer_custom_field->getValues($custom_field['custom_field_id']);
+
+				foreach ($custom_field_values as $custom_field_value) {
+					$custom_field_value_description_data = [];
+
+					$custom_field_value_descriptions = $this->model_customer_custom_field->getValueDescriptions($custom_field_value['custom_field_value_id']);
+
+					foreach ($custom_field_value_descriptions as $code => $custom_field_value_description) {
+						$custom_field_value_description_data[$code] = ['name' => $custom_field_value_description['name']];
+					}
+
+					$custom_field_value_data[] = [
+						'custom_field_value_id' => $custom_field_value['custom_field_value_id'],
+						'description'           => $custom_field_value_description_data,
+						'sort_order'            => $custom_field_value['sort_order']
+					];
+				}
+
+				$sort_order = [];
+
+				foreach ($custom_field_value_data as $key => $value) {
+					$sort_order[$key] = $value['sort_order'];
+				}
+
+				array_multisort($sort_order, SORT_ASC, $custom_field_value_data);
+			}
+
+			$custom_field_data[] = [
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'description'        => $custom_field_description_data,
+				'type'               => $custom_field['type'],
+				'custom_field_value' => $custom_field_value_data,
+				'value'              => $custom_field['value'],
+				'required'           => $custom_field['required'],
+				'validation'         => $custom_field['validation'],
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
+			];
+		}
+
+		$sort_order = [];
+
+		foreach ($custom_field_data as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $custom_field_data);
+
+		$customer_group_data = [
+			'customer_group_id' => $customer_group_info['customer_group_id'],
+			'description'       => $description_data,
+			'custom_fields'     => $custom_field_data,
+			'approval'          => $customer_group_info['approval']
+		];
+
 		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
@@ -152,79 +226,11 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Custom Field
-			$custom_field_data = [];
+			$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
 
-			$this->load->model('customer/custom_field');
-
-			$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
-
-			foreach ($custom_fields as $custom_field) {
-				$custom_field_description_data = [];
-
-				$custom_field_descriptions = $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id']);
-
-				foreach ($custom_field_descriptions as $code => $custom_field_description) {
-					$custom_field_description_data[$code] = ['name' => $custom_field_description['name']];
-				}
-
-				$custom_field_value_data = [];
-
-				if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio' || $custom_field['type'] == 'checkbox') {
-					$custom_field_values = $this->model_customer_custom_field->getValues($custom_field['custom_field_id']);
-
-					foreach ($custom_field_values as $custom_field_value) {
-						$custom_field_value_description_data = [];
-
-						$custom_field_value_descriptions = $this->model_customer_custom_field->getValueDescriptions($custom_field_value['custom_field_value_id']);
-
-						foreach ($custom_field_value_descriptions as $code => $custom_field_value_description) {
-							$custom_field_value_description_data[$code] = ['name' => $custom_field_value_description['name']];
-						}
-
-						$custom_field_value_data[] = [
-							'custom_field_value_id' => $custom_field_value['custom_field_value_id'],
-							'description'           => $custom_field_value_description_data,
-							'sort_order'            => $custom_field_value['sort_order']
-						];
-					}
-
-					$sort_order = [];
-
-					foreach ($custom_field_value_data as $key => $value) {
-						$sort_order[$key] = $value['sort_order'];
-					}
-
-					array_multisort($sort_order, SORT_ASC, $custom_field_value_data);
-				}
-
-				$custom_field_data[] = [
-					'custom_field_id'    => $custom_field['custom_field_id'],
-					'description'        => $custom_field_description_data,
-					'type'               => $custom_field['type'],
-					'custom_field_value' => $custom_field_value_data,
-					'value'              => $custom_field['value'],
-					'required'           => $custom_field['required'],
-					'validation'         => $custom_field['validation'],
-					'location'           => $custom_field['location'],
-					'sort_order'         => $custom_field['sort_order']
-				];
+			if (!in_array($customer_group_info['customer_group_id'], $customer_group_ids)) {
+				continue;
 			}
-
-			$sort_order = [];
-
-			foreach ($custom_field_data as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $custom_field_data);
-
-			$customer_group_data = [
-				'customer_group_id' => $customer_group_info['customer_group_id'],
-				'description'       => $description_data,
-				'custom_fields'     => $custom_field_data,
-				'approval'          => $customer_group_info['approval']
-			];
 
 			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
 			$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.yaml';

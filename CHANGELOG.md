@@ -113,6 +113,19 @@
 * Fixed: Fix related products showing for wrong store in https://github.com/opencart/opencart/pull/15463
 * Fixed: Bug: admin/model/cms/article.php getComments() in https://github.com/opencart/opencart/pull/15482
 * Changed: Fix products filtration in https://github.com/opencart/opencart/pull/15483
+* Fixed: Fixes for CMS SEO and topic module in https://github.com/opencart/opencart/pull/15486
+* Fixed: Admin order add in https://github.com/opencart/opencart/pull/15491
+* Fixed: Fix admin order addProduct validation in https://github.com/opencart/opencart/pull/15488
+* Fixed: Fix misnamed form attribute in https://github.com/opencart/opencart/pull/15485
+* Fixed: Fix image extension and getimagesize for PHP 8.5 in https://github.com/opencart/opencart/pull/15490
+* Fixed: Enforce PHP 8.1 minimum version in installers in https://github.com/opencart/opencart/pull/15492
+* Fixed: More admin order edit/add fixes in https://github.com/opencart/opencart/pull/15496
+* Fixed: More fixes for api/cart in https://github.com/opencart/opencart/pull/15497
+* Fixed: Fixed and optimized the GitHub Actions workflow configuration in https://github.com/opencart/opencart/pull/15494
+* Fixed: Fix option values check and error messages in https://github.com/opencart/opencart/pull/15495
+* Changed: Updated api/cart in https://github.com/opencart/opencart/pull/15503
+* Fixed: PHP CS Fixer for api/cart in https://github.com/opencart/opencart/pull/15504
+* Changed: Added caching for tools in https://github.com/opencart/opencart/pull/15500
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

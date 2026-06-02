@@ -107,27 +107,19 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('localisation/geo_zone');
-
-		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($args['geo_zone_id']);
-
-		if (!$geo_zone_info) {
-			return ['error' => $this->language->get('error_geo_zone')];
-		}
-
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/tax_rate-' . $geo_zone_info['geo_zone_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/tax_rate-' . (int)$args['geo_zone_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $geo_zone_info['name'])];
+		return ['success' => $this->language->get('text_delete')];
 	}
 }
 

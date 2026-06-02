@@ -100,7 +100,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => sprintf($this->language->get('text_info'), $filter_group_info['name'])];
 	}
 
 	/**

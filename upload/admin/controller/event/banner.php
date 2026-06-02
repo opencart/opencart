@@ -36,7 +36,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new banner data.
 	 *
-	 * Trigger admin/model/deign/banner/addBanner/after
+	 * Trigger admin/model/deign/banner/editBanner/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -61,7 +61,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new banner data.
 	 *
-	 * Trigger admin/model/deign/banner/addBanner/after
+	 * Trigger admin/model/deign/banner/deleteBanner/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

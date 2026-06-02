@@ -1,8 +1,7 @@
 <?php
 // Text
-$_['text_task']       = 'Generating article task list!';
-$_['text_info']       = 'Generating %s %s article information!';
-$_['text_delete']     = 'Article %s data deleted!';
+$_['text_info']       = 'Generating %s article information!';
+$_['text_delete']     = 'Article %s information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Article ID required!';

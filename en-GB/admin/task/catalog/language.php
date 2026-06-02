@@ -1,7 +1,6 @@
 <?php
 // Text
-$_['text_task']       = 'Generating language task list!';
-$_['text_list']       = 'Generating %s language data!';
+$_['text_list']       = 'Generating language information list!';
 
 // Error
 $_['error_store']     = 'Error: Store could not be found!';

@@ -81,7 +81,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	public function info(array $args = []): array {
@@ -150,7 +150,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $manufacturer_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $manufacturer_info['name'])];
 	}
 
 	/**

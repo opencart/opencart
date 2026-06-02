@@ -1,15 +1,15 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
- * Class Attribute
+ * Class Address Format
  *
  * @package Opencart\Admin\Controller\Event
  */
 class AddressFormat extends \Opencart\System\Engine\Controller {
 	/*
-	 * Edit Country
+	 * Edit Address Format
 	 *
-	 * Adds task to generate new product data.
+	 * Adds task to generate new address format data.
 	 *
 	 * Trigger admin/model/catalog/localisation/editAddressFormat/before
 	 *

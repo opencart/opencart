@@ -28,7 +28,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$task_data = [
-				'code'   => 'country.' . $result['country_id'],
+				'code'   => 'country.info.' . $result['country_id'],
 				'action' => 'task/catalog/country',
 				'args'   => ['country_id' => $result['country_id']]
 			];

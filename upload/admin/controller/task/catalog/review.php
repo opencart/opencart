@@ -33,23 +33,46 @@ class Review extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_review')];
 		}
 
+		$limit = 10;
+
+		$return_reason_data = [];
+
+		$this->load->model('catalog/review');
+
+		$reviews = $this->model_catalog_review->getReviews();
+
+		foreach ($reviews as $review) {
+
+		}
+
 		// Stores
 		$this->load->model('setting/store');
-		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'review',
-				'action' => 'task/catalog/review.list',
-				'args'   => [
-					'product_id' => $product_info['product_id'],
-					'store_id'   => $store_id
-				]
-			];
 
-			$this->model_setting_task->addTask($task_data);
+
+
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+
+
+
+			$directory = DIR_APPLICATION . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+			$filename = 'return_reason.yaml';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($return_reason_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -106,16 +129,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		}
 
-		$directory = DIR_APPLICATION . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'return_reason.yaml';
 
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
-
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($return_reason_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}

@@ -75,6 +75,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => $this->language->get('text_list')];
 	}
 }

@@ -41,6 +41,8 @@ class Country extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$country_data = [];
+
 			$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
 
 			foreach ($country_ids as $country_id) {
@@ -74,7 +76,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	/**

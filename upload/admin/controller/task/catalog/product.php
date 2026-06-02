@@ -32,67 +32,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_product')];
 		}
 
-		$this->load->model('setting/store');
-		$this->load->model('setting/task');
-
-		$store_ids = $this->model_catalog_product->getStores($product_info['product_id']);
-
-		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'product.info.' . $store_id . '.' . $product_info['product_id'],
-				'action' => 'task/catalog/product.info',
-				'args'   => [
-					'product_id' => $product_info['product_id'],
-					'store_id'   => $store_id
-				]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
-
-		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
-	 * Info
-	 *
-	 * Generate country data by product ID.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function info(array $args = []): array {
-		$this->load->language('task/catalog/product');
-
-		if (!array_key_exists('product_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
-		}
-
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-		}
-
-		$this->load->model('catalog/product');
-
-		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
-
-		if (!$product_info || !$product_info['status']) {
-			return ['error' => $this->language->get('error_product')];
-		}
-
 		// Image
 		$this->load->model('tool/image');
 
@@ -361,18 +300,40 @@ class Product extends \Opencart\System\Engine\Controller {
 			'date_modified'      => $product_info['date_modified']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'product-' . $product_info['product_id'] . '.yaml';
+		$this->load->model('setting/store');
 
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		$store_ids = $this->model_catalog_product->getStores($product_info['product_id']);
+
+		foreach ($store_ids as $store_id) {
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
+			];
+
+			if ($store_id) {
+				$this->load->model('setting/store');
+
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
+			}
+
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+			$filename = 'product-' . $product_info['product_id'] . '.yaml';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($product_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($product_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
-
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $product_info['name'])];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**

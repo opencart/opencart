@@ -182,26 +182,18 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('cms/topic');
-
-		$topic_info = $this->model_cms_topic->getTopic((int)$args['topic_id']);
-
-		if (!$topic_info) {
-			return ['error' => $this->language->get('error_topic')];
-		}
-
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/topic-' . $topic_info['topic_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/topic-' . (int)$args['topic_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $topic_info['title'])];
+		return ['success' => $this->language->get('text_delete')];
 	}
 }

@@ -98,26 +98,18 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('design/banner');
-
-		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);
-
-		if (!$banner_info) {
-			return ['error' => $this->language->get('error_banner')];
-		}
-
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/design/banner-' . $banner_info['banner_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/design/banner-' . (int)$args['banner_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $banner_info['name'])];
+		return ['success' => $this->language->get('text_delete')];
 	}
 }

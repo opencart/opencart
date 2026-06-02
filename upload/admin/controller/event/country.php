@@ -63,7 +63,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new country data.
 	 *
-	 * Trigger admin/model/localisation/country/editCountry/after
+	 * Trigger admin/model/localisation/country/editCountry/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -113,7 +113,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new country data.
 	 *
-	 * Trigger admin/model/localization/country/deleteCountry/after
+	 * Trigger admin/model/localization/country/deleteCountry/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -140,6 +140,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+		// Admin
 		$task_data = [
 			'code'   => 'admin.country',
 			'action' => 'task/admin/country',

@@ -60,8 +60,6 @@ class Article extends \Opencart\System\Engine\Controller {
 			'date_modified' => $article_info['date_modified']
 		];
 
-		$this->load->model('setting/task');
-
 		$store_ids = $this->model_cms_article->getStores($article_info['article_id']);
 
 		foreach ($store_ids as $store_id) {

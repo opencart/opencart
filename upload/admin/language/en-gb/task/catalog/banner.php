@@ -1,8 +1,7 @@
 <?php
 // Text
-$_['text_task']       = 'Generating banner task list!';
-$_['text_info']       = 'Generating %s %s banner information!';
-$_['text_delete']     = 'Banner %s data deleted!';
+$_['text_info']       = 'Generating %s banner information!';
+$_['text_delete']     = 'Banner %s information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Banner ID required!';

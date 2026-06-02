@@ -1206,6 +1206,15 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// empty variant checks
+		$variant = [];
+		foreach ($post_info['variant'] as $key => $value) {
+			if (!empty($value)) {
+				$variant[$key] = $value;
+			}
+		}
+		$post_info['variant'] = $variant;
+
 		foreach ($post_info['product_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');

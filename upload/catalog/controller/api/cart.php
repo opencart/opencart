@@ -93,6 +93,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 
 			if ($product_info) {
+				// If variant get master product
+				if ($product_info['master_id']) {
+					$product_id = $product_info['master_id'];
+				}
+
 				// Merge variant code with options
 				foreach ($product_info['variant'] as $option_id => $value) {
 					$option[$option_id] = $value;
@@ -173,7 +178,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!$output) {
-				$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
+				$this->cart->add($product_info['product_id'], $quantity, $option, $subscription_plan_id);
 			}
 		}
 

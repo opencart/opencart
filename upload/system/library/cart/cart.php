@@ -96,7 +96,9 @@ class Cart {
 
 					if ($variant) {
 						foreach ($variant as $key => $value) {
-							$product_options[$key] = $value;
+							if (!empty($value)) {
+								$product_options[$key] = $value;
+							}
 						}
 					}
 

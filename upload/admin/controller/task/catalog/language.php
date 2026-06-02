@@ -31,10 +31,10 @@ class Language extends \Opencart\System\Engine\Controller {
 				'url'      => HTTP_CATALOG
 			];
 
-			if ($args['store_id']) {
+			if ($store_id) {
 				$this->load->model('setting/store');
 
-				$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
 
 				if (!$store_info) {
 					return ['error' => $this->language->get('error_store')];

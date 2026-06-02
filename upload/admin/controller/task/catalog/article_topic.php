@@ -28,25 +28,15 @@ class ArticleTopic extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_topic')];
 		}
 
-		$article_data = [];
-
 		$this->load->model('cms/article');
-
-		$article_ids = $this->model_cms_article->getArticlesBy($topic_info['topic_id']);
-
-		foreach ($article_ids as $article_id) {
-			$store_ids = $this->model_cms_article->getStores($article_id);
-
-			if (in_array($store_info['store_id'], $store_ids)) {
-				$article_data[] = $article_id;
-			}
-		}
 
 		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
+			$article_data = [];
+
 			$store_info = [
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name'),
@@ -66,6 +56,15 @@ class ArticleTopic extends \Opencart\System\Engine\Controller {
 
 
 
+			$article_ids = $this->model_cms_article->getArticlesBy($topic_info['topic_id']);
+
+			foreach ($article_ids as $article_id) {
+				$store_ids = $this->model_cms_article->getStores($article_id);
+
+				if (in_array($store_info['store_id'], $store_ids)) {
+					$article_data[] = $article_id;
+				}
+			}
 
 
 

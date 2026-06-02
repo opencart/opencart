@@ -110,20 +110,12 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('cms/article');
-
-		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
-
-		if (!$article_info) {
-			return ['error' => $this->language->get('error_article')];
-		}
-
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/article-' . $article_info['article_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_task']       = 'Generating category task list!';
+$_['text_list']       = 'Generating category information list!';
 $_['text_info']       = 'Generating %s category information!';
-$_['text_delete']     = 'Category %s data deleted!';
+$_['text_delete']     = 'Category %s information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Category ID required!';

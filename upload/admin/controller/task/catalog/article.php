@@ -93,7 +93,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $article_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $article_info['name'])];
 	}
 
 	/**

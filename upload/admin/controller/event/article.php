@@ -89,7 +89,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new article data.
 	 *
-	 * Trigger admin/model/cms/article/addArticle/after
+	 * Trigger admin/model/cms/article/deleteArticle/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

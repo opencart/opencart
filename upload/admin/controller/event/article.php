@@ -84,6 +84,9 @@ class Article extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->addTask($task_data);
 			}
 		}
+
+
+
 	}
 
 	/*

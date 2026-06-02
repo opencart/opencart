@@ -1145,12 +1145,12 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.attribute.edit', 'Triggers attribute static site data creation.', 'admin/model/catalog/attribute.editAttribute/before', 'event/attribute.editAttribute', 1),
 
        ('ssr.banner.add', 'Triggers banner static site data creation.', 'admin/model/design/banner.addBanner/after', 'event/banner.addBanner', 1),
-       ('ssr.banner.edit', 'Triggers banner static site data creation.', 'admin/model/design/banner.editBanner/after', 'event/banner.editBanner', 1),
-       ('ssr.banner.delete', 'Triggers banner static site data creation.', 'admin/model/design/banner.deleteBanner/after', 'event/banner.deleteBanner', 1),
+       ('ssr.banner.edit', 'Triggers banner static site data creation.', 'admin/model/design/banner.editBanner/before', 'event/banner.editBanner', 1),
+       ('ssr.banner.delete', 'Triggers banner static site data creation.', 'admin/model/design/banner.deleteBanner/before', 'event/banner.deleteBanner', 1),
 
        ('ssr.category.add', 'Triggers category static site data creation.', 'admin/model/catalog/category.addCategory/after', 'event/category.addCategory', 1),
-       ('ssr.category.edit', 'Triggers category static site data creation.', 'admin/model/catalog/category.editCategory/after', 'event/category.editCategory', 1),
-       ('ssr.category.delete', 'Triggers category static site data creation.', 'admin/model/catalog/category.deleteCategory/after', 'event/category.deleteCategory', 1),
+       ('ssr.category.edit', 'Triggers category static site data creation.', 'admin/model/catalog/category.editCategory/before', 'event/category.editCategory', 1),
+       ('ssr.category.delete', 'Triggers category static site data creation.', 'admin/model/catalog/category.deleteCategory/before', 'event/category.deleteCategory', 1),
 
        ('ssr.comment.add', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.addComment/after', 'event/comment.addComment', 1),
        ('ssr.comment.edit', 'Triggers comment static site data creation.', 'admin/model/cms/comment.editComment/after', 'event/comment.editComment', 1),

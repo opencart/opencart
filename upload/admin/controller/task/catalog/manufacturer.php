@@ -169,26 +169,18 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('catalog/manufacturer');
-
-		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
-
-		if (!$manufacturer_info) {
-			return ['error' => $this->language->get('error_manufacturer')];
-		}
-
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $manufacturer_info['name'])];
+		return ['success' => $this->language->get('text_delete')];
 	}
 }

@@ -1,7 +1,6 @@
 <?php
 // Text
-$_['text_task']       = 'Generating currency task list!';
-$_['text_list']       = 'Generating %s currency data!';
+$_['text_list']       = 'Generating currency information list!';
 
 // Error
 $_['error_store']     = 'Error: Store could not be found!';

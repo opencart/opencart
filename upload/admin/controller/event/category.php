@@ -44,7 +44,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new category data.
 	 *
-	 * Trigger admin/model/catalog/category/editCategory/after
+	 * Trigger admin/model/catalog/category/editCategory/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -77,7 +77,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new category data.
 	 *
-	 * Trigger admin/model/catalog/category/deleteCategory/after
+	 * Trigger admin/model/catalog/category/deleteCategory/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

@@ -212,26 +212,18 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('catalog/category');
-
-		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
-
-		if (!$category_info) {
-			return ['error' => $this->language->get('error_category')];
-		}
-
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/category-' . $category_info['category_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/category-' . (int)$args['category_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $category_info['name'])];
+		return ['success' => $this->language->get('text_delete')];
 	}
 }

@@ -31,11 +31,13 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		// Topic
-		$task_data = [
-			'code'   => 'article_topic.' . $args[1]['topic_id'],
-			'action' => 'task/catalog/article_topic',
-			'args'   => ['topic_id' => $args[1]['topic_id']]
-		];
+		if ($args[1]['topic_id']) {
+			$task_data = [
+				'code'   => 'article_topic.' . $args[1]['topic_id'],
+				'action' => 'task/catalog/article_topic',
+				'args'   => ['topic_id' => $args[1]['topic_id']]
+			];
+		}
 
 		$this->model_setting_task->addTask($task_data);
 	}
@@ -70,7 +72,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
 		if ($article_info) {
-			$topic_ids = array_unique([$args[1]['topic_id'], $article_info['topic_id']]);
+			$topic_ids = array_filter(array_unique([$args[1]['topic_id'], $article_info['topic_id']]));
 
 			foreach ($topic_ids as $topic_id) {
 				$task_data = [

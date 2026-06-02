@@ -73,7 +73,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new customer group data with the updated customer fields.
 	 *
-	 * Trigger model/customer/custom_field/deleteCustomField/after
+	 * Trigger model/customer/custom_field/deleteCustomField/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

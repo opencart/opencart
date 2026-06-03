@@ -2,7 +2,7 @@
 // Text
 $_['text_list']         = 'Generating information list!';
 $_['text_info']         = 'Generating %s information information!';
-$_['text_delete']       = 'Information %s information deleted!';
+$_['text_delete']       = 'Information information deleted!';
 
 // Error
 $_['error_required']    = 'Error: Information ID required!';

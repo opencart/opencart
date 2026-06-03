@@ -2,7 +2,7 @@
 // Text
 $_['text_list']       = 'Generating topic information list!';
 $_['text_info']       = 'Generating %s topic information!';
-$_['text_delete']     = 'Topic %s information deleted!';
+$_['text_delete']     = 'Topic information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Topic ID required!';

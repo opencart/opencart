@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_info']       = 'Generating %s tax rate information!';
-$_['text_delete']     = 'Tax Rate %s information deleted!';
+$_['text_delete']     = 'Tax Rate information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Tax Rate ID required!';

@@ -145,14 +145,14 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/return_reason');
+		$this->load->language('task/catalog/review');
 
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/review.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/review.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

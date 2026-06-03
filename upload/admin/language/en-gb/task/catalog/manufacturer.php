@@ -2,7 +2,7 @@
 // Text
 $_['text_list']          = 'Generating manufacturer information list!';
 $_['text_info']          = 'Generating %s manufacturer information!';
-$_['text_delete']        = 'Manufacturer %s information deleted!';
+$_['text_delete']        = 'Manufacturer information deleted!';
 
 // Error
 $_['error_required']     = 'Error: Manufacturer ID required!';

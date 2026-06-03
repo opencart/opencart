@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_info']       = 'Generating %s article information!';
-$_['text_delete']     = 'Article %s information deleted!';
+$_['text_delete']     = 'Article information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Article ID required!';

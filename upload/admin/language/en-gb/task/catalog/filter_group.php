@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_info']          = 'Generating %s filter group information!';
-$_['text_delete']        = 'Filter Group %s information deleted!';
+$_['text_delete']        = 'Filter Group information deleted!';
 
 // Error
 $_['error_required']     = 'Error: Country ID required!';

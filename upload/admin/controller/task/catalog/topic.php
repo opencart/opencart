@@ -178,6 +178,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 	public function article(array $args = []): array {
 		$this->load->language('task/catalog/topic');
 
+		if (!array_key_exists('topic_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('cms/topic');
 
 		$topic_info = $this->model_cms_topic->getTopic((int)$args['topic_id']);
@@ -187,7 +191,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('cms/article');
-
 		$this->load->model('setting/store');
 
 		$store_ids = $this->model_cms_topic->getStores($topic_info['topic_id']);
@@ -200,8 +203,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 			];
 
 			if ($store_id) {
-				$this->load->model('setting/store');
-
 				$store_info = $this->model_setting_store->getStore((int)$store_id);
 
 				if (!$store_info) {

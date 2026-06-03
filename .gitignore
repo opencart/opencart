@@ -59,3 +59,6 @@
 # ENV
 .env
 .env.docker
+# CocoIndex Code (ccc)
+/.cocoindex_code/
+sessions  

@@ -45,8 +45,11 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$_SERVER['HTTPS'] = false;
 }
 
-// Check IP
-if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+// Check IP - Only trust X-Forwarded-For from known proxies
+// In production, remove HTTP_CLIENT_IP handling entirely or only use from whitelisted proxies
+if (!empty($_SERVER['HTTP_CLIENT_IP']) && filter_var($_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP)) {
+	// Note: This header can be spoofed by attackers
+	// Only use when behind a trusted reverse proxy
 	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CLIENT_IP'];
 }
 

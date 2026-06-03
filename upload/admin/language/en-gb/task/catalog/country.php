@@ -2,7 +2,7 @@
 // Text
 $_['text_list']       = 'Generating country information list!';
 $_['text_info']       = 'Generating %s country information!';
-$_['text_delete']     = 'Country %s information deleted!';
+$_['text_delete']     = 'Country information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Country ID required!';

@@ -249,6 +249,10 @@ class Article extends \Opencart\System\Engine\Model {
 			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 		}
 
+		if (isset($data['filter_topic_id']) && $data['filter_topic_id'] !== '') {
+			$sql .= " AND `a`.`topic_id` = '" . (int)$data['filter_topic_id'] . "'";
+		}
+
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " AND `a2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
@@ -342,6 +346,10 @@ class Article extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		}
+
+		if (isset($data['filter_topic_id']) && $data['filter_topic_id'] !== '') {
+			$sql .= " AND `a`.`topic_id` = '" . (int)$data['filter_topic_id'] . "'";
 		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {

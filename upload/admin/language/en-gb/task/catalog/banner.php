@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_info']       = 'Generating %s banner information!';
-$_['text_delete']     = 'Banner %s information deleted!';
+$_['text_delete']     = 'Banner information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Banner ID required!';

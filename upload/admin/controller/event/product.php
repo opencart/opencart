@@ -35,8 +35,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($category_ids as $category_id) {
 			$task_data = [
-				'code'   => 'product_category.' . $category_id,
-				'action' => 'task/catalog/product_category',
+				'code'   => 'product.category.' . $category_id,
+				'action' => 'task/catalog/category.product',
 				'args'   => ['category_id' => $category_id]
 			];
 
@@ -45,8 +45,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		// Manufacturer
 		$task_data = [
-			'code'   => 'product_manufacturer.' . $args[1]['manufacturer_id'],
-			'action' => 'task/catalog/product_manufacturer',
+			'code'   => 'product.manufacturer.' . $args[1]['manufacturer_id'],
+			'action' => 'task/catalog/manufacturer.product',
 			'args'   => ['manufacturer_id' => $args[1]['manufacturer_id']]
 		];
 
@@ -57,8 +57,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($filter_ids as $filter_id) {
 			$task_data = [
-				'code'   => 'product_filter.' . $filter_id,
-				'action' => 'task/catalog/product_filter',
+				'code'   => 'product.filter.' . $filter_id,
+				'action' => 'task/catalog/filter.product',
 				'args'   => ['filter_id' => $filter_id]
 			];
 
@@ -97,8 +97,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($category_ids as $category_id) {
 			$task_data = [
-				'code'   => 'product_category.' . $category_id,
-				'action' => 'task/catalog/product_category',
+				'code'   => 'product.category.' . $category_id,
+				'action' => 'task/catalog/category.product',
 				'args'   => ['category_id' => $category_id]
 			];
 

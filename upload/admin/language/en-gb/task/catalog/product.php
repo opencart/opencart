@@ -2,7 +2,7 @@
 // Text
 $_['text_list']       = 'Generating product information list!';
 $_['text_info']       = 'Generating %s product information!';
-$_['text_delete']     = 'Product %s information deleted!';
+$_['text_delete']     = 'Product information deleted!';
 
 // Error
 $_['error_required']  = 'Error: Product ID required!';

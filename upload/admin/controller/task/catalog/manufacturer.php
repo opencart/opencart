@@ -154,6 +154,72 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * product
+	 *
+	 * Generate JSON country list file.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function product(array $args = []): array {
+		$this->load->language('task/catalog/product_manufacturer');
+
+		if (!array_key_exists('manufacturer_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
+
+		if (!$manufacturer_info || !$manufacturer_info['status']) {
+			return ['success' => $this->language->get('error_filter')];
+		}
+
+		$product_data = [];
+
+		$this->load->model('catalog/product');
+
+		$products = $this->model_catalog_product->getProducts(['filter_manufacturer_id' => $manufacturer_info['manufacturer_id']]);
+
+		foreach ($products as $product) {
+			$store_ids = $this->model_catalog_product->getStores($product['product_id']);
+
+			if (in_array($store_info['store_id'], $store_ids)) {
+				$product_data[] = $product['product_id'];
+			}
+		}
+
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.csv';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($directory . $filename, implode(',', $product_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $manufacturer_info['name'])];
+	}
+
+	/**
 	 * Delete
 	 *
 	 * Delete generated JSON manufacturer files.
@@ -175,6 +241,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_urls as $store_url) {
 			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.yaml';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-product-' . $args['manufacturer_id'] . '.csv';
 
 			if (is_file($file)) {
 				unlink($file);

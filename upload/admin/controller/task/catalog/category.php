@@ -213,6 +213,10 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function product(array $args = []): array {
 		$this->load->language('task/catalog/category');
 
+		if (!array_key_exists('category_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('catalog/category');
 
 		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
@@ -222,7 +226,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('catalog/product');
-
 		$this->load->model('setting/store');
 
 		$store_ids = $this->model_catalog_category->getStores($category_info['category_id']);
@@ -235,8 +238,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 
 			if ($store_id) {
-				$this->load->model('setting/store');
-
 				$store_info = $this->model_setting_store->getStore((int)$store_id);
 
 				if (!$store_info) {
@@ -259,7 +260,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 			}
 
-			if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_catalog_product->getProducts($filter_data), 'article_id')))) {
+			if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_catalog_product->getProducts($filter_data), 'product_id')))) {
 				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 			}
 		}

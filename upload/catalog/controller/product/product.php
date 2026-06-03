@@ -296,7 +296,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['stock'] = $product_info['quantity'];
 			}
 
-			$data['rating'] = (int)$product_info['rating'];
+			$data['rating'] = $product_info['rating'];
 			$data['review_status'] = (int)$this->config->get('config_review_status');
 			$data['review'] = $this->load->controller('product/review');
 

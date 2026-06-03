@@ -169,11 +169,11 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * $rating_info = $this->model_catalog_review->getRating($product_id);
 	 */
-	public function getRating(int $product_id): int {
+	public function getRating(int $product_id): float {
 		$query = $this->db->query("SELECT AVG(`rating`) AS `total` FROM `" . DB_PREFIX . "review` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '1'");
 
 		if ($query->num_rows) {
-			return (int)$query->row['total'];
+			return (float)$query->row['total'];
 		} else {
 			return 0;
 		}

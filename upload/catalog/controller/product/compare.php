@@ -142,7 +142,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 					'manufacturer' => $manufacturer,
 					'availability' => $availability,
 					'minimum'      => $product_info['minimum'] > 0 ? $product_info['minimum'] : 1,
-					'rating'       => (int)$product_info['rating'],
+					'rating'       => $product_info['rating'],
 					'reviews'      => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
 					'weight'       => $this->weight->format($product_info['weight'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point')),
 					'length'       => $this->length->format($product_info['length'], $product_info['length_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point')),

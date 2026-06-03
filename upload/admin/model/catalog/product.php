@@ -939,7 +939,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Edit product rating record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
-	 * @param int $rating
+	 * @param float $rating
 	 *
 	 * @return void
 	 *
@@ -949,8 +949,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_catalog_product->editRating($result['product_id'], $this->model_catalog_review->getRating($product_id));
 	 */
-	public function editRating(int $product_id, int $rating): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `rating` = '" . (int)$rating . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
+	public function editRating(int $product_id, float $rating): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `rating` = '" . (float)$rating . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**

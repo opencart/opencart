@@ -24,6 +24,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -40,6 +41,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Banner
 		$this->load->model('design/banner');
 
 		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);

@@ -129,6 +129,29 @@ class Response {
 	}
 
 	/**
+	 * Add Security Headers
+	 *
+	 * CWE-20: Protection against clickjacking, MIME sniffing, and XSS
+	 *
+	 * @return void
+	 */
+	private function addSecurityHeaders(): void {
+		// CWE-1033: X-Frame-Options prevents clickjacking attacks
+		$this->addHeader('X-Frame-Options: SAMEORIGIN');
+
+		// CWE-16: X-Content-Type-Options prevents MIME-type sniffing
+		$this->addHeader('X-Content-Type-Options: nosniff');
+
+		// CWE-79: X-XSS-Protection for legacy browser support
+		$this->addHeader('X-XSS-Protection: 1; mode=block');
+
+		// CWE-1023: Content-Security-Policy to prevent XSS and data injection
+		// Note: Configure this CSP policy according to your application needs
+		// This is a restrictive default that allows only same-origin resources
+		$this->addHeader("Content-Security-Policy: default-src 'self'");
+	}
+
+	/**
 	 * Output
 	 *
 	 * Displays the set HTML output
@@ -140,6 +163,9 @@ class Response {
 			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;
 
 			if (!headers_sent()) {
+				// Add security headers before other headers
+				$this->addSecurityHeaders();
+
 				foreach ($this->headers as $header) {
 					header($header, true);
 				}

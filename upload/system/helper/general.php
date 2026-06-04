@@ -28,7 +28,10 @@ function oc_get_ip(): string {
 			// This line might or might not be used.
 			$ip = trim(explode(',', $ip)[0]);
 
-			return $ip;
+			// CWE-941: Validate IP before returning to prevent spoofing
+			if (filter_var($ip, FILTER_VALIDATE_IP)) {
+				return $ip;
+			}
 		}
 	}
 

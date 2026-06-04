@@ -86,7 +86,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_list'), $store_info['name']];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 
 	/**
@@ -105,11 +105,29 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
 
-		if (!$customer_group_info) {
+		if (!$customer_group_info || !in_array($customer_group_info['customer_group_id'], $this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']))) {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
@@ -199,46 +217,18 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			'approval'          => $customer_group_info['approval']
 		];
 
-		$this->load->model('setting/store');
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
+		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.yaml';
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
-		foreach ($store_ids as $store_id) {
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
-
-			if ($store_id) {
-				$this->load->model('setting/store');
-
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
-
-			if (!in_array($customer_group_info['customer_group_id'], $customer_group_ids)) {
-				continue;
-			}
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
-			$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $customer_group_info['name'])];
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $customer_group_info['name'])];
 	}
 
 	/**

@@ -21,8 +21,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 */
 	public function addFilter(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'filter_group.' . $output,
-			'action' => 'task/catalog/filter_group',
+			'code'   => 'filter.' . $output,
+			'action' => 'task/catalog/filter',
 			'args'   => ['filter_group_id' => $output]
 		];
 
@@ -46,8 +46,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 */
 	public function editFilter(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'filter_group.' . $args[0],
-			'action' => 'task/catalog/filter_group',
+			'code'   => 'filter.' . $args[0],
+			'action' => 'task/catalog/filter',
 			'args'   => ['filter_group_id' => $args[0]]
 		];
 
@@ -71,8 +71,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteFilter(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'filter_group.delete.' . $args[0],
-			'action' => 'task/catalog/filter_group.delete',
+			'code'   => 'filter.delete.' . $args[0],
+			'action' => 'task/catalog/filter.delete',
 			'args'   => ['filter_group_id' => $args[0]],
 		];
 

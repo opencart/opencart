@@ -20,79 +20,73 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
-		$this->load->model('setting/store');
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		foreach ($store_ids as $store_id) {
-			// Store
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-			if ($store_id) {
-				$this->load->model('setting/store');
-
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$customer_group_data = [];
-
-			$this->load->model('setting/setting');
-			$this->load->model('customer/customer_group');
-
-			$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
-
-			foreach ($customer_group_ids as $customer_group_id) {
-				$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
-
-				if ($customer_group_info) {
-					$description_data = [];
-
-					$descriptions = $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id']);
-
-					foreach ($descriptions as $code => $description) {
-						$description_data[$code] = [
-							'name'        => $description['name'],
-							'description' => $description['description']
-						];
-					}
-
-					$customer_group_data[] = [
-						'customer_group_id' => $customer_group_info['customer_group_id'],
-						'description'       => $description_data,
-						'sort_order'        => $customer_group_info['sort_order']
-					];
-				}
-			}
-
-			$sort_order = [];
-
-			foreach ($customer_group_data as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $customer_group_data);
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
-			$filename = 'customer_group.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		$customer_group_data = [];
+
+		$this->load->model('setting/setting');
+		$this->load->model('customer/customer_group');
+
+		$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
+
+		foreach ($customer_group_ids as $customer_group_id) {
+			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
+
+			if ($customer_group_info) {
+				$description_data = [];
+
+				$descriptions = $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = [
+						'name'        => $description['name'],
+						'description' => $description['description']
+					];
+				}
+
+				$customer_group_data[] = [
+					'customer_group_id' => $customer_group_info['customer_group_id'],
+					'description'       => $description_data,
+					'sort_order'        => $customer_group_info['sort_order']
+				];
+			}
+		}
+
+		$sort_order = [];
+
+		foreach ($customer_group_data as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $customer_group_data);
+
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
+		$filename = 'customer_group.yaml';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => $this->language->get('text_list'), $store_info['name']];
 	}
 
 	/**

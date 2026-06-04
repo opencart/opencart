@@ -37,6 +37,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Customer Group
 		$customer_group_data = [];
 
 		$this->load->model('setting/setting');

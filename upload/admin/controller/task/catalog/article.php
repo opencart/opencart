@@ -24,6 +24,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -84,7 +85,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			'date_modified' => $article_info['date_modified']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$directory = DIR_CATALOG . 'view/data/cms/';
 		$filename = 'article-' . $article_info['article_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -95,7 +96,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $article_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $article_info['name'])];
 	}
 
 	/**

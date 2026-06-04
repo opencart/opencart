@@ -20,69 +20,63 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/category');
 
-		$this->load->model('setting/store');
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		foreach ($store_ids as $store_id) {
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$category_data = [];
+
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
+		$this->load->model('catalog/category');
+
+		$results = $this->model_catalog_category->getCategories($filter_data);
+
+		foreach ($results as $result) {
+			$path = $this->model_catalog_category->getPath($result['category_id']);
+
+			$description_data = [];
+
+			$descriptions = $this->model_catalog_category->getDescriptions($result['category_id']);
+
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['name' => $description['name']];
+			}
+
+			$category_data[$path] = [
+				'category_id' => $result['category_id'],
+				'description' => $description_data,
+				'image'       => $result['image'],
+				'path'        => $path
 			];
+		}
 
-			if ($store_id) {
-				$this->load->model('setting/store');
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'category.yaml';
 
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
 
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$category_data = [];
-
-			$filter_data = [
-				'filter_store_id' => $store_info['store_id'],
-				'filter_status'   => true,
-				'sort'            => 'sort_order',
-				'order'           => 'ASC',
-			];
-
-			$this->load->model('catalog/category');
-
-			$results = $this->model_catalog_category->getCategories($filter_data);
-
-			foreach ($results as $result) {
-				$path = $this->model_catalog_category->getPath($result['category_id']);
-
-				$description_data = [];
-
-				$descriptions = $this->model_catalog_category->getDescriptions($result['category_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = ['name' => $description['name']];
-				}
-
-				$category_data[$path] = [
-					'category_id' => $result['category_id'],
-					'description' => $description_data,
-					'image'       => $result['image'],
-					'path'        => $path
-				];
-			}
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-			$filename = 'category.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($category_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($category_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => $this->language->get('text_list')];
@@ -104,11 +98,27 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('catalog/category');
 
 		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
 
-		if (!$category_info || !$category_info['status']) {
+		if (!$category_info || !$category_info['status'] || !in_array($store_info['store_id'], $this->model_catalog_category->getStores($category_info['category_id']))) {
 			return ['error' => $this->language->get('error_category')];
 		}
 
@@ -128,77 +138,57 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$path = $this->model_catalog_category->getPath($category_info['category_id']);
 
-		$store_ids = $this->model_catalog_category->getStores($category_info['category_id']);
+		$children_data = [];
 
-		foreach ($store_ids as $store_id) {
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
+		$filter_data = [
+			'filter_store_id'  => $store_info['store_id'],
+			'filter_parent_id' => $category_info['category_id'],
+			'filter_status'    => true,
+			'sort'             => 'sort_order',
+			'order'            => 'ASC',
+		];
+
+		$children = $this->model_catalog_category->getCategories($filter_data);
+
+		foreach ($children as $child) {
+			$child_description_data = [];
+
+			$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
+
+			foreach ($child_descriptions as $code => $child_description) {
+				$child_description_data[$code] = ['name' => $child_description['name']];
+			}
+
+			$children_data[] = [
+				'category_id' => $child['category_id'],
+				'description' => $child_description_data,
+				'image'       => $child['image'],
+				'path'        => $path . '_' . $child['category_id'],
+				'sort_order'  => $child['sort_order']
 			];
-
-			if ($store_id) {
-				$this->load->model('setting/store');
-
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$children_data = [];
-
-			$filter_data = [
-				'filter_store_id'  => $store_info['store_id'],
-				'filter_parent_id' => $category_info['category_id'],
-				'filter_status'    => true,
-				'sort'             => 'sort_order',
-				'order'            => 'ASC',
-			];
-
-			$children = $this->model_catalog_category->getCategories($filter_data);
-
-			foreach ($children as $child) {
-				$child_description_data = [];
-
-				$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
-
-				foreach ($child_descriptions as $code => $child_description) {
-					$child_description_data[$code] = ['name' => $child_description['name']];
-				}
-
-				$children_data[] = [
-					'category_id' => $child['category_id'],
-					'description' => $child_description_data,
-					'image'       => $category_info['image'],
-					'path'        => $path . '_' . $child['category_id'],
-					'sort_order'  => $category_info['sort_order']
-				];
-			}
-
-			$category_data = [
-				'category_id' => $category_info['category_id'],
-				'description' => $description_data,
-				'image'       => $category_info['image'],
-				'path'        => $path,
-				'children'    => $children_data,
-				'sort_order'  => $category_info['sort_order']
-			];
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-			$filename = 'category-' . $category_info['category_id'] . '.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($category_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $category_info['name'])];
+		$category_data = [
+			'category_id' => $category_info['category_id'],
+			'description' => $description_data,
+			'image'       => $category_info['image'],
+			'path'        => $path,
+			'children'    => $children_data,
+			'sort_order'  => $category_info['sort_order']
+		];
+
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'category-' . $category_info['category_id'] . '.yaml';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($category_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $category_info['name'])];
 	}
 
 	/**
@@ -217,52 +207,49 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('catalog/category');
 
 		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
 
-		if (!$category_info || !$category_info['status']) {
+		if (!$category_info || !$category_info['status'] || !in_array($store_info['store_id'], $this->model_catalog_category->getStores($category_info['category_id']))) {
 			return ['success' => $this->language->get('error_category')];
 		}
 
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'category-product-' . $category_info['category_id'] . '.csv';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		$filter_data = [
+			'filter_store_id'    => $store_info['store_id'],
+			'filter_category_id' => $category_info['category_id'],
+			'filter_status'      => true,
+			'sort'               => 'name',
+			'order'              => 'ASC',
+		];
+
 		$this->load->model('catalog/product');
-		$this->load->model('setting/store');
 
-		$store_ids = $this->model_catalog_category->getStores($category_info['category_id']);
-
-		foreach ($store_ids as $store_id) {
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
-
-			if ($store_id) {
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$filter_data = [
-				'filter_store_id'    => $store_info['store_id'],
-				'filter_category_id' => $category_info['category_id'],
-				'filter_status'      => true,
-				'sort'               => 'name',
-				'order'              => 'ASC',
-			];
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-			$filename = 'category-product-' . $category_info['category_id'] . '.csv';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_catalog_product->getProducts($filter_data), 'product_id')))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_catalog_product->getProducts($filter_data), 'product_id')))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => $this->language->get('text_task')];

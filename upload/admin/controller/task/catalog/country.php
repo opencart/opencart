@@ -20,8 +20,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
-		$this->load->model('setting/store');
-
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -38,6 +37,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Country
 		$country_data = [];
 
 		$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
@@ -91,11 +91,29 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		// Country
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
 
-		if (!$country_info || !$country_info['status']) {
+		if (!$country_info || !$country_info['status'] || !in_array($country_info['country_id'], (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']))) {
 			return ['error' => $this->language->get('error_country')];
 		}
 
@@ -155,47 +173,18 @@ class Country extends \Opencart\System\Engine\Controller {
 			'geo_zones'         => $geo_zone_data
 		];
 
-		$this->load->model('setting/store');
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$filename = 'country-' . $country_info['country_id'] . '.yaml';
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
-		foreach ($store_ids as $store_id) {
-			// Store
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
-
-			if ($store_id) {
-				$this->load->model('setting/store');
-
-				$store_info = $this->model_setting_store->getStore($store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
-
-			if (!in_array($country_info['country_id'], $country_ids)) {
-				continue;
-			}
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-			$filename = 'country-' . $country_info['country_id'] . '.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($country_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $country_info['name'])];
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($country_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $country_info['name'])];
 	}
 
 	/*

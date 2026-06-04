@@ -22,6 +22,23 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('localisation/geo_zone');
 
 		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone((int)$args['geo_zone_id']);
@@ -54,38 +71,15 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/store');
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.yaml';
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
 
-		foreach ($store_ids as $store_id) {
-			// Store
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
-
-			if ($store_id) {
-				$this->load->model('setting/store');
-
-				$store_info = $this->model_setting_store->getStore($store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-			$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($tax_rate_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($tax_rate_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => sprintf($this->language->get('text_info'), $geo_zone_info['name'])];

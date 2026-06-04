@@ -219,7 +219,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $manufacturer_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $manufacturer_info['name'])];
 	}
 
 	/**

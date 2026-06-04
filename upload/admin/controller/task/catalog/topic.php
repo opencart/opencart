@@ -20,8 +20,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/topic');
 
-		$this->load->model('setting/store');
-
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -66,11 +64,12 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 			$topic_data[] = [
 				'topic_id'    => $result['topic_id'],
-				'description' => $description_data
+				'description' => $description_data,
+				'stores'      => $this->model_cms_topic->getStores($result['topic_id'])
 			];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$directory = DIR_CATALOG . 'view/data/cms/';
 		$filename = 'topic.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -100,6 +99,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -116,20 +116,16 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Topic
 		$this->load->model('cms/topic');
 
 		$topic_info = $this->model_cms_topic->getTopic((int)$args['topic_id']);
 
-		if (!$topic_info || !$topic_info['status']) {
+		if (!$topic_info || !$topic_info['status'] || !in_array($store_info['store_id'], $this->model_cms_topic->getStores($topic_info['topic_id']))) {
 			return ['error' => $this->language->get('error_topic')];
 		}
 
-		$store_ids = $this->model_cms_topic->getStores($topic_info['topic_id']);
-
-		if (!in_array($store_info['store_id'], $store_ids)) {
-			return ['error' => $this->language->get('error_topic')];
-		}
-
+		// Description
 		$description_data = [];
 
 		$descriptions = $this->model_cms_topic->getDescriptions($topic_info['topic_id']);
@@ -203,7 +199,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if (!$topic_info || !$topic_info['status'] || !in_array($store_info['store_id'], $this->model_cms_topic->getStores($topic_info['topic_id']))) {
 			return ['success' => $this->language->get('error_topic')];
 		}
-
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'article_topic-' . $topic_info['topic_id'] . '.csv';

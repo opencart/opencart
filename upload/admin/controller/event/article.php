@@ -67,9 +67,10 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	private function editArticle(string &$route, array &$args, &$output): void {
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
@@ -79,22 +80,25 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'article.' . $args[0],
+				'code'   => 'article.' . $store_id . '.' . $args[0],
 				'action' => 'task/catalog/article',
-				'args'   => ['article_id' => $args[0]]
+				'args'   => [
+					'article_id' => $args[0],
+				    'store_id'   => $store_id
+				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 
 			// Topic
-			$this->load->model('cms/article');
-
-
 			foreach ($topic_ids as $topic_id) {
 				$task_data = [
-					'code'   => 'topic.article.' . $topic_id,
+					'code'   => 'topic.article.' . $store_id . '.' . $topic_id,
 					'action' => 'task/catalog/topic.article',
-					'args'   => ['topic_id' => $topic_id]
+					'args'   => [
+						'topic_id' => $topic_id,
+					    'store_id' => $store_id
+					]
 				];
 
 				$this->model_setting_task->addTask($task_data);
@@ -116,29 +120,39 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	private function deleteArticle(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'article.delete.' . $args[0],
-			'action' => 'task/catalog/article.delete',
-			'args'   => ['article_id' => $args[0]]
-		];
-
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		// Topic
-		$this->load->model('cms/article');
+		foreach ($store_ids as $store_id) {
+				$task_data = [
+					'code'   => 'article.delete.' . $args[0],
+					'action' => 'task/catalog/article.delete',
+					'args'   => ['article_id' => $args[0]]
+				];
 
-		$article_info = $this->model_cms_article->getArticle($args[0]);
 
-		if ($article_info) {
-			$task_data = [
-				'code'   => 'topic.article.' . $article_info['topic_id'],
-				'action' => 'task/catalog/topic.article_',
-				'args'   => ['topic_id' => $article_info['topic_id']]
-			];
+			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
+
+			// Topic
+			$this->load->model('cms/article');
+
+			$article_info = $this->model_cms_article->getArticle($args[0]);
+
+			if ($article_info) {
+				$task_data = [
+					'code'   => 'topic.article.' . $article_info['topic_id'],
+					'action' => 'task/catalog/topic.article_',
+					'args'   => ['topic_id' => $article_info['topic_id'],
+					             'store_id' => $store_id]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+
+			}
 		}
 	}
 }

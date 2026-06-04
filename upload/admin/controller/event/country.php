@@ -37,7 +37,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 			// Generate new country info page.
 			$task_data = [
-				'code'   => 'country.info.' . $output,
+				'code'   => 'country.info.' . $store_id . '.' . $output,
 				'action' => 'task/catalog/country.info',
 				'args'   => [
 					'country_id' => $output,
@@ -120,10 +120,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$task_data = [
 			'code'   => 'admin.country.info.' . $args[0],
 			'action' => 'task/admin/country.info',
-			'args'   => [
-				'country_id' => $args[0],
-			    'store_id'   => $store_id
-			]
+			'args'   => ['country_id' => $args[0]]
 		];
 
 		$this->model_setting_task->addTask($task_data);
@@ -154,8 +151,6 @@ class Country extends \Opencart\System\Engine\Controller {
 				'action' => 'task/catalog/country',
 				'args'   => ['store_id' => $store_id]
 			];
-
-			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
 

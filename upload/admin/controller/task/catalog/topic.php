@@ -22,70 +22,66 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		foreach ($store_ids as $store_id) {
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-			if ($store_id) {
-				$this->load->model('setting/store');
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$topic_data = [];
-
-			$filter_data = [
-				'filter_store_id' => $store_info['store_id'],
-				'filter_status'   => true,
-				'sort'            => 'sort_order',
-				'order'           => 'ASC',
-			];
-
-			$this->load->model('cms/topic');
-
-			$results = $this->model_cms_topic->getTopics($filter_data);
-
-			foreach ($results as $result) {
-				$description_data = [];
-
-				$descriptions = $this->model_cms_topic->getDescriptions($result['topic_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = [
-						'name'        => $description['name'],
-						'description' => $description['description'],
-						'image'       => $description['image']
-					];
-				}
-
-				$topic_data[] = [
-					'topic_id'    => $result['topic_id'],
-					'description' => $description_data
-				];
-			}
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
-			$filename = 'topic.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($topic_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		return ['success' => $this->language->get('text_list')];
+		$topic_data = [];
+
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
+		$this->load->model('cms/topic');
+
+		$results = $this->model_cms_topic->getTopics($filter_data);
+
+		foreach ($results as $result) {
+			$description_data = [];
+
+			$descriptions = $this->model_cms_topic->getDescriptions($result['topic_id']);
+
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = [
+					'name'        => $description['name'],
+					'description' => $description['description'],
+					'image'       => $description['image']
+				];
+			}
+
+			$topic_data[] = [
+				'topic_id'    => $result['topic_id'],
+				'description' => $description_data
+			];
+		}
+
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$filename = 'topic.yaml';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($topic_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 
 	/**
@@ -104,11 +100,33 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('cms/topic');
 
 		$topic_info = $this->model_cms_topic->getTopic((int)$args['topic_id']);
 
 		if (!$topic_info || !$topic_info['status']) {
+			return ['error' => $this->language->get('error_topic')];
+		}
+
+		$store_ids = $this->model_cms_topic->getStores($topic_info['topic_id']);
+
+		if (!in_array($store_info['store_id'], $store_ids)) {
 			return ['error' => $this->language->get('error_topic')];
 		}
 
@@ -132,38 +150,18 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'description' => $description_data
 		];
 
-		$store_ids = $this->model_cms_topic->getStores($topic_info['topic_id']);
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$filename = 'topic-' . $topic_info['topic_id'] . '.yaml';
 
-		foreach ($store_ids as $store_id) {
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
-
-			if ($store_id) {
-				$this->load->model('setting/store');
-
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
-			$filename = 'topic-' . $topic_info['topic_id'] . '.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($topic_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $topic_info['title'])];
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($topic_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $topic_info['title'])];
 	}
 
 	/**
@@ -182,52 +180,50 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('cms/topic');
 
 		$topic_info = $this->model_cms_topic->getTopic((int)$args['topic_id']);
 
-		if (!$topic_info || !$topic_info['status']) {
+		if (!$topic_info || !$topic_info['status'] || !in_array($store_info['store_id'], $this->model_cms_topic->getStores($topic_info['topic_id']))) {
 			return ['success' => $this->language->get('error_topic')];
 		}
 
+
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'article_topic-' . $topic_info['topic_id'] . '.csv';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		$filter_data = [
+			'filter_store_id'  => $store_info['store_id'],
+			'filter_topic_id'  => $topic_info['topic_id'],
+			'filter_status'    => true,
+			'sort'             => 'sort_order',
+			'order'            => 'ASC',
+		];
+
 		$this->load->model('cms/article');
-		$this->load->model('setting/store');
 
-		$store_ids = $this->model_cms_topic->getStores($topic_info['topic_id']);
-
-		foreach ($store_ids as $store_id) {
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
-
-			if ($store_id) {
-				$store_info = $this->model_setting_store->getStore((int)$store_id);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$filter_data = [
-				'filter_store_id'  => $store_info['store_id'],
-				'filter_topic_id'  => $topic_info['topic_id'],
-				'filter_status'    => true,
-				'sort'             => 'sort_order',
-				'order'            => 'ASC',
-			];
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-			$filename = 'article_topic-' . $topic_info['topic_id'] . '.csv';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_cms_article->getArticles($filter_data), 'article_id')))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_cms_article->getArticles($filter_data), 'article_id')))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => $this->language->get('text_task')];

@@ -20,20 +20,28 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editAddressFormat(string &$route, array &$args, &$output): void {
+		$this->load->model('setting/task');
+		$this->load->model('setting/store');
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
 		$this->load->model('localisation/country');
 
 		$results = $this->model_localisation_country->getCountriesByAddressFormatId($args[0]);
 
-		$this->load->model('setting/task');
+		foreach ($store_ids as $store_id) {
+			foreach ($results as $result) {
+				$task_data = [
+					'code'   => 'country.info.' . $store_id . '.' . $result['country_id'],
+					'action' => 'task/catalog/country',
+					'args'   => [
+						'country_id' => $result['country_id'],
+						'store_id'   => $store_id
+					]
+				];
 
-		foreach ($results as $result) {
-			$task_data = [
-				'code'   => 'country.info.' . $result['country_id'],
-				'action' => 'task/catalog/country',
-				'args'   => ['country_id' => $result['country_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 }

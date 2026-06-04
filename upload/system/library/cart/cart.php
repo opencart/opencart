@@ -93,11 +93,14 @@ class Cart {
 					$product_options = (array)json_decode(!empty($cart['option']) ? $cart['option'] : '{}', true);
 
 					$variant = json_decode(!empty($product_query->row['variant']) ? $product_query->row['variant'] : '{}', true);
+					$override = json_decode(!empty($product_query->row['override']) ? $product_query->row['override'] : '{}', true);
 
 					if ($variant) {
 						foreach ($variant as $key => $value) {
-							if (!empty($value)) {
-								$product_options[$key] = $value;
+							if (!empty($override[$key])) {
+								if (!empty($value)) {
+									$product_options[$key] = $value;
+								}
 							}
 						}
 					}

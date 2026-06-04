@@ -99,8 +99,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				// Merge variant code with options
-				foreach ($product_info['variant'] as $option_id => $value) {
-					$option[$option_id] = $value;
+				foreach ($product_info['variant'] as $product_option_id => $value) {
+					if (!empty($product_info['override']['variant']['product_option_id'])) {
+						$option[$product_option_id] = $value;
+					}
 				}
 
 				// Validate options that have been sent are part of the product
@@ -276,34 +278,32 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$cart_option_quantity = [];
 
-			// Get all cart products' option quantities
-			foreach ($products as $product) {
-				$pid = $product['product_id'];
-				$qty = $product['quantity'];
-
-				if (!isset($cart_option_quantity[$pid])) {
-					$cart_option_quantity[$pid] = [];
-				}
-				if (!empty($product['option'])) {
-					foreach ($product['option'] as $opt) {
-						$optId = $opt['product_option_value_id'];
-
-						if (!isset($cart_option_quantity[$pid][$optId])) {
-							$cart_option_quantity[$pid][$optId] = 0;
-						}
-						$cart_option_quantity[$pid][$optId] += $qty;
-					}
-				}
-			}
-
 			// If variant get master product
 			if ($product_info['master_id']) {
 				$product_id = $product_info['master_id'];
 			}
 
+			// Get all cart products' option quantities
+			foreach ($products as $product) {
+				$qty = $product['quantity'];
+
+				if (!empty($product['option'])) {
+					foreach ($product['option'] as $opt) {
+						$product_option_value_id = $opt['product_option_value_id'];
+
+						if (!isset($cart_option_quantity[$product_option_value_id])) {
+							$cart_option_quantity[$product_option_value_id] = 0;
+						}
+						$cart_option_quantity[$product_option_value_id] += $qty;
+					}
+				}
+			}
+
 			// Merge variant code with options
-			foreach ($product_info['variant'] as $option_id => $value) {
-				$option[$option_id] = $value;
+			foreach ($product_info['variant'] as $product_option_id => $value) {
+				if (!empty($product_info['override']['variant']['product_option_id'])) {
+					$option[$product_option_id] = $value;
+				}
 			}
 
 			// Validate the options that have been sent are part of the product
@@ -326,10 +326,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 							} elseif ($product_option_value_info['subtract']) {
 								// Compare product's option stock to cart + request quantity
 								$orderOptQty = $order_option_quantity[$product_id][$product_option_value_id] ?? 0;
-								$cartOptQty = $cart_option_quantity[$product_id][$product_option_value_id] ?? 0;
-								$product_stock = $product_option_value_info['quantity'] + $orderOptQty;
+								$cartOptQty = $cart_option_quantity[$product_option_value_id] ?? 0;
+								$stock = $product_option_value_info['quantity'] + $orderOptQty;
 
-								if ($product_stock < $cartOptQty + $quantity) {
+								if ($quantity > $stock - $cartOptQty) {
 									$output['error']['option_' . $product_option_id] = $this->language->get('error_option_stock');
 								}
 							}

@@ -113,26 +113,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function product(array $args = []): array {
-		$this->load->language('task/catalog/product_filter');
+		$this->load->language('task/catalog/filter');
 
 		if (!array_key_exists('filter_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
-		}
-
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
 		}
 
 		$this->load->model('catalog/filter');
@@ -147,27 +131,46 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		$product_ids = $this->model_catalog_product->getProductsByFilterId($filter_info['filter_id']);
+		foreach ($store_ids as $store_id) {
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
+			];
 
-		foreach ($product_ids as $product_id) {
-			$store_ids = $this->model_catalog_product->getStores($product_id);
+			if ($args['store_id']) {
+				$this->load->model('setting/store');
 
-			if (in_array($store_info['store_id'], $store_ids)) {
-				$product_data[] = $product_id;
+				$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
 			}
-		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'filter-' . $filter_info['filter_id'] . '.csv';
+			$product_ids = $this->model_catalog_product->getProductsByFilterId($filter_info['filter_id']);
 
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
+			foreach ($product_ids as $product_id) {
 
-		if (!file_put_contents($directory . $filename, implode(',', $product_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
 
+				$store_ids = $this->model_catalog_product->getStores($product_id);
+
+				if (in_array($store_info['store_id'], $store_ids)) {
+					$product_data[] = $product_id;
+				}
+			}
+
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+			$filename = 'filter-product-' . $filter_info['filter_id'] . '.csv';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, implode(',', $product_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
+	}
 		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $filter_info['name'])];
 	}
 
@@ -212,7 +215,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 				unlink($file);
 			}
 
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/filter-' . $filter_info['filter_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/filter-product-' . $filter_info['filter_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

@@ -20,23 +20,31 @@ class Category extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addCategory(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'category',
-			'action' => 'task/catalog/category',
-			'args'   => []
-		];
-
 		$this->load->model('setting/task');
+		$this->load->model('setting/store');
 
-		$this->model_setting_task->addTask($task_data);
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$task_data = [
-			'code'   => 'category.info.' . $output,
-			'action' => 'task/catalog/category.info',
-			'args'   => ['category_id' => $output]
-		];
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'category.' . $store_id,
+				'action' => 'task/catalog/category',
+				'args'   => ['store_id' => $store_id]
+			];
 
-		$this->model_setting_task->addTask($task_data);
+			$this->model_setting_task->addTask($task_data);
+
+			$task_data = [
+				'code'   => 'category.info.' . $store_id . '.' . $output,
+				'action' => 'task/catalog/category.info',
+				'args'   => [
+					'category_id' => $output,
+					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
 	/*
@@ -53,23 +61,31 @@ class Category extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editCategory(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'category',
-			'action' => 'task/catalog/category',
-			'args'   => []
-		];
-
 		$this->load->model('setting/task');
+		$this->load->model('setting/store');
 
-		$this->model_setting_task->addTask($task_data);
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$task_data = [
-			'code'   => 'category.info.' . $args[0],
-			'action' => 'task/catalog/category.info',
-			'args'   => ['category_id' => $args[0]]
-		];
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'category.' . $store_id,
+				'action' => 'task/catalog/category',
+				'args'   => ['store_id' => $store_id]
+			];
 
-		$this->model_setting_task->addTask($task_data);
+			$this->model_setting_task->addTask($task_data);
+
+			$task_data = [
+				'code'   => 'category.info.' . $store_id . '.' . $args[0],
+				'action' => 'task/catalog/category.info',
+				'args'   => [
+					'category_id' => $args[0],
+					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
 	/*
@@ -86,22 +102,30 @@ class Category extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteCategory(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'category',
-			'action' => 'task/catalog/category',
-			'args'   => []
-		];
-
 		$this->load->model('setting/task');
+		$this->load->model('setting/store');
 
-		$this->model_setting_task->addTask($task_data);
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$task_data = [
-			'code'   => 'category.delete.' . $args[0],
-			'action' => 'task/catalog/category.delete',
-			'args'   => ['category_id' => $args[0]]
-		];
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'category.' . $store_id,
+				'action' => 'task/catalog/category',
+				'args'   => ['store_id' => $store_id]
+			];
 
-		$this->model_setting_task->addTask($task_data);
+			$this->model_setting_task->addTask($task_data);
+
+			$task_data = [
+				'code'   => 'category.delete.' . $store_id . '.' . $args[0],
+				'action' => 'task/catalog/category.delete',
+				'args'   => [
+					'category_id' => $args[0],
+					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

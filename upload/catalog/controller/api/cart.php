@@ -100,7 +100,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				// Merge variant code with options
 				foreach ($product_info['variant'] as $product_option_id => $value) {
-					if (!empty($product_info['override']['variant']['product_option_id'])) {
+					if (!empty($product_info['override']['variant'][$product_option_id])) {
 						$option[$product_option_id] = $value;
 					}
 				}
@@ -301,7 +301,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			// Merge variant code with options
 			foreach ($product_info['variant'] as $product_option_id => $value) {
-				if (!empty($product_info['override']['variant']['product_option_id'])) {
+				if (!empty($product_info['override']['variant'][$product_option_id])) {
 					$option[$product_option_id] = $value;
 				}
 			}

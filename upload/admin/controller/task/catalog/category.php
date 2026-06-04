@@ -20,6 +20,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/category');
 
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -36,6 +37,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Category
 		$category_data = [];
 
 		$filter_data = [
@@ -98,6 +100,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -114,6 +117,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Category
 		$this->load->model('catalog/category');
 
 		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
@@ -122,6 +126,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_category')];
 		}
 
+		// Description
 		$description_data = [];
 
 		$descriptions = $this->model_catalog_category->getDescriptions($category_info['category_id']);
@@ -138,6 +143,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$path = $this->model_catalog_category->getPath($category_info['category_id']);
 
+		// Children
 		$children_data = [];
 
 		$filter_data = [
@@ -207,6 +213,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -223,6 +230,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Category
 		$this->load->model('catalog/category');
 
 		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);

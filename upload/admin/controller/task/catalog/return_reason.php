@@ -20,6 +20,24 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		// Return Reasons
 		$return_reason_data = [];
 
 		$this->load->model('localisation/return_reason');
@@ -41,38 +59,15 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$this->load->model('setting/store');
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$filename = 'return_reason.yaml';
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
 
-		foreach ($store_ids as $store_id) {
-			// Store
-			$store_info = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'url'      => HTTP_CATALOG
-			];
-
-			if ($args['store_id']) {
-				$this->load->model('setting/store');
-
-				$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-				if (!$store_info) {
-					return ['error' => $this->language->get('error_store')];
-				}
-			}
-
-			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-			$filename = 'return_reason.yaml';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($return_reason_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($return_reason_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => $this->language->get('text_task')];

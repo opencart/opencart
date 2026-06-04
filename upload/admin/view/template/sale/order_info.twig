@@ -1537,6 +1537,15 @@ $('#form-product-add').on('submit', function(e) {
     });
 });
 
+$(document).on('hidden.bs.modal', '#modal-product', function () {
+    // Restores form and clears dynamic injections whenever modal closes
+    $('#form-product-add')[0].reset();
+    $('#form-product-add > .alert').remove();
+    $('#autocomplete-product').empty();
+    $('#option').empty();
+    $('#subscription').empty();
+});
+
 // Remove product
 $('#order-product').on('click', 'button', function(e) {
     $(this).parent().parent().remove();

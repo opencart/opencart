@@ -23,8 +23,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args): void {
 		$task_data = [
-			'code'   => 'language',
-			'action' => 'task/catalog/language',
+			'code'   => 'admin.language',
+			'action' => 'task/admin/language',
 			'args'   => []
 		];
 
@@ -32,13 +32,19 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		$task_data = [
-			'code'   => 'admin.language',
-			'action' => 'task/admin/language',
-			'args'   => []
-		];
+		$this->load->model('setting/store');
 
-		$this->model_setting_task->addTask($task_data);
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'language.' . $store_id,
+				'action' => 'task/catalog/language',
+				'args'   => ['store_id' => $store_id]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
 	/**

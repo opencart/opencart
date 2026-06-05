@@ -1519,37 +1519,38 @@ class Product extends \Opencart\System\Engine\Controller {
 			$product_options = $this->model_catalog_product->getOptions($master_id);
 
 			foreach ($product_options as $product_option) {
-				if (!isset($result['override']['variant'][$product_option['product_option_id']])) {
+				$override = isset($result['override']['variant'][$product_option['product_option_id']]);
 
-					$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
+				$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
 
-					if ($option_info) {
-						$product_option_value_data = [];
+				if ($option_info) {
+					$product_option_value_data = [];
 
-						foreach ($product_option['product_option_value'] as $product_option_value) {
-							$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
+					foreach ($product_option['product_option_value'] as $product_option_value) {
+						$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
 
-							if ($option_value_info) {
-								$product_option_value_data[] = [
-									'product_option_value_id' => $product_option_value['product_option_value_id'],
-									'option_value_id'         => $product_option_value['option_value_id'],
-									'name'                    => $option_value_info['name'],
-									'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
-									'price_prefix'            => $product_option_value['price_prefix']
-								];
-							}
+						if ($option_value_info) {
+							$product_option_value_data[] = [
+								'product_option_value_id' => $product_option_value['product_option_value_id'],
+								'option_value_id'         => $product_option_value['option_value_id'],
+								'name'                    => $option_value_info['name'],
+								'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+								'price_prefix'            => $product_option_value['price_prefix']
+							];
 						}
-
-						$option_data[] = [
-							'product_option_id'    => $product_option['product_option_id'],
-							'product_option_value' => $product_option_value_data,
-							'option_id'            => $product_option['option_id'],
-							'name'                 => $option_info['name'],
-							'type'                 => $option_info['type'],
-							'value'                => $product_option['value'],
-							'required'             => $product_option['required']
-						];
 					}
+
+					$option_data[] = [
+						'product_option_id'    => $product_option['product_option_id'],
+						'product_option_value' => $product_option_value_data,
+						'option_id'            => $product_option['option_id'],
+						'name'                 => $option_info['name'],
+						'type'                 => $option_info['type'],
+						'value'                => $override ? $result['variant'][$product_option['product_option_id']] : $product_option['value'],
+						'required'             => $override ? false : $product_option['required'],
+						'disabled'             => $override
+					];
+
 				}
 			}
 

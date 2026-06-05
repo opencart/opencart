@@ -120,7 +120,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 							foreach ($product_option_values as $product_option_value_id) {
 								$product_option_value_info = $this->model_catalog_product->getOptionValue($product_id, $product_option_value_id);
 
-								$orderOptQty = $order_option_quantity[$product_id][$product_option_value_id] ?? 0;
+								$orderOptQty = $order_option_quantity[$product['product_id']][$product_option_value_id] ?? 0;
 								$option_stock = $product_option_value_info['quantity'] + $orderOptQty;
 
 								if (!$product_option_value_info) {
@@ -155,8 +155,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				$product_stock = $product_info['quantity'];
-				if (isset($order_quantity[$product_id])) {
-					$product_stock += $order_quantity[$product_id];
+				if (isset($order_quantity[$product['product_id']])) {
+					$product_stock += $order_quantity[$product['product_id']];
 				}
 
 				// Stock

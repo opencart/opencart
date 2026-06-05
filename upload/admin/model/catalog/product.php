@@ -938,7 +938,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * Edit product rating record in the database.
 	 *
-	 * @param int $product_id primary key of the product record
+	 * @param int   $product_id primary key of the product record
 	 * @param float $rating
 	 *
 	 * @return void

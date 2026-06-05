@@ -161,7 +161,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
-	 * @return int total number of rating records that have product ID
+	 * @return float average rating that have product ID
 	 *
 	 * @example
 	 *

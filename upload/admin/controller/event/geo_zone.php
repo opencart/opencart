@@ -21,7 +21,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	public function addGeoZone(string &$route, array &$args, &$output): void {
 		// Update tax rates based on geo zone
 		$task_data = [
-			'code'   => 'tax_rate.info.' . $output,
+			'code'   => 'tax_rate.info.' . $store_id . '.' . $output,
 			'action' => 'task/catalog/tax_rate.info',
 			'args'   => ['geo_zone_id' => $output]
 		];
@@ -36,7 +36,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 			foreach ($country_ids as $country_id) {
 				$task_data = [
-					'code'   => 'country.info.' . $country_id,
+					'code'   => 'country.info.' . $store_id . '.' . $country_id,
 					'action' => 'task/catalog/country.info',
 					'args'   => ['country_id' => $country_id]
 				];
@@ -60,7 +60,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 */
 	public function editGeoZone(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'tax_rate.info.' . $args[0],
+			'code'   => 'tax_rate.info.' . $store_id . '.' . $args[0],
 			'action' => 'task/catalog/tax_rate.info',
 			'args'   => ['geo_zone_id' => $args[0]]
 		];
@@ -75,7 +75,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 			foreach ($country_ids as $country_id) {
 				$task_data = [
-					'code'   => 'country.info.' . $country_id,
+					'code'   => 'country.info.' . $store_id . '.' . $country_id,
 					'action' => 'task/catalog/country.info',
 					'args'   => ['country_id' => $country_id]
 				];
@@ -91,7 +91,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				if (!in_array($result['country_id'], $country_ids)) {
 					$task_data = [
-						'code'   => 'country.info.' . $result['country_id'],
+						'code'   => 'country.info.' . $store_id . '.' . $result['country_id'],
 						'action' => 'task/catalog/country.info',
 						'args'   => ['country_id' => $result['country_id']]
 					];
@@ -116,7 +116,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteGeoZone(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'tax_rate.info.' . $args[0],
+			'code'   => 'tax_rate.info.' . $store_id . '.' . $args[0],
 			'action' => 'task/admin/tax_rate.info',
 			'args'   => ['geo_zone_id' => $args[0]]
 		];
@@ -132,7 +132,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$task_data = [
-				'code'   => 'country.info.' . $result['country_id'],
+				'code'   => 'country.info.' . $store_id . '.' . $result['country_id'],
 				'action' => 'task/catalog/country.info',
 				'args'   => ['country_id' => $result['country_id']]
 			];

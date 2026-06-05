@@ -1277,13 +1277,13 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'select') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '  <select ' + (option['disabled'] ? 'disabled' : '') + ' name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
                     html += '    <option value="">{{ text_select|escape('js') }}</option>';
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
 
-                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+                        html += '<option ' + (option['value'] == option_value['product_option_value_id'] ? 'selected="selected"' : '') + ' value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
                             html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -1300,13 +1300,13 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'radio') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '  <select ' + (option['disabled'] ? 'disabled' : '') + ' name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
                     html += '    <option value="">{{ text_select|escape('js') }}</option>';
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
 
-                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+                        html += '<option ' + (option['value'] == option_value['product_option_value_id'] ? 'selected="selected"' : '') + ' value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
                             html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -1327,9 +1327,10 @@ $('#input-product').autocomplete({
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
+                        checked = Array.isArray(option['value']) ? option['value'].includes(option_value['product_option_value_id']) : false;
 
                         html += '<div class="form-check">';
-                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/>';
+                        html += '  <input ' + (option['disabled'] ? 'disabled ' : '') + (checked ? 'checked' : '') + ' type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/>';
                         html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">' + option_value['name'];
 
                         if (option_value['price']) {
@@ -1345,34 +1346,10 @@ $('#input-product').autocomplete({
                     html += '</div>';
                 }
 
-                if (option['type'] == 'image') {
-                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-
-                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
-                    html += '    <option value="">{{ text_select|escape('js') }}</option>';
-
-                    for (j = 0; j < option['product_option_value'].length; j++) {
-                        option_value = option['product_option_value'][j];
-
-                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
-
-                        if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
-                        }
-
-                        html += '</option>';
-                    }
-
-                    html += '  </select>';
-                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
-                    html += '</div>';
-                }
-
                 if (option['type'] == 'text') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <input ' + (option['disabled'] ? 'disabled' : '') + ' type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }
@@ -1380,7 +1357,7 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'textarea') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <textarea name="option[' + option['product_option_id'] + ']" rows="5" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control">' + option['value'] + '</textarea>';
+                    html += '  <textarea ' + (option['disabled'] ? 'disabled' : '') + ' name="option[' + option['product_option_id'] + ']" rows="5" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control">' + option['value'] + '</textarea>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }
@@ -1389,7 +1366,7 @@ $('#input-product').autocomplete({
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label class="form-label">' + option['name'] + '</label>';
                     html += '  <div>';
-                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-option-' + option['product_option_id'] + '" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size|escape('js') }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload|escape('js') }}</button>';
+                    html += '    <button ' + (option['disabled'] ? 'disabled' : '') + ' type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-option-' + option['product_option_id'] + '" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size|escape('js') }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload|escape('js') }}</button>';
                     html += '    <a href="" class="btn btn-light"><i class="fa-solid fa-download"></i></a>';
                     html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/>';
                     html += '  </div>';
@@ -1400,7 +1377,7 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'date') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <input type="date" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <input ' + (option['disabled'] ? 'disabled' : '') + ' type="date" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }
@@ -1408,7 +1385,7 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'time') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <input type="time" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <input ' + (option['disabled'] ? 'disabled' : '') + ' type="time" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }
@@ -1416,7 +1393,7 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'datetime') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-                    html += '  <input type="datetime-local" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
+                    html += '  <input ' + (option['disabled'] ? 'disabled' : '') + ' type="datetime-local" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }

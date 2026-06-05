@@ -194,6 +194,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (!$filter_group_info) {
 			return ['error' => $this->language->get('error_filter_group')];
 		}
+
 		$this->load->model('catalog/filter');
 
 		$filter_info = $this->model_catalog_filter->getFilter((int)$args['filter_id']);
@@ -201,6 +202,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (!$filter_info || !$filter_info['status']) {
 			return ['success' => $this->language->get('error_filter')];
 		}
+
 		$this->load->model('setting/store');
 
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];

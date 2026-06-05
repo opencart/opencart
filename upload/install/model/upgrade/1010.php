@@ -9,10 +9,7 @@ class ModelUpgrade1010 extends Model {
 		// remove obsolete files and folders from vendor directory
 		$obsoletes = array(
 			'bin/',
-			'braintree/braintree_php/tests/Braintree/fixtures/',
-			'braintree/braintree_php/tests/integration/SubscriptionTestHelper.php',
-			'braintree/braintree_php/tests/TestHelper.php',
-			'braintree/braintree_php/.gitignore',
+			'braintree/',
 			'cardinity/cardinity-sdk-php/spec/Method/Void/',
 			'cardinity/cardinity-sdk-php/src/Method/Void/',
 			'cardinity/cardinity-sdk-php/tests/VoidTest.php',
@@ -133,10 +130,7 @@ class ModelUpgrade1010 extends Model {
 			'twig/twig/.php_cs.dist',
 			'twig/twig/.travis.yml',
 			'twig/twig/drupal_test.sh',
-			'zoujingli/wechat-developer/MIT-LICENSE.txt',
-			'zoujingli/wechat-developer/WeChat/Contracts/Prpcrypt.php',
-			'zoujingli/wechat-developer/.gitignore',
-			'zoujingli/wechat-php-sdk/.gitignore',
+			'zoujingli/',
 			'scss.inc.php'
 		);
 		if ($dir_current_vendor != $dir_vendor) {
@@ -393,8 +387,13 @@ class ModelUpgrade1010 extends Model {
 		$this->removeByName($dir_opencart,'usps.php');
 		$this->removeByName($dir_opencart,'usps.twig');
 		$this->removeByNameFromDB('usps');
+		$this->removeByName($dir_opencart,'google_hangouts');
+		$this->removeByNameFromDB('google_hangouts');
+		$this->removeByName($dir_opencart,'pp_braintree_button');
+		$this->removeByNameFromDB('pp_braintree_button');
 
 		// remove some other obsolete core files
+		$this->deleteEntry($dir_opencart.'/admin/view/image/payment/paypal/braintree_connect.png');
 		$this->deleteEntry($dir_opencart.'/admin/view/image/payment/paypal/icon-message.svg');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/jquery/owl-carousel');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/jquery/jquery-2.1.1.min.js');

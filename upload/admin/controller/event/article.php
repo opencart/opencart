@@ -3,6 +3,8 @@ namespace Opencart\Admin\Controller\Event;
 /**
  * Class Article
  *
+ * Generates banner information for all stores.
+ *
  * @package Opencart\Admin\Controller\Event
  */
 class Article extends \Opencart\System\Engine\Controller {
@@ -38,18 +40,16 @@ class Article extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 
 			// Topic
-			if ($args[1]['topic_id']) {
-				$task_data = [
-					'code'   => 'topic.article.' . $store_id . '.' . $args[1]['topic_id'],
-					'action' => 'task/catalog/topic.article',
-					'args'   => [
-						'topic_id' => $args[1]['topic_id'],
-						'store_id' => $store_id
-					]
-				];
+			$task_data = [
+				'code'   => 'topic.article.' . $store_id . '.' . $args[1]['topic_id'],
+				'action' => 'task/catalog/topic.article',
+				'args'   => [
+					'topic_id' => $args[1]['topic_id'],
+					'store_id' => $store_id
+				]
+			];
 
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 	}
 
@@ -125,24 +125,25 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
+
+		// Topic
+		$this->load->model('cms/article');
+
+		$article_info = $this->model_cms_article->getArticle($args[0]);
+
+		if ($article_info) {
+
+
+
 		foreach ($store_ids as $store_id) {
-				$task_data = [
-					'code'   => 'article.delete.' . $args[0],
-					'action' => 'task/catalog/article.delete',
-					'args'   => ['article_id' => $args[0]]
-				];
-
-
-			$this->load->model('setting/task');
+			$task_data = [
+				'code'   => 'article.delete.' . $args[0],
+				'action' => 'task/catalog/article.delete',
+				'args'   => ['article_id' => $args[0]]
+			];
 
 			$this->model_setting_task->addTask($task_data);
 
-			// Topic
-			$this->load->model('cms/article');
-
-			$article_info = $this->model_cms_article->getArticle($args[0]);
-
-			if ($article_info) {
 				$task_data = [
 					'code'   => 'topic.article.' . $article_info['topic_id'],
 					'action' => 'task/catalog/topic.article_',
@@ -151,7 +152,6 @@ class Article extends \Opencart\System\Engine\Controller {
 				];
 
 				$this->model_setting_task->addTask($task_data);
-
 			}
 		}
 	}

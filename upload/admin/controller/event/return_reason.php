@@ -22,16 +22,17 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
+		$this->load->model('setting/store');
+		$this->load->model('setting/task');
+
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'return_reason',
+				'code'   => 'return_reason.' . $store_id,
 				'action' => 'task/catalog/return_reason',
-				'args'   => []
+				'args'   => ['store_id' => $store_id]
 			];
-
-			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
 		}

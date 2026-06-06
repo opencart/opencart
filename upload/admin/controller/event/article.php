@@ -78,6 +78,8 @@ class Article extends \Opencart\System\Engine\Controller {
 			$topic_ids = array_filter(array_unique([$args[1]['topic_id'], $article_info['topic_id']]));
 		}
 
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'article.' . $store_id . '.' . $args[0],
@@ -91,6 +93,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 
 			// Topic
+
 			foreach ($topic_ids as $topic_id) {
 				$task_data = [
 					'code'   => 'topic.article.' . $store_id . '.' . $topic_id,
@@ -103,6 +106,10 @@ class Article extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+
+
+
+
 		}
 	}
 

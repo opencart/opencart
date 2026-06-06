@@ -19,7 +19,17 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addZone(string &$route, array &$args, &$output): void {
+		// Admin
+		$task_data = [
+			'code'   => 'admin.country.info.' . $args[1]['country_id'],
+			'action' => 'task/admin/country.info',
+			'args'   => ['country_id' => $args[1]['country_id']]
+		];
+
 		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
 		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
@@ -36,15 +46,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
-
-		// Admin
-		$task_data = [
-			'code'   => 'admin.country.info.' . $args[1]['country_id'],
-			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $args[1]['country_id']]
-		];
-
-		$this->model_setting_task->addTask($task_data);
 	}
 
 	/**
@@ -61,32 +62,59 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 */
 	public function editZone(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
-		$this->load->model('setting/store');
 
 		$this->load->model('localisation/zone');
 
 		$zone_info = $this->model_localisation_zone->getZone($args[0]);
 
-		if ($zone_info) {
-			$country_ids = array_unique([$args[1]['country_id'], $zone_info['country_id']]);
 
-			foreach ($country_ids as $country_id) {
+
+
+		$country_ids = array_unique([$args[1]['country_id'], $zone_info['country_id']]);
+
+		foreach ($country_ids as $country_id) {
+
+
+		// Admin
+		$task_data = [
+			'code'   => 'admin.country.info.' . $country_id,
+			'action' => 'task/admin/country.info',
+			'args'   => ['country_id' => $country_id]
+		];
+
+
+
+		$this->model_setting_task->addTask($task_data);
+
+
+
+
+		if ($zone_info) {
+
+		$this->load->model('setting/store');
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		foreach ($store_ids as $store_id) {
+
+
+
+
+
+
+
 				$task_data = [
 					'code'   => 'country.info.' . $store_id . '.' . $country_id,
 					'action' => 'task/catalog/country.info',
-					'args'   => ['country_id' => $country_id]
+					'args'   => [
+						'country_id' => $country_id,
+						'store_id'   => $store_id
+					]
 				];
 
 				$this->model_setting_task->addTask($task_data);
 
-				// Admin
-				$task_data = [
-					'code'   => 'admin.country.info.' . $country_id,
-					'action' => 'task/admin/country.info',
-					'args'   => ['country_id' => $country_id]
-				];
 
-				$this->model_setting_task->addTask($task_data);
 			}
 		}
 	}
@@ -107,29 +135,39 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 		$this->load->model('setting/store');
 
+
+
 		$this->load->model('localisation/zone');
 
 		$zone_info = $this->model_localisation_zone->getZone($args[0]);
 
-		if ($zone_info) {
-			$task_data = [
-				'code'   => 'country.info.' . $store_id . '.' . $zone_info['country_id'],
-				'action' => 'task/catalog/country.info',
-				'args'   => ['country_id' => $zone_info['country_id']]
-			];
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-			$this->load->model('setting/task');
+		foreach ($store_ids as $store_id) {
+			if ($zone_info) {
+				$task_data = [
+					'code'   => 'country.info.' . $store_id . '.' . $zone_info['country_id'],
+					'action' => 'task/catalog/country.info',
+					'args'   => [
+						'country_id' => $zone_info['country_id'],
+						'store_id'   => $store_id
+					]
+				];
 
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
 
-			// Admin
-			$task_data = [
-				'code'   => 'admin.country.info.' . $zone_info['country_id'],
-				'action' => 'task/admin/country.info',
-				'args'   => ['country_id' => $zone_info['country_id']]
-			];
+				// Admin
+				$task_data = [
+					'code'   => 'admin.country.info.' . $zone_info['country_id'],
+					'action' => 'task/admin/country.info',
+					'args'   => [
+						'country_id' => $zone_info['country_id'],
+						'store_id'   => $store_id
+					]
+				];
 
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 }

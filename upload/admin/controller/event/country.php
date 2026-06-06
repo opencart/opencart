@@ -110,8 +110,6 @@ class Country extends \Opencart\System\Engine\Controller {
 				'args'   => []
 			];
 
-			$this->load->model('setting/task');
-
 			$this->model_setting_task->addTask($task_data);
 
 			$task_data = [

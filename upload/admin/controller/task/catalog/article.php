@@ -115,7 +115,12 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$store_url = HTTP_CATALOG;
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
@@ -127,18 +132,12 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/store');
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.yaml';
 
-		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
-
-		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.yaml';
-
-			if (is_file($file)) {
-				unlink($file);
-			}
+		if (is_file($file)) {
+			unlink($file);
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $article_info['name'])];
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }

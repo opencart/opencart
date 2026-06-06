@@ -79,8 +79,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'args'   => ['store_id' => $store_id]
 			];
 
-			$this->load->model('setting/task');
-
 			$this->model_setting_task->addTask($task_data);
 
 			// Info
@@ -134,7 +132,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => 'manufacturer.' . $store_id,
 				'action' => 'task/catalog/manufacturer',
-				'args'   => []
+				'args'   => ['store_id' => $store_id]
 			];
 
 			$this->model_setting_task->addTask($task_data);

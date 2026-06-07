@@ -185,9 +185,9 @@ $_['error_zip_incons']       		= 'Zip archive inconsistent!';
 $_['error_zip_inval']        		= 'Ungültiges Argument!';
 $_['error_zip_memory']       		= 'Memory allocation failure!';
 $_['error_zip_noent']        		= 'Datei nicht gefunden!';
-$_['error_zip_nozip']        		= 'Not a zip archive!';
+$_['error_zip_nozip']        		= 'Kein Zip-Archiv!';
 $_['error_zip_open']         		= 'Datei kann nicht geöffnet werden!';
-$_['error_zip_read']        		= 'Read error!';
+$_['error_zip_read']        		= 'Lesefehler!';
 $_['error_zip_seek']         		= 'Seek error!';
 
 // When doing translations only include the matching language code

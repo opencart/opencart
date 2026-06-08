@@ -139,7 +139,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$task_data = [
 			'code'   => 'admin.customer_group',
 			'action' => 'task/admin/customer_group',
-			'args'   => ['customer_group_id' => $args[0]]
+			'args'   => []
 		];
 
 		$this->load->model('setting/task');

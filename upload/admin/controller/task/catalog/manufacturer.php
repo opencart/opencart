@@ -230,22 +230,33 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('setting/store');
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.yaml';
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-			if (is_file($file)) {
-				unlink($file);
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
+		}
 
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-product-' . (int)$args['manufacturer_id'] . '.csv';
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.yaml';
 
-			if (is_file($file)) {
-				unlink($file);
-			}
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-product-' . (int)$args['manufacturer_id'] . '.csv';
+
+		if (is_file($file)) {
+			unlink($file);
 		}
 
 		return ['success' => $this->language->get('text_delete')];

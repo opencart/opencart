@@ -23,7 +23,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['manufacturer_store'])) {
+			$store_ids = (array)$args[1]['manufacturer_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -34,7 +38,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 
-			// Info
 			$task_data = [
 				'code'   => 'manufacturer.info.' . $store_id . '.' . $output,
 				'action' => 'task/catalog/manufacturer.info',
@@ -62,15 +65,18 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editManufacturer(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
+
+		$store_ids = [];
+
+		if (isset($args[1]['manufacturer_store'])) {
+			$store_ids = (array)$args[1]['manufacturer_store'];
+		}
 
 		// Products
 		$this->load->model('catalog/product');
 
 		$results = $this->model_catalog_product->getProducts(['filter_manufacturer_id' => $args[0]]);
-
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -105,6 +111,24 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+		}
+
+		// Remove store ID's
+		$this->load->model('catalog/manufacturer');
+
+		$remove_ids = array_diff($this->model_catalog_manufacturer->getStores($args[0]), $store_ids);
+
+		foreach ($remove_ids as $remove_id) {
+			$task_data = [
+				'code'   => 'manufacturer.delete.' . $remove_id . '.' . $args[0],
+				'action' => 'task/catalog/manufacturer.delete',
+				'args'   => [
+					'manufacturer_id' => $args[0],
+					'store_id'        => $remove_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 		}
 	}
 

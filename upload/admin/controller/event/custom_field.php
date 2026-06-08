@@ -110,7 +110,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			foreach ($results as $result) {
 				$task_data = [
-					'code'   => 'customer_group.delete.' . $store_id . '.' . $result['customer_group_id'],
+					'code'   => 'customer_group.info.' . $store_id . '.' . $result['customer_group_id'],
 					'action' => 'task/catalog/customer_group',
 					'args'   => [
 						'customer_group_id' => $result['customer_group_id'],

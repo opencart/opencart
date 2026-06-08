@@ -74,7 +74,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		// Remove Customer Groups ID's
 		$this->load->model('customer/custom_field');
 
-		$remove_ids = array_diff(array_unique(array_column($this->model_customer_custom_field->getCustomerGroups($args[0]), 'customer_group_id')), $customer_group_ids);
+		$customer_group_ids = array_unique(array_merge(array_column($this->model_customer_custom_field->getCustomerGroups($args[0]), 'customer_group_id'), $customer_group_ids));
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -85,19 +85,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 					'action' => 'task/catalog/customer_group',
 					'args'   => [
 						'customer_group_id' => $customer_group_id,
-						'store_id'          => $store_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			foreach ($remove_ids as $remove_id) {
-				$task_data = [
-					'code'   => 'customer_group.info.' . $store_id . '.' . $remove_id,
-					'action' => 'task/catalog/customer_group.info',
-					'args'   => [
-						'customer_group_id' => $remove_id,
 						'store_id'          => $store_id
 					]
 				];

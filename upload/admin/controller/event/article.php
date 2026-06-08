@@ -25,7 +25,11 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['article_store'])) {
+			$store_ids = (array)$args[1]['article_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -67,18 +71,18 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	private function editArticle(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
+		// Rewrite the article ID's in the topic file
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
-		if ($article_info) {
-			$topic_ids = array_filter(array_unique([$args[1]['topic_id'], $article_info['topic_id']]));
-		}
+		$store_ids = [];
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		if (isset($args[1]['article_store'])) {
+			$store_ids = (array)$args[1]['article_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -93,23 +97,57 @@ class Article extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 
 			// Topic
+			$task_data = [
+				'code'   => 'topic.article.' . $store_id . '.' . $args[1]['topic_id'],
+				'action' => 'task/catalog/topic.article',
+				'args'   => [
+					'topic_id' => $args[1]['topic_id'],
+					'store_id' => $store_id
+				]
+			];
 
-			foreach ($topic_ids as $topic_id) {
+			$this->model_setting_task->addTask($task_data);
+
+			if ($article_info && $article_info['topic_id'] !== $args[1]['topic_id']) {
 				$task_data = [
-					'code'   => 'topic.article.' . $store_id . '.' . $topic_id,
+					'code'   => 'topic.article.' . $store_id . '.' . $article_info['topic_id'],
 					'action' => 'task/catalog/topic.article',
 					'args'   => [
-						'topic_id' => $topic_id,
-					    'store_id' => $store_id
+						'topic_id' => $article_info['topic_id'],
+						'store_id' => $store_id
 					]
 				];
 
 				$this->model_setting_task->addTask($task_data);
 			}
+		}
 
+		// Remove
+		$remove_ids = array_diff($this->model_cms_article->getStores($args[0]), $store_ids);
 
+		foreach ($remove_ids as $remove_id) {
+			$task_data = [
+				'code'   => 'article.delete.' . $remove_id . '.' . $args[0],
+				'action' => 'task/catalog/article.delete',
+				'args'   => [
+					'article_id' => $args[0],
+					'store_id'   => $remove_id
+				]
+			];
 
+			// Rewrite the article ID's in the topic file
+			if ($article_info) {
+				$task_data = [
+					'code'   => 'topic.article.' . $remove_id . '.' . $article_info['topic_id'],
+					'action' => 'task/catalog/topic.article',
+					'args'   => [
+						'topic_id' => $article_info['topic_id'],
+						'store_id' => $remove_id
+					]
+				];
 
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 
@@ -127,35 +165,35 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	private function deleteArticle(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
-
-		// Topic
+		// Rewrite the article ID's in the topic file
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
-		if ($article_info) {
-
-
+		$store_ids = $this->model_cms_article->getStores($args[0]);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'article.delete.' . $args[0],
+				'code'   => 'article.delete.' . $store_id . '.' . $args[0],
 				'action' => 'task/catalog/article.delete',
-				'args'   => ['article_id' => $args[0]]
+				'args'   => [
+					'article_id' => $args[0],
+					'store_id'   => $store_id
+				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 
+			if ($article_info) {
 				$task_data = [
-					'code'   => 'topic.article.' . $article_info['topic_id'],
-					'action' => 'task/catalog/topic.article_',
-					'args'   => ['topic_id' => $article_info['topic_id'],
-					             'store_id' => $store_id]
+					'code'   => 'topic.article.' . $store_id . '.' . $article_info['topic_id'],
+					'action' => 'task/catalog/topic.article',
+					'args'   => [
+						'topic_id' => $article_info['topic_id'],
+						'store_id' => $store_id
+					]
 				];
 
 				$this->model_setting_task->addTask($task_data);

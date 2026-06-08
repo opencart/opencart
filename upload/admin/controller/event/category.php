@@ -23,7 +23,11 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 		$this->load->model('setting/store');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['category_store'])) {
+			$store_ids = (array)$args[1]['category_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -62,9 +66,12 @@ class Category extends \Opencart\System\Engine\Controller {
 	 */
 	public function editCategory(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
-		$this->load->model('setting/store');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['category_store'])) {
+			$store_ids = (array)$args[1]['category_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -81,6 +88,24 @@ class Category extends \Opencart\System\Engine\Controller {
 				'args'   => [
 					'category_id' => $args[0],
 					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		// Remove store ID's
+		$this->load->model('catalog/category');
+
+		$remove_ids = array_diff($this->model_catalog_category->getStores($args[0]), $store_ids);
+
+		foreach ($remove_ids as $remove_id) {
+			$task_data = [
+				'code'   => 'category.delete.' . $remove_id . '.' . $args[0],
+				'action' => 'task/catalog/category.delete',
+				'args'   => [
+					'category_id' => $args[0],
+					'store_id'    => $remove_id
 				]
 			];
 
@@ -103,11 +128,13 @@ class Category extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteCategory(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
-		$this->load->model('setting/store');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$this->load->model('catalog/category');
+
+		$store_ids = $this->model_catalog_category->getStores($args[0]);
 
 		foreach ($store_ids as $store_id) {
+			// Refresh List
 			$task_data = [
 				'code'   => 'category.' . $store_id,
 				'action' => 'task/catalog/category',
@@ -116,6 +143,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 
+			// Delete
 			$task_data = [
 				'code'   => 'category.delete.' . $store_id . '.' . $args[0],
 				'action' => 'task/catalog/category.delete',

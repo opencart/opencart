@@ -118,7 +118,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'action' => 'task/catalog/manufacturer.product',
 				'args'   => ['manufacturer_id' => $manufacturer_id]
 			];
-
+S
 			$this->model_setting_task->addTask($task_data);
 		}
 

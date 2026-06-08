@@ -85,7 +85,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		// Update country info for any removed geo zones
 		$this->load->model('localisation/geo_zone');
 
-		$remove_ids = array_diff(array_unique(array_column($this->model_localisation_geo_zone->getZones($args[0]), 'country_id')), $country_ids);
+		$remove_ids = array_unique(array_merge(array_column($this->model_localisation_geo_zone->getZones($args[0]), 'country_id'), $country_ids));
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -114,19 +114,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
-
-			foreach ($remove_ids as $remove_id) {
-				$task_data = [
-					'code'   => 'country.info.' . $store_id . '.' . $remove_id,
-					'action' => 'task/catalog/country.info',
-					'args'   => [
-						'country_id' => $remove_id,
-						'store_id'   => $store_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
 		}
 	}
 
@@ -143,29 +130,37 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteGeoZone(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'tax_rate.info.' . $store_id . '.' . $args[0],
-			'action' => 'task/admin/tax_rate.info',
-			'args'   => ['geo_zone_id' => $args[0]]
-		];
-
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		// Update countries based on geo zones.
-		$this->load->model('localisation/geo_zone');
-
-		$results = $this->model_localisation_geo_zone->getZones($args[0]);
-
-		foreach ($results as $result) {
+		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'country.info.' . $store_id . '.' . $result['country_id'],
-				'action' => 'task/catalog/country.info',
-				'args'   => ['country_id' => $result['country_id']]
+				'code'   => 'tax_rate.info.' . $store_id . '.' . $args[0],
+				'action' => 'task/admin/tax_rate.info',
+				'args'   => ['geo_zone_id' => $args[0]]
 			];
 
+			$this->load->model('setting/task');
+
 			$this->model_setting_task->addTask($task_data);
+
+			// Update countries based on geo zones.
+			$this->load->model('localisation/geo_zone');
+
+			$results = $this->model_localisation_geo_zone->getZones($args[0]);
+
+			foreach ($results as $result) {
+				$task_data = [
+					'code'   => 'country.info.' . $store_id . '.' . $result['country_id'],
+					'action' => 'task/catalog/country.info',
+					'args'   => ['country_id' => $result['country_id']]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 }

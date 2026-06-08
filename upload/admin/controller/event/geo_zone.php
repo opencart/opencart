@@ -19,26 +19,40 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addGeoZone(string &$route, array &$args, &$output): void {
-		// Update tax rates based on geo zone
-		$task_data = [
-			'code'   => 'tax_rate.info.' . $store_id . '.' . $output,
-			'action' => 'task/catalog/tax_rate.info',
-			'args'   => ['geo_zone_id' => $output]
-		];
-
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+		$country_ids = [];
 
 		// Update countries based on geo zones.
 		if (isset($args[1]['zone_to_geo_zone']) && is_array($args[1]['zone_to_geo_zone'])) {
 			$country_ids = array_unique(array_column($args[1]['zone_to_geo_zone'], 'country_id'));
+		}
+
+		$this->load->model('setting/store');
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		foreach ($store_ids as $store_id) {
+			// Update tax rates based on geo zone
+			$task_data = [
+				'code'   => 'tax_rate.info.' . $store_id . '.' . $output,
+				'action' => 'task/catalog/tax_rate.info',
+				'args'   => [
+					'geo_zone_id' => $output,
+					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 
 			foreach ($country_ids as $country_id) {
 				$task_data = [
 					'code'   => 'country.info.' . $store_id . '.' . $country_id,
 					'action' => 'task/catalog/country.info',
-					'args'   => ['country_id' => $country_id]
+					'args'   => [
+						'country_id' => $country_id,
+						'store_id'   => $store_id
+					]
 				];
 
 				$this->model_setting_task->addTask($task_data);
@@ -59,45 +73,59 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editGeoZone(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'tax_rate.info.' . $store_id . '.' . $args[0],
-			'action' => 'task/catalog/tax_rate.info',
-			'args'   => ['geo_zone_id' => $args[0]]
-		];
-
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+		$country_ids = [];
 
-		// Update countries based on geo zones.
 		if (isset($args[1]['zone_to_geo_zone']) && is_array($args[1]['zone_to_geo_zone'])) {
 			$country_ids = array_unique(array_column($args[1]['zone_to_geo_zone'], 'country_id'));
+		}
+
+		// Update country info for any removed geo zones
+		$this->load->model('localisation/geo_zone');
+
+		$remove_ids = array_diff(array_unique(array_column($this->model_localisation_geo_zone->getZones($args[0]), 'country_id')), $country_ids);
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		// Update countries based on geo zones.
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'tax_rate.info.' . $store_id . '.' . $args[0],
+				'action' => 'task/catalog/tax_rate.info',
+				'args'   => [
+					'geo_zone_id' => $args[0],
+					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 
 			foreach ($country_ids as $country_id) {
 				$task_data = [
 					'code'   => 'country.info.' . $store_id . '.' . $country_id,
 					'action' => 'task/catalog/country.info',
-					'args'   => ['country_id' => $country_id]
+					'args'   => [
+						'country_id' => $country_id,
+						'store_id'   => $store_id
+					]
 				];
 
 				$this->model_setting_task->addTask($task_data);
 			}
 
-			// Update country info for any removed geo zones
-			$this->load->model('localisation/geo_zone');
+			foreach ($remove_ids as $remove_id) {
+				$task_data = [
+					'code'   => 'country.info.' . $store_id . '.' . $remove_id,
+					'action' => 'task/catalog/country.info',
+					'args'   => [
+						'country_id' => $remove_id,
+						'store_id'   => $store_id
+					]
+				];
 
-			$results = $this->model_localisation_geo_zone->getZones($args[0]);
-
-			foreach ($results as $result) {
-				if (!in_array($result['country_id'], $country_ids)) {
-					$task_data = [
-						'code'   => 'country.info.' . $store_id . '.' . $result['country_id'],
-						'action' => 'task/catalog/country.info',
-						'args'   => ['country_id' => $result['country_id']]
-					];
-
-					$this->model_setting_task->addTask($task_data);
-				}
+				$this->model_setting_task->addTask($task_data);
 			}
 		}
 	}

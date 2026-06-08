@@ -248,26 +248,29 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('customer/customer_group');
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if (!$customer_group_info) {
-			return ['error' => $this->language->get('error_customer_group')];
-		}
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-		$this->load->model('setting/store');
-
-		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
-
-		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/customer/customer_group-' . $customer_group_info['customer_group_id'] . '.yaml';
-
-			if (is_file($file)) {
-				unlink($file);
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $customer_group_info['name'])];
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/customer_group-' . (int)$args['customer_group_id'] . '.yaml';
+
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }

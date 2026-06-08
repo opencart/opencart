@@ -101,6 +101,14 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($remove_ids as $remove_id) {
 			$task_data = [
+				'code'   => 'information.' . $remove_id,
+				'action' => 'task/catalog/information',
+				'args'   => ['store_id' => $remove_id]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			$task_data = [
 				'code'   => 'information.delete.' . $remove_id . '.' . $args[0],
 				'action' => 'task/catalog/information.delete',
 				'args'   => [

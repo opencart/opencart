@@ -301,28 +301,26 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		// Customer Groups
+		$this->load->model('customer/customer_group');
+
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
+		$custom_field_customer_groups = [];
+
 		if (!empty($custom_field_info)) {
 			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($custom_field_info['custom_field_id']);
-		} else {
-			$custom_field_customer_groups = [];
 		}
 
 		$data['custom_field_customer_group'] = [];
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if (isset($custom_field_customer_group['customer_group_id'])) {
-				$data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
-			}
+			$data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
 		}
-
-		$this->load->model('customer/customer_group');
-
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		$data['custom_field_required'] = [];
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if (isset($custom_field_customer_group['required']) && $custom_field_customer_group['required'] && isset($custom_field_customer_group['customer_group_id'])) {
+			if ($custom_field_customer_group['required']) {
 				$data['custom_field_required'][] = $custom_field_customer_group['customer_group_id'];
 			}
 		}

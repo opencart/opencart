@@ -172,26 +172,29 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('catalog/information');
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$information_info = $this->model_catalog_information->getInformation((int)$args['information_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if (!$information_info) {
-			return ['error' => $this->language->get('error_information')];
-		}
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-		$this->load->model('setting/store');
-
-		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
-
-		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/information/information-' . $information_info['information_id'] . '.yaml';
-
-			if (is_file($file)) {
-				unlink($file);
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $information_info['title'])];
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/information/information-' . (int)$args['information_id'] . '.yaml';
+
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }

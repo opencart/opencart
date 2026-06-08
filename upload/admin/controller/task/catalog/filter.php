@@ -187,41 +187,36 @@ class Filter extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('catalog/filter');
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$filter_group_info = $this->model_catalog_filter->getFilterGroups((int)$args['filter_group_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if (!$filter_group_info) {
-			return ['error' => $this->language->get('error_filter_group')];
-		}
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-		$this->load->model('catalog/filter');
-
-		$filter_info = $this->model_catalog_filter->getFilter((int)$args['filter_id']);
-
-		if (!$filter_info || !$filter_info['status']) {
-			return ['success' => $this->language->get('error_filter')];
-		}
-
-		$this->load->model('setting/store');
-
-		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
-
-		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/filter_group-' . $filter_group_info['filter_group_id'] . '.yaml';
-
-			if (is_file($file)) {
-				unlink($file);
-			}
-
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/filter-product-' . $filter_info['filter_id'] . '.yaml';
-
-			if (is_file($file)) {
-				unlink($file);
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $filter_group_info['name'])];
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/filter_group-' . (int)$args['filter_group_id'] . '.yaml';
+
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/filter-product-' . (int)$args['filter_group_id'] . '.yaml';
+
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }
 

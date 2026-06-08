@@ -23,11 +23,11 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 		$this->load->model('setting/store');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
 		$this->load->model('localisation/country');
 
 		$results = $this->model_localisation_country->getCountriesByAddressFormatId($args[0]);
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
 			foreach ($results as $result) {

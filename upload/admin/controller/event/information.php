@@ -23,7 +23,11 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['information_store'])) {
+			$store_ids = (array)$args[1]['information_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -61,10 +65,13 @@ class Information extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editInformation(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['information_store'])) {
+			$store_ids = (array)$args[1]['information_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -81,6 +88,24 @@ class Information extends \Opencart\System\Engine\Controller {
 				'args'   => [
 					'information_id' => $args[0],
 					'store_id'       => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		// Remove store ID's
+		$this->load->model('catalog/information');
+
+		$remove_ids = array_diff($this->model_catalog_information->getStores($args[0]), $store_ids);
+
+		foreach ($remove_ids as $remove_id) {
+			$task_data = [
+				'code'   => 'information.delete.' . $remove_id . '.' . $args[0],
+				'action' => 'task/catalog/information.delete',
+				'args'   => [
+					'information_id' => $args[0],
+					'store_id'       => $remove_id
 				]
 			];
 

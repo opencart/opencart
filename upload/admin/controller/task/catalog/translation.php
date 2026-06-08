@@ -192,19 +192,25 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
-		$stores = [];
-
-		$stores[] = [
+		// Store
+		$store_info = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
-		$this->load->model('setting/store');
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
 
 		$this->load->model('localisation/language');
 

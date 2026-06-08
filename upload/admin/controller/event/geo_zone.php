@@ -79,7 +79,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$country_ids = [];
 
 		if (isset($args[1]['zone_to_geo_zone'])) {
-			$country_ids = array_unique(array_column($args[1]['zone_to_geo_zone'], 'country_id'));
+			$country_ids = array_column($args[1]['zone_to_geo_zone'], 'country_id');
 		}
 
 		// Update country info for any removed geo zones

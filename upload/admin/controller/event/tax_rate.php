@@ -19,15 +19,23 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addTaxRate(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'tax_rate.' . $args[1]['geo_zone_id'],
-			'action' => 'task/catalog/tax_rate',
-			'args'   => ['geo_zone_id' => $args[1]['geo_zone_id']]
-		];
-
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'tax_rate.' . $store_id . '.' . $args[1]['geo_zone_id'],
+				'action' => 'task/catalog/tax_rate',
+				'args'   => [
+					'geo_zone_id' => $args[1]['geo_zone_id'],
+					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
 	/**
@@ -51,14 +59,21 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$geo_zone_ids = array_unique([$args[1]['geo_zone_id'], $tax_rate_info['geo_zone_id']]);
 
-		foreach ($geo_zone_ids as $geo_zone_id) {
-			$task_data = [
-				'code'   => 'tax_rate.' . $geo_zone_id,
-				'action' => 'task/catalog/tax_rate',
-				'args'   => ['geo_zone_id' => $geo_zone_id]
-			];
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-			$this->model_setting_task->addTask($task_data);
+		foreach ($store_ids as $store_id) {
+			foreach ($geo_zone_ids as $geo_zone_id) {
+				$task_data = [
+					'code'   => 'tax_rate.' . $store_id . '.' . $geo_zone_id,
+					'action' => 'task/catalog/tax_rate',
+					'args'   => [
+						'geo_zone_id' => $geo_zone_id,
+						'store_id'   => $store_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 
@@ -83,7 +98,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
 				'action' => 'task/admin/tax_rate.delete',
-				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
+				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']
+						'store_id'   => $store_id]
 			];
 
 			$this->load->model('setting/task');

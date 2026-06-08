@@ -69,33 +69,42 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 
 
-
-		$country_ids = array_unique([$args[1]['country_id'], $zone_info['country_id']]);
-
-		foreach ($country_ids as $country_id) {
-
-
-		// Admin
-		$task_data = [
-			'code'   => 'admin.country.info.' . $country_id,
-			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $country_id]
-		];
+		$country_ids = array_unique(array[$args[1]['country_id'], $zone_info['country_id']]);
 
 
 
-		$this->model_setting_task->addTask($task_data);
+
+
+
+		$this->load->model('setting/store');
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+
+
+
+		foreach ($store_ids as $store_id) {
+
+
+
+			foreach ($country_ids as $country_id) {
+			// Admin
+			$task_data = [
+				'code'   => 'admin.country.info.' . $country_id,
+				'action' => 'task/admin/country.info',
+				'args'   => ['country_id' => $country_id]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 
 
 
 
 		if ($zone_info) {
 
-		$this->load->model('setting/store');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		foreach ($store_ids as $store_id) {
+
 
 
 

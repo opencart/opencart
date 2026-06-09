@@ -102,7 +102,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			foreach ($geo_zone_ids as $geo_zone_id) {
 				$task_data = [
-					'code'   => 'tax_rate.' . $geo_zone_id,
+					'code'   => 'tax_rate.' . $store_id . '.' . $geo_zone_id,
 					'action' => 'task/catalog/tax_rate',
 					'args'   => [
 						'geo_zone_id' => $geo_zone_id,
@@ -130,24 +130,34 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	public function deleteTaxClass(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
+		$geo_zone_ids = [];
+
 		$this->load->model('localisation/tax_class');
 		$this->load->model('localisation/tax_rate');
 
 		$results = $this->model_localisation_tax_class->getTaxRules($args[0]);
 
+		$tax_rate_ids = array_unique(array_column($results, 'tax_rate_id'));
 
-
-
-
-
-		foreach ($results as $result) {
-			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
+		foreach ($tax_rate_ids as $tax_rate_id) {
+			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($tax_rate_id);
 
 			if ($tax_rate_info) {
+				$geo_zone_ids[] = $tax_rate_info['geo_zone_id'];
+			}
+		}
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		foreach ($store_ids as $store_id) {
+			foreach ($geo_zone_ids as $geo_zone_id) {
 				$task_data = [
-					'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
-					'action' => 'task/admin/tax_rate.delete',
-					'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
+					'code'   => 'tax_rate.' . $store_id . '.' . $geo_zone_id,
+					'action' => 'task/admin/tax_rate',
+					'args'   => [
+						'geo_zone_id' => $geo_zone_id,
+						'store_id'    => $store_id
+					]
 				];
 
 				$this->model_setting_task->addTask($task_data);

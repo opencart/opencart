@@ -22,17 +22,16 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args): void {
+		$this->load->model('setting/task');
+		$this->load->model('setting/store');
+
 		$task_data = [
 			'code'   => 'admin.language',
 			'action' => 'task/admin/language',
 			'args'   => []
 		];
 
-		$this->load->model('setting/task');
-
 		$this->model_setting_task->addTask($task_data);
-
-		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

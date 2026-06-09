@@ -21,7 +21,6 @@ class Category extends \Opencart\System\Engine\Controller {
 	 */
 	public function addCategory(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
-		$this->load->model('setting/store');
 
 		$store_ids = [];
 
@@ -94,7 +93,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		// Remove store ID's
+		// Remove from stores
 		$this->load->model('catalog/category');
 
 		$remove_ids = array_diff($this->model_catalog_category->getStores($args[0]), $store_ids);

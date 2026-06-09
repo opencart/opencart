@@ -133,7 +133,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		// Update countries based on geo zones.
+		// Update country files based on geo zones.
 		$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getZones($args[0]);
@@ -143,8 +143,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		// Update countries based on geo zones.
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'tax_rate.info.' . $store_id . '.' . $args[0],
-				'action' => 'task/catalog/tax_rate.info',
+				'code'   => 'tax_rate.delete.' . $store_id . '.' . $args[0],
+				'action' => 'task/catalog/tax_rate.delete',
 				'args'   => [
 					'geo_zone_id' => $args[0],
 				    'store_id'    => $store_id

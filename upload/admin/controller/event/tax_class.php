@@ -128,6 +128,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteTaxClass(string &$route, array &$args): void {
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$geo_zone_ids = [];
@@ -153,7 +154,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			foreach ($geo_zone_ids as $geo_zone_id) {
 				$task_data = [
 					'code'   => 'tax_rate.' . $store_id . '.' . $geo_zone_id,
-					'action' => 'task/admin/tax_rate',
+					'action' => 'task/catalog/tax_rate',
 					'args'   => [
 						'geo_zone_id' => $geo_zone_id,
 						'store_id'    => $store_id

@@ -295,6 +295,13 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($args[0]);
 
+		// Categories
+		$category_ids = $this->model_catalog_product->getCategories($args[0]);
+
+		// Filters
+		$filter_ids = $this->model_catalog_product->getFilters($args[0]);
+
+		// Stores
 		$store_ids = $this->model_catalog_product->getStores($args[0]);
 
 		foreach ($store_ids as $store_id) {
@@ -309,11 +316,46 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 
+			foreach ($category_ids as $category_id) {
+				$task_data = [
+					'code'   => 'category.product.' . $store_id . '.' . $category_id,
+					'action' => 'task/catalog/category.product',
+					'args'   => [
+						'category_id' => $category_id,
+						'store_id'    => $store_id
+					]
+				];
 
+				$this->model_setting_task->addTask($task_data);
+			}
 
+			// Manufacturer
+			if ($product_info) {
+				$task_data = [
+					'code'   => 'manufacturer.product.' . $store_id . '.' . $product_info['manufacturer_id'],
+					'action' => 'task/catalog/manufacturer.product',
+					'args'   => [
+						'manufacturer_id' => $product_info['manufacturer_id'],
+						'store_id'        => $store_id
+					]
+				];
 
+				$this->model_setting_task->addTask($task_data);
+			}
 
+			// Filters
+			foreach ($filter_ids as $filter_id) {
+				$task_data = [
+					'code'   => 'filter.product.' . $store_id . '.' . $filter_id,
+					'action' => 'task/catalog/filter.product',
+					'args'   => [
+						'filter_id' => $filter_id,
+						'store_id'  => $store_id
+					]
+				];
 
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 }

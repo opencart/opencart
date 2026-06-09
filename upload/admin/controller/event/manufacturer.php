@@ -20,7 +20,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addManufacturer(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$store_ids = [];
@@ -149,7 +148,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$this->load->model('catalog/manufacturer');
+
+		$store_ids = $this->model_catalog_manufacturer->getStores($args[0]);
 
 		foreach ($store_ids as $store_id) {
 			// List

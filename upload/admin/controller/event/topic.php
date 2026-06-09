@@ -20,12 +20,23 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addTopic(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['topic_store'])) {
+			$store_ids = (array)$args[1]['topic_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'topic.' . $store_id,
+				'action' => 'task/catalog/topic',
+				'args'   => ['store_id' => $store_id]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
 			$task_data = [
 				'code'   => 'topic.info.' . $store_id . '.' . $output,
 				'action' => 'task/catalog/topic.info',
@@ -53,18 +64,47 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editTopic(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$store_ids = [];
+
+		if (isset($args[1]['topic_store'])) {
+			$store_ids = (array)$args[1]['topic_store'];
+		}
 
 		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'topic.' . $store_id,
+				'action' => 'task/catalog/topic',
+				'args'   => ['store_id' => $store_id]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
 			$task_data = [
 				'code'   => 'topic.info.' . $store_id . '.' . $args[0],
 				'action' => 'task/catalog/topic.info',
 				'args'   => [
 					'topic_id' => $args[0],
 					'store_id' => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		// Remove store ID's
+		$this->load->model('cms/topic');
+
+		$remove_ids = array_diff($this->model_cms_topic->getStores($args[0]), $store_ids);
+
+		foreach ($remove_ids as $remove_id) {
+			$task_data = [
+				'code'   => 'topic.delete.' . $remove_id . '.' . $args[0],
+				'action' => 'task/catalog/topic.delete',
+				'args'   => [
+					'topic_id' => $args[0],
+					'store_id' => $remove_id
 				]
 			];
 
@@ -86,10 +126,11 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteTopic(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+		$this->load->model('catalog/information');
+
+		$store_ids = $this->model_catalog_information->getStores($args[0]);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

@@ -22,7 +22,6 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	private function addArticle(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$store_ids = [];
@@ -73,16 +72,16 @@ class Article extends \Opencart\System\Engine\Controller {
 	private function editArticle(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
 
-		// Rewrite the article ID's in the topic file
-		$this->load->model('cms/article');
-
-		$article_info = $this->model_cms_article->getArticle($args[0]);
-
 		$store_ids = [];
 
 		if (isset($args[1]['article_store'])) {
 			$store_ids = (array)$args[1]['article_store'];
 		}
+
+		// Rewrite the article ID's in the topic file
+		$this->load->model('cms/article');
+
+		$article_info = $this->model_cms_article->getArticle($args[0]);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -122,7 +121,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Remove
+		// Remove from stores
 		$remove_ids = array_diff($this->model_cms_article->getStores($args[0]), $store_ids);
 
 		foreach ($remove_ids as $remove_id) {

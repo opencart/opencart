@@ -3,13 +3,15 @@ import { loader } from '../../../assets/framework/library/loader.js';
 // Base
 const base = new URL(document.querySelector('base').href);
 
+console.log(base);
+
 // lang
 const lang = document.documentElement.lang.toLowerCase();
 
 // Config
 const config = await loader.library('config');
 
-config.addPath('catalog/view/data/');
+config.addPath('shop/' + base.host + '/data/');
 
 // Testing Code
 config.cache.set('default', {
@@ -33,12 +35,12 @@ local.set('currency', 'EUR');
 // Language
 const language = await loader.library('language');
 
-language.addPath('catalog/view/language/' + base.host + '/' + local.get('language') + '/');
+language.addPath('shop/' + base.host + '/language/' + local.get('language') + '/');
 
 // Storage
 const storage = await loader.library('storage');
 
-storage.addPath('catalog/view/data/' + base.host + '/');
+storage.addPath('shop/' + base.host + '/data/');
 
 storage.cache.set('cms/article-1', { articles: [] });
 storage.cache.set('catalog/information', { information: [] });
@@ -46,7 +48,7 @@ storage.cache.set('catalog/information', { information: [] });
 // Template
 const template = await loader.library('template');
 
-template.addPath('catalog/view/template/');
+template.addPath('shop/' + base.host + '/template/');
 
 // Event
 const event = await loader.library('event');

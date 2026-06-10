@@ -85,7 +85,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			'date_modified' => $article_info['date_modified']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/cms/';
+		$directory = DIR_OPENCART . 'shop/';
 		$filename = 'article-' . $article_info['article_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -132,7 +132,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);

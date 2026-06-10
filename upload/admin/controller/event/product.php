@@ -228,6 +228,20 @@ class Product extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+
+			// Tags
+			foreach ($tags as $tag) {
+				$task_data = [
+					'code'   => 'tag.product.' . $store_id . '.' . $tag,
+					'action' => 'task/catalog/tag.product',
+					'args'   => [
+						'tag'      => $tag,
+						'store_id' => $store_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 
 		// Remove from stores
@@ -292,6 +306,20 @@ class Product extends \Opencart\System\Engine\Controller {
 					'args'   => [
 						'filter_id' => $filter_id,
 						'store_id'  => $remove_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Tags
+			foreach ($tags as $tag) {
+				$task_data = [
+					'code'   => 'tag.product.' . $store_id . '.' . $tag,
+					'action' => 'task/catalog/tag.product',
+					'args'   => [
+						'tag'      => $tag,
+						'store_id' => $store_id
 					]
 				];
 

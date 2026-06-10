@@ -28,6 +28,33 @@ class Product extends \Opencart\System\Engine\Controller {
 			$store_ids = (array)$args[1]['product_store'];
 		}
 
+		// Categories
+		$category_ids = [];
+
+		if (isset($args[1]['product_category'])) {
+			$category_ids = (array)$args[1]['product_category'];
+		}
+
+		// Filters
+		$filter_ids = [];
+
+		if (isset($args[1]['product_filter'])) {
+			$filter_ids = (array)$args[1]['product_filter'];
+		}
+
+		// Tags
+		$tags = [];
+
+		if (isset($args[1]['product_description'])) {
+			foreach ($args[1]['product_description'] as $description) {
+				$parts = explode(',', $description['tag']);
+
+				foreach ($parts as $part) {
+					$tags[] = trim($part);
+				}
+			}
+		}
+
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'product.' . $store_id . '.' . $output,
@@ -39,13 +66,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
-
-			// Categories
-			$category_ids = [];
-
-			if (isset($args[1]['product_category'])) {
-				$category_ids = (array)$args[1]['product_category'];
-			}
 
 			foreach ($category_ids as $category_id) {
 				$task_data = [
@@ -71,13 +91,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
-
-			// Filters
-			$filter_ids = [];
-
-			if (isset($args[1]['product_filter'])) {
-				$filter_ids = (array)$args[1]['product_filter'];
-			}
 
 			foreach ($filter_ids as $filter_id) {
 				$task_data = [
@@ -137,6 +150,19 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		$filter_ids = array_unique(array_merge($this->model_catalog_product->getFilters($args[0]), $filter_ids));
+
+		// Tags
+		$tags = [];
+
+		if (isset($args[1]['product_description'])) {
+			foreach ($args[1]['product_description'] as $description) {
+				$parts = explode(',', $description['tag']);
+
+				foreach ($parts as $part) {
+					$tags[] = trim($part);
+				}
+			}
+		}
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

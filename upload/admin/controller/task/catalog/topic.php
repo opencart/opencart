@@ -69,7 +69,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/cms/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'topic.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -146,7 +146,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'description' => $description_data
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'topic-' . $topic_info['topic_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -200,7 +200,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_topic')];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'article_topic-' . $topic_info['topic_id'] . '.csv';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -257,13 +257,13 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/topic-' . (int)$args['topic_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/topic-' . (int)$args['topic_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/topic.article-' . (int)$args['topic_id'] . '.csv';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/topic.article-' . (int)$args['topic_id'] . '.csv';
 
 		if (is_file($file)) {
 			unlink($file);

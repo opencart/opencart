@@ -45,7 +45,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 		$filename = basename($file, '.scss');
 		$directory = dirname($file) . '/';
 
-		$stylesheet = DIR_CATALOG . 'view/stylesheet/' . $filename . '.css';
+		$stylesheet = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/stylesheet/' . $filename . '.css';
 
 		if (is_file($stylesheet)) {
 			unlink($stylesheet);
@@ -62,6 +62,6 @@ class Sass extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => sprintf($this->language->get('text_success'), $store_info['name'])];
 	}
 }

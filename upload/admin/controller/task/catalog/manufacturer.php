@@ -66,7 +66,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'manufacturer.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -134,7 +134,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'image'           => $manufacturer_info['image']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -198,7 +198,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'order'                  => 'ASC',
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'manufacturer-product-' . $manufacturer_info['manufacturer_id'] . '.csv';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -247,13 +247,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-product-' . (int)$args['manufacturer_id'] . '.csv';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-product-' . (int)$args['manufacturer_id'] . '.csv';
 
 		if (is_file($file)) {
 			unlink($file);

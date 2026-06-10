@@ -316,7 +316,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'date_modified'      => $product_info['date_modified']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'product-' . $product_info['product_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -363,7 +363,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/product-' . (int)$args['product_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/product-' . (int)$args['product_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);

@@ -59,7 +59,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'return_reason.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {

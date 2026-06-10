@@ -152,7 +152,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/review.yaml';
+			$file = DIR_OPENCART . 'shop/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/review.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

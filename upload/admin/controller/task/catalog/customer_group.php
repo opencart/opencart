@@ -76,7 +76,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $customer_group_data);
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
 		$filename = 'customer_group.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -218,7 +218,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			'approval'          => $customer_group_info['approval']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
 		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -265,7 +265,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/customer_group-' . (int)$args['customer_group_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/customer_group-' . (int)$args['customer_group_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);

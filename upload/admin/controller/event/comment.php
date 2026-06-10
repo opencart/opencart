@@ -20,6 +20,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addComment(string &$route, array &$args, &$output): void {
+		$store_ids = [];
+
+		if (isset($args[1]['article_store'])) {
+			$store_ids = (array)$args[1]['article_store'];
+		}
+
+
 		$task_data = [
 			'code'   => 'comment.' . $args['article_id'],
 			'action' => 'task/catalog/comment',

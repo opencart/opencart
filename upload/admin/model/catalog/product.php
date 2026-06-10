@@ -1086,6 +1086,14 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
 		}
 
+		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p`.`product_id` = `p2c`.`product_id`)";
+		}
+
+		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`p`.`product_id` = `pf`.`product_id`)";
+		}
+
 		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -1101,11 +1109,15 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
+			$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
 		}
 
 		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
+
+		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
+			$sql .= " AND `pf`.`filter_id` = '" . (int)$data['filter_filter_id'] . "'";
 		}
 
 		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
@@ -1275,6 +1287,14 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
 		}
 
+		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p`.`product_id` = `p2c`.`product_id`)";
+		}
+
+		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`p`.`product_id` = `pf`.`product_id`)";
+		}
+
 		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -1290,11 +1310,15 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
+			$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
 		}
 
 		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
+
+		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
+			$sql .= " AND `pf`.`filter_id` = '" . (int)$data['filter_filter_id'] . "'";
 		}
 
 		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {

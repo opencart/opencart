@@ -148,12 +148,15 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$product_ids = $this->model_catalog_product->getProductsByFilterId($filter_info['filter_id']);
 
 		foreach ($product_ids as $product_id) {
-
-
 			$store_ids = $this->model_catalog_product->getStores($product_id);
 
 			if (in_array($store_info['store_id'], $store_ids)) {
+
+
 				$product_data[] = $product_id;
+
+
+
 			}
 		}
 

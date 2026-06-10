@@ -66,7 +66,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'information.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -142,7 +142,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			'description'    => $description_data
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'information-' . $information_info['information_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -189,7 +189,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/information/information-' . (int)$args['information_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/information/information-' . (int)$args['information_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);

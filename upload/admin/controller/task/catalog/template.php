@@ -100,7 +100,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
 		$stores = [];
@@ -113,6 +113,12 @@ class Template extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
+
+
+
+
+
+
 
 		$this->load->model('localisation/language');
 

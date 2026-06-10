@@ -5,7 +5,7 @@ $_['heading_title']       = 'என் கணக்கு';
 // Text
 $_['text_account']        = 'கணக்கு';
 $_['text_my_account']     = 'என் கணக்கு';
-$_['text_my_orders']      = 'என் கணக்கு';
+$_['text_my_orders']      = 'நான் வாங்கக்கேட்டவை';
 $_['text_my_affiliate']   = 'என் இணைப்புப்பகிர்வு';
 $_['text_my_newsletter']  = 'செய்திமடல்';
 $_['text_edit']           = 'உங்கள் கணக்குத் தகவலைத் திருத்துக';

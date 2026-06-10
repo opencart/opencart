@@ -70,7 +70,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'category.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -183,7 +183,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'sort_order'  => $category_info['sort_order']
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'category-' . $category_info['category_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -239,7 +239,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_category')];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'category-product-' . $category_info['category_id'] . '.csv';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -291,13 +291,13 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/category-' . (int)$args['category_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/category-' . (int)$args['category_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/category-product-' . (int)$args['category_id'] . '.csv';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/category-product-' . (int)$args['category_id'] . '.csv';
 
 		if (is_file($file)) {
 			unlink($file);

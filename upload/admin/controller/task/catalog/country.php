@@ -61,7 +61,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'country.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -173,7 +173,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'geo_zones'         => $geo_zone_data
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'country-' . $country_info['country_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -215,7 +215,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/country-' . (int)$args['country_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/country-' . (int)$args['country_id'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);

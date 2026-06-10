@@ -20,15 +20,36 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addReview(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'review.' . $args[1]['product_id'],
-			'action' => 'task/catalog/review',
-			'args'   => ['product_id' => $args[1]['product_id']]
-		];
-
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+		$this->load->model('catalog/product');
+		$this->load->model('catalog/review');
+
+		$store_ids = $this->model_catalog_product->getStores($args[1]['product_id']);
+
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'review.' . $store_id . '.' . $args[1]['product_id'],
+				'action' => 'task/catalog/review',
+				'args'   => [
+					'product_id' => $args[1]['product_id'],
+					'store_id'   => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			$task_data = [
+				'code'   => 'review.info.' . $store_id . '.' . $args[1]['product_id'],
+				'action' => 'task/catalog/review',
+				'args'   => [
+					'product_id' => $args[1]['product_id'],
+					'store_id'   => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
 	/*
@@ -45,29 +66,42 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editReview(string &$route, array &$args, &$output): void {
+		$this->load->model('catalog/review');
+
 		$review_info = $this->model_catalog_review->getReview($args[0]);
 
-		if ($review_info) {
-			$task_data = [
-				'code'   => 'review.' . $args[1]['product_id'],
-				'action' => 'task/catalog/review',
-				'args'   => ['product_id' => $args[1]['product_id']]
-			];
+		$this->load->model('catalog/product');
 
-			$this->load->model('setting/task');
+		$store_ids = $this->model_catalog_product->getStores($args[0]);
 
-			$this->model_setting_task->addTask($task_data);
+		foreach ($store_ids as $store_id) {
 
-			$product_ids = array_unique([$args[1]['product_id'], $review_info['product_id']]);
 
-			foreach ($product_ids as $product_id) {
+			if ($review_info) {
 				$task_data = [
-					'code'   => 'review.' . $product_id,
+					'code'   => 'review.' . $args[1]['product_id'],
 					'action' => 'task/catalog/review',
-					'args'   => ['review_id' => $product_id]
+					'args'   => ['product_id' => $args[1]['product_id']]
 				];
 
+				$this->load->model('setting/task');
+
 				$this->model_setting_task->addTask($task_data);
+
+				$product_ids = array_unique([$args[1]['product_id'], $review_info['product_id']]);
+
+				foreach ($product_ids as $product_id) {
+					$task_data = [
+						'code'   => 'review.' . $product_id,
+						'action' => 'task/catalog/review',
+						'args'   => ['review_id' => $product_id]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+				}
+
+
+
 			}
 		}
 	}

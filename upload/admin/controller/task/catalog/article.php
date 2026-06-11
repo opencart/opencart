@@ -86,17 +86,17 @@ class Article extends \Opencart\System\Engine\Controller {
 		];
 
 		$directory = DIR_OPENCART . 'shop/';
-		$filename = 'article-' . $article_info['article_id'] . '.yaml';
+		$filename = 'article-' . $article_info['article_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($article_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($article_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $article_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $article_info['name'])];
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

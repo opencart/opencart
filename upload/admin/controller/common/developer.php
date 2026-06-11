@@ -304,16 +304,16 @@ class Developer extends \Opencart\System\Engine\Controller {
 			// Store
 
 			// tax_rate
-			$this->load->model('localisation/tax_rate');
+			$this->load->model('localisation/geo_zone');
 
-			$tax_rates = $this->model_localisation_tax_rate->getTaxRates();
+			$geo_zones = $this->model_localisation_geo_zone->getGeoZones();
 
-			foreach ($tax_rates as $tax_rate) {
+			foreach ($geo_zones as $geo_zone) {
 				$task_data = [
-					'code'   => 'tax_rate.' . $store_info['store_id'] . '.' . $tax_rate['geo_zone_id'],
+					'code'   => 'tax_rate.' . $store_info['store_id'] . '.' . $geo_zone['geo_zone_id'],
 					'action' => 'task/catalog/tax_rate',
 					'args'   => [
-						'geo_zone_id' => $tax_rate['geo_zone_id'],
+						'geo_zone_id' => $geo_zone['geo_zone_id'],
 						'store_id'    => $store_info['store_id']
 					]
 				];
@@ -321,9 +321,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->addTask($task_data);
 			}
 
-			// template
+			// Template
 
-			// topic
+			// Topic
 			$task_data = [
 				'code'   => 'topic.' . $store_info['store_id'],
 				'action' => 'task/catalog/topic',
@@ -334,12 +334,12 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 			$topics = $this->model_cms_topic->getStoresByStoreId($store_info['store_id']);
 
-			foreach ($tax_rates as $tax_rate) {
+			foreach ($topics as $topic) {
 				$task_data = [
-					'code'   => 'topic.info.' . $store_info['store_id'] . '.' . $output,
+					'code'   => 'topic.info.' . $store_info['store_id'] . '.' . $topic['topic_id'],
 					'action' => 'task/catalog/topic.info',
 					'args'   => [
-						'topic_id' => $output,
+						'topic_id' => $topic['topic_id'],
 						'store_id' => $store_info['store_id']
 					]
 				];
@@ -347,7 +347,12 @@ class Developer extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->addTask($task_data);
 			}
 
-			// translation
+			// Translation
+
+
+
+
+
 
 			$json['success'] = $this->language->get('text_rebuild_success');
 		}

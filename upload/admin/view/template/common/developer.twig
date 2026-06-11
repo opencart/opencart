@@ -27,19 +27,15 @@
                     <tr>
                       <td>{{ store.name }}</td>
                       <td class="text-end">
-
-
-
-
-                          <button type="button" value="{{ store.store_id }}" title="{{ text_rebuild }}" class="btn btn-warning"><i class="fa-solid fa-store"></i></button>
-
-                        <button type="button" value="{{ store.store_id }}" title="{{ text_template }}" class="btn btn-danger"><i class="fa-solid fa-code"></i></button>
-
-                        <button type="button" value="{{ store.store_id }}" title="{{ text_sass }}" class="btn btn-danger"><i class="fa-brands fa-sass"></i></button>
-
-                        <button type="button" value="{{ store.store_id }}" title="{{ text_clear }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-
-
+                        <div class="dropdown">
+                          <button type="button" class="btn btn-warning dropdown-toggle dropdown-menu-end" data-bs-toggle="dropdown">{{ text_rebuild }} <i class="fa-solid fa-caret-down"></i></button>
+                          <ul class="dropdown-menu">
+                            <li><a href="{{ store.rebuild }}" class="dropdown-item"><i class="fa-solid fa-sync"></i> {{ text_rebuild }}</a></li>
+                            <li><a href="{{ store.template }}" class="dropdown-item"><i class="fa-solid fa-sync"></i> {{ text_template }}</a></li>
+                            <li><a href="{{ store.sass }}" class="dropdown-item"><i class="fa-solid fa-sync"></i> {{ text_sass }}</a></li>
+                            <li><a href="{{ store.clear }}" class="dropdown-item"><i class="fa-solid fa-sync"></i> {{ text_clear }}</a></li>
+                          </ul>
+                        </div>
                       </td>
                     </tr>
                   {% endfor %}

@@ -66,7 +66,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer/';
 		$filename = 'manufacturer.json';
 
 		if (!oc_directory_create($directory, 0777)) {

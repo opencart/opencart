@@ -21,12 +21,28 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 		$data['stores'][] = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+			'name'     => $this->config->get('config_name'),
+			'rebuild'  => $this->url->link('common/developer.rebuild', 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
+			'template' => $this->url->link('common/developer.template', 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
+			'sass'     => $this->url->link('common/developer.sass', 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
+			'clear'    => $this->url->link('common/developer.clear', 'user_token=' . $this->session->data['user_token'] . '&store_id=0')
 		];
 
+		// Stores
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = [
+				'store_id' => $store['store_id'],
+				'name'     => $store['name'],
+				'rebuild'  => $this->url->link('common/developer.rebuild', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
+				'template' => $this->url->link('common/developer.template', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
+				'sass'     => $this->url->link('common/developer.sass', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
+				'clear'    => $this->url->link('common/developer.clear', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id'])
+			];
+		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -60,301 +76,17 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			/*
+			$json['success'] = $this->language->get('text_rebuild_success');
+
 			$task_data = [
-				'code'   => 'sass.' . $store_info['store_id'],
-				'action' => 'task/catalog/sass',
-				'args'   => ['store_id'   => $store_info['store_id']]
+				'code'   => 'store.' . $store_info['store_id'],
+				'action' => 'task/catalog/store',
+				'args'   => ['store_id' => $store_info['store_id']]
 			];
-			*/
+
 			$this->load->model('setting/task');
 
-			//$this->model_setting_task->addTask($task_data);
-
-			// Articles
-			$this->load->model('cms/article');
-
-			$articles = $this->model_cms_article->getArticles();
-
-			foreach ($articles as $article) {
-				$task_data = [
-					'code'   => 'article.' . $store_info['store_id'] . '.' . $article['article_id'],
-					'action' => 'task/catalog/article',
-					'args'   => [
-						'article_id' => $article['article_id'],
-						'store_id'   => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Banner
-			$this->load->model('design/banner');
-
-			$banners = $this->model_design_banner->getBanners();
-
-			foreach ($banners as $banner) {
-				$task_data = [
-					'code'   => 'banner.' . $store_info['store_id'] . '.' . $banner['banner_id'],
-					'action' => 'task/catalog/banner',
-					'args'   => [
-						'banner_id' => $banner['banner_id'],
-						'store_id'  => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Categories
-			$task_data = [
-				'code'   => 'category.' . $store_info['store_id'],
-				'action' => 'task/catalog/category',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
 			$this->model_setting_task->addTask($task_data);
-
-			$this->load->model('catalog/category');
-
-			$category_ids = $this->model_catalog_category->getStoresByStoreId($store_info['store_id']);
-
-			foreach ($category_ids as $category_id) {
-				$task_data = [
-					'code'   => 'category.info.' . $store_info['store_id'] . '.' . $category_id,
-					'action' => 'task/catalog/category.info',
-					'args'   => [
-						'category_id' => $category_id,
-						'store_id'    => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Country
-			$task_data = [
-				'code'   => 'country.' . $store_info['store_id'],
-				'action' => 'task/catalog/country',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			$this->load->model('setting/setting');
-
-			$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
-
-			foreach ($country_ids as $country_id) {
-				$task_data = [
-					'code'   => 'country.info.' . $store_info['store_id'] . '.' . $country_id,
-					'action' => 'task/catalog/country.info',
-					'args'   => [
-						'country_id' => $country_id,
-						'store_id'   => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Currency
-			$task_data = [
-				'code'   => 'currency.' . $store_info['store_id'],
-				'action' => 'task/catalog/currency',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			// Customer Group
-			$customer_group_ids = (array)$this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
-
-			foreach ($customer_group_ids as $customer_group_id) {
-				$task_data = [
-					'code'   => 'customer_group.info.' . $store_info['store_id'] . '.' . $customer_group_id,
-					'action' => 'task/catalog/customer_group.info',
-					'args'   => [
-						'customer_group_id' => $customer_group_id,
-						'store_id'          => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Filter Group
-			$this->load->model('catalog/filter_group');
-
-			$filter_groups = $this->model_catalog_filter->getFilterGroups();
-
-			foreach ($filter_groups as $filter_group) {
-				$task_data = [
-					'code'   => 'filter_group.info.' . $store_info['store_id'] . '.' . $filter_group['filter_group_id'],
-					'action' => 'task/catalog/filter_group.info',
-					'args'   => [
-						'filter_group_id' => $filter_group['filter_group_id'],
-						'store_id'        => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Information
-			$task_data = [
-				'code'   => 'information.' . $store_info['store_id'],
-				'action' => 'task/catalog/information',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			$this->load->model('catalog/information');
-
-			$information_ids = $this->model_catalog_information->getStoresByStoreId($store_info['store_id']);
-
-			foreach ($information_ids as $information_id) {
-				$task_data = [
-					'code'   => 'information.info.' . $store_info['store_id'] . '.' . $information_id,
-					'action' => 'task/catalog/information.info',
-					'args'   => [
-						'information_id' => $information_id,
-						'store_id'       => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Language
-			$task_data = [
-				'code'   => 'language.' . $store_info['store_id'],
-				'action' => 'task/catalog/language',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			// Location
-			$task_data = [
-				'code'   => 'location.' . $store_info['store_id'],
-				'action' => 'task/catalog/location',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			// Manufacturer
-			$task_data = [
-				'code'   => 'manufacturer.' . $store_info['store_id'],
-				'action' => 'task/catalog/manufacturer',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			$this->load->model('catalog/manufacturer');
-
-			$manufacturer_ids = $this->model_catalog_manufacturer->getStoresByStoreId($store_info['store_id']);
-
-			foreach ($manufacturer_ids as $manufacturer_id) {
-				$task_data = [
-					'code'   => 'manufacturer.info.' . $store_info['store_id'] . '.' . $manufacturer_id,
-					'action' => 'task/catalog/manufacturer.info',
-					'args'   => [
-						'manufacturer_id' => $manufacturer_id,
-						'store_id'        => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Products
-			$this->load->model('catalog/product');
-
-			$products = $this->model_catalog_product->getStoresByStoreId($store_info['store_id']);
-
-			foreach ($products as $product) {
-				$task_data = [
-					'code'   => 'product.' . $store_info['store_id'] . '.' . $product['product_id'],
-					'action' => 'task/catalog/product',
-					'args'   => [
-						'product_id' => $product['product_id'],
-						'store_id'   => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Return Reason
-			$task_data = [
-				'code'   => 'return_reason.' . $store_info['store_id'],
-				'action' => 'task/catalog/return_reason',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			// Setting
-
-			// Store
-
-			// tax_rate
-			$this->load->model('localisation/geo_zone');
-
-			$geo_zones = $this->model_localisation_geo_zone->getGeoZones();
-
-			foreach ($geo_zones as $geo_zone) {
-				$task_data = [
-					'code'   => 'tax_rate.' . $store_info['store_id'] . '.' . $geo_zone['geo_zone_id'],
-					'action' => 'task/catalog/tax_rate',
-					'args'   => [
-						'geo_zone_id' => $geo_zone['geo_zone_id'],
-						'store_id'    => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Template
-
-			// Topic
-			$task_data = [
-				'code'   => 'topic.' . $store_info['store_id'],
-				'action' => 'task/catalog/topic',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			$topics = $this->model_cms_topic->getStoresByStoreId($store_info['store_id']);
-
-			foreach ($topics as $topic) {
-				$task_data = [
-					'code'   => 'topic.info.' . $store_info['store_id'] . '.' . $topic['topic_id'],
-					'action' => 'task/catalog/topic.info',
-					'args'   => [
-						'topic_id' => $topic['topic_id'],
-						'store_id' => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-
-			// Translation
-
-
-
-
-
-
-			$json['success'] = $this->language->get('text_rebuild_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

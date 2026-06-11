@@ -118,7 +118,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('catalog/category');
 
-			$category_ids = $this->model_catalog_category->getStores($store_info['store_id']);
+			$category_ids = $this->model_catalog_category->getStoresByStoreId($store_info['store_id']);
 
 			foreach ($category_ids as $category_id) {
 				$task_data = [
@@ -133,8 +133,221 @@ class Developer extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->addTask($task_data);
 			}
 
+			// Country
+			$task_data = [
+				'code'   => 'country.' . $store_info['store_id'],
+				'action' => 'task/catalog/country',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
 
+			$this->model_setting_task->addTask($task_data);
 
+			$this->load->model('setting/setting');
+
+			$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
+
+			foreach ($country_ids as $country_id) {
+				$task_data = [
+					'code'   => 'country.info.' . $store_info['store_id'] . '.' . $country_id,
+					'action' => 'task/catalog/country.info',
+					'args'   => [
+						'country_id' => $country_id,
+						'store_id'   => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Currency
+			$task_data = [
+				'code'   => 'currency.' . $store_info['store_id'],
+				'action' => 'task/catalog/currency',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			// Customer Group
+			$customer_group_ids = (array)$this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
+
+			foreach ($customer_group_ids as $customer_group_id) {
+				$task_data = [
+					'code'   => 'customer_group.info.' . $store_info['store_id'] . '.' . $customer_group_id,
+					'action' => 'task/catalog/customer_group.info',
+					'args'   => [
+						'customer_group_id' => $customer_group_id,
+						'store_id'          => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Filter Group
+			$this->load->model('catalog/filter_group');
+
+			$filter_groups = $this->model_catalog_filter->getFilterGroups();
+
+			foreach ($filter_groups as $filter_group) {
+				$task_data = [
+					'code'   => 'filter_group.info.' . $store_info['store_id'] . '.' . $filter_group['filter_group_id'],
+					'action' => 'task/catalog/filter_group.info',
+					'args'   => [
+						'filter_group_id' => $filter_group['filter_group_id'],
+						'store_id'        => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Information
+			$task_data = [
+				'code'   => 'information.' . $store_info['store_id'],
+				'action' => 'task/catalog/information',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			$this->load->model('catalog/information');
+
+			$information_ids = $this->model_catalog_information->getStoresByStoreId($store_info['store_id']);
+
+			foreach ($information_ids as $information_id) {
+				$task_data = [
+					'code'   => 'information.info.' . $store_info['store_id'] . '.' . $information_id,
+					'action' => 'task/catalog/information.info',
+					'args'   => [
+						'information_id' => $information_id,
+						'store_id'       => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Language
+			$task_data = [
+				'code'   => 'language.' . $store_info['store_id'],
+				'action' => 'task/catalog/language',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			// Location
+			$task_data = [
+				'code'   => 'location.' . $store_info['store_id'],
+				'action' => 'task/catalog/location',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			// Manufacturer
+			$task_data = [
+				'code'   => 'manufacturer.' . $store_info['store_id'],
+				'action' => 'task/catalog/manufacturer',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			$this->load->model('catalog/manufacturer');
+
+			$manufacturer_ids = $this->model_catalog_manufacturer->getStoresByStoreId($store_info['store_id']);
+
+			foreach ($manufacturer_ids as $manufacturer_id) {
+				$task_data = [
+					'code'   => 'manufacturer.info.' . $store_info['store_id'] . '.' . $manufacturer_id,
+					'action' => 'task/catalog/manufacturer.info',
+					'args'   => [
+						'manufacturer_id' => $manufacturer_id,
+						'store_id'        => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Products
+			$this->load->model('catalog/product');
+
+			$products = $this->model_catalog_product->getStoresByStoreId($store_info['store_id']);
+
+			foreach ($products as $product) {
+				$task_data = [
+					'code'   => 'product.' . $store_info['store_id'] . '.' . $product['product_id'],
+					'action' => 'task/catalog/product',
+					'args'   => [
+						'product_id' => $product['product_id'],
+						'store_id'   => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Return Reason
+			$task_data = [
+				'code'   => 'return_reason.' . $store_info['store_id'],
+				'action' => 'task/catalog/return_reason',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			// Setting
+
+			// Store
+
+			// tax_rate
+			$this->load->model('localisation/tax_rate');
+
+			$tax_rates = $this->model_localisation_tax_rate->getTaxRates();
+
+			foreach ($tax_rates as $tax_rate) {
+				$task_data = [
+					'code'   => 'tax_rate.' . $store_info['store_id'] . '.' . $tax_rate['geo_zone_id'],
+					'action' => 'task/catalog/tax_rate',
+					'args'   => [
+						'geo_zone_id' => $tax_rate['geo_zone_id'],
+						'store_id'    => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// template
+
+			// topic
+			$task_data = [
+				'code'   => 'topic.' . $store_info['store_id'],
+				'action' => 'task/catalog/topic',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			$topics = $this->model_cms_topic->getStoresByStoreId($store_info['store_id']);
+
+			foreach ($tax_rates as $tax_rate) {
+				$task_data = [
+					'code'   => 'topic.info.' . $store_info['store_id'] . '.' . $output,
+					'action' => 'task/catalog/topic.info',
+					'args'   => [
+						'topic_id' => $output,
+						'store_id' => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// translation
 
 			$json['success'] = $this->language->get('text_rebuild_success');
 		}
@@ -144,11 +357,84 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * HTML
+	 * Theme
 	 *
 	 * @return void
 	 */
-	public function html(): void {
+	public function template(): void {
+		$this->load->language('common/developer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$directories = oc_directory_read(DIR_CACHE . 'template/');
+
+			if ($directories) {
+				foreach ($directories as $directory) {
+					if (is_dir($directory)) {
+						oc_directory_delete($directory);
+					}
+				}
+			}
+
+			$json['success'] = $this->language->get('text_theme_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * SASS Catalog
+	 *
+	 * Generate catalog SASS file.
+	 *
+	 * @return void
+	 */
+	public function sass(): void {
+		$this->load->language('common/developer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$file = DIR_CATALOG . 'view/sass/stylesheet.scss';
+
+		if (!is_file($file)) {
+			$json['error'] = sprintf($this->language->get('error_file'), $file);
+		}
+
+		if (!$json) {
+			$task_data = [
+				'code'   => 'sass',
+				'action' => 'task/catalog/sass',
+				'args'   => []
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+
+			$json['success'] = $this->language->get('text_sass_catalog_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+
+	/**
+	 * Clear
+	 *
+	 * @return void
+	 */
+	public function clear(): void {
 		$this->load->language('common/developer');
 
 		$json = [];
@@ -195,119 +481,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 			}
 
 			$json['success'] = $this->language->get('text_cache_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Theme
-	 *
-	 * @return void
-	 */
-	public function theme(): void {
-		$this->load->language('common/developer');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$directories = oc_directory_read(DIR_CACHE . 'template/');
-
-			if ($directories) {
-				foreach ($directories as $directory) {
-					if (is_dir($directory)) {
-						oc_directory_delete($directory);
-					}
-				}
-			}
-
-			$json['success'] = $this->language->get('text_theme_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * SASS Catalog
-	 *
-	 * Generate catalog SASS file.
-	 *
-	 * @return void
-	 */
-	public function sass_catalog(): void {
-		$this->load->language('common/developer');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$file = DIR_CATALOG . 'view/sass/stylesheet.scss';
-
-		if (!is_file($file)) {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
-
-		if (!$json) {
-			$task_data = [
-				'code'   => 'sass',
-				'action' => 'task/catalog/sass',
-				'args'   => []
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
-
-			$json['success'] = $this->language->get('text_sass_catalog_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * SASS Admin
-	 *
-	 * Generate admin SASS file.
-	 *
-	 * @return void
-	 */
-	public function sass_admin(): void {
-		$this->load->language('common/developer');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		// Before we delete we need to make sure there is a sass file to regenerate the css
-		$file = DIR_APPLICATION . 'view/sass/stylesheet.scss';
-
-		if (!is_file($file)) {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
-
-		if (!$json) {
-			$task_data = [
-				'code'   => 'sass',
-				'action' => 'task/admin/sass',
-				'args'   => []
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
-
-			$json['success'] = $this->language->get('text_sass_admin_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

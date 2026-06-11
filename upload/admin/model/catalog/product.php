@@ -2691,6 +2691,21 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_store_data;
 	}
 
+	/*
+	 * Get information data based on stores
+	 */
+	public function getStoresByStoreId(int $store_id): array {
+		$product_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_data[] = $result['product_id'];
+		}
+
+		return $product_data;
+	}
+
 	/**
 	 * Add Layout
 	 *

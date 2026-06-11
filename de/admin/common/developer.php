@@ -11,9 +11,9 @@ $_['text_theme_success']        = 'Erfolg: Sie haben den Theme-Cache geleert!';
 $_['text_sass_catalog_success'] = 'Success: Generating the catalog SASS added to the task queue!';
 $_['text_vendor_success']       = 'Success: You have modified the vendor cache!';
 
-$_['text_rebuild']              = 'Rebuild store';
-$_['text_template']             = 'Rebuild Template';
-$_['text_sass']                 = 'Rebuild SASS';
+$_['text_rebuild']              = 'Rebuild Store';
+$_['text_template']             = 'Rebuild Templates';
+$_['text_sass']                 = 'Rebuild Stylesheet';
 $_['text_clear']                = 'Clear All';
 $_['text_cache']                = 'Zwischenspeicher';
 $_['text_vendor']               = 'Verkäufer';

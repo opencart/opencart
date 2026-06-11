@@ -61,13 +61,13 @@ class Location extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'location.yaml';
+		$filename = 'location.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($location_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($location_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

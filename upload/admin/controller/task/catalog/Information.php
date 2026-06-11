@@ -67,13 +67,13 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'information.yaml';
+		$filename = 'information.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($information_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($information_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -143,13 +143,13 @@ class Information extends \Opencart\System\Engine\Controller {
 		];
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'information-' . $information_info['information_id'] . '.yaml';
+		$filename = 'information-' . $information_info['information_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($information_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($information_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -189,7 +189,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/information/information-' . (int)$args['information_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/information/information-' . (int)$args['information_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

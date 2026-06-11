@@ -77,13 +77,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $customer_group_data);
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
-		$filename = 'customer_group.yaml';
+		$filename = 'customer_group.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -219,13 +219,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		];
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
-		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.yaml';
+		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -265,7 +265,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/customer_group-' . (int)$args['customer_group_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/customer_group-' . (int)$args['customer_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

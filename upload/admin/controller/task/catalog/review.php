@@ -64,13 +64,13 @@ class Review extends \Opencart\System\Engine\Controller {
 
 
 			$directory = DIR_APPLICATION . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-			$filename = 'return_reason.yaml';
+			$filename = 'return_reason.json';
 
 			if (!oc_directory_create($directory, 0777)) {
 				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 			}
 
-			if (!file_put_contents($directory . $filename, oc_yaml_encode($return_reason_data))) {
+			if (!file_put_contents($directory . $filename, json_encode($return_reason_data))) {
 				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 			}
 		}
@@ -152,7 +152,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_OPENCART . 'shop/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/review.yaml';
+			$file = DIR_OPENCART . 'shop/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/review.json';
 
 			if (is_file($file)) {
 				unlink($file);

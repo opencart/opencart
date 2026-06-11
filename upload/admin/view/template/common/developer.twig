@@ -14,92 +14,73 @@
         </ul>
         <div class="tab-content">
           <div id="tab-general" class="tab-pane active">
-
-            <div class="mb-3">
-              <label class="form-label">Stores</label>
-              <select class="form-select">
-                <option>All Stores</option>
-                <option>Default</option>
-              </select>
-            </div>
-
             <fieldset>
               <legend>Static Site Rendering</legend>
               <table class="table table-bordered mt-3">
-                <tr>
-                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
-                  <td>Catalog
-                    <br/>
-                    <span class="fw-light">Generates all products, categories, options</span></td>
-                </tr>
-                <tr>
-                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
-                  <td>Catalog
-                    <br/>
-                    <span class="fw-light">Generates all products, categories, options</span></td>
-                </tr>
-                <tr>
-                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
-                  <td>CMS
-                    <br/>
-                    <span class="fw-light">Generates all topics, articles, comments</span></td>
-                </tr>
-                <tr>
-                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
-                  <td>CMS
-                    <br/>
-                    <span class="fw-light">Generates all topics, articles, comments</span></td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th>{{ column_store }}</th>
+                    <th class="text-end">{{ column_action }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for store in stores %}
+
+                    <tr>
+                      <td>{{ store.name }}</td>
+                      <td class="text-end">
+
+
+                        <div class="dropdown">
+
+
+                          <button type="button" value="{{ store.store_id }}" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">{{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
+
+
+                          <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a href="#" class="dropdown-item">{{ text_rebuild }}</a></li>
+                            <li><a href="#" class="dropdown-item">{{ text_sass }}</a></li>
+                            <li><a href="#" class="dropdown-item">Something else here</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                  {% endfor %}
+
+                </tbody>
               </table>
             </fieldset>
 
 
+
           </div>
+
           <div id="tab-data" class="tab-pane">
-            <table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <td>{{ text_html }}
-                    <br/>
-                    <span class="fw-light">{{ help_html }}</span></td>
-                  <td class="text-end"><button type="button" value="html" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-                </tr>
-                <tr>
-                  <td>{{ text_cache }}
-                    <br/>
-                    <span class="fw-light">{{ help_cache }}</span></td>
-                  <td class="text-end"><button type="button" value="cache" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-                </tr>
-                <tr>
-                  <td>{{ text_theme }}
-                    <br/>
-                    <span class="fw-light">{{ help_theme }}</span></td>
-                  <td class="text-end"><button type="button" value="theme" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-                </tr>
-                <tr>
-                  <td>{{ text_sass_catalog }}
-                    <br/>
-                    <span class="fw-light">{{ help_sass_catalog }}</span></td>
-                  <td class="text-end"><button type="button" value="sass_catalog" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-                </tr>
-                <tr>
-                  <td>{{ text_sass_admin }}
-                    <br/>
-                    <span class="fw-light">{{ help_sass_admin }}</span></td>
-                  <td class="text-end"><button type="button" value="sass_admin" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-                </tr>
-                <tr>
-                  <td>{{ text_vendor }}
-                    <br/>
-                    <span class="fw-light">{{ help_vendor }}</span></td>
-                  <td class="text-end"><button type="button" value="vendor" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-                </tr>
-              </tbody>
-            </table>
+            <fieldset>
+              <legend>Local Storage</legend>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td>{{ text_cache }}
+                      <br/>
+                      <span class="fw-light">{{ help_cache }}</span></td>
+                    <td class="text-end"><button type="button" value="cache" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td>{{ text_vendor }}
+                      <br/>
+                      <span class="fw-light">{{ help_vendor }}</span></td>
+                    <td class="text-end"><button type="button" value="vendor" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </fieldset>
           </div>
         </div>
-
       </div>
+
     </div>
   </div>
 </div>

@@ -67,13 +67,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'manufacturer.yaml';
+		$filename = 'manufacturer.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($manufacturer_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($manufacturer_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -135,13 +135,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		];
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
+		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($manufacturer_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($manufacturer_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -247,7 +247,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.yaml';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

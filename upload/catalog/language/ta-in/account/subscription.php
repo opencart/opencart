@@ -7,7 +7,7 @@ $_['text_account']               = 'கணக்கு';
 $_['text_success']               = 'வெற்றி: உங்கள் சந்தா வெற்றிகரமாக ரத்துசெய்யப்பட்டது!';
 $_['text_subscription']          = 'சந்தா #%s';
 $_['text_subscription_id']       = 'சந்தா அடையாளம்';
-$_['text_order_id']              = 'வாங்கக்கேட்டதன் அடையாளம்';
+$_['text_order_id']              = 'வாங்கக்கோரியதன் அடையாளம்';
 $_['text_shipping_address']      = 'அனுப்பல் முகவரி';
 $_['text_shipping_method']       = 'அனுப்பல் முறை';
 $_['text_payment_address']       = 'கட்டண முகவரி';
@@ -26,7 +26,7 @@ $_['text_quantity']              = 'எண்ணிக்கை';
 $_['text_date_next']             = 'தேதி அடுத்து';
 $_['text_remaining']             = 'மீதம்';
 $_['text_history']               = 'இதுவரையிலான சந்தாக்கள்';
-$_['text_order']                 = 'இதுவரை வாங்கக்கேட்டவை';
+$_['text_order']                 = 'இதுவரை வாங்கக்கோரியவை';
 $_['text_no_subscription']       = 'சந்தா எதுவும் காணப்படவில்லை!';
 
 // Column
@@ -34,7 +34,7 @@ $_['column_subscription_id']     = 'சந்தா அடையாளம்';
 $_['column_product']             = 'பொருள்';
 $_['column_product_total']       = 'பொருட்களின் எண்ணிக்கை';
 $_['column_description']         = 'விவரம்';
-$_['column_order_id']            = 'வாங்கக்கேட்டதன் அடையாளம்';
+$_['column_order_id']            = 'வாங்கக்கோரியதன் அடையாளம்';
 $_['column_status']              = 'நிலை';
 $_['column_quantity']            = 'அளவு';
 $_['column_trial_price']         = 'பரிசோதிப்பு விலை';

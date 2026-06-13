@@ -83,7 +83,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$task_data = [
 				'code'   => 'category.info.' . $store_id . '.' . $args[0],
-				'action' => 'task/catalog/category.info',
+				'action' => 'task/ssr/category.info',
 				'args'   => [
 					'category_id' => $args[0],
 					'store_id'    => $store_id
@@ -101,7 +101,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		foreach ($remove_ids as $remove_id) {
 			$task_data = [
 				'code'   => 'category.delete.' . $remove_id . '.' . $args[0],
-				'action' => 'task/catalog/category.delete',
+				'action' => 'task/ssr/category.delete',
 				'args'   => [
 					'category_id' => $args[0],
 					'store_id'    => $remove_id
@@ -136,7 +136,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			// Refresh List
 			$task_data = [
 				'code'   => 'category.' . $store_id,
-				'action' => 'task/catalog/category',
+				'action' => 'task/ssr/category',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -145,7 +145,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			// Delete
 			$task_data = [
 				'code'   => 'category.delete.' . $store_id . '.' . $args[0],
-				'action' => 'task/catalog/category.delete',
+				'action' => 'task/ssr/category.delete',
 				'args'   => [
 					'category_id' => $args[0],
 					'store_id'    => $store_id

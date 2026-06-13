@@ -2950,6 +2950,35 @@ VALUES (1, 'order_sale', 0),
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_ssr`
+--
+INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`)
+VALUES ('article', '', 'task/catalog/article', 1),
+       ('banner', '', 'task/catalog/banner', 1),
+       ('category', '', 'task/catalog/category', 1),
+       ('comment', '', 'task/catalog/comment', 1),
+       ('country', '', 'task/catalog/country', 1),
+       ('currency', '', 'task/catalog/currency', 1),
+       ('customer_group', 'task/catalog/customer_group', '', 1),
+       ('filter', '', 'task/catalog/filter', 1),
+       ('information', '', 'task/catalog/information', 1),
+       ('language', '', 'task/catalog/language', 1),
+       ('location', '', 'task/catalog/location', 1),
+       ('manufacturer', '', 'task/catalog/manufacturer', 1),
+       ('product', '', 'task/catalog/product', 1),
+       ('return_reason', '', 'task/catalog/', 1),
+       ('review', '', 'task/catalog/review', 1),
+       ('sass', '', 'task/catalog/sass', 1),
+       ('setting', '', 'task/catalog/setting', 1),
+       ('tag', '', 'task/catalog/tag', 1),
+       ('tax_rate', '', 'task/catalog/tax_rate', 1),
+       ('template', '', 'task/catalog/template', 1),
+       ('topic', '', 'task/catalog/topic', 1),
+       ('translation', '', 'task/catalog/translation', 1);
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_stock_status`
 --
 

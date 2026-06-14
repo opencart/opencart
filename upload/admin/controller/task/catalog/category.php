@@ -3,11 +3,55 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Category
  *
- * Generates category information for all stores.
+ * Generates category information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Category extends \Opencart\System\Engine\Controller {
+	public function index(array $args = []): array {
+		$this->load->language('task/catalog/category');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		$task_data = [
+			'code'   => 'category.list',
+			'action' => 'task/catalog/category.list',
+			'args'   => ['store_id' => $args['store_id']]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$filter_data = [
+			'filter_store_id' => $args['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
+		$this->load->model('catalog/category');
+
+		$results = $this->model_catalog_category->getCategories($filter_data);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'category.info.' . $args['store_id'] . '.' . $result['category_id'],
+				'action' => 'task/catalog/category.info',
+				'args'   => [
+					'category_id' => $result['category_id'],
+					'store_id'    => $args['store_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => $this->language->get('text_category')];
+	}
+
 	/**
 	 * List
 	 *
@@ -17,7 +61,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function index(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/catalog/category');
 
 		// Store

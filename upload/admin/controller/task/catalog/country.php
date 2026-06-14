@@ -3,13 +3,54 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Country
  *
- * Generates country information for all stores.
+ * Generates country information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Country extends \Opencart\System\Engine\Controller {
+	public function index(array $args = []): array {
+		$this->load->language('task/catalog/country');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		$task_data = [
+			'code'   => 'country',
+			'action' => 'task/catalog/country.list',
+			'args'   => ['store_id' => $args['store_id']]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$this->load->model('catalog/country');
+
+		$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $args['store_id']);
+
+		foreach ($country_ids as $country_id) {
+			$country_info = $this->model_localisation_country->getCountry((int)$country_id);
+
+			if ($country_info && $country_info['status']) {
+				$task_data = [
+					'code'   => 'country.info.' . $args['store_id'] . '.' . $country_info['country_id'],
+					'action' => 'task/catalog/country.info',
+					'args'   => [
+						'country_id' => $country_info['country_id'],
+						'store_id'   => $args['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+		}
+
+		return ['success' => $this->language->get('text_category')];
+	}
+
 	/**
-	 * List
+	 * Index
 	 *
 	 * Generate country list task by store.
 	 *
@@ -17,7 +58,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function index(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
 		// Store

@@ -16,7 +16,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		$task_data = [
-			'code'   => 'country',
+			'code'   => 'country.list',
 			'action' => 'task/catalog/country.list',
 			'args'   => ['store_id' => $args['store_id']]
 		];
@@ -26,6 +26,8 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$this->load->model('catalog/country');
+
+		$this->load->model('setting/store');
 
 		$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $args['store_id']);
 
@@ -46,11 +48,11 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_category')];
+		return ['success' => $this->language->get('text_country')];
 	}
 
 	/**
-	 * Index
+	 * List
 	 *
 	 * Generate country list task by store.
 	 *

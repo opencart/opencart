@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Currency
  *
- * Generates currency information for all stores.
+ * Generates currency information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate currency task list.
+	 * Generate all currency data based on store.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -37,7 +37,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Currency
 		$currency_data = [];
 
 		$this->load->model('setting/setting');

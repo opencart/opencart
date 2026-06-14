@@ -2952,6 +2952,7 @@ VALUES (1, 'order_sale', 0),
 --
 -- Dumping data for table `oc_ssr`
 --
+
 INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`)
 VALUES ('article', '', 'task/catalog/article', 1),
        ('banner', '', 'task/catalog/banner', 1),
@@ -2966,7 +2967,7 @@ VALUES ('article', '', 'task/catalog/article', 1),
        ('location', '', 'task/catalog/location', 1),
        ('manufacturer', '', 'task/catalog/manufacturer', 1),
        ('product', '', 'task/catalog/product', 1),
-       ('return_reason', '', 'task/catalog/', 1),
+       ('return_reason', '', 'task/catalog/return_reason', 1),
        ('review', '', 'task/catalog/review', 1),
        ('sass', '', 'task/catalog/sass', 1),
        ('setting', '', 'task/catalog/setting', 1),

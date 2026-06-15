@@ -126,6 +126,14 @@
 * Changed: Updated api/cart in https://github.com/opencart/opencart/pull/15503
 * Fixed: PHP CS Fixer for api/cart in https://github.com/opencart/opencart/pull/15504
 * Changed: Added caching for tools in https://github.com/opencart/opencart/pull/15500
+* Fixed: More fixes for usage of options in variant products in https://github.com/opencart/opencart/pull/15512
+* Fixed: More bugfixes for admin order product add in https://github.com/opencart/opencart/pull/15516
+* Changed: Reset modal-product form in https://github.com/opencart/opencart/pull/15517
+* Fixed: Merge variant code with options in https://github.com/opencart/opencart/pull/15518
+* Fixed: More admin order edit/add fixes in https://github.com/opencart/opencart/pull/15519
+* Changed: Change product rating field type to float in https://github.com/opencart/opencart/pull/15513
+* Fixed: Coupon category restriction not enforced in https://github.com/opencart/opencart/pull/15530
+* Fixed: Customer-facing 2FA email contains admin-oriented text in https://github.com/opencart/opencart/pull/15533
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

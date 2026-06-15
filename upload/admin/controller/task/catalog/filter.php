@@ -11,7 +11,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate all customer group data based on store.
+	 * Generate filter list task by store.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -41,28 +41,20 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$task_data = [
-			'code'   => 'filter.list.' . $args['store_id'],
-			'action' => 'task/catalog/filter.list',
-			'args'   => ['store_id' => $args['store_id']]
-		];
-
 		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
 
 		$limit = 1000;
 
 		$this->load->model('catalog/filter');
 
-		$filter_total = $this->model_catalog_filter->getTotalFilterGroups();
+		$filter_group_total = $this->model_catalog_filter->getTotalFilterGroups();
 
-		for ($i = 1; $i <= ceil($filter_total / $limit); $i++) {
+		for ($i = 1; $i <= ceil($filter_group_total / $limit); $i++) {
 			$task_data = [
-				'code'   => 'filter',
+				'code'   => 'filter.list.' . $store_info['store_id'],
 				'action' => 'task/catalog/filter.list',
 				'args'   => [
-					'store_id' => $args['store_id'],
+					'store_id' => $store_info['store_id'],
 					'start'    => $i * $limit,
 					'limit'    => $limit
 				]
@@ -74,7 +66,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
-	public function filter(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->model('setting/task');
 
 		if (!array_key_exists('store_id', $args)) {
@@ -98,6 +90,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Filter Group
 		$this->load->model('catalog/filter');
 
 		$filter_groups = $this->model_catalog_filter->getFilterGroups();
@@ -113,9 +106,25 @@ class Filter extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
+
+			// Filters
+			$filters = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group['filter_group_id']]);
+
+			foreach ($filters as $filter) {
+				$task_data = [
+					'code'   => 'filter.product.' . $store_info['store_id'] . '.' . $filter['filter_id'],
+					'action' => 'task/catalog/filter.product',
+					'args'   => [
+						'filter_id' => $filter['filter_id'],
+						'store_id'  => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_filter'), $store_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $args['start'], $args['limit'])];
 	}
 
 
@@ -128,7 +137,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function index(array $args = []): array {
+	public function info(array $args = []): array {
 		$this->load->language('task/catalog/filter');
 
 		if (!array_key_exists('filter_group_id', $args)) {

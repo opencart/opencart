@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate all currency data based on store.
+	 * Generate currency data based on store.
 	 *
 	 * @param array<string, string> $args
 	 *

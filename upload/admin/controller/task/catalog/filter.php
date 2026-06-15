@@ -3,11 +3,122 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Filter
  *
- * Generates filter information for all stores.
+ * Generates filter information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Filter extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * Generate all customer group data based on store.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function index(array &$args): array {
+		$this->load->language('task/catalog/filter');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$task_data = [
+			'code'   => 'filter.list.' . $args['store_id'],
+			'action' => 'task/catalog/filter.list',
+			'args'   => ['store_id' => $args['store_id']]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$limit = 1000;
+
+		$this->load->model('catalog/filter');
+
+		$filter_total = $this->model_catalog_filter->getTotalFilterGroups();
+
+		for ($i = 1; $i <= ceil($filter_total / $limit); $i++) {
+			$task_data = [
+				'code'   => 'filter',
+				'action' => 'task/catalog/filter.list',
+				'args'   => [
+					'store_id' => $args['store_id'],
+					'start'    => $i * $limit,
+					'limit'    => $limit
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
+	}
+
+	public function filter(array $args = []): array {
+		$this->load->model('setting/task');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$this->load->model('catalog/filter');
+
+		$filter_groups = $this->model_catalog_filter->getFilterGroups();
+
+		foreach ($filter_groups as $filter_group) {
+			$task_data = [
+				'code'   => 'filter.info.' . $store_info['store_id'] . '.' . $filter_group['filter_group_id'],
+				'action' => 'task/catalog/filter.info',
+				'args'   => [
+					'filter_group_id' => $filter_group['filter_group_id'],
+					'store_id'        => $store_info['store_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => sprintf($this->language->get('text_filter'), $store_info['name'])];
+	}
+
+
 	/**
 	 * Index
 	 *

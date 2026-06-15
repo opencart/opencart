@@ -3,11 +3,81 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Information
  *
- * Generates information for all stores.
+ * Generates information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Information extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * Generate customer group data based on store.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function index(array $args = []): array {
+		$this->load->language('task/catalog/information');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$task_data = [
+			'code'   => 'information.list.' . $store_info['store_id'],
+			'action' => 'task/catalog/information.list',
+			'args'   => ['store_id' => $store_info['store_id']]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
+		$this->load->model('catalog/information');
+
+		$results = $this->model_catalog_information->getInformations($filter_data);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'information.info.' . $store_info['store_id'] . '.' . $result['information_id'],
+				'action' => 'task/catalog/information.info',
+				'args'   => [
+					'information_id' => $result['information_id'],
+					'store_id'       => $store_info['store_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => $this->language->get('text_information')];
+	}
+
 	/**
 	 * List
 	 *
@@ -17,7 +87,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function index(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
 		// Store

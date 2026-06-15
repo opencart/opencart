@@ -8,6 +8,15 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Country extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * Generate country list task by store.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
@@ -15,10 +24,27 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$task_data = [
-			'code'   => 'country.list',
+			'code'   => 'country.list.' . $store_info['store_id'],
 			'action' => 'task/catalog/country.list',
-			'args'   => ['store_id' => $args['store_id']]
+			'args'   => ['store_id' => $store_info['store_id']]
 		];
 
 		$this->load->model('setting/task');
@@ -29,18 +55,18 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $args['store_id']);
+		$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
 
 		foreach ($country_ids as $country_id) {
 			$country_info = $this->model_localisation_country->getCountry((int)$country_id);
 
 			if ($country_info && $country_info['status']) {
 				$task_data = [
-					'code'   => 'country.info.' . $args['store_id'] . '.' . $country_info['country_id'],
+					'code'   => 'country.info.' . $store_info['store_id'] . '.' . $country_info['country_id'],
 					'action' => 'task/catalog/country.info',
 					'args'   => [
 						'country_id' => $country_info['country_id'],
-						'store_id'   => $args['store_id']
+						'store_id'   => $store_info['store_id']
 					]
 				];
 
@@ -48,7 +74,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_country')];
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
 	/**

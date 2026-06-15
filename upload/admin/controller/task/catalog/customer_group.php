@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Customer Group
  *
- * Generates customer group information for all stores.
+ * Generates customer group information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -11,13 +11,82 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate customer group task list.
+	 * Generate all customer group data based on store.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
+		$this->load->language('task/catalog/customer_group');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$task_data = [
+			'code'   => 'customer_group.list.' . $store_info['store_id'],
+			'action' => 'task/catalog/customer_group.list',
+			'args'   => ['store_id' => $store_info['store_id']]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$this->load->model('customer/customer_group');
+
+		$this->load->model('setting/store');
+
+		$customer_group_ids = (array)$this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
+
+		foreach ($customer_group_ids as $customer_group_id) {
+			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$customer_group_id);
+
+			if ($customer_group_info) {
+				$task_data = [
+					'code'   => 'customer_group.info.' . $store_info['store_id'] . '.' . $customer_group_info['country_id'],
+					'action' => 'task/catalog/customer_group.info',
+					'args'   => [
+						'customer_group_id' => $customer_group_info['customer_group_id'],
+						'store_id'          => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+		}
+
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
+	}
+
+	/**
+	 * List
+	 *
+	 * Generate customer group task list.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function list(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
 		// Store

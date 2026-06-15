@@ -96,12 +96,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		$filter_data = [
-			'filter_store_id' => $store_info['store_id'],
-			'filter_status'   => true,
-			'sort'            => 'date_added',
-			'order'           => 'DESC',
-			'start'           => $args['start'],
-			'limit'           => $args['limit']
+			'filter_status' => true,
+			'start'         => $args['start'],
+			'limit'         => $args['limit']
 		];
 
 		$this->load->model('cms/article');

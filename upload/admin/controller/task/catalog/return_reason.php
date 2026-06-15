@@ -11,7 +11,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate return reason list task for each store and language.
+	 * Generate return reason list task by store.
 	 *
 	 * @param array<string, string> $args
 	 *

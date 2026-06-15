@@ -8,6 +8,15 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Topic extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * Generate topic task list.
+	 *
+	 * @param array<int, mixed> $args
+	 *
+	 * @return array
+	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/topic');
 
@@ -15,10 +24,27 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$task_data = [
-			'code'   => 'topic.list.' . $args['store_id'],
+			'code'   => 'topic.list.' . $store_info['store_id'],
 			'action' => 'task/catalog/topic.list',
-			'args'   => ['store_id' => $args['store_id']]
+			'args'   => ['store_id' => $store_info['store_id']]
 		];
 
 		$this->load->model('setting/task');
@@ -26,7 +52,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$filter_data = [
-			'filter_store_id' => $args['store_id'],
+			'filter_store_id' => $store_info['store_id'],
 			'filter_status'   => true,
 			'sort'            => 'sort_order',
 			'order'           => 'ASC',
@@ -34,33 +60,33 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/topic');
 
-		$results = $this->model_catalog_topic->getTopics($filter_data);
+		$results = $this->model_cms_topic->getTopics($filter_data);
 
 		foreach ($results as $result) {
 			$task_data = [
-				'code'   => 'topic.info.' . $args['store_id'] . '.' . $result['topic_id'],
+				'code'   => 'topic.info.' . $store_info['store_id'] . '.' . $result['topic_id'],
 				'action' => 'task/catalog/topic.info',
 				'args'   => [
 					'topic_id' => $result['topic_id'],
-					'store_id' => $args['store_id']
+					'store_id' => $store_info['store_id']
 				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 
 			$task_data = [
-				'code'   => 'topic.article.' . $args['store_id'] . '.' . $result['topic_id'],
+				'code'   => 'topic.article.' . $store_info['store_id'] . '.' . $result['topic_id'],
 				'action' => 'task/catalog/topic.article',
 				'args'   => [
 					'topic_id' => $result['topic_id'],
-					'store_id' => $args['store_id']
+					'store_id' => $store_info['store_id']
 				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_topic')];
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
 	/**

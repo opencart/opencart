@@ -81,20 +81,19 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_store_id' => $store_info['store_id'],
-			'sort'            => 'date_added',
-			'order'           => 'DESC',
 			'start'           => $args['start'],
 			'limit'           => $args['limit']
 		];
 
 		$this->load->model('localisation/geo_zone');
 
-		$results = $this->model_cms_article->getGeoZones($filter_data);
-
-		getZones
-
+		$results = $this->model_localisation_geo_zone->getGeoZones($filter_data);
 
 		foreach ($results as $result) {
+
+			$results = $this->model_localisation_geo_zone->getZones($filter_data);
+
+
 			$task_data = [
 				'code'   => 'tax_rate.info.' . $store_info['store_id'] . '.' . $result['tax_rate_id'],
 				'action' => 'task/catalog/tax_rate',
@@ -105,6 +104,12 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
+
+
+
+
+
+
 		}
 
 		return ['success' => sprintf($this->language->get('text_article'), $store_info['name'], $args['start'], $args['limit'])];

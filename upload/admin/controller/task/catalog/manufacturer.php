@@ -8,6 +8,12 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Manufacturer extends \Opencart\System\Engine\Controller {
+
+
+
+
+
+
 	/**
 	 * Index
 	 *

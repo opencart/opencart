@@ -51,7 +51,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		for ($i = 1; $i <= ceil($banner_total / $limit); $i++) {
 			$task_data = [
-				'code'   => 'banner',
+				'code'   => 'banner.list',
 				'action' => 'task/catalog/banner.list',
 				'args'   => [
 					'store_id' => $args['store_id'],
@@ -107,8 +107,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$task_data = [
-				'code'   => 'banner.' . $store_info['store_id'] . '.' . $result['banner_id'],
-				'action' => 'task/catalog/banner',
+				'code'   => 'banner.info.' . $store_info['store_id'] . '.' . $result['banner_id'],
+				'action' => 'task/catalog/banner.info',
 				'args'   => [
 					'banner_id' => $result['banner_id'],
 					'store_id'  => $store_info['store_id']

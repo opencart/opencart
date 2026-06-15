@@ -330,7 +330,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => sprintf($this->language->get('text_product'), $store_info['name'], $category_info['name'])];
 	}
 
 	/*

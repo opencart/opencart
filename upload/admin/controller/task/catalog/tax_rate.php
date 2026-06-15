@@ -16,6 +16,110 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
+		$this->load->model('setting/task');
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$limit = 1000;
+
+		$this->load->model('localisation/geo_zone');
+
+		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
+
+		for ($i = 1; $i <= ceil($geo_zone_total / $limit); $i++) {
+			$task_data = [
+				'code'   => 'tax_rate.list.' . $store_info['store_id'],
+				'action' => 'task/catalog/tax_rate.list',
+				'args'   => ['store_id' => $store_info['store_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
+	}
+
+	/*
+	 * List
+	 *
+	 * Generate Article data files.
+	 */
+	public function list(array $args = []): array {
+		$this->load->model('setting/task');
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'sort'            => 'date_added',
+			'order'           => 'DESC',
+			'start'           => $args['start'],
+			'limit'           => $args['limit']
+		];
+
+		$this->load->model('localisation/geo_zone');
+
+		$results = $this->model_cms_article->getGeoZones($filter_data);
+
+		getZones
+
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'tax_rate.info.' . $store_info['store_id'] . '.' . $result['tax_rate_id'],
+				'action' => 'task/catalog/tax_rate',
+				'args'   => [
+					'tax_rate_id' => $result['tax_rate_id'],
+					'store_id'    => $store_info['store_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => sprintf($this->language->get('text_article'), $store_info['name'], $args['start'], $args['limit'])];
+	}
+
+	/**
+	 * Index
+	 *
+	 * Generate tax class task list.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function info(array $args = []): array {
 		$this->load->language('task/catalog/tax_rate');
 
 		if (!array_key_exists('geo_zone_id', $args)) {

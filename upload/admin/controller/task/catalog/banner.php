@@ -3,23 +3,19 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Banner
  *
- * Generates banner information for all stores.
+ * Generates banner information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Banner extends \Opencart\System\Engine\Controller {
 	/**
-	 * Add Store
+	 * Index
 	 *
-	 * Adds task to generate new store list
+	 * Generate banner list task by store.
 	 *
-	 * model/setting/store/addStore
-	 *
-	 * @param string            $route
 	 * @param array<int, mixed> $args
-	 * @param mixed             $output
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array &$args): array {
 		$this->load->language('task/catalog/banner');
@@ -67,13 +63,17 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'])];
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
 	/*
-	 * Article
+	 * List
 	 *
 	 * Generate Article data files.
+	 *
+	 * @param array<int, mixed> $args
+	 *
+	 * @return array
 	 */
 	public function list(array $args = []): array {
 		$this->load->model('setting/task');
@@ -106,26 +106,26 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$articles = $this->model_cms_article->getArticles($filter_data);
+		$results = $this->model_cms_article->getArticles($filter_data);
 
-		foreach ($articles as $article) {
+		foreach ($results as $result) {
 			$task_data = [
-				'code'   => 'article.' . $store_info['store_id'] . '.' . $article['article_id'],
-				'action' => 'task/catalog/article',
+				'code'   => 'banner.' . $store_info['store_id'] . '.' . $result['banner_id'],
+				'action' => 'task/catalog/banner',
 				'args'   => [
-					'article_id' => $article['article_id'],
-					'store_id'   => $store_info['store_id']
+					'banner_id' => $result['banner_id'],
+					'store_id'  => $store_info['store_id']
 				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => sprintf($this->language->get('text_article'), $store_info['name'], $args['start'], $args['limit'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $args['start'], $args['limit'])];
 	}
 
 	/**
-	 * Index
+	 * Info
 	 *
 	 * Generate banner task by banner ID for each store and language.
 	 *

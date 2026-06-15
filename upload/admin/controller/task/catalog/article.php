@@ -9,15 +9,13 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class Article extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generates all article data based on store
+	 * Index
 	 *
-	 * Adds task to generate article store data.
+	 * Generate article task list.
 	 *
-	 * @param string            $route
 	 * @param array<int, mixed> $args
-	 * @param mixed             $output
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array &$args): array {
 		$this->load->language('task/catalog/article');
@@ -26,12 +24,29 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('setting/task');
 
 		$limit = 1000;
 
 		$filter_data = [
-			'filter_store_id' => $args['store_id'],
+			'filter_store_id' => $store_info['store_id'],
 			'filter_status'   => true
 		];
 
@@ -41,10 +56,10 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		for ($i = 1; $i <= ceil($article_total / $limit); $i++) {
 			$task_data = [
-				'code'   => 'article.list.' . $args['store_id'],
+				'code'   => 'article.list.' . $store_info['store_id'],
 				'action' => 'task/catalog/article.list',
 				'args'   => [
-					'store_id' => $args['store_id'],
+					'store_id' => $store_info['store_id'],
 					'start'    => $i * $limit,
 					'limit'    => $limit
 				]
@@ -53,19 +68,46 @@ class Article extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'])];
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
 	/*
 	 * List
 	 *
 	 * Generate All Article files.
+	 *
+	 * @param array<int, mixed> $args
+	 *
+	 * @return array
 	 */
 	public function list(array $args = []): array {
+		$this->load->language('task/catalog/article');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('setting/task');
 
 		$filter_data = [
-			'filter_store_id' => $args['store_id'],
+			'filter_store_id' => $store_info['store_id'],
 			'filter_status'   => true,
 			'sort'            => 'date_added',
 			'order'           => 'DESC',
@@ -79,18 +121,18 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$task_data = [
-				'code'   => 'article.info.' . $args['store_id'] . '.' . $result['article_id'],
+				'code'   => 'article.info.' . $store_info['store_id'] . '.' . $result['article_id'],
 				'action' => 'task/catalog/article.info',
 				'args'   => [
 					'article_id' => $result['article_id'],
-					'store_id'   => $args['store_id']
+					'store_id'   => $store_info['store_id']
 				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_article')];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $args['start'], $args['limit'])];
 	}
 
 	/**

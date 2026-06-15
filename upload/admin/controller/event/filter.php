@@ -28,7 +28,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'filter.' . $store_id . '.' . $output,
-				'action' => 'task/catalog/filter',
+				'action' => 'task/catalog/filter.info',
 				'args'   => [
 					'filter_group_id' => $output,
 					'store_id'        => $store_id
@@ -61,7 +61,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'filter.' . $store_id . '.' . $args[0],
-				'action' => 'task/catalog/filter',
+				'action' => 'task/catalog/filter.info',
 				'args'   => [
 					'filter_group_id' => $args[0],
 					'store_id'        => $store_id

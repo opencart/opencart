@@ -35,6 +35,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 				'name'     => $store['name']
 			];
 		}
+
 		$data['ssrs'] = [];
 
 		$this->load->model('setting/ssr');
@@ -79,17 +80,16 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$store_id = 0;
 		}
 
-		if (isset($this->request->get['ssr_id'])) {
-			$ssr_id = (int)$this->request->get['ssr_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$ssr_id = 0;
+			$selected = [];
 		}
 
 		// Store
 		$store_info = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
+			'name'     => $this->config->get('config_name')
 		];
 
 		if ($store_id) {
@@ -102,38 +102,27 @@ class Developer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/ssr');
-
-		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);
-
-		if (!$ssr_info) {
-			$json['error'] = $this->language->get('error_exists');
-		}
-
 		if (!$json) {
+			$this->load->model('setting/task');
+			$this->load->model('setting/ssr');
+
+			foreach ($selected as $ssr_id) {
+				$ssr_info = $this->model_setting_ssr->getSsr((int)$ssr_id);
+
+				if ($ssr_info) {
+					$task_data = [
+						'code'   => $ssr_info['code'] . '.' . $store_info['store_id'],
+						'action' => $ssr_info['action'],
+						'args'   => ['store_id' => $store_info['store_id']]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+
+					$this->model_setting_ssr->editSsr($ssr_info['ssr_id']);
+				}
+			}
+
 			$json['success'] = $this->language->get('text_success');
-
-			$task_data = [
-				'code'   => $ssr_info['code'] . '.' . $store_id,
-				'action' => $ssr_info['action'],
-				'args'   => ['store_id' => $store_id]
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
-
-			$this->model_setting_ssr->editSsr($ssr_info['ssr_id']);
-
-			$task_data = [
-				'code'   => 'store.' . $store_info['store_id'],
-				'action' => 'task/catalog/store',
-				'args'   => ['store_id' => $store_info['store_id']]
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -167,6 +156,10 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
+
+
 
 	/**
 	 * Cache

@@ -3,23 +3,40 @@
 $_['heading_title']        = 'Developer Options';
 
 // Text
-$_['text_rebuild_success'] = 'Success: You have cleared the HTML files!';
-$_['text_theme_success']   = 'Success: You have cleared the theme cache!';
-$_['text_sass_success']    = 'Success: Generating the catalog SASS added to the task queue!';
+$_['text_ssr']             = 'Static Site Rendering';
+$_['text_storage']         = 'Local Storage';
 
+$_['text_success']         = 'Success: You have added the Static Site Rendering tasks!';
+$_['text_clear_success']   = 'Success: You have cleared the HTML files!';
 $_['text_cache_success']   = 'Success: You have cleared the cache!';
 $_['text_vendor_success']  = 'Success: You have modified the vendor cache!';
-
-$_['text_rebuild']         = 'Rebuild Store';
-$_['text_template']        = 'Rebuild Templates';
-$_['text_sass']            = 'Rebuild Stylesheet';
-$_['text_clear']           = 'Clear All';
+$_['text_run']             = 'Run';
+$_['text_clear']           = 'Clear';
 $_['text_cache']           = 'Cache';
 $_['text_vendor']          = 'Vendor';
-
-// Column
-$_['column_store']         = 'Store';
-$_['column_action']        = 'Action';
+$_['text_article']         = 'Articles';
+$_['text_banner']          = 'Banners';
+$_['text_category']        = 'Categories';
+$_['text_comment']         = 'Comments';
+$_['text_country']         = 'Countries';
+$_['text_currency']        = 'Currencies';
+$_['text_customer_group']  = 'Customer Groups';
+$_['text_filter']          = 'Filters';
+$_['text_information']     = 'Information';
+$_['text_language']        = 'Language';
+$_['text_location']        = 'Location';
+$_['text_manufacturer']    = 'Manufacturer';
+$_['text_product']         = 'Product';
+$_['text_return_reason']   = 'Return Reason';
+$_['text_review']          = 'Review';
+$_['text_sass']            = 'SASS';
+$_['text_setting']         = 'Setting';
+$_['text_store']           = 'Stores';
+$_['text_tag']             = 'Tagsw';
+$_['text_tax_rate']        = 'Tax Rates';
+$_['text_template']        = 'Template';
+$_['text_topic']           = 'Topic';
+$_['text_translation']     = 'Translation';
 
 // Help
 $_['help_cache']           = 'Clears all stored cache data files.';

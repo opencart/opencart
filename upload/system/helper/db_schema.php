@@ -4646,6 +4646,12 @@ function oc_db_schema() {
 				'key'  => [
 					'email'
 				]
+			],
+			[
+				'name' => 'order_status_id',
+				'key'  => [
+					'order_status_id'
+				]
 			]
 		],
 		'engine'  => 'InnoDB',

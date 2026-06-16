@@ -19,9 +19,46 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		try {
 			$ssrs = [];
 
+
+
+
+
+
+
+
+
+       ('location', 'Generates location data.', 'task/catalog/location', 1, NOW()),
+       ('manufacturer', 'Generates article data.', 'task/catalog/manufacturer', 1, NOW()),
+       ('product', 'Generates product data.', 'task/catalog/product', 1, NOW()),
+       ('return_reason', 'Generates return_reason data.', 'task/catalog/return_reason', 1, NOW()),
+       ('review', 'Generates review data.', 'task/catalog/review', 1, NOW()),
+       ('sass', 'Generates sass data.', 'task/catalog/sass', 1, NOW()),
+       ('setting', 'Generates setting data.', 'task/catalog/setting', 1, NOW()),
+       ('tag', 'Generates tag data.', 'task/catalog/tag', 1, NOW()),
+       ('tax_rate', 'Generates tax rate data.', 'task/catalog/tax_rate', 1, NOW()),
+       ('template', 'Generates template data.', 'task/catalog/template', 1, NOW()),
+       ('topic', 'Generates topic data.', 'task/catalog/topic', 1, NOW()),
+       ('translation', 'Generates translation data.', 'task/catalog/translation', 1, NOW());
+
+
+			$ssrs[] = [
+				'code'   => 'article',
+				'action' => 'task/catalog/article'
+			];
+
 			$ssrs[] = [
 				'code'   => 'banner',
 				'action' => 'task/catalog/banner'
+			];
+
+			$ssrs[] = [
+				'code'   => 'category',
+				'action' => 'task/catalog/category'
+			];
+
+			$ssrs[] = [
+				'code'   => 'comment',
+				'action' => 'task/catalog/comment'
 			];
 
 			$ssrs[] = [
@@ -30,18 +67,8 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 			];
 
 			$ssrs[] = [
-				'code'   => 'country',
-				'action' => 'task/admin/country'
-			];
-
-			$ssrs[] = [
 				'code'   => 'currency',
 				'action' => 'task/catalog/currency'
-			];
-
-			$ssrs[] = [
-				'code'   => 'currency',
-				'action' => 'task/admin/currency'
 			];
 
 			$ssrs[] = [
@@ -50,13 +77,13 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 			];
 
 			$ssrs[] = [
-				'code'   => 'customer_group',
-				'action' => 'task/admin/customer_group'
+				'code'   => 'filter',
+				'action' => 'task/catalog/filter'
 			];
 
 			$ssrs[] = [
 				'code'   => 'information',
-				'action' => 'task/admin/information'
+				'action' => 'task/catalog/information'
 			];
 
 			$ssrs[] = [
@@ -65,63 +92,23 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 			];
 
 			$ssrs[] = [
-				'code'   => 'language',
-				'action' => 'task/admin/language'
+				'code'   => 'location',
+				'action' => 'task/catalog/location'
 			];
 
 			$ssrs[] = [
-				'code'   => 'length_class',
-				'action' => 'task/catalog/length_class'
+				'code'   => 'manufacturer',
+				'action' => 'task/catalog/manufacturer'
 			];
 
 			$ssrs[] = [
-				'code'   => 'length_class',
-				'action' => 'task/admin/length_class'
-			];
-
-			$ssrs[] = [
-				'code'   => 'report_order',
-				'action' => 'task/report/order'
-			];
-
-			$ssrs[] = [
-				'code'   => 'report_return',
-				'action' => 'task/report/returns'
-			];
-
-			$ssrs[] = [
-				'code'   => 'report_review',
-				'action' => 'task/report/review'
-			];
-
-			$ssrs[] = [
-				'code'   => 'report_sale',
-				'action' => 'task/report/sale'
-			];
-
-			$ssrs[] = [
-				'code'   => 'report_stock',
-				'action' => 'task/report/stock'
-			];
-
-			$ssrs[] = [
-				'code'   => 'return_action',
-				'action' => 'task/admin/return_action'
+				'code'   => 'product',
+				'action' => 'task/catalog/product'
 			];
 
 			$ssrs[] = [
 				'code'   => 'return_reason',
 				'action' => 'task/catalog/return_reasonn'
-			];
-
-			$ssrs[] = [
-				'code'   => 'return_reason',
-				'action' => 'task/admin/return_reason'
-			];
-
-			$ssrs[] = [
-				'code'   => 'return_status',
-				'action' => 'task/admin/return_status'
 			];
 
 			$ssrs[] = [
@@ -131,42 +118,42 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 
 			$ssrs[] = [
 				'code'   => 'sass',
-				'action' => 'task/catalog/stock_status'
+				'action' => 'task/catalog/sass'
 			];
 
 			$ssrs[] = [
-				'code'   => 'stock_status',
-				'action' => 'task/admin/stock_status'
+				'code'   => 'setting',
+				'action' => 'task/catalog/setting'
 			];
 
 			$ssrs[] = [
 				'code'   => 'store',
-				'action' => 'task/admin/store'
+				'action' => 'task/catalog/store'
 			];
 
 			$ssrs[] = [
-				'code'   => 'subscription_status',
-				'action' => 'task/admin/subscription_status'
+				'code'   => 'tag',
+				'action' => 'task/catalog/tag'
 			];
 
 			$ssrs[] = [
-				'code'   => 'theme',
-				'action' => 'task/catalog/theme'
+				'code'   => 'tax_rate',
+				'action' => 'task/catalog/tax_rate'
+			];
+
+			$ssrs[] = [
+				'code'   => 'template',
+				'action' => 'task/catalog/template'
+			];
+
+			$ssrs[] = [
+				'code'   => 'topic',
+				'action' => 'task/catalog/topic'
 			];
 
 			$ssrs[] = [
 				'code'   => 'translation',
 				'action' => 'task/catalog/translation'
-			];
-
-			$ssrs[] = [
-				'code'   => 'weight_class',
-				'action' => 'task/catalog/weight_class'
-			];
-
-			$ssrs[] = [
-				'code'   => 'weight_class',
-				'action' => 'task/admin/weight_class'
 			];
 
 			foreach ($ssrs as $ssr) {

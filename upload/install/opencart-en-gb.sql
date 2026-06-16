@@ -2063,11 +2063,11 @@ VALUES (1, 1, 'Categories'),
        (67, 1, 'Maintenance'),
        (68, 1, 'Admin Menu'),
        (69, 1, 'Upgrade'),
-       (71, 1, 'Backup &amp; Restore'),
-       (72, 1, 'Uploads'),
-       (73, 1, 'Error Log'),
-       (74, 1, 'Reports'),
-       (75, 1, 'Who\'s Online');
+       (70, 1, 'Backup &amp; Restore'),
+       (71, 1, 'Uploads'),
+       (72, 1, 'Error Log'),
+       (73, 1, 'Reports'),
+       (74, 1, 'Who\'s Online');
 
 -----------------------------------------------------------
 

@@ -246,7 +246,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/cron')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

@@ -4,19 +4,19 @@ $_['heading_title']        = 'Static Site Rendering';
 
 // Text
 $_['text_success']         = 'Success: You have modified static site rendering!';
+$_['text_instruction']     = 'SSR Instructions';
 $_['text_list']            = 'SSR List';
-$_['text_ssr']             = 'Static Site Rendering is used to pre render templates and static data. If you have issues you can disable or enable the SSR here.';
-$_['text_render']          = 'Static Site Renderers';
-$_['text_info']            = 'Static Site Rendering Information';
+$_['text_info']            = 'SSR Information';
 
 // Column
 $_['column_code']          = 'SSR Code';
+$_['column_status']        = 'Status';
 $_['column_date_modified'] = 'Last Run';
 $_['column_action']        = 'Aktionen';
 
 // Button
-$_['button_run']           = 'Run Rendering';
+$_['button_run']           = 'Render';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify static site rendering!';
-$_['error_exists']         = 'Render does not exist!';
+$_['error_permission']     = 'Warning: You do not have permission to modify SSR!';
+$_['error_exists']         = 'SSR does not exist!';

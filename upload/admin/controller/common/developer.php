@@ -21,11 +21,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 		$data['stores'][] = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'rebuild'  => $this->url->link('common/developer.rebuild', 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
-			'template' => $this->url->link('common/developer.template', 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
-			'sass'     => $this->url->link('common/developer.sass', 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
-			'clear'    => $this->url->link('common/developer.clear', 'user_token=' . $this->session->data['user_token'] . '&store_id=0')
+			'name'     => $this->config->get('config_name')
 		];
 
 		// Stores
@@ -36,11 +32,19 @@ class Developer extends \Opencart\System\Engine\Controller {
 		foreach ($stores as $store) {
 			$data['stores'][] = [
 				'store_id' => $store['store_id'],
-				'name'     => $store['name'],
-				'rebuild'  => $this->url->link('common/developer.rebuild', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
-				'template' => $this->url->link('common/developer.template', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
-				'sass'     => $this->url->link('common/developer.sass', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
-				'clear'    => $this->url->link('common/developer.clear', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id'])
+				'name'     => $store['name']
+			];
+		}
+		$data['ssrs'] = [];
+
+		$this->load->model('setting/ssr');
+
+		$results = $this->model_setting_ssr->getSsrs();
+
+		foreach ($results as $result) {
+			$data['ssrs'][] = [
+				'ssr_id' => $result['ssr_id'],
+				'name'   => $this->language->get('text_' . $result['code'])
 			];
 		}
 
@@ -49,13 +53,36 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
 
-	public function rebuild(): void {
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('common/developer');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function run(): void {
 		$this->load->language('common/developer');
 
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		if (isset($this->request->get['ssr_id'])) {
+			$ssr_id = (int)$this->request->get['ssr_id'];
+		} else {
+			$ssr_id = 0;
 		}
 
 		// Store
@@ -65,18 +92,38 @@ class Developer extends \Opencart\System\Engine\Controller {
 			'url'      => HTTP_CATALOG
 		];
 
-		if ($this->request->get['store_id']) {
+		if ($store_id) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore((int)$this->request->get['store_id']);
+			$store_info = $this->model_setting_store->getStore($store_id);
 
 			if (!$store_info) {
 				$json['error'] = $this->language->get('error_store');
 			}
 		}
 
+		$this->load->model('setting/ssr');
+
+		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);
+
+		if (!$ssr_info) {
+			$json['error'] = $this->language->get('error_exists');
+		}
+
 		if (!$json) {
-			$json['success'] = $this->language->get('text_rebuild_success');
+			$json['success'] = $this->language->get('text_success');
+
+			$task_data = [
+				'code'   => $ssr_info['code'] . '.' . $store_id,
+				'action' => $ssr_info['action'],
+				'args'   => ['store_id' => $store_id]
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+
+			$this->model_setting_ssr->editSsr($ssr_info['ssr_id']);
 
 			$task_data = [
 				'code'   => 'store.' . $store_info['store_id'],
@@ -92,79 +139,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-	/**
-	 * Theme
-	 *
-	 * @return void
-	 */
-	public function template(): void {
-		$this->load->language('common/developer');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$directories = oc_directory_read(DIR_CACHE . 'template/');
-
-			if ($directories) {
-				foreach ($directories as $directory) {
-					if (is_dir($directory)) {
-						oc_directory_delete($directory);
-					}
-				}
-			}
-
-			$json['success'] = $this->language->get('text_theme_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * SASS Catalog
-	 *
-	 * Generate catalog SASS file.
-	 *
-	 * @return void
-	 */
-	public function sass(): void {
-		$this->load->language('common/developer');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$file = DIR_CATALOG . 'view/sass/stylesheet.scss';
-
-		if (!is_file($file)) {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
-
-		if (!$json) {
-			$task_data = [
-				'code'   => 'sass',
-				'action' => 'task/catalog/sass',
-				'args'   => []
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
-
-			$json['success'] = $this->language->get('text_sass_catalog_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 
 	/**
 	 * Clear

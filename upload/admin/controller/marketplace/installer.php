@@ -422,6 +422,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					$destination = str_replace('\\', '/', $source);
 
+					// Reject any entry that traverses outside the install directory
+					if (in_array('..', explode('/', $destination))) {
+						continue;
+					}
+
 					// Only extract the contents of the upload folder
 					$path = $extension_install_info['code'] . '/' . $destination;
 					$base = DIR_EXTENSION;

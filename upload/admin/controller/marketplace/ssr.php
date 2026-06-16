@@ -124,9 +124,33 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$ssr_id = 0;
 		}
 
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
 		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($store_id) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$store_id);
+
+			if (!$store_info) {
+				$json['error'] = $this->language->get('error_store');
+			}
+		}
+
 
 		// Ssr
 		$this->load->model('setting/ssr');
@@ -138,13 +162,19 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Create a store instance using loader class to call controllers, models, views, libraries
-			$this->load->model('setting/store');
+			$json['success'] = $this->language->get('text_success');
 
+			$task_data = [
+				'code'   => 'article.' . $store_id,
+				'action' => $ssr_info['action'],
+				'args'   => ['store_id' => $store_id]
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
 
 			$this->model_setting_ssr->editSsr($ssr_info['ssr_id']);
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

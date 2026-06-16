@@ -16,6 +16,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/developer');
 
+		$data['run'] = $this->url->link('common/developer.run', 'user_token=' . $this->session->data['user_token']);
+		$data['clear'] = $this->url->link('common/developer.clear', 'user_token=' . $this->session->data['user_token']);
+
 		// Stores
 		$data['stores'] = [];
 
@@ -143,6 +146,15 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+
+
+
+
+
+
+
+
+
 		if (!$json) {
 			$files = oc_directory_read(DIR_CATALOG . 'view/html/');
 
@@ -150,16 +162,12 @@ class Developer extends \Opencart\System\Engine\Controller {
 				oc_directory_delete($file);
 			}
 
-			$json['success'] = $this->language->get('text_html_success');
+			$json['success'] = $this->language->get('text_clear_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-
-
-
 
 	/**
 	 * Cache

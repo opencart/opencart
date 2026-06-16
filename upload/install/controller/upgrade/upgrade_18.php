@@ -329,12 +329,12 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 				$results[] = [
 					'menu_description' => [
 						1 => [
-							'name' => 'Static Site Rendering'
+							'name' => 'SSR'
 						]
 					],
 					'code'             => 'ssr',
 					'type'             => 'link',
-					'route'            => 'marketplace/task',
+					'route'            => 'marketplace/ssr',
 					'parent'           => 'extension',
 					'sort_order'       => 6
 				];

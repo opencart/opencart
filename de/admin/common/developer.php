@@ -10,6 +10,7 @@ $_['text_success']         = 'Success: You have added the Static Site Rendering 
 $_['text_clear_success']   = 'Success: You have cleared the HTML files!';
 $_['text_cache_success']   = 'Erfolg: Sie haben den Cache geleert!';
 $_['text_vendor_success']  = 'Success: You have modified the vendor cache!';
+
 $_['text_run']             = 'Run';
 $_['text_clear']           = 'Klar';
 $_['text_cache']           = 'Zwischenspeicher';
@@ -32,7 +33,7 @@ $_['text_review']          = 'Review';
 $_['text_sass']            = 'SASS';
 $_['text_setting']         = 'Setting';
 $_['text_store']           = 'Online-Shop (Store)';
-$_['text_tag']             = 'Tagsw';
+$_['text_tag']             = 'Schlagwörter';
 $_['text_tax_rate']        = 'Steuersätze';
 $_['text_template']        = 'Template';
 $_['text_topic']           = 'Thema';

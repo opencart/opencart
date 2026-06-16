@@ -150,11 +150,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 
 
-
-
-
-
-
 		if (!$json) {
 			$files = oc_directory_read(DIR_CATALOG . 'view/html/');
 

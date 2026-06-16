@@ -19,28 +19,6 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		try {
 			$ssrs = [];
 
-
-
-
-
-
-
-
-
-       ('location', 'Generates location data.', 'task/catalog/location', 1, NOW()),
-       ('manufacturer', 'Generates article data.', 'task/catalog/manufacturer', 1, NOW()),
-       ('product', 'Generates product data.', 'task/catalog/product', 1, NOW()),
-       ('return_reason', 'Generates return_reason data.', 'task/catalog/return_reason', 1, NOW()),
-       ('review', 'Generates review data.', 'task/catalog/review', 1, NOW()),
-       ('sass', 'Generates sass data.', 'task/catalog/sass', 1, NOW()),
-       ('setting', 'Generates setting data.', 'task/catalog/setting', 1, NOW()),
-       ('tag', 'Generates tag data.', 'task/catalog/tag', 1, NOW()),
-       ('tax_rate', 'Generates tax rate data.', 'task/catalog/tax_rate', 1, NOW()),
-       ('template', 'Generates template data.', 'task/catalog/template', 1, NOW()),
-       ('topic', 'Generates topic data.', 'task/catalog/topic', 1, NOW()),
-       ('translation', 'Generates translation data.', 'task/catalog/translation', 1, NOW());
-
-
 			$ssrs[] = [
 				'code'   => 'article',
 				'action' => 'task/catalog/article'

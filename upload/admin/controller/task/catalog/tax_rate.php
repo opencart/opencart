@@ -16,7 +16,11 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->model('setting/task');
+		$this->load->language('task/catalog/tax_rate');
+
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
 		// Store
 		$store_info = [
@@ -35,17 +39,23 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('setting/task');
+
 		$limit = 1000;
 
-		$this->load->model('localisation/geo_zone');
+		$this->load->model('localisation/tax_rate');
 
-		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
+		$geo_zone_total = $this->model_localisation_tax_rate->getTotalGeoZones();
 
 		for ($i = 1; $i <= ceil($geo_zone_total / $limit); $i++) {
 			$task_data = [
 				'code'   => 'tax_rate.list.' . $store_info['store_id'],
 				'action' => 'task/catalog/tax_rate.list',
-				'args'   => ['store_id' => $store_info['store_id']]
+				'args'   => [
+					'store_id' => $store_info['store_id'],
+					'start'    => $i * $limit,
+					'limit'    => $limit
+				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
@@ -62,7 +72,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->model('setting/task');
 
-		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -91,7 +100,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 
-			$results = $this->model_localisation_geo_zone->getZones($filter_data);
+			$zones = $this->model_localisation_geo_zone->getZones($filter_data);
 
 
 			$task_data = [
@@ -112,7 +121,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		}
 
-		return ['success' => sprintf($this->language->get('text_article'), $store_info['name'], $args['start'], $args['limit'])];
+		return ['success' => sprintf($this->language->get('text_tax_rate'), $store_info['name'], $args['start'], $args['limit'])];
 	}
 
 	/**

@@ -6,17 +6,14 @@ $_['heading_title']        = 'Developer Options';
 $_['text_ssr']             = 'Static Site Rendering';
 $_['text_storage']         = 'Local Storage';
 
-$_['text_success']         = 'Success: You have Static Site Rendering the HTML files!';
+$_['text_success']         = 'Success: You have added the Static Site Rendering tasks!';
 $_['text_clear_success']   = 'Success: You have cleared the HTML files!';
 $_['text_cache_success']   = 'Success: You have cleared the cache!';
 $_['text_vendor_success']  = 'Success: You have modified the vendor cache!';
-$_['text_rebuild']         = 'Rebuild';
+$_['text_run']             = 'Run';
 $_['text_clear']           = 'Clear';
 $_['text_cache']           = 'Cache';
 $_['text_vendor']          = 'Vendor';
-
-
-
 $_['text_article']         = 'Articles';
 $_['text_banner']          = 'Banners';
 $_['text_category']        = 'Categories';

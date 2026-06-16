@@ -13,27 +13,29 @@
         </ul>
         <div class="tab-content">
           <div id="tab-general" class="tab-pane active">
-            <fieldset>
-              <legend>{{ text_store }}</legend>
-              <div class="mb-3">
-                <div class="input-group">
-                  <div class="input-group-text"><i class="fa-solid fa-store"></i></div>
-                  <select id="input-store" class="form-select">
-                    {% for store in stores %}
-                      <option value="{{ store.store_id }}">{{ store.name }}</option>
-                    {% endfor %}
-                  </select>
+            <form id="form-ssr" method="post">
+              <fieldset>
+                <legend>{{ text_store }}</legend>
+                <div class="mb-3">
+                  <div class="input-group">
+                    <div class="input-group-text"><i class="fa-solid fa-store"></i></div>
+                    <select id="input-store" class="form-select">
+                      {% for store in stores %}
+                        <option value="{{ store.store_id }}">{{ store.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
                 </div>
-              </div>
-            </fieldset>
-            <fieldset>
-              <legend>{{ text_ssr }}</legend>
-              <form id="form-ssr">
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_ssr }}</legend>
                 <div class="form-control mb-3" style="height: 250px; overflow: auto;">
                   <table class="table table-borderless table-striped">
                     <thead>
                       <tr>
-                        <th class="text-center" style="width: 1px;"><checkbox-all input-id="input-ssr-all" target="#form-ssr"></checkbox-all></th>
+                        <th class="text-center" style="width: 1px;">
+                          <checkbox-all input-id="input-ssr-all" target="#form-ssr"></checkbox-all>
+                        </th>
                         <th><label for="input-ssr-all" class="form-check-label">{{ text_all }}</label></th>
                       </tr>
                     </thead>
@@ -42,7 +44,7 @@
                         {% set ssr_row = 0 %}
                         {% for ssr in ssrs %}
                           <tr>
-                            <td class="text-center"><input type="checkbox" name="selected[]" value="{{ ssr.ssr_id }}" id="input-ssr-{{ ssr.ssr_id }}" checked class="form-check-input"/></td>
+                            <td class="text-center"><input type="checkbox" name="selected[]" value="{{ ssr.ssr_id }}" id="input-ssr-{{ ssr.ssr_id }}" class="form-check-input" checked/></td>
                             <td><label for="input-ssr-{{ ssr.ssr_id }}">{{ ssr.name }}</label></td>
                           </tr>
                           {% set ssr_row = ssr_row + 1 %}
@@ -59,13 +61,13 @@
                   <div class="btn-group">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-cog fa-fw"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a href="{{ profile }}" class="dropdown-item"><i class="fa-solid fa-rotate"></i> {{ text_rebuild }}</a></li>
-                      <li><a href="{{ profile }}" class="dropdown-item"><i class="fa-solid fa-eraser"></i> {{ text_clear }}</a></li>
+                      <li><button type="submit" formaction="{{ run }}" class="dropdown-item"><i class="fa-solid fa-play"></i> {{ text_run }}</button></li>
+                      <li><button type="submit" formaction="{{ clear }}" class="dropdown-item"><i class="fa-solid fa-eraser"></i> {{ text_clear }}</button></li>
                     </ul>
                   </div>
                 </div>
-              </form>
-            </fieldset>
+              </fieldset>
+            </form>
           </div>
           <div id="tab-data" class="tab-pane">
             <fieldset>

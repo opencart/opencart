@@ -277,7 +277,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
 			// Stock Status
-			if ($product_info['quantity'] <= 0) {
+			if ($product_info['quantity'] <= 0 || $this->hasRequiredOptionsWithoutStock($product_info)) {
 				$stock_status_id = $product_info['stock_status_id'];
 			} elseif (!$this->config->get('config_stock_display')) {
 				$stock_status_id = (int)$this->config->get('config_stock_status_id');
@@ -469,5 +469,73 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Check to make sure that none of the required product options is without stock
+	 *
+	 * @param array<string, mixed> $product_info
+	 *
+	 * @return bool
+	 */
+	protected function hasRequiredOptionsWithoutStock(array $product_info): bool {
+		if ($product_info['master_id']) {
+			$master_id = (int)$product_info['master_id'];
+		} else {
+			$master_id = (int)$product_info['product_id'];
+		}
+
+		$product_options = $this->model_catalog_product->getOptions($master_id);
+
+		foreach ($product_options as $product_option) {
+			if (!$product_option['required']) {
+				continue;
+			}
+			$product_option_id = $product_option['product_option_id'];
+
+			$has_stock = false;
+
+			$type = $product_option['type'];
+			if ($type == 'select' || $type == 'radio' || $type == 'checkbox') {
+				foreach ($product_option['product_option_value'] as $product_option_value) {
+					$product_option_value_id = $product_option_value['product_option_value_id'];
+					if (!empty($product_info['override']['variant'][$product_option_id])) {
+						if (!isset($product_info['variant'][$product_option_id])) {
+							// option value is not used in variant product
+							continue;
+						}
+						$value = $product_info['variant'][$product_option_id];
+						if (!is_array($value)) {
+							$value = [$value];
+						}
+						if (!in_array($product_option_value_id, $value)) {
+							// option value is not used in variant product
+							continue;
+						}
+					}
+					if (!$product_option_value['subtract']) {
+						// at least one required product option value can still be chosen
+						$has_stock = true;
+						break;
+					}
+					if ($product_option_value['quantity'] > 0) {
+						// at least one required product option value still has some stock
+						$has_stock = true;
+						break;
+					}
+				}
+				if (!$has_stock) {
+					return true;
+				}
+			} else {
+				$has_stock = true;
+			}
+
+			if (!$has_stock) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

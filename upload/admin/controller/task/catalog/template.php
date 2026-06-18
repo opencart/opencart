@@ -18,58 +18,156 @@ class Template extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/template');
 
-		$required = [
-			'route',
-			'store_id'
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
-		$language = new \Opencart\System\Library\Language((string)$language_info['code']);
-		$language->addPath(DIR_CATALOG . 'language/');
-
-		$part = explode('/', $args['route']);
-
-		if ($part[0] == 'extension' && count($part) > 2) {
-			$language->addPath('extension/' . $part[1], DIR_EXTENSION . $part[1] . '/catalog/language/');
-		}
-
-		$language->load($args['route']);
-
-		$filter_data = [
-			'filter_route'       => $args['route'],
-			'filter_store_id'    => $store_info['store_id'],
-			'filter_language_id' => $language_info['language_id']
+		// Generate new data
+		$ignore = [
+			'api',
+			'mail',
+			'task'
 		];
 
-		// Overrides
-		$this->load->model('design/translation');
+		$routes = [];
 
-		$results = $this->model_design_translation->getTranslations($filter_data);
+		$directory = DIR_CATALOG . 'template/';
 
-		foreach ($results as $result) {
-			$language->set($result['key'], $result['value']);
+		$files = oc_directory_read($directory, true, '/.+\.php$/');
+
+		foreach ($files as $file) {
+			$route = substr(substr($file, strlen($directory)), 0, -4);
+
+			$pos = strpos($route, '/');
+
+			if ($pos == false || in_array(substr($route, 0, $pos), $ignore)) {
+				continue;
+			}
+
+			$routes[] = $route;
 		}
 
-		$data = $language->all();
+		$directories = oc_directory_read(DIR_EXTENSION, false);
 
-		ksort($data, SORT_REGULAR);
+		foreach ($directories as $directory) {
+			$extension = basename($directory);
+
+			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language['code'] . '/';
+
+			$files = oc_directory_read($path, true, '/.+\.php/');
+
+			foreach ($files as $file) {
+				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -4);
+			}
+		}
+
+		foreach ($routes as $route) {
+			$task_data = [
+				'code'   => 'template.info.' . $store_info['store_id'],
+				'action' => 'task/catalog/template.write',
+				'args'   => [
+					'route'       => $route,
+					'store_id'    => $store['store_id'],
+					'language_id' => $language['language_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+
+
+
+
+
+
+
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
+	}
+
+	/**
+	 *
+	 *
+	 */
+	public function info(array $args = []): array {
+		$this->load->language('task/catalog/template');
+
+		if (!array_key_exists('template_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		// Template
+		$this->load->model('design/template');
+
+		$template_info = $this->model_design_template->getTemplate($args['template_id']);
+
+		if (!$template_info || !$template_info['status']) {
+			return ['error' => $this->language->get('error_template')];
+		}
+
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true
+		];
+
+
+		$this->load->model('design/template');
+
+		$results = $this->model_design_template->getTemplates($filter_data);
+
+		foreach ($results as $result) {
+			if ($result['status']) {
+				$task_data = [
+					'code'   => 'template.info.' . $store_info['store_id'] . '.' . $result['template_id'],
+					'action' => 'task/catalog/template.info',
+					'args'   => [
+						'template_id' => $result['template_id'],
+						'store_id'    => $store_info['store_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+		}
+
 
 		$pos = strrpos($args['route'], '/');
 
-		$directory = DIR_CATALOG . 'view/data/' .parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/language/'  .  substr($args['route'], 0, $pos) . '/';
+		$directory = DIR_CATALOG . 'shop/' .parse_url($store_info['url'], PHP_URL_HOST) . '/data/template/'  .  substr($args['route'], 0, $pos) . '/';
 		$filename = substr($args['route'], $pos + 1) . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -80,7 +178,7 @@ class Template extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_info')];
 	}
 
 	/**

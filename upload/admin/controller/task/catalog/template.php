@@ -83,21 +83,13 @@ class Template extends \Opencart\System\Engine\Controller {
 				'code'   => 'template.info.' . $store_info['store_id'],
 				'action' => 'task/catalog/template.write',
 				'args'   => [
-					'route'       => $route,
-					'store_id'    => $store['store_id'],
-					'language_id' => $language['language_id']
+					'route'    => $route,
+					'store_id' => $store_info['store_id']
 				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
-
-
-
-
-
-
-
 
 		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
@@ -215,13 +207,13 @@ class Template extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$directories = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
 
-				foreach ($directories as $directory) {
-					oc_directory_delete($directory);
-				}
+			$directories = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
+
+			foreach ($directories as $directory) {
+				oc_directory_delete($directory);
 			}
+
 		}
 
 		return ['success' => $this->language->get('text_clear')];

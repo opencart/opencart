@@ -50,7 +50,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		$location_ids = (array)$this->model_setting_setting->getValue('config_location_list', $store_info['store_id']);
 
 		foreach ($location_ids as $location_id) {
-			$location_info = $this->model_localisation_location->getLocation($location_id);
+			$location_info = $this->model_localisation_location->getLocation((int)$location_id);
 
 			if ($location_info) {
 				$location_data[] = [
@@ -76,6 +76,6 @@ class Location extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => $this->language->get('text_list')];
 	}
 }

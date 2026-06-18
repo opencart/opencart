@@ -46,8 +46,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			foreach ($geo_zone_ids as $geo_zone_id) {
 				$task_data = [
-					'code'   => 'tax_rate.' . $store_id . '.' . $geo_zone_id,
-					'action' => 'task/catalog/tax_rate',
+					'code'   => 'tax_rate.info.' . $store_id . '.' . $geo_zone_id,
+					'action' => 'task/catalog/tax_rate.info',
 					'args'   => [
 						'geo_zone_id' => $geo_zone_id,
 						'store_id'    => $store_id
@@ -102,8 +102,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			foreach ($geo_zone_ids as $geo_zone_id) {
 				$task_data = [
-					'code'   => 'tax_rate.' . $store_id . '.' . $geo_zone_id,
-					'action' => 'task/catalog/tax_rate',
+					'code'   => 'tax_rate.info.' . $store_id . '.' . $geo_zone_id,
+					'action' => 'task/catalog/tax_rate.info',
 					'args'   => [
 						'geo_zone_id' => $geo_zone_id,
 						'store_id'    => $store_id
@@ -153,8 +153,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			foreach ($geo_zone_ids as $geo_zone_id) {
 				$task_data = [
-					'code'   => 'tax_rate.' . $store_id . '.' . $geo_zone_id,
-					'action' => 'task/catalog/tax_rate',
+					'code'   => 'tax_rate.info.' . $store_id . '.' . $geo_zone_id,
+					'action' => 'task/catalog/tax_rate.info',
 					'args'   => [
 						'geo_zone_id' => $geo_zone_id,
 						'store_id'    => $store_id

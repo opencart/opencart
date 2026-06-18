@@ -238,7 +238,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $topic_info['title'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $topic_info['name'])];
 	}
 
 	/**

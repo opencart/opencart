@@ -173,14 +173,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
 
-		if (!$article_info || !$article_info['status']) {
-			return ['error' => $this->language->get('error_article')];
-		}
-
-		// Stores
-		$store_ids = $this->model_cms_article->getStores($article_info['article_id']);
-
-		if (!in_array($store_info['store_id'], $store_ids)) {
+		if (!$article_info || !$article_info['status'] || !in_array($store_info['store_id'], $this->model_cms_article->getStores($article_info['article_id']))) {
 			return ['error' => $this->language->get('error_article')];
 		}
 

@@ -53,7 +53,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		// 2. Add country list task
-		$this->load->model('catalog/country');
+		$this->load->model('localisation/country');
 
 		$this->load->model('setting/setting');
 
@@ -110,6 +110,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		// Country
 		$country_data = [];
+
+		$this->load->model('localisation/country');
 
 		$country_ids = (array)$this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
 

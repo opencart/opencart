@@ -72,7 +72,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 			$path = DIR_EXTENSION . $extension . '/catalog/template/';
 
-			$files = oc_directory_read($path, true, '/.+\.php/');
+			$files = oc_directory_read($path, true, '/.+\.html/');
 
 			foreach ($files as $file) {
 				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -4);
@@ -151,7 +151,7 @@ class Template extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_info')];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $args['route'])];
 	}
 
 	/**

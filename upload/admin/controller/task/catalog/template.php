@@ -82,7 +82,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		foreach ($routes as $route) {
 			$task_data = [
 				'code'   => 'template.info.' . $store_info['store_id'],
-				'action' => 'task/catalog/template.write',
+				'action' => 'task/catalog/template.info',
 				'args'   => [
 					'route'    => $route,
 					'store_id' => $store_info['store_id']
@@ -102,7 +102,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/template');
 
-		if (!array_key_exists('template_id', $args)) {
+		if (!array_key_exists('route', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
@@ -129,33 +129,13 @@ class Template extends \Opencart\System\Engine\Controller {
 		$template_info = $this->model_design_template->getTemplate($args['template_id']);
 
 		if (!$template_info || !$template_info['status']) {
-			return ['error' => $this->language->get('error_template')];
+
+
+
+
 		}
 
-		$filter_data = [
-			'filter_store_id' => $store_info['store_id'],
-			'filter_status'   => true
-		];
 
-
-		$this->load->model('design/template');
-
-		$results = $this->model_design_template->getTemplates($filter_data);
-
-		foreach ($results as $result) {
-			if ($result['status']) {
-				$task_data = [
-					'code'   => 'template.info.' . $store_info['store_id'] . '.' . $result['template_id'],
-					'action' => 'task/catalog/template.info',
-					'args'   => [
-						'template_id' => $result['template_id'],
-						'store_id'    => $store_info['store_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
-		}
 
 
 		$pos = strrpos($args['route'], '/');

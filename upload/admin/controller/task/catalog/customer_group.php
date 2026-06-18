@@ -62,7 +62,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 			if ($customer_group_info) {
 				$task_data = [
-					'code'   => 'customer_group.info.' . $store_info['store_id'] . '.' . $customer_group_info['country_id'],
+					'code'   => 'customer_group.info.' . $store_info['store_id'] . '.' . $customer_group_info['customer_group_id'],
 					'action' => 'task/catalog/customer_group.info',
 					'args'   => [
 						'customer_group_id' => $customer_group_info['customer_group_id'],

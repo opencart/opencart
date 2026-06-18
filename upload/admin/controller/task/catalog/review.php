@@ -21,17 +21,17 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/review');
 
 		if (!array_key_exists('product_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
+		//	return ['error' => $this->language->get('error_required')];
 		}
 
 		// Review
 		$this->load->model('catalog/product');
 
-		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
+		//$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
 
-		if (!$product_info || !$product_info['status']) {
-			return ['error' => $this->language->get('error_review')];
-		}
+		//if (!$product_info || !$product_info['status']) {
+		//	return ['error' => $this->language->get('error_review')];
+		//}
 
 		$limit = 10;
 
@@ -43,36 +43,6 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		foreach ($reviews as $review) {
 
-		}
-
-		// Stores
-		$this->load->model('setting/store');
-
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
-		foreach ($store_ids as $store_id) {
-
-
-
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-
-
-
-			$directory = DIR_APPLICATION . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-			$filename = 'return_reason.json';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, json_encode($return_reason_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-			}
 		}
 
 		return ['success' => $this->language->get('text_task')];

@@ -205,7 +205,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'filters'         => $filter_data
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
 		$filename = 'filter_group-' . $filter_group_info['filter_group_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -280,7 +280,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
 		$filename = 'filter-product-' . $filter_info['filter_id'] . '.csv';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -327,13 +327,13 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/filter_group-' . (int)$args['filter_group_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter_group-' . (int)$args['filter_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/filter-product-' . (int)$args['filter_group_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter-product-' . (int)$args['filter_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

@@ -134,7 +134,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/localisation/';
 		$filename = 'country.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -246,7 +246,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'geo_zones'         => $geo_zone_data
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/localisation/';
 		$filename = 'country-' . $country_info['country_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -288,7 +288,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/country-' . (int)$args['country_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/localisation/country-' . (int)$args['country_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

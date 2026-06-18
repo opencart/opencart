@@ -177,7 +177,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/design/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . 'data/design/';
 		$filename = 'banner-' . $banner_info['banner_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -224,7 +224,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/design/banner-' . (int)$args['banner_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/design/banner-' . (int)$args['banner_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

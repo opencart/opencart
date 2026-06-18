@@ -48,9 +48,9 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$routes = [];
 
-		$directory = DIR_CATALOG . 'template/';
+		$directory = DIR_CATALOG . 'view/template/';
 
-		$files = oc_directory_read($directory, true, '/.+\.php$/');
+		$files = oc_directory_read($directory, true, '/.+\.html$/');
 
 		foreach ($files as $file) {
 			$route = substr(substr($file, strlen($directory)), 0, -4);
@@ -64,12 +64,13 @@ class Template extends \Opencart\System\Engine\Controller {
 			$routes[] = $route;
 		}
 
+		// Extension
 		$directories = oc_directory_read(DIR_EXTENSION, false);
 
 		foreach ($directories as $directory) {
 			$extension = basename($directory);
 
-			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language['code'] . '/';
+			$path = DIR_EXTENSION . $extension . '/catalog/template/';
 
 			$files = oc_directory_read($path, true, '/.+\.php/');
 

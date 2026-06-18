@@ -180,7 +180,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/localisation/';
 		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -227,7 +227,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/tax_rate-' . (int)$args['geo_zone_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/localisation/tax_rate-' . (int)$args['geo_zone_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

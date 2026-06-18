@@ -65,7 +65,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/localisation/';
 		$filename = 'location.json';
 
 		if (!oc_directory_create($directory, 0777)) {

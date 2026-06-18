@@ -252,7 +252,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/article-' . (int)$args['article_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/article-' . (int)$args['article_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

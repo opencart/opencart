@@ -21,64 +21,57 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/comment');
 
 		if (!array_key_exists('article_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
+			//return ['error' => $this->language->get('error_required')];
 		}
 
-		// Review
-		$this->load->model('cms/article');
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
-
-		if (!$article_info || !$article_info['status']) {
-			return ['error' => $this->language->get('error_article')];
-		}
-
-
-
-
-		$limit = 10;
-
-		$return_reason_data = [];
-
-		$this->load->model('cms/comment');
-
-		$reviews = $this->model_catalog_review->getReviews();
-
-		foreach ($reviews as $review) {
-
-		}
-
-		// Stores
-		$this->load->model('setting/store');
-
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
-		foreach ($store_ids as $store_id) {
-
-
-
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-
-
-
-			$directory = DIR_APPLICATION . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-			$filename = 'return_reason.json';
-
-			if (!oc_directory_create($directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-			}
-
-			if (!file_put_contents($directory . $filename, json_encode($return_reason_data))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+				//return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		// Article
+		$this->load->model('cms/article');
+
+		//$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
+
+		//if (!$article_info || !$article_info['status'] || !in_array($store_info['store_id'], $this->model_cms_article->getStores($article_info['article_id']))) {
+			//return ['error' => $this->language->get('error_article')];
+		//}
+
+		$limit = 1000;
+
+		$comment_total = $this->model_cms_article->getTotalComments(['filter_status' => true]);
+
+		for ($i = 1; $i <= ceil($comment_total / $limit); $i++) {
+			$start = $i * $limit;
+
+			$task_data = [
+				'code'   => 'comment.list.' . $store_info['store_id'],
+				'action' => 'task/catalog/comment.list',
+				'args'   => [
+					//'article_id' => $article_info['article_id'],
+					'store_id'   => $store_info['store_id'],
+					'start'      => $start,
+					'limit'      => $limit
+				]
+			];
+
+			//$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
 	/**
@@ -93,60 +86,44 @@ class Comment extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/comment');
 
+		if (!array_key_exists('article_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		// Article
 		$this->load->model('cms/article');
 
-		$product_total = $this->model_catalog_product->getTotalProducts();
+		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
 
-		$page_total = ceil($product_total / $limit);
-
-		for ($i = 1; $i <= $page_total; $i++) {
-			$start = $i * $limit;
-
-			$task_data = [
-				'code'   => 'review',
-				'action' => 'task/catalog/review.list',
-				'args'   => [
-					'store_id'    => $store['store_id'],
-					'start'       => $start,
-					'limit'       => $limit
-				]
-			];
-
-			$this->model_setting_task->addTask($task_data);
+		if (!$article_info || !$article_info['status'] || !in_array($store_info['store_id'], $this->model_cms_article->getStores($article_info['article_id']))) {
+			return ['error' => $this->language->get('error_article')];
 		}
 
-		$limit = 10;
-		$this->load->language('task/catalog/review');
+		$results = $this->model_cms_article->getComments(['filter_status' => true]);
 
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
-		$return_reason_data = [];
-
-		$this->load->model('catalog/review');
-
-		$return_reasons = $this->model_catalog_review->getReviews();
-
-		foreach ($return_reasons as $return_reason) {
+		foreach ($results as $result) {
 
 		}
 
-
-
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
-
-
-
-
-
-
-
 
 	/**
 	 * Clear

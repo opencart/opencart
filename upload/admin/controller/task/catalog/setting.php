@@ -32,7 +32,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 				'args'   => ['store_id' => $store_id]
 			];
 
-			$this->model_setting_task->addTask($task_data);
+			//$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];

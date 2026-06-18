@@ -45,9 +45,9 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/tax_rate');
 
-		$geo_zone_total = $this->model_localisation_tax_rate->getTotalGeoZones();
+		$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRates();
 
-		for ($i = 1; $i <= ceil($geo_zone_total / $limit); $i++) {
+		for ($i = 1; $i <= ceil($tax_rate_total / $limit); $i++) {
 			$task_data = [
 				'code'   => 'tax_rate.list.' . $store_info['store_id'],
 				'action' => 'task/catalog/tax_rate.list',
@@ -70,7 +70,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * Generate Article data files.
 	 */
 	public function list(array $args = []): array {
-		$this->load->model('setting/task');
+		$this->load->language('task/catalog/tax_rate');
 
 		$store_info = [
 			'store_id' => 0,
@@ -88,40 +88,31 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('setting/task');
+
 		$filter_data = [
-			'filter_store_id' => $store_info['store_id'],
-			'start'           => $args['start'],
-			'limit'           => $args['limit']
+			'start' => $args['start'],
+			'limit' => $args['limit']
 		];
 
-		$this->load->model('localisation/geo_zone');
+		$this->load->model('localisation/tax_rate');
 
-		$results = $this->model_localisation_geo_zone->getGeoZones($filter_data);
+		$results = $this->model_localisation_tax_rate->getTaxRates($filter_data);
 
 		foreach ($results as $result) {
-
-			$zones = $this->model_localisation_geo_zone->getZones($filter_data);
-
-
 			$task_data = [
-				'code'   => 'tax_rate.info.' . $store_info['store_id'] . '.' . $result['tax_rate_id'],
-				'action' => 'task/catalog/tax_rate',
+				'code'   => 'tax_rate.info.' . $store_info['store_id'] . '.' . $result['geo_zone_id'],
+				'action' => 'task/catalog/tax_rate.info',
 				'args'   => [
-					'tax_rate_id' => $result['tax_rate_id'],
+					'geo_zone_id' => $result['geo_zone_id'],
 					'store_id'    => $store_info['store_id']
 				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
-
-
-
-
-
-
 		}
 
-		return ['success' => sprintf($this->language->get('text_tax_rate'), $store_info['name'], $args['start'], $args['limit'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $args['start'], $args['limit'])];
 	}
 
 	/**

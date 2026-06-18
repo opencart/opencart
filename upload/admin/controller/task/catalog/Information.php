@@ -188,7 +188,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$information_info = $this->model_catalog_information->getInformation((int)$args['information_id']);
 
-		if (!$information_info || !$information_info['status'] || !in_array($information_info['information_id'], $this->model_catalog_information->getStores($information_info['information_id']))) {
+		if (!$information_info || !$information_info['status'] || !in_array($store_info['store_id'], $this->model_catalog_information->getStores($information_info['information_id']))) {
 			return ['error' => $this->language->get('error_information')];
 		}
 

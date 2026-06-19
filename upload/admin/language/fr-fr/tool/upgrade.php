@@ -26,5 +26,6 @@ $_['error_version']        = 'La version est inférieure à la version actuelle!
 $_['error_download']       = 'La mise à niveau n\'a pas pu être téléchargée!';
 $_['error_file']           = 'Le fichier de mise à niveau est introuvable!';
 $_['error_directory']      = 'Impossible de créer le répertoire %s!';
+$_['error_path']           = 'Le chemin d\'installation %s n\'est pas autorisé!';
 $_['error_copy']           = 'Impossible de copier le fichier %s vers %s!';
 $_['error_unzip']          = 'Impossible d\'ouvrir le fichier .zip!';

@@ -88,7 +88,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	/**
 	 * Download
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public function download(): void {
 		$this->load->language('tool/upgrade');
@@ -194,6 +194,12 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
 						if (substr($destination, 0, 8) == 'install/') {
+							if (!oc_validate_relative_path($destination)) {
+								$json['error'] = sprintf($this->language->get('error_path'), $destination);
+
+								break;
+							}
+
 							// Default copy location
 							$path = '';
 
@@ -228,9 +234,11 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 				$zip->close();
 
-				$json['text'] = $this->language->get('text_patch');
+				if (!$json) {
+					$json['text'] = $this->language->get('text_patch');
 
-				$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
+					$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
+				}
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

@@ -56,13 +56,15 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
-		for ($i = 1; $i <= ceil($product_total / $limit); $i++) {
+		for ($i = 0; $i <= ceil($product_total / $limit); $i++) {
+			$start = $i * $limit;
+
 			$task_data = [
-				'code'   => 'product.list.' . $args['store_id'],
+				'code'   => 'product.list.' . $args['store_id'] . '.' . $start . '.' . $limit,
 				'action' => 'task/catalog/product.list',
 				'args'   => [
 					'store_id' => $args['store_id'],
-					'start'    => $i * $limit,
+					'start'    => $start,
 					'limit'    => $limit
 				]
 			];

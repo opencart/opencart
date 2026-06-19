@@ -176,6 +176,14 @@ class Template extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	public function getTemplateByRoute(string $route, $store_id): array {
+		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store` FROM `" . DB_PREFIX . "template` `t` ORDER BY `t`.`date_added`";
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Total Templates
 	 *

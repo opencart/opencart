@@ -39,13 +39,9 @@ class Template extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Generate new data
-		$ignore = [
-			'api',
-			'mail',
-			'task'
-		];
+		$this->load->model('setting/task');
 
+		// Generate new data
 		$routes = [];
 
 		$directory = DIR_CATALOG . 'view/template/';
@@ -57,7 +53,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 			$pos = strpos($route, '/');
 
-			if ($pos == false || in_array(substr($route, 0, $pos), $ignore)) {
+			if ($pos == false || in_array(substr($route, 0, $pos), ['mail'])) {
 				continue;
 			}
 
@@ -70,7 +66,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		foreach ($directories as $directory) {
 			$extension = basename($directory);
 
-			$path = DIR_EXTENSION . $extension . '/catalog/template/';
+			$path = DIR_EXTENSION . $extension . '/catalog/view/template/';
 
 			$files = oc_directory_read($path, true, '/.+\.html/');
 
@@ -123,31 +119,69 @@ class Template extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+
+		if ($args['route']) {
+			$path = $args['route'];
+		} else {
+			$path = '';
+		}
+
+
+
+
+
+		// Default template load
+		if (substr($path, 0, 10) != 'extension/') {
+			$directory = DIR_CATALOG . 'view/template';
+			$file = $directory . '/' . $path . '.html';
+		} else {
+			// Extension template load
+			$part = explode('/', $path);
+
+			$directory = DIR_EXTENSION . $part[1] . '/catalog/view/template';
+
+			unset($part[0]);
+			unset($part[1]);
+
+			$file = $directory . '/' . implode('/', $part) . '.html';
+		}
+
+		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
+			return ['error' => $this->language->get('error_file')];
+		}
+
 		// Template
 		$this->load->model('design/template');
 
-		$template_info = $this->model_design_template->getTemplate($args['template_id']);
+		$template_info = $this->model_design_template->getTemplateByRoute($args['route']);
 
-		if (!$template_info || !$template_info['status']) {
-
-
-
-
+		if ($template_info) {
+			$code = $template_info['code'];
 		}
+
+
+
+
+		$code = file_get_contents($file);
+
+
+
+
+
 
 
 
 
 		$pos = strrpos($args['route'], '/');
 
-		$directory = DIR_CATALOG . 'shop/' .parse_url($store_info['url'], PHP_URL_HOST) . '/data/template/'  .  substr($args['route'], 0, $pos) . '/';
+		$directory = DIR_OPENCART . 'shop/' .parse_url($store_info['url'], PHP_URL_HOST) . '/template/'  .  substr($args['route'], 0, $pos) . '/';
 		$filename = substr($args['route'], $pos + 1) . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($data))) {
+		if (!file_put_contents($directory . $filename, $code)) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -155,7 +189,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
 	 * Delete generated template files.
 	 *
@@ -164,40 +198,36 @@ class Template extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/translation');
+		$this->load->language('task/catalog/template');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
-
-
-
-
-
-
-
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-
-			$directories = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
-
-			foreach ($directories as $directory) {
-				oc_directory_delete($directory);
-			}
-
+		if (!array_key_exists('article_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$directories = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
+
+		foreach ($directories as $directory) {
+			oc_directory_delete($directory);
+		}
+
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }
 

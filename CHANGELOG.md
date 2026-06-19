@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.1.0.4]
+## [v4.1.0.4] (Release date: 19.06.2026)
 
 #### Changes
 
@@ -134,6 +134,11 @@
 * Changed: Change product rating field type to float in https://github.com/opencart/opencart/pull/15513
 * Fixed: Coupon category restriction not enforced in https://github.com/opencart/opencart/pull/15530
 * Fixed: Customer-facing 2FA email contains admin-oriented text in https://github.com/opencart/opencart/pull/15533
+* Fixed: reject traversal zip entries in marketplace installer in https://github.com/opencart/opencart/pull/15536
+* Fixed: Add product to cart in https://github.com/opencart/opencart/pull/15538
+* Changed: Improve admin performance with order table index in https://github.com/opencart/opencart/pull/15537
+* Fixed: Fix filter group sorting in admin in https://github.com/opencart/opencart/pull/15539
+* Changed: Use hash_equals() for API signature validation in https://github.com/opencart/opencart/pull/15541
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

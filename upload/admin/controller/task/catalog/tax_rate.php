@@ -47,7 +47,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRates();
 
-		for ($i = 1; $i <= ceil($tax_rate_total / $limit); $i++) {
+		for ($i = 0; $i <= ceil($tax_rate_total / $limit); $i++) {
 			$task_data = [
 				'code'   => 'tax_rate.list.' . $store_info['store_id'],
 				'action' => 'task/catalog/tax_rate.list',

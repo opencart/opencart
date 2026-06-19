@@ -62,7 +62,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$page_total = ceil($product_total / $limit);
 
-		for ($i = 1; $i <= $page_total; $i++) {
+		for ($i = 0; $i <= $page_total; $i++) {
 			$start = $i * $limit;
 
 			$task_data = [

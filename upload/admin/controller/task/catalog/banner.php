@@ -49,9 +49,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$banner_total = $this->model_design_banner->getTotalBanners(['filter_status' => true]);
 
-		for ($i = 1; $i <= ceil($banner_total / $limit); $i++) {
+		for ($i = 0; $i <= ceil($banner_total / $limit); $i++) {
 			$task_data = [
-				'code'   => 'banner.list',
+				'code'   => 'banner.list.' . $store_info['store_id'],
 				'action' => 'task/catalog/banner.list',
 				'args'   => [
 					'store_id' => $args['store_id'],

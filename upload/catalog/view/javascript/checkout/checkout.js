@@ -435,6 +435,16 @@ $('#button-shipping-methods').on('click', function() {
             }
 
             if (json['shipping_methods']) {
+                var oldModalShipping = document.getElementById('modal-shipping');
+
+                if (oldModalShipping) {
+                    var modalInstance = bootstrap.Modal.getInstance(oldModalShipping);
+
+                    if (modalInstance) {
+                        modalInstance.dispose();
+                    }
+                }
+
                 $('#modal-shipping').remove();
 
                 html = '<div id="modal-shipping" class="modal">';
@@ -571,6 +581,16 @@ $('#button-payment-methods').on('click', function() {
             }
 
             if (json['payment_methods']) {
+                var oldModalPayment = document.getElementById('modal-payment');
+
+                if (oldModalPayment) {
+                    var modalInstance = bootstrap.Modal.getInstance(oldModalPayment);
+
+                    if (modalInstance) {
+                        modalInstance.dispose();
+                    }
+                }
+
                 $('#modal-payment').remove();
 
                 html = '<div id="modal-payment" class="modal">';

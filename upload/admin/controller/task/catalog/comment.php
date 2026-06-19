@@ -54,7 +54,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$comment_total = $this->model_cms_article->getTotalComments(['filter_status' => true]);
 
-		for ($i = 1; $i <= ceil($comment_total / $limit); $i++) {
+		for ($i = 0; $i <= ceil($comment_total / $limit); $i++) {
 			$start = $i * $limit;
 
 			$task_data = [

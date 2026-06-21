@@ -31,13 +31,13 @@ $_['text_product']         = 'Produkt';
 $_['text_return_reason']   = 'Rückgabegrund';
 $_['text_review']          = 'Review';
 $_['text_sass']            = 'SASS';
-$_['text_setting']         = 'Setting';
+$_['text_setting']         = 'Einstellungen';
 $_['text_store']           = 'Online-Shop (Store)';
 $_['text_tag']             = 'Schlagwörter';
 $_['text_tax_rate']        = 'Steuersätze';
 $_['text_template']        = 'Template';
 $_['text_topic']           = 'Thema';
-$_['text_translation']     = 'Translation';
+$_['text_translation']     = 'Übersetzung';
 
 // Help
 $_['help_cache']           = 'Clears all stored cache data files.';

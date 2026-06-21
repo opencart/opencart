@@ -17,7 +17,7 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 		chmod 0777 config.php
 		chmod 0777 admin/config.php
 
-5. Make sure you have installed a MySQL Database which has a user assigned to it
+5. Make sure you have installed a MySQL or MariaDB database which has a user assigned to it
 	* do not use your ```root``` username and ```root``` password
 6. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
 7. You should be taken to the installer page. Follow the on screen instructions.
@@ -33,7 +33,7 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 		config.php
 		admin/config.php
 
-4. Make sure you have installed a MySQL Database which has a user assigned to it
+4. Make sure you have installed a MySQL or MariaDB database which has a user assigned to it
 	* do not use your ```root``` username and ```root``` password
 5. You should be taken to the installer page. Follow the on screen instructions.
 6. After successful install, delete the ```/install/``` directory.

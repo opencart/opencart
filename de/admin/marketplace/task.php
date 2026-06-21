@@ -10,9 +10,9 @@ $_['text_filter']          = 'Filter';
 $_['text_status']          = 'Change Status';
 $_['text_pending']         = 'Ausstehend';
 $_['text_processing']      = 'Verarbeitung';
-$_['text_paused']          = 'Paused';
+$_['text_paused']          = 'Pausiert';
 $_['text_complete']        = 'Vollständig';
-$_['text_failed']          = 'Failed';
+$_['text_failed']          = 'Fehlgeschlagen';
 
 // Column
 $_['column_code']          = 'Task Code';

@@ -30,8 +30,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'topic.' . $store_id,
-				'action' => 'task/catalog/topic',
+				'code'   => 'topic.list.' . $store_id,
+				'action' => 'task/catalog/topic.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -74,8 +74,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'topic.' . $store_id,
-				'action' => 'task/catalog/topic',
+				'code'   => 'topic.list.' . $store_id,
+				'action' => 'task/catalog/topic.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -133,6 +133,14 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$store_ids = $this->model_catalog_information->getStores($args[0]);
 
 		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'topic.list.' . $store_id,
+				'action' => 'task/catalog/topic.list',
+				'args'   => ['store_id' => $store_id]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
 			$task_data = [
 				'code'   => 'topic.delete.' . $store_id . '.' . $args[0],
 				'action' => 'task/catalog/topic.delete',

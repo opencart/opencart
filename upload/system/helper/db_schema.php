@@ -7587,53 +7587,6 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'theme',
-		'field' => [
-			[
-				'name'           => 'theme_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name'    => 'store_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name'    => 'route',
-				'type'    => 'varchar(64)',
-				'default' => '0'
-			],
-			[
-				'name' => 'code',
-				'type' => 'mediumtext'
-			],
-			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'theme_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'store_id',
-				'table' => 'store',
-				'field' => 'store_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
 		'name'  => 'translation',
 		'field' => [
 			[

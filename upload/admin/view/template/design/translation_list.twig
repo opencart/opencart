@@ -5,7 +5,8 @@
         <tr>
           <th class="text-center" style="width: 1px;"><checkbox-all target="#form-translation"></checkbox-all></th>
           <th>{{ column_route }}</th>
-          <th>{{ column_key }}</th>
+          <th>{{ column_store }}</th>
+          <th>{{ column_language }}</th>
           <th class="text-center">{{ column_status }}</th>
           <th>{{ column_date_added }}</th>
           <th class="text-end">{{ column_action }}</th>
@@ -17,7 +18,8 @@
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ translation.translation_id }}" class="form-check-input"/></td>
               <td>{{ translation.route }}</td>
-              <td>{{ translation.key }}</td>
+              <td>{{ translation.store }}</td>
+              <td>{{ translation.language }}</td>
               <td class="text-center">{% if translation.status %}
                   <span class="badge bg-success">{{ text_enabled }}</span>
                 {% else %}
@@ -29,7 +31,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

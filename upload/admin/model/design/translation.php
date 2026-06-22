@@ -68,7 +68,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $this->model_design_translation->editTranslation($translation_id, $translation_data);
 	 */
 	public function editTranslation(int $translation_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `status` = '" . (bool)$data['status'] . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `status` = '" . (bool)$data['status'] . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
 
 		$this->model_design_translation->deleteDescriptions($translation_id);
 
@@ -135,6 +135,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteTranslationsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `store_id` = '" . (int)$store_id . "'");
+
+
 	}
 
 	/**
@@ -154,6 +156,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteTranslationsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `language_id` = '" . (int)$language_id . "'");
+
+
 	}
 
 	/**
@@ -274,7 +278,7 @@ class Translation extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] = "`t`.`status` = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {

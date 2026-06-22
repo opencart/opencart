@@ -161,10 +161,19 @@ class Translation extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('design/translation');
+		$this->load->model('setting/store');
 
 		$results = $this->model_design_translation->getTranslations($filter_data);
 
 		foreach ($results as $result) {
+			$store_info = $this->model_setting_store->getStore($result['store_id']);
+
+			if ($store_info) {
+				$store = $store_info['name'];
+			} else {
+				$store = '';
+			}
+
 			$language_info = $this->model_localisation_language->getLanguage($result['language_id']);
 
 			if ($language_info) {
@@ -192,7 +201,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Translations
-		$translation_total = $this->model_design_translation->getTotalTranslations();
+		$translation_total = $this->model_design_translation->getTotalTranslations($filter_data);
 
 		// Pagination
 		$data['total'] = $translation_total;
@@ -289,6 +298,52 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$data['route'] = '';
 		}
 
+		$data['templates'] = [];
+
+		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language_catalog') . '/';
+
+		$files = oc_directory_read($directory, true, '/.+\.php$/');
+
+		foreach ($files as $file) {
+			$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
+
+			if ($template) {
+				$data['templates'][] = $template;
+			}
+		}
+
+
+
+		$directories = oc_directory_read(DIR_EXTENSION, false);
+
+		foreach ($directories as $directory) {
+			$extension = basename($directory);
+
+			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $this->config->get('config_language_catalog') . '/';
+
+			$files = oc_directory_read($path, true, '/.+\.php/');
+
+			foreach ($files as $file) {
+				$language = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
+
+				if ($language) {
+					$json[] = 'extension/' . $extension . '/' . $language;
+				}
+			}
+		}
+
+
+		// SEO
+		if (!empty($translation_info)) {
+			$data['translation_description'] = $this->model_design_translation->getDescriptions('information_id', $information_info['translation_id']);
+
+
+		} else {
+			$data['translation_description'] = [];
+		}
+
+
+
 		if (!empty($translation_info)) {
 			$data['key'] = $translation_info['key'];
 		} else {
@@ -300,6 +355,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['value'] = '';
 		}
+
+
+
+
 
 		if (!empty($translation_info)) {
 			$data['status'] = $translation_info['status'];
@@ -476,35 +535,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 
 		if (!empty($language_info)) {
-			$directory = DIR_CATALOG . 'language/' . $language_info['code'] . '/';
 
-			$files = oc_directory_read($directory, true, '/.+\.php$/');
-
-			foreach ($files as $file) {
-				$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
-
-				if ($template) {
-					$json[] = $template;
-				}
-			}
-
-			$directories = oc_directory_read(DIR_EXTENSION, false);
-
-			foreach ($directories as $directory) {
-				$extension = basename($directory);
-
-				$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language_info['code'] . '/';
-
-				$files = oc_directory_read($path, true, '/.+\.php/');
-
-				foreach ($files as $file) {
-					$language = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
-
-					if ($language) {
-						$json[] = 'extension/' . $extension . '/' . $language;
-					}
-				}
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

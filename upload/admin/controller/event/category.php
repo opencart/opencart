@@ -30,8 +30,8 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'category.' . $store_id,
-				'action' => 'task/catalog/category',
+				'code'   => 'category.list.' . $store_id,
+				'action' => 'task/catalog/category.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -74,8 +74,8 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'category.' . $store_id,
-				'action' => 'task/catalog/category',
+				'code'   => 'category.list.' . $store_id,
+				'action' => 'task/catalog/category.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -135,8 +135,8 @@ class Category extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			// Refresh List
 			$task_data = [
-				'code'   => 'category.' . $store_id,
-				'action' => 'task/catalog/category',
+				'code'   => 'category.list.' . $store_id,
+				'action' => 'task/catalog/category.list',
 				'args'   => ['store_id' => $store_id]
 			];
 

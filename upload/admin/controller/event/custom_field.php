@@ -61,7 +61,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editCustomField(string &$route, array &$args, &$output): void {
+	public function editCustomField(string &$route, array &$args): void {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 

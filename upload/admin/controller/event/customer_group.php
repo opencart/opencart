@@ -76,7 +76,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editCustomerGroup(string &$route, array &$args, &$output): void {
+	public function editCustomerGroup(string &$route, array &$args): void {
 		// Admin
 		$task_data = [
 			'code'   => 'admin.customer_group',
@@ -102,8 +102,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'customer_group.' . $store_id,
-				'action' => 'task/catalog/customer_group',
+				'code'   => 'customer_group.list.' . $store_id,
+				'action' => 'task/catalog/customer_group.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -160,8 +160,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'customer_group.' . $store_id,
-				'action' => 'task/catalog/customer_group',
+				'code'   => 'customer_group.list.' . $store_id,
+				'action' => 'task/catalog/customer_group.list',
 				'args'   => ['store_id' => $store_id]
 			];
 

@@ -119,12 +119,10 @@ class Template extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Default template load
 		$filter_data = [
 			'filter_route'    => $args['route'],
 			'filter_store_id' => $store_info['store_id'],
 			'filter_status'   => true,
-			'sort_order'      => 'date_added',
 			'start'           => 0,
 			'limit'           => 1
 		];

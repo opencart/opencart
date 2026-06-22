@@ -66,7 +66,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$template_info = $this->model_design_template->getTemplate($args[0]);
 
-		if ($template_info && ($template_info['store_id'] !== $args[1]['store_id'] && $template_info['route'] !== $args[1]['route'])) {
+		if ($template_info && ($template_info['store_id'] !== $args[1]['store_id'] || $template_info['route'] !== $args[1]['route'])) {
 			$task_data = [
 				'code'   => 'template.info.' . $template_info['store_id'] . '.' . str_replace('/', '.', $template_info['route']),
 				'action' => 'task/catalog/template.info',

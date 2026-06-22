@@ -157,8 +157,28 @@ class Template extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_design_template->getTemplates();
 	 */
 	public function getTemplates(array $data = []): array {
-		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store` FROM `" . DB_PREFIX . "template` `t` ORDER BY `t`.`date_added`";
-		
+		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store` FROM `" . DB_PREFIX . "template` `t`";
+
+		$implode = [];
+
+		if (!empty($data['filter_route'])) {
+			$implode[] = "`t`.`route` LIKE '" .  $this->db->escape($data['filter_route'])  . "'";
+		}
+
+		if (!empty($data['filter_store_id'])) {
+			$implode[] = "`t`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_status'])) {
+			$implode[] = "`t`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sql .= " ORDER BY `t`.`route` ASC";
+
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;
@@ -170,14 +190,6 @@ class Template extends \Opencart\System\Engine\Model {
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
-	}
-
-	public function getTemplateByRoute(string $route, $store_id): array {
-		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store` FROM `" . DB_PREFIX . "template` `t` ORDER BY `t`.`date_added`";
 
 		$query = $this->db->query($sql);
 
@@ -198,7 +210,27 @@ class Template extends \Opencart\System\Engine\Model {
 	 * $template_total = $this->model_design_template->getTotalTemplates();
 	 */
 	public function getTotalTemplates(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "template`");
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "template`";
+
+		$implode = [];
+
+		if (!empty($data['filter_route'])) {
+			$implode[] = "`t`.`route` LIKE '" .  $this->db->escape($data['filter_route'])  . "'";
+		}
+
+		if (!empty($data['filter_store_id'])) {
+			$implode[] = "`t`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_status'])) {
+			$implode[] = "`t`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

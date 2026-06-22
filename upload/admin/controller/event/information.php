@@ -94,7 +94,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		// Remove store ID's
+		// Remove stores
 		$this->load->model('catalog/information');
 
 		$remove_ids = array_diff($this->model_catalog_information->getStores($args[0]), $store_ids);

@@ -18,83 +18,89 @@ class Translation extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		$this->load->model('setting/task');
 
-		// Generate new data
 		$ignore = [
 			'api',
-			'mail',
-			'task'
+			'mail'
 		];
 
-		$stores = [];
+		// Generate new data
+		$routes = [];
 
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
+		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language_catalog') . '/';
 
-		$this->load->model('setting/store');
+		$files = oc_directory_read($directory, true, '/.+\.php$/');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		foreach ($files as $file) {
+			$route = substr(substr($file, strlen($directory)), 0, -4);
+
+			$pos = strpos($route, '/');
+
+			if ($pos == false || in_array(substr($route, 0, $pos), $ignore)) {
+				continue;
+			}
+
+			$routes[] = $route;
+		}
+
+		// Extension
+		$directories = oc_directory_read(DIR_EXTENSION, false);
+
+		foreach ($directories as $directory) {
+			$extension = basename($directory);
+
+			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $this->config->get('config_language_catalog') . '/';
+
+			$files = oc_directory_read($path, true, '/.+\.php/');
+
+			foreach ($files as $file) {
+				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -4);
+			}
+		}
 
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		$this->load->model('setting/task');
-
-		foreach ($stores as $store) {
+		foreach ($routes as $route) {
 			foreach ($languages as $language) {
-				$routes = [];
+				$task_data = [
+					'code'   => 'translation.info.' . $store_info['store_id'] . '.' . $language['language_id'] . '.' . str_replace('/', '.', $route),
+					'action' => 'task/catalog/translation.info',
+					'args'   => [
+						'route'       => $route,
+						'store_id'    => $store_info['store_id'],
+						'language_id' => $language['language_id']
+					]
+				];
 
-				$directory = DIR_CATALOG . 'language/' . $language['code'] . '/';
-
-				$files = oc_directory_read($directory, true, '/.+\.php$/');
-
-				foreach ($files as $file) {
-					$route = substr(substr($file, strlen($directory)), 0, -4);
-
-					$pos = strpos($route, '/');
-
-					if ($pos == false || in_array(substr($route, 0, $pos), $ignore)) {
-						continue;
-					}
-
-					$routes[] = $route;
-				}
-
-				$directories = oc_directory_read(DIR_EXTENSION, false);
-
-				foreach ($directories as $directory) {
-					$extension = basename($directory);
-
-					$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language['code'] . '/';
-
-					$files = oc_directory_read($path, true, '/.+\.php/');
-
-					foreach ($files as $file) {
-						$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -4);
-					}
-				}
-
-				foreach ($routes as $route) {
-					$task_data = [
-						'code'   => 'translation',
-						'action' => 'task/catalog/translation.write',
-						'args'   => [
-							'route'       => $route,
-							'store_id'    => $store['store_id'],
-							'language_id' => $language['language_id']
-						]
-					];
-
-					$this->model_setting_task->addTask($task_data);
-				}
+				$this->model_setting_task->addTask($task_data);
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
 	/**
@@ -106,29 +112,31 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function write(array $args = []): array {
+	public function info(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
-		$required = [
-			'route',
-			'store_id',
-			'language_id'
+		if (!array_key_exists('route', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
@@ -136,6 +144,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
 		}
+
+
 
 		$language = new \Opencart\System\Library\Language((string)$language_info['code']);
 		$language->addPath(DIR_CATALOG . 'language/');
@@ -180,52 +190,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_write'), $store_info['name'], $language_info['name'], $args['route'])];
-	}
-
-	/**
-	 * Clear
-	 *
-	 * Delete generated JSON translation files.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/translation');
-
-		// Store
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
-		if ($args['store_id']) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-		}
-
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$directories = oc_directory_read(DIR_CATALOG . 'view/language/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
-
-				foreach ($directories as $directory) {
-					oc_directory_delete($directory);
-				}
-			}
-		}
-
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $args['route'])];
 	}
 }

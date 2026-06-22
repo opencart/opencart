@@ -514,35 +514,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Path
-	 *
-	 * @return void
-	 */
-	public function path(): void {
-		$this->load->language('design/translation');
-
-		$json = [];
-
-		if (isset($this->request->get['language_id'])) {
-			$language_id = (int)$this->request->get['language_id'];
-		} else {
-			$language_id = 0;
-		}
-
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage($language_id);
-
-		if (!empty($language_info)) {
-
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
 	 * Translation
 	 *
 	 * @return void

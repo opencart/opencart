@@ -84,8 +84,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		foreach ($routes as $route) {
-			foreach ($languages as $language) {
+		foreach ($languages as $language) {
+			foreach ($routes as $route) {
 				$task_data = [
 					'code'   => 'translation.info.' . $store_info['store_id'] . '.' . $language['language_id'] . '.' . str_replace('/', '.', $route),
 					'action' => 'task/catalog/translation.info',
@@ -145,23 +145,13 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-
-
-		$language = new \Opencart\System\Library\Language((string)$language_info['code']);
-		$language->addPath(DIR_CATALOG . 'language/');
-
-		$part = explode('/', $args['route']);
-
-		if ($part[0] == 'extension' && count($part) > 2) {
-			$language->addPath('extension/' . $part[1], DIR_EXTENSION . $part[1] . '/catalog/language/');
-		}
-
-		$language->load($args['route']);
-
 		$filter_data = [
 			'filter_route'       => $args['route'],
 			'filter_store_id'    => $store_info['store_id'],
-			'filter_language_id' => $language_info['language_id']
+			'filter_language_id' => $language_info['language_id'],
+			'filter_status'      => true,
+			'start'              => 0,
+			'limit'              => 1
 		];
 
 		// Overrides
@@ -169,11 +159,55 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$results = $this->model_design_translation->getTranslations($filter_data);
 
-		foreach ($results as $result) {
-			$language->set($result['key'], $result['value']);
+		$translation_info = array_shift($results);
+
+		if ($translation_info && $translation_info['status']) {
+
+
+
+
+
+
+		} else {
+
+			if (substr($args['route'], 0, 10) != 'extension/') {
+				$directory = DIR_CATALOG . 'language/' . $language_info['code'] . '/';
+
+				$file = $directory . $args['route'] . '.php';
+
+			} else {
+
+				// Extension template load
+				$part = explode('/', $args['route']);
+
+				$directory = DIR_EXTENSION . $part[1] . '/catalog/language/';
+
+				array_shift($part);
+				// Don't remove. Required for extension route.
+				array_shift($part);
+
+				$route = implode('/', $part);
+			}
+
+			if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+				$_ = [];
+
+				include($directory . $language_info['code'] . '/' . $route . '.php');
+
+				foreach ($_ as $key => $value) {
+					$json[] = [
+						'key'   => $key,
+						'value' => $value
+					];
+				}
+			}
 		}
 
-		$data = $language->all();
+
+
+
+
+
 
 		ksort($data, SORT_REGULAR);
 

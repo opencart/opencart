@@ -36,7 +36,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			foreach ($customer_group_ids as $customer_group_id) {
 				$task_data = [
 					'code'   => 'customer_group.info.' . $store_id . '.' . $customer_group_id,
-					'action' => 'task/catalog/customer_group',
+					'action' => 'task/catalog/customer_group.info',
 					'args'   => [
 						'customer_group_id' => $customer_group_id,
 						'store_id'          => $store_id
@@ -82,7 +82,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			foreach ($customer_group_ids as $customer_group_id) {
 				$task_data = [
 					'code'   => 'customer_group.info.' . $store_id . '.' . $customer_group_id,
-					'action' => 'task/catalog/customer_group',
+					'action' => 'task/catalog/customer_group.info',
 					'args'   => [
 						'customer_group_id' => $customer_group_id,
 						'store_id'          => $store_id
@@ -121,7 +121,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$task_data = [
 					'code'   => 'customer_group.info.' . $store_id . '.' . $result['customer_group_id'],
-					'action' => 'task/catalog/customer_group',
+					'action' => 'task/catalog/customer_group.info',
 					'args'   => [
 						'customer_group_id' => $result['customer_group_id'],
 						'store_id'          => $store_id

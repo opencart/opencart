@@ -32,8 +32,8 @@ class Option extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			foreach ($results as $result) {
 				$task_data = [
-					'code'   => 'product.' . $result['product_id'],
-					'action' => 'task/catalog/product',
+					'code'   => 'product.info.' . $result['product_id'],
+					'action' => 'task/catalog/product.info',
 					'args'   => [
 						'product_id' => $result['product_id'],
 						'store_id'   => $store_id

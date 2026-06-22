@@ -24,9 +24,7 @@ class Sale extends \Opencart\System\Engine\Controller {
 
 		$product_total = $this->model_catalog_product->getTotalProducts();
 
-		$page_total = ceil($product_total / $limit);
-
-		for ($i = 1; $i <= $page_total; $i++) {
+		for ($i = 1; $i <= ceil($product_total / $limit); $i++) {
 			$start = $i * $limit;
 
 			$task_data = [

@@ -11,7 +11,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Trigger admin/model/catalog/product/editAttribute/after
+	 * Trigger admin/model/catalog/product/editAttribute/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -19,7 +19,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editAttribute(string &$route, array &$args, &$output): void {
+	public function editAttribute(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 		$this->load->model('setting/store');
 

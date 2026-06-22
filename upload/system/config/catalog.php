@@ -27,8 +27,8 @@ $_['action_pre_action']  = [
 	'startup/customer',
 	'startup/currency',
 	'startup/tax',
-	'startup/application',
 	'startup/extension',
+	'startup/application',
 	'startup/startup',
 	'startup/marketing',
 	'startup/error',
@@ -49,6 +49,10 @@ $_['action_event']      = [
 	'controller/*/after' => [
 		0 => 'event/language.after',
 		//2 => 'event/debug.after'
+	],
+	'library/*/before' => [
+		0 => 'event/modification.library',
+		//2 => 'event/debug.before'
 	],
 	'view/*/before' => [
 		0   => 'event/modification.view',

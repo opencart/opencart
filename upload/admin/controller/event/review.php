@@ -29,8 +29,8 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'review.' . $store_id . '.' . $args[1]['product_id'],
-				'action' => 'task/catalog/review',
+				'code'   => 'review.info.' . $store_id . '.' . $args[1]['product_id'],
+				'action' => 'task/catalog/review.info',
 				'args'   => [
 					'product_id' => $args[1]['product_id'],
 					'store_id'   => $store_id
@@ -41,7 +41,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 			$task_data = [
 				'code'   => 'review.info.' . $store_id . '.' . $args[1]['product_id'],
-				'action' => 'task/catalog/review',
+				'action' => 'task/catalog/review.info',
 				'args'   => [
 					'product_id' => $args[1]['product_id'],
 					'store_id'   => $store_id
@@ -79,8 +79,8 @@ class Review extends \Opencart\System\Engine\Controller {
 
 			if ($review_info) {
 				$task_data = [
-					'code'   => 'review.' . $args[1]['product_id'],
-					'action' => 'task/catalog/review',
+					'code'   => 'review.info.' . $args[1]['product_id'],
+					'action' => 'task/catalog/review.info',
 					'args'   => ['product_id' => $args[1]['product_id']]
 				];
 
@@ -92,8 +92,8 @@ class Review extends \Opencart\System\Engine\Controller {
 
 				foreach ($product_ids as $product_id) {
 					$task_data = [
-						'code'   => 'review.' . $product_id,
-						'action' => 'task/catalog/review',
+						'code'   => 'review.info.' . $product_id,
+						'action' => 'task/catalog/review.info',
 						'args'   => ['review_id' => $product_id]
 					];
 

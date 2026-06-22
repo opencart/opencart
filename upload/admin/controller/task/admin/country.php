@@ -11,13 +11,54 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate country list.
+	 * Generate country task list.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
+		$this->load->language('task/catalog/country');
+
+		// 1. Add country list task
+		$task_data = [
+			'code'   => 'country.list',
+			'action' => 'task/catalog/country.list',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		// 2. Add country list task
+		$this->load->model('localisation/country');
+
+		$results = $this->model_localisation_country->getCountries(['sort_order' => 'ASC']);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'country.info.' . $result['country_id'],
+				'action' => 'task/catalog/country.info',
+				'args'   => ['country_id' => $result['country_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => $this->language->get('text_task')];
+	}
+
+	/**
+	 * List
+	 *
+	 * Generate country list.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function list(array $args = []): array {
 		$this->load->language('task/admin/country');
 
 		$country_data = [];
@@ -27,7 +68,18 @@ class Country extends \Opencart\System\Engine\Controller {
 		$countries = $this->model_localisation_country->getCountries(['sort_order' => 'ASC']);
 
 		foreach ($countries as $country) {
-			$country_data[] = array_merge($country, ['description' => $this->model_localisation_country->getDescriptions($country['country_id'])]);
+			$description_data = [];
+
+			$descriptions = $this->model_localisation_country->getDescriptions($country['country_id']);
+
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['name' => $description['name']];
+			}
+
+			$country_data[] = [
+				'country_id'  => $country['country_id'],
+				'description' => $description_data
+			];
 		}
 
 		$sort_order = [];
@@ -86,6 +138,22 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($zones as $zone) {
 			$zone_data[] = $zone + ['description' => $this->model_localisation_zone->getDescriptions($zone['zone_id'])];
 		}
+
+
+		$country_data = [
+			'country_id'        => $country_info['country_id'],
+			'description'       => $description_data,
+			'iso_code_2'        => $country_info['iso_code_2'],
+			'iso_code_3'        => $country_info['iso_code_3'],
+			'address_format_id' => $country_info['address_format_id'],
+			'postcode_required' => $country_info['postcode_required'],
+			'zones'             => $zone_data,
+			'geo_zones'         => $geo_zone_data
+		];
+
+
+
+
 
 		$directory = DIR_APPLICATION . 'view/data/localisation/';
 		$filename = 'country-' . $country_info['country_id'] . '.json';

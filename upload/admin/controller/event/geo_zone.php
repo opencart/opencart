@@ -72,7 +72,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editGeoZone(string &$route, array &$args, &$output): void {
+	public function editGeoZone(string &$route, array &$args): void {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 

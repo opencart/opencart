@@ -26,8 +26,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'tax_rate.' . $store_id . '.' . $args[1]['geo_zone_id'],
-				'action' => 'task/catalog/tax_rate',
+				'code'   => 'tax_rate.info.' . $store_id . '.' . $args[1]['geo_zone_id'],
+				'action' => 'task/catalog/tax_rate.info',
 				'args'   => [
 					'geo_zone_id' => $args[1]['geo_zone_id'],
 					'store_id'    => $store_id
@@ -62,8 +62,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'tax_rate.' . $store_id . '.' . $args[1]['geo_zone_id'],
-				'action' => 'task/catalog/tax_rate',
+				'code'   => 'tax_rate.info.' . $store_id . '.' . $args[1]['geo_zone_id'],
+				'action' => 'task/catalog/tax_rate.info',
 				'args'   => [
 					'geo_zone_id' => $args[1]['geo_zone_id'],
 					'store_id'    => $store_id
@@ -74,8 +74,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 			if ($tax_rate_info && $tax_rate_info['geo_zone_id'] !== $args[1]['geo_zone_id']) {
 				$task_data = [
-					'code'   => 'tax_rate.' . $store_id . '.' . $tax_rate_info['geo_zone_id'],
-					'action' => 'task/catalog/tax_rate',
+					'code'   => 'tax_rate.info.' . $store_id . '.' . $tax_rate_info['geo_zone_id'],
+					'action' => 'task/catalog/tax_rate.info',
 					'args'   => [
 						'geo_zone_id' => $tax_rate_info['geo_zone_id'],
 						'store_id'    => $store_id
@@ -112,8 +112,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			if ($tax_rate_info) {
 				$task_data = [
-					'code'   => 'tax_rate.delete.' .  $store_id . '.' . $tax_rate_info['geo_zone_id'],
-					'action' => 'task/catalog/tax_rate.delete',
+					'code'   => 'tax_rate.info.' .  $store_id . '.' . $tax_rate_info['geo_zone_id'],
+					'action' => 'task/catalog/tax_rate.info',
 					'args'   => [
 						'geo_zone_id' => $tax_rate_info['geo_zone_id'],
 						'store_id'    => $store_id

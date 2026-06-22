@@ -69,7 +69,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	private function editArticle(string &$route, array &$args, &$output): void {
+	private function editArticle(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
 		$store_ids = [];
@@ -163,7 +163,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	private function deleteArticle(string &$route, array &$args, &$output): void {
+	private function deleteArticle(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
 		// Rewrite the article ID's in the topic file

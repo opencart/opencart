@@ -21,11 +21,11 @@ class Template extends \Opencart\System\Engine\Controller {
 	 */
 	public function addTemplate(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'template.info.' . $args[1]['store_id'] . '.' . str_replace('/', '.', $args[1]['route']),
+			'code'   => 'template.info.' . $args[0]['store_id'] . '.' . str_replace('/', '.', $args[0]['route']),
 			'action' => 'task/catalog/template.info',
 			'args'   => [
-				'route'    => $args[1]['route'],
-				'store_id' => $args[1]['store_id']
+				'route'    => $args[0]['route'],
+				'store_id' => $args[0]['store_id']
 			]
 		];
 
@@ -47,7 +47,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editTemplate(string &$route, array &$args, &$output): void {
+	public function editTemplate(string &$route, array &$args): void {
 		$task_data = [
 			'code'   => 'template.info.' . $args[1]['store_id'] . '.' . str_replace('/', '.', $args[1]['route']),
 			'action' => 'task/catalog/template.info',
@@ -75,7 +75,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function deleteTemplate(string &$route, array &$args, &$output): void {
+	public function deleteTemplate(string &$route, array &$args): void {
 		$task_data = [
 			'code'   => 'template.delete.' . $args[0],
 			'action' => 'task/catalog/template.delete',

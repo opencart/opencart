@@ -145,8 +145,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 			$topic_data[] = [
 				'topic_id'    => $result['topic_id'],
-				'description' => $description_data,
-				'stores'      => $this->model_cms_topic->getStores($result['topic_id'])
+				'description' => $description_data
 			];
 		}
 
@@ -281,7 +280,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_topic')];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/';
 		$filename = 'article.topic-' . $topic_info['topic_id'] . '.csv';
 
 		if (!oc_directory_create($directory, 0777)) {

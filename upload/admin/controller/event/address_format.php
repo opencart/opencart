@@ -19,7 +19,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editAddressFormat(string &$route, array &$args, &$output): void {
+	public function editAddressFormat(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 		$this->load->model('setting/store');
 

@@ -14,7 +14,7 @@ OpenCart 4.1 requires PHP 8.0+.
 Use the supplied `Makefile` wrappers around `docker compose`:
 ```bash
 make init        # first run only – copies docker/.env.docker.example
-make build       # build PHP/Apache/MySQL images
+make build       # build PHP/Apache/MariaDB images
 make up          # start the stack (add `profiles="redis"` etc. to include extras)
 make php         # open a shell in the PHP container as www-data
 make logs        # tail all service logs
@@ -25,7 +25,7 @@ Once the stack is running, visit `http://localhost`, complete the installer (cre
 ### Native / custom setups
 If you run OpenCart without Docker you must still provide:
 - PHP 8.0+ with extensions: `curl`, `gd`, `zip` (see `INSTALL.md` for OS-specific notes).
-- MySQL (or compatible) database.
+- MySQL or MariaDB database.
 - Web server pointing to `upload/` as the document root.
 
 Install PHP dependencies locally by running:

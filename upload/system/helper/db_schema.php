@@ -7325,7 +7325,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(32)'
+				'type' => 'varchar(128)'
 			],
 			[
 				'name' => 'action',
@@ -7370,7 +7370,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(32)'
+				'type' => 'varchar(128)'
 			],
 			[
 				'name' => 'comment',

@@ -230,6 +230,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			// Tags
+			/*
 			foreach ($tags as $tag) {
 				$task_data = [
 					'code'   => 'tag.product.' . $store_id . '.' . $tag,
@@ -242,6 +243,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+			*/
 		}
 
 		// Remove from stores
@@ -313,6 +315,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			// Tags
+			/*
 			foreach ($tags as $tag) {
 				$task_data = [
 					'code'   => 'tag.product.' . $store_id . '.' . $tag,
@@ -325,6 +328,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+			*/
 		}
 	}
 

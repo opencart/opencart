@@ -7647,19 +7647,11 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name' => 'value',
-				'type' => 'text'
-			],
-			[
 				'name' => 'language_id',
 				'type' => 'int(11)'
 			],
 			[
 				'name' => 'route',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'key',
 				'type' => 'varchar(64)'
 			],
 			[
@@ -7707,12 +7699,6 @@ function oc_db_schema() {
 				'key'  => [
 					'route'
 				]
-			],
-			[
-				'name' => 'key',
-				'key'  => [
-					'key'
-				]
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -7724,18 +7710,17 @@ function oc_db_schema() {
 		'name'  => 'translation_description',
 		'field' => [
 			[
-				'name'           => 'translation_id',
+				'name'           => 'translation_description_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
 			[
-				'name'    => 'store_id',
-				'type'    => 'int(11)',
-				'default' => '0'
+				'name' => 'translation_id',
+				'type' => 'int(11)'
 			],
 			[
-				'name' => 'language_id',
-				'type' => 'int(11)'
+				'name' => 'key',
+				'type' => 'varchar(64)'
 			],
 			[
 				'name' => 'value',
@@ -7743,20 +7728,13 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'translation_id',
-			'store_id',
-			'language_id'
+			'translation_description_id'
 		],
 		'foreign' => [
 			[
-				'key'   => 'store_id',
-				'table' => 'store',
-				'field' => 'store_id'
-			],
-			[
-				'key'   => 'language_id',
-				'table' => 'language',
-				'field' => 'language_id'
+				'key'   => 'translation_id',
+				'table' => 'translation',
+				'field' => 'translation_id'
 			]
 		],
 		'index' => [
@@ -7764,18 +7742,6 @@ function oc_db_schema() {
 				'name' => 'translation',
 				'key'  => [
 					'translation_id'
-				]
-			],
-			[
-				'name' => 'store',
-				'key'  => [
-					'store_id'
-				]
-			],
-			[
-				'name' => 'language',
-				'key'  => [
-					'language_id'
 				]
 			]
 		],

@@ -30,8 +30,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'manufacturer.' . $store_id,
-				'action' => 'task/catalog/manufacturer',
+				'code'   => 'manufacturer.list.' . $store_id,
+				'action' => 'task/catalog/manufacturer.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -79,8 +79,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'manufacturer.' . $store_id,
-				'action' => 'task/catalog/manufacturer',
+				'code'   => 'manufacturer.list.' . $store_id,
+				'action' => 'task/catalog/manufacturer.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -155,8 +155,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			// List
 			$task_data = [
-				'code'   => 'manufacturer.' . $store_id,
-				'action' => 'task/catalog/manufacturer',
+				'code'   => 'manufacturer.list.' . $store_id,
+				'action' => 'task/catalog/manufacturer.list',
 				'args'   => ['store_id' => $store_id]
 			];
 

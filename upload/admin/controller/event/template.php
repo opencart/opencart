@@ -60,6 +60,26 @@ class Template extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+		// Template
+		$this->load->model('design/template');
+
+		$template_info = $this->model_design_template->getTemplate($args[0]);
+
+		if ($template_info && ($template_info['store_id'] !== $args[1]['store_id'] && $template_info['route'] !== $args[1]['route'])) {
+			$task_data = [
+				'code'   => 'template.info.' . $template_info['store_id'] . '.' . str_replace('/', '.', $template_info['route']),
+				'action' => 'task/catalog/template.info',
+				'args'   => [
+					'route'    => $template_info['route'],
+					'store_id' => $template_info['store_id']
+				]
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
 	/**
@@ -76,17 +96,23 @@ class Template extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteTemplate(string &$route, array &$args): void {
-		$task_data = [
-			'code'   => 'template.delete.' . $args[0],
-			'action' => 'task/catalog/template.delete',
-			'args'   => [
-				'route'    => $args[1]['route'],
-				'store_id' => $args[1]['store_id']
-			]
-		];
+		$this->load->model('design/template');
 
-		$this->load->model('setting/task');
+		$template_info = $this->model_design_template->getTemplate($args[0]);
 
-		$this->model_setting_task->addTask($task_data);
+		if ($template_info) {
+			$task_data = [
+				'code'   => 'template.info.' . $template_info['store_id'] . '.' . str_replace('/', '.', $template_info['route']),
+				'action' => 'task/catalog/template.info',
+				'args'   => [
+					'route'    => $template_info['route'],
+					'store_id' => $template_info['store_id']
+				]
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

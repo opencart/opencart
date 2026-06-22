@@ -138,7 +138,6 @@ class Template extends \Opencart\System\Engine\Controller {
 		if ($template_info && $template_info['status']) {
 			$code = $template_info['code'];
 		} else {
-
 			if (substr($args['route'], 0, 10) != 'extension/') {
 				$directory = DIR_CATALOG . 'view/template/';
 				$file = $directory . $args['route'] . '.html';
@@ -163,7 +162,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$pos = strrpos($args['route'], '/');
 
-		$directory = DIR_OPENCART . 'shop/' .parse_url($store_info['url'], PHP_URL_HOST) . '/template/'  .  substr($args['route'], 0, $pos) . '/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/template/'  .  substr($args['route'], 0, $pos) . '/';
 		$filename = substr($args['route'], $pos + 1) . '.html';
 
 		if (!oc_directory_create($directory, 0777)) {

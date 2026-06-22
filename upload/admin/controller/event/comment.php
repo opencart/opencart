@@ -51,7 +51,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editComment(string &$route, array &$args, &$output): void {
+	public function editComment(string &$route, array &$args): void {
 		$task_data = [
 			'code'   => 'comment.' . $args['article_id'],
 			'action' => 'task/catalog/comment',

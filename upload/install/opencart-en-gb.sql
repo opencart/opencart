@@ -1157,8 +1157,8 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.comment.delete', 'Triggers comment static site data creation.', 'admin/model/cms/comment.deleteComment/after', 'event/comment.deleteComment', 1),
 
        ('ssr.country.add', 'Triggers country static site data creation.', 'admin/model/localisation/country.addCountry/after', 'event/country.addCountry', 1),
-       ('ssr.country.edit', 'Triggers country static site data creation.', 'admin/model/localisation/country.editCountry/after', 'event/country.editCountry', 1),
-       ('ssr.country.delete', 'Triggers country static site data creation.', 'admin/model/localisation/country.deleteCountry/after', 'event/country.deleteCountry', 1),
+       ('ssr.country.edit', 'Triggers country static site data creation.', 'admin/model/localisation/country.editCountry/before', 'event/country.editCountry', 1),
+       ('ssr.country.delete', 'Triggers country static site data creation.', 'admin/model/localisation/country.deleteCountry/before', 'event/country.deleteCountry', 1),
 
        ('ssr.currency.add', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.addCurrency/after', 'event/currency', 1),
        ('ssr.currency.edit', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.editCurrency/after', 'event/currency', 1),

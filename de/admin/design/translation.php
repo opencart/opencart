@@ -15,7 +15,8 @@ $_['text_translation_add'] = 'Übersetzung hinzufügen';
 
 // Column
 $_['column_route']         = 'Route';
-$_['column_key']           = 'Schlüssel';
+$_['column_store']         = 'Online-Shop (Store)';
+$_['column_language']      = 'Sprache';
 $_['column_status']        = 'Status';
 $_['column_date_added']    = 'Datum hinzugefügt';
 $_['column_action']        = 'Aktionen';

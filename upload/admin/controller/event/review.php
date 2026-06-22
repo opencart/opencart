@@ -65,7 +65,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editReview(string &$route, array &$args, &$output): void {
+	public function editReview(string &$route, array &$args): void {
 		$this->load->model('catalog/review');
 
 		$review_info = $this->model_catalog_review->getReview($args[0]);

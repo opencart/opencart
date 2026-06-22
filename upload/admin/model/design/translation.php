@@ -188,6 +188,10 @@ class Translation extends \Opencart\System\Engine\Model {
 
 		$implode = [];
 
+		if (!empty($data['filter_route'])) {
+			$implode[] = "`t`.`route` LIKE '" .  $this->db->escape($data['filter_route'])  . "'";
+		}
+
 		if (!empty($data['filter_store_id'])) {
 			$implode[] = "`t`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
@@ -196,15 +200,15 @@ class Translation extends \Opencart\System\Engine\Model {
 			$implode[] = "`t`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
-		if (!empty($data['filter_route'])) {
-			$implode[] = "`t`.`route` = '" .  $this->db->escape($data['filter_route'])  . "'";
+		if (!empty($data['filter_status'])) {
+			$implode[] = "`t`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
-		$sql .= " ORDER BY store ASC";
+		$sql .= " ORDER BY `t`.`route` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -241,6 +245,10 @@ class Translation extends \Opencart\System\Engine\Model {
 
 		$implode = [];
 
+		if (!empty($data['filter_route'])) {
+			$implode[] = "`route` LIKE '" .  $this->db->escape($data['filter_route'])  . "'";
+		}
+
 		if (!empty($data['filter_store_id'])) {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
@@ -249,8 +257,8 @@ class Translation extends \Opencart\System\Engine\Model {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
-		if (!empty($data['filter_route'])) {
-			$implode[] = "`route` = '" .  $this->db->escape($data['filter_route'])  . "'";
+		if (!empty($data['filter_status'])) {
+			$implode[] = "`t`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {

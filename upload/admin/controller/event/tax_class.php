@@ -71,7 +71,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editTaxClass(string &$route, array &$args, &$output): void {
+	public function editTaxClass(string &$route, array &$args): void {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 

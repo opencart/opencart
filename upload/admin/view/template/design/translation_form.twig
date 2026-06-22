@@ -44,7 +44,20 @@
             <div class="row mb-3">
               <label for="input-route" class="col-sm-2 col-form-label">{{ entry_route }}</label>
               <div class="col-sm-10">
-                <select name="route" id="input-route" class="form-select"></select>
+                <select name="route" id="input-route" class="form-select">
+
+                  <optgroup label="{{ text_default }}">
+                    {% for template in templates %}
+                      <option value="{{ template }}"{% if template == route %} selected{% endif %}>{{ template }}</option>
+                    {% endfor %}
+                  </optgroup>
+                  <optgroup label="{{ text_extension }}">
+                    {% for extension in extensions %}
+                      <option value="{{ extension }}"{% if extension == route %} selected{% endif %}>{{ extension }}</option>
+                    {% endfor %}
+                  </optgroup>
+
+                </select>
               </div>
             </div>
             <div class="row mb-3">
@@ -67,15 +80,22 @@
                   </tr>
                 </thead>
                 <tbody>
+
+                  {% set image_row = 0 %}
+                  {% for language in languages %}
                   <tr>
                     <td><select id="input-keys" class="form-select"></select>
                       <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
                       <div id="error-key" class="invalid-feedback"></div>
                     </td>
                     <td><textarea name="default" rows="5" placeholder="{{ entry_default }}" id="input-default" class="form-control" disabled="disabled">{% if default %}{{ default }}{% endif %}</textarea></td>
-                    <td><textarea name="value" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ value }}</textarea></td>
+                    <td><textarea name="translation_description[][value]" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ value }}</textarea></td>
                     <td class="text-end"><button type="button" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>
                   </tr>
+
+                    {% set image_row = image_row + 1 %}
+                  {% endfor %}
+                  {% endif %}
                 </tbody>
                 <tfoot>
                   <tr>

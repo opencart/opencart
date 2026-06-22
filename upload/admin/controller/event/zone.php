@@ -102,7 +102,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 			if ($zone_info && $zone_info['country_id'] !== $args[1]['country_id']) {
 				$task_data = [
-					'code'   => 'country.country.' . $zone_info['country_id'],
+					'code'   => 'country.info.' . $zone_info['country_id'],
 					'action' => 'task/catalog/country.info',
 					'args'   => [
 						'country_id' => $zone_info['country_id'],

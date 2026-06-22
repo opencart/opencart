@@ -44,7 +44,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'customer_group.' . $store_id,
+				'code'   => 'customer_group.list.' . $store_id,
 				'action' => 'task/catalog/customer_group',
 				'args'   => ['store_id' => $store_id]
 			];

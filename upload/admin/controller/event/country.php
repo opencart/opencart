@@ -46,8 +46,8 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			// Generate new country list.
 			$task_data = [
-				'code'   => 'country.' . $store_id,
-				'action' => 'task/catalog/country',
+				'code'   => 'country.list.' . $store_id,
+				'action' => 'task/catalog/country.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -106,9 +106,9 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'country.' . $store_id,
-				'action' => 'task/catalog/country',
-				'args'   => []
+				'code'   => 'country.list.' . $store_id,
+				'action' => 'task/catalog/country.list',
+				'args'   => ['store_id' => $store_id]
 			];
 
 			$this->model_setting_task->addTask($task_data);
@@ -165,8 +165,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'country.' . $store_id,
-				'action' => 'task/catalog/country',
+				'code'   => 'country.list.' . $store_id,
+				'action' => 'task/catalog/country.list',
 				'args'   => ['store_id' => $store_id]
 			];
 

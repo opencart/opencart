@@ -381,9 +381,9 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'template_id' => 0,
-			'route'    => '',
-			'code'     => '',
-			'status'   => 0
+			'route'       => '',
+			'code'        => '',
+			'status'      => 0
 		];
 
 		$post_info = $this->request->post + $required;
@@ -394,7 +394,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_CATALOG . 'view/template';
-		$file = $directory . '/' . (string)$post_info['route'] . '.twig';
+		$file = $directory . '/' . (string)$post_info['route'] . '.html';
 
 		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
 			$json['error'] = $this->language->get('error_file');
@@ -411,7 +411,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 			$route = implode('/', $part);
 
-			$file = $directory . '/' . $route . '.twig';
+			$file = $directory . '/' . $route . '.html';
 
 			if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory) {
 				$json['error'] = $this->language->get('error_file');

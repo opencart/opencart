@@ -57,8 +57,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'product.' . $store_id . '.' . $output,
-				'action' => 'task/catalog/product',
+				'code'   => 'product.info.' . $store_id . '.' . $output,
+				'action' => 'task/catalog/product.info',
 				'args'   => [
 					'product_id' => $output,
 					'store_id'   => $store_id
@@ -120,7 +120,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editProduct(string &$route, array &$args, &$output): void {
+	public function editProduct(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
 		$store_ids = [];
@@ -166,8 +166,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'product.' . $store_id . '.' . $args[0],
-				'action' => 'task/catalog/product',
+				'code'   => 'product.info.' . $store_id . '.' . $args[0],
+				'action' => 'task/catalog/product.info',
 				'args'   => [
 					'product_id' => $args[0],
 				    'store_id'   => $store_id

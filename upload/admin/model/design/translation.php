@@ -31,8 +31,16 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_design_translation->addTranslation($translation_data);
 	 */
-	public function addTranslation(array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
+	public function addTranslation(array $data): int {
+		$sql = "INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()";
+
+		$translation_id = $this->db->getLastId();
+
+		foreach ($data['translation_description'] as $translation_description) {
+			$this->model_design_translation->addDescription($translation_id, $translation_description);
+		}
+
+		return $translation_id;
 	}
 
 	/**
@@ -61,6 +69,12 @@ class Translation extends \Opencart\System\Engine\Model {
 	 */
 	public function editTranslation(int $translation_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `status` = '" . (bool)$data['status'] . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
+
+		$this->model_design_translation->deleteDescriptions($translation_id);
+
+		foreach ($data['translation_description'] as $translation_description) {
+			$this->model_design_translation->addDescription($translation_id, $translation_description);
+		}
 	}
 
 	/**
@@ -100,6 +114,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteTranslation(int $translation_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `translation_id` = '" . (int)$translation_id . "'");
+
+		$this->model_design_translation->deleteDescriptions($translation_id);
 	}
 
 	/**
@@ -268,5 +284,51 @@ class Translation extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Add Description
+	 *
+	 * Create a new attribute group description record in the database.
+	 *
+	 * @param int                  $attribute_group_id primary key of the attribute group record
+	 * @param int                  $language_id        primary key of the language record
+	 * @param array<string, mixed> $data               array of data
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $attribute_group_data['attribute_group_description'] = [
+	 *     'attribute_group_id' => 1,
+	 *	   'language_id'        => 1,
+	 *	   'name'               => 'Attribute Group Name'
+	 * ];
+	 *
+	 * $this->load->model('design/translation');
+	 *
+	 * $this->model_catalog_attribute_group->addDescription($attribute_group_id, $language_id, $attribute_group_data);
+	 */
+	public function addDescription(int $translation_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation_description` SET `translation_id` = '" . (int)$translation_id . "', `key` = '" . $this->db->escape($data['key']) . "', `value` = '" . $this->db->escape($data['value']) . "'");
+	}
+
+	/**
+	 * Delete Descriptions
+	 *
+	 * Delete attribute group description records in the database.
+	 *
+	 * @param int $attribute_group_id primary key of the attribute group record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/attribute_group');
+	 *
+	 * $this->model_catalog_attribute_group->deleteDescriptions($attribute_group_id);
+	 */
+	public function deleteDescriptions(int $translation_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation_description` WHERE `translation_id` = '" . (int)$translation_id . "'");
 	}
 }

@@ -31,8 +31,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'information.' . $store_id,
-				'action' => 'task/catalog/information',
+				'code'   => 'information.list.' . $store_id,
+				'action' => 'task/catalog/information.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -75,8 +75,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'information.' . $store_id,
-				'action' => 'task/catalog/information',
+				'code'   => 'information.list.' . $store_id,
+				'action' => 'task/catalog/information.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -101,8 +101,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($remove_ids as $remove_id) {
 			$task_data = [
-				'code'   => 'information.' . $remove_id,
-				'action' => 'task/catalog/information',
+				'code'   => 'information.list.' . $remove_id,
+				'action' => 'task/catalog/information.list',
 				'args'   => ['store_id' => $remove_id]
 			];
 
@@ -143,8 +143,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'information.' . $store_id,
-				'action' => 'task/catalog/information',
+				'code'   => 'information.list.' . $store_id,
+				'action' => 'task/catalog/information.list',
 				'args'   => ['store_id' => $store_id]
 			];
 

@@ -55,7 +55,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		$data['enable']	= $this->url->link('design/template.enable', 'user_token=' . $this->session->data['user_token']);
 		$data['disable'] = $this->url->link('design/template.disable', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->load->controller('design/template.getList');
+		$data['list'] = $this->getList();
 
 		// Stores
 		$data['stores'] = [];
@@ -89,7 +89,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('design/template');
 
-		$this->response->setOutput($this->load->controller('design/template.getList'));
+		$this->response->setOutput($this->getList());
 	}
 
 	/**
@@ -137,8 +137,6 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		// Templates
 		$this->load->model('design/template');
-
-		// Setting
 		$this->load->model('setting/store');
 
 		$results = $this->model_design_template->getTemplates($filter_data);
@@ -155,8 +153,7 @@ class Template extends \Opencart\System\Engine\Controller {
 			$data['templates'][] = [
 				'store'      => ($result['store_id'] ? $store : $this->language->get('text_default')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('design/template.form', 'user_token=' . $this->session->data['user_token'] . '&template_id=' . $result['template_id']),
-				'delete'     => $this->url->link('design/template.delete', 'user_token=' . $this->session->data['user_token'] . '&template_id=' . $result['template_id'])
+				'edit'       => $this->url->link('design/template.form', 'user_token=' . $this->session->data['user_token'] . '&template_id=' . $result['template_id'])
 			] + $result;
 		}
 
@@ -247,6 +244,12 @@ class Template extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = 0;
 		}
 
+		if (!empty($template_info)) {
+			$data['route'] = $template_info['route'];
+		} else {
+			$data['route'] = '';
+		}
+
 		// We grab the files from the default template directory
 		$directory = DIR_CATALOG . 'view/stylesheet/';
 
@@ -262,10 +265,10 @@ class Template extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$data['templates'] = [];
+
 		// We grab the files from the default template directory
 		$directory = DIR_CATALOG . 'view/template/';
-
-		$data['templates'] = [];
 
 		$files = oc_directory_read($directory, true);
 
@@ -296,12 +299,6 @@ class Template extends \Opencart\System\Engine\Controller {
 					$data['extensions'][] = 'extension/' . $extension . '/' . $template;
 				}
 			}
-		}
-
-		if (!empty($template_info)) {
-			$data['route'] = $template_info['route'];
-		} else {
-			$data['route'] = '';
 		}
 
 		if (!empty($template_info)) {

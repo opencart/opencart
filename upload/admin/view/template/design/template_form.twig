@@ -36,13 +36,6 @@
               <div class="input-group-text">{{ entry_route }}</div>
               <select name="route" id="input-route" class="form-select">
                 <option value=""></option>
-
-                <optgroup label="{{ text_stylesheet }}">
-                  {% for stylesheet in stylesheets %}
-                    <option value="{{ stylesheet }}"{% if stylesheet == route %} selected{% endif %}>{{ stylesheet }}</option>
-                  {% endfor %}
-                </optgroup>
-
                 <optgroup label="{{ text_default }}">
                   {% for template in templates %}
                     <option value="{{ template }}"{% if template == route %} selected{% endif %}>{{ template }}</option>
@@ -69,10 +62,9 @@
     </div>
   </div>
 </div>
-<link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
-<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
-<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
-<script type="text/javascript" src="view/javascript/codemirror/mode/xml/xml.js"></script>
-<script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-<script type="text/javascript" src="view/javascript/template.js"></script>
+<link href="../assets/codemirror/lib/codemirror.css" rel="stylesheet"/>
+<link href="../assets/codemirror/theme/monokai.css" rel="stylesheet"/>
+<script type="text/javascript" src="../assets/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="../assets/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="../assets/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 {{ footer }}

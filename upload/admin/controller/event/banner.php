@@ -27,8 +27,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'banner.' . $store_id . '.' . $output,
-				'action' => 'task/catalog/banner',
+				'code'   => 'banner.info.' . $store_id . '.' . $output,
+				'action' => 'task/catalog/banner.info',
 				'args'   => [
 					'banner_id' => $output,
 					'store_id'  => $store_id
@@ -60,8 +60,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'banner.' . $store_id . '.' . $args[0],
-				'action' => 'task/catalog/banner',
+				'code'   => 'banner.info.' . $store_id . '.' . $args[0],
+				'action' => 'task/catalog/banner.info',
 				'args'   => [
 					'banner_id' => $args[0],
 					'store_id'  => $store_id

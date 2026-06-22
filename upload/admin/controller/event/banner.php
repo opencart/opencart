@@ -52,7 +52,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function editBanner(string &$route, array &$args, &$output): void {
+	public function editBanner(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 		$this->load->model('setting/store');
 
@@ -85,7 +85,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function deleteBanner(string &$route, array &$args, &$output): void {
+	public function deleteBanner(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 		$this->load->model('setting/store');
 

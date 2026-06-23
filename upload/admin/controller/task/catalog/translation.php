@@ -145,6 +145,36 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		if (substr($args['route'], 0, 10) != 'extension/') {
+			$directory = DIR_CATALOG . 'language/' . $language_info['code'] . '/';
+			$file = $directory . $args['route'] . '.php';
+		} else {
+			// Extension template load
+			$part = explode('/', $args['route']);
+
+			$directory = DIR_EXTENSION . $part[1] . '/catalog/language/' . $language_info['code'] . '/';
+
+			unset($part[0]);
+			unset($part[1]);
+
+			$file = $directory . implode('/', $part) . '.html';
+		}
+
+		if (is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
+			return ['error' => $this->language->get('error_file')];
+		}
+
+		$_ = [];
+
+		include($directory . $language_info['code'] . '/' . $route . '.php');
+
+		foreach ($_ as $key => $value) {
+			$json[] = [
+				'key'   => $key,
+				'value' => $value
+			];
+		}
+
 		$filter_data = [
 			'filter_route'       => $args['route'],
 			'filter_store_id'    => $store_info['store_id'],
@@ -154,7 +184,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'limit'              => 1
 		];
 
-		// Overrides
 		$this->load->model('design/translation');
 
 		$results = $this->model_design_translation->getTranslations($filter_data);
@@ -163,53 +192,13 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		if ($translation_info && $translation_info['status']) {
 
+			$results = $this->model_design_translation->getTranslations($filter_data);
 
 
 
 
-
-		} else {
-
-			if (substr($args['route'], 0, 10) != 'extension/') {
-				$directory = DIR_CATALOG . 'language/' . $language_info['code'] . '/';
-
-				$file = $directory . $args['route'] . '.php';
-
-			} else {
-
-				// Extension template load
-				$part = explode('/', $args['route']);
-
-				$directory = DIR_EXTENSION . $part[1] . '/catalog/language/';
-
-				array_shift($part);
-				// Don't remove. Required for extension route.
-				array_shift($part);
-
-				$route = implode('/', $part);
-			}
-
-			if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-				$_ = [];
-
-				include($directory . $language_info['code'] . '/' . $route . '.php');
-
-				foreach ($_ as $key => $value) {
-					$json[] = [
-						'key'   => $key,
-						'value' => $value
-					];
-				}
-			}
 		}
 
-
-
-
-
-
-
-		ksort($data, SORT_REGULAR);
 
 		$pos = strrpos($args['route'], '/');
 
@@ -220,7 +209,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($data))) {
+		if (!file_put_contents($directory . $filename, json_encode($_))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

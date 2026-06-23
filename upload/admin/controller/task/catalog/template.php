@@ -174,4 +174,3 @@ class Template extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $args['route'])];
 	}
 }
-

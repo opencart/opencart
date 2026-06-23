@@ -291,6 +291,33 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Descriptions
+	 *
+	 * Get the record of the translation description records in the database.
+	 *
+	 * @param int $translation_id primary key of the translation record
+	 *
+	 * @return array<int, array<string, string>> description records that have translation ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('design/translation');
+	 *
+	 * $translation_description = $this->model_design_translation->getDescriptions($translation_id);
+	 */
+	public function getDescriptions(int $translation_id): array {
+		$translation_data = [];
+
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `agd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "translation_description` `agd` WHERE `agd`.`translation_id` = '" . (int)$translation_id . "'");
+
+		foreach ($query->rows as $result) {
+			$translation_data[$result['code']] = $result;
+		}
+
+		return $translation_data;
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new attribute group description record in the database.
@@ -320,7 +347,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
-	 * Delete attribute group description records in the database.
+	 * Delete translation description records in the database.
 	 *
 	 * @param int $attribute_group_id primary key of the attribute group record
 	 *
@@ -328,11 +355,32 @@ class Translation extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/attribute_group');
+	 * $this->load->model('design/translation');
 	 *
-	 * $this->model_catalog_attribute_group->deleteDescriptions($attribute_group_id);
+	 * $this->model_design_translation->deleteDescriptions($attribute_group_id);
 	 */
 	public function deleteDescriptions(int $translation_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation_description` WHERE `translation_id` = '" . (int)$translation_id . "'");
+	}
+
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * Get the record of the translation descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<int, array<string, string>> description records that have language ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('design/translation');
+	 *
+	 * $results = $this->model_design_translation->getDescriptionsByLanguageId($language_id);
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 }

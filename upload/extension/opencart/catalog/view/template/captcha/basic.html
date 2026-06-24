@@ -1,0 +1,11 @@
+<fieldset>
+  <legend>{{ text_captcha }}</legend>
+  <div class="mb-3">
+    <label for="input-captcha" class="form-label">{{ entry_captcha }}</label>
+    <input type="text" name="captcha" value="" id="input-captcha" class="form-control mb-1" required/>
+    <div id="captcha">
+      <img src="index.php?route=extension/opencart/captcha/basic.captcha" alt=""/>
+    </div>
+    <div id="error-captcha" class="invalid-feedback"></div>
+  </div>
+</fieldset>

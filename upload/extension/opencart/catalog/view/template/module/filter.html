@@ -1,0 +1,22 @@
+<div class="card mb-3">
+  <div class="card-header"><i class="fa-solid fa-filter"></i> {{ heading_title }}</div>
+  <div class="list-group list-group-flush">
+    {% for filter_group in filter_groups %}
+      <a class="list-group-item">{{ filter_group.name }}</a>
+      <div class="list-group-item">
+        <div id="filter-group-{{ filter_group.filter_group_id }}">
+          {% for filter in filter_group.filter %}
+            <div class="form-check">
+              <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" id="input-filter-{{ filter.filter_id }}" class="form-check-input"{% if filter.filter_id in filter_category %} checked{% endif %}/>
+              <label for="input-filter-{{ filter.filter_id }}" class="form-check-label">{{ filter.name }}</label>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="card-footer text-end">
+    <button type="button" id="button-filter" class="btn btn-primary"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+  </div>
+</div>
+<script src="extension/opencart/view/javascript/filter.js" type="text/javascript"></script>

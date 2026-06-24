@@ -369,8 +369,46 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['key'], 3, 64)) {
-			$json['error']['key'] = $this->language->get('error_key');
+		$required = [
+			'translation_id' => 0,
+			'store_id'       => 0,
+			'language_id'    => 0,
+			'route'          => 0,
+			'custom_field'   => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		// Store
+		if ($post_info['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$post_info['store_id']);
+
+			if (!$store_info) {
+				$json['error']['store'] = $this->language->get('error_store');
+			}
+		}
+
+		// Language
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage((int)$post_info['language_id']);
+
+		if (!$language_info) {
+			$json['error']['language'] = $this->language->get('error_language');
+		}
+
+		if (isset($post_info['translation_description'])) {
+			foreach ($post_info['translation_description'] as $key => $value) {
+				if (!oc_validate_length($value['key'], 2, 64)) {
+					$json['error']['key_' . $key] = $this->language->get('error_key');
+				}
+
+				if ($value['value']) {
+					$json['error']['value_' . $key] = $this->language->get('error_value');
+				}
+			}
 		}
 
 		if (!$json) {

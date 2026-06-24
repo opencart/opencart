@@ -8,8 +8,7 @@ $_['text_list']            = 'Übersetzungsliste';
 $_['text_add']             = 'Übersetzung hinzufügen';
 $_['text_edit']            = 'Übersetzung bearbeiten';
 $_['text_filter']          = 'Filter';
-$_['text_store']           = 'Online-Shop (Store)';
-$_['text_language']        = 'Sprache';
+$_['text_extension']       = 'Erweiterungen';
 $_['text_translation']     = 'Translation';
 $_['text_translation_add'] = 'Übersetzung hinzufügen';
 

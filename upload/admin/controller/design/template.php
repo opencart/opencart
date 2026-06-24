@@ -255,7 +255,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		// We grab the files from the default template directory
 		$directory = DIR_CATALOG . 'view/template/';
 
-		$files = oc_directory_read($directory, true);
+		$files = oc_directory_read($directory, true, '/.+\.html$/');
 
 		foreach ($files as $file) {
 			$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
@@ -275,7 +275,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 			$path = DIR_EXTENSION . $extension . '/catalog/view/template/';
 
-			$files = oc_directory_read($path, true, '/.+\.twig$/');
+			$files = oc_directory_read($path, true, '/.+\.html$/');
 
 			foreach ($files as $file) {
 				$template = substr(substr($file, 0, strrpos($file, '.')), strlen($path));

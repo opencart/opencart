@@ -104,9 +104,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Write
+	 * Info
 	 *
-	 * Write JSON translation file.
+	 * Generate the template list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -166,14 +166,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$_ = [];
 
-		include($directory . $language_info['code'] . '/' . $route . '.php');
-
-		foreach ($_ as $key => $value) {
-			$json[] = [
-				'key'   => $key,
-				'value' => $value
-			];
-		}
+		include($file);
 
 		$filter_data = [
 			'filter_route'       => $args['route'],
@@ -191,14 +184,12 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$translation_info = array_shift($results);
 
 		if ($translation_info && $translation_info['status']) {
+			$descriptions = $this->model_design_translation->getDescriptions($translation_info['translation_id']);
 
-			$results = $this->model_design_translation->getTranslations($filter_data);
-
-
-
-
+			foreach ($descriptions as $description) {
+				$_[$description['key']] = $description['value'];
+			}
 		}
-
 
 		$pos = strrpos($args['route'], '/');
 

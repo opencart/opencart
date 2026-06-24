@@ -157,10 +157,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 			unset($part[0]);
 			unset($part[1]);
 
-			$file = $directory . implode('/', $part) . '.html';
+			$file = $directory . implode('/', $part) . '.php';
 		}
 
-		if (is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
+		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
 			return ['error' => $this->language->get('error_file')];
 		}
 
@@ -193,7 +193,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$pos = strrpos($args['route'], '/');
 
-		$directory = DIR_CATALOG . 'view/language/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/'  .  substr($args['route'], 0, $pos) . '/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/language/' . $language_info['code'] . '/'  .  substr($args['route'], 0, $pos) . '/';
 		$filename = substr($args['route'], $pos + 1) . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {

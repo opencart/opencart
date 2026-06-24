@@ -1,0 +1,39 @@
+<div class="accordion-item">
+  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-shipping">{{ heading_title }}</button></h2>
+  <div id="collapse-shipping" class="accordion-collapse collapse" data-bs-parent="#accordion">
+    <div class="accordion-body">
+      <form id="form-quote">
+        <p>{{ text_destination }}</p>
+        <div class="row mb-3">
+          <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
+          <div class="col-md-8">
+            <x-country name="country_id" value="{{ country_id }}" id="x-country" postcode-required="1" target="input-postcode" input-id="input-country" input-class="form-select" required>
+              <option value="0">{{ text_select }}</option>
+            </x-country>
+            <div id="error-country" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
+          <div class="col-md-8">
+            <x-zone name="zone_id" value="{{ zone_id }}" target="x-country" input-id="input-zone" input-class="form-select" required>
+              <option value="0">{{ text_select }}</option>
+            </x-zone>
+            <div id="error-zone" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
+          <div class="col-md-8">
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" required/>
+            <div id="error-postcode" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="text-end">
+          <button type="submit" id="button-quote" class="btn btn-primary">{{ button_quote }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="extension/opencart/view/javascript/shipping.js" type="text/javascript"></script>
+</div>

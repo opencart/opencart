@@ -32,7 +32,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $this->model_design_translation->addTranslation($translation_data);
 	 */
 	public function addTranslation(array $data): int {
-		$sql = "INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()";
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
 
 		$translation_id = $this->db->getLastId();
 
@@ -350,14 +350,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $translation_description = $this->model_design_translation->getDescriptions($translation_id);
 	 */
 	public function getDescriptions(int $translation_id): array {
-		$translation_data = [];
-
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "translation_description` WHERE `translation_id` = '" . (int)$translation_id . "'");
 
-		foreach ($query->rows as $result) {
-			$translation_data[$result['code']] = $result;
-		}
-
-		return $translation_data;
+		return $query->rows;
 	}
 }

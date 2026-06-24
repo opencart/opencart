@@ -298,21 +298,23 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$data['route'] = '';
 		}
 
-		$data['templates'] = [];
+		$data['translations'] = [];
 
+		// We grab the files from the default language directory
 		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language_catalog') . '/';
 
 		$files = oc_directory_read($directory, true, '/.+\.php$/');
 
 		foreach ($files as $file) {
-			$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
+			$translation = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
 
-			if ($template) {
-				$data['templates'][] = $template;
+			if ($translation) {
+				$data['translations'][] = $translation;
 			}
 		}
 
-
+		// We grab the files from the extension template directory
+		$data['extensions'] = [];
 
 		$directories = oc_directory_read(DIR_EXTENSION, false);
 
@@ -327,38 +329,16 @@ class Translation extends \Opencart\System\Engine\Controller {
 				$language = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
 
 				if ($language) {
-					$json[] = 'extension/' . $extension . '/' . $language;
+					$data['extensions'][] = 'extension/' . $extension . '/' . $language;
 				}
 			}
 		}
 
-
-		// SEO
 		if (!empty($translation_info)) {
-			$data['translation_description'] = $this->model_design_translation->getDescriptions('information_id', $information_info['translation_id']);
-
-
+			$data['translation_descriptions'] = $this->model_design_translation->getDescriptions('translation_id', $translation_info['translation_id']);
 		} else {
-			$data['translation_description'] = [];
+			$data['translation_descriptions'] = [];
 		}
-
-
-
-		if (!empty($translation_info)) {
-			$data['key'] = $translation_info['key'];
-		} else {
-			$data['key'] = '';
-		}
-
-		if (!empty($translation_info)) {
-			$data['value'] = $translation_info['value'];
-		} else {
-			$data['value'] = '';
-		}
-
-
-
-
 
 		if (!empty($translation_info)) {
 			$data['status'] = $translation_info['status'];

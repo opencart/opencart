@@ -135,8 +135,6 @@ class Translation extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteTranslationsByStoreId(int $store_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `store_id` = '" . (int)$store_id . "'");
-
-
 	}
 
 	/**
@@ -291,33 +289,6 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Descriptions
-	 *
-	 * Get the record of the translation description records in the database.
-	 *
-	 * @param int $translation_id primary key of the translation record
-	 *
-	 * @return array<int, array<string, string>> description records that have translation ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('design/translation');
-	 *
-	 * $translation_description = $this->model_design_translation->getDescriptions($translation_id);
-	 */
-	public function getDescriptions(int $translation_id): array {
-		$translation_data = [];
-
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `agd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "translation_description` `agd` WHERE `agd`.`translation_id` = '" . (int)$translation_id . "'");
-
-		foreach ($query->rows as $result) {
-			$translation_data[$result['code']] = $result;
-		}
-
-		return $translation_data;
-	}
-
-	/**
 	 * Add Description
 	 *
 	 * Create a new attribute group description record in the database.
@@ -364,23 +335,29 @@ class Translation extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Descriptions By Language ID
+	 * Get Descriptions
 	 *
-	 * Get the record of the translation descriptions by language records in the database.
+	 * Get the record of the translation description records in the database.
 	 *
-	 * @param int $language_id primary key of the language record
+	 * @param int $translation_id primary key of the translation record
 	 *
-	 * @return array<int, array<string, string>> description records that have language ID
+	 * @return array<int, array<string, string>> description records that have translation ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('design/translation');
 	 *
-	 * $results = $this->model_design_translation->getDescriptionsByLanguageId($language_id);
+	 * $translation_description = $this->model_design_translation->getDescriptions($translation_id);
 	 */
-	public function getDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	public function getDescriptions(int $translation_id): array {
+		$translation_data = [];
 
-		return $query->rows;
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "translation_description` WHERE `translation_id` = '" . (int)$translation_id . "'");
+
+		foreach ($query->rows as $result) {
+			$translation_data[$result['code']] = $result;
+		}
+
+		return $translation_data;
 	}
 }

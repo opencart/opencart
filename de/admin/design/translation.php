@@ -31,4 +31,7 @@ $_['entry_status']         = 'Status';
 
 // Error
 $_['error_permission']     = 'Achtung: Sie haben keine Berechtigung, den Spracheditor zu ändern!';
+$_['error_route']          = 'Route must be between 2 and 64 characters!';
+$_['error_store']          = 'Error: Store could not be found!';
+$_['error_language']       = 'Error: Language could not be found!';
 $_['error_key']            = 'Der Schlüssel muss zwischen 3 und 64 Zeichen lang sein!';

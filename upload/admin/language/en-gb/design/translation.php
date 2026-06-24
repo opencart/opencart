@@ -31,4 +31,7 @@ $_['entry_status']         = 'Status';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify language editor!';
+$_['error_route']          = 'Route must be between 2 and 64 characters!';
+$_['error_store']          = 'Error: Store could not be found!';
+$_['error_language']       = 'Error: Language could not be found!';
 $_['error_key']            = 'Key must be between 3 and 64 characters!';

@@ -93,6 +93,7 @@ $_['button_image_add']              = 'Add Image';
 $_['button_geo_zone_add']           = 'Add Geo Zone';
 $_['button_history_add']            = 'Add History';
 $_['button_transaction_add']        = 'Add Transaction';
+$_['button_translation_add']        = 'Add Translation';
 $_['button_route_add']              = 'Add Route';
 $_['button_rule_add']               = 'Add Rule';
 $_['button_module_add']             = 'Add Module';

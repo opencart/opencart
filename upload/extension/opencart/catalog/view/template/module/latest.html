@@ -1,0 +1,6 @@
+<h3>{{ heading_title }}</h3>
+<div class="row{% if axis == 'horizontal' %} row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4{% endif %}">
+  {% for product in products %}
+    <div class="col mb-3">{{ product }}</div>
+  {% endfor %}
+</div>

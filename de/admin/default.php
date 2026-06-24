@@ -93,6 +93,7 @@ $_['button_image_add']              = 'Bild hinzufügen';
 $_['button_geo_zone_add']           = 'Geozone hinzufügen';
 $_['button_history_add']            = 'Verlauf hinzufügen';
 $_['button_transaction_add']        = 'Transaktion hinzufügen';
+$_['button_translation_add']        = 'Übersetzung hinzufügen';
 $_['button_route_add']              = 'Route hinzufügen';
 $_['button_rule_add']               = 'Regel hinzufügen';
 $_['button_module_add']             = 'Modul hinzufügen';

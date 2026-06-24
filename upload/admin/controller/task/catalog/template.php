@@ -92,9 +92,14 @@ class Template extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Info
 	 *
+	 * Generate the template list.
 	 *
-	 */
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+     */
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/template');
 

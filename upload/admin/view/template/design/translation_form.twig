@@ -47,8 +47,8 @@
                 <select name="route" id="input-route" class="form-select">
 
                   <optgroup label="{{ text_default }}">
-                    {% for template in templates %}
-                      <option value="{{ template }}"{% if template == route %} selected{% endif %}>{{ template }}</option>
+                    {% for translation in translations %}
+                      <option value="{{ translation }}"{% if translation == route %} selected{% endif %}>{{ translation }}</option>
                     {% endfor %}
                   </optgroup>
 
@@ -81,32 +81,24 @@
                   </tr>
                 </thead>
                 <tbody>
-
                   {% set description_row = 0 %}
-
-
-
-                  {% for description in descriptions %}
+                  {% for translation_description in translation_descriptions %}
                   <tr>
                     <td><select id="input-keys" class="form-select"></select>
-                      <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
-                      <div id="error-key" class="invalid-feedback"></div>
+                      <input type="text" name="translation_description[{{ description_row }}][key]" value="{{ translation_description[description_row].key }}" placeholder="{{ entry_key }}" id="input-key-{{ description_row }}" class="form-control"/>
+                      <div id="error-key-{{ description_row }}" class="invalid-feedback"></div>
                     </td>
                     <td><textarea name="default" rows="5" placeholder="{{ entry_default }}" id="input-default" class="form-control" disabled="disabled">{% if default %}{{ default }}{% endif %}</textarea></td>
-                    <td><textarea name="translation_description[][value]" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ value }}</textarea></td>
+                    <td><textarea name="translation_description[{{ description_row }}][value]" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ translation_description[description_row].value }}</textarea></td>
                     <td class="text-end"><button type="button" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>
                   </tr>
-
                     {% set description_row = description_row + 1 %}
                   {% endfor %}
-
-
-
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="3"></td>
-                    <td class="text-end"><button type="button" form="form-translation" title="{{ button_translation_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                    <td class="text-end"><button type="button" id="button-translation-add" title="{{ button_translation_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>

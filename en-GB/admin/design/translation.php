@@ -8,8 +8,7 @@ $_['text_list']            = 'Translation List';
 $_['text_add']             = 'Add Translation';
 $_['text_edit']            = 'Edit Translation';
 $_['text_filter']          = 'Filter';
-$_['text_store']           = 'Store';
-$_['text_language']        = 'Language';
+$_['text_extension']       = 'Extensions';
 $_['text_translation']     = 'Translation';
 $_['text_translation_add'] = 'Add Translation';
 

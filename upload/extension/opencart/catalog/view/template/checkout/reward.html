@@ -1,0 +1,18 @@
+<div class="accordion-item">
+  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-reward">{{ heading_title }}</button></h2>
+  <div id="collapse-reward" class="accordion-collapse collapse" data-bs-parent="#accordion">
+    <div class="accordion-body">
+      <form id="form-reward" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+        <div class="row mb-3">
+          <label for="input-reward" class="col-md-4 col-form-label">{{ entry_reward }}</label>
+          <div class="col-md-8">
+            <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/>
+          </div>
+        </div>
+      </form>
+      <div class="text-end">
+        <button type="submit" form="form-reward" formaction="{{ save }}" class="btn btn-primary">{{ button_reward }}</button>
+      </div>
+    </div>
+  </div>
+</div>

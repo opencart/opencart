@@ -254,7 +254,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['translation_id'])) {
 			$this->load->model('design/translation');
 
-			$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
+			$translation_info = $this->model_design_translation->getTranslation((int)$this->request->get['translation_id']);
 		}
 
 		if (!empty($translation_info)) {
@@ -335,7 +335,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($translation_info)) {
-			$data['translation_descriptions'] = $this->model_design_translation->getDescriptions('translation_id', $translation_info['translation_id']);
+			$data['translation_descriptions'] = $this->model_design_translation->getDescriptions($translation_info['translation_id']);
 		} else {
 			$data['translation_descriptions'] = [];
 		}
@@ -370,11 +370,11 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'translation_id' => 0,
-			'store_id'       => 0,
-			'language_id'    => 0,
-			'route'          => 0,
-			'custom_field'   => []
+			'translation_id'          => 0,
+			'store_id'                => 0,
+			'language_id'             => 0,
+			'route'                   => '',
+			'translation_description' => []
 		];
 
 		$post_info = $this->request->post + $required;
@@ -399,14 +399,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['error']['language'] = $this->language->get('error_language');
 		}
 
+		// Route
+		if (!oc_validate_length((string)$post_info['route'], 2, 64)) {
+			$json['error']['route'] = $this->language->get('error_route');
+		}
+
 		if (isset($post_info['translation_description'])) {
 			foreach ($post_info['translation_description'] as $key => $value) {
 				if (!oc_validate_length($value['key'], 2, 64)) {
 					$json['error']['key_' . $key] = $this->language->get('error_key');
-				}
-
-				if ($value['value']) {
-					$json['error']['value_' . $key] = $this->language->get('error_value');
 				}
 			}
 		}
@@ -418,7 +419,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['translation_id']) {
 				$this->model_design_translation->addTranslation($this->request->post);
 			} else {
-				$this->model_design_translation->editTranslation($this->request->post['translation_id'], $this->request->post);
+				$this->model_design_translation->editTranslation($this->request->post['translation_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

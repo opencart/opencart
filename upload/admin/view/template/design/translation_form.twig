@@ -82,14 +82,14 @@
                 </thead>
                 <tbody>
                   {% set description_row = 0 %}
-
                   {% for translation_description in translation_descriptions %}
                     <tr>
-                      <td><select id="input-keys" class="form-select"></select> <input type="text" name="translation_description[{{ description_row }}][key]" value="{{ translation_description[description_row].key }}" placeholder="{{ entry_key }}" id="input-key-{{ description_row }}" class="form-control"/>
+                      <td><select id="input-keys" class="form-select"></select>
+                        <input type="text" name="translation_description[{{ description_row }}][key]" value="{{ translation_description.key }}" placeholder="{{ entry_key }}" id="input-key-{{ description_row }}" class="form-control"/>
                         <div id="error-key-{{ description_row }}" class="invalid-feedback"></div>
                       </td>
                       <td><textarea name="default" rows="5" placeholder="{{ entry_default }}" id="input-default" class="form-control" disabled="disabled">{% if default %}{{ default }}{% endif %}</textarea></td>
-                      <td><textarea name="translation_description[{{ description_row }}][value]" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ translation_description[description_row].value }}</textarea>
+                      <td><textarea name="translation_description[{{ description_row }}][value]" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ translation_description.value }}</textarea>
                         <div id="error-value-{{ description_row }}" class="invalid-feedback"></div>
                       </td>
                       <td class="text-end"><button type="button" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>

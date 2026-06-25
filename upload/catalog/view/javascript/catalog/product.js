@@ -106,7 +106,10 @@ export default class extends Controller {
             // Attributes
             data.attribute_groups = [];
 
-            for (let attribute_group of product.attribute_group) {
+            console.log(product.attribute_groups);
+
+
+            for (let attribute_group of product.attribute_groups) {
                 let attributes = [];
 
                 for (let attribute of attribute_group.attribute) {
@@ -121,7 +124,7 @@ export default class extends Controller {
 
             data.options = [];
 
-            for (let option of product.option) {
+            for (let option of product.options) {
                 let option_values = [];
 
                 for (let option_value of option.option_value) {

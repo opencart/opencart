@@ -61,7 +61,7 @@ export default class extends Controller {
 
             if (config.config_tax) data.tax = product.special ? product.special : product.price;
 
-            data.discounts = product.discount;
+            data.discounts = product.discounts;
 
             // Stock
             data.quantity = product.quantity;
@@ -105,9 +105,6 @@ export default class extends Controller {
 
             // Attributes
             data.attribute_groups = [];
-
-            console.log(product.attribute_groups);
-
 
             for (let attribute_group of product.attribute_groups) {
                 let attributes = [];

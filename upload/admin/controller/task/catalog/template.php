@@ -53,7 +53,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 			$pos = strpos($route, '/');
 
-			if ($pos == false || in_array(substr($route, 0, $pos), ['mail'])) {
+			if ($pos !== false && in_array(substr($route, 0, $pos), ['mail'])) {
 				continue;
 			}
 

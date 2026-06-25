@@ -48,7 +48,9 @@ storage.cache.set('catalog/information', { information: [] });
 // Template
 const template = await loader.library('template');
 
-template.addPath('shop/' + base.host + '/template/');
+//template.addPath('shop/' + base.host + '/template/');
+
+template.addPath('catalog/view/template/');
 
 // Event
 const event = await loader.library('event');

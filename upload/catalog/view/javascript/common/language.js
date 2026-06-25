@@ -14,7 +14,7 @@ const language = await loader.language('common/language');
 const languages = await loader.storage('localisation/language');
 
 export default class extends Controller {
-    render() {
+    async render() {
         let data = {};
 
         // Config stored language code
@@ -34,6 +34,11 @@ export default class extends Controller {
         }
 
         data.languages = Object.values(languages);
+
+
+        console.log('language');
+        console.log(data.languages);
+
 
         return loader.template('common/language', { ...data,  ...language });
     }

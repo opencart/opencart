@@ -19,7 +19,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/translation');
 
 		if (!array_key_exists('store_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
+			//return ['error' => $this->language->get('error_required')];
 		}
 
 		// Store
@@ -29,21 +29,23 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'url'      => HTTP_CATALOG
 		];
 
-		if ($args['store_id']) {
+		//if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+			//$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-			if (!$store_info) {
-				return ['error' => $this->language->get('error_store')];
-			}
-		}
+			//if (!$store_info) {
+				//return ['error' => $this->language->get('error_store')];
+			//}
+		//}
 
 		$this->load->model('setting/task');
 
+		// Ignore directories
 		$ignore = [
 			'api',
-			'mail'
+			'mail',
+			'tool'
 		];
 
 		// Generate new data
@@ -58,7 +60,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 			$pos = strpos($route, '/');
 
-			if ($pos == false || in_array(substr($route, 0, $pos), $ignore)) {
+			if ($pos !== false && in_array(substr($route, 0, $pos), $ignore)) {
 				continue;
 			}
 
@@ -79,6 +81,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -4);
 			}
 		}
+
+		print_r($routes);
 
 		$this->load->model('localisation/language');
 

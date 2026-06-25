@@ -49,7 +49,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 			if ($language_info && $language_info['status']) {
 				$language_data[$language_info['code']] = [
-					'name '     => $language_info['name'],
+					'name'      => $language_info['name'],
 					'code'      => $language_info['code'],
 					'locale'    => $language_info['locale'],
 					'extension' => $language_info['extension']

@@ -13,7 +13,7 @@ export default class extends Controller {
 
         data.categories = categories;
 
-
+        console.log('menu');
         console.log(categories);
 
         return loader.template('common/menu', { ...data,  ...language });

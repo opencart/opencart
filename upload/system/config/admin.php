@@ -56,6 +56,10 @@ $_['action_event']       = [
 	//'model/*/after' => [
 	//	0 => 'event/debug.after'
 	//],
+	'library/*/before' => [
+		0 => 'event/modification.library',
+		//2 => 'event/debug.before'
+	],
 	'view/*/before' => [
 		0   => 'event/modification.view',
 		999 => 'event/language'

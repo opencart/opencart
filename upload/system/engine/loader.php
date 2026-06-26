@@ -233,6 +233,9 @@ class Loader {
 	public function library(string $route, &...$args): object {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
+		$trigger = $route;
+
+		$this->event->trigger('library/' . $trigger . '/before', [&$route, &$args]);
 
 		// Create a new key to store the model object
 		$key = 'library_' . str_replace('/', '_', $route);

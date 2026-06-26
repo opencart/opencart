@@ -13,13 +13,16 @@ class Application extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		// Weight
-		$this->registry->set('weight', new \Opencart\System\Library\Cart\Weight($this->registry));
+		$weight = $this->load->library('cart/weight', $this->registry);
+		$this->registry->set('weight', $weight);
 
 		// Length
-		$this->registry->set('length', new \Opencart\System\Library\Cart\Length($this->registry));
+		$length = $this->load->library('cart/length', $this->registry);
+		$this->registry->set('length', $length);
 
 		// Cart
-		$this->registry->set('cart', new \Opencart\System\Library\Cart\Cart($this->registry));
+		$cart = $this->load->library('cart/cart', $this->registry);
+		$this->registry->set('cart', $cart);
 
 		// Validation
 		$this->load->helper('validation');

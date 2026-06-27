@@ -41,6 +41,9 @@ class Storage {
         if (response.status == 200) {
             let data = await response.json();
 
+            console.log(path);
+            console.log(data);
+
             this.cache.set(path, data);
 
             return this.cache.get(path);

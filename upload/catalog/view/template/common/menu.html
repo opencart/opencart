@@ -8,10 +8,13 @@
         {% for category in categories %}
         {% if category.children != '' %}
         {% assign total = category.children | length %}
-        {% if total > 20 %} {% assign batch = total | divide: 4 | round %}
+        {% if total > 20 %}
+        {% assign batch = total | divide: 4 | round %}
         {% assign column = 4 %}
+        {% else %}
         {% assign batch = 5 %}
-        {% assign column = total | divide: 5 | round %} {% endif %}
+        {% assign column = total | divide: 5 | round %}
+        {% endif %}
         <li class="nav-item dropdown"><a href="{{ category.href }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
           <div class="dropdown-menu dropdown-column-{{ column }}">
             <div class="dropdown-inner">

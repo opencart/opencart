@@ -111,18 +111,57 @@ class Category extends \Opencart\System\Engine\Controller {
 		$category_data = [];
 
 		$filter_data = [
-			'filter_store_id' => $store_info['store_id'],
-			'filter_status'   => true,
-			'sort'            => 'sort_order',
-			'order'           => 'ASC',
+			'filter_parent_id' => 0,
+			'filter_store_id'  => $store_info['store_id'],
+			'filter_status'    => true,
+			'sort'             => 'sort_order',
+			'order'            => 'ASC',
 		];
 
 		$this->load->model('catalog/category');
+		$this->load->model('catalog/product');
 
 		$results = $this->model_catalog_category->getCategories($filter_data);
 
 		foreach ($results as $result) {
-			$path = $this->model_catalog_category->getPath($result['category_id']);
+			$children_data = [];
+
+			// Filter children
+			$filter_data = [
+				'filter_parent_id' => $result['category_id'],
+				'filter_store_id'  => $store_info['store_id'],
+				'filter_status'    => true,
+				'sort'             => 'sort_order',
+				'order'            => 'ASC',
+			];
+
+			$children = $this->model_catalog_category->getCategories($filter_data);
+
+			foreach ($children as $child) {
+				$description_data = [];
+
+				$descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = ['name' => $description['name']];
+				}
+
+				$filter_data = [
+					'filter_category_id' => $result['category_id'],
+					'filter_store_id'    => $store_info['store_id'],
+					'filter_status'      => true
+				];
+
+				$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+
+				$children_data[] = [
+					'category_id'   => $child['category_id'],
+					'description'   => $description_data,
+					'image'         => $child['image'],
+					'path'          => $result['category_id'] . '_' . $child['category_id'],
+					'product_total' => $product_total
+				];
+			}
 
 			$description_data = [];
 
@@ -132,11 +171,21 @@ class Category extends \Opencart\System\Engine\Controller {
 				$description_data[$code] = ['name' => $description['name']];
 			}
 
-			$category_data[$path] = [
-				'category_id' => $result['category_id'],
-				'description' => $description_data,
-				'image'       => $result['image'],
-				'path'        => $path
+			$filter_data = [
+				'filter_category_id' => $result['category_id'],
+				'filter_store_id'    => $store_info['store_id'],
+				'filter_status'      => true
+			];
+
+			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+
+			$category_data[] = [
+				'category_id'   => $result['category_id'],
+				'description'   => $description_data,
+				'image'         => $result['image'],
+				'path'          => $result['category_id'],
+				'children'      => $children_data,
+				'product_total' => $product_total
 			];
 		}
 

@@ -197,8 +197,19 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$pos = strrpos($args['route'], '/');
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/language/' . $language_info['code'] . '/'  .  substr($args['route'], 0, $pos) . '/';
-		$filename = substr($args['route'], $pos + 1) . '.json';
+		if ($pos !== false) {
+			$path = '/'  . substr($args['route'], 0, $pos);
+			$filename = substr($args['route'], $pos) . '.json';
+		} else {
+			$path = '';
+			$filename = $args['route'] . '.json';
+		}
+
+
+
+
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/language/' . $language_info['code'] . $path . '/';
+		//$filename = substr($args['route'], $pos + 1) . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

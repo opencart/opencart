@@ -35,11 +35,6 @@ export default class extends Controller {
 
         data.languages = Object.values(languages);
 
-
-        console.log('language');
-        console.log(data.languages);
-
-
         return loader.template('common/language', { ...data,  ...language });
     }
 

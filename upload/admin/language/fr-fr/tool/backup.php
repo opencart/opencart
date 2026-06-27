@@ -25,6 +25,7 @@ $_['entry_export']       = 'Exporter';
 $_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier la sauvegarde &amp; restauration!';
 $_['error_table']        = 'La table %s n\'est pas dans la liste autorisée!';
 $_['error_file']         = 'Le fichier est introuvable!';
+$_['error_file_type']    = 'Type de fichier invalide!';
 $_['error_directory']    = 'Le répertoire est introuvable!';
 $_['error_not_found']    = 'Erreur: Impossible de trouver le fichier %s!';
 $_['error_headers_sent'] = 'Erreur: Les en-têtes ont déjà été envoyés!';

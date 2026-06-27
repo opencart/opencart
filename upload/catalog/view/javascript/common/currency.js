@@ -35,10 +35,6 @@ export default class extends Controller {
 
         data.currencies = Object.values(currencies);
 
-
-        console.log('currencies');
-        console.log(data.currencies);
-
         return loader.template('common/currency', { ...data, ...language });
     }
 
@@ -48,8 +44,6 @@ export default class extends Controller {
         let code = e.target.getAttribute('href');
 
         local.set('currency', code);
-
-        this.update();
 
         let elements = document.querySelectorAll('x-currency');
 

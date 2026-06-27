@@ -17,10 +17,10 @@ export default class extends Controller {
         data.categories = [];
 
         for (let category of categories) {
-            let children_data = [];
+            let children = [];
 
             for (let child of category.children) {
-                children_data.push({
+                children.push({
                     name: child.description[config.config_language].name,
                     path: child.path,
                     product_total: child.product_total
@@ -30,7 +30,7 @@ export default class extends Controller {
             data.categories.push({
                 name: category.description[config.config_language].name,
                 path: category.path,
-                children: children_data,
+                children: children,
                 product_total: category.product_total
             });
         }

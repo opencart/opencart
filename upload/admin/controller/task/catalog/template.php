@@ -39,8 +39,6 @@ class Template extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/task');
-
 		// Generate new data
 		$routes = [];
 
@@ -74,6 +72,8 @@ class Template extends \Opencart\System\Engine\Controller {
 				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -5);
 			}
 		}
+
+		$this->load->model('setting/task');
 
 		foreach ($routes as $route) {
 			$task_data = [

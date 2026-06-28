@@ -21,7 +21,7 @@
               {% for children in category.children | batch: 5 %}
               <ul class="list-unstyled">
                 {% for child in children %}
-                <li><a href="{{ child.href }}" class="dropdown-item">{{ child.name }}</a></li>
+                <li><a href="{{ child.href }}" class="dropdown-item">{{ child.name }}{% if config_product_count %} ({{ child.product_total }}){% endif %}</a></li>
                 {% endfor %}
               </ul>
               {% endfor %}

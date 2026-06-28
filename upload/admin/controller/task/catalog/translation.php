@@ -39,8 +39,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/task');
-
 		// Ignore directories
 		$ignore = [
 			'api',
@@ -82,8 +80,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		print_r($routes);
-
+		$this->load->model('setting/task');
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();

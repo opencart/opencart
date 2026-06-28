@@ -35,7 +35,7 @@ export default class extends Controller {
             });
         }
 
-        console.log(data);
+        data.config_product_count = config.config_product_count;
 
         return loader.template('common/menu', { ...data,  ...language });
     }

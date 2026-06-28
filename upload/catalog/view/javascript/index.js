@@ -23,7 +23,8 @@ config.cache.set('default', {
     config_language: 'en-gb',
     config_currency: 'EUR',
     config_customer_group_id: 1,
-    config_account_id: 1
+    config_account_id: 1,
+    config_product_count: true
 });
 
 // Testing Code

@@ -19,7 +19,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/translation');
 
 		if (!array_key_exists('store_id', $args)) {
-			//return ['error' => $this->language->get('error_required')];
+			return ['error' => $this->language->get('error_required')];
 		}
 
 		// Store
@@ -29,15 +29,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'url'      => HTTP_CATALOG
 		];
 
-		//if ($args['store_id']) {
+		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			//$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-			//if (!$store_info) {
-				//return ['error' => $this->language->get('error_store')];
-			//}
-		//}
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
 
 		$this->load->model('setting/task');
 
@@ -195,21 +195,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/language/' . $language_info['code'] . '/';
+		$filename = $args['route'] . '.json';
+
 		$pos = strrpos($args['route'], '/');
 
 		if ($pos !== false) {
-			$path = '/'  . substr($args['route'], 0, $pos);
+			$directory = substr($args['route'], 0, $pos);
 			$filename = substr($args['route'], $pos) . '.json';
-		} else {
-			$path = '';
-			$filename = $args['route'] . '.json';
 		}
-
-
-
-
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/language/' . $language_info['code'] . $path . '/';
-		//$filename = substr($args['route'], $pos + 1) . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

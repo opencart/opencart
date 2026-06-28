@@ -147,7 +147,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				}
 
 				$filter_data = [
-					'filter_category_id' => $result['category_id'],
+					'filter_category_id' => $child['category_id'],
 					'filter_store_id'    => $store_info['store_id'],
 					'filter_status'      => true
 				];

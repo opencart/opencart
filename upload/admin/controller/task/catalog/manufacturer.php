@@ -8,11 +8,75 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Manufacturer extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * Generate category list task by store.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function index(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
 
+		if (!array_key_exists('store_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		$task_data = [
+			'code'   => 'manufacturer.list.' . $store_info['store_id'],
+			'action' => 'task/catalog/manufacturer.list',
+			'args'   => ['store_id' => $store_info['store_id']]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
+		$this->load->model('catalog/manufacturer');
+
+		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'manufacturer.info.' . $store_info['store_id'] . '.' . $result['manufacturer_id'],
+				'action' => 'task/catalog/manufacturer.info',
+				'args'   => [
+					'manufacturer_id' => $result['manufacturer_id'],
+					'store_id'        => $store_info['store_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
+	}
 
 	/**
 	 * Index
@@ -23,7 +87,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function index(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
 		// Store
@@ -72,7 +136,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
 		$filename = 'manufacturer.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -115,7 +179,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
 
-		if (!$manufacturer_info || !$manufacturer_info['status'] || !in_array($manufacturer_info['information_id'], $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']))) {
+		if (!$manufacturer_info || !$manufacturer_info['status'] || !in_array($store_info['store_id'], $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']))) {
 			return ['error' => $this->language->get('error_manufacturer')];
 		}
 

@@ -5,18 +5,20 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = loader.language('account/information');
+const language = loader.language('information/information');
 
 export default class extends Controller {
     async render() {
         let data = {};
 
-        let information = await loader.storage('information/information-' + this.getAttribute('information_id'));
+        console.log(document.currentScript);
 
-        if (information.length) {
-            data.title = information.title;
-            data.description = information.description;
-        }
+        //let information = await loader.storage('catalog/information-' + this.getAttribute('information_id'));
+
+        //if (information.length) {
+         //   data.title = information.title;
+        //    data.description = information.description;
+        //}
 
         return loader.template('information/information', { ...data, ...language, ...config });
     }

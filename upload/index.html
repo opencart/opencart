@@ -9,14 +9,17 @@
 <body>
 <div id="container">
   <div id="alert"></div>
-  <x-include src="common/header"></x-include>
+  <x-include src="common/header.js"></x-include>
   <main class="flex-grow-1 mb-4">
-    <x-include src="common/menu"></x-include>
+    <x-include src="common/menu.js"></x-include>
     <div class="container">
-      <x-include id="content" src="common/home"></x-include>
+
+      <x-include id="content" src="catalog/category.js?category_id=43"></x-include>
+
+      <x-include id="content" src="common/home.js"></x-include>
     </div>
   </main>
-  <x-include src="common/footer"></x-include>
+  <x-include src="common/footer.js"></x-include>
 </div>
 <script src="./assets/bootstrap/js/bootstrap.bundle.min.js" type="module"></script>
 <script src="./catalog/view/javascript/index.js" type="module"></script>

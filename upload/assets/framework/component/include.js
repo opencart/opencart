@@ -19,9 +19,19 @@ customElements.define('x-include', class extends WebComponent {
         // Get the source HTML to load
         if (!this.src) return;
 
-        let object = await import(config.config_path + this.src + '.js');
+        console.log(this.src);
+
+        let object = await import(config.config_path + this.src);
+
+        console.log(object);
 
         let controller = new object.default(this);
+
+        //controller.set(attributes);
+
+
+        //controller.setAttribute
+
 
         let output = await controller.render();
 

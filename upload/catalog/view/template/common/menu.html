@@ -6,7 +6,9 @@
     <div id="navbar-menu" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         {% for category in categories %}
+
         {% if category.children != '' %}
+
         {% assign total = category.children | length %}
         {% if total > 20 %}
         {% assign batch = total | divide: 4 | round %}
@@ -15,13 +17,14 @@
         {% assign batch = 5 %}
         {% assign column = total | divide: 5 | round %}
         {% endif %}
-        <li class="nav-item dropdown"><a href="{{ category.href }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
+
+        <li class="nav-item dropdown"><a href="catalog/category.js?path={{ category.path }}" data-on="click:onClick" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
           <div class="dropdown-menu dropdown-column-{{ column }}">
             <div class="dropdown-inner">
               {% for children in category.children | batch: 5 %}
               <ul class="list-unstyled">
                 {% for child in children %}
-                <li><a href="{{ child.href }}" class="dropdown-item">{{ child.name }}{% if config_product_count %} ({{ child.product_total }}){% endif %}</a></li>
+                <li><a href="catalog/category.js?path={{ child.path }}" data-on="click:onClick" class="dropdown-item">{{ child.name }}{% if config_product_count %} ({{ child.product_total }}){% endif %}</a></li>
                 {% endfor %}
               </ul>
               {% endfor %}
@@ -30,12 +33,12 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a href="{{ category.href }}" class="dropdown-item">{{ text_all }} {{ category.name }}</a></li>
+              <li><a href="catalog/category.js?path={{ child.path }}" data-on="click:onClick" class="dropdown-item">{{ text_all }} {{ category.name }}</a></li>
             </ul>
           </div>
         </li>
         {% else %}
-        <li class="nav-item"><a href="{{ category.href }}" class="dropdown-item">{{ category.name }}</a></li>
+        <li class="nav-item"><a href="catalog/category.js?path={{ category.path }}" data-on="click:onClick" class="dropdown-item">{{ category.name }}</a></li>
         {% endif %}
         {% endfor %}
       </ul>

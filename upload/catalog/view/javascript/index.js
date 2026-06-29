@@ -44,7 +44,6 @@ const storage = await loader.library('storage');
 storage.addPath('shop/' + base.host + '/data/');
 
 storage.cache.set('cms/article-1', { articles: [] });
-storage.cache.set('catalog/information', { information: [] });
 
 // Template
 const template = await loader.library('template');

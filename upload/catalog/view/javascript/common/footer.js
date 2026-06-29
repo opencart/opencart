@@ -23,25 +23,23 @@ export default class extends Controller {
         // Information Pages
         data.informations = [];
 
-        if (informations.length && config.config_language in informations.description) {
-
-            for (let information of informations) {
-                information.description[config.config_language];
-
-                console.log(information);
-
-                data.informations.push(information);
+        for (let information of informations) {
+            if (config.config_language in information.description) {
+                data.informations.push({
+                    information_id: information.information_id,
+                    title: information.description[config.config_language].title
+                });
             }
-
-            data.gdpr = config.config_gdpr_id ? true : false;
-            data.affiliate = config.config_affiliate_status ? true : false;
-
-            let date = new Date();
-
-            data.year = date.getFullYear();
-
-            return await loader.template('common/footer', {...data, ...language, ...config});
         }
+
+        data.gdpr = config.config_gdpr_id ? true : false;
+        data.affiliate = config.config_affiliate_status ? true : false;
+
+        let date = new Date();
+
+        data.year = date.getFullYear();
+
+        return await loader.template('common/footer', { ...data, ...language, ...config });
     }
 
     onClick(e) {

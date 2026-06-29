@@ -198,7 +198,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$pos = strrpos($args['route'], '/');
 
 		if ($pos !== false) {
-			$directory = substr($args['route'], 0, $pos);
+			$directory .= substr($args['route'], 0, $pos);
 			$filename = substr($args['route'], $pos) . '.json';
 		}
 

@@ -241,8 +241,6 @@ class Task extends \Opencart\System\Engine\Controller {
 				$output = $e;
 			}
 
-			$this->model_setting_task->addLog($task['code'], json_encode($output), true);
-
 			if ($output instanceof \Exception) {
 				$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
 			}

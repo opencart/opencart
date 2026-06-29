@@ -19,7 +19,7 @@ export default class extends Controller {
         let data = {};
 
         // Get product by product ID
-        let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
+        let product = await loader.storage('catalog/product-' + this.getAttribute('product_id'));
 
         if (product.length) {
             data.thumb = product.thumb;

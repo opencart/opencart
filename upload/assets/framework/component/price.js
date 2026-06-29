@@ -7,7 +7,7 @@ const tax = await loader.library('tax');
 
 // Storage
 const currencies = loader.storage('localisation/currency');
-const tax_rates = loader.storage('localisation/tax_rate-');
+//const tax_rates = loader.storage('localisation/tax_rate-');
 
 customElements.define('x-price', class extends WebComponent {
     static observed = [

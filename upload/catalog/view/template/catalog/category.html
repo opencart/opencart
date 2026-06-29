@@ -13,9 +13,8 @@
 {% endif %}
 
 {% if categories %}
-
   <h3>{{ text_refine }}</h3>
-  {% if categories|length <= 5 %}
+  {% if categories | length <= 5 %}
     <div class="row">
       <div class="col-sm-3">
         <ul>
@@ -27,13 +26,13 @@
     </div>
   {% else %}
     <div class="row row-cols-sm-2 row-cols-lg-4">
-      {% set total = category.children|length %}
+      {% set total = category.children | length %}
       {% if total > 20 %}
         {% set batch = (total / 4)|round(0, 'ceil') %}
       {% else %}
         {% set batch = 5 %}
       {% endif %}
-      {% for category in categories|batch(batch) %}
+      {% for category in categories | batch(batch) %}
         <div class="col">
           <ul>
             {% for child in category %}

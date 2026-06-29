@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('product/product');
+const language = await loader.language('catalog/product');
 
 // Library
 const local = await loader.library('local');
@@ -28,7 +28,7 @@ export default class extends Controller {
 
         console.log(product);
 
-        if (product.length && config.config_language in product.description) {
+        if (product !== undefined && config.config_language in product.description) {
             data.product_id = product.product_id;
 
             // Images
@@ -162,7 +162,7 @@ export default class extends Controller {
 
             data.currency = currency;
 
-            return loader.template('product/product', { ...data, ...language, ...config });
+            return loader.template('catalog/product', { ...data, ...language, ...config });
         }
     }
 

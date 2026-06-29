@@ -8,7 +8,7 @@ export default class extends Controller {
 }
 
 $('#button-search').on('click', function() {
-    url = 'index.php?route=product/search&language={{ language }}';
+    url = 'index.php?route=catalog/search&language={{ language }}';
 
     var search = $('#input-search').val();
 

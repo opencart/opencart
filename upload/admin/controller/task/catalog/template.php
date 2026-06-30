@@ -163,15 +163,10 @@ class Template extends \Opencart\System\Engine\Controller {
 			$code = file_get_contents($file);
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/template/';
-		$filename = $args['route'] . '.html';
-
 		$pos = strrpos($args['route'], '/');
 
-		if ($pos !== false) {
-			$directory = substr($args['route'], 0, $pos);
-			$filename = substr($args['route'], $pos) . '.json';
-		}
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/template/' . ($pos !== false ? substr($args['route'], 0, $pos) . '/' : '');
+		$filename = ($pos !== false ? substr($args['route'], $pos) : $args['route']) . '.html';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

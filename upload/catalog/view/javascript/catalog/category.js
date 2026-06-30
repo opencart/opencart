@@ -11,19 +11,16 @@ export default class extends Controller {
     async render() {
         let data = {};
 
+        let request = new URL(import.meta.url).searchParams;
+
         // Product Info
         let category = await loader.storage('catalog/category-42');
-
-        console.log(category);
-
 
         if (category !== undefined && config.config_language in category.description) {
             data.category_id = category.category_id;
 
-            console.log('[hi]');
-
             // Images
-            data.thumb = category.thumb;
+            data.image = category.image;
 
             let description = category.description[config.config_language];
 
@@ -34,10 +31,10 @@ export default class extends Controller {
             data.heading_title = description.name;
             data.description = description.description;
 
-            data.children = [];
+            data.categories = [];
 
             for (let children of category.children) {
-                data.children = data.children.push({
+                data.categories = data.children.push({
                     name: children.description[config.config_language].name,
                     path: children.path
                 });

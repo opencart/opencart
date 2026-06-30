@@ -26,12 +26,9 @@ export default class extends Controller {
         // Product Info
         let product = await loader.storage('catalog/product-' + request.get('product_id'));
 
-
-
         console.log('product');
         console.log(request.get('product_id'));
         console.log(product);
-
 
         if (product !== undefined && config.config_language in product.description) {
             data.product_id = product.product_id;

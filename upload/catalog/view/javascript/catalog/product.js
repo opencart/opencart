@@ -21,12 +21,17 @@ export default class extends Controller {
     async render() {
         let data = {};
 
-        console.log('product');
+        let request = new URL(import.meta.url).searchParams;
 
         // Product Info
-        let product = await loader.storage('catalog/product-42');
+        let product = await loader.storage('catalog/product-' + request.get('product_id'));
 
+
+
+        console.log('product');
+        console.log(request.get('product_id'));
         console.log(product);
+
 
         if (product !== undefined && config.config_language in product.description) {
             data.product_id = product.product_id;

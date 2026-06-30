@@ -16,8 +16,8 @@ class Storage {
     }
 
     async fetch(path) {
-        console.log('Storage');
-        console.log(path);
+        //console.log('Storage');
+        ///console.log(path);
 
         if (this.cache.has(path)) {
             return this.cache.get(path);
@@ -41,12 +41,12 @@ class Storage {
 
         let response = await fetch(file);
 
-        console.log('status', response.status);
+        //console.log('status', response.status);
 
         if (response.status == 200) {
             let data = await response.json();
 
-            console.log(data);
+            //console.log(data);
 
             this.cache.set(path, data);
 

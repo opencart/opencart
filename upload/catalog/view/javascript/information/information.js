@@ -11,14 +11,18 @@ export default class extends Controller {
     async render() {
         let data = {};
 
-        console.log(document.currentScript);
+        let request = new URL(import.meta.url).searchParams;
 
-        //let information = await loader.storage('catalog/information-' + this.getAttribute('information_id'));
+        let information = await loader.storage('catalog/information-' + request.get('information_id'));
 
-        //if (information.length) {
-         //   data.title = information.title;
-        //    data.description = information.description;
-        //}
+        if (information != undefined && config.config_language in information.description) {
+            data.information_id = information.information_id;
+
+            let description = information.description[config.config_language];
+
+            data.heading_title = description.title;
+            data.description = description.description;
+        }
 
         return loader.template('information/information', { ...data, ...language, ...config });
     }

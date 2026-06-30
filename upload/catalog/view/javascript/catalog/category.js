@@ -13,8 +13,18 @@ export default class extends Controller {
 
         let request = new URL(import.meta.url).searchParams;
 
+        let category_id = 0
+
+        let path = request.get('path');
+
+        if (path.indexOf('_') !== -1) {
+            category_id = path.split('_').pop();
+        } else {
+            category_id = path;
+        }
+
         // Product Info
-        let category = await loader.storage('catalog/category-42');
+        let category = await loader.storage('catalog/category-' + category_id);
 
         if (category !== undefined && config.config_language in category.description) {
             data.category_id = category.category_id;
@@ -34,7 +44,7 @@ export default class extends Controller {
             data.categories = [];
 
             for (let children of category.children) {
-                data.categories = data.children.push({
+                data.categories.push({
                     name: children.description[config.config_language].name,
                     path: children.path
                 });

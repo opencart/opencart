@@ -1,6 +1,6 @@
 <h1>{{ heading_title }}</h1>
 
-{% if image or description %}
+{% if image || description %}
   <div class="row">
     {% if image %}
       <div class="col-3"><img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" style="width: 268px"/></div>
@@ -13,6 +13,7 @@
 {% endif %}
 
 {% if categories %}
+
   <h3>{{ text_refine }}</h3>
   {% if categories | length <= 5 %}
     <div class="row">
@@ -27,11 +28,13 @@
   {% else %}
     <div class="row row-cols-sm-2 row-cols-lg-4">
       {% set total = category.children | length %}
+
       {% if total > 20 %}
-        {% set batch = (total / 4)|round(0, 'ceil') %}
+        {% set batch = (total / 4) | round(0, 'ceil') %}
       {% else %}
         {% set batch = 5 %}
       {% endif %}
+
       {% for category in categories | batch(batch) %}
         <div class="col">
           <ul>
@@ -41,6 +44,7 @@
           </ul>
         </div>
       {% endfor %}
+
     </div>
     <br/>
   {% endif %}

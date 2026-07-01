@@ -88,6 +88,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
+			// Regenerate session ID
+			oc_session_regenerate($this->registry);
+
 			// Log the customer in
 			$this->customer->login($post_info['email'], '', true);
 

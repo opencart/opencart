@@ -150,6 +150,9 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Regenerate session ID
+			oc_session_regenerate($this->registry);
+
 			// Remove form token from session
 			unset($this->session->data['login_token']);
 
@@ -252,6 +255,9 @@ class Login extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_account_customer->getTokenByCode($code);
 
 		if ($customer_info && $customer_info['email'] == $email && $customer_info['type'] == 'login' && $this->customer->login($customer_info['email'], '', true)) {
+			// Regenerate session ID
+			oc_session_regenerate($this->registry);
+
 			// Add customer details into session
 			$this->session->data['customer'] = $customer_info;
 

@@ -194,6 +194,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		// CMS
 		$data['config_article_description_length'] = $this->config->get('config_article_description_length');
+		$data['config_article_count'] = $this->config->get('config_article_count');
 		$data['config_comment_status'] = $this->config->get('config_comment_status');
 		$data['config_comment_approve'] = $this->config->get('config_comment_approve');
 		$data['config_comment_interval'] = $this->config->get('config_comment_interval');

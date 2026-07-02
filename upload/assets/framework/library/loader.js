@@ -1,74 +1,53 @@
-import { config } from './config.js';
-import { event } from './event.js';
-import { language } from './language.js';
-import { storage } from './storage.js';
-import { template } from './template.js';
+import { Config } from './config.js';
+import { Language } from './language.js';
+import { Storage } from './storage.js';
+import { Template } from './template.js';
 
 class Loader {
     static instance;
 
     constructor() {
         this.data = new Map();
-        this.data.set('config', config);
-        this.data.set('event', event);
-        this.data.set('language', language);
-        this.data.set('storage', storage);
-        this.data.set('template', template);
+        this.data.set('config', new Config());
+        this.data.set('language', new Language);
+        this.data.set('storage', new Storage);
+        this.data.set('template', new Template);
     }
 
     async controller(path) {
-        event.trigger('controller/' + path + '/before', { path });
-
         if (this.data.has(path)) {
             return this.data.get(path);
         }
 
-        let test1 = await config.fetch('default');
+        let config = this.data.get('config').fetch('default');
 
-        let controller = await import(test1.config_path + path + '.js');
+        let controller = await import(config.config_path + path + '.js');
 
         this.data.set('controller/' + path, new controller.default());
 
         let output = this.data.get(path);
 
-        event.trigger('controller/' + path + '/after', { path, output });
-
         return output;
     }
 
     async storage(path) {
-        event.trigger('storage/' + path + '/before', { path });
-
-        let output = await storage.fetch(path);
-
-        event.trigger('storage/' + path + '/after', { path, output });
-
-        return output;
+        return await this.data.get('storage').fetch(path);
     }
 
     async language(path) {
-        event.trigger('language/' + path + '/before', { path });
+        let output = this.data.get('language').fetch(path);
 
-        let output = await language.fetch(path);
+        // Load Default Language
+        let defaults = this.data.get('language').fetch('default');
 
-        event.trigger('language/' + path + '/after', { path, output });
-
-        return output;
+        return { ...output, ...defaults };
     }
 
     async template(path, data = {}) {
-        event.trigger('template/' + path + '/before', { path, data });
-
-        let output = await template.render(path, data);
-
-        event.trigger('template/' + path + '/after', { path, data, output });
-
-        return output;
+        return await this.data.get('template').render(path, data);
     }
 
     async library(path) {
-        event.trigger('library/' + path + '/before', { path });
-
         if (this.data.has(path)) {
             return this.data.get(path);
         }
@@ -79,19 +58,11 @@ class Loader {
 
         let output = this.data.get(path);
 
-        event.trigger('library/' + path + '/after', { path, output });
-
         return output;
     }
 
     async config(path) {
-        event.trigger('config/' + path + '/before', { path });
-
-        let output = await config.fetch(path);
-
-        event.trigger('config/' + path + '/after', { path, output });
-
-        return output;
+        return await this.data.get('config').fetch(path);
     }
 
     static getInstance() {

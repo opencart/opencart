@@ -1,5 +1,3 @@
-
-
 export default class extends Controller {
     async connected() {
 
@@ -12,7 +10,7 @@ export default class extends Controller {
             $('#collapse-remove').slideUp();
         }
     }
-}
+};
 
 $('input[name=\'action\']').on('change', function() {
 

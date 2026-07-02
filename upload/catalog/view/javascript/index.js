@@ -5,7 +5,7 @@ const base = new URL(document.querySelector('base').href);
 
 console.log(base);
 
-// lang
+// language
 const lang = document.documentElement.lang.toLowerCase();
 
 // Config
@@ -45,41 +45,12 @@ const storage = await loader.library('storage');
 
 storage.addPath('shop/' + base.host + '/data/');
 
-storage.cache.set('cms/article-1', { articles: [] });
-
 // Template
 const template = await loader.library('template');
 
 //template.addPath('shop/' + base.host + '/template/');
 
 template.addPath('catalog/view/template/');
-
-// Event
-const event = await loader.library('event');
-
-// Inject default language vars into for every language load.
-event.register(/language\/.+\/after/g, ({ path, output }) => {
-    // Load the default language vars
-    //let data = language.fetch('default');
-
-    //for (let key in data) {
-    //  if (output[key] == undefined) {
-    //      output[key] = data[key];
-    //  }
-    //}
-});
-
-// Inject default language vars into for every language load.
-event.register(/template\/.+\/before/g, ({ path, data }) => {
-    // Load the default language vars
-    //let output = language.fetch('default');
-
-    //for (let key in output) {
-    //    if (data[key] == undefined) {
-    //        data[key] = output[key];
-    //    }
-    //}
-});
 
 import './component.js';
 

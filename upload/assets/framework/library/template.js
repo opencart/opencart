@@ -1,1 +1,1 @@
-export { curlytag as template } from '../../curlytag/curlytag.js';
+export { CurlyTag as Template } from '../../curlytag/curlytag.js';

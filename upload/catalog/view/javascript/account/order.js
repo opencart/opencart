@@ -10,7 +10,7 @@ export default class extends Controller {
 
         return loader.template('account/order', { ...language });
     }
-}
+};
 
 
 

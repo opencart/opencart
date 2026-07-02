@@ -24,4 +24,4 @@ export default class extends Controller {
         e.preventDefault();
 
     }
-}
+};

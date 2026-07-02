@@ -8,7 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('common/footer');
 
 // Storage
-const articles = await loader.storage('cms/article-1');
+//const articles = await loader.storage('cms/article-1');
 
 // Information
 const informations = await loader.storage('catalog/information');
@@ -18,7 +18,7 @@ export default class extends Controller {
         let data = {};
 
         // Articles
-        data.articles = Object.values(articles).length;
+        data.articles = 1; //Object.values(articles).length;
 
         // Information Pages
         data.informations = [];
@@ -49,5 +49,5 @@ export default class extends Controller {
 
         target.src = e.target.getAttribute('href');
     }
-}
+};
 

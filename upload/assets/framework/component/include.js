@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
-customElements.define('x-include', class extends WebComponent {
+customElements.define('oc-include', class extends WebComponent {
     static observed = ['src'];
 
     get src() {
@@ -18,8 +18,6 @@ customElements.define('x-include', class extends WebComponent {
     async render() {
         // Get the source HTML to load
         if (!this.src) return;
-
-        //console.log(this.src);
 
         let object = await import(config.config_path + this.src);
 

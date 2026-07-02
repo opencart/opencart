@@ -8,7 +8,7 @@ export default class extends Controller {
 
         this.innerHTML = this.load.template('account/address', this.language.all());
     }
-}
+};
 
 
 

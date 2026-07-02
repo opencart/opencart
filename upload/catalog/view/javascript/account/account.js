@@ -7,4 +7,4 @@ export default class extends Controller {
     render() {
         return loader.template('account/account', language);
     }
-}
+};

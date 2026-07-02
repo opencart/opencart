@@ -15,7 +15,7 @@
  *   timeout: 10000
  * }).then(res => console.log(res));
  */
-class Request {
+export default class Request {
     constructor(defaults = {}) {
         this.default = {
             url: '',
@@ -159,12 +159,7 @@ class Request {
     }
 
     patch(url, data = {}, config = {}) {
-        return this.request({
-            method: 'PATCH',
-            url,
-            data,
-            ...config
-        });
+        return this.request({method: 'PATCH', url, data, ...config});
     }
 
     delete(url, data = null, config = {}) {

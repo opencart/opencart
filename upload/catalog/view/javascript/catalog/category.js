@@ -1,5 +1,6 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import './list.js';
 
 // Config
 const config = await loader.config('default');
@@ -34,14 +35,14 @@ export default class extends Controller {
 
             let description = category.description[config.config_language];
 
-            //description.meta_title
-            //description.meta_description
-            //description.meta_keyword
+            //description.meta_title;
+            //description.meta_description;
+            //description.meta_keyword;
 
             data.heading_title = description.name;
             data.description = description.description;
 
-            data.categories = [];
+            data.categories = new Array();
 
             for (let children of category.children) {
                 data.categories.push({
@@ -49,6 +50,9 @@ export default class extends Controller {
                     path: children.path
                 });
             }
+
+            //import('./' + path + '.js');
+
 
             return loader.template('catalog/category', { ...data, ...language, ...config });
         }

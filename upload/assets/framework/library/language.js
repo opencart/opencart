@@ -1,4 +1,4 @@
-class Language {
+export class Language {
     static instance = null;
 
     constructor() {
@@ -48,18 +48,6 @@ class Language {
             console.log('Could not load language file ' + path);
         }
 
-        return {};
-    }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Language();
-        }
-
-        return this.instance;
+        return undefined;
     }
 }
-
-const language = Language.getInstance();
-
-export { language };

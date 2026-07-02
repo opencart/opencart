@@ -39,4 +39,4 @@ export default class extends Controller {
 
         return loader.template('information/sitemap', { ...data, ...language });
     }
-}
+};

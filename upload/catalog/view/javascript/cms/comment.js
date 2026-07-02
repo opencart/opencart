@@ -4,12 +4,8 @@ import { loader } from '../index.js';
 export default class extends Controller {
     async render() {
 
-
-
-
-
     }
-}
+};
 
 $('#comment').on('click', '.pagination a', function(e) {
     e.preventDefault();

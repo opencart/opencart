@@ -1,15 +1,18 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-export default class extends Controller {
+customElements.define('product-list', class extends WebComponent {
+
+
+
     async render() {
         let data = {};
 
         // Product Info
-        let manufacturer = await loader.storage('catalog/product-42');
+        let product = await loader.storage('catalog/product-' + request.get('product_id'));
 
-        if (manufacturer.length && config.config_language in manufacturer.description) {
-            data.product_id = category.product_id;
+        if (product !== undefined && config.config_language in product.description) {
+            data.product_id = product.product_id;
 
             // Images
             data.thumb = manufacturer.thumb;
@@ -26,6 +29,6 @@ export default class extends Controller {
             return loader.template('catalog/manufacturer', { ...data, ...language, ...config });
         }
 
-        return this.render('catalog/product_info', { ...data, ...language, ...config });
+        return this.render('catalog/thumb', { ...data, ...language, ...config });
     }
-}
+});

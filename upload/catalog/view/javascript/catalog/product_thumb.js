@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -14,14 +14,14 @@ const tax = await loader.library('tax');
 // Currency
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
-export default class extends Controller {
+customElements.define('product-thumb', class extends WebComponent {
     async render() {
         let data = {};
 
         // Get product by product ID
         let product = await loader.storage('catalog/product-' + this.getAttribute('product_id'));
 
-        if (product.length) {
+        if (product !== undefined) {
             data.thumb = product.thumb;
 
             data.name = product.name;
@@ -50,6 +50,5 @@ export default class extends Controller {
         this.$button_wishlist.getAttribute('action');
         this.$button_cart.getAttribute('action');
         this.$button_cart.getAttribute('compare_add');
-
     }
-}
+});

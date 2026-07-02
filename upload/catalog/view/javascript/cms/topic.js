@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('cms/topic');
 
-export default class extends Controller {
+class extends Controller {
     async connected() {
 
     }

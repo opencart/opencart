@@ -7,13 +7,13 @@ const language = await loader.language('account/subscription');
 // Library
 const session = await loader.library('session');
 
- export default class extends Controller {
+export default class extends Controller {
     render() {
         let data = {};
 
         return loader.template('account/subscription', { ...data, ...language });
     }
-}
+};
 
 /*
 $('#button-cancel').on('click', function(e) {

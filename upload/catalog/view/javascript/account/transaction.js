@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/transaction');
 
-export default class extends Controller {
+class extends Controller {
     render() {
 
 

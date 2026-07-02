@@ -1,3 +1,14 @@
+const base = '../catalog/view/javascript/'
+
+const path = new Map([
+    ['account', base + 'account/'],
+    ['catalog', base + 'catalog/'],
+    ['cms', base + 'cms/'],
+    ['common', base + 'common/'],
+    ['error', base + 'error/'],
+    ['information', base + 'information/']
+]);
+
 export class WebComponent extends HTMLElement {
     constructor() {
         super();
@@ -24,26 +35,25 @@ export class WebComponent extends HTMLElement {
         if (output) {
             this.innerHTML = output;
 
-            // Attach Events based on elements that have data-bind attributes
-            let elements = [];
+            // Autoload any custom elements not already loaded
+            this.querySelectorAll('[data-bind], [data-on]').forEach((element) => {
+                // Attach Events based on elements that have data-bind attributes
+                if (element.hasAttribute('data-bind')) {
+                    this['$' + element.getAttribute('data-bind')] = element;
 
-            // Attach attributes based on elements that have data-bind attribute
-            this.querySelectorAll('[data-bind]').forEach((element) => {
-                // Binds the element to an attribute by name.
-                this['$' + element.getAttribute('data-bind')] = element;
-
-                element.removeAttribute('data-bind');
-            });
-
-            // Attach events based on elements that have data-on attribute
-            this.querySelectorAll('[data-on]').forEach((element) => {
-                let [event, method] = element.getAttribute('data-on').split(':');
-
-                if (method !== undefined && method in this) {
-                    element.addEventListener(event, this[method].bind(this));
+                    element.removeAttribute('data-bind');
                 }
 
-                element.removeAttribute('data-on');
+                // Attach events based on elements that have data-on attributes
+                if (element.getAttribute('data-on')) {
+                    let [event, method] = element.getAttribute('data-on').split(':');
+
+                    if (method in this) {
+                        element.addEventListener(event, this[method].bind(this));
+                    }
+
+                    element.removeAttribute('data-on');
+                }
             });
 
             /*

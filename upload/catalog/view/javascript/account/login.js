@@ -51,7 +51,7 @@ export default class extends Controller {
             }
         });
     }
-}
+};
 
 /*
 $('#form-login').on('submit', function(e) {

@@ -36,4 +36,4 @@ export default class extends Controller {
 
         this.$button.state = 'loading';
     }
-}
+});

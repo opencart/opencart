@@ -26,4 +26,4 @@ export default class extends Controller {
 
         return loader.template('information/information', { ...data, ...language, ...config });
     }
-}
+};

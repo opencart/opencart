@@ -13,4 +13,4 @@ export default class extends Controller {
 
         target.src = e.target.getAttribute('href');
     }
-}
+};

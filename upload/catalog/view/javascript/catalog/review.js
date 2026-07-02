@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/review');
 
-export default class extends Controller {
+class extends Controller {
     async render() {
 
     }

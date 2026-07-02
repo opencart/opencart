@@ -5,7 +5,7 @@ export default class extends Controller {
     async connected() {
 
     }
-}
+});
 
 $('#button-send').on('click', function(e) {
     e.preventDefault();

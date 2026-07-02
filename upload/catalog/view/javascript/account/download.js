@@ -11,4 +11,4 @@ export default class extends Controller {
 
         return loader.template('account/download', { ...data, ...language });
     }
-}
+};

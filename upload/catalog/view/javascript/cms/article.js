@@ -5,6 +5,8 @@ import { loader } from '../index.js';
 const language = loader.language('account/edit');
 
 export default class extends Controller {
+
+
     async render() {
         let data = {};
 

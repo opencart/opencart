@@ -1,4 +1,4 @@
-class Config {
+export class Config {
     static instance = null;
 
     constructor() {
@@ -50,16 +50,4 @@ class Config {
 
         return {};
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Config();
-        }
-
-        return this.instance;
-    }
 }
-
-const config = Config.getInstance();
-
-export { config };

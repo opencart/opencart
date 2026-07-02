@@ -7,7 +7,7 @@ console.log(session);
 // Language
 const language = await loader.language('account/edit');
 
-export default class extends Controller {
+class extends Controller {
     render() {
         let data = {};
 

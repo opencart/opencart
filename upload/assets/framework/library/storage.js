@@ -1,6 +1,4 @@
-class Storage {
-    static instance = null;
-
+export class Storage {
     constructor() {
         this.directory = '';
         this.path = new Map();
@@ -57,16 +55,4 @@ class Storage {
 
         return undefined;
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Storage();
-        }
-
-        return this.instance;
-    }
 }
-
-const storage = Storage.getInstance();
-
-export { storage };

@@ -76,7 +76,7 @@ class Api extends \Opencart\System\Engine\Controller {
 				$time_start = time() - 450;
 				$time_end = time() + 450;
 
-				if ($time < $time_start && $time > $time_end) {
+				if ($time < $time_start || $time > $time_end) {
 					$status = false;
 				}
 			}

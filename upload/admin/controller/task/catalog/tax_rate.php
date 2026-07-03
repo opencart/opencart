@@ -41,8 +41,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$limit = 1000;
-
 		$this->load->model('localisation/tax_rate');
 
 		$results = $this->model_localisation_tax_rate->getTaxRates();

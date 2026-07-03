@@ -70,6 +70,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 }

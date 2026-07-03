@@ -263,35 +263,34 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$product_data = [];
 
+		$filter_data = [
+			'filter_filter_id' => $filter_info['filter_id'],
+			'filter_store_id'  => $store_info['store_id'],
+			'filter_status'    => true,
+			'sort'             => 'name',
+			'order'            => 'ASC',
+		];
+
 		$this->load->model('catalog/product');
 
-		$product_ids = $this->model_catalog_product->getProductsByFilterId($filter_info['filter_id']);
+		$products = $this->model_catalog_product->getProducts($filter_data);
 
-		foreach ($product_ids as $product_id) {
-			$store_ids = $this->model_catalog_product->getStores($product_id);
-
-			if (in_array($store_info['store_id'], $store_ids)) {
-
-
-				$product_data[] = $product_id;
-
-
-
-			}
+		foreach ($products as $product) {
+			$product_data[] = $product['product_id'];
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
-		$filename = 'filter-product-' . $filter_info['filter_id'] . '.csv';
+		$filename = 'filter-product-' . $filter_info['filter_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, implode(',', $product_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($product_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $filter_info['name'])];
+		return ['success' => sprintf($this->language->get('text_product'), $store_info['name'], $filter_info['name'])];
 	}
 
 	/**

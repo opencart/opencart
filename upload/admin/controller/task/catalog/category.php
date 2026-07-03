@@ -73,6 +73,17 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
+
+			$task_data = [
+				'code'   => 'category.product.' . $store_info['store_id'] . '.' . $result['category_id'],
+				'action' => 'task/catalog/category.product',
+				'args'   => [
+					'category_id' => $result['category_id'],
+					'store_id'    => $store_info['store_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
@@ -359,15 +370,17 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
-		$filename = 'category-product-' . $category_info['category_id'] . '.csv';
+		$filename = 'category-product-' . $category_info['category_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
+		$product_data = [];
+
 		$filter_data = [
-			'filter_store_id'    => $store_info['store_id'],
 			'filter_category_id' => $category_info['category_id'],
+			'filter_store_id'    => $store_info['store_id'],
 			'filter_status'      => true,
 			'sort'               => 'name',
 			'order'              => 'ASC',
@@ -375,7 +388,13 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_catalog_product->getProducts($filter_data), 'product_id')))) {
+		$products = $this->model_catalog_product->getProducts($filter_data);
+
+		foreach ($products as $product) {
+			$product_data[] = $product['product_id'];
+		}
+
+		if (!file_put_contents($directory . $filename, json_encode($product_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -416,7 +435,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/category-product-' . (int)$args['category_id'] . '.csv';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/category-product-' . (int)$args['category_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

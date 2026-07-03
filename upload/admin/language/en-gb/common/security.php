@@ -18,6 +18,7 @@ $_['text_admin_move']                 = 'Moving %s to %s of %s admin files';
 $_['text_admin_success']              = 'Success: Admin directory has been moved!';
 $_['text_admin_delete']               = 'Delete previous admin directory';
 $_['text_admin_delete_description']   = 'Your previous admin directory needs deleting!';
+$_['text_admin_delete_success']       = 'Success: Your previous admin directory has been deleted!';
 $_['text_path']                       = 'Path';
 
 // Entry

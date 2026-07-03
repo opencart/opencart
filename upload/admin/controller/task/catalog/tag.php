@@ -56,7 +56,7 @@ class Tag extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
-		$filename = 'filter-product-' . $filter_info['filter_id'] . '.csv';
+		$filename = 'filter-product-' . $filter_info['filter_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

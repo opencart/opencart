@@ -48,7 +48,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$currency_info = $this->model_localisation_currency->getCurrencyByCode((string)$code);
 
 			if ($currency_info && $currency_info['status']) {
-				$currency_data[$currency_info['code']] = [
+				$currency_data[] = [
 					'title'         => $currency_info['title'],
 					'code'          => $currency_info['code'],
 					'symbol_left'   => $currency_info['symbol_left'],
@@ -70,6 +70,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_list')];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 }

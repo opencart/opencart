@@ -78,7 +78,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	/*
 	 * List
 	 *
-	 * Generate All Article files.
+	 * Generate All Product files.
 	 *
 	 * @param array<int, mixed> $args
 	 *
@@ -500,6 +500,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-		return ['success' => $this->language->get('text_delete')];
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }

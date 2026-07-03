@@ -281,7 +281,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/';
-		$filename = 'article.topic-' . $topic_info['topic_id'] . '.json';
+		$filename = 'topic-article-' . $topic_info['topic_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

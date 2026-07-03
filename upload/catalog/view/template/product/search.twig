@@ -99,7 +99,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-search').bind('click', function() {
+$('#button-search').on('click', function() {
     url = 'index.php?route=product/search&language={{ language }}';
 
     var search = $('#input-search').val();
@@ -129,7 +129,7 @@ $('#button-search').bind('click', function() {
     location = url;
 });
 
-$('#input-search').bind('keydown', function(e) {
+$('#input-search').on('keydown', function(e) {
     if (e.keyCode == 13) {
         $('#button-search').trigger('click');
     }

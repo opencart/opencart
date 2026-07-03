@@ -144,7 +144,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_tax_rate->getTaxRates($filter_data);
 	 */
 	public function getTaxRates(array $data = []): array {
-		$sql = "SELECT `tr`.`tax_rate_id`, `tr`.`name` AS `name`, `tr`.`rate`, `tr`.`type`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`)";
+		$sql = "SELECT `tr`.`tax_rate_id`, `tr`.`name` AS `name`, `tr`.`rate`, `tr`.`type`, `tr`.`geo_zone_id`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`)";
 
 		$sort_data = [
 			'name'     => 'tr.name',

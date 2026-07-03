@@ -147,7 +147,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_list')];
+		return ['success' => $this->language->get('text_list'), $store_info['name']];
 	}
 
 	public function info(array $args = []): array {
@@ -260,16 +260,24 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_manufacturer')];
 		}
 
+		$product_data = [];
+
 		$filter_data = [
-			'filter_store_id'        => $store_info['store_id'],
 			'filter_manufacturer_id' => $manufacturer_info['manufacturer_id'],
+			'filter_store_id'        => $store_info['store_id'],
 			'filter_status'          => true,
 			'sort'                   => 'name',
 			'order'                  => 'ASC',
 		];
 
+		$products = $this->model_catalog_product->getProducts($filter_data);
+
+		foreach ($products as $product) {
+			$product_data[] = $product['product_id'];
+		}
+
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
-		$filename = 'manufacturer-product-' . $manufacturer_info['manufacturer_id'] . '.csv';
+		$filename = 'manufacturer-product-' . $manufacturer_info['manufacturer_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -277,11 +285,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_catalog_product->getProducts($filter_data), 'product_id')))) {
+		if (!file_put_contents($directory . $filename, json_encode($product_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $manufacturer_info['name'])];
+		return ['success' => sprintf($this->language->get('text_product'), $store_info['name'], $manufacturer_info['name'])];
 	}
 
 	/**
@@ -323,12 +331,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer-product-' . (int)$args['manufacturer_id'] . '.csv';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer-product-' . (int)$args['manufacturer_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		return ['success' => $this->language->get('text_delete')];
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }

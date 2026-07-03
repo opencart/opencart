@@ -370,7 +370,7 @@ $(document).ready(function() {
     $('#form-currency .dropdown-item').on('click', function(e) {
         e.preventDefault();
 
-        $('#form-currency input[name=\'code\']').val($(this).attr('href'));
+        $('#form-currency input[name=\'code\']').val($(this).data('code'));
 
         $('#form-currency').submit();
     });
@@ -379,7 +379,7 @@ $(document).ready(function() {
     $('#form-language .dropdown-item').on('click', function(e) {
         e.preventDefault();
 
-        $('#form-language input[name=\'code\']').val($(this).attr('href'));
+        $('#form-language input[name=\'code\']').val($(this).data('code'));
 
         $('#form-language').submit();
     });

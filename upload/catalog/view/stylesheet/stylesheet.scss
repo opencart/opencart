@@ -121,7 +121,7 @@ button:focus {
   margin-bottom: 0;
 }
 
-#top .list-inline-item > a, #top .list-inline-item .dropdown > a {
+#top .list-inline-item > a, #top .list-inline-item .dropdown > a, #top .list-inline-item .dropdown > span {
   font-size: 1.1em;
   color: var(--bs-gray-600);
   line-height: 40px;

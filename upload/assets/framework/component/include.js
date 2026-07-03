@@ -23,7 +23,7 @@ customElements.define('oc-include', class extends WebComponent {
 
         let controller = new object.default(this);
 
-        let output = await controller.render();
+        let output = await controller.execute();
 
         if (output) {
             return output;

@@ -38,7 +38,7 @@ $('#wishlist').on('click', '.btn-danger', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#wishlist').load('index.php?route=account/wishlist.list&language={{ language }}');
+                $('#wishlist').load('index.php?route=account/wishlist.list&language={{ language }}&customer_token={{ customer_token }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
-customElements.define('oc-include', class extends WebComponent {
+customElements.define('x-include', class extends WebComponent {
     static observed = ['src'];
 
     get src() {

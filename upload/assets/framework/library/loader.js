@@ -9,9 +9,9 @@ class Loader {
     constructor() {
         this.data = new Map();
         this.data.set('config', new Config());
-        this.data.set('language', new Language);
-        this.data.set('storage', new Storage);
-        this.data.set('template', new Template);
+        this.data.set('language', new Language());
+        this.data.set('storage', new Storage());
+        this.data.set('template', new Template());
     }
 
     async controller(path) {
@@ -35,10 +35,10 @@ class Loader {
     }
 
     async language(path) {
-        let output = this.data.get('language').fetch(path);
+        let output = await this.data.get('language').fetch(path);
 
         // Load Default Language
-        let defaults = this.data.get('language').fetch('default');
+        let defaults = await this.data.get('language').fetch('default');
 
         return { ...output, ...defaults };
     }

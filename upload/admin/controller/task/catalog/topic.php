@@ -281,7 +281,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/';
-		$filename = 'article.topic-' . $topic_info['topic_id'] . '.csv';
+		$filename = 'article.topic-' . $topic_info['topic_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -297,11 +297,11 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		if (!file_put_contents($directory . $filename, implode(',', array_column($this->model_cms_article->getArticles($filter_data), 'article_id')))) {
+		if (!file_put_contents($directory . $filename, json_encode($this->model_cms_article->getArticles($filter_data)))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => sprintf($this->language->get('text_article'), $store_info['name'], $topic_info['name'])];
 	}
 
 	/**
@@ -343,7 +343,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic.article-' . (int)$args['topic_id'] . '.csv';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic.article-' . (int)$args['topic_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

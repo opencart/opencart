@@ -343,7 +343,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic.article-' . (int)$args['topic_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic-article-' . (int)$args['topic_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

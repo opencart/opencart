@@ -4,10 +4,10 @@
       <div class="col-4">
         <ul class="list-inline">
           <li class="list-inline-item me-3">
-            <common-currency></common-currency>
+            <component-currency></component-currency>
           </li>
           <li class="list-inline-item">
-            <common-language></common-language>
+            <component-language></component-language>
           </li>
         </ul>
       </div>
@@ -46,12 +46,12 @@
         <div id="logo">{% if config_logo %}<a href="{{ config_url }}" data-on="click:onClick"><img src="{{ config_url }}image/{{ config_logo }}" title="{{ config_name }}" alt="{{ config_name }}" class="img-fluid"/></a>{% else %}<h1><a href="{{ config_url }}" data-on="click:onClick">{{ config_name }}</a></h1>{% endif %}</div>
       </div>
       <div class="col-md-5">
-        <common-search></common-search>
+        <component-search></component-search>
       </div>
       <div class="col-md-4 col-lg-3 mb-2">
-        <common-cart></common-cart>
+        <component-cart></component-cart>
       </div>
     </div>
   </div>
 </header>
-
+<component-menu></component-menu>

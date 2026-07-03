@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const local = await loader.library('local');
 
 // Config
-const config = await loader.config('default');
+//const config = await loader.config('default');
 
 // Language
 const language = await loader.language('component/currency');
@@ -33,7 +33,7 @@ customElements.define('component-currency', class extends WebComponent {
             data.symbol_right = '';
         }
 
-        data.currencies = Object.values(currencies);
+        data.currencies = currencies;
 
         return loader.template('component/currency', { ...data, ...language });
     }

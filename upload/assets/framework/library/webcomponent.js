@@ -1,14 +1,3 @@
-const base = '../catalog/view/javascript/'
-
-const path = new Map([
-    ['account', base + 'account/'],
-    ['catalog', base + 'catalog/'],
-    ['cms', base + 'cms/'],
-    ['common', base + 'common/'],
-    ['error', base + 'error/'],
-    ['information', base + 'information/']
-]);
-
 export class WebComponent extends HTMLElement {
     constructor() {
         super();
@@ -27,6 +16,10 @@ export class WebComponent extends HTMLElement {
         if (this.render !== undefined) {
             this.update();
         }
+    }
+
+    load() {
+
     }
 
     async update() {

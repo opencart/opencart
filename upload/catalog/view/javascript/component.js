@@ -1,13 +1,8 @@
-export { Controller } from '../../../assets/framework/component.js';
-/*
-const base = '../javascript/';
+export { WebComponent, Controller } from '../../../assets/framework/component.js';
 
-import(base + 'common/header.js');
-import(base + 'common/footer.js');
-import(base + 'common/currency.js');
-import(base + 'common/language.js');
-import(base + 'common/cart.js');
-import(base + 'common/home.js');
-import(base + 'common/menu.js');
-import(base + 'common/search.js');
- */
+// General
+import './component/currency.js';
+import './component/language.js';
+import './component/search.js';
+import './component/cart.js';
+import './component/menu.js';

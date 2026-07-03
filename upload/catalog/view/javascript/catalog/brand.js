@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 // Language
 const language = loader.language('catalog/manufacturer');
 
-class extends Controller {
+export default class extends Controller {
     async connected() {
         let data = {};
 

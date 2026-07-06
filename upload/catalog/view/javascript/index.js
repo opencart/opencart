@@ -1,9 +1,7 @@
-import { loader } from '../../../assets/framework/library/loader.js';
+import { loader } from '../../../assets/framework/index.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
-
-console.log(base);
 
 // language
 const lang = document.documentElement.lang.toLowerCase();
@@ -29,6 +27,8 @@ config.cache.set('default', {
     config_product_count: true
 });
 
+console.log(config);
+
 // Testing Code
 const local = await loader.library('local');
 
@@ -52,6 +52,7 @@ const template = await loader.library('template');
 
 template.addPath('catalog/view/template/');
 
+// General
 import './component.js';
 
 export { loader };

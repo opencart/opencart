@@ -1,6 +1,4 @@
 export class Config {
-    static instance = null;
-
     constructor() {
         this.directory = '';
         this.path = new Map();
@@ -12,11 +10,13 @@ export class Config {
             this.directory = namespace;
         } else {
             this.path.set(namespace, path);
-        }
+        }5
     }
 
     async fetch(path) {
         if (this.cache.has(path)) {
+            console.log('cache', path);
+
             return this.cache.get(path);
         }
 
@@ -48,6 +48,6 @@ export class Config {
             console.log('Could not load config file ' + path);
         }
 
-        return {};
+        return undefined;
     }
 }

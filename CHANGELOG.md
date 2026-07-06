@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.1.0.4] (Release date: 19.06.2026)
+## [v4.1.0.4] (Release date: 06.07.2026)
 
 #### Changes
 
@@ -139,6 +139,13 @@
 * Changed: Improve admin performance with order table index in https://github.com/opencart/opencart/pull/15537
 * Fixed: Fix filter group sorting in admin in https://github.com/opencart/opencart/pull/15539
 * Changed: Use hash_equals() for API signature validation in https://github.com/opencart/opencart/pull/15541
+* Fixed: Fix library OCMOD in https://github.com/opencart/opencart/pull/15543
+* Fixed: Missing language texts in https://github.com/opencart/opencart/pull/15546
+* Fixed: Fix filter group sorting in admin in https://github.com/opencart/opencart/pull/15539
+* Changed: Help prevent long-running cron jobs from causing misses in https://github.com/opencart/opencart/pull/15548
+* Changed: Remove redundant language text in https://github.com/opencart/opencart/pull/15555
+* Fixed: Fix Admin Panel Product Option Value Weight Display Bug in https://github.com/opencart/opencart/pull/15556
+* Fixed: Fix email validation logic in https://github.com/opencart/opencart/pull/15554
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

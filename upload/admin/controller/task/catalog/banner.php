@@ -177,7 +177,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . 'data/design/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/design/';
 		$filename = 'banner-' . $banner_info['banner_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {

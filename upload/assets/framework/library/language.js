@@ -1,6 +1,4 @@
 export class Language {
-    static instance = null;
-
     constructor() {
         this.directory = '';
         this.path = new Map();

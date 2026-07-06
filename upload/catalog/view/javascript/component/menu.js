@@ -7,14 +7,16 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('component/menu');
 
-// Storage
-const categories = await loader.storage('catalog/category');
-
 customElements.define('component-menu', class extends WebComponent {
     async render() {
         let data = {};
 
         data.categories = [];
+
+        // Storage
+        let categories = await loader.storage('category/category');
+
+        console.log(categories);
 
         for (let category of categories) {
             let children = [];
@@ -37,7 +39,7 @@ customElements.define('component-menu', class extends WebComponent {
 
         data.config_product_count = config.config_product_count;
 
-        return loader.template('component/menu', { ...data,  ...language });
+        return loader.template('component/menu', { ...data, ...language });
     }
 
     onClick(e) {

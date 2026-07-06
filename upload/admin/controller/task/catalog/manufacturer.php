@@ -136,7 +136,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer/';
 		$filename = 'manufacturer.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -204,7 +204,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'image'           => $manufacturer_info['image']
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer/';
 		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -273,10 +273,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$products = $this->model_catalog_product->getProducts($filter_data);
 
 		foreach ($products as $product) {
-			$product_data[] = $product['product_id'];
+			$product_data[] = (int)$product['product_id'];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer/';
 		$filename = 'manufacturer-product-' . $manufacturer_info['manufacturer_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -325,13 +325,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer-' . (int)$args['manufacturer_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer/manufacturer-' . (int)$args['manufacturer_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer-product-' . (int)$args['manufacturer_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/manufacturer/manufacturer-product-' . (int)$args['manufacturer_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

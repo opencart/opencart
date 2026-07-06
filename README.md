@@ -94,7 +94,7 @@ After the process is complete, your OpenCart store will be available at `http://
     ```bash
     make logs
     ```
-* **To enter the PHP container:**
+* **To enter the PHP container:***
     ```bash
     make php
     ```

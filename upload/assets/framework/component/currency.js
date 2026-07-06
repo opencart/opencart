@@ -1,6 +1,12 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+// Library
+let currency = await loader.library('currency');
+
+// Storage
+let currencies = await loader.storage('localisation/currency');
+
 customElements.define('x-currency', class extends WebComponent {
     static observed = [
         'code',
@@ -26,7 +32,7 @@ customElements.define('x-currency', class extends WebComponent {
 
     get value() {
         if (this.hasAttribute('value')) {
-            return parseFloat(this.getAttribute('value')).toFixed(this.currency.decimal_place);
+            return parseFloat(this.getAttribute('value')).toFixed(currency.decimal_place);
         }
 
         if (this.code in currencies) {
@@ -41,11 +47,7 @@ customElements.define('x-currency', class extends WebComponent {
     }
 
     async connected() {
-        // Library
-        this.currency = await loader.library('currency');
 
-        // Storage
-        this.currencies = await loader.storage('localisation/currency');
     }
 
     async render() {

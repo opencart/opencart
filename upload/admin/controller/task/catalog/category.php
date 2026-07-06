@@ -200,7 +200,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/category/';
 		$filename = 'category.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -313,7 +313,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'sort_order'  => $category_info['sort_order']
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/category/';
 		$filename = 'category-' . $category_info['category_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -369,13 +369,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_category')];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
-		$filename = 'category-product-' . $category_info['category_id'] . '.json';
-
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
-
 		$product_data = [];
 
 		$filter_data = [
@@ -391,7 +384,14 @@ class Category extends \Opencart\System\Engine\Controller {
 		$products = $this->model_catalog_product->getProducts($filter_data);
 
 		foreach ($products as $product) {
-			$product_data[] = $product['product_id'];
+			$product_data[] = (int)$product['product_id'];
+		}
+
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/category/';
+		$filename = 'category-product-' . $category_info['category_id'] . '.json';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
 		if (!file_put_contents($directory . $filename, json_encode($product_data))) {
@@ -429,13 +429,13 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/category-' . (int)$args['category_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/category/category-' . (int)$args['category_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/category-product-' . (int)$args['category_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/category/category-product-' . (int)$args['category_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

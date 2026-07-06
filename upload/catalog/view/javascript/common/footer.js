@@ -1,5 +1,6 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import '../component/currency.js';
 
 // Config
 const config = await loader.config('default');
@@ -7,18 +8,12 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('common/footer');
 
-// Storage
-//const articles = await loader.storage('cms/article-1');
-
 // Information
 const informations = await loader.storage('catalog/information');
 
 export default class extends Controller {
     async render() {
         let data = {};
-
-        // Articles
-        data.articles = 1; //Object.values(articles).length;
 
         // Information Pages
         data.informations = [];

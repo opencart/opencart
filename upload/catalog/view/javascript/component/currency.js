@@ -5,13 +5,13 @@ import { loader } from '../index.js';
 const local = await loader.library('local');
 
 // Config
-//const config = await loader.config('default');
-
-// Language
-const language = await loader.language('component/currency');
+const config = await loader.config('default');
 
 // Storage
 const currencies = await loader.storage('localisation/currency');
+
+// Language
+const language = await loader.language('component/currency');
 
 customElements.define('component-currency', class extends WebComponent {
     async render() {
@@ -25,15 +25,17 @@ customElements.define('component-currency', class extends WebComponent {
             data.code = local.get('currency');
         }
 
-        if (data.code in currencies) {
-            data.symbol_left = currencies[data.code].symbol_left;
-            data.symbol_right = currencies[data.code].symbol_right;
+        data.currencies = currencies;
+
+        let value = currencies.find(currency => currency.code === data.code);
+
+        if (value !== undefined) {
+            data.symbol_left = value.symbol_left;
+            data.symbol_right = value.symbol_right;
         } else {
             data.symbol_left = '';
             data.symbol_right = '';
         }
-
-        data.currencies = currencies;
 
         return loader.template('component/currency', { ...data, ...language });
     }

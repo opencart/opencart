@@ -981,7 +981,7 @@ class Product extends \Opencart\System\Engine\Controller {
 						$product_option_value_data[] = [
 							'name'   => $option_value_info['name'],
 							'points' => round($product_option_value['points']),
-							'weight' => round($product_option_value['weight']),
+							'weight' => (float)$product_option_value['weight'],
 						] + $product_option_value;
 					}
 				}

@@ -36,31 +36,21 @@ class Sass extends \Opencart\System\Engine\Controller {
 		}
 
 		// Before we delete we need to make sure there is a sass file to regenerate the css
-		$file = DIR_CATALOG . 'view/sass/stylesheet.scss';
-
-		if (!is_file($file)) {
-			return ['error' => sprintf($this->language->get('error_file'), $file)];
-		}
-
-		$filename = basename($file, '.scss');
-		$directory = dirname($file) . '/';
-
-		$stylesheet = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/stylesheet/' . $filename . '.css';
-
-		if (is_file($stylesheet)) {
-			unlink($stylesheet);
-		}
-
 		$scss = new \ScssPhp\ScssPhp\Compiler();
-		$scss->setImportPaths($directory);
+		$scss->setImportPaths(DIR_CATALOG . 'view/sass/');
 
-		$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
+		$output = $scss->compileString('@import "stylesheet.scss"')->getCss();
 
-		$handle = fopen($stylesheet, 'w');
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/stylesheet/';
+		$filename = 'stylesheet.css';
 
-		fwrite($handle, $output);
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
 
-		fclose($handle);
+		if (!file_put_contents($directory . $filename, $output)) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
 
 		return ['success' => sprintf($this->language->get('text_success'), $store_info['name'])];
 	}

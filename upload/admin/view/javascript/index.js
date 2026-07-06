@@ -1,9 +1,9 @@
-import { loader } from '../../../assets/framework/library/loader.js';
+import { loader } from '../../../assets/framework/index.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
 
-// lang
+// language
 const lang = document.documentElement.lang.toLowerCase();
 
 // Config
@@ -20,8 +20,11 @@ config.cache.set('default', {
     config_telephone: '01234 567890',
     config_language: 'en-gb',
     config_currency: 'EUR',
+    config_country_id: 222,
+    config_zone_id: 3563,
     config_customer_group_id: 1,
-    config_account_id: 1
+    config_account_id: 1,
+    config_product_count: true
 });
 
 // Testing Code
@@ -47,33 +50,6 @@ storage.cache.set('catalog/information', { information: [] });
 const template = await loader.library('template');
 
 template.addPath('view/template/');
-
-// Event
-const event = await loader.library('event');
-
-// Inject default language vars into for every language load.
-event.register(/language\/.+\/after/g, ({ path, output }) => {
-    // Load the default language vars
-    //let data = language.fetch('default');
-
-    //for (let key in data) {
-    //  if (output[key] == undefined) {
-    //      output[key] = data[key];
-    //  }
-    //}
-});
-
-// Inject default language vars into for every language load.
-event.register(/template\/.+\/before/g, ({ path, data }) => {
-    // Load the default language vars
-    //let output = language.fetch('default');
-
-    //for (let key in output) {
-    //    if (data[key] == undefined) {
-    //        data[key] = output[key];
-    //    }
-    //}
-});
 
 import './component.js';
 

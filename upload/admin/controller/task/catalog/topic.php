@@ -149,7 +149,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/';
 		$filename = 'topic.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -226,7 +226,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'description' => $description_data
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/';
 		$filename = 'topic-' . $topic_info['topic_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -280,7 +280,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_topic')];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/';
 		$filename = 'topic-article-' . $topic_info['topic_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -337,13 +337,13 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic-' . (int)$args['topic_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/topic-' . (int)$args['topic_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic-article-' . (int)$args['topic_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/topic-article-' . (int)$args['topic_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

@@ -1,6 +1,6 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
-import './list.js';
+import '../component/product.js';
 
 // Config
 const config = await loader.config('default');
@@ -27,6 +27,8 @@ export default class extends Controller {
         // Product Info
         let category = await loader.storage('catalog/category-' + category_id);
 
+
+
         if (category !== undefined && config.config_language in category.description) {
             data.category_id = category.category_id;
 
@@ -42,7 +44,7 @@ export default class extends Controller {
             data.heading_title = description.name;
             data.description = description.description;
 
-            data.categories = new Array();
+            data.categories = [];
 
             for (let children of category.children) {
                 data.categories.push({
@@ -50,9 +52,6 @@ export default class extends Controller {
                     path: children.path
                 });
             }
-
-            //import('./' + path + '.js');
-
 
             return loader.template('catalog/category', { ...data, ...language, ...config });
         }

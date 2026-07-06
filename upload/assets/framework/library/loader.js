@@ -4,8 +4,6 @@ import { Storage } from './storage.js';
 import { Template } from './template.js';
 
 class Loader {
-    static instance;
-
     constructor() {
         this.data = new Map();
         this.data.set('config', new Config());
@@ -15,6 +13,7 @@ class Loader {
     }
 
     async controller(path) {
+        /*
         if (this.data.has(path)) {
             return this.data.get(path);
         }
@@ -28,6 +27,7 @@ class Loader {
         let output = this.data.get(path);
 
         return output;
+        */
     }
 
     async storage(path) {
@@ -49,6 +49,8 @@ class Loader {
 
     async library(path) {
         if (this.data.has(path)) {
+            console.log('library', path);
+
             return this.data.get(path);
         }
 

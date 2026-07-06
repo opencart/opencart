@@ -4,9 +4,7 @@
       <div class="col-sm-3">
         <h5>{{ text_information }}</h5>
         <ul class="list-unstyled">
-          {% if articles %}
-            <li><a href="cms/topic.js" data-on="click:onClick">{{ text_blog }}</a></li>
-          {% endif %}
+          <li><a href="cms/topic.js" data-on="click:onClick">{{ text_blog }}</a></li>
           {% for information in informations %}
             <li><a href="information/information.js?information_id={{ information.information_id }}" data-on="click:onClick">{{ information.title }}</a></li>
           {% endfor %}

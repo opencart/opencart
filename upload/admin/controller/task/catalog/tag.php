@@ -54,6 +54,7 @@ class Tag extends \Opencart\System\Engine\Controller {
 				$product_data[] = $product_id;
 			}
 		}
+
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/';
 		$filename = 'filter-product-' . $filter_info['filter_id'] . '.json';
 

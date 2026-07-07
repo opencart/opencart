@@ -21,11 +21,12 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 	 */
 	public function editAddressFormat(string &$route, array &$args): void {
 		$this->load->model('setting/task');
-		$this->load->model('setting/store');
 
 		$this->load->model('localisation/country');
 
 		$results = $this->model_localisation_country->getCountriesByAddressFormatId($args[0]);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

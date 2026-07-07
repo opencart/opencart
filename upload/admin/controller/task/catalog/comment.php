@@ -142,7 +142,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_OPENCART . 'shop/' . parse_url($store_url, PHP_URL_HOST) . '/data/catalog/review.json';
+			$file = DIR_OPENCART . 'shop/' . parse_url($store_url, PHP_URL_HOST) . '/data/review/review.json';
 
 			if (is_file($file)) {
 				unlink($file);

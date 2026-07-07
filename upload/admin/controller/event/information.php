@@ -20,7 +20,6 @@ class Information extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addInformation(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$store_ids = [];

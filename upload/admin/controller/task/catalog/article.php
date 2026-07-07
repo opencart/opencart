@@ -205,7 +205,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			'date_modified' => $article_info['date_modified']
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/article/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/article/';
 		$filename = 'article-' . $article_info['article_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {

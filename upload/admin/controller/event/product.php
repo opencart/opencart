@@ -346,7 +346,6 @@ class Product extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteProduct(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$this->load->model('catalog/product');

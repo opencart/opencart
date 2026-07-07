@@ -127,7 +127,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $args['start'], $args['limit'])];
 	}
 
-
 	/**
 	 * Index
 	 *
@@ -162,7 +161,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		// Filter Group
-		$this->load->model('catalog/filter_group');
+		$this->load->model('catalog/filter');
 
 		$filter_group_info = $this->model_catalog_filter->getFilterGroup((int)$args['filter_group_id']);
 
@@ -205,7 +204,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'filters'         => $filter_data
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/';
 		$filename = 'filter_group-' . $filter_group_info['filter_group_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -279,7 +278,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$product_data[] = (int)$product['product_id'];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/';
 		$filename = 'filter-product-' . $filter_info['filter_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -326,16 +325,22 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter/filter_group-' . (int)$args['filter_group_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter_group-' . (int)$args['filter_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter/filter-product-' . (int)$args['filter_group_id'] . '.json';
+		$this->load->model('catalog/filter');
 
-		if (is_file($file)) {
-			unlink($file);
+		$filters = $this->model_catalog_filter->getFilters((int)$args['filter_group_id']);
+
+		foreach ($filters as $filter) {
+			$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter-product-' . (int)$filter['filter_id'] . '.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
 		}
 
 		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];

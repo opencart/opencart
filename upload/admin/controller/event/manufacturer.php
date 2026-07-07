@@ -100,8 +100,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			foreach ($results as $result) {
 				$task_data = [
-					'code'   => 'product.' . $store_id . '.' . $result['product_id'],
-					'action' => 'task/catalog/product',
+					'code'   => 'product.info.' . $store_id . '.' . $result['product_id'],
+					'action' => 'task/catalog/product.info',
 					'args'   => [
 						'product_id' => $result['product_id'],
 						'store_id'   => $store_id
@@ -145,7 +145,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteManufacturer(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$this->load->model('catalog/manufacturer');

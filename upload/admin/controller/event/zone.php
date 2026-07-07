@@ -19,9 +19,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addZone(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
-		$this->load->model('setting/task');
-
 		// Admin
 		$task_data = [
 			'code'   => 'admin.country.info.' . $args[1]['country_id'],
@@ -29,7 +26,11 @@ class Zone extends \Opencart\System\Engine\Controller {
 			'args'   => ['country_id' => $args[1]['country_id']]
 		];
 
+		$this->load->model('setting/task');
+
 		$this->model_setting_task->addTask($task_data);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -60,15 +61,14 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editZone(string &$route, array &$args): void {
-		$this->load->model('setting/store');
-		$this->load->model('setting/task');
-
 		// Admin
 		$task_data = [
 			'code'   => 'admin.country.info.' . $args[1]['country_id'],
 			'action' => 'task/admin/country.info',
 			'args'   => ['country_id' => $args[1]['country_id']]
 		];
+
+		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 
@@ -85,6 +85,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -129,7 +131,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteZone(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
-		$this->load->model('setting/store');
 
 		$this->load->model('localisation/zone');
 
@@ -144,6 +145,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

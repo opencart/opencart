@@ -447,7 +447,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'date_modified'      => $product_info['date_modified']
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/product/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/product/';
 		$filename = 'product-' . $product_info['product_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -494,7 +494,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/product/product-' . (int)$args['product_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/product/product-' . (int)$args['product_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

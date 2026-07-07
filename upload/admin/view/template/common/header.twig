@@ -18,6 +18,9 @@
   <link href="{{ stylesheet }}" rel="stylesheet" type="text/css"/>
   <script src="{{ jquery }}" type="text/javascript"></script>
   <script type="text/javascript" src="view/javascript/common.js"></script>
+  {% if icon %}
+    <link rel="icon" href="{{ icon }}" type="image/png">
+  {% endif %}
   {% for style in styles %}
     <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}

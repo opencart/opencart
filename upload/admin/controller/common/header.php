@@ -34,6 +34,13 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts();
 
+		// Fav icon
+		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
+			$data['icon'] = HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
+		} else {
+			$data['icon'] = '';
+		}
+
 		$this->load->language('common/header');
 
 		if (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token'])) {

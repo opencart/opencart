@@ -136,7 +136,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/information/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/information/information/';
 		$filename = 'information.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -212,7 +212,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			'description'    => $description_data
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/information/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/information/information/';
 		$filename = 'information-' . $information_info['information_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -259,7 +259,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/information/information-' . (int)$args['information_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/information/information-' . (int)$args['information_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

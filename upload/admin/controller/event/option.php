@@ -20,12 +20,13 @@ class Option extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editOption(string &$route, array &$args): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$this->load->model('catalog/product');
 
 		$results = $this->model_catalog_product->getProductsByOptionId($args[0]);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

@@ -19,8 +19,9 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addTaxRate(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -51,12 +52,13 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editTaxRate(string &$route, array &$args): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$this->load->model('localisation/tax_rate');
 
 		$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($args[0]);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -100,12 +102,13 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteTaxRate(string &$route, array &$args): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$this->load->model('localisation/tax_rate');
 
 		$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($args[0]);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

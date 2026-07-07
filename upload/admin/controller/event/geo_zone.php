@@ -73,7 +73,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editGeoZone(string &$route, array &$args): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$country_ids = [];
@@ -86,6 +85,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/geo_zone');
 
 		$country_ids = array_unique(array_merge(array_column($this->model_localisation_geo_zone->getZones($args[0]), 'country_id'), $country_ids));
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -130,13 +131,14 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteGeoZone(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		// Update country files based on geo zones.
 		$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getZones($args[0]);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

@@ -21,11 +21,12 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 */
 	public function editAttribute(string &$route, array &$args): void {
 		$this->load->model('setting/task');
-		$this->load->model('setting/store');
 
 		$this->load->model('catalog/product');
 
 		$results = $this->model_catalog_product->getProductsByAttributeId($args[0]);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

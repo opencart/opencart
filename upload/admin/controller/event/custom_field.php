@@ -62,7 +62,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editCustomField(string &$route, array &$args): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$customer_group_ids = [];
@@ -75,6 +74,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$this->load->model('customer/custom_field');
 
 		$customer_group_ids = array_unique(array_merge(array_column($this->model_customer_custom_field->getCustomerGroups($args[0]), 'customer_group_id'), $customer_group_ids));
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -108,12 +109,13 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteCustomField(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$this->load->model('customer/custom_field');
 
 		$results = $this->model_customer_custom_field->getCustomerGroups($args[0]);
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

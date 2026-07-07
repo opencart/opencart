@@ -149,7 +149,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/topic/';
 		$filename = 'topic.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -226,7 +226,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'description' => $description_data
 		];
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/';
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/topic/';
 		$filename = 'topic-' . $topic_info['topic_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -280,12 +280,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_topic')];
 		}
 
-		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/';
-		$filename = 'topic-article-' . $topic_info['topic_id'] . '.json';
-
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
+		$article_data = [];
 
 		$filter_data = [
 			'filter_store_id'  => $store_info['store_id'],
@@ -297,7 +292,20 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		if (!file_put_contents($directory . $filename, json_encode($this->model_cms_article->getArticles($filter_data)))) {
+		$articles = $this->model_cms_article->getArticles($filter_data);
+
+		foreach ($articles as $article) {
+			$article_data[] = (int)$article['article_id'];
+		}
+
+		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/topic/';
+		$filename = 'topic-article-' . $topic_info['topic_id'] . '.json';
+
+		if (!oc_directory_create($directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($directory . $filename, json_encode($article_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -337,13 +345,13 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/topic-' . (int)$args['topic_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/topic/topic-' . (int)$args['topic_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/cms/topic/topic-article-' . (int)$args['topic_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/topic/topic-article-' . (int)$args['topic_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

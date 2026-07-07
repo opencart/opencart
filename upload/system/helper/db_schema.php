@@ -5859,6 +5859,80 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'product_tag',
+		'field' => [
+			[
+				'name'           => 'product_tag_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'tag',
+				'type' => 'text'
+			]
+		],
+		'primary' => [
+			'product_option_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'product_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			],
+			[
+				'key'   => 'option_id',
+				'table' => 'option',
+				'field' => 'option_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'product_2_tag',
+		'field' => [
+			[
+				'name'           => 'product_tag_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'tag',
+				'type' => 'text'
+			]
+		],
+		'primary' => [
+			'product_option_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'product_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			],
+			[
+				'key'   => 'option_id',
+				'table' => 'option',
+				'field' => 'option_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'product_related',
 		'field' => [
 			[

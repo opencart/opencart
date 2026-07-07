@@ -19,7 +19,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addTaxClass(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$tax_rate_ids = [];
@@ -40,6 +39,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 				$geo_zone_ids[] = $tax_rate_info['geo_zone_id'];
 			}
 		}
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -72,7 +73,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editTaxClass(string &$route, array &$args): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$tax_rate_ids = [];
@@ -96,6 +96,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 				$geo_zone_ids[] = $tax_rate_info['geo_zone_id'];
 			}
 		}
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -128,7 +130,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteTaxClass(string &$route, array &$args): void {
-		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$geo_zone_ids = [];
@@ -147,6 +148,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 				$geo_zone_ids[] = $tax_rate_info['geo_zone_id'];
 			}
 		}
+
+		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 

@@ -102,13 +102,13 @@ class Tag extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter_group-' . (int)$args['filter_group_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter_group-' . (int)$args['filter_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/catalog/filter-product-' . (int)$args['filter_group_id'] . '.json';
+		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter-product-' . (int)$args['filter_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

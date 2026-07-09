@@ -1102,7 +1102,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$output = $this->load->controller('extension/' . $extension['extension'] . '/fraud/' . $extension['code'] . '.order');
 
-				if (!$output instanceof \Exception) {
+				if ($output && !$output instanceof \Exception) {
 					$data['tabs'][] = [
 						'code'    => $extension['extension'],
 						'title'   => $this->language->get('extension_heading_title'),

@@ -19,7 +19,7 @@ customElements.define('component-thumb', class extends WebComponent {
         let data = {};
 
         // Get product by product ID
-        let product = await loader.storage('catalog/product-' + this.getAttribute('product_id'));
+        let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
         if (product !== undefined && config.config_language in product.description) {
             data.product_id = product.product_id;

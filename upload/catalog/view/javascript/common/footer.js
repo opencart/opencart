@@ -11,6 +11,8 @@ const language = await loader.language('common/footer');
 // Information
 const informations = await loader.storage('information/information');
 
+console.log(informations);
+
 export default class extends Controller {
     async render() {
         let data = {};
@@ -18,12 +20,14 @@ export default class extends Controller {
         // Information Pages
         data.informations = [];
 
-        for (let information of informations) {
-            if (config.config_language in information.description) {
-                data.informations.push({
-                    information_id: information.information_id,
-                    title: information.description[config.config_language].title
-                });
+        if (informations != undefined) {
+            for (let information of informations) {
+                if (config.config_language in information.description) {
+                    data.informations.push({
+                        information_id: information.information_id,
+                        title: information.description[config.config_language].title
+                    });
+                }
             }
         }
 

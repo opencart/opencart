@@ -24,7 +24,7 @@ export default class extends Controller {
         let request = new URL(import.meta.url).searchParams;
 
         // Product Info
-        let product = await loader.storage('catalog/product-' + request.get('product_id'));
+        let product = await loader.storage('product/product-' + request.get('product_id'));
 
         console.log('product');
         console.log(request.get('product_id'));

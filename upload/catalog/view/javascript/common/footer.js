@@ -9,7 +9,7 @@ const config = await loader.config('default');
 const language = await loader.language('common/footer');
 
 // Information
-const informations = await loader.storage('catalog/information');
+const informations = await loader.storage('information/information');
 
 export default class extends Controller {
     async render() {

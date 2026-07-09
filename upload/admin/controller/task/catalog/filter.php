@@ -302,7 +302,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/filter_group');
+		$this->load->language('task/catalog/filter');
 
 		if (!array_key_exists('filter_group_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
@@ -325,18 +325,43 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter_group-' . (int)$args['filter_group_id'] . '.json';
+		if (isset($args['filter_group_id'])) {
+			$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter_group-' . (int)$args['filter_group_id'] . '.json';
 
-		if (is_file($file)) {
-			unlink($file);
+			if (is_file($file)) {
+				unlink($file);
+			}
 		}
 
-		$this->load->model('catalog/filter');
+		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
+	}
 
-		$filters = $this->model_catalog_filter->getFilters((int)$args['filter_group_id']);
+	public function deleteFilter(array $args = []): array {
+		$this->load->language('task/catalog/filter');
 
-		foreach ($filters as $filter) {
-			$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter-product-' . (int)$filter['filter_id'] . '.json';
+		if (!array_key_exists('filter_id', $args)) {
+			return ['error' => $this->language->get('filter_id')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		if (isset($args['filter_id'])) {
+			$file = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/filter-product-' . (int)$args['filter_id'] . '.json';
 
 			if (is_file($file)) {
 				unlink($file);
@@ -346,4 +371,3 @@ class Filter extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_delete'), $store_info['name'])];
 	}
 }
-

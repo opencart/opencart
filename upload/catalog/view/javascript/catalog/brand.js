@@ -2,14 +2,14 @@ import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = loader.language('catalog/manufacturer');
+const language = loader.language('manufacturer/manufacturer');
 
 export default class extends Controller {
     async connected() {
         let data = {};
 
         // Product Info
-        let manufacturer = await loader.storage('catalog/manufacturer-42');
+        let manufacturer = await loader.storage('manufacturer/manufacturer-42');
 
         if (manufacturer.length && config.config_language in manufacturer.description) {
             data.manufacturer_id = manufacturer.manufacturer_id;

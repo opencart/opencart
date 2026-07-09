@@ -1,6 +1,6 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
-import '../component/product.js';
+import '../catalog/product_list.js';
 
 // Config
 const config = await loader.config('default');
@@ -25,9 +25,7 @@ export default class extends Controller {
         }
 
         // Product Info
-        let category = await loader.storage('catalog/category-' + category_id);
-
-
+        let category = await loader.storage('category/category-' + category_id);
 
         if (category !== undefined && config.config_language in category.description) {
             data.category_id = category.category_id;

@@ -12,7 +12,7 @@ customElements.define('component-product', class extends WebComponent {
         let data = {};
 
         // Product Info
-        data.products = await loader.storage('catalog/category-product-' + this.getAttribute('category_id'));
+        data.products = await loader.storage('category/category-product-' + this.getAttribute('category_id'));
 
         console.log(data.products);
 

@@ -13,7 +13,7 @@ export default class extends Controller {
 
         let request = new URL(import.meta.url).searchParams;
 
-        let information = await loader.storage('catalog/information-' + request.get('information_id'));
+        let information = await loader.storage('information/information-' + request.get('information_id'));
 
         if (information != undefined && config.config_language in information.description) {
             data.information_id = information.information_id;

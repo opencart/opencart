@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('catalog/thumb');
+const language = await loader.language('catalog/product_thumb');
 
 // library
 const local = await loader.library('local');
@@ -42,7 +42,7 @@ customElements.define('product-thumb', class extends WebComponent {
 
             data.currency = currency;
 
-            return await loader.template('component/product_thumb', { ...data, ...language, ...config });
+            return await loader.template('catalog/product_thumb', { ...data, ...language, ...config });
         }
     }
 

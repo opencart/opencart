@@ -14,7 +14,7 @@ const tax = await loader.library('tax');
 // Currency
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
-customElements.define('component-thumb', class extends WebComponent {
+customElements.define('product-thumb', class extends WebComponent {
     async render() {
         let data = {};
 

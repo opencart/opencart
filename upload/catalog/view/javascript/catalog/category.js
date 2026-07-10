@@ -1,6 +1,6 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
-import '../catalog/product_list.js';
+import './product_list.js';
 
 // Config
 const config = await loader.config('default');

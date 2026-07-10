@@ -33,8 +33,8 @@
   </div>
 </div>
 <div id="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4">
-  {% for product in products %}
-  <div class="col mb-3"><component-thumb product_id="{{ product.product_id }}" sort="" order=""></component-thumb></div>
+  {% for product_id in products %}
+  <div class="col mb-3"><product-thumb product_id="{{ product_id }}" sort="" order=""></product-thumb></div>
   {% endfor %}
 </div>
 <div class="row">

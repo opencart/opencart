@@ -476,7 +476,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 1, 1, 11);
+			$json['text'] = sprintf($this->language->get('text_patch'), 1, 1, 12);
 
 			$url = '';
 

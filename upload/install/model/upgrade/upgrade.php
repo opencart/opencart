@@ -123,4 +123,60 @@ class Upgrade extends \Opencart\System\Engine\Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` DROP `" . $field . "`");
 		}
 	}
+
+	/**
+	 * Get Field Type
+	 *
+	 * @param string $table
+	 * @param string $field
+	 *
+	 * @return string
+	 */
+	public function getFieldType(string $table, string $field): string {
+		$result = $this->db->query("DESCRIBE `" . DB_PREFIX . $table . "` `" . $field . "`;");
+
+		return $result->row['Type'] ?? '';
+	}
+
+	/**
+	 * Alter Field Type
+	 *
+	 * @param string $table
+	 * @param string $field
+	 * @param string $type
+	 * @param string $constrains
+	 *
+	 * @return void
+	 */
+	public function alterFieldType(string $table, string $field, string $type, string $constrains): void {
+		if ($this->hasField($table, $field)) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` MODIFY COLUMN `" . $field . "` {$type} {$constrains};");
+		}
+	}
+
+	/**
+	 * Has Index
+	 *
+	 * @param string $table
+	 * @param string $index_name
+	 *
+	 * @return int
+	 */
+	public function hasIndex(string $table, string $index_name): int {
+		$query = $this->db->query("SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "' AND COLUMN_NAME = '" . $index_name . "';");
+
+		return $query->num_rows;
+	}
+
+	/**
+	 * Create Index
+	 *
+	 * @param string $table
+	 * @param string $field
+	 *
+	 * @return void
+	 */
+	public function createIndex(string $table, string $field): void {
+		$this->db->query("CREATE INDEX '" . $field . "' ON '" . DB_PREFIX . $table . "';");
+	}
 }

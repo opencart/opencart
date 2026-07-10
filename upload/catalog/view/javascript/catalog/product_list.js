@@ -1,13 +1,14 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
+import './product_thumb.js';
 
 // Config
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('component/product');
+const language = await loader.language('catalog/product_list');
 
-customElements.define('component-product', class extends WebComponent {
+customElements.define('product-list', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -16,6 +17,6 @@ customElements.define('component-product', class extends WebComponent {
 
         console.log(data.products);
 
-        return loader.template('component/product_list', { ...data, ...language, ...config });
+        return loader.template('catalog/product_list', { ...data, ...language, ...config });
     }
 });

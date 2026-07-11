@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.1.0.4] (Release date: 10.07.2026)
+## [v4.1.0.4] (Release date: 11.07.2026)
 
 #### Changes
 
@@ -151,6 +151,9 @@
 * Changed: Use strict comparison for captcha and authorize code checks  in https://github.com/opencart/opencart/pull/15565
 * Changed: Only show the order fraud info tab if it's not empty in https://github.com/opencart/opencart/pull/15563
 * Changed: Update of upgrade scripts in https://github.com/opencart/opencart/pull/15566
+* Changed: Adjust cache-control headers in https://github.com/opencart/opencart/pull/15569
+* Fixed: Upgrade updates in https://github.com/opencart/opencart/pull/15570
+* Fixed: validate password when adding a new user in https://github.com/opencart/opencart/pull/15571
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

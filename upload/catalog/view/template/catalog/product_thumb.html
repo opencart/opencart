@@ -1,8 +1,8 @@
 <div class="product-thumb">
-  <div class="image"><a href="{{ href }}"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}" class="img-fluid"/></a></div>
+  <div class="image"><a href="catalog/product_info.js?product_id={{ product_id }}" data-on="click:onClick"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}" class="img-fluid"/></a></div>
   <div class="content">
     <div class="description">
-      <h4><a href="{{ href }}">{{ name }}</a></h4>
+      <h4><a href="catalog/product_info.js?product_id={{ product_id }}" data-on="click:onClick">{{ name }}</a></h4>
 
       <p>{{ description }}</p>
 
@@ -15,7 +15,7 @@
 
       {% if review_status and rating %}
       <div class="rating">
-        {% for i in 1..5 %} {% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %} {% endfor %}
+        {% for i in 1..5 %}{% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %}{% endfor %}
       </div>
       {% endif %}
 

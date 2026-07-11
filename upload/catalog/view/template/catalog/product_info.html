@@ -3,7 +3,7 @@
   {% if thumb || images %}
   <div class="col-sm">
     <div class="image magnific-popup">
-      {% if thumb %} <a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail mb-3"/></a> {% endif %}
+      {% if thumb %}<a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail mb-3"/></a>{% endif %}
 
       {% if images %}
       <div>
@@ -19,6 +19,7 @@
     <h1>{{ heading_title }}</h1>
 
     <ul class="list-unstyled mb-1">
+
       {% if manufacturer %}
       <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer/manufacturer-{{ manufacturer_id }}">{{ manufacturer }}</a></strong></li>
       {% endif %}

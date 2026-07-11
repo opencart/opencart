@@ -16,6 +16,8 @@ customElements.define('x-include', class extends WebComponent {
         // Get the source HTML to load
         if (!this.src) return;
 
+        console.log('x-include', this.src);
+
         // Config
         const config = await loader.config('default');
 

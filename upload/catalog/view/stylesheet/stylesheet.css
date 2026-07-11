@@ -46,8 +46,8 @@ button:focus {
   position: fixed;
   top: 30%;
   left: 50%;
-  width: 400px;
-  margin-left: -200px;
+  width: 320px;
+  margin-left: -160px;
 }
 
 @media (min-width: 992px) {

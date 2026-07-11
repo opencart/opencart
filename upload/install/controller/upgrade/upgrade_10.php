@@ -63,7 +63,8 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 				'upc',
 				'ean',
 				'jan',
-				'isbn'
+				'isbn',
+				'mpn'
 			];
 
 			foreach ($remove as $field) {

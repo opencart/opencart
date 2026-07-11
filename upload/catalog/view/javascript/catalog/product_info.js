@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('catalog/product');
+const language = await loader.language('catalog/product_info');
 
 // Library
 const local = await loader.library('local');
@@ -15,7 +15,7 @@ const tax = await loader.library('tax');
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
 // Storage
-const stock_status = await loader.storage('localisation/stock_status');
+//const stock_status = await loader.storage('localisation/stock_status');
 
 export default class extends Controller {
     async render() {
@@ -46,7 +46,6 @@ export default class extends Controller {
 
             data.heading_title = description.name;
             data.description = description.description;
-            data.tags = description.tag.split(',');
 
             // Product Codes
             data.model = product.model;
@@ -160,16 +159,37 @@ export default class extends Controller {
                 //} + $result;
             }
 
+            // Tags
+            data.tags = description.tag.split(',');
+
             data.review_status = config.config_review_status;
 
             data.currency = currency;
 
-            return loader.template('catalog/product', { ...data, ...language, ...config });
+            return loader.template('catalog/product_info', { ...data, ...language, ...config });
         }
     }
 
     addToCart(e) {
         e.preventDefault();
+
+        // 1. Create a new instance
+        const xhr = new XMLHttpRequest();
+
+        // 2. Configure the target endpoint and HTTP method
+        xhr.open('GET', 'https://typicode.com', true);
+
+        xhr.responseType = 'json';
+
+        // 4. Handle a successful server response
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                console.log('Success payload:', xhr.response);
+            } else {
+                console.error('Server error status:', xhr.status);
+            }
+        };
+
 
         loader.request({
             url: 'index.php?route=checkout/cart.add&language={{ language }}',

@@ -1,4 +1,5 @@
 import { loader } from '../../../assets/framework/index.js';
+//import '../../../assets/sass/sass.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
@@ -10,6 +11,21 @@ const lang = document.documentElement.lang.toLowerCase();
 const config = await loader.library('config');
 
 config.addPath('shop/' + base.host + '/data/');
+
+// Sass Testing Code
+/*
+const sass = new Sass();
+
+const path = '../sass/stylesheet.scss';
+
+const options = {
+    style: compile.Sass.style.expanded,
+};
+
+sass.compile(path, function(result) {
+    console.log(result);
+});
+*/
 
 // Testing Code
 config.cache.set('default', {
@@ -24,6 +40,7 @@ config.cache.set('default', {
     config_zone_id: 3563,
     config_customer_group_id: 1,
     config_account_id: 1,
+    config_product_description_length: 100,
     config_product_count: true
 });
 
@@ -54,5 +71,4 @@ template.addPath('catalog/view/template/');
 
 // General
 import './component.js';
-
 export { loader };

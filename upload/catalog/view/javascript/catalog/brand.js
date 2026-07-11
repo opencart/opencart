@@ -2,20 +2,19 @@ import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = loader.language('manufacturer/manufacturer');
+const language = await loader.language('catalog/manufacturer');
 
 export default class extends Controller {
     async connected() {
         let data = {};
 
+        let request = new URL(import.meta.url).searchParams;
+
         // Product Info
-        let manufacturer = await loader.storage('manufacturer/manufacturer-42');
+        let manufacturer = await loader.storage('manufacturer/manufacturer-' + request.get('manufacturer_id'));
 
-        if (manufacturer.length && config.config_language in manufacturer.description) {
+        if (manufacturer !== undefined && config.config_language in manufacturer.description) {
             data.manufacturer_id = manufacturer.manufacturer_id;
-
-            // Images
-            data.thumb = manufacturer.thumb;
 
             let description = manufacturer.description[config.config_language];
 
@@ -25,6 +24,9 @@ export default class extends Controller {
 
             data.heading_title = description.name;
             data.description = description.description;
+
+            // Images
+            data.image = manufacturer.image;
 
             return loader.template('catalog/manufacturer', { ...data, ...language, ...config });
         }

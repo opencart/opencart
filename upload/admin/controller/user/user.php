@@ -562,7 +562,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_email_exists');
 		}
 
-		if ($post_info['password'] || (!isset($post_info['user_id']))) {
+		if ($post_info['password'] || !$post_info['user_id']) {
 			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
 
 			if (!oc_validate_length($password, (int)$this->config->get('config_user_password_length'), 40)) {

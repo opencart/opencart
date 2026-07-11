@@ -25,8 +25,10 @@ customElements.define('product-thumb', class extends WebComponent {
             data.product_id = product.product_id;
             data.thumb = product.thumb;
 
-            data.name = product.name;
-            data.description = product.description;
+            let description = product.description[config.config_language];
+
+            data.name = description.name;
+            data.description = description.description.substr(0, config.config_product_description_length);
 
             data.model = product.model;
             data.price = tax.calculate(product.price);
@@ -51,15 +53,27 @@ customElements.define('product-thumb', class extends WebComponent {
 
         let target = document.getElementById('content');
 
-        target.src = e.target.getAttribute('href');
+        target.src = e.currentTarget.getAttribute('href');
     }
 
-    onSubmit(e) {
+    addToCart(e) {
         e.preventDefault();
 
         this.$button_wishlist.getAttribute('action');
         this.$button_cart.getAttribute('action');
         this.$button_cart.getAttribute('compare_add');
+
+
+    }
+
+    addToWishlist(e) {
+        e.preventDefault();
+
+
+    }
+
+    addToCompare(e) {
+        e.preventDefault();
 
 
     }

@@ -19,52 +19,6 @@ class Upgrade12 extends \Opencart\System\Engine\Controller {
 		try {
 			$this->load->model('upgrade/upgrade');
 
-			// Modify various DB field fields and indexes
-			$type = $this->model_upgrade_upgrade->getFieldType('banner_image', 'link');
-			if ($type != 'text') {
-				$this->model_upgrade_upgrade->alterFieldType('banner_image', 'link', 'text', '');
-			}
-			$type = $this->model_upgrade_upgrade->getFieldType('article_description', 'description');
-			if ($type != 'mediumtext') {
-				$this->model_upgrade_upgrade->alterFieldType('article_description', 'description', 'mediumtext', '');
-			}
-			$type = $this->model_upgrade_upgrade->getFieldType('topic_description', 'description');
-			if ($type != 'mediumtext') {
-				$this->model_upgrade_upgrade->alterFieldType('topic_description', 'description', 'mediumtext', '');
-			}
-			$type = $this->model_upgrade_upgrade->getFieldType('category_description', 'description');
-			if ($type != 'mediumtext') {
-				$this->model_upgrade_upgrade->alterFieldType('category_description', 'description', 'mediumtext', '');
-			}
-			$type = $this->model_upgrade_upgrade->getFieldType('module', 'setting');
-			if ($type != 'mediumtext') {
-				$this->model_upgrade_upgrade->alterFieldType('module', 'setting', 'mediumtext', '');
-			}
-			if (!$this->model_upgrade_upgrade->hasIndex('order', 'order_status_id')) {
-				$this->model_upgrade_upgrade->createIndex('order', 'order_status_id');
-			}
-			$this->model_upgrade_upgrade->dropField('product', 'sku');
-			$this->model_upgrade_upgrade->dropField('product', 'upc');
-			$this->model_upgrade_upgrade->dropField('product', 'ean');
-			$this->model_upgrade_upgrade->dropField('product', 'jan');
-			$this->model_upgrade_upgrade->dropField('product', 'isbn');
-			$this->model_upgrade_upgrade->dropField('product', 'mpn');
-			if (!$this->model_upgrade_upgrade->hasIndex('product_code', 'product_id')) {
-				$this->model_upgrade_upgrade->createIndex('product_code', 'product_id');
-			}
-			$type = $this->model_upgrade_upgrade->getFieldType('product_description', 'description');
-			if ($type != 'mediumtext') {
-				$this->model_upgrade_upgrade->alterFieldType('product_description', 'description', 'mediumtext', '');
-			}
-			$type = $this->model_upgrade_upgrade->getFieldType('session', 'data');
-			if ($type != 'mediumtext') {
-				$this->model_upgrade_upgrade->alterFieldType('product_description', 'description', 'mediumtext', '');
-			}
-			$type = $this->model_upgrade_upgrade->getFieldType('setting', 'value');
-			if ($type != 'mediumtext') {
-				$this->model_upgrade_upgrade->alterFieldType('setting', 'value', 'mediumtext', '');
-			}
-
 			// add various config settings
 			$setting_records = $this->model_upgrade_upgrade->getRecords('setting');
 

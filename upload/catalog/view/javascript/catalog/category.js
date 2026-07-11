@@ -30,9 +30,6 @@ export default class extends Controller {
         if (category !== undefined && config.config_language in category.description) {
             data.category_id = category.category_id;
 
-            // Images
-            data.image = category.image;
-
             let description = category.description[config.config_language];
 
             //description.meta_title;
@@ -41,6 +38,9 @@ export default class extends Controller {
 
             data.heading_title = description.name;
             data.description = description.description;
+
+            // Images
+            data.image = category.image;
 
             data.categories = [];
 

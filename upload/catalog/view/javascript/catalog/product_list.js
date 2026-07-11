@@ -12,11 +12,36 @@ customElements.define('product-list', class extends WebComponent {
     async render() {
         let data = {};
 
+        if (this.hasAttribute('sort')) {
+            data.sort = this.getAttribute('sort');
+        } else {
+            data.sort = '';
+        }
+
+        if (this.hasAttribute('order')) {
+            data.order = this.getAttribute('order');
+        } else {
+            data.order = '';
+        }
+
+        if (this.hasAttribute('page')) {
+            data.page = this.getAttribute('page');
+        } else {
+            data.page = '';
+        }
+
         // Product Info
         data.products = await loader.storage('category/category-product-' + this.getAttribute('category_id'));
 
         console.log(data.products);
 
+
         return loader.template('catalog/product_list', { ...data, ...language, ...config });
+    }
+
+    onChange(e) {
+        this.setAttribute('sort');
+
+
     }
 });

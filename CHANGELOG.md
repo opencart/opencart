@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.1.0.4] (Release date: 11.07.2026)
+## [v4.1.0.4] (Release date: 12.07.2026)
 
 #### Changes
 
@@ -154,6 +154,7 @@
 * Changed: Adjust cache-control headers in https://github.com/opencart/opencart/pull/15569
 * Fixed: Upgrade updates in https://github.com/opencart/opencart/pull/15570
 * Fixed: validate password when adding a new user in https://github.com/opencart/opencart/pull/15571
+* Fixed: Fix admin redirect and use of config_url in https://github.com/opencart/opencart/pull/15575
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

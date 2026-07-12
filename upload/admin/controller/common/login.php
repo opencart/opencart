@@ -72,8 +72,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		// Stop any undefined index messages.
 		$required = [
 			'username' => '',
-			'password' => '',
-			'redirect' => ''
+			'password' => ''
 		];
 
 		$post_info = $this->request->post + $required;

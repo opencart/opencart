@@ -21,7 +21,6 @@ $_['column_action']           = 'Aktionen';
 
 // Entry
 $_['entry_name']              = 'Hersteller Name';
-$_['entry_description']       = 'Beschreibung';
 $_['entry_meta_title']        = 'Meta-Tag-Titel';
 $_['entry_meta_keyword']      = 'Meta-Tag-Schlüsselwörter';
 $_['entry_meta_description']  = 'Meta-Tag-Beschreibung';

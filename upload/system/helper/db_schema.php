@@ -3887,10 +3887,6 @@ function oc_db_schema() {
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'description',
-				'type' => 'mediumtext'
-			],
-			[
 				'name' => 'meta_title',
 				'type' => 'varchar(255)'
 			],

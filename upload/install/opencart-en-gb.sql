@@ -1883,13 +1883,13 @@ VALUES (5, 'catalog/demo/htc_logo.jpg', 0),
 -- Dumping data for table `oc_manufacturer_description`
 --
 
-INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`)
-VALUES (5, 1, 'HTC', NULL, NULL, NULL, NULL),
-       (6, 1, 'Palm', NULL, NULL, NULL, NULL),
-       (7, 1, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
-       (8, 1, 'Apple', NULL, NULL, NULL, NULL),
-       (9, 1, 'Canon', NULL, NULL, NULL, NULL),
-       (10, 1, 'Sony', NULL, NULL, NULL, NULL);
+INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `name`, `meta_title`, `meta_description`, `meta_keyword`)
+VALUES (5, 1, 'HTC', NULL, NULL, NULL),
+       (6, 1, 'Palm', NULL, NULL, NULL),
+       (7, 1, 'Hewlett-Packard', NULL, NULL, NULL),
+       (8, 1, 'Apple', NULL, NULL, NULL),
+       (9, 1, 'Canon', NULL, NULL, NULL),
+       (10, 1, 'Sony', NULL, NULL, NULL);
 
 -----------------------------------------------------------
 

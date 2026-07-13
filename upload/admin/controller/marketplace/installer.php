@@ -224,6 +224,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
 		// 1. Validate the file uploaded.
 		if (isset($this->request->files['file']['name'])) {
 			$filename = basename($this->request->files['file']['name']);

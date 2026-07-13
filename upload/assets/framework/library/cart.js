@@ -12,18 +12,19 @@ import { loader } from './loader.js';
 export default class Cart {
     constructor() {
         this.customer = null;
-        this.data = [];
+        this.data = new Map();
     }
 
-    add(item) {
-        this.data = item;
+    add(key, item) {
+        this.data.set(key, item);
     }
 
     remove(key) {
-        return this.data;
+        return this.data.delete(key);
     }
 
     getProducts() {
+        this.data.forEach(key, item);
 
     }
 

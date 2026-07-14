@@ -113,7 +113,7 @@ export default class extends Controller {
 
                data.attribute_groups.push({
                    name: attribute_group.description[config.config_language].name,
-                   attribute: attributes,
+                   attribute: attributes
                });
             }
 
@@ -183,7 +183,9 @@ export default class extends Controller {
         });
 
         if (!response.ok) {
-            throw new Error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(response);
+
+            //throw new Error(response.thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
 
         let json = await response.json();
@@ -216,7 +218,7 @@ export default class extends Controller {
             }
         }
 
-        // Display Success message
+        // Display success message
         if (json['success'] !== undefined) {
             let alert = form.getElementById('alert');
 

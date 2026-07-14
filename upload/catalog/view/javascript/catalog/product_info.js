@@ -8,6 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('catalog/product_info');
 
 // Library
+const cart = await loader.library('cart');
 const local = await loader.library('local');
 const tax = await loader.library('tax');
 
@@ -25,10 +26,6 @@ export default class extends Controller {
 
         // Product Info
         let product = await loader.storage('product/product-' + request.get('product_id'));
-
-        console.log('product');
-        console.log(request.get('product_id'));
-        console.log(product);
 
         if (product !== undefined && config.config_language in product.description) {
             data.product_id = product.product_id;
@@ -154,8 +151,7 @@ export default class extends Controller {
                 }
 
                 //data.subscription_plans[] = {
-               //     'description' => description
-
+                //     'description' => description
                 //} + $result;
             }
 
@@ -170,66 +166,68 @@ export default class extends Controller {
         }
     }
 
-    addToCart(e) {
+    async addToCart(e) {
         e.preventDefault();
 
-        // 1. Create a new instance
-        const xhr = new XMLHttpRequest();
+        console.log('addToCart');
 
-        // 2. Configure the target endpoint and HTTP method
-        xhr.open('GET', 'https://typicode.com', true);
+        //this.$button_cart.state = 'loading';
 
-        xhr.responseType = 'json';
+        let target = e.target;
 
-        // 4. Handle a successful server response
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                console.log('Success payload:', xhr.response);
-            } else {
-                console.error('Server error status:', xhr.status);
-            }
-        };
+        let form = new FormData(target);
 
-
-        loader.request({
-            url: 'index.php?route=checkout/cart.add&language={{ language }}',
-            type: 'post',
-            data: new FormData(this.$form.getAttribute('action')),
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            cache: false,
-            processData: false,
-            beforeSend: function() {
-                this.$button_cart.state = 'loading';
-            },
-            complete: function() {
-                this.$button_cart.state = 'reset';
-            },
-            success: function(json) {
-                console.log(json);
-
-                /*
-                $('#form-product').find('.is-invalid').removeClass('is-invalid');
-                $('#form-product').find('.invalid-feedback').removeClass('d-block');
-
-                if (json['error'])
-                    for (key in json['error']) {
-                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                    }
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
-                }
-                */
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
+        let response = await fetch('index.php?route=checkout/cart.add', {
+            method: 'POST',
+            body: form
         });
+
+        if (!response.ok) {
+            throw new Error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+
+        let json = await response.json();
+
+        // Remove past error classes from inputs
+        target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+        // Display error messages
+        if (json['error'] !== undefined) {
+            console.log(json['error']);
+
+            for (let key in json['error']) {
+                let value = key.replaceAll('_', '-');
+
+                let input = target.querySelector('#input-' + value);
+
+                if (input) {
+                    input.classList.add('is-invalid');
+
+                    // If the element has inputs inside.
+                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                }
+
+                let error = target.querySelector('#error-' + value);
+
+                if (error) {
+                    error.classList.add('d-block');
+                }
+            }
+        }
+
+        // Display Success message
+        if (json['success'] !== undefined) {
+            let alert = form.getElementById('alert');
+
+            alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+            //$('#cart').load('index.php?route=common/cart.info');
+
+            //cart.add(result);
+        }
+
+        //this.$button_cart.state = '';
     }
 
     addToWishList() {
@@ -245,8 +243,6 @@ export default class extends Controller {
 
         subscription.classList.add('d-none');
 
-
-
         //$('#subscription-description-' + $(element).val()).classList.remove('d-none');
     }
 
@@ -258,6 +254,5 @@ export default class extends Controller {
                 enabled: true
             }
         });
-
     }
 }

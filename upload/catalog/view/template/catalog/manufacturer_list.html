@@ -2,16 +2,25 @@
 {% if categories %}
   <p><strong>{{ text_index }}</strong>
     {% for category in categories %}
-      &nbsp;&nbsp;&nbsp;<a href="{{ category.href }}#{{ category.name }}">{{ category.name }}</a>
+      &nbsp;&nbsp;&nbsp;<a href="catalog/manufacturer_list.js#{{ category.name }}">{{ category.name }}</a>
     {% endfor %}
   </p>
+
+
   {% for category in categories %}
+trttrt
+
+
     <h2 id="{{ category.name }}">{{ category.name }}</h2>
-    {% if category.manufacturer %}
-      {% for manufacturers in category.manufacturer|batch(4) %}
+    {% if category.manufacturer !== '' %}
+
+
+
+
+      {% for manufacturers in category.manufacturer | batch: 4 %}
         <div class="row mb-3">
           {% for manufacturer in manufacturers %}
-            <div class="col-sm-3"><a href="{{ manufacturer.href }}">{{ manufacturer.name }}</a></div>
+            <div class="col-sm-3"><a href="catalog/manufacturer_info.js?manufacturer_id={{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</a></div>
           {% endfor %}
         </div>
       {% endfor %}

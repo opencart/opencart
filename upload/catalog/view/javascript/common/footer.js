@@ -11,8 +11,6 @@ const language = await loader.language('common/footer');
 // Information
 const informations = await loader.storage('information/information');
 
-console.log(informations);
-
 export default class extends Controller {
     async render() {
         let data = {};

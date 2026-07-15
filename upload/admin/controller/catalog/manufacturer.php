@@ -534,7 +534,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		if (!$this->user->hasPermission('modify', 'catalog/information')) {
+		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

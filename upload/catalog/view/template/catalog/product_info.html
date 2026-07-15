@@ -21,7 +21,7 @@
     <ul class="list-unstyled mb-1">
 
       {% if manufacturer %}
-      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer/manufacturer-{{ manufacturer_id }}">{{ manufacturer }}</a></strong></li>
+      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer.js?manufacturer_id={{ manufacturer_id }}">{{ manufacturer }}</a></strong></li>
       {% endif %}
 
       <li>{{ text_model }}: <strong>{{ model }}</strong></li>
@@ -102,7 +102,8 @@
 
 
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+            <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
             <option value="">{{ text_select }}</option>
 
 

@@ -753,7 +753,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '.subscription');
 
-				if (!$output instanceof \Exception) {
+				if ($output && !$output instanceof \Exception) {
 					$this->load->language('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'], 'extension');
 
 					$data['tabs'][] = [

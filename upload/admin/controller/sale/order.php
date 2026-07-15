@@ -1024,7 +1024,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('total_' . $extension['code'] . '_status')) {
 				$output = $this->load->controller('extension/' . $extension['extension'] . '/api/' . $extension['code']);
 
-				if (!$output instanceof \Exception) {
+				if ($output && !$output instanceof \Exception) {
 					$data['extensions'][] = $output;
 				}
 			}
@@ -1079,7 +1079,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'] . '.order');
 
-				if (!$output instanceof \Exception) {
+				if ($output && !$output instanceof \Exception) {
 					$this->load->language('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'], 'extension');
 
 					$data['tabs'][] = [

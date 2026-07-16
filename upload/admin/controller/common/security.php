@@ -215,19 +215,40 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
-			// Check the chosen directory is not in the public webspace
-			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
-
-			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
-				$json['error'] = $this->language->get('error_storage_root');
+			if (!$json) {
+				// Check the chosen directory is not in the public webspace
+				$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT']) . '/');
+				if (str_starts_with($base_new, $root)) {
+					$json['error'] = $this->language->get('error_storage_root');
+				}
 			}
 
-			if (!str_starts_with($name, 'storage')) {
-				$json['error'] = $this->language->get('error_storage_name');
+			if (!$json) {
+				// check the storage name starts with 'storage'
+				if (!str_starts_with($name, 'storage')) {
+					$json['error'] = $this->language->get('error_storage_name');
+				}
 			}
 
-			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
-				$json['error'] = $this->language->get('error_writable');
+			if (!$json) {
+				// check the config files are writeable, needed for modifications
+				if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
+					$json['error'] = $this->language->get('error_writable');
+				}
+			}
+
+			if (!$json) {
+				if (!is_dir($base_new)) {
+					// check the new storage folder can be created
+					if (!is_writable($path)) {
+						$json['error'] = str_replace('%s', $path, $this->language->get('error_writable_path'));
+					}
+				} else {
+					// check the new storage folder can be written to
+					if (!is_writeable($base_new)) {
+						$json['error'] = str_replace('%s', $path, $this->language->get('error_writable_path'));
+					}
+				}
 			}
 		}
 

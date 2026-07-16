@@ -42,4 +42,5 @@ $_['error_admin']                     = 'Attention: Le répertoire admin n\'exis
 $_['error_admin_allowed']             = 'Attention: Le nom de répertoire admin ne peut être utilisé!';
 $_['error_admin_exists']              = 'Attention: Le nom du répertoire admin existe déjà!';
 $_['error_writable']                  = 'Attention: Les fichiers config.php et admin/config.php doivent être rendus modifiables!';
+$_['error_writable_path']             = 'Attention: Le répertoire \'%s\' doit être modifiable!';
 $_['error_remove']                    = 'Attention: Le répertoire à supprimer n\'existe pas!';

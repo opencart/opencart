@@ -245,7 +245,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 				} else {
 					// check the new storage folder can be written to
-					if (!is_writeable($base_new)) {
+					if (!is_writable($base_new)) {
 						$json['error'] = str_replace('%s', $path, $this->language->get('error_writable_path'));
 					}
 				}

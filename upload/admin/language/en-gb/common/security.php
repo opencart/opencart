@@ -43,4 +43,5 @@ $_['error_admin']                     = 'Warning: Admin directory does not exist
 $_['error_admin_allowed']             = 'Warning: This admin directory name can not be used!';
 $_['error_admin_exists']              = 'Warning: Admin directory already exists!';
 $_['error_writable']                  = 'Warning: config.php and admin/config.php need to be made writable!';
+$_['error_writable_path']             = 'Warning: The folder \'%s\' needs to be writable!';
 $_['error_remove']                    = 'Warning: Directory does not exist to remove!';

@@ -81,8 +81,9 @@ $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
 set_error_handler(function(int $code, string $message, string $file, int $line) {
-	// error was suppressed with the @-operator
-	if (error_reporting() === 0) {
+	// PHP 8 compatible check for the @ suppression operator
+	if (!(error_reporting() & $code)) {
+		// Return false to let the standard PHP internal error handler take over (or do nothing)
 		return false;
 	}
 

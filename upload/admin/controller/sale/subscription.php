@@ -868,7 +868,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$currency = (string)$this->config->get('config_currency');
 		}
 
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
+		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

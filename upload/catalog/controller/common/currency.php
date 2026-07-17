@@ -96,7 +96,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 30,
-				'path'     => '/',
+				'path'     => $this->config->get('session_path'),
+				'secure'   => $request->server['HTTPS'],
+				'httponly' => true,
 				'samesite' => 'Lax'
 			];
 

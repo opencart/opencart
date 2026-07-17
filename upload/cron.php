@@ -152,8 +152,8 @@ if ($config->get('session_autostart')) {
 		'path'     => $config->get('session_path'),
 		'domain'   => $config->get('session_domain'),
 		'secure'   => $request->server['HTTPS'],
-		'httponly' => false,
-		'SameSite' => $config->get('session_samesite')
+		'httponly' => true,
+		'samesite' => $config->get('session_samesite')
 	];
 
 	setcookie($config->get('session_name'), $session->getId(), $option);

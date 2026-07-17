@@ -56,8 +56,8 @@ class Cookie extends \Opencart\System\Engine\Controller {
 				'expires'  => time() + 60 * 60 * 24 * 365,
 				'path'     => $this->config->get('session_path'),
 				'secure'   => !empty($this->request->server['HTTPS']),
-				'httponly' => false,
-				'samesite' => $this->config->get('config_session_samesite') ?: 'Lax'
+				'httponly' => true,
+				'samesite' => 'Lax'
 			];
 
 			setcookie('policy', $agree, $option);

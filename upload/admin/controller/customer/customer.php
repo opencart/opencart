@@ -1483,12 +1483,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_authorize_id = 0;
 		}
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
-		} else {
-			$token = '';
-		}
-
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}

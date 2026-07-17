@@ -50,10 +50,9 @@ class Notification extends \Opencart\System\Engine\Controller {
 			// Only grab the
 			$option = [
 				'expires'  => time() + 3600 * 24 * 7,
-				'path'     => $this->config->get('session_path'),
 				'secure'   => $this->request->server['HTTPS'],
-				'httponly' => false,
-				'SameSite' => $this->config->get('config_session_samesite')
+				'httponly' => true,
+				'samesite' => $this->config->get('config_session_samesite')
 			];
 
 			setcookie('notification', '1', $option);

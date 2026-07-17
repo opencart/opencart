@@ -93,9 +93,9 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 365 * 10,
-				'path'     => $this->config->get('session_path'),
 				'secure'   => $this->request->server['HTTPS'],
-				'SameSite' => $this->config->get('config_session_samesite')
+				'httponly' => true,
+				'samesite' => 'Lax'
 			];
 
 			setcookie('language', $code, $option);

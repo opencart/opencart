@@ -726,8 +726,8 @@ class User extends \Opencart\System\Engine\Controller {
 			$user_authorize_id = 0;
 		}
 
-		if (isset($this->request->cookie['authorize'])) {
-			$token = $this->request->cookie['authorize'];
+		if (isset($this->request->cookie['admin_authorize'])) {
+			$token = $this->request->cookie['admin_authorize'];
 		} else {
 			$token = '';
 		}

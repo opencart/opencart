@@ -329,6 +329,13 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['totals'][] = ['text' => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $order_total;
 		}
 
+		// Payment Instructions
+		if (!empty($order_info['payment_method']['code']) && $order_info['payment_method']['code'] == 'bank_transfer.bank_transfer') {
+			if ($this->config->get('payment_bank_transfer_bank_' . $order_info['language_id'])) {
+				$data['payment_instructions'] = nl2br($this->config->get('payment_bank_transfer_bank_' . $order_info['language_id']));
+			}
+		}
+
 		// Setting
 		$this->load->model('setting/setting');
 

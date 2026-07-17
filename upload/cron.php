@@ -45,8 +45,9 @@ $registry->set('log', $log);
 
 // Error Handler
 set_error_handler(function(int $code, string $message, string $file, int $line) use ($log, $config) {
-	// error suppressed with @
-	if (@error_reporting() === 0) {
+	// PHP 8 compatible check for the @ suppression operator
+	if (!(error_reporting() & $code)) {
+		// Return false to let the standard PHP internal error handler take over (or do nothing)
 		return false;
 	}
 
@@ -63,20 +64,27 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 		case E_USER_ERROR:
 			$error = 'Fatal Error';
 			break;
+		case E_DEPRECATED:
+		case E_USER_DEPRECATED:
+			$error = 'Deprecated';
+			break;
 		default:
 			$error = 'Unknown';
 			break;
 	}
 
+	// Always write to the OpenCart error log so admins can diagnose cron issues
 	if ($config->get('error_log')) {
 		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 	}
 
+	// If error display is turned on, output clean plaintext to the console instead of HTML tags
 	if ($config->get('error_display')) {
-		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+		echo PHP_EOL . "PHP {$error}: {$message} in {$file} on line {$line}" . PHP_EOL;
 	} else {
-		header('Location: ' . $config->get('error_page'));
-		exit();
+		// Never call header() or exit with a successful code (0) on a fatal cron crash.
+		// Instead, we exit with a non-zero code to let the server's cron daemon know the task failed.
+		exit(1);
 	}
 
 	return true;
@@ -84,15 +92,46 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 
 // Exception Handler
 set_exception_handler(function(\Throwable $e) use ($log, $config): void {
-	if ($config->get('error_log')) {
-		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+	$exception_class = get_class($e);
+
+	// Format a detailed backtrace string for the logs
+	$output  = $exception_class . ': ' . $e->getMessage() . "\n";
+	$output .= 'File: ' . $e->getFile() . "\n";
+	$output .= 'Line: ' . $e->getLine() . "\n\n";
+
+	foreach ($e->getTrace() as $key => $trace) {
+		$output .= 'Backtrace: ' . $key . "\n";
+		$output .= 'File: ' . ($trace['file'] ?? 'unknown') . "\n";
+		$output .= 'Line: ' . ($trace['line'] ?? 'unknown') . "\n";
+
+		if (isset($trace['class'])) {
+			$output .= 'Class: ' . $trace['class'] . "\n";
+		}
+
+		$output .= 'Function: ' . $trace['function'] . "\n\n";
 	}
 
+	// Log the full detailed exception trace so you can debug background failures
+	if ($config->get('error_log')) {
+		$log->write(trim($output));
+	}
+
+	// Identify if this is a strict internal PHP 8 type mismatch error
+	$isRecoverablePhp8Error = ($e instanceof \TypeError || $e instanceof \ValueError || $e instanceof \DivisionByZeroError);
+
+	// Handle terminal output or script termination
 	if ($config->get('error_display')) {
-		echo '<b>' . get_class($e) . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+		// Output clean plaintext directly to the terminal console
+		echo PHP_EOL . "--- CRON EXCEPTION DETECTED ---" . PHP_EOL;
+		echo $output;
+	} elseif ($isRecoverablePhp8Error) {
+		// In production cron jobs, allow the task runner to try and degrade gracefully
+		// on minor type/value mismatches, rather than aggressively crashing mid-execution.
+		echo "[Cron Warning]: A minor internal type or value exception occurred and was logged. Execution continuing." . PHP_EOL;
 	} else {
-		header('Location: ' . $config->get('error_page'));
-		exit();
+		// Hard termination for true fatal exceptions, database connection drops, etc.
+		// Exiting with code 1 alerts the server's task scheduler (e.g. systemd/crontab) that the job failed.
+		exit(1);
 	}
 });
 

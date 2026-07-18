@@ -63,7 +63,7 @@ class Error extends \Opencart\System\Engine\Controller {
 
 		if ($this->config->get('config_error_display')) {
 			echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
-		} else {
+		} elseif ($error === 'Fatal Error' || $error === 'Unknown') {
 			header('Location: ' . $this->config->get('error_page'));
 			exit();
 		}

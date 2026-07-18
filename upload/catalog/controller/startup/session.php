@@ -63,9 +63,9 @@ class Session extends \Opencart\System\Engine\Controller {
 		$option = [
 			'expires'  => time() + (int)$this->config->get('config_session_expire'),
 			'path'     => $this->config->get('session_path'),
-			'secure'   => !empty($this->request->server['HTTPS']),
+			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => true,
-			'samesite' => $this->config->get('session_samesite') ?: 'Lax'
+			'samesite' => $this->config->get('session_samesite')
 		];
 
 		setcookie($this->config->get('session_name'), $session->getId(), $option);

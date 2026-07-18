@@ -50,13 +50,15 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
 
-			setcookie('customer_authorize', $token, [
+			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 90,
-				'path'     => '/',
-				'secure'   => isset($this->request->server['HTTPS']) && $this->request->server['HTTPS'] === 'on',
+				'path'     => $this->config->get('session_path'),
+				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => true,
-				'samesite' => 'Lax'
-			]);
+				'samesite' => $this->config->get('config_session_samesite')
+			];
+
+			setcookie('customer_authorize', $token, $option);
 		}
 
 		// Set the code to be emailed

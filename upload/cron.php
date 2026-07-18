@@ -81,7 +81,7 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 	// If error display is turned on, output clean plaintext to the console instead of HTML tags
 	if ($config->get('error_display')) {
 		echo PHP_EOL . "PHP {$error}: {$message} in {$file} on line {$line}" . PHP_EOL;
-	} else {
+	} elseif ($error === 'Fatal Error' || $error === 'Unknown') {
 		// Never call header() or exit with a successful code (0) on a fatal cron crash.
 		// Instead, we exit with a non-zero code to let the server's cron daemon know the task failed.
 		exit(1);

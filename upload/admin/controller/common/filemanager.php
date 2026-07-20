@@ -106,7 +106,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$total = count($files);
+		$total = count($files) + count($directories);
 		$limit = 16;
 		$start = ($page - 1) * $limit;
 

@@ -144,6 +144,8 @@ $(document).on('submit', '#form-payment-method', function(e) {
                     $('#input-payment-method').val($('input[name=\'payment_method\']:checked').parent().find('label').text());
                     $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
 
+                    $('#input-comment').removeAttr('disabled');
+
                     $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },

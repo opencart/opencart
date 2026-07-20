@@ -34,4 +34,3 @@ $_['text_year']                  = 'année';
 $_['text_download']              = 'Une fois votre paiement confirmé, vous pouvez cliquer sur le lien ci-dessous pour accéder à vos produits téléchargeables:';
 $_['text_comment']               = 'Les commentaires pour votre commande sont:';
 $_['text_footer']                = 'Veuillez répondre à cet e-mail si vous avez des questions.';
-$_['text_payment_instructions']  = 'Instructions de paiement';

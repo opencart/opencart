@@ -47,7 +47,7 @@
       </tr>
     </tbody>
   </table>
-  {% if comment %}
+  {% if instruction %}
     <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
       <thead>
         <tr>
@@ -56,7 +56,7 @@
       </thead>
       <tbody>
         <tr>
-          <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ comment }}</td>
+          <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ instruction }}</td>
         </tr>
       </tbody>
     </table>
@@ -113,16 +113,16 @@
       {% endfor %}
     </tfoot>
   </table>
-  {% if payment_instructions %}
+  {% if comment %}
   <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
     <thead>
       <tr>
-        <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_payment_instructions }}</td>
+        <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_comment }}</td>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ payment_instructions }}</td>
+        <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ comment }}</td>
       </tr>
     </tbody>
   </table>

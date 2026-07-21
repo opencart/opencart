@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.1.0.4] (Release date: 12.07.2026)
+## [v4.1.0.4] (Release date: 21.07.2026)
 
 #### Changes
 
@@ -155,6 +155,25 @@
 * Fixed: Upgrade updates in https://github.com/opencart/opencart/pull/15570
 * Fixed: validate password when adding a new user in https://github.com/opencart/opencart/pull/15571
 * Fixed: Fix admin redirect and use of config_url in https://github.com/opencart/opencart/pull/15575
+* Fixed: Check modify permission in installer upload in https://github.com/opencart/opencart/pull/15578
+* Fixed: Only show the order total and payment info tabs if they're not empty in https://github.com/opencart/opencart/pull/15582
+* Fixed: Security Storage Move in https://github.com/opencart/opencart/pull/15584
+* Fixed: Fix is_writable in https://github.com/opencart/opencart/pull/15585
+* Fixed: Storage move changes in https://github.com/opencart/opencart/pull/15586
+* Fixed: Set httponly on the session cookie in https://github.com/opencart/opencart/pull/15587
+* Fixed: Check subscription permission in subscription api call in https://github.com/opencart/opencart/pull/15589
+* Fixed: Improved exception and error handlers in https://github.com/opencart/opencart/pull/15590
+* Fixed: Added payment instructions to order mail in https://github.com/opencart/opencart/pull/15591
+* Changed: Cookie changes in https://github.com/opencart/opencart/pull/15594
+* Fixed: Admin: Fixed Design -> Layouts form in https://github.com/opencart/opencart/pull/15596
+* Fixed: More error handler changes in https://github.com/opencart/opencart/pull/15597
+* Fixed: Admin: Fixed reports HTML markup errors in https://github.com/opencart/opencart/pull/15598
+* Fixed: Fix escape bypass on directory in filemanager getList https://github.com/opencart/opencart/pull/15599
+* Fixed: Fix order order email comments and instructions in https://github.com/opencart/opencart/pull/15601
+* Fixed: Fixed order comment during checkout in https://github.com/opencart/opencart/pull/15602
+* Fixed: Admin: Fixed filemanager pagination count in https://github.com/opencart/opencart/pull/15603
+* Fixed: Reject traversal entries in upgrade archive extraction in https://github.com/opencart/opencart/pull/15604
+* Fixed: Match api routes case insensitively in the startup gate in https://github.com/opencart/opencart/pull/15606
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

@@ -206,8 +206,6 @@ $('#input-payment-address').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 $('#input-payment-address').removeClass('is-invalid');
                 $('#error-payment-address').removeClass('d-block');
 
@@ -254,8 +252,6 @@ $('#form-payment-address').on('submit', function(e) {
                 $('#button-payment-address').button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
 

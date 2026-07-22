@@ -22,8 +22,6 @@ $('#button-shipping-methods').on('click', function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 $('#input-shipping-method').removeClass('is-invalid');
                 $('#error-shipping-method').removeClass('d-block');
 
@@ -114,10 +112,9 @@ $(document).on('submit', '#form-shipping-method', function(e) {
             },
             complete: function() {
                 $('#button-shipping-method').button('reset');
+                $('#input-comment').val('').prop('disabled', true);
             },
             success: function(json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }

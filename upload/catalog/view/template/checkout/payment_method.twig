@@ -32,8 +32,6 @@ $('#button-payment-methods').on('click', function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 $('#input-payment-method').removeClass('is-invalid');
                 $('#error-payment-method').removeClass('d-block');
 
@@ -126,8 +124,6 @@ $(document).on('submit', '#form-payment-method', function(e) {
                 $('#button-payment-method').button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
@@ -174,8 +170,6 @@ $('#input-comment').on('keydown', function() {
                 dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded',
                 success: function(json) {
-                    console.log(json);
-
                     $('.alert-dismissible').remove();
 
                     if (json['redirect']) {

@@ -39,8 +39,6 @@ $('#shopping-cart').on('submit', '#output-cart form', function(e) {
             $(button).button('reset');
         },
         success: function(json) {
-            console.log(json);
-
             if (json['redirect']) {
                 location = json['redirect'];
             }
@@ -78,8 +76,6 @@ $('#shopping-cart').on('click', '.btn-danger', function(e) {
             $(element).button('reset');
         },
         success: function(json) {
-            console.log(json);
-
             if (json['redirect']) {
                 location = json['redirect'];
             }

@@ -208,8 +208,6 @@ $('#input-shipping-address').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 $('#input-shipping-address').removeClass('is-invalid');
                 $('#error-shipping-address').removeClass('d-block');
 
@@ -256,8 +254,6 @@ $('#form-shipping-address').on('submit', function(e) {
                 $('#button-shipping-address').button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 $('#form-shipping-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-shipping-address').find('.invalid-feedback').removeClass('d-block');
 

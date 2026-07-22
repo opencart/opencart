@@ -274,8 +274,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_filename');
 			}
 
-			// 3. Validate is ocmod file.
-			if (substr($filename, -10) != '.ocmod.zip') {
+			// 3. Validate is ocmod file and the extension code cannot escape the extension directory.
+			if (substr($filename, -10) != '.ocmod.zip' || $code == '.' || $code == '..') {
 				$json['error'] = $this->language->get('error_file_type');
 			}
 

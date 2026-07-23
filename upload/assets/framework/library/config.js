@@ -10,13 +10,11 @@ export class Config {
             this.directory = namespace;
         } else {
             this.path.set(namespace, path);
-        }5
+        }
     }
 
     async fetch(path) {
         if (this.cache.has(path)) {
-            console.log('cache', path);
-
             return this.cache.get(path);
         }
 

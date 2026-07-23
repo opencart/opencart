@@ -1,0 +1,20 @@
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="input-group">
+    <span class="input-group-text"><i class="fa fa-credit-card"></i></span><input type="text" name="payment_method" value="{{ payment_method }}" placeholder="{{ entry_payment_method }}" id="input-payment-method" class="form-control" readonly/>
+    <button type="button" id="button-payment-methods" class="btn btn-primary">{{ button_choose }}</button>
+  </div>
+  <input type="hidden" name="code" value="{{ code }}" id="input-payment-code"/>
+  <div id="error-payment-method" class="invalid-feedback"></div>
+</fieldset>
+<br/>
+<div class="mb-2">
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
+  <textarea name="comment" rows="4" id="input-comment" class="form-control">{{ comment }}</textarea>
+</div>
+{% if text_agree %}
+<div class="text-end">
+  <label for="input-checkout-agree" class="form-check-label">{{ text_agree }}</label>
+  <x-switch name="agree" value="1" checked="{{ agree }}" input-id="input-checkout-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline me-0"></x-switch>
+</div>
+{% endif %}

@@ -1,0 +1,65 @@
+<div id="squareup_buttons" class="form-control-static buttons clearfix">
+  {% if order_recurring_id %}
+  <div class="pull-right">
+    <button type="button" id="button-cancel" data-loading-text="{{ text_loading }}" class="btn btn-danger">{{ button_text }}</button>
+  </div>
+  {% endif %}
+</div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    var addOrderHistory = function(success_callback) {
+        $.ajax({
+            url: '{{ catalog }}index.php?route=api/order/history&api_token={{ api_token }}&order_id={{ order_id }}',
+            type: 'post',
+            dataType: 'json',
+            data: 'order_status_id={{ order_status_id }}&notify={{ notify }}&override=0&append=0&comment=' + encodeURIComponent("{{ comment }}"),
+            success: function(json) {
+                if (json['error']) {
+                    $('#squareup_buttons').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                }
+
+                if (json['success']) {
+                    success_callback();
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                $('#squareup_buttons').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + thrownError + "<br />" + xhr.statusText + "<br />" + xhr.responseText + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
+        });
+    }
+
+    $(document).delegate('#button-cancel', 'click', function() {
+        if (!confirm("{{ text_confirm_cancel }}")) {
+            return false;
+        }
+
+        $.ajax({
+            url: '{{ cancel }}',
+            dataType: 'json',
+            beforeSend: function() {
+                $('#button-cancel').button('loading');
+            },
+            success: function(json) {
+                $('.alert').remove();
+                
+                if (json['success']) {
+                    addOrderHistory(function() {
+                        $('#squareup_buttons').before('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                        $('#button-cancel').hide();
+                    });
+                }
+                
+                if (json['error']) {
+                    $('#squareup_buttons').before('<div class="alert alert-danger">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                    $('#button-cancel').button('reset');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+//--></script>

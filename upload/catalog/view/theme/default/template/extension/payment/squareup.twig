@@ -1,0 +1,69 @@
+{% if sandbox_message %}
+<div class="alert alert-warning">
+  <span class="fa fa-exclamation-circle"></span>&nbsp;{{ sandbox_message }}
+</div>
+{% endif %}
+
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/payment/squareup/checkout',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-confirm').button('loading');
+		},
+		complete: function() {
+			$('#button-confirm').button('reset');
+		},
+		success: function(json) {
+			if (json['payment_link']) {
+				location = json['payment_link'];
+//				openSquarePayment(json['payment_link']);
+			}
+			if (json['error']) {
+				alert(json['error']);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+/*
+function openSquarePayment(paymentUrl) {
+    const width = 500;
+    const height = 700;
+    const left = (window.screen.width / 2) - (width / 2);
+    const top = (window.screen.height / 2) - (height / 2);
+
+    const popup = window.open(
+        paymentUrl, 
+        'SquarePayment', 
+        `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`
+    );
+
+    // Focus the popup immediately
+    if (window.focus) popup.focus();
+
+    // Check if the popup is closed every 1 second
+    const timer = setInterval(() => {
+        if (popup.closed) {
+            clearInterval(timer);
+            // If the original tab hasn't been redirected yet, the user likely cancelled
+            setTimeout(() => {
+                if (window.location.href.indexOf('checkout/success') === -1) {
+                    console.log("Payment window closed without completion.");
+                }
+            }, 500);
+        }
+    }, 1000);
+}
+*/
+//--></script>

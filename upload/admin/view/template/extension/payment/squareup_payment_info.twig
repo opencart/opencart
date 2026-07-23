@@ -1,0 +1,461 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <a id="payment_refresh" data-url-payment-refresh="{{ url_refresh }}" data-confirm-refresh="{{ text_confirm_refresh }}" class="btn btn-primary">{{ button_refresh_status }}</a>
+        {% if is_authorized %}
+            <a id="payment_capture" data-url-payment-capture="{{ url_capture }}" data-confirm-capture="{{ confirm_capture }}" class="btn btn-success">{{ button_capture }}</a>
+            <a id="payment_void" data-url-payment-void="{{ url_void }}" data-confirm-void="{{ confirm_void }}" class="btn btn-warning">{{ button_void }}</a>
+        {% endif %}
+        
+        {% if is_captured and not is_fully_refunded %}
+            <a id="payment_refund" data-url-payment-refund="{{ url_refund }}" data-confirm-refund="{{ confirm_refund }}" data-insert-amount="{{ insert_amount }}" class="btn btn-danger">{{ button_refund }}</a>
+        {% endif %}
+        
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div id="payment-alert" data-message="{{ text_loading }}">
+        {% for alert in alerts %}
+            <div class="alert alert-{{ alert.type }}"><i class="fa fa-{{ alert.icon }}"></i>&nbsp;{{ alert.text }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i>&nbsp;{{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_opencart_order_id }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static"><a href="{{ url_order }}" target="_blank">{{ opencart_order_id }}</a></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_payment_id }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ payment_id }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_merchant_id }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ merchant_id }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_location_id }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ location_id }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_order_id }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ order_id }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_customer_id }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ customer_id }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_created_at }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ created_at }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_updated_at }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ updated_at }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_amount }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ amount }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_currency }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ currency }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ status }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_source_type }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ source_type }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_square_product }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ square_product }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_application_id }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ application_id }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_refunded_amount }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ refunded_amount }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_refunded_currency }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ refunded_currency }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_card_fingerprint }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ card_fingerprint }}</div>
+                </div>
+            </div>
+            {% if not payment_squareup_quick_pay %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_first_name }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ first_name }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_last_name }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ last_name }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_address_line_1 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ address_line_1 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_address_line_2 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ address_line_2 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_address_line_3 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ address_line_3 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_locality }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ locality }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_sublocality }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ sublocality }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_sublocality_2 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ sublocality_2 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_sublocality_3 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ sublocality_3 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_administrative_district_level_1 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ administrative_district_level_1 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_administrative_district_level_2 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ administrative_district_level_2 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_administrative_district_level_3 }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ administrative_district_level_3 }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_postal_code }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ postal_code }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_country }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ country }}</div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_ip }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ ip }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_user_agent }}</label>
+                <div class="col-sm-10">
+                    <div class="form-control-static">{{ user_agent }}</div>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="squareup-confirm-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ text_confirm_action }}</h4>
+            </div>
+            <div class="modal-body">
+                <h4 id="squareup-confirm-modal-content"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ text_close }}</button>
+                <button id="squareup-confirm-ok" type="button" class="btn btn-primary">{{ text_ok }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="squareup-refund-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ text_refund_details }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label" id="squareup-refund-modal-content-reason"></label>
+                    <textarea class="form-control" id="squareup-refund-reason" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" id="squareup-refund-modal-content-amount"></label>
+                    <input class="form-control" type="text" id="squareup-refund-amount" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ text_close }}</button>
+                <button id="squareup-refund-ok" type="button" class="btn btn-primary">{{ text_ok }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    var paymentLoading = function() {
+        var message = $('#payment-alert').attr('data-message');
+
+        $('#payment-alert').html('<div class="text-center alert alert-info"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
+    }
+
+    var refreshPage = function() {
+        document.location = document.location;
+    }
+
+    var paymentError = function(message) {
+        $('#payment-alert').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
+    }
+
+    var addOrderHistory = function(data, success_callback) {
+        $.ajax({
+            url: '{{ catalog }}index.php?route=api/order/history&api_token={{ api_token }}&order_id=' + data.order_id,
+            type: 'post',
+            dataType: 'json',
+            data: data,
+            success: function(json) {
+                if (json['error']) {
+                    refreshPage();
+                }
+
+                if (json['success']) {
+                    success_callback();
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                paymentError(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                enablePaymentButtons();
+            }
+        });
+    }
+
+    var paymentRequest = function(type, url, data) {
+        $.ajax({
+            url : url,
+            dataType : 'json',
+            type : type,
+            data : data,
+            beforeSend : paymentLoading,
+            success : function(json) {
+                if (json.error) {
+                    refreshPage();
+                }
+
+                if (json.success && json.order_history_data) {
+                    addOrderHistory(json.order_history_data, function() {
+                        refreshPage();
+                    });
+                }
+            },
+            error : function(xhr, ajaxSettings, thrownError) {
+                paymentError(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                enablePaymentButtons();
+            }
+        });
+    }
+
+    var disablePaymentButtons = function() {
+        $('*[data-url-payment-capture], *[data-url-payment-void], *[data-url-payment-refund]').attr('disabled', true);
+    }
+
+    var enablePaymentButtons = function() {
+        $('*[data-url-payment-capture], *[data-url-payment-void], *[data-url-payment-refund]').attr('disabled', false);
+    }
+
+    var modalConfirm = function(url, text) {
+        var modal = '#squareup-confirm-modal';
+        var content = '#squareup-confirm-modal-content';
+        var button = '#squareup-confirm-ok';
+
+        $(content).html(text);
+        $(button).unbind().click(function() {
+            disablePaymentButtons();
+
+            $(modal).modal('hide');
+
+            paymentRequest('GET', url);
+        });
+        
+        $(modal).modal('show');
+    }
+
+    var refundInputValidate = function(reason_input, amount_input) {
+        var result = true;
+
+        if (!$(reason_input)[0].checkValidity()) {
+            $(reason_input).closest('.form-group').addClass('has-error');
+            result = false;
+        } else {
+            $(reason_input).closest('.form-group').removeClass('has-error');
+        }
+
+        if (!$(amount_input)[0].checkValidity()) {
+            $(amount_input).closest('.form-group').addClass('has-error');
+            result = false;
+        } else {
+            $(amount_input).closest('.form-group').removeClass('has-error');
+        }
+
+        return result;
+    }
+
+    var modalRefund = function(url, text_reason, text_amount) {
+        var modal = '#squareup-refund-modal';
+        var content_reason = '#squareup-refund-modal-content-reason';
+        var content_amount = '#squareup-refund-modal-content-amount';
+        var button = '#squareup-refund-ok';
+        var reason_input = '#squareup-refund-reason';
+        var amount_input = '#squareup-refund-amount';
+
+        $(content_reason).html(text_reason);
+        $(content_amount).html(text_amount);
+
+        $(reason_input).val('');
+        $(amount_input).val('');
+
+        $(button).unbind().click(function() {
+            if (!refundInputValidate(reason_input, amount_input)) {
+                return;
+            }
+
+            disablePaymentButtons();
+
+            $(modal).modal('hide');
+
+            paymentRequest('POST', url, {
+                reason : $(reason_input).val(),
+                amount : $(amount_input).val()
+            });
+        });
+        
+        $(modal).modal('show');
+    }
+
+    $(document).on('click', '*[data-url-payment-refresh]', function() {
+        modalConfirm(
+            $(this).attr('data-url-payment-refresh'),
+            $(this).attr('data-confirm-refresh')
+        );
+    });
+        
+    $(document).on('click', '*[data-url-payment-capture]', function() {
+        if ($(this).attr('disabled')) return;
+
+        modalConfirm(
+            $(this).attr('data-url-payment-capture'),
+            $(this).attr('data-confirm-capture')
+        );
+    });
+        
+    $(document).on('click', '*[data-url-payment-void]', function() {
+        if ($(this).attr('disabled')) return;
+
+        modalConfirm(
+            $(this).attr('data-url-payment-void'),
+            $(this).attr('data-confirm-void')
+        );
+    });
+
+    $(document).on('click', '*[data-url-payment-refund]', function() {
+        if ($(this).attr('disabled')) return;
+
+        modalRefund(
+            $(this).attr('data-url-payment-refund'),
+            $(this).attr('data-confirm-refund'),
+            $(this).attr('data-insert-amount')
+        );
+    });
+});
+</script>
+{{ footer }}

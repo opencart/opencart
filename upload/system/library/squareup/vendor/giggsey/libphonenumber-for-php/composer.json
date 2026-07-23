@@ -1,0 +1,101 @@
+{
+  "name": "giggsey/libphonenumber-for-php",
+  "type": "library",
+  "description": "A library for parsing, formatting, storing and validating international phone numbers, a PHP Port of Google's libphonenumber.",
+  "keywords": [
+    "phonenumber",
+    "libphonenumber",
+    "mobile",
+    "validation",
+    "geocoding",
+    "geolocation"
+  ],
+  "homepage": "https://github.com/giggsey/libphonenumber-for-php",
+  "license": "Apache-2.0",
+  "support": {
+    "source": "https://github.com/giggsey/libphonenumber-for-php",
+    "issues": "https://github.com/giggsey/libphonenumber-for-php/issues"
+  },
+  "authors": [
+    {
+      "name": "Joshua Gigg",
+      "email": "giggsey@gmail.com",
+      "homepage": "https://giggsey.com/"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "libphonenumber\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "libphonenumber\\buildtools\\": "build/",
+      "libphonenumber\\Tests\\": "tests/"
+    }
+  },
+  "archive": {
+    "exclude": [
+      "build/",
+      "docs/",
+      "tests/",
+      ".github/",
+      ".editorconfig",
+      ".gitattributes",
+      ".gitignore",
+      "phpunit.xml.dist",
+      "phpstan.neon.dist",
+      ".php-cs-fixer.dist.php",
+      "infection.json5",
+      "src/CountryCodeToRegionCodeMapForTesting.php"
+    ]
+  },
+  "require": {
+    "php": "^8.1",
+    "giggsey/locale": "^2.7",
+    "symfony/polyfill-mbstring": "^1.31"
+  },
+  "require-dev": {
+    "ext-dom": "*",
+    "friendsofphp/php-cs-fixer": "^3.71",
+    "infection/infection": "^0.29|^0.31.0",
+    "nette/php-generator": "^4.1",
+    "php-coveralls/php-coveralls": "^2.7",
+    "phpstan/extension-installer": "^1.4.3",
+    "phpstan/phpstan": "^2.1.7",
+    "phpstan/phpstan-deprecation-rules": "^2.0.1",
+    "phpstan/phpstan-phpunit": "^2.0.4",
+    "phpstan/phpstan-strict-rules": "^2.0.3",
+    "phpunit/phpunit": "^10.5.45",
+    "symfony/console": "^6.4",
+    "symfony/filesystem": "^6.4",
+    "symfony/process": "^6.4"
+  },
+  "replace": {
+    "giggsey/libphonenumber-for-php-lite": "self.version"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "9.x-dev"
+    }
+  },
+  "scripts": {
+    "cs": "vendor/bin/php-cs-fixer fix",
+    "phpstan": "vendor/bin/phpstan",
+    "test": "vendor/bin/phpunit",
+    "metadata": "@php build/build.php build",
+    "build": [
+      "@metadata",
+      "@cs",
+      "@test",
+      "@phpstan"
+    ]
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "infection/extension-installer": true,
+      "phpstan/extension-installer": true
+    }
+  }
+}

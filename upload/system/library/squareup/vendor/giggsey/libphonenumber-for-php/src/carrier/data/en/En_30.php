@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * libphonenumber-for-php data file
+ * This file has been @generated from libphonenumber data
+ * Do not modify!
+ * @internal
+ */
+
+declare(strict_types=1);
+
+namespace libphonenumber\carrier\data\en;
+
+/**
+ * @internal
+ */
+class En_30
+{
+    public const DATA = [
+        3094 => 'Vodafone',
+        30693 => 'Wind',
+        30694 => 'Vodafone',
+        30697 => 'Cosmote',
+        30698 => 'Cosmote',
+        306900 => 'BWS',
+        306906 => 'Wind',
+        306907 => 'Wind',
+        306908 => 'Wind',
+        306909 => 'Wind',
+        306950 => 'Vodafone',
+        306951 => 'Vodafone',
+        306955 => 'Vodafone',
+        306956 => 'Vodafone',
+        306957 => 'Vodafone',
+        306958 => 'Vodafone',
+        306959 => 'Vodafone',
+        306991 => 'Wind',
+        306992 => 'Wind',
+        306993 => 'Wind',
+        306994 => 'Wind',
+        306995 => 'Wind',
+        306996 => 'Wind',
+        306997 => 'Wind',
+        306998 => 'Wind',
+        306999 => 'Wind',
+        3068519 => 'Cyta',
+        3069522 => 'Vodafone',
+        3069523 => 'Vodafone',
+        3069524 => 'BWS',
+        3069529 => 'BWS',
+        3069530 => 'Cyta',
+        3069540 => 'OTE',
+        3069541 => 'OTE',
+        3069542 => 'OTE',
+        3069543 => 'OTE',
+        3069601 => 'OTE',
+        3069900 => 'Wind',
+        30685185 => 'Cyta',
+        30685500 => 'Cyta',
+        30685501 => 'BWS',
+        30685505 => 'Cyta',
+        30685550 => 'Cyta',
+        30685555 => 'Cyta',
+        30685585 => 'Cyta',
+        30687500 => 'BWS',
+        30688500 => 'BWS',
+        30689900 => 'OTEGlobe',
+        30689901 => 'M-STAT',
+        30690100 => 'MI Carrier Services',
+        30690199 => 'BWS',
+        30690200 => 'MI Carrier Services',
+        30690299 => 'BWS',
+        30690300 => 'MI Carrier Services',
+        30690399 => 'BWS',
+        30690400 => 'MI Carrier Services',
+        30690499 => 'BWS',
+        30690500 => 'MI Carrier Services',
+        30690555 => 'AMD Telecom',
+        30690574 => 'BWS',
+        30690575 => 'BWS',
+        30690588 => 'BWS',
+        30690599 => 'BWS',
+        30691000 => 'BWS',
+        30691234 => 'M-STAT',
+        30691345 => 'Forthnet',
+        30691400 => 'AMD Telecom',
+        30691600 => 'Compatel',
+        30691700 => 'Inter Telecom',
+        30691888 => 'OSE',
+        30692354 => 'Premium Net International',
+        30692356 => 'SIA NETBALT',
+        30692428 => 'Premium Net International',
+        30695200 => 'Vodafone',
+        30695201 => 'Vodafone',
+        30695202 => 'Vodafone',
+        30695203 => 'Vodafone',
+        30695310 => 'MI Carrier Services',
+        30695328 => 'Premium Net International',
+        30695330 => 'Apifon',
+        30695340 => 'AMD Telecom',
+        30695355 => 'Cyta',
+        30695456 => 'BWS',
+        30695490 => 'MI Carrier Services',
+        30695499 => 'M-STAT',
+        30699010 => 'BWS',
+        30699022 => 'Yuboto',
+        30699046 => 'Premium Net International',
+        30699048 => 'AMD Telecom',
+        30699099 => 'BWS',
+    ];
+}

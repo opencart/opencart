@@ -1,0 +1,21 @@
+/* CSS to style the input fields hosted by Square */
+.sq-input {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+    border-radius: 4px;
+}
+.sq-input--focus {
+    border-color: #006aff;
+}
+.sq-input--error {
+    border-color: #ff0000;
+}
+#card-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    height: 50px; /* Square manages the iframe size */
+    width: 300px;
+}

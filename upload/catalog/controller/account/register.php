@@ -251,6 +251,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Regenerate session ID
+			oc_session_regenerate($this->registry);
+
 			$customer_id = $this->model_account_customer->addCustomer(['customer_group_id' => $customer_group_id] + $post_info);
 
 			// Login if requires approval

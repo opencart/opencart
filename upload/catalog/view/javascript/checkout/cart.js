@@ -1,20 +1,72 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
+// Config
+const config = await loader.config('default');
+
 // Language
 const language = await loader.language('checkout/cart');
 
-// Library
+// library
 const session = await loader.library('session');
+const cart = await loader.library('cart');
+const local = await loader.library('local');
+const tax = await loader.library('tax');
+
+// Currency
+const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
 export default class extends Controller {
-    async render() {
+    connected() {
 
-
-        return loader.template('checkout/cart', { ...data, ...language });
     }
-}
 
+    async render() {
+        let data = {};
+
+        data.products = [];
+
+        let products = cart.getProducts();
+
+
+
+        data.currency = currency;
+
+        return await loader.template('checkout/cart', { ...data,  ...language });
+    }
+
+    onClick(e) {
+        e.preventDefault();
+
+        let target = document.getElementById('content');
+
+        target.src = e.target.getAttribute('href');
+    }
+
+    editProduct(e) {
+        e.preventDefault();
+
+    }
+
+    deleteProduct(e) {
+        e.preventDefault();
+
+    }
+
+    open() {
+
+    }
+
+    close(e) {
+        console.log('hi');
+
+        let modal = document.getElementById('dialog');
+
+        modal.close();
+    }
+};
+
+/*
 $('#shopping-cart').on('submit', '#output-cart form', function(e) {
     e.preventDefault();
 
@@ -108,3 +160,4 @@ $('#cart').on('submit', 'form', function(e) {
         $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
     }, 3000);
 });
+*/

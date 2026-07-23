@@ -145,9 +145,9 @@ export default class extends Controller {
                 let frequency = language['text_' + subscription_plan.frequency];
 
                 if (subscription_plan.duration) {
-                   // description = language['text_subscription_duration'] price, subscription_plan.cycle, frequency, subscription_plan.duration);
+                   //description = language['text_subscription_duration'] price, subscription_plan.cycle, frequency, subscription_plan.duration);
                 } else {
-                   // description = sprintf(language['text_subscription_cancel'], price, subscription_plan.cycle, frequency);
+                   //description = sprintf(language['text_subscription_cancel'], price, subscription_plan.cycle, frequency);
                 }
 
                 //data.subscription_plans[] = {
@@ -157,6 +157,8 @@ export default class extends Controller {
 
             // Tags
             data.tags = description.tag.split(',');
+
+            data.related = [];
 
             data.review_status = config.config_review_status;
 
@@ -196,8 +198,6 @@ export default class extends Controller {
 
         // Display error messages
         if (json['error'] !== undefined) {
-            console.log(json['error']);
-
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -220,24 +220,103 @@ export default class extends Controller {
 
         // Display success message
         if (json['success'] !== undefined) {
-            let alert = form.getElementById('alert');
+            let alert = target.querySelector('#alert');
 
-            alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            if (alert) {
+                alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
 
-            //$('#cart').load('index.php?route=common/cart.info');
+            //console.log(form);
+            ///console.log(form.elements);
+            //console.log(form.entries());
+            //const uniqueString = [...new Set(matrix.flat(Infinity))].join(', ');
 
-            //cart.add(result);
+            let output = [];
+
+            let regex = /^([^\[]+)\[(\w+)\]$/g;
+
+            console.log('form2array');
+
+            function nameToObject(str, value) {
+                const match = str.match(/^([^\[]+)\[(\w+)\]$/);
+
+                if (!match) return {
+                    [str]: value
+                };
+
+                return {
+                    [match[1]]: {
+                        [match[2]]: value
+                    }
+                };
+            }
+
+
+            /*
+            let test = form.entries().filter(item => {
+               // console.log(item.get());
+
+                item[0].match(/^option\[(.*?)\]/);
+            });
+*/
+            console.log(nameToObject("test[1]", 'ghth'));
+
+
+            for (let [key, value] of form.entries()) {
+                // Get Options. JavaScript is terrible!
+                let matches = key.match(/^option\[(.*?)\]/);
+
+                console.log(key);
+                console.log(value);
+                console.log(matches);
+
+                if (matches) {
+                    let [, match] = matches;
+
+                    console.log(match);
+
+                    output[match] = value;
+                }
+            }
+
+
+
+            let { product_id, quantity, option, subscription_plan_id } = Object.fromEntries(form);
+
+            console.log(product_id);
+            console.log(quantity);
+            console.log(option);
+            console.log(subscription_plan_id);
+
+            //cart.add(product_id, quantity, option, subscription_plan_id);
+
+           // let button = document.querySelector('#cart > button');
+
+            //button.click();
         }
 
         //this.$button_cart.state = '';
     }
 
-    addToWishList() {
+    async addToWishList(e) {
+        e.preventDefault();
 
+        console.log('addToWishList');
+        console.log(e);
     }
 
-    addToCompare() {
+    async addToCompare(e) {
+        e.preventDefault();
 
+        console.log('addToCompare');
+        console.log(e);
+    }
+
+    onClick(e) {
+        e.preventDefault();
+
+        console.log('onClick');
+        console.log(e);
     }
 
     onChange(e) {

@@ -29,10 +29,10 @@
 			</div>
 		{% endif %}
 
-		{% if php_version_old %}
+		{% if php_version_unsupported %}
 			<div class="alert alert-warning alert-dismissible">
 				<i class="fa fa-exclamation-circle"></i>
-				You are using a older version of php, You can still use the payment method via external payment. To unlock additional features update your php to >= 7.2.5.
+				{{ error_php_version_unsupported }}
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
 		{% endif %}
@@ -65,7 +65,7 @@
 						<div id="store_tab_0" class="tab-pane fade in active">
 
 							<!-- FORM FOR API DATA -->
-							{% if php_version_old == false %}
+							{% if php_version_unsupported == false %}
 
 								<div class="form-group {% if payment_cardinity_external == 0 %} required {% endif %} internal_credentials">
 									<label class="col-sm-2 control-label" for="payment_cardinity_external">
@@ -122,7 +122,7 @@
 								<p>Settings specific {{ store['url'] }}.</p>
 								<!-- FORM FOR API DATA MULTI STORE -->
 
-								{% if php_version_old == false %}
+								{% if php_version_unsupported == false %}
 
 									<div class="form-group {% if payment_cardinity_external == 0 %} required {% endif %} internal_credentials">
 										<label class="col-sm-2 control-label" for="payment_cardinity_external">
@@ -191,7 +191,7 @@
 									<select name="payment_cardinity_external" id="input-external" class="form-control">
 										{% if payment_cardinity_external %}
 											<option value="1" selected="selected">{{ text_enabled }}</option>
-											{% if php_version_old == false %}
+											{% if php_version_unsupported == false %}
 												<option value="0">{{ text_disabled }}</option>
 											{% endif %}
 										{% else %}

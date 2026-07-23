@@ -112,7 +112,6 @@ $(document).on('submit', '#form-shipping-method', function(e) {
             },
             complete: function() {
                 $('#button-shipping-method').button('reset');
-                $('#input-comment').val('').prop('disabled', true);
             },
             success: function(json) {
                 if (json['redirect']) {

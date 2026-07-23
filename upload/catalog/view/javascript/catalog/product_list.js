@@ -59,7 +59,6 @@ customElements.define('product-list', class extends WebComponent {
 
         console.log(data.products);
 
-
         return loader.template('catalog/product_list', { ...data, ...language, ...config });
     }
 

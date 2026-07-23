@@ -1,5 +1,6 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import './article_list.js';
 
 // Config
 const config = await loader.config('default');
@@ -13,16 +14,22 @@ export default class extends Controller {
 
         let request = new URL(import.meta.url).searchParams;
 
-        let topic = await loader.storage('cms/topic-' + request.get('topic_id'));
+        let topic_id = 0;
+
+        if (request.has('topic_id')) {
+            topic_id = request.get('topic_id');
+        }
+
+        let topic = await loader.storage('topic/topic-' + topic_id);
 
         if (topic !== undefined && config.config_language in topic.description) {
             data.topic_id = topic.topic_id;
+            data.image = topic.image;
 
             let description = topic.description[config.config_language];
 
             data.name = description.name;
             data.description = description.description;
-            data.image = topic.image;
         }
 
         return loader.template('cms/topic', { ...data, ...language });

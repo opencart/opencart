@@ -1,0 +1,9 @@
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="input-group">
+    <span class="input-group-text"><i class="fa fa-truck"></i></span><input type="text" name="shipping_method" value="{{ shipping_method }}" placeholder="{{ entry_shipping_method }}" id="input-shipping-method" class="form-control" readonly/>
+    <button type="button" id="button-shipping-methods" class="btn btn-primary">{{ button_choose }}</button>
+  </div>
+  <input type="hidden" name="code" value="{{ code }}" id="input-shipping-code"/>
+  <div id="error-shipping-method" class="invalid-feedback"></div>
+</fieldset>

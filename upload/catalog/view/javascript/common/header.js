@@ -1,5 +1,10 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
+import '../component/currency.js';
+import '../component/language.js';
+import '../component/search.js';
+import '../component/cart.js';
+import '../component/menu.js';
 
 // Config
 const config = await loader.config('default');
@@ -10,7 +15,7 @@ const language = await loader.language('common/header');
 // library
 const session = await loader.library('session');
 
-export default class extends Controller {
+customElements.define('common-header', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -28,8 +33,11 @@ export default class extends Controller {
     onClick(e) {
         e.preventDefault();
 
+        console.log(e);
+
+
         let target = document.getElementById('content');
 
         target.src = e.target.getAttribute('href');
     }
-};
+});

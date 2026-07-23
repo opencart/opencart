@@ -12,6 +12,24 @@ customElements.define('product-list', class extends WebComponent {
     async render() {
         let data = {};
 
+        if (this.hasAttribute('path')) {
+            data.path = this.getAttribute('path');
+        } else {
+            data.path = '';
+        }
+
+        if (this.hasAttribute('filter')) {
+            data.filter = this.getAttribute('filter');
+        } else {
+            data.filter = '';
+        }
+
+        if (this.hasAttribute('manufacturer_id')) {
+            data.manufacturer_id = this.getAttribute('manufacturer_id');
+        } else {
+            data.manufacturer_id = '';
+        }
+
         if (this.hasAttribute('sort')) {
             data.sort = this.getAttribute('sort');
         } else {
@@ -22,6 +40,12 @@ customElements.define('product-list', class extends WebComponent {
             data.order = this.getAttribute('order');
         } else {
             data.order = '';
+        }
+
+        if (this.hasAttribute('limit')) {
+            data.limit = this.getAttribute('limit');
+        } else {
+            data.limit = 10;
         }
 
         if (this.hasAttribute('page')) {

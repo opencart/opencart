@@ -9,15 +9,20 @@
 <body>
 <div id="container">
   <div id="alert"></div>
-  <x-include src="common/header.js"></x-include>
+  <dialog id="dialog" class="position-relative border-0" closedby="any"></dialog>
+
+  <common-header></common-header>
+
   <main class="flex-grow-1 mb-4">
     <div class="container">
-      <x-include id="content" src="catalog/product_info.js?product_id=28"></x-include>
+      <x-include id="content" src="catalog/product_info.js?product_id=42"></x-include>
     </div>
   </main>
-  <x-include src="common/footer.js"></x-include>
+
+  <common-footer></common-footer>
+
 </div>
 <script src="./assets/bootstrap/js/bootstrap.bundle.min.js" type="module"></script>
-<script src="./catalog/view/javascript/index.js" type="module"></script>
+<script src="./catalog/view/javascript/framework.js" type="module"></script>
 </body>
 </html>

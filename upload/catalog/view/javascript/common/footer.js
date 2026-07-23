@@ -1,6 +1,5 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
-import '../component/currency.js';
 
 // Config
 const config = await loader.config('default');
@@ -11,7 +10,7 @@ const language = await loader.language('common/footer');
 // Information
 const informations = await loader.storage('information/information');
 
-export default class extends Controller {
+customElements.define('common-footer', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -46,5 +45,4 @@ export default class extends Controller {
 
         target.src = e.target.getAttribute('href');
     }
-};
-
+});

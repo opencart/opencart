@@ -15,8 +15,22 @@ export default class Cart {
         this.data = new Map();
     }
 
-    add(key, item) {
-        this.data.set(key, item);
+    add(product_id, quantity = 1, option, $subscription_plan_id) {
+
+        console.log('add');
+        console.log(product_id);
+        console.log(quantity);
+        console.log(option);
+        console.log(subscription_plan_id);
+
+        //let key  = product_id + '.' + option.flat(Infinity) + '.';
+
+           //console.log(key);
+
+
+        //this.data.set(key, {
+
+        //});
     }
 
     remove(key) {
@@ -24,7 +38,7 @@ export default class Cart {
     }
 
     getProducts() {
-        this.data.forEach(key, item);
+        this.data.get(key, item);
 
     }
 

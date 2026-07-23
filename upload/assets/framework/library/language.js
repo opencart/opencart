@@ -37,9 +37,9 @@ export class Language {
         let response = await fetch(file);
 
         if (response.status == 200) {
-            let object = await response.json();
+            let data = await response.json();
 
-            this.cache.set(path, object);
+            this.cache.set(path, data);
 
             return this.cache.get(path);
         } else {

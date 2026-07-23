@@ -5,23 +5,23 @@ import { loader } from '../index.js';
 const language = await loader.language('cms/topic');
 
 export default class extends Controller {
-    async connected() {
-
-    }
-
     async render() {
         let data = {};
 
-        //let topic = await loader.storage('cms/topic-' + this.getAttribute('topic_id'));
+        let request = new URL(import.meta.url).searchParams;
 
-        //if (topic.length) {
-         //   data.name = topic.name;
-          //  data.description = topic.description;
-          //  data.image = topic.image;
+        let topic = await loader.storage('cms/topic-' + request.get('topic_id'));
 
-            //let articles = await loader.storage('cms/topic-' + this.getAttribute('topic_id'));
+        if (topic !== undefined && config.config_language in article.description) {
+            data.name = topic.name;
+            data.description = topic.description;
+            data.image = topic.image;
 
-        //}
+            data.articles = await loader.storage('cms/topic-' + this.getAttribute('topic_id'));
+
+
+
+        }
 
         return loader.template('cms/article', { ...data, ...language });
     }

@@ -21,7 +21,7 @@
     <ul class="list-unstyled mb-1">
 
       {% if manufacturer %}
-      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer.js?manufacturer_id={{ manufacturer_id }}">{{ manufacturer }}</a></strong></li>
+      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer.js?manufacturer_id={{ manufacturer_id }}" data-on="click:onClick">{{ manufacturer }}</a></strong></li>
       {% endif %}
 
       <li>{{ text_model }}: <strong>{{ model }}</strong></li>
@@ -83,10 +83,11 @@
 
     <form>
       <div class="btn-group">
-        <button type="submit" formaction="{{ wishlist_add }}" class="btn btn-light btn-lg" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
-        <button type="submit" formaction="{{ compare_add }}" class="btn btn-light btn-lg" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+        <button type="button" data-bind="wishlist" data-on="submit:addToWishlist" class="btn btn-light btn-lg" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
+        <button type="button" data-bind="compare" data-on="click:addToCompare" data-product-id="{{ product_id }}" class="btn btn-light btn-lg" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
       </div>
-      <input type="hidden" name="product_id" value="{{ product_id }}"/>
+
+      <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ minimum }}"/>
     </form>
 
     <br/>
@@ -102,13 +103,15 @@
 
 
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
             <option value="">{{ text_select }}</option>
 
 
             {% for option_value in option.option_value %}
-            <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>){% endif %}</option>
+            <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}
+              <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
+              ){% endif %}
+            </option>
             {% endfor %}
 
 
@@ -168,16 +171,14 @@
 
           {% if option.type == 'text' %}
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
           </div>
           {% endif %}
 
           {% if option.type == 'textarea' %}
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
           </div>
           {% endif %}
@@ -195,24 +196,21 @@
 
           {% if option.type == 'date' %}
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <input type="date" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="date" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
           </div>
           {% endif %}
 
           {% if option.type == 'time' %}
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <input type="time" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="time" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
           </div>
           {% endif %}
 
           {% if option.type == 'datetime' %}
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <input type="datetime-local" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="datetime-local" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
           </div>
           {% endif %}
@@ -229,7 +227,6 @@
             <option value="">{{ text_select }}</option>
 
             {% for subscription_plan in subscription_plans %}
-
 
 
             "text_subscription_duration": "%s every %d %s(s) for %d payment(s)",
@@ -282,15 +279,13 @@
   <li class="nav-item"><a href="#tab-description" data-bs-toggle="tab" class="nav-link active">{{ tab_description }}</a></li>
   {% if attribute_groups %}
   <li class="nav-item"><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
-  {% endif %}
-  {% if review_status %}
+  {% endif %} {% if review_status %}
   <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review }}</a></li>
   {% endif %}
 </ul>
 <div class="tab-content">
   <div id="tab-description" class="tab-pane fade show active mb-4">
-    {{ description }}
-    {% if tags %}
+    {{ description }} {% if tags %}
     <p><strong>{{ text_tags }}</strong> {% for tag in tags %} <a href="{{ tag }}">{{ tag }}</a>{% if !loop.last %},{% endif %} {% endfor %}</p>
     {% endif %}
   </div>
@@ -316,8 +311,7 @@
       </table>
     </div>
   </div>
-  {% endif %}
-  {% if review_status %}
+  {% endif %} {% if review_status %}
   <div id="tab-review" class="tab-pane fade mb-4">{{ review }}</div>
   {% endif %}
 </div>

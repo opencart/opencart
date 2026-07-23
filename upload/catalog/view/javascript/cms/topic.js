@@ -1,6 +1,9 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
+// Config
+const config = await loader.config('default');
+
 // Language
 const language = await loader.language('cms/topic');
 
@@ -12,18 +15,17 @@ export default class extends Controller {
 
         let topic = await loader.storage('cms/topic-' + request.get('topic_id'));
 
-        if (topic !== undefined && config.config_language in article.description) {
-            data.name = topic.name;
-            data.description = topic.description;
+        if (topic !== undefined && config.config_language in topic.description) {
+            data.topic_id = topic.topic_id;
+
+            let description = topic.description[config.config_language];
+
+            data.name = description.name;
+            data.description = description.description;
             data.image = topic.image;
-
-            data.articles = await loader.storage('cms/topic-' + this.getAttribute('topic_id'));
-
-
-
         }
 
-        return loader.template('cms/article', { ...data, ...language });
+        return loader.template('cms/topic', { ...data, ...language });
     }
 
     async onSubmit() {

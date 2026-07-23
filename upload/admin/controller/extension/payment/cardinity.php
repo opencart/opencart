@@ -2,10 +2,9 @@
 class ControllerExtensionPaymentCardinity extends Controller {
 	private $error = array();
 
-	private $external_mode_only;
+	private $external_mode_only = false;
 
 	public function index() {
-
 		$this->load->model('extension/payment/cardinity');
 		$this->model_extension_payment_cardinity->createMissingTables();
 
@@ -13,13 +12,19 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$this->load->model('setting/store');
 		$this->load->language('extension/payment/cardinity');
 
-		//if using old version
-		if(version_compare(phpversion(), '7.2.5', '<') == true){
+		// older PHP versions are not supported
+		if (version_compare(phpversion(), '7.2.5', '<') == true) {
 			$this->external_mode_only = true;
 			$this->config->set('payment_cardinity_external', 1);
 			$this->model_setting_setting->editSettingValue('payment_cardinity', 'payment_cardinity_external', 1); 
 		}
-	
+
+		// newer PHP versions are not supported
+		if (version_compare(phpversion(), '8.5', '>=') == true) {
+			$this->external_mode_only = true;
+			$this->config->set('payment_cardinity_external', 1);
+			$this->model_setting_setting->editSettingValue('payment_cardinity', 'payment_cardinity_external', 1);
+		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -30,32 +35,28 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$this->model_setting_setting->editSetting('payment_cardinity', $commonSettings, 0);
 			
 			if (isset($this->request->post['api_data'])) {
-				foreach($this->request->post['api_data'] as $store_Id => $storeAPIData){					
+				foreach ($this->request->post['api_data'] as $store_Id => $storeAPIData) {
 					$allSettings = array_merge($storeAPIData, $commonSettings);
 					$this->model_setting_setting->editSetting('payment_cardinity', $allSettings, $store_Id);	
-				}				
+				}
 			}
-
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
-		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
 		}
 
-
-		
-		if( isset($this->error['api_data']) ){
+		if (isset($this->error['api_data'])) {
 
 			//mark error by store
-			foreach($this->error['api_data'] as $storeId => $data){
-				
+			foreach ($this->error['api_data'] as $storeId => $data) {
+
 				//internal
 				if (isset($this->error['api_data'][$storeId]['key'])) {
 					$data['error_key'][$storeId] = $this->error['api_data'][$storeId]['key'];
@@ -81,8 +82,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 				}	
 			}
 		}
-		
-	
 
 		$data['breadcrumbs'] = array();
 
@@ -105,18 +104,15 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
-
-		
 		$listOfStore = $this->model_setting_store->getStores(); 
-		
-		
+
 		//add a index for the default store
 		array_unshift($listOfStore, array(
 			'store_id' => 0,
 			'name' => 'Default'
 		));
 
-		foreach($listOfStore as $store){
+		foreach ($listOfStore as $store) {
 
 			$storeId = $store['store_id'];
 
@@ -145,8 +141,6 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			}
 
 		}
-
-
 
 		//Common fields for all stores
 
@@ -204,12 +198,17 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-
-		$data['php_version_old'] = $this->external_mode_only;
+		$data['php_version_unsupported'] = false;
+		if ($this->external_mode_only) {
+			$data['php_version_unsupported'] = true;
+			$txt = $this->language->get('error_php_version_unsupported');
+			$txt = str_replace('%1', phpversion(), $txt);
+			$data['error_php_version_unsupported'] = $txt;
+		}
+		$data['php_version_unsupported'] = $this->external_mode_only;
 		$data['entry_log'] = $this->language->get('entry_log');
 		$data['yearNow'] = (int) date("Y");
 		$data['entry_log_action'] = $this->url->link('extension/payment/cardinity/getTransactions',  'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
-		
 
 		$data['stores_data'] = print_r($this->model_setting_store->getStores(), true);
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -228,12 +227,11 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 	public function getPayment() {
 
-		if(version_compare(phpversion(), '7.2.5', '<') == true){
+		if (version_compare(phpversion(), '7.2.5', '<') == true) {
 			$this->response->setOutput($this->load->view('extension/payment/cardinity_order_na'));
 			return;
 		}
 
-		
 		$this->load->language('extension/payment/cardinity');
 
 		$this->load->model('extension/payment/cardinity');
@@ -266,9 +264,9 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 			$payment = $this->model_extension_payment_cardinity->getPayment($client, $order['payment_id']);
 
-            if(!$payment){
-                return;
-            }
+			if (!$payment) {
+				return;
+			}
 
 			$data['refund_action'] = false;
 
@@ -334,19 +332,19 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$refund = $this->model_extension_payment_cardinity->refundPayment($client, $this->request->post['payment_id'], (float)number_format($this->request->post['amount'], 2), $this->request->post['description']);
 
 		if ($refund) {
-            if($refund->isApproved()){
-                $success = $this->language->get('refund_approved');
-            }else if($refund->isProcessing()){
-                $success = $this->language->get('refund_processing');
-            }else {
-                $error = $this->language->get('refund_declined');
-            }
-            $json['refund'] = array(
-                'date_added'  => date($this->language->get('datetime_format'), strtotime($refund->getCreated())),
-                'amount'	  => $this->currency->format($refund->getAmount(), $refund->getCurrency(), '1.00000000', true),
-                'status' =>  $refund->getStatus(),
-                'description' =>  $refund->getDescription(),
-            );
+			if ($refund->isApproved()) {
+				$success = $this->language->get('refund_approved');
+			} else if ($refund->isProcessing()) {
+				$success = $this->language->get('refund_processing');
+			} else {
+				$error = $this->language->get('refund_declined');
+			}
+			$json['refund'] = array(
+				'date_added'  => date($this->language->get('datetime_format'), strtotime($refund->getCreated())),
+				'amount'      => $this->currency->format($refund->getAmount(), $refund->getCurrency(), '1.00000000', true),
+				'status'      =>  $refund->getStatus(),
+				'description' =>  $refund->getDescription(),
+			);
 		} else {
 			$error = $this->language->get('text_error_generic');
 		}
@@ -363,7 +361,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$check_credentials = true;
 
-		if (version_compare(phpversion(), '5.4', '<')) {
+		if (version_compare(phpversion(), '7.2.5', '<') == true) {
 			$this->error['warning'] = $this->language->get('error_php_version');
 		}
 
@@ -405,20 +403,20 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		
 					$verify_credentials = $this->model_extension_payment_cardinity->verifyCredentials($client);
 		
-					if (!$verify_credentials) {						
+					if (!$verify_credentials) {
 						$this->error['warning'] = $this->language->get('error_connection');
 						
 						
 					}
 				}
 				
-			}		
+			}
 			
 
-		}elseif ($this->request->post['payment_cardinity_external'] == 1) {			
+		} elseif ($this->request->post['payment_cardinity_external'] == 1) {
 
 			//validate by each store
-			foreach($this->request->post['api_data'] as $storeId => $storeAPIdata){
+			foreach ($this->request->post['api_data'] as $storeId => $storeAPIdata) {
 				
 				//validate required fields for external hosted payment
 				if (!$this->request->post['api_data'][$storeId]['payment_cardinity_project_key']) {
@@ -431,12 +429,10 @@ class ControllerExtensionPaymentCardinity extends Controller {
 					$this->error['api_data'][$storeId]['project_secret'] = $this->language->get('error_project_secret');
 		
 					$check_credentials = false;
-				}		
+				}
 
-			}			
+			}
 		}
-
-		
 
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
@@ -447,20 +443,19 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 	public function getTransactions(){
 		
-		if(isset($this->request->post['cardinity_error_log'])){
+		if (isset($this->request->post['cardinity_error_log'])) {
 			$fileName = 'cardinity';
-		}else{
+		} else {
 			$fileName = 'crd-transactions-'.$this->request->post['cardinity_trns_year'].'-'. $this->request->post['cardinity_trns_month'];
 		}	
-		
-		
+
 		$fileToDownload =  $fileName .'.log';
-		
+
 		// Process download
-		if(file_exists(DIR_LOGS.$fileToDownload)) {
-		   
+		if (file_exists(DIR_LOGS.$fileToDownload)) {
+   
 			$downloadName = $fileName. time(). '.log';
-		
+
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename='.basename($downloadName));
 			header('Expires: 0');
@@ -472,7 +467,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
         } else {
 			$this->response->redirect($this->url->link('extension/payment/cardinity', 'user_token=' . $this->session->data['user_token'], true));
-		}				
+		}
 
 	}
 

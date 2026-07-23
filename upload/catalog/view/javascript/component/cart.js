@@ -8,6 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('component/cart');
 
 // library
+const session = await loader.library('session');
 const cart = await loader.library('cart');
 const local = await loader.library('local');
 const tax = await loader.library('tax');
@@ -24,14 +25,19 @@ customElements.define('component-cart', class extends WebComponent {
         return loader.template('component/cart', { ...data,  ...language });
     }
 
-    onSubmit(e) {
+    async onClick(e) {
         e.preventDefault();
 
-        loader.request({
-            onComplete: () => {
+        let dialog = document.getElementById('dialog');
 
+        dialog.innerHTML = '';
 
-            }
-        });
+        let object = await import(config.config_path + 'checkout/cart.js');
+
+        let controller = new object.default(dialog);
+
+        dialog.append(await controller.execute());
+
+        dialog.showModal();
     }
 });

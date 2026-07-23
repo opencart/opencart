@@ -48,7 +48,7 @@ customElements.define('article-list', class extends WebComponent {
         }
 
         // Product Info
-        data.articles = await loader.storage('cms/topic-article-' + this.getAttribute('topic_id'));
+        data.articles = await loader.storage('topic/topic-article-' + this.getAttribute('topic_id'));
 
         console.log(data.articles);
 

@@ -18,10 +18,6 @@ export class WebComponent extends HTMLElement {
         }
     }
 
-    load() {
-
-    }
-
     async update() {
         let output = await this.render();
 

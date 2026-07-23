@@ -13,21 +13,19 @@ class Loader {
     }
 
     async controller(path) {
-        /*
-        if (this.data.has(path)) {
-            return this.data.get(path);
-        }
+        let key = 'controller/' + path;
+
+        if (this.data.has(key)) return this.data.get(key);
 
         let config = this.data.get('config').fetch('default');
 
         let controller = await import(config.config_path + path + '.js');
 
-        this.data.set('controller/' + path, new controller.default());
+        this.data.set(key, new controller.default());
 
-        let output = this.data.get(path);
+        let output = this.data.get(key);
 
         return output;
-        */
     }
 
     async storage(path) {
@@ -48,11 +46,7 @@ class Loader {
     }
 
     async library(path) {
-        if (this.data.has(path)) {
-            console.log('library', path);
-
-            return this.data.get(path);
-        }
+        if (this.data.has(path)) return this.data.get(path);
 
         let object = await import('./' + path + '.js');
 

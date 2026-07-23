@@ -36,15 +36,8 @@ export class Storage {
 
         let response = await fetch(file);
 
-        //console.log('status', response.status);
-
         if (response.status == 200) {
             let data = await response.json();
-
-            console.log('Storage');
-            console.log(path);
-
-            console.log(data);
 
             this.cache.set(path, data);
 

@@ -19,14 +19,12 @@
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
       <select id="input-sort" class="form-select" data-on="change:onChange">
         <option value="">{{ text_default }}</option>
-        <option value="name-asc"{% if sort == 'name-asc' %} selected{% endif %}>{{ text_name_asc }}</option>
-        <option value="name-desc"{% if sort == 'name-desc' %} selected{% endif %}>{{ text_name_desc }}</option>
-        <option value="price-asc"{% if sort == 'price-asc' %} selected{% endif %}>{{ text_price_asc }}</option>
-        <option value="price-desc"{% if sort == 'price-desc' %} selected{% endif %}>{{ text_price_desc }}</option>
-        <option value="rating-asc"{% if sort == 'rating-asc' %} selected{% endif %}>{{ text_rating_asc }}</option>
-        <option value="rating-desc"{% if sort == 'rating-desc' %} selected{% endif %}>{{ text_rating_desc }}</option>
-        <option value="model-asc"{% if sort == 'model-asc' %} selected{% endif %}>{{ text_model_asc }}</option>
-        <option value="model-desc"{% if sort == 'model-desc' %} selected{% endif %}>{{ text_model_desc }}</option>
+        <option value="name-asc"{% if sort == 'name-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_name }}</option>
+        <option value="name-desc"{% if sort == 'name-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_name }}</option>
+        <option value="price-asc"{% if sort == 'price-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_price }}</option>
+        <option value="price-desc"{% if sort == 'price-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_price }}</option>
+        <option value="rating-asc"{% if sort == 'rating-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_rating }}</option>
+        <option value="rating-desc"{% if sort == 'rating-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_rating }}</option>
       </select>
     </div>
   </div>

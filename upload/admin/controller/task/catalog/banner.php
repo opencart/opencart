@@ -50,12 +50,14 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$banner_total = $this->model_design_banner->getTotalBanners(['filter_status' => true]);
 
 		for ($i = 0; $i <= ceil($banner_total / $limit); $i++) {
+			$start = $i * $limit;
+
 			$task_data = [
-				'code'   => 'banner.list.' . $store_info['store_id'],
+				'code'   => 'banner.list.' . $store_info['store_id'] . '.' . $start . '.' . $limit,
 				'action' => 'task/catalog/banner.list',
 				'args'   => [
 					'store_id' => $args['store_id'],
-					'start'    => $i * $limit,
+					'start'    => $start,
 					'limit'    => $limit
 				]
 			];
@@ -101,9 +103,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'limit'         => $args['limit']
 		];
 
-		$this->load->model('cms/article');
+		$this->load->model('design/banner');
 
-		$results = $this->model_cms_article->getArticles($filter_data);
+		$results = $this->model_design_banner->getBanners($filter_data);
 
 		foreach ($results as $result) {
 			$task_data = [

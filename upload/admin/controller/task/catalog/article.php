@@ -55,12 +55,14 @@ class Article extends \Opencart\System\Engine\Controller {
 		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
 
 		for ($i = 0; $i <= ceil($article_total / $limit); $i++) {
+			$start = $i * $limit;
+
 			$task_data = [
-				'code'   => 'article.list.' . $store_info['store_id'],
+				'code'   => 'article.list.' . $store_info['store_id'] . '.' . $start . '.' . $limit,
 				'action' => 'task/catalog/article.list',
 				'args'   => [
 					'store_id' => $store_info['store_id'],
-					'start'    => $i * $limit,
+					'start'    => $start,
 					'limit'    => $limit
 				]
 			];

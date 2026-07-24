@@ -41,17 +41,19 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if (!$token_info) {
 			// Create a token that can be stored as a cookie and will be used to identify device is safe.
 			$token = oc_token(32);
+			$expire = max(1, (int)$this->config->get('config_2fa_expire'));
 
 			$authorize_data = [
 				'token'      => $token,
 				'ip'         => oc_get_ip(),
-				'user_agent' => $this->request->server['HTTP_USER_AGENT']
+				'user_agent' => $this->request->server['HTTP_USER_AGENT'],
+				'expire'     => $expire
 			];
 
 			$this->model_account_customer->addAuthorize($this->customer->getId(), $authorize_data);
 
 			$option = [
-				'expires'  => time() + 60 * 60 * 24 * 90,
+				'expires'  => time() + 60 * 60 * 24 * $expire,
 				'path'     => $this->config->get('session_path'),
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => true,

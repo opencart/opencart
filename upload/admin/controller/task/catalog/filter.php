@@ -50,12 +50,14 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$filter_group_total = $this->model_catalog_filter->getTotalFilterGroups();
 
 		for ($i = 0; $i <= ceil($filter_group_total / $limit); $i++) {
+			$start = $i * $limit;
+
 			$task_data = [
-				'code'   => 'filter.list.' . $store_info['store_id'],
+				'code'   => 'filter.list.' . $store_info['store_id'] . '.' . $start . '.' . $limit,
 				'action' => 'task/catalog/filter.list',
 				'args'   => [
 					'store_id' => $store_info['store_id'],
-					'start'    => $i * $limit,
+					'start'    => $start,
 					'limit'    => $limit
 				]
 			];

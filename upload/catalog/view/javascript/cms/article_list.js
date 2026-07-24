@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('catalog/article_list');
+const language = await loader.language('cms/article_list');
 
 customElements.define('article-list', class extends WebComponent {
     async render() {
@@ -47,12 +47,29 @@ customElements.define('article-list', class extends WebComponent {
             data.page = '';
         }
 
-        // Product Info
-        data.articles = await loader.storage('topic/topic-article-' + this.getAttribute('topic_id'));
+        data.articles = [];
 
-        console.log(data.articles);
+        let articles = await loader.storage('topic/topic-article-' + this.getAttribute('topic_id'));
 
-        return loader.template('catalog/article_list', { ...data, ...language, ...config });
+        if (articles !== undefined) {
+            for (let article of articles) {
+                if (config.config_language in article.description) {
+                    let description = article.description[config.config_language];
+
+                    data.articles.push({
+                        article_id: article.article_id,
+                        name: description.name,
+                        description: description.description,
+                        image: article.image,
+                        author: article.author,
+                        comment_total: article.comment_total,
+                        date_added: article.date_added,
+                    });
+                }
+            }
+        }
+
+        return loader.template('cms/article_list', { ...data, ...language, ...config });
     }
 
     onChange(e) {

@@ -354,7 +354,7 @@ class Template extends \Opencart\System\Engine\Controller {
 			$file = $directory . '/' . implode('/', $part) . '.twig';
 		}
 
-		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
+		if (!$this->isFileInDirectory($file, $directory)) {
 			$json['code'] = '';
 		}
 
@@ -393,7 +393,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		$directory = DIR_CATALOG . 'view/template';
 		$file = $directory . '/' . (string)$post_info['route'] . '.html';
 
-		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
+		if (!$this->isFileInDirectory($file, $directory)) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
@@ -410,7 +410,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 			$file = $directory . '/' . $route . '.html';
 
-			if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory) {
+			if (!$this->isFileInDirectory($file, $directory)) {
 				$json['error'] = $this->language->get('error_file');
 			}
 		}
@@ -538,5 +538,27 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Is File In Directory
+	 *
+	 * @param string $file
+	 * @param string $directory
+	 *
+	 * @return bool
+	 */
+	private function isFileInDirectory(string $file, string $directory): bool {
+		$directory = realpath($directory);
+		$file = realpath($file);
+
+		if ($directory === false || $file === false || !is_file($file)) {
+			return false;
+		}
+
+		$directory = rtrim(str_replace('\\', '/', $directory), '/') . '/';
+		$file = str_replace('\\', '/', $file);
+
+		return str_starts_with($file, $directory);
 	}
 }

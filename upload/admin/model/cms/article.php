@@ -292,19 +292,9 @@ class Article extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$key = md5($sql);
+		$query = $this->db->query($sql);
 
-		$article_data = $this->cache->get('article.' . $key);
-
-		if (!$article_data) {
-			$query = $this->db->query($sql);
-
-			$article_data = $query->rows;
-
-			$this->cache->set('article.' . $key, $article_data);
-		}
-
-		return $article_data;
+		return $query->rows;
 	}
 
 	/**

@@ -48,7 +48,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$limit = 1000;
 
 		$filter_data = [
-			'filter_store_id' => $args['store_id'],
+			'filter_store_id' => $store_info['store_id'],
 			'filter_status'   => true
 		];
 
@@ -60,10 +60,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$start = $i * $limit;
 
 			$task_data = [
-				'code'   => 'product.list.' . $args['store_id'] . '.' . $start . '.' . $limit,
+				'code'   => 'product.list.' . $store_info['store_id'] . '.' . $start . '.' . $limit,
 				'action' => 'task/catalog/product.list',
 				'args'   => [
-					'store_id' => $args['store_id'],
+					'store_id' => $store_info['store_id'],
 					'start'    => $start,
 					'limit'    => $limit
 				]

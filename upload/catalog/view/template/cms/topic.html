@@ -10,7 +10,7 @@
 <div class="input-group dropdown mb-3">
   <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
   {% if topics %}
-    <select name="topic_id" id="input-topic" class="form-select" onchange="">
+    <select name="topic_id" id="input-topic" class="form-select" data-on="change:onChange">
       <option value="">{{ text_all }}</option>
       {% for topic in topics %}
         <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
@@ -19,6 +19,4 @@
   {% endif %}
   <button id="button-search" class="btn btn-primary">{{ button_search }}</button>
 </div>
-
-
 <article-list topic_id="{{ topic_id }}" sort="" order=""></article-list>

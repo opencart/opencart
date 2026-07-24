@@ -2,7 +2,7 @@ import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = loader.language('account/edit');
+const language = loader.language('account/article_info');
 
 export default class extends Controller {
     async render() {
@@ -18,6 +18,10 @@ export default class extends Controller {
 
             let description = article.description[config.config_language];
 
+            //description.meta_title
+            //description.meta_description
+            //description.meta_keyword
+
             data.image = description.image;
 
             data.name = description.name;
@@ -29,7 +33,7 @@ export default class extends Controller {
 
             data.comment_total = article.comment_total;
 
-            return loader.template('cms/article', { ...data, ...config });
+            return loader.template('cms/article', { ...data, ...config, ...language });
         }
     }
 }

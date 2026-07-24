@@ -1,30 +1,14 @@
-
-
 {% if articles %}
 
 <div class="row mb-3">
   <div class="col-lg offset-lg-8">
     <div class="input-group">
-      <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select id="input-sort" class="form-select" onchange="location = this.value;">
-
-
-      <option value="">{{ text_default }}</option>
-      <option value="name-asc"{% if sort == 'name-asc' %} selected{% endif %}>{{ text_name_asc }}</option>
-      <option value="name-desc"{% if sort == 'name-desc' %} selected{% endif %}>{{ text_name_desc }}</option>
-      <option value="rating-asc"{% if sort == 'rating-asc' %} selected{% endif %}>{{ text_rating_asc }}</option>
-      <option value="rating-desc"{% if sort == 'rating-desc' %} selected{% endif %}>{{ text_rating_desc }}</option>
-      <option value="model-asc"{% if sort == 'model-asc' %} selected{% endif %}>{{ text_model_asc }}</option>
-      <option value="model-desc"{% if sort == 'model-desc' %} selected{% endif %}>{{ text_model_desc }}</option>
-
-
-
-
-      {% for sorts in sorts %}
-      <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
-      {% endfor %}
-
-
-
+      <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+      <select id="input-sort" class="form-select" data-on="change:onSort">
+      <option value="latest-asc" {% if sort == 'latest-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_date_added }}</option>
+      <option value="latest-desc" {% if sort == 'latest-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-up-short-wide"></i> {{ text_date_added }}</option>
+      <option value="popularity-asc" {% if sort == 'popularity-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i>{{ text_popularity }}</option>
+      <option value="popularity-desc" {% if sort == 'popularity-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-up-short-wide"></i> {{ text_popularity }}</option>
     </select>
     </div>
   </div>
@@ -33,6 +17,7 @@
 {% for article in articles %}
 <div class="mb-3">
   <h2><a href="{{ article.href }}">{{ article.name }}</a></h2>
+
   {% if article.image %}
   <div><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
   {% endif %}

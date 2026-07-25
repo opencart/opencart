@@ -1,0 +1,134 @@
+{% if sandbox_message %}
+<div class="alert alert-warning">
+  <span class="fa fa-exclamation-circle"></span>&nbsp;{{ sandbox_message }}
+</div>
+{% endif %}
+
+<!-- container for the Square card form which will be in an iframe -->
+<div id="card-container"></div>
+
+<button id="card-button" type="button" class="btn btn-primary">{{ text_payment }}</button>
+
+{% if is_sandbox %}
+<script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+{% else %}
+<script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
+{% endif %}
+
+<script type="text/javascript">
+(function() {
+    async function initializeSquare() {
+        try {
+            const payments = Square.payments('{{ application_id }}', '{{ location_id }}');
+            const card = await payments.card();
+            await card.attach('#card-container');
+
+            document.getElementById('card-button').addEventListener('click', async (event) => {
+                event.preventDefault();  // Prevent OpenCart from submitting the form early
+                event.stopPropagation(); // Stop event from bubbling up to other handlers
+                event.stopImmediatePropagation(); // Prevent other OpenCart listeners on this same button
+
+                // Optional: Disable the button to prevent double-clicks
+                const btn = event.currentTarget;
+                btn.disabled = true;
+                
+                try {
+                    // 1. Tokenize the card first to get the source ID (cnon)
+                    const result = await card.tokenize();
+
+                    if (result.status === 'OK') {
+                        // 2. Perform verification with strict 2026 validation rules
+                        const verificationDetails = {
+                            locationId: '{{ location_id }}',
+                            {% if intent != 'STORE' %}
+                            amount: '{{ amount }}', 
+                            {% endif %}
+                            currencyCode: '{{ currency }}',
+                            intent: '{{ intent }}',
+                            customerInitiated: true,
+                            sellerKeyedIn: false,
+                            billingContact: {
+                                addressLines: ['{{ address_line_1 }}'{% if address_line_2 %},'{{ address_line_2 }}'{% endif %}],
+                                familyName: '{{ family_name }}',
+                                givenName: '{{ given_name }}',
+                                email: '{{ email }}',
+                                phone: '{{ phone }}',
+                                city: '{{ city }}',
+                                postalCode: '{{ postal_code }}',
+                                countryCode: '{{ country_code|upper }}'
+                            }
+                        };
+                        
+                        // Explicitly add safe state naming parameters for non-GB regions
+                        {% if country_code|upper != "GB" and state %}
+                        verificationDetails.billingContact.state = '{{ state }}';
+                        {% endif %}
+                        
+                        const verificationResult = await payments.verifyBuyer(result.token, verificationDetails);
+
+                        if (verificationResult && verificationResult.token) {
+                            // 3. Send BOTH tokens to the PHP controller
+                            $.ajax({
+                                url: '{{ squareup_process_payment }}',
+                                type: 'post',
+                                data: { 
+                                    source_id: String(result.token).trim(),
+                                    verification_token: String(verificationResult.token).trim()
+                                },
+                                dataType: 'json',
+                                success: function(json) {
+                                    if (json['error']) {
+                                        alert(json['error']);
+                                        btn.disabled = false;
+                                    } else if (json['redirect']) {
+                                        location = json['redirect'];	
+                                    }
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    console.error(xhr.responseText);
+                                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                    btn.disabled = false;
+                                }
+                            });
+                        } else {
+                            // This catches cancellations, failed OTP inputs, and validation timeouts
+                            console.error('Square Buyer Verification failed or was cancelled.');
+                            alert('Card verification failed. Please complete the OTP check or try another card.');
+                            btn.disabled = false;
+                        }
+                    } else {
+                        console.error(result.errors);
+                        btn.disabled = false;
+                    }
+                } catch (e) {
+                    console.error(e);
+                    btn.disabled = false;
+                }
+            });
+        } catch (e) {
+            console.error("Square initialization failed: ", e);
+        }
+    }
+
+    // Poll for the 'Square' object instead of relying on DOM events
+    // This works even if OpenCart loads this template via AJAX
+    const checkSquareLoad = setInterval(() => {
+        if (typeof Square !== 'undefined') {
+            clearInterval(checkSquareLoad);
+            initializeSquare();
+        }
+    }, 100);
+})();
+
+// Monitor script loading
+window.addEventListener('error', function(e) {
+    if (e.target.src && e.target.src.includes('square.js')) {
+        console.error('Square script failed to load:', e);
+        handleScriptLoadError();
+    }
+});
+
+function handleScriptLoadError() {
+	alert("Payment temporarily unavailable. Please try again later.");
+}
+</script>

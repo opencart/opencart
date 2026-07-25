@@ -1,0 +1,7 @@
+# CLDR Version
+#
+# This file specifies the version of CLDR data to generate data from
+# It can be a commit, branch or tag of https://github.com/unicode-cldr/cldr-localenames-full
+#
+# For more information, look at build.xml
+47.0.0

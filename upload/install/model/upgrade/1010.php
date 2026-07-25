@@ -376,14 +376,8 @@ class ModelUpgrade1010 extends Model {
 		$this->removeByNameFromDB('ups');
 		$this->removeByName($dir_opencart,'citylink');
 		$this->removeByNameFromDB('citylink');
-		if (file_exists($dir_opencart.'/admin/controller/extension/payment/squareup.php')) {
-			$contents = file_get_contents($dir_opencart.'/admin/controller/extension/payment/squareup.php');
-			if (strpos($contents,'function connect()')===false) {
-				// no newer squareup from e.g. iSenseLabs installed, remove old squareup
-				$this->removeByName($dir_opencart,'squareup');
-				$this->removeByNameFromDB('squareup');
-			}
-		}
+//		$this->removeByName($dir_opencart,'squareup');
+		$this->removeByNameFromDB('squareup');
 		$this->removeByName($dir_opencart,'usps.php');
 		$this->removeByName($dir_opencart,'usps.twig');
 		$this->removeByNameFromDB('usps');
@@ -440,8 +434,10 @@ class ModelUpgrade1010 extends Model {
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-zh-CN.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-zh-TW.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/template/extension/payment/paypal/message.twig');
+		$this->deleteEntry($dir_opencart.'/admin/view/template/extension/payment/squareup_transaction_info.twig');
 		$this->deleteEntry($dir_opencart.'/catalog/controller/information/tracking.php');
 		$this->deleteEntries($dir_opencart.'/catalog/language/*/information/tracking.php');
+		$this->deleteEntries($dir_opencart.'/catalog/model/extension/credit_card/squareup.php');
 		$this->deleteEntry($dir_opencart.'/catalog/view/javascript/jquery/owl-carousel');
 		$this->deleteEntries($dir_opencart.'/catalog/view/theme/*/template/affiliate/transaction.twig');
 		$this->deleteEntries($dir_opencart.'/catalog/view/theme/*/template/extension/module/amazon_pay.twig');

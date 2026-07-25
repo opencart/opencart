@@ -256,6 +256,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -272,19 +273,26 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('cms/topic');
+		$topic_info = [
+			'topic_id' => 0,
+			'name'     => $this->language->get('error_default')
+		];
 
-		$topic_info = $this->model_cms_topic->getTopic((int)$args['topic_id']);
+		if ($args['topic_id']) {
+			$this->load->model('cms/topic');
 
-		if (!$topic_info || !$topic_info['status'] || !in_array($store_info['store_id'], $this->model_cms_topic->getStores($topic_info['topic_id']))) {
-			return ['success' => $this->language->get('error_topic')];
+			$topic_info = $this->model_cms_topic->getTopic((int)$args['topic_id']);
+
+			if (!$topic_info || !$topic_info['status'] || !in_array($store_info['store_id'], $this->model_cms_topic->getStores($topic_info['topic_id']))) {
+				return ['success' => $this->language->get('error_topic')];
+			}
 		}
-
+		
 		$article_data = [];
 
 		$filter_data = [
-			'filter_store_id'  => $store_info['store_id'],
 			'filter_topic_id'  => $topic_info['topic_id'],
+			'filter_store_id'  => $store_info['store_id'],
 			'filter_status'    => true,
 			'sort'             => 'sort_order',
 			'order'            => 'ASC',
@@ -299,7 +307,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/topic/';
-		$filename = 'topic-article-' . $topic_info['topic_id'] . '.json';
+		$filename = 'topic-article-' . (int)$topic_info['topic_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

@@ -7,8 +7,11 @@ parameters:
     level: 1
     paths:
         - ./upload/
+    bootstrapFiles:
+        - ./upload/system/library/squareup/vendor/autoload.php
     excludePaths:
         - ./upload/system/storage/vendor/
+        - ./upload/system/library/squareup/vendor/composer/
     tmpDir: .cache
     ignoreErrors:
         - '#Class Event constructor invoked with 1 parameter, 4-5 required\.#'

@@ -49,11 +49,13 @@ customElements.define('article-list', class extends WebComponent {
 
         data.articles = [];
 
-        let articles = await loader.storage('topic/topic-article-' + this.getAttribute('topic_id'));
+        let article_ids = await loader.storage('topic/topic-article-' + this.getAttribute('topic_id'));
 
-        if (articles !== undefined) {
-            for (let article of articles) {
-                if (config.config_language in article.description) {
+        if (article_ids !== undefined) {
+            for (let article_id of article_ids) {
+                let article = await loader.storage('article/article-' + article_id);
+
+                if (article !== undefined && config.config_language in article.description) {
                     let description = article.description[config.config_language];
 
                     data.articles.push({
@@ -63,16 +65,27 @@ customElements.define('article-list', class extends WebComponent {
                         image: article.image,
                         author: article.author,
                         comment_total: article.comment_total,
-                        date_added: article.date_added,
+                        date_added: article.date_added
                     });
                 }
             }
         }
+
+
+
 
         return loader.template('cms/article_list', { ...data, ...language, ...config });
     }
 
     onChange(e) {
         this.setAttribute('sort');
+    }
+
+    onClick(e) {
+        e.preventDefault();
+
+        let target = document.getElementById('content');
+
+        target.src = e.target.getAttribute('href');
     }
 });

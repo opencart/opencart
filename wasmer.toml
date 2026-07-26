@@ -1,0 +1,11 @@
+[package]
+name = "opencart"
+version = "4.0.0"
+
+[dependencies]
+"php" = "8.2"
+"mariadb" = "10"
+
+[[command]]
+name = "opencart"
+module = "php"

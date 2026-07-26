@@ -70,6 +70,6 @@ class Related extends \Opencart\System\Engine\Controller {
 			$data['products'][] = $this->load->controller('product/thumb', $product_data);
 		}
 
-		return $this->load->view('product/related', $data);
+		return $this->load->view('catalog/related', $data);
 	}
 }

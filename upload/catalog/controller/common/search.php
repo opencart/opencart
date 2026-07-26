@@ -26,7 +26,7 @@ class Search extends \Opencart\System\Engine\Controller {
 			$data['search'] = '';
 		}
 
-		return $this->load->view('common/search', $data);
+		return $this->load->view('component/search', $data);
 	}
 
 	/**

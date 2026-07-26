@@ -203,7 +203,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['currency'] = $this->session->data['currency'];
 
-		return $this->load->view('checkout/cart_list', $data);
+		return $this->load->view('checkout/cart', $data);
 	}
 
 	/**

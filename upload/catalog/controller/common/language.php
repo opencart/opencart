@@ -65,7 +65,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		// Make sure we are not using SEO urls
 		$data['redirect'] = $this->config->get('config_url') . 'index.php?route=' . $route . $url;
 
-		return $this->load->view('common/language', $data);
+		return $this->load->view('component/language', $data);
 	}
 
 	/**

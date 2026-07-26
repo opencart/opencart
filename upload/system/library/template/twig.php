@@ -62,14 +62,12 @@ class Twig {
 	 * @return string
 	 */
 	public function render(string $filename, array $data = [], string $code = ''): string {
-		$file = $this->directory . $filename . '.twig';
-
 		/*
 		 * FYI: To all the Twig lovers out there!
 		 * The Twig syntax is good, but the implementation and the available methods is a joke!
 		 *
 		 * All the Symfony developer has done is create a garbage framework by putting 3rd party scripts into DI containers.
-		 * The Twig syntax, he ripped it off from Jinja and Django templates then did a garbage implementation!
+		 * If symphony is like this, then I have no idea why people use the framework.
 		 *
 		 * The fact that this system cache is just compiling php into more php code instead of html, is a disgrace!
 		 */
@@ -77,6 +75,8 @@ class Twig {
 		$namespace = '';
 
 		$parts = explode('/', $filename);
+
+		$file = '';
 
 		foreach ($parts as $part) {
 			if (!$namespace) {
@@ -86,12 +86,32 @@ class Twig {
 			}
 
 			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . substr($filename, strlen($namespace) + 1) . '.twig';
+				$base = $this->path[$namespace] . substr($filename, strlen($namespace) + 1);
 			}
 		}
 
+		if (!isset($base)) {
+			$base = $this->directory . $filename;
+		}
+
+		// If $base is an absolute path, make it relative to $this->root
+		if (strpos($base, '/') === 0) {
+			$base = substr($base, strlen($this->root) + 1);
+		}
+
+		// Check for .html first, then .twig
+		if (is_file($this->root . '/' . $base . '.html')) {
+			$file = $base . '.html';
+		} elseif (is_file($this->root . '/' . $base . '.twig')) {
+			$file = $base . '.twig';
+		} else {
+			$file = $base . '.html';
+		}
+
 		// We have to remove the root web directory.
-		$file = substr($file, strlen($this->root) + 1);
+		if (strpos($file, $this->root) === 0) {
+			$file = substr($file, strlen($this->root) + 1);
+		}
 
 		if ($code) {
 			// render from modified template code
@@ -116,9 +136,11 @@ class Twig {
 				$twig->addExtension(new \Twig\Extension\DebugExtension());
 			}
 
+			$twig->addExtension(new \Opencart\System\Library\Template\TwigExtension());
+
 			return $twig->render($file, $data);
-		} catch (\Twig\Error\SyntaxError $e) {
-			throw new \Exception('Error: Could not load template ' . $filename . '!');
+		} catch (\Twig\Error\SyntaxError | \Twig\Error\RuntimeError | \Twig\Error\LoaderError $e) {
+			throw new \Exception('Error: Could not load template ' . $filename . ': ' . $e->getMessage());
 		}
 	}
 }

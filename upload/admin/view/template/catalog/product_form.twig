@@ -74,20 +74,6 @@
                               </div>
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label for="input-tag-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_tag }}</label>
-                            <div class="col-sm-10">
-                              <div class="input-group">
-                                <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.code] ? product_description[language.code].tag }}" placeholder="{{ entry_tag }}" id="input-tag-{{ language.language_id }}" class="form-control"/>
-                                {% if master_id %}
-                                  <div class="input-group-text">
-                                    <x-switch name="override[product_description][{{ language.language_id }}][tag]" value="1" checked="{{ override.product_description[language.code].tag }}" input-class="form-switch" data-oc-target="#input-tag-{{ language.language_id }}"></x-switch>
-                                  </div>
-                                {% endif %}
-                              </div>
-                              <div class="form-text">{{ help_tag }}</div>
-                            </div>
-                          </div>
                         </fieldset>
                         <fieldset>
                           <legend>{{ text_meta }}</legend>
@@ -447,6 +433,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" data-oc-target="autocomplete-category" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-category" class="dropdown-menu"></ul>
+
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-category" class="table m-0">
@@ -460,15 +447,51 @@
                         </tbody>
                       </table>
                     </div>
+
                     {% if master_id %}
                       <div class="input-group-text">
                         <x-switch name="override[product_category]" value="1" checked="{{ override.product_category }}" input-class="form-switch" data-oc-target="#input-category, #product-category"></x-switch>
                       </div>
                     {% endif %}
+
                   </div>
                   <div class="form-text">{{ help_category }}</div>
                 </div>
               </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_tag }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="tag" value="" placeholder="{{ entry_tag }}" id="input-tag" class="form-control"/>
+                  <ul id="autocomplete-tag" class="dropdown-menu"></ul>
+
+                  <div class="input-group">
+
+                    <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                      <table id="product-tag" class="table m-0">
+                        <tbody>
+                          {% for product_tag in product_tags %}
+                            <tr id="product-tag-{{ product_tag.tag_id }}">
+                              <td>{{ product_tag.name }}<input type="hidden" name="product_tag[]" value="{{ product_tag.tag_id }}"/></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {% if master_id %}
+                      <div class="input-group-text">
+                        <x-switch name="override[tag]" value="1" checked="{{ override.tag }}" input-class="form-switch" data-oc-target="#input-tag"></x-switch>
+                      </div>
+                    {% endif %}
+
+                  </div>
+
+                  <div class="form-text">{{ help_tag }}</div>
+                </div>
+              </div>
+
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
                 <div class="col-sm-10">

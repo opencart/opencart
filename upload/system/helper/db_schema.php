@@ -5872,7 +5872,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'product_option_id'
+			'product_tag_id'
 		],
 		'foreign' => [
 			[
@@ -5909,7 +5909,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'product_option_id'
+			'product_tag_id'
 		],
 		'foreign' => [
 			[

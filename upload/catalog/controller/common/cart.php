@@ -91,7 +91,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['currency'] = $this->session->data['currency'];
 
-		return $this->load->view('common/cart', $data);
+		return $this->load->view('component/cart', $data);
 	}
 
 	/**

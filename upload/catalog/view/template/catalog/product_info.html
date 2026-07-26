@@ -45,7 +45,7 @@
     {% if price %}
     <ul class="list-unstyled">
 
-      {% if !special %}
+      {% if not special %}
       <li>
         <h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></h2>
       </li>
@@ -236,11 +236,11 @@
 
             {% if subscription_plan.duration %}
 
-            <option value="{{ subscription_plan.subscription_plan_id }}">{{ text_subscription_duration | replace_first: '%s', subscription_plan.price | replace_first: '%d', subscription_plan.cycle | replace_first: '%s', subscription_plan.frequency | replace_first: '%d', subscription_plan.duration }}</option>
+            <option value="{{ subscription_plan.subscription_plan_id }}">{{ text_subscription_duration|replace_first('%s', subscription_plan.price)|replace_first('%d', subscription_plan.cycle)|replace_first('%s', subscription_plan.frequency)|replace_first('%d', subscription_plan.duration) }}</option>
 
             {% else %}
 
-            <option value="{{ subscription_plan.subscription_plan_id }}">{{ text_subscription_cancel | replace_first: '%s', subscription_plan.price | replace_first: '%d', subscription_plan.cycle }}</option>
+            <option value="{{ subscription_plan.subscription_plan_id }}">{{ text_subscription_cancel|replace_first('%s', subscription_plan.price)|replace_first('%d', subscription_plan.cycle) }}</option>
             text_subscription_cancel
 
             {% endif %}
@@ -269,7 +269,7 @@
         </div>
 
         {% if minimum > 1 %}
-        <div class="alert alert-warning"><i class="fa-solid fa-circle-info"></i> {{ text_minimum | replace: '%s', minimum }}</div>
+        <div class="alert alert-warning"><i class="fa-solid fa-circle-info"></i> {{ text_minimum|replace({'%s': minimum}) }}</div>
         {% endif %}
       </form>
     </div>
@@ -286,7 +286,7 @@
 <div class="tab-content">
   <div id="tab-description" class="tab-pane fade show active mb-4">
     {{ description }} {% if tags %}
-    <p><strong>{{ text_tags }}</strong> {% for tag in tags %} <a href="{{ tag }}">{{ tag }}</a>{% if !loop.last %},{% endif %} {% endfor %}</p>
+    <p><strong>{{ text_tags }}</strong> {% for tag in tags %} <a href="{{ tag }}">{{ tag }}</a>{% if not loop.last %},{% endif %} {% endfor %}</p>
     {% endif %}
   </div>
   {% if attribute_groups %}

@@ -539,6 +539,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($return_total - $limit)) ? $return_total : ((($page - 1) * $limit) + $limit), $return_total, ceil($return_total / $limit));
 
-		return $this->load->view('account/returns_history', $data);
+		return $this->load->view('account/return_history', $data);
 	}
 }

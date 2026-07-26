@@ -58,7 +58,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$data['redirect'] = $this->url->link($route, $url);
 
-		return $this->load->view('common/currency', $data);
+		return $this->load->view('component/currency', $data);
 	}
 
 	/**

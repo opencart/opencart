@@ -57,6 +57,8 @@ set_exception_handler(function(object $e) use ($log, $config): void {
 		header('Location: ' . $config->get('error_page'));
 		exit();
 	}
+
+	exit();
 });
 
 // Event
@@ -243,6 +245,11 @@ while ($action) {
 
 // Trigger the post events
 $event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+
+// Set output on response if controller returned a string
+if (is_string($output)) {
+	$response->setOutput($output);
+}
 
 // Output
 $response->output();

@@ -130,7 +130,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		return $this->load->view('account/address_list', $data);
+		return $this->load->view('account/address', $data);
 	}
 
 	/**

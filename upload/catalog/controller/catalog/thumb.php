@@ -40,6 +40,6 @@ class Thumb extends \Opencart\System\Engine\Controller {
 
 		$data['currency'] = $this->session->data['currency'];
 
-		return $this->load->view('product/thumb', $data);
+		return $this->load->view('catalog/product_thumb', $data);
 	}
 }

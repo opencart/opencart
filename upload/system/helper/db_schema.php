@@ -691,10 +691,6 @@ function oc_db_schema() {
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'tag',
-				'type' => 'text'
-			],
-			[
 				'name' => 'meta_title',
 				'type' => 'varchar(255)'
 			],
@@ -898,6 +894,39 @@ function oc_db_schema() {
 				'key'   => 'store_id',
 				'table' => 'store',
 				'field' => 'store_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'article_to_tag',
+		'field' => [
+			[
+				'name' => 'article_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'tag_id',
+				'type' => 'int(11)'
+			]
+		],
+		'primary' => [
+			'article_id',
+			'tag_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'article_id',
+				'table' => 'article',
+				'field' => 'article_id'
+			],
+			[
+				'key'   => 'tag_id',
+				'table' => 'tag',
+				'field' => 'tag_id'
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -5477,10 +5506,6 @@ function oc_db_schema() {
 				'type' => 'mediumtext'
 			],
 			[
-				'name' => 'tag',
-				'type' => 'text'
-			],
-			[
 				'name' => 'meta_title',
 				'type' => 'varchar(255)'
 			],
@@ -5804,131 +5829,6 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'product_subscription',
-		'field' => [
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'subscription_plan_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'customer_group_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)'
-			],
-			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)'
-			]
-		],
-		'primary' => [
-			'product_id',
-			'subscription_plan_id',
-			'customer_group_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
-				'key'   => 'subscription_plan_id',
-				'table' => 'subscription_plan',
-				'field' => 'subscription_plan_id'
-			],
-			[
-				'key'   => 'customer_group_id',
-				'table' => 'customer_group',
-				'field' => 'customer_group_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'product_tag',
-		'field' => [
-			[
-				'name'           => 'product_tag_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'tag',
-				'type' => 'text'
-			]
-		],
-		'primary' => [
-			'product_option_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
-				'key'   => 'option_id',
-				'table' => 'option',
-				'field' => 'option_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'product_2_tag',
-		'field' => [
-			[
-				'name'           => 'product_tag_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'tag',
-				'type' => 'text'
-			]
-		],
-		'primary' => [
-			'product_option_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
-				'key'   => 'option_id',
-				'table' => 'option',
-				'field' => 'option_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
 		'name'  => 'product_related',
 		'field' => [
 			[
@@ -6043,6 +5943,57 @@ function oc_db_schema() {
 				'key'   => 'product_id',
 				'table' => 'product',
 				'field' => 'product_id'
+			],
+			[
+				'key'   => 'customer_group_id',
+				'table' => 'customer_group',
+				'field' => 'customer_group_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'product_subscription',
+		'field' => [
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'customer_group_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)'
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)'
+			]
+		],
+		'primary' => [
+			'product_id',
+			'subscription_plan_id',
+			'customer_group_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'product_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			],
+			[
+				'key'   => 'subscription_plan_id',
+				'table' => 'subscription_plan',
+				'field' => 'subscription_plan_id'
 			],
 			[
 				'key'   => 'customer_group_id',
@@ -6200,6 +6151,39 @@ function oc_db_schema() {
 				'key'   => 'store_id',
 				'table' => 'store',
 				'field' => 'store_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'product_to_tag',
+		'field' => [
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'tag_id',
+				'type' => 'int(11)'
+			]
+		],
+		'primary' => [
+			'product_id',
+			'tag_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'product_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			],
+			[
+				'key'   => 'tag_id',
+				'table' => 'tag',
+				'field' => 'tag_id'
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -7379,6 +7363,27 @@ function oc_db_schema() {
 				'table' => 'language',
 				'field' => 'language_id'
 			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'tag',
+		'field' => [
+			[
+				'name'           => 'tag_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'tag',
+				'type' => 'text'
+			]
+		],
+		'primary' => [
+			'tag_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

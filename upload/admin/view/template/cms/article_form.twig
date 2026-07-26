@@ -60,14 +60,6 @@
                               </div>
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label for="input-tag-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_tag }}</label>
-                            <div class="col-sm-10">
-                              <input type="text" name="article_description[{{ language.language_id }}][tag]" value="{{ article_description[language.code] ? article_description[language.code].tag }}" placeholder="{{ entry_tag }}" id="input-tag-{{ language.language_id }}" class="form-control"/>
-                              <div class="form-text">{{ help_tag }}</div>
-                              <div id="error-tag-{{ language.language_id }}" class="invalid-feedback"></div>
-                            </div>
-                          </div>
                         </fieldset>
                         <fieldset>
                           <legend>{{ text_meta }}</legend>
@@ -116,6 +108,36 @@
                   </select>
                 </div>
               </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_tag }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="tag" value="" placeholder="{{ entry_tag }}" id="input-tag" class="form-control"/>
+                  <ul id="autocomplete-tag" class="dropdown-menu"></ul>
+
+                  <div class="input-group">
+                    <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                      <table id="article-tag" class="table m-0">
+                        <tbody>
+                          {% for article_tag in article_tags %}
+                            <tr id="article-tag-{{ article_tag.tag_id }}">
+                              <td>{{ article_tag.name }}<input type="hidden" name="article_tag[]" value="{{ article_tag.tag_id }}"/></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                    {% if master_id %}
+                      <div class="input-group-text">
+                        <x-switch name="override[tag]" value="1" checked="{{ override.tag }}" input-class="form-switch" data-oc-target="#input-tag"></x-switch>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="form-text">{{ help_tag }}</div>
+                </div>
+              </div>
+
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">

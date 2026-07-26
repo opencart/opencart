@@ -39,6 +39,14 @@ class Article extends \Opencart\System\Engine\Model {
 			$this->model_cms_article->addDescription($article_id, $language_id, $value);
 		}
 
+		// Tag
+		if (isset($data['article_tag'])) {
+			foreach ($data['article_tag'] as $tag_id) {
+				$this->model_cms_article->addTag($article_id, $tag_id);
+
+			}
+		}
+
 		// Store
 		if (isset($data['article_store'])) {
 			foreach ($data['article_store'] as $store_id) {
@@ -99,6 +107,15 @@ class Article extends \Opencart\System\Engine\Model {
 
 		foreach ($data['article_description'] as $language_id => $value) {
 			$this->model_cms_article->addDescription($article_id, $language_id, $value);
+		}
+
+		// Tag
+		$this->model_cms_article->deleteTags($article_id);
+
+		if (isset($data['article_tag'])) {
+			foreach ($data['article_tag'] as $tag_id) {
+				$this->model_cms_article->addTag($article_id, $tag_id);
+			}
 		}
 
 		// Store
@@ -174,6 +191,7 @@ class Article extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article` WHERE `article_id` = '" . (int)$article_id . "'");
 
 		$this->model_cms_article->deleteDescriptions($article_id);
+		$this->model_cms_article->deleteTags($article_id);
 		$this->model_cms_article->deleteStores($article_id);
 		$this->model_cms_article->deleteCommentsByArticleId($article_id);
 
@@ -383,7 +401,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_article->addDescription($article_id, $language_id, $article_data);
 	 */
 	public function addDescription(int $article_id, int $language_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
@@ -470,6 +488,91 @@ class Article extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Add Tag
+	 *
+	 * Create a new product category record in the database.
+	 *
+	 * @param int $product_id  primary key of the product record
+	 * @param int $tag_id primary key of the category record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->addTag($product_id, $tag_id);
+	 */
+	public function addTag(int $article_id, int $tag_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_to_tag` SET `article_id` = '" . (int)$article_id . "', `tag_id` = '" . (int)$tag_id . "'");
+	}
+
+	/**
+	 * Delete Tags
+	 *
+	 * Delete product category records in the database.
+	 *
+	 * @param int $product_id primary key of the product record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->deleteTags($product_id);
+	 */
+	public function deleteTags(int $article_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_tag` WHERE `article_id` = '" . (int)$article_id . "'");
+	}
+
+	/**
+	 * Delete Tags By Tag ID
+	 *
+	 * Delete categories by category record in the database.
+	 *
+	 * @param int $category_id primary key of the category record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->deleteTagByTagId($tag_id);
+	 */
+	public function deleteTagsByTagId(int $tag_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_to_tag` WHERE `tag_id` = '" . (int)$tag_id . "'");
+	}
+
+	/**
+	 * Get Tags
+	 *
+	 * Get the record of the product category records in the database.
+	 *
+	 * @param int $product_id primary key of the product record
+	 *
+	 * @return array<int, int> category records that have category ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $categories = $this->model_catalog_product->getCategories($product_id);
+	 */
+	public function getTags(int $article_id): array {
+		$article_tag_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_to_tag` WHERE `article_id` = '" . (int)$article_id . "'");
+
+		foreach ($query->rows as $result) {
+			$article_tag_data[] = $result['tag_id'];
+		}
+
+		return $article_tag_data;
 	}
 
 	/**

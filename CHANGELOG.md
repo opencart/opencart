@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v3.0.5.1] [Unreleased] (27.07.2026)
+## [v3.0.5.1] (Unreleased 27.07.2026)
   
 #### Changes
 

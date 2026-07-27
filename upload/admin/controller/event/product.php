@@ -236,7 +236,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			// Tags
 			foreach ($tag_ids as $tag_id) {
 				$task_data = [
-					'code'   => 'category.product.' . $store_id . '.' . $tag_id,
+					'code'   => 'tag.product.' . $store_id . '.' . $tag_id,
 					'action' => 'task/catalog/tag.product',
 					'args'   => [
 						'tag_id'   => $tag_id,

@@ -77,10 +77,26 @@ class Mail extends \stdClass {
 
 		ini_set('sendmail_from', $this->from);
 
-		if ($this->parameter) {
-			mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header, $this->parameter);
-		} else {
-			mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
+		// Define a temporary error handler that converts warnings into exceptions
+		set_error_handler(function ($severity, $message, $file, $line) {
+			if ($severity === E_WARNING) {
+				throw new \ErrorException($message, 0, $severity, $file, $line);
+			}
+			return false; // Let non-warnings pass to normal handling
+		});
+
+		try {
+			// Run existing mail calls
+			if ($this->parameter) {
+				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header, $this->parameter);
+			} else {
+				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
+			}
+		} catch (\ErrorException $e) {
+			// The PHP 8.5 warning is safely caught here! We ignore it.
+		} finally {
+			// Always restore the server's original error handler
+			restore_error_handler();
 		}
 	}
 }

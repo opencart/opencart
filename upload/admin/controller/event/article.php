@@ -53,6 +53,10 @@ class Article extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
+
+
+
+
 		}
 	}
 
@@ -72,16 +76,16 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function editArticle(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
+		// Rewrite the article ID's in the topic file
+		$this->load->model('cms/article');
+
+		$article_info = $this->model_cms_article->getArticle($args[0]);
+
 		$store_ids = [];
 
 		if (isset($args[1]['article_store'])) {
 			$store_ids = (array)$args[1]['article_store'];
 		}
-
-		// Rewrite the article ID's in the topic file
-		$this->load->model('cms/article');
-
-		$article_info = $this->model_cms_article->getArticle($args[0]);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

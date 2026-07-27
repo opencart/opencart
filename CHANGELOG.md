@@ -1,8 +1,70 @@
 # OpenCart change log
 
-## [Unreleased]
+## [v3.0.5.1] [Unreleased] (27.07.2026)
+  
+#### Changes
 
-## [v4.0.1.2] (Release date: 07.07.2017)
+* Changed: Improved mail exception handler (https://github.com/opencart/opencart/pull/15625)
+* Changed: Updated php-cs-fixer (https://github.com/opencart/opencart/pull/15624)
+* Fixed: PHP 8.5 deprecation error fixes (https://github.com/opencart/opencart/pull/15623)
+* Changed: PHPStan changes (https://github.com/opencart/opencart/pull/15620)
+* Changed: Updated Squareup payment (https://github.com/opencart/opencart/pull/15617)
+* Changed: PHP 8.5 support for cardinity payment method (https://github.com/opencart/opencart/pull/15616)
+* Changed: Updated upgrade script (https://github.com/opencart/opencart/pull/15521)
+* Removed: Removed discontinued google hangouts (https://github.com/opencart/opencart/pull/15520)
+* Changed: Replace socket_set_timeout with stream_set_timeout for PHP 8.5 (https://github.com/opencart/opencart/pull/15471)
+* Changed: PHP 8.5 support (https://github.com/opencart/opencart/pull/15469)
+* Changed: php-cs-fixer changes (https://github.com/opencart/opencart/pull/15468)
+* Updated: 3.0.x.x-wechat-pay (https://github.com/opencart/opencart/pull/15466)
+* Updated: 3.0.x.x-wechat-pay (https://github.com/opencart/opencart/pull/15456)
+* Changed: modification.php (https://github.com/opencart/opencart/pull/15310)
+* Added: Add authentication support to Redis Cache driver (https://github.com/opencart/opencart/pull/15249)
+* Fixed: Image file manager fix (https://github.com/opencart/opencart/pull/15321)
+* Fixed: Removal of getTotalCategoriesByCategoryId (https://github.com/opencart/opencart/pull/15313)
+* Fixed: Don't remove leading slash from PHP_SELF (https://github.com/opencart/opencart/pull/15292)
+* Fixed: Fix utf8 helper iconv implicit conversions in PHP 8.1 (https://github.com/opencart/opencart/pull/15301)
+* Fixed: Don't remove leading slash from PHP_SELF (https://github.com/opencart/opencart/pull/15291)
+* Fixed: Fix Google sitemap XML when product names contain HTML entities (https://github.com/opencart/opencart/pull/15290)
+* Fixed: Fix admin login password encoding (https://github.com/opencart/opencart/pull/15264)
+* Changed: PHP-CS-Fixer - cleanup indention and dangling spaces (https://github.com/opencart/opencart/pull/15126)
+* Fixed: Checkbox left margin fix (https://github.com/opencart/opencart/pull/15284)
+* Removed: Removal of old USPS (https://github.com/opencart/opencart/pull/15283)
+* Added: Added USPS (https://github.com/opencart/opencart/pull/#15282)
+* Fixed: Sales Orders Buttons (https://github.com/opencart/opencart/pull/#15280)
+* Changed: Update region codes for Bulgaria (https://github.com/opencart/opencart/pull/#15274)
+* Removed: Removal of obsolete config_mail_protocol (https://github.com/opencart/opencart/pull/#15269)
+* Fixed: Fix GLOB_BRACE compatibility issues (Alpine Linux, Musl, FrankenPHP) (https://github.com/opencart/opencart/pull/#15247)
+* Fixed: improved GLOB_BRACE support (https://github.com/opencart/opencart/pull/#15267)
+* Fixed: Remove GLOB_BRACE for glob() to improve compatibility on musl-based systems (https://github.com/opencart/opencart/pull/#15246)
+* Fixed: Fix zone Royal Mail config name (https://github.com/opencart/opencart/pull/#15242)
+
+## [v3.0.5.0] (Release date: 12.09.2025)
+
+## [v3.0.4.1] (Release date: 14.05.2025)
+
+## [v3.0.4.0] (Release date: 24.06.2024)
+
+## [v3.0.3.9] (Release date: 15.10.2023)
+
+## [v3.0.3.8] (Release date: 25.08.2021)
+
+## [v3.0.3.7] (Release date: 04.02.2021)
+
+## [v3.0.3.6] (Release date: 20.07.2020)
+
+## [v3.0.3.5] (Release date: 17.07.2020)
+
+## [v3.0.3.4] (Release date: 25.05.2020)
+
+## [v3.0.3.3] (Release date: 01.05.2020)
+
+## [v3.0.3.2] (Release date: 09.04.2019)
+
+## [v3.0.3.1] (Release date: 04.01.2019)
+
+## [v3.0.3.0] (Release date: 02.01.2019)
+
+## [v3.0.2.0] (Release date: 17.07.2017)
 
 ## [v3.0.1.2] (Release date: 07.07.2017)
 

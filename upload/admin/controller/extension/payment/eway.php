@@ -243,7 +243,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
-		$refund_amount = (double)$this->request->post['refund_amount'];
+		$refund_amount = (float)$this->request->post['refund_amount'];
 
 		if ($order_id && $refund_amount > 0) {
 			$this->load->model('extension/payment/eway');
@@ -298,7 +298,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
-		$capture_amount = (double)$this->request->post['capture_amount'];
+		$capture_amount = (float)$this->request->post['capture_amount'];
 
 		if ($order_id && $capture_amount > 0) {
 			$this->load->model('extension/payment/eway');

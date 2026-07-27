@@ -267,6 +267,6 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 	public function getTotalRebated($globalpay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "globalpay_remote_order_transaction` WHERE `globalpay_remote_order_id` = '" . (int)$globalpay_order_id . "' AND 'rebate'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 }

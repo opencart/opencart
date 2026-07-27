@@ -461,7 +461,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
                     }
 				}
 
-				if ($total_captured >= (double)$amazon_login_pay_order['total']) {
+				if ($total_captured >= (float)$amazon_login_pay_order['total']) {
 					$this->model_extension_payment_amazon_login_pay->updateCaptureStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
 					$capture_status = 1;
 					$json['msg'] = $this->language->get('text_capture_ok_order');

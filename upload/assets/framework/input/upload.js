@@ -1,9 +1,10 @@
-import { WebComponent } from '../library/webcomponent.js';
+import { WebComponent } from '../component.js';
 
-customElements.define('x-upload', class extends WebComponent {
+customElements.define('input-upload', class extends WebComponent {
     static observed = [
         'name',
         'value',
+        'disabled',
         'required',
         'readonly'
     ];
@@ -49,87 +50,49 @@ customElements.define('x-upload', class extends WebComponent {
     }
 
     render() {
+
+        // data-oc-toggle="upload"
+        // data-oc-url="{{ upload }}"
+        // data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"
+        // data-oc-size-max="{{ config_file_max_size }}"
+        // data-oc-size-error="{{ error_upload_size }}"
+
         let html = '';
 
         html += '<div class="input-group">';
+
         html += '  <button type="button" class="btn btn-primary" data-on="click:onClick"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>';
+
         html += '  <input type="text" name="' + this.name + '" value="' + this.value + '" id="' + this.getAttribute('input-id') + '" class="form-control" data-on="click:onClick"/>';
-        html += '  <button type="button" disabled class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i></button>';
-        html += '  <button type="button" disabled class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>';
+
+        html += '  <button type="button" class="btn btn-outline-secondary" data-on="click:download" disabled><i class="fa-solid fa-download"></i></button>';
+
+        html += '  <button type="button" class="btn btn-outline-danger" data-on="click:cancel" disabled><i class="fa-solid fa-eraser"></i></button>';
+
         html += '</div>';
 
         return html;
     }
 
     onclick(e) {
-        if (!$(element).prop('disabled')) {
-            var element = this;
+        if (!this.disabled) {
+            let form = document.getElementById('#form-upload');
 
-            if (!$(element).prop('disabled')) {
-                $('#form-upload').remove();
+            form.remove();
 
-                $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>');
+            $('#form-upload input[name=\'file\']').trigger('click');
 
-                $('#form-upload input[name=\'file\']').trigger('click');
+            $('#form-upload input[name=\'file\']').on('change', function(e) {
+                if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
+                    alert($(element).attr('data-oc-size-error'));
 
-                $('#form-upload input[name=\'file\']').on('change', function(e) {
-                    if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
-                        alert($(element).attr('data-oc-size-error'));
-
-                        $(this).val('');
-                    }
-                });
-
-                if (typeof timer != 'undefined') {
-                    clearInterval(timer);
+                    $(this).val('');
                 }
+            });
 
-                var timer = setInterval(function() {
-                    if ($('#form-upload input[name=\'file\']').val() != '') {
-                        clearInterval(timer);
-
-                        $.ajax({
-                            url: $(element).attr('data-oc-url'),
-                            type: 'post',
-                            data: new FormData($('#form-upload')[0]),
-                            dataType: 'json',
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            beforeSend: function() {
-                                $(element).button('loading');
-                            },
-                            complete: function() {
-                                $(element).button('reset');
-                            },
-                            success: function(json) {
-                                console.log(json);
-
-                                if (json['error']) {
-                                    alert(json['error']);
-                                }
-
-                                if (json['success']) {
-                                    alert(json['success']);
-                                }
-
-                                if (json['code']) {
-                                    $($(element).attr('data-oc-target')).val(json['code']);
-
-                                    $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', false);
-                                }
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                        });
-                    }
-                }, 500);
-            }
+            document.body.prepend();
         }
     }
-
-
 
     onchange(e) {
         this.checked = e.target.checked ? 1 : 0;
@@ -168,44 +131,64 @@ customElements.define('x-upload', class extends WebComponent {
 
         $($(this).attr('data-oc-target')).val('');
     }
+});
+
+customElements.define('form-upload', class extends WebComponent {
 
 
-    event = {
-        connected: async () => {
-            this.addEventListener('[checked]', this.event.onchecked);
+    render() {
+        return '<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>';
+    }
 
-            this.target = this.getAttribute('target') == 1 ? 1 : 0;
-            this.value = this.getAttribute('value');
+    onClick() {
+        if (typeof timer != 'undefined') {
+            clearInterval(timer);
+        }
 
-            let html = '';
+        let timer = setInterval(this.timeout, 500);
 
-            html += '<div class="input-group">';
-            html += '  <button type="button" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>';
-            html += '  <input type="text" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" id="' + this.getAttribute('input-id') + '" class="form-control" readonly/>';
-            html += '  <button type="button" disabled class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i></button>';
-            html += '  <button type="button" disabled class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>';
-            html += '</div>';
 
-            // data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}"
-            // data-oc-toggle="download"
-            // data-oc-toggle="clear"
-            // data-oc-target="#' + this.getAttribute('input-id') + '"
-            // data-oc-target="#' + this.getAttribute('input-id') + '"{
+    }
 
-            html += '<div class="' + this.getAttribute('input-class') + '">';
-            html += '  <input type="hidden" name="' + this.getAttribute('name') + '" value=""/>';
-            html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" class="form-check-input"' + (this.checked ? ' checked' : '') + '/>';
-            html += '</div>';
+    timeout() {
+        if ($('#form-upload input[name=\'file\']').val() != '') {
+            clearInterval(timer);
 
-            this.innerHTML = html;
+            $.ajax({
+                url: $(element).attr('data-oc-url'),
+                type: 'post',
+                data: new FormData($('#form-upload')[0]),
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $(element).button('loading');
+                },
+                complete: function() {
+                    $(element).button('reset');
+                },
+                success: function(json) {
+                    console.log(json);
 
-            this.element = this.querySelector('input[type=\'checkbox\']');
+                    if (json['error']) {
+                        alert(json['error']);
+                    }
 
-            this.element.addEventListener('change', this.event.onchange);
+                    if (json['success']) {
+                        alert(json['success']);
+                    }
 
-            if (this.hasAttribute('input-id')) {
-                this.element.setAttribute('id', this.getAttribute('input-id'));
-            }
-        },
-    };
+                    if (json['code']) {
+                        $($(element).attr('data-oc-target')).val(json['code']);
+
+                        $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', false);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }
 });

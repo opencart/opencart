@@ -22,13 +22,13 @@ class Filter extends \Opencart\System\Engine\Controller {
 	public function addFilter(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
 
-		$this->load->model('catalog/filter');
-
-		$filters = $this->model_catalog_filter->getFilters((int)$args['filter_group_id']);
-
 		$this->load->model('setting/store');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		$this->load->model('catalog/filter');
+
+		$filters = $this->model_catalog_filter->getFilters((int)$args['filter_group_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -74,6 +74,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 	public function editFilter(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
+		$this->load->model('setting/store');
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
 		// Filters
 		$filter_ids = [];
 
@@ -84,10 +88,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/filter');
 
 		$remove_ids = array_diff(array_column($this->model_catalog_filter->getFilters(['filter_group_id' => $args[0]]), 'filter_id'), $filter_ids);
-
-		$this->load->model('setting/store');
-
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

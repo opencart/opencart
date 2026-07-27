@@ -228,10 +228,11 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
+		// Stores
 		$store_ids = $this->model_cms_article->getStores($args[0]);
 
 		// Tags
-		$tag_ids = array_unique(array_merge($this->model_cms_article->getTags($args[0]), $tag_ids));
+		$tag_ids = $this->model_cms_article->getTags($args[0]);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -264,8 +265,8 @@ class Article extends \Opencart\System\Engine\Controller {
 					'code'   => 'tag.article.' . $store_id . '.' . $tag_id,
 					'action' => 'task/catalog/tag.article',
 					'args'   => [
-						'tag_id'    => $tag_id,
-						'store_id'  => $store_id
+						'tag_id'   => $tag_id,
+						'store_id' => $store_id
 					]
 				];
 

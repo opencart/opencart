@@ -1,4 +1,4 @@
-import {WebComponent} from '../component.js';
+import { WebComponent } from '../component.js';
 
 customElements.define('x-autocomplete', class extends WebComponent {
     async render() {

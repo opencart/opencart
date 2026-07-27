@@ -30,6 +30,13 @@ class Article extends \Opencart\System\Engine\Controller {
 			$store_ids = (array)$args[1]['article_store'];
 		}
 
+		// Tags
+		$tag_ids = [];
+
+		if (isset($args[1]['product_tag'])) {
+			$tag_ids = (array)$args[1]['product_tag'];
+		}
+
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'article.info.' . $store_id . '.' . $output,
@@ -54,9 +61,19 @@ class Article extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 
+			// Tags
+			foreach ($tag_ids as $tag_id) {
+				$task_data = [
+					'code'   => 'tag.product.' . $store_id . '.' . $tag_id,
+					'action' => 'task/catalog/tag.product',
+					'args'   => [
+						'tag_id'   => $tag_id,
+						'store_id' => $store_id
+					]
+				];
 
-
-
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 
@@ -86,6 +103,15 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (isset($args[1]['article_store'])) {
 			$store_ids = (array)$args[1]['article_store'];
 		}
+
+		// Tags
+		$tag_ids = [];
+
+		if (isset($args[1]['article_tag'])) {
+			$tag_ids = (array)$args[1]['article_tag'];
+		}
+
+		$tag_ids = array_unique(array_merge($this->model_cms_article->getTags($args[0]), $tag_ids));
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -123,6 +149,20 @@ class Article extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+
+			// Tags
+			foreach ($tag_ids as $tag_id) {
+				$task_data = [
+					'code'   => 'tag.article.' . $store_id . '.' . $tag_id,
+					'action' => 'task/catalog/tag.article',
+					'args'   => [
+						'tag_id'   => $tag_id,
+						'store_id' => $store_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 
 		// Remove from stores
@@ -151,6 +191,20 @@ class Article extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+
+			// Tags
+			foreach ($tag_ids as $tag_id) {
+				$task_data = [
+					'code'   => 'tag.article.' . $remove_id . '.' . $tag_id,
+					'action' => 'task/catalog/tag.article',
+					'args'   => [
+						'tag_id'   => $tag_id,
+						'store_id' => $remove_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 
@@ -170,12 +224,14 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function deleteArticle(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
-		// Rewrite the article ID's in the topic file
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
 		$store_ids = $this->model_cms_article->getStores($args[0]);
+
+		// Tags
+		$tag_ids = array_unique(array_merge($this->model_cms_article->getTags($args[0]), $tag_ids));
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -196,6 +252,20 @@ class Article extends \Opencart\System\Engine\Controller {
 					'args'   => [
 						'topic_id' => $article_info['topic_id'],
 						'store_id' => $store_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Tags
+			foreach ($tag_ids as $tag_id) {
+				$task_data = [
+					'code'   => 'tag.article.' . $store_id . '.' . $tag_id,
+					'action' => 'task/catalog/tag.article',
+					'args'   => [
+						'tag_id'    => $tag_id,
+						'store_id'  => $store_id
 					]
 				];
 

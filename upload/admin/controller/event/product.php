@@ -43,16 +43,10 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Tags
-		$tags = [];
+		$tag_ids = [];
 
-		if (isset($args[1]['product_description'])) {
-			foreach ($args[1]['product_description'] as $description) {
-				$parts = explode(',', $description['tag']);
-
-				foreach ($parts as $part) {
-					$tags[] = trim($part);
-				}
-			}
+		if (isset($args[1]['product_tag'])) {
+			$tag_ids = (array)$args[1]['product_tag'];
 		}
 
 		foreach ($store_ids as $store_id) {
@@ -104,6 +98,20 @@ class Product extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_task->addTask($task_data);
 			}
+
+			// Tags
+			foreach ($tag_ids as $tag_id) {
+				$task_data = [
+					'code'   => 'tag.product.' . $store_id . '.' . $tag_id,
+					'action' => 'task/catalog/tag.product',
+					'args'   => [
+						'tag_id'   => $tag_id,
+						'store_id' => $store_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 
@@ -123,15 +131,15 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function editProduct(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
+		$this->load->model('catalog/product');
+
+		$product_info = $this->model_catalog_product->getProduct($args[0]);
+
 		$store_ids = [];
 
 		if (isset($args[1]['product_store'])) {
 			$store_ids = (array)$args[1]['product_store'];
 		}
-
-		$this->load->model('catalog/product');
-
-		$product_info = $this->model_catalog_product->getProduct($args[0]);
 
 		// Categories
 		$category_ids = [];
@@ -152,17 +160,13 @@ class Product extends \Opencart\System\Engine\Controller {
 		$filter_ids = array_unique(array_merge($this->model_catalog_product->getFilters($args[0]), $filter_ids));
 
 		// Tags
-		$tags = [];
+		$tag_ids = [];
 
-		if (isset($args[1]['product_description'])) {
-			foreach ($args[1]['product_description'] as $description) {
-				$parts = explode(',', $description['tag']);
-
-				foreach ($parts as $part) {
-					$tags[] = trim($part);
-				}
-			}
+		if (isset($args[1]['product_tag'])) {
+			$tag_ids = (array)$args[1]['product_tag'];
 		}
+
+		$tag_ids = array_unique(array_merge($this->model_catalog_product->getTags($args[0]), $tag_ids));
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -230,20 +234,18 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			// Tags
-			/*
-			foreach ($tags as $tag) {
+			foreach ($tag_ids as $tag_id) {
 				$task_data = [
-					'code'   => 'tag.product.' . $store_id . '.' . $tag,
+					'code'   => 'category.product.' . $store_id . '.' . $tag_id,
 					'action' => 'task/catalog/tag.product',
 					'args'   => [
-						'tag'      => $tag,
+						'tag_id'   => $tag_id,
 						'store_id' => $store_id
 					]
 				];
 
 				$this->model_setting_task->addTask($task_data);
 			}
-			*/
 		}
 
 		// Remove from stores
@@ -315,20 +317,18 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			// Tags
-			/*
-			foreach ($tags as $tag) {
+			foreach ($tag_ids as $tag_id) {
 				$task_data = [
-					'code'   => 'tag.product.' . $store_id . '.' . $tag,
+					'code'   => 'tag.product.' . $remove_id . '.' . $tag_id,
 					'action' => 'task/catalog/tag.product',
 					'args'   => [
-						'tag'      => $tag,
-						'store_id' => $store_id
+						'tag_id'   => $tag_id,
+						'store_id' => $remove_id
 					]
 				];
 
 				$this->model_setting_task->addTask($task_data);
 			}
-			*/
 		}
 	}
 
@@ -352,14 +352,17 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($args[0]);
 
+		// Stores
+		$store_ids = $this->model_catalog_product->getStores($args[0]);
+
 		// Categories
 		$category_ids = $this->model_catalog_product->getCategories($args[0]);
 
 		// Filters
 		$filter_ids = $this->model_catalog_product->getFilters($args[0]);
 
-		// Stores
-		$store_ids = $this->model_catalog_product->getStores($args[0]);
+		// Tags
+		$tag_ids = $this->model_catalog_product->getTags($args[0]);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -407,6 +410,20 @@ class Product extends \Opencart\System\Engine\Controller {
 					'action' => 'task/catalog/filter.product',
 					'args'   => [
 						'filter_id' => $filter_id,
+						'store_id'  => $store_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Tags
+			foreach ($tag_ids as $tag_id) {
+				$task_data = [
+					'code'   => 'tag.product.' . $store_id . '.' . $tag_id,
+					'action' => 'task/catalog/tag.product',
+					'args'   => [
+						'tag_id'    => $tag_id,
 						'store_id'  => $store_id
 					]
 				];

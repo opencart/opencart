@@ -642,7 +642,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
     public function getTotalCaptured($amazon_login_pay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "amazon_login_pay_order_transaction` WHERE `amazon_login_pay_order_id` = '" . (int)$amazon_login_pay_order_id . "' AND (`type` = 'capture' OR `type` = 'refund') AND (`status` = 'Completed' OR `status` = 'Closed')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
     public function authorizationIpn($xml) {

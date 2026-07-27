@@ -69,17 +69,18 @@ class Tag extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $filter_info['name'])];
 	}
 
+	public function article() {
+		$this->load->language('task/catalog/tag');
 
 
 
+	}
+
+	public function product() {
+		$this->load->language('task/catalog/tag');
 
 
-
-
-
-
-
-
+	}
 
 	/**
 	 * Delete
@@ -91,7 +92,7 @@ class Tag extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/filter_group');
+		$this->load->language('task/catalog/tag');
 
 		if (!array_key_exists('filter_group_id', $args)) {
 			return ['error' => $this->language->get('error_required')];

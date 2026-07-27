@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.1.0.4] (Release date: 21.07.2026)
+## [v4.1.0.4] (Unreleased: 27.07.2026)
 
 #### Changes
 
@@ -174,6 +174,10 @@
 * Fixed: Admin: Fixed filemanager pagination count in https://github.com/opencart/opencart/pull/15603
 * Fixed: Reject traversal entries in upgrade archive extraction in https://github.com/opencart/opencart/pull/15604
 * Fixed: Match api routes case insensitively in the startup gate in https://github.com/opencart/opencart/pull/15606
+* Fixed: Reject traversal extension codes in installer upload in https://github.com/opencart/opencart/pull/15609
+* Fixed: More checkout fixes in https://github.com/opencart/opencart/pull/15611
+* Fixed: More checkout comment fixes in https://github.com/opencart/opencart/pull/15615
+* Fixed: Honor configured 2FA authorization expiry on 4.x in https://github.com/opencart/opencart/pull/15619
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

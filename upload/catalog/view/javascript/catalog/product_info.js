@@ -126,7 +126,10 @@ export default class extends Controller {
                     option_values.push(Object.assign(option_value, option_value.description[config.config_language]));
                 }
 
-                data.options.push(Object.assign(option, { option_value: option_values }));
+                data.options.push(Object.assign(option, {
+                    name: option.description[config.config_language].name,
+                    option_value: option_values
+                }));
             }
 
             // Subscription Plans

@@ -1,4 +1,4 @@
-import { WebComponent } from '../library/webcomponent.js';
+import { WebComponent } from '../component.js';
 
 customElements.define('x-switch', class extends WebComponent {
     get checked() {

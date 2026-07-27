@@ -59,6 +59,7 @@ return $config
         'no_alternative_syntax' => true,
         'no_binary_string' => true,
         'no_blank_lines_after_class_opening' => false,
+        'no_break_comment' => false,
         'no_closing_tag' => false,
         'no_empty_comment' => true,
         'no_homoglyph_names' => true,

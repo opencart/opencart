@@ -1,5 +1,4 @@
-import { WebComponent } from '../library/webcomponent.js';
-import { loader } from '../index.js';
+import { WebComponent } from '../component.js';
 
 customElements.define('checkbox-all', class extends WebComponent {
     render() {

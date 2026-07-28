@@ -262,8 +262,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_filter')];
 		}
 
-		$product_data = [];
-
 		$filter_data = [
 			'filter_filter_id' => $filter_info['filter_id'],
 			'filter_store_id'  => $store_info['store_id'],
@@ -274,11 +272,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		$products = $this->model_catalog_product->getProducts($filter_data);
-
-		foreach ($products as $product) {
-			$product_data[] = (int)$product['product_id'];
-		}
+		$product_data = array_column($this->model_catalog_product->getProducts($filter_data), 'product_id');
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/filter/';
 		$filename = 'filter-product-' . $filter_info['filter_id'] . '.json';

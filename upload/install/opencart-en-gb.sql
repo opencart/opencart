@@ -1110,6 +1110,7 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('activity.affiliate.edit', 'Adds edit affiliate entry in the activity log.', 'catalog/model/account/affiliate.editAffiliate/after', 'event/activity.editAffiliate', 1),
        ('activity.order.add', 'Adds new order entry in the activity log.', 'catalog/model/checkout/order.addHistory/before', 'event/activity.addHistory', 1),
        ('activity.return.add', 'Adds new return entry in the activity log.', 'catalog/model/account/returns.addReturn/after', 'event/activity.addReturn', 1),
+
        ('mail.customer.add', 'Sends mail to newly registered customers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register', 1),
        ('mail.customer.alert', 'Sends alert mail to store owner when a new customer registers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register.alert', 1),
        ('mail.customer.transaction', 'Sends mail to the customer when their transaction balance is updated.', 'catalog/model/account/customer.addTransaction/after', 'mail/transaction', 1),
@@ -1215,6 +1216,10 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.store.add', 'Triggers store static site data creation.', 'admin/model/setting/store.addStore/after', 'event/store.addStore', 1),
        ('ssr.store.edit', 'Triggers store static site data creation.', 'admin/model/setting/store.editStore/before', 'event/store.editStore', 1),
        ('ssr.store.delete', 'Triggers store static site data creation.', 'admin/model/setting/store.deleteStore/before', 'event/store.deleteStore', 1),
+
+       ('ssr.tag.add', 'Triggers tag static site data creation.', 'admin/model/catalog/tag.addTag/after', 'event/tag.addTag', 1),
+       ('ssr.tag.edit', 'Triggers tag static site data creation.', 'admin/model/catalog/tag.editTag/before', 'event/tag.editTag', 1),
+       ('ssr.tag.delete', 'Triggers tag static site data creation.', 'admin/model/catalog/tag.deleteTag/before', 'event/tag.deleteTag', 1),
 
        ('ssr.tax_class.add', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.addTaxClass/after', 'event/tax_class.addTaxClass', 1),
        ('ssr.tax_class.edit', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.editTaxClass/before', 'event/tax_class.editTaxClass', 1),

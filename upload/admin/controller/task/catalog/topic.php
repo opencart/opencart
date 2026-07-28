@@ -287,8 +287,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 				return ['success' => $this->language->get('error_topic')];
 			}
 		}
-		
-		$article_data = [];
 
 		$filter_data = [
 			'filter_topic_id'  => $topic_info['topic_id'],
@@ -300,11 +298,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/article');
 
-		$articles = $this->model_cms_article->getArticles($filter_data);
-
-		foreach ($articles as $article) {
-			$article_data[] = (int)$article['article_id'];
-		}
+		$article_data = array_column($this->model_cms_article->getArticles($filter_data), 'article_id');
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/data/topic/';
 		$filename = 'topic-article-' . (int)$topic_info['topic_id'] . '.json';

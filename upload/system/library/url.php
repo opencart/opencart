@@ -52,9 +52,9 @@ class Url {
 	 *
 	 * Generates a URL
 	 *
-	 * @param string $route
-	 * @param mixed  $args
-	 * @param bool   $js
+	 * @param string                      $route
+	 * @param array<string, mixed>|string $args
+	 * @param bool                        $js
 	 *
 	 * @return string
 	 */

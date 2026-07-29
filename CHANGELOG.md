@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.1.0.4] (Unreleased: 27.07.2026)
+## [v4.1.0.4] (Unreleased: 29.07.2026)
 
 #### Changes
 
@@ -178,6 +178,8 @@
 * Fixed: More checkout fixes in https://github.com/opencart/opencart/pull/15611
 * Fixed: More checkout comment fixes in https://github.com/opencart/opencart/pull/15615
 * Fixed: Honor configured 2FA authorization expiry on 4.x in https://github.com/opencart/opencart/pull/15619
+* Fixed: keep computed status authoritative in cms/comment add in https://github.com/opencart/opencart/pull/15632
+* Fixed: Add $args parameter type to Url::link() docblock in https://github.com/opencart/opencart/pull/15633
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

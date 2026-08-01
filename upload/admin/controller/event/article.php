@@ -33,8 +33,8 @@ class Article extends \Opencart\System\Engine\Controller {
 		// Tags
 		$tag_ids = [];
 
-		if (isset($args[1]['product_tag'])) {
-			$tag_ids = (array)$args[1]['product_tag'];
+		if (isset($args[1]['article_tag'])) {
+			$tag_ids = (array)$args[1]['article_tag'];
 		}
 
 		foreach ($store_ids as $store_id) {
@@ -64,8 +64,8 @@ class Article extends \Opencart\System\Engine\Controller {
 			// Tags
 			foreach ($tag_ids as $tag_id) {
 				$task_data = [
-					'code'   => 'tag.product.' . $store_id . '.' . $tag_id,
-					'action' => 'task/catalog/tag.product',
+					'code'   => 'tag.article.' . $store_id . '.' . $tag_id,
+					'action' => 'task/catalog/tag.article',
 					'args'   => [
 						'tag_id'   => $tag_id,
 						'store_id' => $store_id
@@ -116,7 +116,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'article.info.' . $store_id . '.' . $args[0],
-				'action' => 'task/catalog/article',
+				'action' => 'task/catalog/article.info',
 				'args'   => [
 					'article_id' => $args[0],
 				    'store_id'   => $store_id

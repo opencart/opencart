@@ -85,18 +85,18 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Filters
+		if (isset($data['product_filter'])) {
+			foreach ($data['product_filter'] as $filter_id) {
+				$this->model_catalog_product->addFilter($product_id, $filter_id);
+			}
+		}
+
 		// Tag
 		if (isset($data['product_tag'])) {
 			foreach ($data['product_tag'] as $tag_id) {
 				$this->model_catalog_product->addTag($product_id, $tag_id);
 
-			}
-		}
-
-		// Filters
-		if (isset($data['product_filter'])) {
-			foreach ($data['product_filter'] as $filter_id) {
-				$this->model_catalog_product->addFilter($product_id, $filter_id);
 			}
 		}
 
@@ -275,6 +275,15 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Filters
+		$this->model_catalog_product->deleteFilters($product_id);
+
+		if (isset($data['product_filter'])) {
+			foreach ($data['product_filter'] as $filter_id) {
+				$this->model_catalog_product->addFilter($product_id, $filter_id);
+			}
+		}
+
 		// Tag
 		$this->model_catalog_product->deleteTags($product_id);
 
@@ -282,15 +291,6 @@ class Product extends \Opencart\System\Engine\Model {
 			foreach ($data['product_tag'] as $tag_id) {
 				$this->model_catalog_product->addTag($product_id, $tag_id);
 
-			}
-		}
-
-		// Filters
-		$this->model_catalog_product->deleteFilters($product_id);
-
-		if (isset($data['product_filter'])) {
-			foreach ($data['product_filter'] as $filter_id) {
-				$this->model_catalog_product->addFilter($product_id, $filter_id);
 			}
 		}
 
@@ -442,7 +442,8 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_description'] = $this->model_catalog_product->getDescriptions($product_id);
 			$product_data['product_discount'] = $this->model_catalog_product->getDiscounts($product_id);
 			$product_data['product_download'] = $this->model_catalog_product->getDownloads($product_id);
-			$product_data['product_filter'] = $this->model_catalog_product->getFilters($product_id);
+			$product_data['product_tags'] = $this->model_catalog_product->getFilters($product_id);
+			$product_data['product_filter'] = $this->model_catalog_product->getTags($product_id);
 			$product_data['product_image'] = $this->model_catalog_product->getImages($product_id);
 			$product_data['product_layout'] = $this->model_catalog_product->getLayouts($product_id);
 			$product_data['product_option'] = $this->model_catalog_product->getOptions($product_id);
@@ -492,6 +493,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteDiscounts($product_id);
 		$this->model_catalog_product->deleteDownloads($product_id);
 		$this->model_catalog_product->deleteFilters($product_id);
+		$this->model_catalog_product->deleteTags($product_id);
 		$this->model_catalog_product->deleteImages($product_id);
 		$this->model_catalog_product->deleteLayouts($product_id);
 		$this->model_catalog_product->deleteOptions($product_id);
@@ -1112,6 +1114,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`p`.`product_id` = `pf`.`product_id`)";
 		}
 
+		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `pt` ON (`p`.`product_id` = `pt`.`product_id`)";
+		}
+
 		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -1136,6 +1142,10 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
 			$sql .= " AND `pf`.`filter_id` = '" . (int)$data['filter_filter_id'] . "'";
+		}
+
+		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
+			$sql .= " AND `p2t`.`tag_id` = '" . (int)$data['filter_tag_id'] . "'";
 		}
 
 		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
@@ -1309,6 +1319,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p`.`product_id` = `p2c`.`product_id`)";
 		}
 
+		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `pt` ON (`p`.`product_id` = `pt`.`product_id`)";
+		}
+
 		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`p`.`product_id` = `pf`.`product_id`)";
 		}
@@ -1333,6 +1347,10 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
+		}
+
+		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
+			$sql .= " AND `p2t`.`tag_id` = '" . (int)$data['filter_tag_id'] . "'";
 		}
 
 		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
@@ -1489,7 +1507,6 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_data['product_description'] = [
 	 *     'name'             => 'Product Name',
 	 *     'description'      => 'Product Description',
-	 *     'tag'              => 'Product Tag',
 	 *     'meta_title'       => 'Meta Title',
 	 *     'meta_description' => 'Meta Description',
 	 *     'meta_keyword'     => 'Meta Keyword'
@@ -1500,7 +1517,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_product->addDescription($product_id, $language_id, $product_data);
 	 */
 	public function addDescription(int $product_id, int $language_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**

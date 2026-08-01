@@ -25,6 +25,7 @@
       {% endif %}
 
       <li>{{ text_model }}: <strong>{{ model }}</strong></li>
+
       {% for product_code in product_codes %}
       <li>{{ product_code.code }}: <strong>{{ product_code.value }}</strong></li>
       {% endfor %}
@@ -101,11 +102,9 @@
 
           {% if option.type == 'select' %}
 
-
           <div class="mb-3{% if option.required %} required{% endif %}">
             <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
             <option value="">{{ text_select }}</option>
-
 
             {% for option_value in option.option_value %}
             <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}

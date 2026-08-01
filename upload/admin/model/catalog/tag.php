@@ -62,7 +62,7 @@ class Tag extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete tag record in the database.
 	 *
-	 * @param int $filter_group_id primary key of the tag record
+	 * @param int $tag_id primary key of the tag record
 	 *
 	 * @return void
 	 *
@@ -89,7 +89,7 @@ class Tag extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/tag');
 	 *
-	 * $tag_info = $this->model_catalog_tag->getFilterGroup($tag_id);
+	 * $tag_info = $this->model_catalog_tag->getTag($tag_id);
 	 */
 	public function getTag(int $tag_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tag` WHERE = '" . (int)$tag_id . "'");
@@ -109,13 +109,14 @@ class Tag extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $tag_data = [
-	 *     'start' => 0,
-	 *     'limit' => 10
+	 *     'filter_tag' => '',
+	 *     'start'      => 0,
+	 *     'limit'      => 10
 	 * ];
 	 *
 	 * $this->load->model('catalog/tag');
 	 *
-	 * $results = $this->model_catalog_tag->getTag($tag_data);
+	 * $results = $this->model_catalog_tag->getTags($tag_data);
 	 */
 	public function getTags(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "tag`";
@@ -152,9 +153,13 @@ class Tag extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/tag');
+	 * $tag_data = [
+	 *    'filter_tag' => '',
+	 * ];
 	 *
-	 * $tag_total = $this->model_catalog_tag->getTotalTags();
+     * $this->load->model('catalog/tag');
+	 *
+	 * $tag_total = $this->model_catalog_tag->getTotalTags($tag_data);
 	 */
 	public function getTotalTags(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tag`";

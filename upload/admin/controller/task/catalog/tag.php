@@ -49,7 +49,7 @@ class Tag extends \Opencart\System\Engine\Controller {
 
 		$tag_total = $this->model_catalog_tag->getTotalTags();
 
-		for ($i = 0; $i <= ceil($tag_total / $limit); $i++) {
+		for ($i = 0; $i < ceil($tag_total / $limit); $i++) {
 			$start = $i * $limit;
 
 			$task_data = [

@@ -56,7 +56,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
-		for ($i = 0; $i <= ceil($product_total / $limit); $i++) {
+		for ($i = 0; $i < ceil($product_total / $limit); $i++) {
 			$start = $i * $limit;
 
 			$task_data = [
@@ -213,7 +213,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			$description_data[$code] = [
 				'name'             => $description['name'],
 				'description'      => $description['description'],
-				'tag'              => $description['tag'],
 				'meta_title'       => $description['meta_title'],
 				'meta_description' => $description['meta_description'],
 				'meta_keyword'     => $description['meta_keyword']
@@ -443,6 +442,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'length_class_id'    => $product_info['length_class_id'],
 			'sales'              => $product_info['sales'],
 			'rating'             => $product_info['rating'],
+			'tags'               => $this->model_catalog_product->getTags($product_info['product_id']),
 			'date_added'         => $product_info['date_added'],
 			'date_modified'      => $product_info['date_modified']
 		];

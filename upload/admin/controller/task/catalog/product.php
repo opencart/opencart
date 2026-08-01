@@ -364,9 +364,10 @@ class Product extends \Opencart\System\Engine\Controller {
 		foreach ($product_subscriptions as $product_subscription) {
 			$subscription_info = $this->model_catalog_subscription_plan->getSubscription($product_subscription['product_id']);
 
-			if ($subscription_info) {
+			if ($subscription_info && $subscription_info['status']) {
 				$subscription_plan_data[$product_subscription['customer_group_id']] = [
 					'subscription_plan_id' => $subscription_info['subscription_plan_id'],
+					'customer_group_id'    => $product_subscription['customer_group_id'],
 					'trial_price'          => $product_subscription['trial_price'],
 					'trial_frequency '     => $subscription_info['trial_frequency'],
 					'trial_duration'       => $subscription_info['trial_duration'],
@@ -376,7 +377,6 @@ class Product extends \Opencart\System\Engine\Controller {
 					'frequency '           => $subscription_info['frequency'],
 					'duration'             => $subscription_info['duration'],
 					'cycle'                => $subscription_info['cycle'],
-					'status'               => $subscription_info['status'],
 					'sort_order'           => $subscription_info['sort_order']
 				];
 			}

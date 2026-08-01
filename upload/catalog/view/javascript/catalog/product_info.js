@@ -143,20 +143,21 @@ export default class extends Controller {
                     price = (product.special ? product.special : product.price) / subscription_plan.duration;
                 }
 
-                //price = tax.calculate(price, $product.tax_class_id, $this->config.config_tax'));
-                let frequency = language['text_' + subscription_plan.frequency];
-
-                if (subscription_plan.duration) {
-                   //description = language['text_subscription_duration'] price, subscription_plan.cycle, frequency, subscription_plan.duration);
-                } else {
-                   //description = sprintf(language['text_subscription_cancel'], price, subscription_plan.cycle, frequency);
-                }
-
                 data.subscription_plans.push({
-                    description: description[config.config_language],
-
-
-                } + $result;
+                    subscription_plan_id: subscription_plan.subscription_plan_id,
+                    customer_group_id: subscription_plan.customer_group_id,
+                    name: subscription_plan.description[config.config_language].name,
+                    trial_price: subscription_plan.trial_price,
+                    trial_frequency: subscription_plan.trial_frequency,
+                    trial_duration: subscription_plan.trial_duration,
+                    trial_cycle: subscription_plan.trial_cycle,
+                    trial_status: subscription_plan.trial_status,
+                    cycle: subscription_plan.cycle,
+                    frequency: subscription_plan.frequency,
+                    duration: subscription_plan.duration,
+                    price: subscription_plan.price,
+                    sort_order: subscription_plan.sort_order
+                });
             }
 
             // Tags

@@ -49,7 +49,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$filter_group_total = $this->model_catalog_filter->getTotalFilterGroups();
 
-		for ($i = 0; $i <= ceil($filter_group_total / $limit); $i++) {
+		for ($i = 0; $i < ceil($filter_group_total / $limit); $i++) {
 			$start = $i * $limit;
 
 			$task_data = [
@@ -68,6 +68,15 @@ class Filter extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_task'), $store_info['name'])];
 	}
 
+	/*
+	 * List
+	 *
+	 * Generate all filter files.
+	 *
+	 * @param array<int, mixed> $args
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->model('setting/task');
 

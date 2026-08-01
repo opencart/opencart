@@ -54,7 +54,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
 
-		for ($i = 0; $i <= ceil($article_total / $limit); $i++) {
+		for ($i = 0; $i < ceil($article_total / $limit); $i++) {
 			$start = $i * $limit;
 
 			$task_data = [
@@ -111,7 +111,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_store_id' => $store_info['store_id'],
 			'filter_status'   => true,
-			'sort'            => 'date_added',
+			'sort'            => 'name',
 			'order'           => 'DESC',
 			'start'           => $args['start'],
 			'limit'           => $args['limit']
@@ -189,7 +189,6 @@ class Article extends \Opencart\System\Engine\Controller {
 				'name'             => $description['name'],
 				'description'      => $description['description'],
 				'image'            => $description['image'],
-				'tag'              => $description['tag'],
 				'meta_title'       => $description['meta_title'],
 				'meta_description' => $description['meta_description'],
 				'meta_keyword'     => $description['meta_keyword']
@@ -202,6 +201,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			'topic_id'      => $article_info['topic_id'],
 			'author'        => $article_info['author'],
 			'rating'        => $article_info['rating'],
+			'tag'           => $this->model_cms_article->getTags($article_info['article_id']),
 			'status'        => $article_info['status'],
 			'date_added'    => $article_info['date_added'],
 			'date_modified' => $article_info['date_modified']

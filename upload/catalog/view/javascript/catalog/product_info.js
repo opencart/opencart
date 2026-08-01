@@ -76,7 +76,6 @@ export default class extends Controller {
 
                 data.stock = true;
             } else {
-                stock_status_id = 0;
 
                 data.stock = true;
             }
@@ -153,9 +152,11 @@ export default class extends Controller {
                    //description = sprintf(language['text_subscription_cancel'], price, subscription_plan.cycle, frequency);
                 }
 
-                //data.subscription_plans[] = {
-                //     'description' => description
-                //} + $result;
+                data.subscription_plans.push({
+                    description: description[config.config_language],
+
+
+                } + $result;
             }
 
             // Tags
@@ -229,53 +230,24 @@ export default class extends Controller {
                 alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            //console.log(form);
-            ///console.log(form.elements);
-            //console.log(form.entries());
-            //const uniqueString = [...new Set(matrix.flat(Infinity))].join(', ');
-
             let output = [];
 
             let regex = /^([^\[]+)\[(\w+)\]$/g;
 
-            console.log('form2array');
-
-            function nameToObject(str, value) {
-                const match = str.match(/^([^\[]+)\[(\w+)\]$/);
-
-                if (!match) return {
-                    [str]: value
-                };
-
-                return {
-                    [match[1]]: {
-                        [match[2]]: value
-                    }
-                };
-            }
-
-
-            /*
-            let test = form.entries().filter(item => {
-               // console.log(item.get());
-
-                item[0].match(/^option\[(.*?)\]/);
-            });
-*/
-            console.log(nameToObject("test[1]", 'ghth'));
-
-
-            for (let [key, value] of form.entries()) {
+            for (let [ key, value] of form.entries()) {
                 // Get Options. JavaScript is terrible!
-                let matches = key.match(/^option\[(.*?)\]/);
+                let matches = key.match(/^(.*?)\[(.*?)\]/);
 
+                console.log('form.entries');
                 console.log(key);
                 console.log(value);
                 console.log(matches);
 
                 if (matches) {
-                    let [, match] = matches;
+                    let [ test, match] = matches;
 
+                    console.log('match');
+                    console.log(test);
                     console.log(match);
 
                     output[match] = value;
@@ -283,15 +255,11 @@ export default class extends Controller {
             }
 
 
-
             let { product_id, quantity, option, subscription_plan_id } = Object.fromEntries(form);
 
-            console.log(product_id);
-            console.log(quantity);
-            console.log(option);
-            console.log(subscription_plan_id);
+            console.log(Object.fromEntries(form));
 
-            //cart.add(product_id, quantity, option, subscription_plan_id);
+            cart.add(product_id, quantity, option, subscription_plan_id);
 
            // let button = document.querySelector('#cart > button');
 

@@ -24,11 +24,9 @@ export default class extends Controller {
     async render() {
         let data = {};
 
-        data.products = [];
+        data.products = await cart.getProducts();
 
-        let products = cart.getProducts();
-
-
+        console.log(data.products);
 
         data.currency = currency;
 

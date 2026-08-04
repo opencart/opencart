@@ -261,12 +261,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			$json['products'][] = [
-					'thumb'        => $this->model_tool_image->resize($product['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
-					'subscription' => $subscription,
-					'price'        => $price_status ? $product['price'] : '',
-					'total'        => $price_status ? $product['total'] : '',
-					'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-				] + $product;
+				'thumb'        => $this->model_tool_image->resize($product['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
+				'subscription' => $subscription,
+				'price'        => $price_status ? $product['price'] : '',
+				'total'        => $price_status ? $product['total'] : '',
+				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
+			] + $product;
 		}
 
 		$totals = [];

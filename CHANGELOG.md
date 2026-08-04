@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v3.0.5.1] (Unreleased 02.08.2026)
+## [v3.0.5.1] (Unreleased 04.08.2026)
   
 #### Changes
 
@@ -38,6 +38,7 @@
 * Fixed: Remove GLOB_BRACE for glob() to improve compatibility on musl-based systems (https://github.com/opencart/opencart/pull/#15246)
 * Fixed: Fix zone Royal Mail config name (https://github.com/opencart/opencart/pull/#15242)
 * Changed: mail update (https://github.com/opencart/opencart/pull/15638)
+* Fixed: Add session check before captcha generation (https://github.com/opencart/opencart/pull/15642)
 
 ## [v3.0.5.0] (Release date: 12.09.2025)
 

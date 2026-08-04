@@ -25,6 +25,10 @@ class ControllerExtensionCaptchaBasic extends Controller {
 	}
 
 	public function captcha() {
+		if (!isset($this->session->data['captcha'])) {
+			exit();
+		}
+
 		$image = imagecreatetruecolor(150, 35);
 
 		$width = imagesx($image);

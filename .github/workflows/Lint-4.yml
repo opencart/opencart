@@ -38,5 +38,9 @@ jobs:
           php tools/php-cs-fixer.phar fix --dry-run --diff --ansi || true
           php tools/php-cs-fixer.phar fix --dry-run --format=checkstyle | cs2pr
 
+      - name: Check Registry Docblock
+        if: matrix.php == '8.3'
+        run: php tools/generate_registry_docblock.php --check
+
       - name: Run PHPStan
         run: php tools/phpstan.phar analyze --no-progress

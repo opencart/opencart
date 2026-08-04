@@ -5,7 +5,7 @@ import { loader } from './loader.js';
 //let tax = await loader.library('tax');
 
 // Config
-let config = await loader.config('catalog');
+let config = await loader.config('default');
 
 //let data = session.get('cart');
 
@@ -34,57 +34,17 @@ export default class Cart {
     }
 
     async getProducts() {
+        let product_data = [];
 
-
-        for (let item of this.data) {
+        for (let [cart_id, item] of this.data) {
             let stock_status = true;
 
-            let product_info = await import('product/product-' + item.product_id);
+            console.log(item);
 
-
-
-/*
-                {
-                    "product_option_id": "226",
-                    "description": {
-                    "en-gb": {
-                        "name": "Select"
-                    }
-                },
-                "type": "select",
-                "value": null,
-                "option_value": [
-                    {
-                        "product_option_value_id": "15",
-                        "description": {
-                            "en-gb": {
-                                "name": "Red"
-                            }
-                        },
-                        "image": "",
-                        "quantity": "2",
-                        "price": "0.0000",
-                        "points": "0",
-                        "weight": "0.00000000",
-                        "sort_order": "1"
-                    },
-                    {
-                    "product_option_value_id": "16",
-                    "description": {
-                        "en-gb": {
-                            "name": "Blue"
-                        }
-                    },
-                    "image": "",
-                    "quantity": "5",
-                    "price": "0.0000",
-                    "points": "0",
-                    "weight": "0.00000000",
-                    "sort_order": "2"
-                }
-*/
+            let product_info = await loader.storage('product/product-' + item.product_id);
 
             if (product_info !== undefined && item.quantity > 0) {
+                let stock = product_info.quantity;
 
                 let option_price = 0;
                 let option_points = 0;
@@ -110,8 +70,7 @@ export default class Cart {
                         option_data.push({
                             product_option_id: option_info.product_option_id,
                             product_option_value_id: option_value_info.product_option_value_id,
-                            option_id: option_info.option_id,
-                            option_value_id: option_value_info.option_value_id,
+                            option_id: option_info.option_id, option_value_id: option_value_info.option_value_id,
                             name: option_info.description[config.config_language].name,
                             value: option_value_info.description[config.config_language].name,
                             type: option_info.type,
@@ -164,84 +123,157 @@ export default class Cart {
                     }
                 }
 
-
-               // Get total products of the same product but with different options
-               let product_total = 0;
+                // Get total products of the same product but with different options
+                let product_total = 0;
 
                 for (let item_2 of this.data) {
-                   if (item_2.product_id == item.product_id) {
-                       product_total += item_2.quantity;
-                   }
-               }
+                    if (item_2.product_id == item.product_id) {
+                        product_total += item_2.quantity;
+                    }
+                }
 
-               let price = product_info.price + option_price;
+                let price = product_info.price + option_price;
 
+                let subscription_data = [];
 
-                /*
-                             $subscription_data = [];
+                // Get option info
+                let subscription_info = product_info.subscription_plans.find(subscription_plan => subscription_plan.subscription_plan_id == item.subscription_plan_id && subscription_plan.customer_group_id == config.config_customer_group_id);
 
-                             $subscription_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` `ps` LEFT JOIN `" . DB_PREFIX . "subscription_plan` `sp` ON (`ps`.`subscription_plan_id` = `sp`.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `ps`.`product_id` = '" . (int)$cart['product_id'] . "' AND `ps`.`subscription_plan_id` = '" . (int)$cart['subscription_plan_id'] . "' AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `sp`.`status` = '1'");
+                if (subscription_info) {
+                    subscription_data.push({
+                        subscription_plan_id: subscription_info.subscription_plan_id,
+                        customer_group_id: subscription_info.customer_group_id,
+                        name: subscription_info.description[config.config_language].name,
+                        trial_price: subscription_info.trial_price,
+                        trial_frequency: subscription_info.trial_frequency,
+                        trial_duration: subscription_info.trial_duration,
+                        trial_cycle: subscription_info.trial_cycle,
+                        trial_status: subscription_info.trial_status,
+                        cycle: subscription_info.cycle,
+                        frequency: subscription_info.frequency,
+                        duration: subscription_info.duration,
+                        remaining: subscription_info.duration,
+                        price: subscription_info.price,
+                        sort_order: subscription_info.sort_order
+                    });
 
-                             if ($subscription_query->num_rows) {
-                                 $subscription_data = ['remaining' => $subscription_query->row['duration']] + $subscription_query->row;
+                    // Set the new price if is subscription product
+                    price = subscription_info.price;
 
-                                 // Set the new price if is subscription product
-                                 $price = $subscription_query->row['price'];
+                    if (subscription_info.trial_status) {
+                        price = subscription_info.trial_price;
+                    }
+                }
 
-                                 if ($subscription_query->row['trial_status']) {
-                                     $price = $subscription_query->row['trial_price'];
-                                 }
-                             }
+                // Product Discounts
+                let discount_info = product_info.discounts.find(discount => discount.customer_group_id == config.config_customer_group_id && discount.quantity <= product_total);
 
-                             // Product Discounts
-                             $product_discount_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` <= '" . (int)$product_total . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` DESC, `priority` ASC, `price` ASC LIMIT 1");
+                if (discount_info) {
+                    if (discount_info.type == 'F') {
+                        // Fixed Price
+                        price = discount_info.price + option_price;
+                        // Percentage
+                        price -= (price * (discount_info.price / 100));
+                    } else if (discount_info.type == 'S') {
+                        // Subtract
+                        price -= discount_info.price;
+                    }
+                }
 
-                             if ($product_discount_query->num_rows) {
-                                 if ($product_discount_query->row['type'] == 'F') {
-                                     // Fixed Price
-                                     $price = $product_discount_query->row['price'] + $option_price;
-                                 } elseif ($product_discount_query->row['type'] == 'P') {
-                                     // Percentage
-                                     $price -= ($price * ($product_discount_query->row['price'] / 100));
-                                 } elseif ($product_discount_query->row['type'] == 'S') {
-                                     // Subtract
-                                     $price -= $product_discount_query->row['price'];
-                                 }
-                             }
+                // Stock
+                if (!product_info.quantity || (product_info.quantity < product_total)) {
+                    stock_status = false;
+                }
 
-                             // Stock
-                             if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $product_total)) {
-                                 $stock_status = false;
-                             }
+                let minimum = true;
 
-                             // Minimum Quantity
-                             if ($product_query->row['minimum'] > $product_total) {
-                                 minimum = false;
-                             } else {
-                                 minimum = true;
-                             }
+                // Minimum Quantity
+                if (product_info.minimum > product_total) {
+                    minimum = false;
+                }
 
-                             // Reward Points
-                             $product_reward_query = $this->db->query("SELECT `points` FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'");
+                // Reward Points
+                let reward = 0;
 
-                             if ($product_reward_query->num_rows) {
-                                 $reward = $product_reward_query->row['points'];
-                             } else {
-                                 $reward = 0;
-                             }
+                let reward_info = product_info.rewards.find(reward => reward.customer_group_id == config.config_customer_group_id);
 
-                             // Downloads
-                             $download_data = [];
+                if (reward_info) {
+                    reward = reward_info.points;
+                }
 
-                             $download_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_download` `p2d` LEFT JOIN `" . DB_PREFIX . "download` `d` ON (`p2d`.`download_id` = `d`.`download_id`) LEFT JOIN `" . DB_PREFIX . "download_description` `dd` ON (`d`.`download_id` = `dd`.`download_id`) WHERE `p2d`.`product_id` = '" . (int)$cart['product_id'] . "' AND `dd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-                             foreach ($download_query->rows as $download) {
-                                 $download_data[] = $download;
-                             }
-                          */
+                product_data.push({
+                    cart_id: item.cart_id,
+                    name: product_info.description[config.config_language].name,
+                    model: product_info.model,
+                    image: product_info.thumb,
+                    option: option_data,
+                    subscription: subscription_data,
+                    shipping: product_info.shipping,
+                    download: product_info.download,
+                    quantity: item.quantity,
+                    minimum: product_info.minimum,
+                    minimum_status: minimum,
+                    stock: stock,
+                    stock_status: stock_status,
+                    tax_class_id: product_info.tax_class_id,
+                    price: price,
+                    total: price * item.quantity,
+                    reward: reward * item.quantity,
+                    points: product_info.points ? (product_info.points + option_points) * item.quantity : 0,
+                    weight: (product_info.weight + option_weight) * item.quantity,
+                    weight_class_id: product_info.weight_class_id,
+                    length: product_info.length,
+                    width: product_info.width,
+                    height: product_info.height,
+                    length_class_id: product_info.length_class_id
+                });
             }
         }
+
+        return product_data;
     }
+
+    update() {
+
+
+    }
+
+    has() {
+
+
+    }
+
+    remove() {
+
+
+    }
+
+    clear() {
+
+
+    }
+
+    /**
+     * Get Subscriptions
+     *
+     * @return array<int, array<string, mixed>>
+     *
+     * @example
+     *
+     * $subscriptions = $this->cart->getSubscriptions();
+     */
+    getSubscriptions() {
+        let product_data = [];
+
+        for (let value in this.getProducts()) {
+            if (value['subscription']) {
+                product_data.push(value);
+            }
+        }
+
+        return $product_data;
+    }
+
 
     getTotal() {
 

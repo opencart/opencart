@@ -161,7 +161,8 @@ export default class extends Controller {
             }
 
             // Tags
-            data.tags = description.tag.split(',');
+            data.tags = product.tag;
+            console.log(data.tags);
 
             data.related = [];
 
@@ -255,16 +256,15 @@ export default class extends Controller {
                 }
             }
 
-
             let { product_id, quantity, option, subscription_plan_id } = Object.fromEntries(form);
 
             console.log(Object.fromEntries(form));
 
-            cart.add(product_id, quantity, option, subscription_plan_id);
+            cart.add(1, product_id, quantity, option, subscription_plan_id);
 
-           // let button = document.querySelector('#cart > button');
+            let button = document.querySelector('#cart > button');
 
-            //button.click();
+            button.click();
         }
 
         //this.$button_cart.state = '';

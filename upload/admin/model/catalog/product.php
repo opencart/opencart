@@ -2705,6 +2705,12 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_download_data;
 	}
 
+	public function getTotalDownloads(int $product_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$product_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
 	/**
 	 * Get Total Downloads By Download ID
 	 *

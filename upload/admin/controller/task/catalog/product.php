@@ -365,7 +365,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$subscription_info = $this->model_catalog_subscription_plan->getSubscription($product_subscription['product_id']);
 
 			if ($subscription_info && $subscription_info['status']) {
-				$subscription_plan_data[$product_subscription['customer_group_id']] = [
+				$subscription_plan_data[] = [
 					'subscription_plan_id' => $subscription_info['subscription_plan_id'],
 					'customer_group_id'    => $product_subscription['customer_group_id'],
 					'trial_price'          => $product_subscription['trial_price'],
@@ -388,14 +388,15 @@ class Product extends \Opencart\System\Engine\Controller {
 		$discounts = $this->model_catalog_product->getDiscounts($product_info['product_id']);
 
 		foreach ($discounts as $discount) {
-			$discount_data[$discount['customer_group_id']] = [
-				'quantity'   => $discount['quantity'],
-				'priority'   => $discount['priority'],
-				'price'      => $discount['price'],
-				'type'       => $discount['type'],
-				'special'    => $discount['special'],
-				'date_start' => $discount['date_start'],
-				'date_end'   => $discount['date_end']
+			$discount_data[] = [
+				'customer_group_id' => $discount['customer_group_id'],
+				'quantity'          => $discount['quantity'],
+				'priority'          => $discount['priority'],
+				'price'             => $discount['price'],
+				'type'              => $discount['type'],
+				'special'           => $discount['special'],
+				'date_start'        => $discount['date_start'],
+				'date_end'          => $discount['date_end']
 			];
 		}
 
@@ -405,7 +406,10 @@ class Product extends \Opencart\System\Engine\Controller {
 		$rewards = $this->model_catalog_product->getRewards($product_info['product_id']);
 
 		foreach ($rewards as $reward) {
-			$reward_data[$reward['customer_group_id']] = ['points' => $reward['points']];
+			$reward_data[] = [
+				'customer_group_id' => $reward['customer_group_id'],
+				'points'            => $reward['points']
+			];
 		}
 
 		$product_data = [
@@ -419,6 +423,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'attribute_groups'   => $attribute_group_data,
 			'options'            => $product_option_data,
 			'subscription_plans' => $subscription_plan_data,
+			'downloads'          => $this->model_catalog_product->getTotalDownloads($product_info['product_id']),
 			'location'           => $product_info['location'],
 			'variant'            => $product_info['variant'],
 			'override'           => $product_info['override'],

@@ -162,6 +162,7 @@ export default class extends Controller {
 
             // Tags
             data.tags = product.tag;
+
             console.log(data.tags);
 
             data.related = [];
@@ -234,40 +235,18 @@ export default class extends Controller {
 
             let output = [];
 
-            let regex = /^([^\[]+)\[(\w+)\]$/g;
+            console.log(json);
 
-            for (let [ key, value] of form.entries()) {
-                // Get Options. JavaScript is terrible!
-                let matches = key.match(/^(.*?)\[(.*?)\]/);
+            //console.log(Object.fromEntries(form));
 
-                console.log('form.entries');
-                console.log(key);
-                console.log(value);
-                console.log(matches);
-
-                if (matches) {
-                    let [ test, match] = matches;
-
-                    console.log('match');
-                    console.log(test);
-                    console.log(match);
-
-                    output[match] = value;
-                }
-            }
-
-            let { product_id, quantity, option, subscription_plan_id } = Object.fromEntries(form);
-
-            console.log(Object.fromEntries(form));
-
-            cart.add(1, product_id, quantity, option, subscription_plan_id);
+            cart.add(json);
 
             let button = document.querySelector('#cart > button');
 
             button.click();
         }
 
-        //this.$button_cart.state = '';
+       // this.$button_cart.state = '';
     }
 
     async addToWishList(e) {

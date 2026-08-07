@@ -62,7 +62,7 @@ class ControllerStartupSeoUrl extends Controller {
 					$this->request->get['route'] = 'information/information';
 				}
 			}
-		} elseif ($this->request->server['REQUEST_METHOD'] == 'GET') {
+		} elseif (in_array($this->request->server['REQUEST_METHOD'], array('GET', 'HEAD'))) {
 			$this->redirectQueryUrl();
 		}
 	}

@@ -362,3 +362,29 @@ function oc_validate_url(string $url): bool {
 function oc_validate_path(string $keyword): bool {
 	return !preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\-\_]+/u', $keyword);
 }
+
+/**
+ * Session Regenerate
+ *
+ * @param \Opencart\System\Engine\Registry $registry
+ *
+ * @return void
+ */
+function oc_session_regenerate(\Opencart\System\Engine\Registry $registry): void {
+	$session = $registry->get('session');
+	$config = $registry->get('config');
+	$request = $registry->get('request');
+
+	$session_id = $session->regenerate();
+
+	$option = [
+		'expires'  => 0,
+		'path'     => $config->get('session_path'),
+		'domain'   => $config->get('session_domain'),
+		'secure'   => $request->server['HTTPS'],
+		'httponly' => false,
+		'SameSite' => $config->get('session_samesite')
+	];
+
+	setcookie($config->get('session_name'), $session_id, $option);
+}

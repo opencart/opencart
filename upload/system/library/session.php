@@ -113,4 +113,21 @@ class Session {
 	public function gc(): void {
 		$this->adaptor->gc();
 	}
+
+	/**
+	 * Regenerate
+	 *
+	 * Regenerates the session ID
+	 *
+	 * @return string
+	 */
+	public function regenerate(): string {
+		$old_session_id = $this->session_id;
+
+		$this->session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$this->adaptor->destroy($old_session_id);
+
+		return $this->session_id;
+	}
 }

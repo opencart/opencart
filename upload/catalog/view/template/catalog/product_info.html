@@ -95,7 +95,7 @@
     <br/>
     <div id="product">
       <form id="form-product" data-on="submit:addToCart">
-        {% if options != '' %}
+        {% if options %}
         <hr>
         <h3>{{ text_option }}</h3>
         <div>
@@ -108,12 +108,8 @@
             <option value="">{{ text_select }}</option>
 
             {% for option_value in option.option_value %}
-            <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}
-              <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
-              ){% endif %}
-            </option>
+            <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>){% endif %}</option>
             {% endfor %}
-
 
           </select>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -219,7 +215,7 @@
         </div>
         {% endif %}
 
-        {% if subscription_plans != '' %}
+        {% if subscription_plans %}
         <hr/>
         <h3>{{ text_subscription }}</h3>
         <div class="mb-3">

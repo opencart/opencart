@@ -990,10 +990,10 @@ export class CurlyTag {
             return token.end;
         }
 
-        // Check to see if a previous tag is inactive
+        // Check to see if a previous tag is inactive.
         let active = this.evaluate(match[1], ctx);
 
-        // Convert the output into bool
+        // Convert the output into bool.
         active = this.truthy(active);
 
         stack.push({

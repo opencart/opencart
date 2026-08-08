@@ -8,7 +8,9 @@ const config = await loader.config('default');
 const language = await loader.language('information/sitemap');
 
 // Storage
-const categories = await loader.storage('catalog/category');
+const categories = await loader.storage('category/category');
+
+console.log(categories);
 
 export default class extends Controller {
     async render() {

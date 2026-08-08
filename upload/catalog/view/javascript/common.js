@@ -22,6 +22,39 @@ function getURLVar(key) {
 	}
 }
 
+function addLanguage(url) {
+	var language = getURLVar('language');
+
+	if (language) {
+		language = decodeURIComponent(language.split('#')[0]);
+	}
+
+	if (!language || !url || /(^|[?&])language=/.test(url)) {
+		return url;
+	}
+
+	var link = document.createElement('a');
+	link.href = url;
+
+	if (link.host && link.host != window.location.host) {
+		return url;
+	}
+
+	var hash = '';
+	var hash_position = url.indexOf('#');
+
+	if (hash_position != -1) {
+		hash = url.substring(hash_position);
+		url = url.substring(0, hash_position);
+	}
+
+	return url + (url.indexOf('?') == -1 ? '?' : '&') + 'language=' + encodeURIComponent(language) + hash;
+}
+
+$.ajaxPrefilter(function(options) {
+	options.url = addLanguage(options.url);
+});
+
 $(document).ready(function() {
 	// Highlight any found errors
 	$('.text-danger').each(function() {
@@ -41,18 +74,9 @@ $(document).ready(function() {
 		$('#form-currency').submit();
 	});
 
-	// Language
-	$('#form-language .language-select').on('click', function(e) {
-		e.preventDefault();
-
-		$('#form-language input[name=\'code\']').val($(this).attr('name'));
-
-		$('#form-language').submit();
-	});
-
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
-		var url = $('base').attr('href') + 'index.php?route=product/search';
+		var url = addLanguage($('base').attr('href') + 'index.php?route=product/search');
 
 		var value = $('header #search input[name=\'search\']').val();
 
@@ -193,7 +217,7 @@ var cart = {
 				}, 100);
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart';
+					location = addLanguage('index.php?route=checkout/cart');
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
@@ -222,7 +246,7 @@ var cart = {
 				}, 100);
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart';
+					location = addLanguage('index.php?route=checkout/cart');
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
@@ -257,7 +281,7 @@ var voucher = {
 				}, 100);
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-					location = 'index.php?route=checkout/cart';
+					location = addLanguage('index.php?route=checkout/cart');
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}

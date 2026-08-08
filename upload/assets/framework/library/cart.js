@@ -27,29 +27,21 @@ export default class Cart {
     }
 
     getProducts() {
-        console.log(this.data.entries());
+        console.log(this.data);
 
         return this.data;
     }
 
     update() {
-
-
     }
 
     has() {
-
-
     }
 
     remove() {
-
-
     }
 
     clear() {
-
-
     }
 
     /**

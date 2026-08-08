@@ -59,55 +59,25 @@ class ControllerStartupStartup extends Controller {
 		$this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
 		
 		// Language
-		$code = '';
-		
 		$this->load->model('localisation/language');
 		
 		$languages = $this->model_localisation_language->getLanguages();
-		
-		if (isset($this->session->data['language'])) {
+
+		$is_ajax = isset($this->request->server['HTTP_X_REQUESTED_WITH']) && strtolower($this->request->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+		$accepts_html = !isset($this->request->server['HTTP_ACCEPT']) || strpos($this->request->server['HTTP_ACCEPT'], 'text/html') !== false;
+		$is_document_request = $this->request->server['REQUEST_METHOD'] == 'GET' && !$is_ajax && $accepts_html;
+
+		// A public document URL must always resolve to the same language. The URL
+		// takes precedence and an unqualified document uses the default language.
+		if (isset($this->request->get['language']) && isset($languages[$this->request->get['language']])) {
+			$code = $this->request->get['language'];
+		} elseif (!$is_document_request && isset($this->session->data['language']) && isset($languages[$this->session->data['language']])) {
+			// Keep AJAX and form endpoints compatible with existing themes and
+			// extensions that do not include the public language parameter yet.
 			$code = $this->session->data['language'];
-		}
-				
-		if (isset($this->request->cookie['language']) && !array_key_exists($code, $languages)) {
+		} elseif (!$is_document_request && isset($this->request->cookie['language']) && isset($languages[$this->request->cookie['language']])) {
 			$code = $this->request->cookie['language'];
-		}
-		
-		// Language Detection
-		if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE']) && !array_key_exists($code, $languages)) {
-			$detect = '';
-			
-			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
-			
-			// Try using local to detect the language
-			foreach ($browser_languages as $browser_language) {
-				foreach ($languages as $key => $value) {
-					if ($value['status']) {
-						$locale = explode(',', $value['locale']);
-						
-						if (in_array($browser_language, $locale)) {
-							$detect = $key;
-							break 2;
-						}
-					}
-				}	
-			}			
-			
-			if (!$detect) { 
-				// Try using language folder to detect the language
-				foreach ($browser_languages as $browser_language) {
-					if (array_key_exists(strtolower($browser_language), $languages)) {
-						$detect = strtolower($browser_language);
-						
-						break;
-					}
-				}
-			}
-			
-			$code = $detect ? $detect : '';
-		}
-		
-		if (!array_key_exists($code, $languages)) {
+		} else {
 			$code = $this->config->get('config_language');
 		}
 		
@@ -126,7 +96,8 @@ class ControllerStartupStartup extends Controller {
 		$this->registry->set('language', $language);
 		
 		// Set the config language_id
-		$this->config->set('config_language_id', $languages[$code]['language_id']);	
+		$this->config->set('config_language_id', $languages[$code]['language_id']);
+		$this->config->set('config_language_code', $code);
 
 		// Customer
 		$customer = new Cart\Customer($this->registry);

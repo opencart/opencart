@@ -12,18 +12,18 @@ let config = await loader.config('default');
 export default class Cart {
     constructor() {
         this.customer = null;
-        this.data = new Map();
+        this.data = new Array();
     }
 
-    async add(cart_id, item = []) {
+    async add(item = []) {
         console.log('add');
         console.log(item);
 
-        this.data.set(cart_id, item);
+        this.data.push(item);
     }
 
     remove(cart_id) {
-        return this.data.delete(cart_id);
+        this.data = this.data.filter(item => item.cart_id !== cart_id);
     }
 
     getProducts() {

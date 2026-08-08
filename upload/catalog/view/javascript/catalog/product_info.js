@@ -235,11 +235,12 @@ export default class extends Controller {
 
             let output = [];
 
-            console.log(json);
+            console.log(json['products']);
 
             //console.log(Object.fromEntries(form));
-
-            cart.add(json);
+            for (let product of json['products']) {
+                cart.add(product);
+            }
 
             let button = document.querySelector('#cart > button');
 

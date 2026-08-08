@@ -20,6 +20,7 @@ class ControllerProductManufacturer extends Controller {
 		);
 
 		$data['categories'] = array();
+		$data['manufacturer'] = $this->url->link('product/manufacturer');
 
 		$results = $this->model_catalog_manufacturer->getManufacturers();
 

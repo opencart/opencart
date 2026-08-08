@@ -1,4 +1,4 @@
-{% if categories != '' %}
+{% if categories %}
 <div class="container">
   <nav id="menu" class="navbar navbar-expand-lg bg-primary">
     <div id="category" class="d-block d-sm-block d-lg-none">{{ text_category }}</div>
@@ -6,7 +6,7 @@
     <div id="navbar-menu" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         {% for category in categories %}
-        {% if category.children != '' %}
+        {% if category.children %}
         {% assign total = category.children | length %}
         {% if total > 20 %}
         {% assign batch = total | divide: 4 | round %}

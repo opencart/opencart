@@ -1,0 +1,16 @@
+<div class="product">
+    <h2>{{ product.name | upper }}</h2>
+    <p class="price">{{ product.price | round: 2 }}</p>
+
+    {% if product.in_stock %}
+    <span class="badge">In Stock</span>
+    {% else %}
+    <span class="badge sold-out">Sold Out</span>
+    {% endif %} {% if product.tags %}
+    <ul class="tags">
+        {% for tag in product.tags %}
+        <li>{{ tag | escape }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>

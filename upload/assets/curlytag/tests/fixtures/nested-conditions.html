@@ -1,0 +1,22 @@
+{% if user %}
+<div class="profile">
+    <h1>{{ user.name }}</h1>
+
+    {% if user.is_admin %}
+    <span class="role">Administrator</span>
+
+    {% if user.permissions %}
+    <ul>
+        {% for perm in user.permissions %}
+        <li>{{ perm }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% elseif user.is_moderator %}
+    <span class="role">Moderator</span>
+    {% else %}
+    <span class="role">User</span>
+    {% endif %}
+</div>
+{% else %}
+<p>Please log in.</p>
+{% endif %}

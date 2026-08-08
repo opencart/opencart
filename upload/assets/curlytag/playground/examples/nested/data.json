@@ -1,0 +1,20 @@
+{
+  "title": "User Directory",
+  "users": [
+    {
+      "name": "Alice",
+      "active": true,
+      "roles": ["admin", "dev"]
+    },
+    {
+      "name": "Bob",
+      "active": false,
+      "roles": ["viewer"]
+    },
+    {
+      "name": "Carol",
+      "active": true,
+      "roles": ["editor", "dev"]
+    }
+  ]
+}

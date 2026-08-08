@@ -1,0 +1,56 @@
+{
+  "heading_title": "Wireless Headphones Pro",
+  "thumb": "https://placehold.co/268x268",
+  "popup": "#",
+  "images": [
+    {
+      "thumb": "https://placehold.co/74x74",
+      "popup": "#"
+    },
+    {
+      "thumb": "https://placehold.co/74x74",
+      "popup": "#"
+    }
+  ],
+  "manufacturer": "SoundCo",
+  "manufacturers": "#",
+  "text_manufacturer": "Brand",
+  "model": "WH-PRO-100",
+  "text_model": "Model",
+  "product_codes": [
+    {
+      "code": "SKU",
+      "value": "WH-PRO-100-BLK"
+    }
+  ],
+  "reward": null,
+  "text_reward": "Reward Points",
+  "stock": true,
+  "stock_status": "In Stock",
+  "text_stock": "Availability",
+  "review_status": true,
+  "rating": 4,
+  "price": "79.99",
+  "special": "59.99",
+  "currency": "USD",
+  "tax": "6.00",
+  "text_tax": "Ex Tax:",
+  "points": 60,
+  "text_points": "Reward Points:",
+  "discounts": [
+    {
+      "quantity": "2+",
+      "price": "54.99"
+    },
+    {
+      "quantity": "5+",
+      "price": "49.99"
+    }
+  ],
+  "text_discount": " units @ ",
+  "wishlist_add": "#",
+  "compare_add": "#",
+  "button_wishlist": "Add to Wish List",
+  "button_compare": "Compare this Product",
+  "product_id": 42
+}

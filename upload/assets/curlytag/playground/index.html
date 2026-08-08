@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CurlyTag Playground</title>
+        <link rel="stylesheet" href="./playground.css" />
+    </head>
+    <body>
+        <div class="bg-mesh" aria-hidden="true"></div>
+
+        <div class="playground">
+            <main class="playground__main">
+                <div class="main-shell">
+                    <div class="main-shell__head">
+                        <div class="main-shell__intro">
+                            <span class="main-shell__eyebrow">CurlyTag Playground</span>
+                            <h1 class="main-shell__title">Template, data, output</h1>
+                            <p class="main-shell__lede">
+                                Edit template and data, inspect the generated HTML, and monitor
+                                render health without leaving the main canvas.
+                            </p>
+                        </div>
+
+                        <div class="main-shell__toolbar">
+                            <button
+                                class="examples__trigger"
+                                popovertarget="examples-panel"
+                                aria-label="Browse examples"
+                            >
+                                <span
+                                    class="button-icon examples__trigger-icon"
+                                    aria-hidden="true"
+                                ></span>
+                                <span class="examples__trigger-label">Browse Examples</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="main-shell__grid">
+                        <section class="editor-section editor-section--template">
+                            <div class="editor-section__head">
+                                <span>
+                                    <span
+                                        class="editor-section__dot editor-section__dot--indigo"
+                                    ></span>
+                                    Template
+                                </span>
+                                <div class="editor-section__actions">
+                                    <button
+                                        type="button"
+                                        class="editor-section__action"
+                                        data-editor-action="copy-template"
+                                    >
+                                        <span
+                                            class="button-icon editor-section__action-icon"
+                                            aria-hidden="true"
+                                        ></span>
+                                        <span data-button-label>Copy</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="editor-section__action"
+                                        data-editor-action="reset-template"
+                                        hidden
+                                    >
+                                        <span
+                                            class="button-icon editor-section__action-icon"
+                                            aria-hidden="true"
+                                        ></span>
+                                        <span data-button-label>Reset</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                id="template-editor"
+                                class="editor-section__body editor-section__body--editor"
+                            ></div>
+                        </section>
+
+                        <section class="editor-section editor-section--data">
+                            <div class="editor-section__head">
+                                <span>
+                                    <span
+                                        class="editor-section__dot editor-section__dot--ochre"
+                                    ></span>
+                                    Data
+                                    <small class="editor-section__meta">JSON</small>
+                                </span>
+                                <div class="editor-section__actions">
+                                    <button
+                                        type="button"
+                                        class="editor-section__action"
+                                        data-editor-action="copy-data"
+                                    >
+                                        <span
+                                            class="button-icon editor-section__action-icon"
+                                            aria-hidden="true"
+                                        ></span>
+                                        <span data-button-label>Copy</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="editor-section__action"
+                                        data-editor-action="reset-data"
+                                        hidden
+                                    >
+                                        <span
+                                            class="button-icon editor-section__action-icon"
+                                            aria-hidden="true"
+                                        ></span>
+                                        <span data-button-label>Reset</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                id="data-editor"
+                                class="editor-section__body editor-section__body--editor"
+                            ></div>
+                        </section>
+
+                        <output class="editor-section editor-section--output">
+                            <div class="editor-section__head">
+                                <span>
+                                    <span
+                                        class="editor-section__dot editor-section__dot--moss"
+                                    ></span>
+                                    Output
+                                </span>
+                            </div>
+                            <div
+                                id="output-source"
+                                class="editor-section__body editor-section__body--output"
+                            >
+                                <div id="output-source-code"></div>
+                            </div>
+                        </output>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div id="examples-panel" popover class="examples__popover">
+            <button class="examples__item" data-example="category">Product Page</button>
+            <button class="examples__item" data-example="loop">Loops &amp; Iteration</button>
+            <button class="examples__item" data-example="conditions">Conditionals</button>
+            <button class="examples__item" data-example="filters">Filters</button>
+            <button class="examples__item" data-example="nested">Nested Logic</button>
+        </div>
+
+        <script type="module" src="./playground.js"></script>
+    </body>
+</html>

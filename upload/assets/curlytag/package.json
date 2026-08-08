@@ -1,0 +1,57 @@
+{
+  "name": "@curlytag/curlytag",
+  "version": "0.1.1",
+  "description": "CurlyTag - Open Source JavaScript Template Engine",
+  "keywords": [
+    "html",
+    "javascript",
+    "template",
+    "template-engine",
+    "twig"
+  ],
+  "homepage": "https://www.curlytag.com/",
+  "bugs": {
+    "url": "https://github.com/curlytag/curlytag/issues"
+  },
+  "license": "MIT",
+  "author": "Daniel Kerr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/curlytag/curlytag.git"
+  },
+  "files": [
+    "curlytag.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "main": "curlytag.js",
+  "exports": {
+    ".": "./curlytag.js"
+  },
+  "scripts": {
+    "check": "vp check",
+    "lint": "vp lint",
+    "fmt": "vp fmt",
+    "test": "vp test",
+    "prepare": "vp config",
+    "release": "changelogen --release"
+  },
+  "devDependencies": {
+    "@codemirror/lang-html": "^6.4.11",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/state": "^6.6.0",
+    "@codemirror/view": "^6.41.1",
+    "@fontsource-variable/martian-mono": "^5.2.7",
+    "@vitest/browser": "^4.1.5",
+    "@vitest/browser-playwright": "^4.1.5",
+    "@vitest/ui": "^4.1.5",
+    "changelogen": "^0.6.2",
+    "codemirror": "^6.0.2",
+    "playwright": "^1.59.1",
+    "remixicon": "^4.9.1",
+    "shiki": "^4.0.2",
+    "vite-plus": "^0.1.19"
+  },
+  "packageManager": "npm@11.13.0"
+}

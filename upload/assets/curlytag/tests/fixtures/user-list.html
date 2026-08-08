@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ user.name | escape }}</td>
+            <td>{{ user.role | default: "member" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

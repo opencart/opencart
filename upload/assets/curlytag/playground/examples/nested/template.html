@@ -1,0 +1,14 @@
+<h3>{{ title }}</h3>
+
+{% for user in users %}
+<div>
+    <strong>{{ user.name }}</strong>
+    {% if user.active %}
+    <span>✅ active</span>
+    {% else %}
+    <span>⏸ inactive</span>
+    {% endif %} {% for role in user.roles %}
+    <span>[{{ role | upper }}]</span>
+    {% endfor %}
+</div>
+{% endfor %}

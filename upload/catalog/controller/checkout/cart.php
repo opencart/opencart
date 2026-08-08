@@ -178,7 +178,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$this->cart->add($product_info['product_id'], $quantity, $option, $subscription_plan_id);
 
-			$json['products'] = $this->cart->getProducts();
+			$json['products'] = array_values($this->cart->getProducts());
 			$json['totals'] = $this->cart->getTotal();
 
 			// Unset all shipping and payment methods

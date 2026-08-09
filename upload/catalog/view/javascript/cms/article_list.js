@@ -71,9 +71,6 @@ customElements.define('article-list', class extends WebComponent {
             }
         }
 
-
-
-
         return loader.template('cms/article_list', { ...data, ...language, ...config });
     }
 

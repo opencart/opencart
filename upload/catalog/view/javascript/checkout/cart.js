@@ -28,10 +28,12 @@ export default class extends Controller {
 
         console.log(data.products);
 
-        let shipping = await cart.hasShipping();
-        let download = await cart.hasDownload();
-        let minimum = await cart.hasMinimum();
+        let shipping = cart.hasShipping();
+        let download = cart.hasDownload();
+        let minimum = cart.hasMinimum();
 
+
+        data.weight = cart.getWeight();
         data.currency = currency;
 
         return await loader.template('checkout/cart', { ...data,  ...language });

@@ -16,10 +16,10 @@
 
 {% for article in articles %}
 <div class="mb-3">
-  <h2><a href="cms/article.js?article_id={{ article.article_id }}" data-on="click:onClick">{{ article.name }}</a></h2>
+  <h2><a href="cms/article_info.js?article_id={{ article.article_id }}" data-on="click:onClick">{{ article.name }}</a></h2>
 
   {% if article.image %}
-  <div><a href="cms/article.js?article_id={{ article.article_id }}" data-on="click:onClick"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
+  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" data-on="click:onClick"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
   {% endif %}
 
   <ul class="list-inline">
@@ -29,7 +29,7 @@
   </ul>
 
   <p class="mb-3">{{ article.description }}</p>
-  <div class="text-end"><a href="cms/article.js?article_id={{ article.article_id }}" class="btn btn-primary" data-on="click:onClick">{{ button_continue }}</a></div>
+  <div class="text-end"><a href="cms/article_info.js?article_id={{ article.article_id }}" class="btn btn-primary" data-on="click:onClick">{{ button_continue }}</a></div>
 
 </div>
 {% endfor %}

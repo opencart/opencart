@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/return');
 
-class extends Controller {
+export default class extends Controller {
    render() {
        return loader.template('account/return_form', { ...language });
     }

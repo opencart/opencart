@@ -5,6 +5,12 @@ export default class Currency {
         this.currencies = loader.storage('localisation/currency');
     }
 
+    convert(value, from, to) {
+        if (!from in this.currencies || !to in this.currencies) return value;
+
+        return value * (this.currencies[to].value / this.currencies[from].value);
+    }
+
     /**
      * This function can prefix/suffix your string.
      *
@@ -64,11 +70,5 @@ export default class Currency {
         }
 
         return string;
-    }
-
-    convert(value, from, to) {
-        if (!from in this.currencies || !to in this.currencies) return value;
-
-        return value * (this.currencies[to].value / this.currencies[from].value);
     }
 }

@@ -37,12 +37,11 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Return Reasons
 		$return_reason_data = [];
 
 		$this->load->model('localisation/return_reason');
 
-		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
+		$return_reasons = (array)$this->model_localisation_return_reason->getReturnReasons();
 
 		foreach ($return_reasons as $return_reason) {
 			$description_data = [];

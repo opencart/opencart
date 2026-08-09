@@ -1,7 +1,10 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
-class extends Controller {
+// Language
+const language = await loader.language('account/return');
+
+export default class extends Controller {
     async connected() {
 
     }

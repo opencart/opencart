@@ -2,7 +2,7 @@
 {% if image %}
   <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-2"/>
 {% endif %}
-<p>{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
+<p>{{ text_by }} <a href="cms/topic.js?author={{ author }}">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
 <div>{{ description }}</div>
 {% if tags %}
   <p>{{ text_tags }}

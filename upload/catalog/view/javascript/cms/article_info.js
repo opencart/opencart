@@ -2,7 +2,7 @@ import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = loader.language('account/article_info');
+const language = loader.language('cms/article_info');
 
 export default class extends Controller {
     async render() {

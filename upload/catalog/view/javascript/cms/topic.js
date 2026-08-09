@@ -53,10 +53,14 @@ export default class extends Controller {
             }
         }
 
+        data.search = '';
+
         return loader.template('cms/topic', { ...data, ...language });
     }
 
-    async onSubmit() {
+    async onSubmit(e) {
+        e.preventDefault();
+
         let url = 'index.php?route=cms/topic&language={{ language }}';
 
         var search = $('#input-search').val();
@@ -74,9 +78,11 @@ export default class extends Controller {
         location = url;
     }
 
-    onKeyDown() {
-        if (e.keyCode == 13) {
-            $('#button-search').trigger('click');
-        }
+    onClick(e) {
+        e.preventDefault();
+
+        let target = document.getElementById('content');
+
+        target.src = e.target.getAttribute('href');
     }
 }

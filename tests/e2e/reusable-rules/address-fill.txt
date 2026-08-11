@@ -1,0 +1,9 @@
+// Fills an OpenCart address form. The labels are the same on the checkout guest form, the
+// checkout register form and the account address book.
+enter "123 Test Street" into "Address 1"
+enter "London" into "City"
+enter "10001" into "Post Code"
+select "United Kingdom" from "Country"
+// Region / State is populated by ajax after Country changes
+wait up to 60 seconds until page contains "Greater London"
+select "Greater London" from "Region / State"

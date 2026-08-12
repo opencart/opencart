@@ -7,18 +7,18 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/manufacturer_list');
 
+// Storage
+let manufacturers = await loader.storage('manufacturer/manufacturer');
+
 export default class extends Controller {
     async render() {
         let data = {};
 
         let request = new URL(import.meta.url).searchParams;
 
-        data.heading_title = language.heading_title;
-
         data.categories = [];
 
-        // Product Info
-        let manufacturers = await loader.storage('manufacturer/manufacturer');
+        console.log(manufacturers);
 
         for (let manufacturer of manufacturers) {
             if (config.config_language in manufacturer.description) {
@@ -32,11 +32,13 @@ export default class extends Controller {
                     key = key.toUpperCase();
                 }
 
+                data.categories.some();
+
                 //if (!key in data.categories) {
-                    data.categories[key] = {
+                    data.categories.push({
                         name: key,
                         manufacturer: []
-                    };
+                    });
                 //}
                 /*
                 data.categories[key].manufacturer.push({
@@ -45,6 +47,8 @@ export default class extends Controller {
                     image: manufacturer.image
                 });
                 */
+
+                console.log(data);
             }
         }
 

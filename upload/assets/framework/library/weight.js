@@ -1,14 +1,17 @@
 import { loader } from './loader.js';
 
+let weight_classes = await loader.storage('localisation/weight_class');
+
 export default class Weight {
-    constructor() {
-        this.weight_classes = loader.storage('localisation/weight');
-    }
-
     convert(value, from, to) {
-        if (!from in this.weight_classes || !to in this.weight_classes) return value;
+        let weight_class_from = weight_classes.find(weight_class => weight_class.weight_class_id === from);
+        let weight_class_to = weight_classes.find(weight_class => weight_class.weight_class_id === to);
 
-        return value * (this.weight_classes[to].value / this.weight_classes[from].value);
+        if (!weight_class_from || !weight_class_to) return value;
+
+        console.log(weight_classes);
+
+        return value * (weight_class_to.value / weight_class_from.value);
     }
 
     /**
@@ -22,23 +25,12 @@ export default class Weight {
      * @param {string} value Optional and will be added after the string
      * @param {string} format Optional and will be added after the string
      */
-    format(number, code, value = 0, format = true) {
-        if (!code in this.currencies) return number;
+    format(value, weight_class_id, decimal_point = '.', thousand_point = ',') {
+        let weight_class = weight_classes.find(weight_class => weight_class.weight_class_id === weight_class_id);
 
-        let currency = this.currencies[code];
+        if (!weight_class) return number;
 
-        value = parseFloat(value ? value : currency.value);
-
-        let amount = parseFloat(number).toFixed(currency.decimal_place);
-
-        let option = {
-            style: 'currency',
-            currency: code,
-            currencyDisplay: 'symbol',
-            currencySign: 'standard',
-            minimumIntegerDigits: 1,
-            minimumFractionDigits: currency.decimal_place
-        };
+        value = parseFloat(value ? value : weight_class.value);
 
         let string = '';
 
@@ -50,25 +42,16 @@ export default class Weight {
 
         let part = formater.formatToParts(amount * value);
 
-        let allowed = [
-            'minusSign',
-            'integer',
-            'group',
-            'decimal',
-            'fraction',
-            'literal'
-        ];
-
-        for (let i = 0; i < part.length; i++) {
-            if (allowed.includes(part[i].type)) {
-                string += part[i].value;
-            }
-        }
-
-        if (currency.symbol_right) {
-            string += currency.symbol_right;
-        }
-
         return string;
+    }
+
+    getUnit(weight_class_id) {
+        //this.weights[$weight_class_id]
+
+       // if () {
+       //     return $this->weights[$weight_class_id]['unit'];
+        //} else {
+       //     return '';
+        //}
     }
 }

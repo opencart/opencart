@@ -25,7 +25,9 @@ config.cache.set('default', {
     config_customer_group_id: 1,
     config_account_id: 1,
     config_product_description_length: 100,
-    config_product_count: true
+    config_product_count: true,
+    config_review_status: true,
+    config_file_max_size: 3000
 });
 
 // Testing Code

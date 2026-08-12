@@ -1,14 +1,15 @@
 import { loader } from './loader.js';
 
+let currencies = loader.storage('localisation/currency');
+
 export default class Currency {
-    constructor() {
-        this.currencies = loader.storage('localisation/currency');
-    }
-
     convert(value, from, to) {
-        if (!from in this.currencies || !to in this.currencies) return value;
+        let currency_from = currencies.find(currency => currency.code === from);
+        let currency_to = currencies.find(currency => currency.code === to);
 
-        return value * (this.currencies[to].value / this.currencies[from].value);
+        if (!currency_from || !currency_to) return value;
+
+        return value * (currency_to.value / currency_from.value);
     }
 
     /**
@@ -23,9 +24,9 @@ export default class Currency {
      * @param {string} format Optional and will be added after the string
      */
     format(number, code, value = 0, format = true) {
-        if (!code in this.currencies) return number;
+        let currency = currencies.find(currency => currency.code === code);
 
-        let currency = this.currencies[code];
+        if (!currency) return number;
 
         value = parseFloat(value ? value : currency.value);
 

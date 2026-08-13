@@ -3,6 +3,7 @@ import { loader } from '../index.js';
 
 // Library
 let currency = await loader.library('currency');
+let tax = await loader.library('tax');
 
 // Storage
 let currencies = await loader.storage('localisation/currency');
@@ -30,6 +31,14 @@ customElements.define('x-currency', class extends WebComponent {
         this.setAttribute('amount', amount);
     }
 
+    get tax_class_id() {
+        return this.getAttribute('tax_class_id');
+    }
+
+    set tax_class_id(tax_class_id) {
+        this.setAttribute('tax_class_id', tax_class_id);
+    }
+
     get value() {
         if (this.hasAttribute('value')) {
             return parseFloat(this.getAttribute('value')).toFixed(currency.decimal_place);
@@ -51,6 +60,8 @@ customElements.define('x-currency', class extends WebComponent {
     }
 
     async render() {
-        return this.currency.format(this.value, this.code);
+        console.log(this.value);
+
+        return currency.format(this.value, this.code);
     }
 });

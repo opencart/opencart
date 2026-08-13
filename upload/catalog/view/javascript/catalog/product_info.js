@@ -28,42 +28,46 @@ export default class extends Controller {
         let product = await loader.storage('product/product-' + request.get('product_id'));
 
         if (product !== undefined && config.config_language in product.description) {
-            data.product_id = product.product_id;
-
-            // Images
-            data.thumb = product.thumb;
-            data.popup = product.popup;
-            data.images = product.images;
-
             let description = product.description[config.config_language];
 
             //description.meta_title
             //description.meta_description
             //description.meta_keyword
 
-            data.heading_title = description.name;
-            data.description = description.description;
-
-            // Product Codes
-            data.model = product.model;
-            data.product_codes = product.product_codes;
-
-            // Manufacturer
-            data.manufacturer_id = product.manufacturer_id;
-            data.manufacturer = product.manufacturer;
-
             // Price
             data.price = product.price;
+
+            let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id && discount.date_start >= Date.now() && discount.date_end <= Date.now());
+
+            if (discount) {
+                data.price = discount.price;
+            }
+
+            data.discounts = [];
+
+            //&& discount.date_start >= Date.now() && discount.date_end <= Date.now()
+            let discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id);
+
+            console.log(discounts);
+
+            discounts.sort(() => Math.random() - 0.5);
+
+            for (let discount of discounts) {
+
+
+
+                data.discounts.push({
+                    dffd: product.discounts
+
+                });
+            }
+
+            console.log(data.discounts);
+
             data.special = product.special;
             data.tax = '';
 
             if (config.config_tax) data.tax = product.special ? product.special : product.price;
-
-            data.discounts = product.discounts;
-
-            // Stock
-            data.quantity = product.quantity;
-            data.minimum = product.minimum;
 
             let stock_status_id = 0;
 
@@ -81,24 +85,6 @@ export default class extends Controller {
             }
 
             data.stock_status = product.stock_status;
-
-            // Reward Points
-            data.points = product.points;
-            data.reward = product.reward;
-
-            // Statistics
-            data.sales = product.sales;
-            data.rating = product.rating;
-
-            // Weight
-            data.weight = product.weight;
-            data.weight_class_id = product.weight_class_id;
-
-            // Dimensions
-            data.length = product.length;
-            data.width = product.width;
-            data.height = product.height;
-            data.length_class_id = product.length_class_id;
 
             // Attributes
             data.attribute_groups = [];
@@ -161,17 +147,15 @@ export default class extends Controller {
             }
 
             // Tags
-            data.tags = product.tag;
+            data.tags = product.tags;
 
             console.log(data.tags);
 
             data.related = [];
 
-            data.review_status = config.config_review_status;
-
             data.currency = currency;
 
-            return loader.template('catalog/product_info', { ...data, ...language, ...config });
+            return loader.template('catalog/product_info', { ...product, ...description, ...data, ...language, ...config });
         }
     }
 

@@ -18,8 +18,8 @@
 <div class="mb-3">
   <h2><a href="cms/article_info.js?article_id={{ article.article_id }}" data-on="click:onClick">{{ article.name }}</a></h2>
 
-  {% if article.image %}
-  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" data-on="click:onClick"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
+  {% if article.thumb %}
+  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" data-on="click:onClick"><img src="{{ article.thumb }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
   {% endif %}
 
   <ul class="list-inline">

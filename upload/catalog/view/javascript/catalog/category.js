@@ -28,19 +28,11 @@ export default class extends Controller {
         let category = await loader.storage('category/category-' + category_id);
 
         if (category !== undefined && config.config_language in category.description) {
-            data.category_id = category.category_id;
-
             let description = category.description[config.config_language];
 
             //description.meta_title;
             //description.meta_description;
             //description.meta_keyword;
-
-            data.heading_title = description.name;
-            data.description = description.description;
-
-            // Images
-            data.image = category.image;
 
             data.categories = [];
 
@@ -51,7 +43,7 @@ export default class extends Controller {
                 });
             }
 
-            return loader.template('catalog/category', { ...data, ...language, ...config });
+            return loader.template('catalog/category', { ...category, ...description, ...data, ...language, ...config });
         }
     }
 

@@ -412,6 +412,20 @@ class Product extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		$tag_data = [];
+
+		$this->load->model('catalog/tag');
+
+		$tags = $this->model_cms_article->getTags($product_info['product_id']);
+
+		foreach ($tags as $tag) {
+			$tag_info = $this->model_catalog_tag->getTag($tag['tag_id']);
+
+			if ($tag_info) {
+				$tag_data[] = $tag_info['tag'];
+			}
+		}
+
 		$product_data = [
 			'product_id'         => $product_info['product_id'],
 			'popup'              => $popup,
@@ -423,7 +437,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'attribute_groups'   => $attribute_group_data,
 			'options'            => $product_option_data,
 			'subscription_plans' => $subscription_plan_data,
-			'downloads'          => $this->model_catalog_product->getTotalDownloads($product_info['product_id']),
+			'download_total'     => $this->model_catalog_product->getTotalDownloads($product_info['product_id']),
 			'location'           => $product_info['location'],
 			'variant'            => $product_info['variant'],
 			'override'           => $product_info['override'],
@@ -447,7 +461,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'length_class_id'    => $product_info['length_class_id'],
 			'sales'              => $product_info['sales'],
 			'rating'             => $product_info['rating'],
-			'tags'               => $this->model_catalog_product->getTags($product_info['product_id']),
+			'tags'               => $tag_data,
 			'date_added'         => $product_info['date_added'],
 			'date_modified'      => $product_info['date_modified']
 		];

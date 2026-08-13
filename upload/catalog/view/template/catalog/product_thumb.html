@@ -13,7 +13,7 @@
       </div>
       {% endif %}
 
-      {% if review_status and rating %}
+      {% if config_review_status and rating %}
       <div class="rating">
         {% for i in 1..5 %}{% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %}{% endfor %}
       </div>
@@ -23,9 +23,9 @@
 
     <form method="post" data-oc-target="#cart">
       <div class="button">
-        <button type="submit" data-on="click:addToCart" data-formaction="{{ cart_add }}" title="{{ button_cart }}" data-bind="button_cart"><i class="fa-solid fa-shopping-cart"></i></button>
-        <button type="submit"data-on="click:addToWishlist" formaction="{{ wishlist_add }}" title="{{ button_wishlist }}" data-bind="button_wishlist"><i class="fa-solid fa-heart"></i></button>
-        <button type="submit"data-on="click:addToCompare" formaction="{{ compare_add }}" title="{{ button_compare }}" data-bind="button_compare"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+        <button type="submit" data-on="click:addToCart" title="{{ button_cart }}" data-bind="button_cart"><i class="fa-solid fa-shopping-cart"></i></button>
+        <button type="submit"data-on="click:addToWishlist" title="{{ button_wishlist }}" data-bind="button_wishlist"><i class="fa-solid fa-heart"></i></button>
+        <button type="submit"data-on="click:addToCompare" title="{{ button_compare }}" data-bind="button_compare"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
       </div>
       <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ minimum }}"/>
     </form>

@@ -46,7 +46,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		foreach ($length_classes as $length_class) {
 			$description_data = [];
 
-			$descriptions = $this->model_localisation_weight_class->getDescriptions($length_class['weight_class_id']);
+			$descriptions = $this->model_localisation_length_class->getDescriptions($length_class['length_class_id']);
 
 			foreach ($descriptions as $code => $description) {
 				$description_data[$code] = ['title' => $description['title']];

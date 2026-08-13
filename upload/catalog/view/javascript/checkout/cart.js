@@ -32,7 +32,6 @@ export default class extends Controller {
         let download = cart.hasDownload();
         let minimum = cart.hasMinimum();
 
-
         data.weight = cart.getWeight();
         data.currency = currency;
 

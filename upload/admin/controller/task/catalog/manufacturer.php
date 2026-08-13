@@ -11,7 +11,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate category list task by store.
+	 * Generate manufacturer list task by store.
 	 *
 	 * @param array<string, string> $args
 	 *

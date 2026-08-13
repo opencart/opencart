@@ -1,6 +1,6 @@
 import { loader } from './loader.js';
 
-let currencies = loader.storage('localisation/currency');
+let currencies = await loader.storage('localisation/currency');
 
 export default class Currency {
     convert(value, from, to) {

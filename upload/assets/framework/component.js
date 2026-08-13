@@ -5,7 +5,7 @@ export { Controller } from './library/controller.js';
 //import('./component/alert.js');
 import('./component/include.js');
 import('./component/pagination.js');
-import('./component/price.js');
+import('./component/currency.js');
 
 // Input
 import('./input/autocomplete.js');

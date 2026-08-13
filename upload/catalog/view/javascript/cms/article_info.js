@@ -1,39 +1,27 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
+// Config
+const config = await loader.config('default');
+
 // Language
-const language = loader.language('cms/article_info');
+const language = await loader.language('cms/article_info');
 
 export default class extends Controller {
     async render() {
-        let data = {};
-
         let request = new URL(import.meta.url).searchParams;
 
         // Article Info
-        let article = await loader.storage('cms/article-' + request.get('article_id'));
+        let article = await loader.storage('article/article-' + request.get('article_id'));
 
         if (article !== undefined && config.config_language in article.description) {
-            data.article_id = article.article_id;
-
             let description = article.description[config.config_language];
 
             //description.meta_title
             //description.meta_description
             //description.meta_keyword
 
-            data.image = description.image;
-
-            data.name = description.name;
-            data.description = description.description;
-
-            data.author = article.author;
-            data.tags = article.tag.split(',');
-            data.date_added = article.date_added;
-
-            data.comment_total = article.comment_total;
-
-            return loader.template('cms/article', { ...data, ...config, ...language });
+            return loader.template('cms/article_info', { ...article, ...description, ...config, ...language });
         }
     }
 }

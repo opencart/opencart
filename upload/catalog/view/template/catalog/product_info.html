@@ -3,11 +3,11 @@
   {% if thumb || images %}
   <div class="col-sm">
     <div class="image magnific-popup">
-      {% if thumb %}<a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail mb-3"/></a>{% endif %}
+      {% if thumb %}<a href="{{ popup }}" title="{{ name }}"><img src="{{ thumb }}" title="{{ name }}" alt="{{ name }}" class="img-thumbnail mb-3"/></a>{% endif %}
 
       {% if images %}
       <div>
-        {% for image in images %} <a href="{{ image.popup }}" title="{{ heading_title }}"><img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail" style="width: 74px"/></a> {% endfor %}
+        {% for image in images %} <a href="{{ image.popup }}" title="{{ name }}"><img src="{{ image.thumb }}" title="{{ name }}" alt="{{ name }}" class="img-thumbnail" style="width: 74px"/></a> {% endfor %}
       </div>
       {% endif %}
 
@@ -16,7 +16,7 @@
   {% endif %}
 
   <div class="col-sm">
-    <h1>{{ heading_title }}</h1>
+    <h1>{{ name }}</h1>
 
     <ul class="list-unstyled mb-1">
 
@@ -37,7 +37,7 @@
       <li>{{ text_stock }}: <strong><span class="text-{% if stock %}success{% else %}danger{% endif %}">{{ stock_status }}</span></strong></li>
     </ul>
 
-    {% if review_status %}
+    {% if config_review_status %}
     <div class="rating">
       {% for i in 1..5 %} {% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %} {% endfor %}
     </div>
@@ -88,8 +88,7 @@
         <button type="button" data-bind="compare" data-on="click:addToCompare" data-product-id="{{ product_id }}" class="btn btn-light btn-lg" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
       </div>
 
-      <input type="hidden" name="product_id" value="{{ product_id }}"/>
-      <input type="hidden" name="quantity" value="{{ minimum }}"/>
+      <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ minimum }}"/>
     </form>
 
     <br/>
@@ -108,7 +107,10 @@
             <option value="">{{ text_select }}</option>
 
             {% for option_value in option.option_value %}
-            <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>){% endif %}</option>
+            <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}
+              <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
+              ){% endif %}
+            </option>
             {% endfor %}
 
           </select>
@@ -224,18 +226,11 @@
 
             {% for subscription_plan in subscription_plans %}
 
-
             {% if subscription_plan.duration %}
-
             <option value="{{ subscription_plan.subscription_plan_id }}">{{ text_subscription_duration | replace_first: '%s', subscription_plan.price | replace_first: '%d', subscription_plan.cycle | replace_first: '%s', subscription_plan.frequency | replace_first: '%d', subscription_plan.duration }}</option>
-
             {% else %}
-
             <option value="{{ subscription_plan.subscription_plan_id }}">{{ text_subscription_cancel | replace_first: '%s', subscription_plan.price | replace_first: '%d', subscription_plan.cycle }}</option>
-            text_subscription_cancel
-
             {% endif %}
-
 
             {% endfor %}
 
@@ -270,7 +265,7 @@
   <li class="nav-item"><a href="#tab-description" data-bs-toggle="tab" class="nav-link active">{{ tab_description }}</a></li>
   {% if attribute_groups %}
   <li class="nav-item"><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
-  {% endif %} {% if review_status %}
+  {% endif %} {% if config_review_status %}
   <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review }}</a></li>
   {% endif %}
 </ul>
@@ -302,7 +297,8 @@
       </table>
     </div>
   </div>
-  {% endif %} {% if review_status %}
+  {% endif %}
+  {% if config_review_status %}
   <div id="tab-review" class="tab-pane fade mb-4">{{ review }}</div>
   {% endif %}
 </div>

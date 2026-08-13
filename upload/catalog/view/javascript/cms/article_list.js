@@ -58,15 +58,7 @@ customElements.define('article-list', class extends WebComponent {
                 if (article !== undefined && config.config_language in article.description) {
                     let description = article.description[config.config_language];
 
-                    data.articles.push({
-                        article_id: article.article_id,
-                        name: description.name,
-                        description: description.description,
-                        image: article.image,
-                        author: article.author,
-                        comment_total: article.comment_total,
-                        date_added: article.date_added
-                    });
+                    data.articles.push({ ...article, ...description });
                 }
             }
         }

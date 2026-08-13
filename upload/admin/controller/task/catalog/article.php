@@ -195,13 +195,28 @@ class Article extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		$tag_data = [];
+
+		$this->load->model('catalog/tag');
+
+		$tags = $this->model_cms_article->getTags($article_info['article_id']);
+
+		foreach ($tags as $tag) {
+			$tag_info = $this->model_catalog_tag->getTag($tag['tag_id']);
+
+			if ($tag_info) {
+				$tag_data[] = $tag_info['tag'];
+			}
+		}
+
 		$article_data = [
 			'article_id'    => $article_info['article_id'],
 			'description'   => $description_data,
 			'topic_id'      => $article_info['topic_id'],
 			'author'        => $article_info['author'],
 			'rating'        => $article_info['rating'],
-			'tag'           => $this->model_cms_article->getTags($article_info['article_id']),
+			'tags'          => $tag_data,
+			'comment_total' => $this->model_cms_article->getTotalComments(['filter_article_id' => $article_info['article_id']]),
 			'status'        => $article_info['status'],
 			'date_added'    => $article_info['date_added'],
 			'date_modified' => $article_info['date_modified']

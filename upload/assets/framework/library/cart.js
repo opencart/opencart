@@ -3,6 +3,7 @@ import { loader } from './loader.js';
 // library
 let session = await loader.library('session');
 let tax = await loader.library('tax');
+let weight_class = await loader.library('weight');
 
 // Config
 let config = await loader.config('default');
@@ -70,7 +71,7 @@ export default class Cart {
 
         for (let product of this.getProducts()) {
             if (product.shipping) {
-                weight += weight.convert(product.weight, product.weight_class_id, config.config_weight_class_id);
+                weight += weight_class.convert(product.weight, product.weight_class_id, config.config_weight_class_id);
             }
         }
 

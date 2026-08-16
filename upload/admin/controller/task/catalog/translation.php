@@ -49,12 +49,12 @@ class Translation extends \Opencart\System\Engine\Controller {
 		// Generate new data
 		$routes = [];
 
-		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language_catalog') . '/';
+		$directory = DIR_CATALOG . 'view/language/' . $this->config->get('config_language_catalog') . '/';
 
-		$files = oc_directory_read($directory, true, '/.+\.php$/');
+		$files = oc_directory_read($directory, true, '/.+\.yaml$/');
 
 		foreach ($files as $file) {
-			$route = substr(substr($file, strlen($directory)), 0, -4);
+			$route = substr(substr($file, strlen($directory)), 0, -5);
 
 			$pos = strpos($route, '/');
 
@@ -73,10 +73,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $this->config->get('config_language_catalog') . '/';
 
-			$files = oc_directory_read($path, true, '/.+\.php/');
+			$files = oc_directory_read($path, true, '/.+\.yaml/');
 
 			foreach ($files as $file) {
-				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -4);
+				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -5);
 			}
 		}
 
@@ -147,27 +147,33 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		if (substr($args['route'], 0, 10) != 'extension/') {
-			$directory = DIR_CATALOG . 'language/' . $language_info['code'] . '/';
-			$file = $directory . $args['route'] . '.php';
+			$directory = DIR_CATALOG . 'view/language/' . $language_info['code'] . '/';
+			$file = $directory . $args['route'] . '.yaml';
 		} else {
 			// Extension template load
 			$part = explode('/', $args['route']);
 
-			$directory = DIR_EXTENSION . $part[1] . '/catalog/language/' . $language_info['code'] . '/';
+			$directory = DIR_EXTENSION . $part[1] . '/catalog/view/language/' . $language_info['code'] . '/';
 
 			unset($part[0]);
 			unset($part[1]);
 
-			$file = $directory . implode('/', $part) . '.php';
+			$file = $directory . implode('/', $part) . '.yaml';
 		}
 
 		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
 			return ['error' => $this->language->get('error_file')];
 		}
 
+		$response = file_get_contents($file);
+
 		$_ = [];
 
-		include($file);
+		$this->load->helper('yaml');
+
+		$_ = \oc_yaml_decode($response);
+
+		//include($file);
 
 		$filter_data = [
 			'filter_route'       => $args['route'],
@@ -195,13 +201,13 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$pos = strrpos($args['route'], '/');
 
 		$directory = DIR_OPENCART . 'shop/' . parse_url($store_info['url'], PHP_URL_HOST) . '/language/' . $language_info['code'] . '/' . ($pos !== false ? substr($args['route'], 0, $pos) . '/' : '');
-		$filename = ($pos !== false ? substr($args['route'], $pos) : $args['route']) . '.json';
+		$filename = ($pos !== false ? substr($args['route'], $pos) : $args['route']) . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($_))) {
+		if (!file_put_contents($directory . $filename, \oc_yaml_encode($_))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

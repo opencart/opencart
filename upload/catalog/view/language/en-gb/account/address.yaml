@@ -1,0 +1,25 @@
+# Heading
+heading_title: 'Address Book'
+
+# Text
+text_account: Account
+text_address_book: 'Address Book Entries'
+text_address_add: 'Add Address'
+text_address_edit: 'Edit Address'
+text_add: 'Your address has been successfully added'
+text_edit: 'Your address has been successfully updated'
+text_delete: 'Your address has been successfully deleted'
+text_no_results: 'You have no addresses in your account.'
+text_default: Default
+
+# Entry
+entry_firstname: 'First Name'
+entry_lastname: 'Last Name'
+entry_company: Company
+entry_address_1: 'Address 1'
+entry_address_2: 'Address 2'
+entry_postcode: 'Post Code'
+entry_city: City
+entry_country: Country
+entry_zone: 'Region / State'
+entry_default: 'Default Address'

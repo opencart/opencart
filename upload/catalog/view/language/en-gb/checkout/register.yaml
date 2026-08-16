@@ -1,0 +1,31 @@
+# Heading
+heading_title: 'Your Personal Details'
+
+# Text
+text_login: 'If you already have an account with us, please login at the <a href="%s"><strong>login page</strong></a>.'
+text_register: 'Register Account'
+text_guest: 'Guest Checkout'
+text_payment_address: 'Payment Address'
+text_shipping_address: 'Shipping Address'
+text_your_password: 'Your Password'
+text_agree: 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>'
+text_success_add: 'Success: Your account has been created!'
+text_success_guest: 'Success: Your guest account information has been saved!'
+text_success_edit: 'Success: Your account has been successfully updated.'
+
+# Entry
+entry_customer_group: 'Account Type'
+entry_firstname: 'First Name'
+entry_lastname: 'Last Name'
+entry_email: E-Mail
+entry_telephone: Telephone
+entry_password: Password
+entry_company: Company
+entry_address_1: 'Address 1'
+entry_address_2: 'Address 2'
+entry_postcode: 'Post Code'
+entry_city: City
+entry_country: Country
+entry_zone: 'Region / State'
+entry_match: 'My delivery and billing addresses are the same.'
+entry_newsletter: 'I wish to subscribe to the %s newsletter.'

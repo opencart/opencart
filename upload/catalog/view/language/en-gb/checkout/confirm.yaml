@@ -1,0 +1,10 @@
+# Text
+text_model: 'Model'
+text_subscription: 'Subscription'
+text_points: 'Reward Points'
+
+# Column
+column_product: 'Product'
+column_quantity: 'Quantity'
+column_price: 'Unit Price'
+column_total: 'Total'

@@ -1,0 +1,33 @@
+# Text
+text_search: 'Search'
+text_brand: 'Brand'
+text_manufacturer: 'Brand'
+text_model: 'Model'
+text_reward: 'Reward Points'
+text_points: 'Price in reward points:'
+text_stock: 'Availability'
+text_tax: 'Ex Tax:'
+text_discount: ' or more '
+text_option: 'Available Options'
+text_minimum: 'This product has a minimum quantity of %s'
+text_reviews: '%s reviews'
+text_write: 'Write a review'
+text_login: 'Please <a href="%s">login</a> or <a href="%s">register</a> to review'
+text_tags: 'Tags:'
+text_subscription: 'Subscription'
+text_subscription_duration: '%s every %d %s(s) for %d payment(s)'
+text_subscription_cancel: '%s every %d %s(s) until canceled'
+text_day: 'day'
+text_week: 'week'
+text_semi_month: 'half-month'
+text_month: 'month'
+text_year: 'year'
+
+# Entry
+entry_qty: 'Qty'
+entry_rating: 'Rating'
+
+# Tab
+tab_description: 'Description'
+tab_attribute: 'Specification'
+tab_review: 'Reviews (%s)'

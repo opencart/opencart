@@ -988,7 +988,6 @@
                       <th class="text-end">{{ entry_priority }}</th>
                       <th class="text-end">{{ entry_price }}</th>
                       <th class="text-end">{{ entry_type }}</th>
-                      <th class="text-end">{{ entry_special }}</th>
                       <th>{{ entry_date_start }}</th>
                       <th>{{ entry_date_end }}</th>
                       <th class="text-end">{% if master_id %}
@@ -1012,9 +1011,6 @@
                             <option value="S"{% if product_discount.type == 'S' %} selected{% endif %}>{{ text_subtract }}</option>
                             <option value="P"{% if product_discount.type == 'P' %} selected{% endif %}>{{ text_percentage }}</option>
                           </select></td>
-                        <td>
-                          <x-switch name="product_discount[{{ discount_row }}][special]" value="1" checked="{{ product_discount.special }}" input-class="form-switch form-switch-lg"></x-switch>
-                        </td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1024,7 +1020,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="8"></td>
+                      <td colspan="7"></td>
                       <td class="text-end"><button type="button" id="button-discount" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>

@@ -1,0 +1,16 @@
+# Heading
+heading_title: 'Account Login'
+
+# Text
+text_account: 'Account'
+text_login: 'Login'
+text_new_customer: 'New Customer'
+text_register: 'Register Account'
+text_register_account: "By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made."
+text_returning_customer: 'Returning Customer'
+text_i_am_returning_customer: 'I am a returning customer'
+text_forgotten: 'Forgotten Password'
+
+# Entry
+entry_email: 'E-Mail Address'
+entry_password: 'Password'

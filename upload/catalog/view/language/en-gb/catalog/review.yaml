@@ -1,0 +1,17 @@
+# Text
+text_reviews: '%s reviews'
+text_write: 'Write a review'
+text_login: 'Please <a href="%s">login</a> or <a href="%s">register</a> to review'
+text_no_results: 'Be the first to write a review for this product.'
+text_note: '<span class="text-danger">Note:</span> HTML is not translated!'
+text_success: 'Thank you for your review. It has been submitted to the webmaster for approval.'
+
+# Entry
+entry_author: 'Your Name'
+entry_review: 'Your Review'
+entry_rating: Rating
+entry_good: Good
+entry_bad: Bad
+
+# Tab
+tab_review: 'Reviews (%s)'

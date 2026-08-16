@@ -1,0 +1,46 @@
+# Heading
+heading_title: 'Subscriptions'
+
+# Text
+text_account: 'Account'
+text_success: 'Success: Your subscription has successfully been canceled!'
+text_subscription: 'Subscription #%s'
+text_subscription_id: 'Subscription ID'
+text_order_id: 'Order ID'
+text_shipping_address: 'Shipping Address'
+text_shipping_method: 'Shipping Method'
+text_payment_address: 'Payment Address'
+text_payment_method: 'Payment Method'
+text_model: 'Model'
+text_subscription_plan: 'Subscription Plan'
+text_subscription_trial: '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) for %d payment(s) then '
+text_subscription_duration: '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) for %d payment(s)'
+text_subscription_cancel: '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) until canceled'
+text_day: 'day'
+text_week: 'week'
+text_semi_month: 'half-month'
+text_month: 'month'
+text_year: 'year'
+text_quantity: 'Quantity'
+text_date_next: 'Date Next'
+text_remaining: 'Remaining'
+text_history: 'Subscription History'
+text_order: 'Order History'
+text_no_subscription: 'No subscriptions found!'
+
+# Column
+column_subscription_id: 'Subscription ID'
+column_product: 'Product'
+column_product_total: 'No. of Products'
+column_description: Description
+column_order_id: 'Order ID'
+column_status: 'Status'
+column_quantity: 'Quantity'
+column_trial_price: 'Trial Price'
+column_price: 'Price'
+column_total: 'Total'
+column_comment: 'Comment'
+column_date_added: 'Date Added'
+
+# Button
+button_cancel: 'Cancel Subscription'

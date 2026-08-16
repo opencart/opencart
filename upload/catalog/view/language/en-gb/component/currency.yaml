@@ -1,0 +1,5 @@
+# Text
+text_currency: 'Currency'
+
+# Error
+error_currency: 'Warning: Currency is not available!'

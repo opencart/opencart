@@ -1,0 +1,11 @@
+# Text
+text_product: 'Products'
+text_no_results: 'There are no products to list in this category.'
+text_compare: 'Product Compare (%s)'
+text_sort: 'Sort By'
+text_default: 'Default'
+text_name: 'Name'
+text_price: 'Price'
+text_rating: 'Rating'
+text_date_added: 'Latest'
+text_limit: 'Show'

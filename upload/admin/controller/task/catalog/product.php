@@ -394,7 +394,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				'priority'          => $discount['priority'],
 				'price'             => $discount['price'],
 				'type'              => $discount['type'],
-				'special'           => $discount['special'],
 				'date_start'        => $discount['date_start'],
 				'date_end'          => $discount['date_end']
 			];
@@ -416,7 +415,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/tag');
 
-		$tags = $this->model_cms_article->getTags($product_info['product_id']);
+		$tags = $this->model_catalog_product->getTags($product_info['product_id']);
 
 		foreach ($tags as $tag) {
 			$tag_info = $this->model_catalog_tag->getTag($tag['tag_id']);

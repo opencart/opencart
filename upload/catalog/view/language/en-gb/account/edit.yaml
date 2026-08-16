@@ -1,0 +1,14 @@
+# Heading
+heading_title: 'My Account Information'
+
+# Text
+text_account: 'Account'
+text_edit: 'Edit Information'
+text_your_details: 'Your Personal Details'
+text_success: 'Success: Your account has been successfully updated.'
+
+# Entry
+entry_firstname: 'First Name'
+entry_lastname: 'Last Name'
+entry_email: 'E-Mail'
+entry_telephone: 'Telephone'

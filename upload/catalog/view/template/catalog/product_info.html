@@ -103,15 +103,13 @@
           {% if option.type == 'select' %}
 
           <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
-            <option value="">{{ text_select }}</option>
+            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+            <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
+              <option value="">{{ text_select }}</option>
 
-            {% for option_value in option.option_value %}
-            <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}
-              <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
-              ){% endif %}
-            </option>
-            {% endfor %}
+              {% for option_value in option.option_value %}
+              <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }} <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>){% endif %}</option>
+              {% endfor %}
 
           </select>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -297,8 +295,7 @@
       </table>
     </div>
   </div>
-  {% endif %}
-  {% if config_review_status %}
+  {% endif %} {% if config_review_status %}
   <div id="tab-review" class="tab-pane fade mb-4">{{ review }}</div>
   {% endif %}
 </div>

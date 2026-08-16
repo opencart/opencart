@@ -2458,7 +2458,6 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'priority'          => 0,
 	 *     'price'             => '0.0000',
 	 *     'type'              => 'Product Discount Type',
-	 *     'special'           => 0,
 	 *     'date_start'        => '2021-01-01',
 	 *     'date_end'          => '2021-01-31'
 	 * ];
@@ -2468,7 +2467,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_product->addDiscount($product_id, $product_data);
 	 */
 	public function addDiscount(int $product_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_discount` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `type` = '" . $this->db->escape($data['type']) . "', `special` = '" . (bool)$data['special'] . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_discount` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `type` = '" . $this->db->escape($data['type']) . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
 	}
 
 	/**

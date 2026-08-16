@@ -1,0 +1,42 @@
+# Heading
+heading_title: 'Comments'
+
+# Text
+text_by: By
+text_write: 'Write a comment'
+text_login: 'Please <a href="%s">login</a> or <a href="%s">register</a> to comment'
+text_no_results: 'Be the first to write a comment for this article.'
+text_sort: 'Sort By'
+text_rating_asc: 'Rating (Lowest)'
+text_rating_desc: 'Rating (Highest)'
+text_date_added_asc: 'Date Added (Oldest)'
+text_date_added_desc: 'Date Added (Latest)'
+text_like: 'Like!'
+text_dislike: 'Dislike!'
+text_success: 'Success: Thank you for your comment!'
+text_queue: 'Success: Your comment has been added to our moderation queue!'
+text_rating: 'Success: Thank you for your rating!'
+
+# Entry
+entry_author: 'Your Name'
+entry_comment: 'Comment'
+
+# Button
+button_comment: 'Post Comment'
+button_reply: 'Post Reply'
+button_replies: 'Show Replies'
+button_more: 'See more replies...'
+button_login: 'Login to Comment'
+button_login_reply: 'Login to Reply'
+button_like: 'Like'
+button_dislike: 'Dislike'
+
+# Error
+error_article: 'Warning: Article could not be found!'
+error_article_comment: 'Warning: Article comment could not be found!'
+error_token: 'Warning: Comment token invalid!'
+error_author: 'Your Name must be between 3 and 25 characters!'
+error_comment: 'Comment must be between 25 and 1000 characters!'
+error_interval: 'Warning: you must wait %s minutes before making another comment!'
+error_login: 'You must login to comment on the article or rate it!'
+error_status: 'Comments are disabled!'

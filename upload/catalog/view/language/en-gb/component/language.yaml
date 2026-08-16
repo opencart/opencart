@@ -1,0 +1,5 @@
+# Text
+text_language: 'Language'
+
+# Error
+error_language: 'Warning: Language is not available!'

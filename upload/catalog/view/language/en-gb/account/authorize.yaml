@@ -1,0 +1,21 @@
+# Heading
+heading_title: 'Protect your account'
+
+# Text
+text_security: 'You must answer security question whenever you login from an unknown device or computer.'
+text_code: 'Click the send button to send a security code to your email account. Enter the code below to continue.'
+text_sent: 'Success: An email has been sent to your email account with a security code!'
+text_locked: 'Your account has been locked!'
+text_reset: 'Your account has been locked because of to many incorrect attempts at entering the security code. Click the reset button to receive a reset link via your email account.'
+text_link: 'Success: An email with a reset link has been sent your email address!'
+text_unlocked: 'Your account has been unlocked!'
+text_unlock: 'Your account has been unlocked. You will have to re-login and repeat the 2FA process again to continue.'
+text_failed: 'Could not reset your security code!'
+
+# Entry
+entry_code: 'Security Code'
+
+# Button
+button_send: Send
+button_reset: Reset
+error_code: 'Security code does not match!'

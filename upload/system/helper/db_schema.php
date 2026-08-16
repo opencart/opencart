@@ -5584,11 +5584,6 @@ function oc_db_schema() {
 				'default' => 'P'
 			],
 			[
-				'name'    => 'special',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
 				'name' => 'date_start',
 				'type' => 'date'
 			],

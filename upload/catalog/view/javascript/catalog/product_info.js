@@ -36,16 +36,32 @@ export default class extends Controller {
 
             // Price
             data.price = product.price;
+            data.special = '';
 
-            let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id && discount.date_start >= Date.now() && discount.date_end <= Date.now());
+            //  && discount.date_start >= Date.now() && discount.date_end <= Date.now()
+            let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id);
 
             if (discount) {
-                data.price = discount.price;
+                let price = '';
+
+                if (discount.type == 'F') {
+                    price = discount.price;
+                } else if (discount.type == 'P') {
+                    price -= (data.price * (discount.price / 100));
+                } else if (discount.type == 'S') {
+                    price -= discount.price;
+                }
+
+                if (!discount.special) {
+                    data.price = discount.price;
+                } else {
+                    data.special = discount.price;
+                }
             }
 
             data.discounts = [];
 
-            //&& discount.date_start >= Date.now() && discount.date_end <= Date.now()
+            // && discount.date_start >= Date.now() && discount.date_end <= Date.now()
             let discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id);
 
             console.log(discounts);
@@ -54,17 +70,15 @@ export default class extends Controller {
 
             for (let discount of discounts) {
 
-
-
                 data.discounts.push({
                     dffd: product.discounts
 
                 });
+
             }
 
             console.log(data.discounts);
 
-            data.special = product.special;
             data.tax = '';
 
             if (config.config_tax) data.tax = product.special ? product.special : product.price;

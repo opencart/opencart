@@ -1,0 +1,19 @@
+# Heading
+heading_title: 'Shipping Address'
+
+# Text
+text_address_new: 'I want to use a new address'
+text_address_existing: 'I want to use an existing address'
+text_success: 'Success: You have changed shipping address!'
+
+# Entry
+entry_address: 'Choose Address'
+entry_firstname: 'First Name'
+entry_lastname: 'Last Name'
+entry_company: 'Company'
+entry_address_1: 'Address 1'
+entry_address_2: 'Address 2'
+entry_postcode: 'Post Code'
+entry_city: 'City'
+entry_country: 'Country'
+entry_zone: 'Region / State'

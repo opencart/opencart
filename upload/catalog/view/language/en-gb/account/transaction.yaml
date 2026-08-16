@@ -1,0 +1,13 @@
+# Heading
+heading_title: 'Your Transactions'
+
+# Text
+text_account: 'Account'
+text_transaction: 'Your Transactions'
+text_total: 'Your current balance is:'
+text_no_results: 'You do not have any transactions!'
+
+# Column
+column_date_added: 'Date Added'
+column_description: 'Description'
+column_amount: 'Amount (%s)'

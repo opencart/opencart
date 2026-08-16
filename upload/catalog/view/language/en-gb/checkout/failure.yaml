@@ -1,0 +1,8 @@
+# Heading
+heading_title: 'Failed Payment!'
+
+# Text
+text_basket: 'Shopping Cart'
+text_checkout: 'Checkout'
+text_failure: 'Failed Payment'
+text_message: "<p>There was a problem processing your payment and the order did not complete.</p>\r\n\r\n<p>Possible reasons are:</p>\r\n<ul>\r\n  <li>Insufficient funds</li>\r\n  <li>Verification failed</li>\r\n</ul>\r\n\r\n<p>Please try to order again using a different payment method.</p>\r\n\r\n<p>If the problem persists please <a href=\"%s\">contact us</a> with the details of the order you are trying to place.</p>\r\n"

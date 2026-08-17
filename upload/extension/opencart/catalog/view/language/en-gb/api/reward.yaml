@@ -1,0 +1,10 @@
+# Text
+text_success: 'Success: Your reward points discount has been applied!'
+
+# Error
+error_customer: 'Warning: Customer details required!'
+error_product: 'Warning: Products required!'
+error_points: "Warning: You don't have %s reward points!"
+error_maximum: 'Warning: The maximum number of points that can be applied is %s!'
+error_status: 'Warning: Reward points are not enabled on this store!'
+error_confirm: 'Warning: Please check the reward form carefully for errors!'

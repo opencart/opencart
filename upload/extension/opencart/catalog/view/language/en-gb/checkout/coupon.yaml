@@ -1,0 +1,12 @@
+# Heading
+heading_title: 'Use Coupon Code'
+
+# Text
+text_success: 'Success: Your coupon discount has been applied!'
+
+# Entry
+entry_coupon: 'Enter your coupon here'
+
+# Error
+error_coupon: 'Warning: Coupon is either invalid, expired or reached its usage limit!'
+error_status: 'Warning: Coupons are not enabled on this store!'

@@ -1,0 +1,9 @@
+# Text
+text_success: 'Success: Your coupon discount has been applied!'
+
+# Error
+error_customer: 'Warning: Customer details required!'
+error_product: 'Warning: Products required!'
+error_coupon: 'Warning: Coupon is either invalid, expired or reached its usage limit!'
+error_status: 'Warning: Coupons are not enabled on this store!'
+error_confirm: 'Warning: Please check the coupon form carefully for errors!'

@@ -2,7 +2,7 @@ import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = await loader.language('account/return');
+const language = await loader.language('account/returns');
 
 export default class extends Controller {
    render() {

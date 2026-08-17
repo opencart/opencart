@@ -24,7 +24,9 @@ config.cache.set('default', {
     config_zone_id: 3563,
     config_customer_group_id: 1,
     config_account_id: 1,
-    config_product_count: true
+    config_product_count: true,
+    config_telephone_status: 1,
+    config_captcha: ''
 });
 
 // Testing Code

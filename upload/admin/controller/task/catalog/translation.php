@@ -73,7 +73,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $this->config->get('config_language_catalog') . '/';
 
-			$files = oc_directory_read($path, true, '/.+\.yaml/');
+			$files = oc_directory_read($path, true, '/.+\.yaml$/');
 
 			foreach ($files as $file) {
 				$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -5);
@@ -162,18 +162,19 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
-			return ['error' => $this->language->get('error_file')];
+			return ['error' => sprintf($this->language->get('error_exists'), $file)];
 		}
 
 		$response = file_get_contents($file);
+
+		print_r($response);
+
 
 		$_ = [];
 
 		$this->load->helper('yaml');
 
 		$_ = \oc_yaml_decode($response);
-
-		//include($file);
 
 		$filter_data = [
 			'filter_route'       => $args['route'],

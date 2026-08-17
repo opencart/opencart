@@ -16,6 +16,6 @@ text_failed: 'Could not reset your security code!'
 entry_code: 'Security Code'
 
 # Button
-button_send: Send
-button_reset: Reset
+button_send: 'Send'
+button_reset: 'Reset'
 error_code: 'Security code does not match!'

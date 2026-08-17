@@ -1,13 +1,13 @@
 # Heading
-heading_title: Downloads
+heading_title: 'Downloads'
 
 # Text
-text_account: Account
-text_downloads: Downloads
+text_account: 'Account'
+text_downloads: 'Downloads'
 text_no_results: 'You have not made any previous downloadable orders!'
 
 # Column
 column_order_id: 'Order ID'
-column_name: Name
-column_size: Size
+column_name: 'Name'
+column_size: 'Size'
 column_date_added: 'Date Added'

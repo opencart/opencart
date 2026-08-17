@@ -1,3 +1,5 @@
+import { load } from '../../yaml/js-yaml.js';
+
 export class Language {
     constructor() {
         this.directory = '';
@@ -18,7 +20,7 @@ export class Language {
             return this.cache.get(path);
         }
 
-        let file = this.directory + path + '.json';
+        let file = this.directory + path + '.yaml';
         let namespace = '';
         let parts = path.split('/');
 
@@ -30,14 +32,14 @@ export class Language {
             }
 
             if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.json';
+                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.yaml';
             }
         }
 
         let response = await fetch(file);
 
         if (response.status == 200) {
-            let data = await response.json();
+            let data = load(await response.text());
 
             this.cache.set(path, data);
 

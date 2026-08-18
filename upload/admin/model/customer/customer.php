@@ -1299,9 +1299,13 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * $login_info = $this->model_customer_customer->getTotalLoginAttempts($email);
 	 */
 	public function getTotalLoginAttempts(string $email): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$query = $this->db->query("SELECT SUM(`total`) AS `total`, MAX(`date_modified`) AS `date_modified` FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
-		return $query->row;
+		if ($query->row['total']) {
+			return $query->row;
+		}
+
+		return [];
 	}
 
 	/**

@@ -71,12 +71,12 @@ class Api extends \Opencart\System\Engine\Controller {
 					$status = false;
 				}
 
-				$time = $this->request->get['time'];
+				$time = (string)$this->request->get['time'];
 
 				$time_start = time() - 450;
 				$time_end = time() + 450;
 
-				if ($time < $time_start && $time > $time_end) {
+				if (!ctype_digit($time) || (int)$time < $time_start || (int)$time > $time_end) {
 					$status = false;
 				}
 			}

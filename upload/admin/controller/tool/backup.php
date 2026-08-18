@@ -212,6 +212,10 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$file = DIR_STORAGE . 'backup/' . $filename;
 
+		if (!str_ends_with(strtolower($filename), '.sql')) {
+			$json['error'] = $this->language->get('error_file_type');
+		}
+
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_file');
 		}
@@ -262,7 +266,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			}
 
 			// Allowed file extension types
-			if (str_ends_with(strtolower($filename), '.sql')) {
+			if (!str_ends_with(strtolower($filename), '.sql')) {
 				$json['error'] = $this->language->get('error_file_type');
 			}
 		}
@@ -297,6 +301,10 @@ class Backup extends \Opencart\System\Engine\Controller {
 		}
 
 		$file = DIR_STORAGE . 'backup/' . $filename;
+
+		if (!str_ends_with(strtolower($filename), '.sql')) {
+			$this->response->redirect($this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'], true));
+		}
 
 		if (!is_file($file)) {
 			$this->response->redirect($this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'], true));
@@ -344,6 +352,10 @@ class Backup extends \Opencart\System\Engine\Controller {
 		}
 
 		$file = DIR_STORAGE . 'backup/' . $filename;
+
+		if (!str_ends_with(strtolower($filename), '.sql')) {
+			$json['error'] = $this->language->get('error_file_type');
+		}
 
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_file');

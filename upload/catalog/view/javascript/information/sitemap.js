@@ -9,8 +9,10 @@ const language = await loader.language('information/sitemap');
 
 // Storage
 const categories = await loader.storage('category/category');
+const informations = await loader.storage('information/information');
 
 console.log(categories);
+console.log(informations);
 
 export default class extends Controller {
     async render() {
@@ -37,8 +39,17 @@ export default class extends Controller {
             });
         }
 
+        data.informations = [];
+
+        for (let information of informations) {
+            data.informations.push({
+                information_id: information.information_id,
+                title: information.description[config.config_language].title
+            });
+        }
+
         data.config_product_count = config.config_product_count;
 
         return loader.template('information/sitemap', { ...data, ...language });
     }
-};
+}

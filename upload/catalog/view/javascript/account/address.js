@@ -11,11 +11,11 @@ export default class extends Controller {
     render() {
         let data = {};
 
-        let customer = session.get('customer');
+        //let customer = session.get('customer');
 
-        data.address = customer.get('addresses');
+        //data.address = customer.get('addresses');
 
-        return this.load.template('account/address', { ...data, ...language });
+        return loader.template('account/address', { ...data, ...language });
     }
 
     onSubmit(e) {

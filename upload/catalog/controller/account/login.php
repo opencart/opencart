@@ -14,81 +14,16 @@ class Login extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('account/login');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		// If already logged in and has matching token then redirect to account page
-		if ($this->customer->isLogged() && isset($this->request->get['customer_token']) && isset($this->session->data['customer_token']) && ($this->request->get['customer_token'] == $this->session->data['customer_token'])) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true));
-		}
-
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_login'),
-			'href' => $this->url->link('account/login', 'language=' . $this->config->get('config_language'))
-		];
-
-		// Check to see if user is using incorrect token
-		if (isset($this->session->data['customer_token'])) {
-			$data['error_warning'] = $this->language->get('error_token');
-
-			$this->customer->logout();
-
-			unset($this->session->data['order_id']);
-			unset($this->session->data['customer']);
-			unset($this->session->data['shipping_address']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_address']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['comment']);
-			unset($this->session->data['coupon']);
-			unset($this->session->data['reward']);
-			unset($this->session->data['customer_token']);
-		} elseif (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->session->data['redirect'])) {
-			$data['redirect'] = $this->session->data['redirect'];
-
-			unset($this->session->data['redirect']);
-		} elseif (isset($this->request->get['redirect'])) {
-			$data['redirect'] = $this->request->get['redirect'];
-		} else {
-			$data['redirect'] = '';
-		}
+		$json = [];
 
 		$this->session->data['login_token'] = oc_token(26);
 
-		$data['login'] = $this->url->link('account/login.login', 'language=' . $this->config->get('config_language') . '&login_token=' . $this->session->data['login_token']);
+		$json['login_token'] = $this->session->data['login_token'];
 
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
+
 
 	/**
 	 * Login

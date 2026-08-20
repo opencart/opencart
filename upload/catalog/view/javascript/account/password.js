@@ -14,6 +14,14 @@ export default class extends Controller {
         return loader.template('account/password', { ...data, ...language });
     }
 
+    onClick(e) {
+        e.preventDefault();
+
+        let target = document.getElementById('content');
+
+        target.src = e.target.getAttribute('href');
+    }
+
     onSubmit(e) {
         e.preventDefault();
 

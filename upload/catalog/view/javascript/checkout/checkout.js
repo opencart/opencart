@@ -1,9 +1,43 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
-class extends Controller {
-    async connected() {
+// Config
+const config = await loader.config('default');
 
+// Language
+const language = await loader.language('checkout/checkout');
+
+// library
+const cart = await loader.library('cart');
+const customer = await loader.library('customer');
+
+export default class extends Controller {
+    connected() {
+
+    }
+
+    async render() {
+        let data = {};
+
+        //let shipping = cart.hasShipping();
+        //let download = cart.hasDownload();
+        //let minimum = cart.hasMinimum();
+
+
+        if (customer.isLogged() && config.config_checkout_payment_address) {
+
+        }
+
+        if (customer.isLogged() && cart.hasShipping()) {
+            shipping_method
+
+        }
+
+        if (cart.hasShipping()) {
+
+        }
+
+        return loader.template('checkout/checkout', { ...data,  ...language });
     }
 }
 

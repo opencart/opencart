@@ -11,4 +11,12 @@ export default class extends Controller {
 
         return loader.template('account/download', { ...data, ...language });
     }
+
+    onClick(e) {
+        e.preventDefault();
+
+        let target = document.getElementById('content');
+
+        target.src = e.target.getAttribute('href');
+    }
 };

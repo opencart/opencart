@@ -1,5 +1,6 @@
 export { WebComponent } from './library/webcomponent.js';
 export { Controller } from './library/controller.js';
+export { Ajax } from './library/ajax.js';
 
 // General
 //import('./component/alert.js');

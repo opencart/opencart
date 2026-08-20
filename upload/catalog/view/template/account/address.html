@@ -9,8 +9,6 @@
         <td>{{ address.address }}</td>
         <td>{% if address.default %}<strong>{{ text_default }}</strong>{% endif %}</td>
         <td class="text-end">
-
-
           <button type="button" value="{{ address.address.id }}" data-on="click:edit" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-regular fa-solid fa-pencil"></i></button>
           <button type="button" value="{{ address.address_id }}" data-on="click:delete" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
         </td>
@@ -24,7 +22,7 @@
 
   <div class="row">
     <div class="col">
-      <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
+      <a href="{{ back }}" class="btn btn-light" data-on="click:onClick">{{ button_back }}</a>
     </div>
     <div class="col text-end">
       <a href="{{ add }}" class="btn btn-primary">{{ button_address_add }}</a>

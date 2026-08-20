@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { Controller, Ajax } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
@@ -17,21 +17,57 @@ export default class extends Controller {
 
         var element = this;
 
-        return await loader.template('account/login', { ...data, ...language });
+        return loader.template('account/login', { ...data, ...language });
+    }
+
+    onClick(e) {
+        e.preventDefault();
+
+        let target = document.getElementById('content');
+
+        target.src = e.target.getAttribute('href');
     }
 
     async onSubmit(e) {
         e.preventDefault();
 
-        console.log('addToCart');
+        console.log('onSubmit');
 
         //this.$button_cart.state = 'loading';
 
         let target = e.target;
 
-        let form = new FormData(target);
+        let form = new FormData(this.$form);
 
-        let response = await fetch('index.php?route=checkout/cart.add', {
+        let ajax = new Ajax({
+            url: 'index.php?route=account/login.login',
+            method: 'POST', // GET, POST, PUT, PATCH
+            //headers: {},
+            //accept: 'application/json',
+            body: form,
+            accept: 'json', // Return Type json, html, text
+            beforeSend: (e) => {
+                console.log('beforeSend', e);
+
+                //this.$button.state = 'loading';
+            },
+            onComplete: (json) => {
+                console.log('onComplete', json);
+
+                //this.$button.state = '';
+            },
+            onSuccess: (json) => {
+                console.log('onSuccess', json);
+            },
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
+
+        ajax.send();
+
+        /*
+        let response = await fetch('index.php?route=account/login', {
             method: 'POST',
             body: form
         });
@@ -93,50 +129,6 @@ export default class extends Controller {
         }
 
         // this.$button_cart.state = '';
+        */
     }
-};
-
-/*
-$('#form-login').on('submit', function(e) {
-
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).attr('action'),
-        type: 'post',
-        dataType: 'json',
-        data: $(element).serialize(),
-        beforeSend: function() {
-            $('#button-login').button('loading');
-        },
-        complete: function() {
-            $('#button-login').button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-               session.set('customer_token', json['customer_token']);
-            }
-
-
-            if (json['redirect']) {
-                //location = json['redirect'];
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-*/
+}

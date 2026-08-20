@@ -15,11 +15,11 @@ export default class extends Controller {
 
         //data.newsletter = customer.get('newsletter');
 
-        return await loader.template('account/newsletter', { ...data, ...language });
+        return loader.template('account/newsletter', { ...data, ...language });
     }
 
     onSubmit(e) {
         e.preventDefault();
 
     }
-});
+}

@@ -17,11 +17,11 @@ export default class extends Controller {
         data.customer_groups = customer_groups;
 
         // Custom Fields
-        data.custom_fields = {};
+        data.custom_fields = [];
 
         let customer_group = await loader.storage('customer/customer_group-' + config.config_customer_group_id);
 
-        if (customer_group.length) {
+        if (customer_group) {
             data.custom_fields = customer_group.custom_fields;
         }
 

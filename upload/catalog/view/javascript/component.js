@@ -1,1 +1,1 @@
-export { WebComponent, Controller } from '../../../assets/framework/component.js';
+export { WebComponent, Controller, Ajax } from '../../../assets/framework/component.js';

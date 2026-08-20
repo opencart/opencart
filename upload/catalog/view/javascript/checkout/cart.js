@@ -35,7 +35,7 @@ export default class extends Controller {
         data.weight = cart.getWeight();
         data.currency = currency;
 
-        return await loader.template('checkout/cart', { ...data,  ...language });
+        return loader.template('checkout/cart', { ...data,  ...language });
     }
 
     onClick(e) {

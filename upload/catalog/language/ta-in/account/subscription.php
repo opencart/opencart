@@ -8,8 +8,8 @@ $_['text_success']               = 'வெற்றி: உங்கள் ச�
 $_['text_subscription']          = 'சந்தா #%s';
 $_['text_subscription_id']       = 'சந்தா அடையாளம்';
 $_['text_order_id']              = 'வாங்கக்கோரியதன் அடையாளம்';
-$_['text_shipping_address']      = 'அனுப்பல் முகவரி';
-$_['text_shipping_method']       = 'அனுப்பல் முறை';
+$_['text_shipping_address']      = 'எடுத்துச்செல்லும் முகவரி';
+$_['text_shipping_method']       = 'எடுத்துச்செல்லும் முறை';
 $_['text_payment_address']       = 'கட்டண முகவரி';
 $_['text_payment_method']        = 'கட்டண முறை';
 $_['text_model']                 = 'மாதிரி';
@@ -48,5 +48,5 @@ $_['button_cancel']              = 'சந்தாவை ரத்துசெ�
 
 // Error
 $_['error_subscription']         = 'சந்தாவைக் கண்டறிய முடியவில்லை!';
-$_['error_duration']             = 'மேலும் %s வாங்கக்கேட்கும் வரை சந்தாவை ரத்துசெய்ய முடியாது!';
+$_['error_duration']             = 'மேலும் %s வாங்கக்கோரும் வரை சந்தாவை ரத்துசெய்ய முடியாது!';
 $_['error_canceled']             = 'சந்தா முன்பே ரத்துசெய்யப்பட்டது!';

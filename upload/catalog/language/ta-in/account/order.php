@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']              = 'வாங்கக்கேட்டவை';
+$_['heading_title']              = 'வாங்கக்கோரியவை';
 
 // Text
 $_['text_account']               = 'கணக்கு';
@@ -8,9 +8,9 @@ $_['text_order']                 = 'வாங்கக்கோரியதன�
 $_['text_order_id']              = 'வாங்கக்கோரியதன் அடையாளம்';
 $_['text_invoice_no']            = 'கட்டணப்பட்டியல் எண்.';
 $_['text_tbc']                   = 'கணக்கிடவில்லை';
-$_['text_shipping_address']      = 'அனுப்பல் முகவரி';
-$_['text_payment_address']       = 'பணம்செலுத்தல் முகவரி';
-$_['text_shipping_method']       = 'அனுப்பல் முறை';
+$_['text_shipping_address']      = 'எடுத்துச்செல்லும் முகவரி';
+$_['text_payment_address']       = 'கட்டண முகவரி';
+$_['text_shipping_method']       = 'எடுத்துச்செல்லும் முறை';
 $_['text_payment_method']        = 'கட்டண முறை';
 $_['text_model']                 = 'மாதிரி';
 $_['text_points']                = 'வெகுமதி புள்ளிகள்';
@@ -26,9 +26,9 @@ $_['text_year']                  = 'ஆண்டு';
 $_['text_date_next']             = 'அடுத்த தேதி';
 $_['text_remaining']             = 'மீதம்';
 $_['text_comment']               = 'குறிப்பு';
-$_['text_history']               = 'இதுவரை வாங்கக்கேட்டவை';
+$_['text_history']               = 'இதுவரை வாங்கக்கோரியவை';
 $_['text_success']               = 'வெற்றி: நீங்கள் <a href="%s">%s</a> என்பதை உங்கள் <a href="%s">பொருள் வைக்கும் வண்டியில் சேர்த்தீர்கள்</a>!';
-$_['text_no_results']            = 'இதற்கு முன் எதையும் வாங்கக்கேட்கவில்லை!';
+$_['text_no_results']            = 'இதற்கு முன் எதையும் வாங்கக்கோரவில்லை!';
 
 // Column
 $_['column_order_id']            = 'வாங்கக்கோரியதன் அடையாளம்;

@@ -5,6 +5,7 @@ export { Ajax } from './library/ajax.js';
 // General
 //import('./component/alert.js');
 import('./component/button.js');
+import('./component/form.js');
 import('./component/include.js');
 import('./component/pagination.js');
 import('./component/currency.js');

@@ -15,7 +15,7 @@ $_['text_payment_method']        = 'Payment Method';
 $_['text_model']                 = 'Model';
 $_['text_subscription_plan']     = 'Subscription Plan';
 $_['text_subscription_trial']    = '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) for %d payment(s) then ';
-$_['text_subscription_duration'] = '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) for %d payment(s)';
+$_['text_subscription_duration'] = '<x-currency code="%s" amount="%f">';
 $_['text_subscription_cancel']   = '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) until canceled';
 $_['text_day']                   = 'day';
 $_['text_week']                  = 'week';

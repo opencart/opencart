@@ -71,6 +71,9 @@ export class Ajax {
             //    this.headers.set(key, value);
             //}
 
+            
+            this.option.headers
+
             for (let [key, value] of this.option.headers) {
                 this.headers.set(key, value);
             }

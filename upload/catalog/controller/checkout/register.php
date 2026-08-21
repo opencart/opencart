@@ -444,6 +444,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Regenerate session ID
+			oc_session_regenerate($this->registry);
+
 			// Add customer details into session
 			$customer_data = [
 				'customer_id'       => 0,

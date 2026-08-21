@@ -1,0 +1,10 @@
+// Logs in as the account created by customer-register-new, using its current password.
+click "My Account"
+click "Login"
+check that page contains "Returning Customer"
+enter stored value "customerEmail" into "E-Mail Address"
+enter stored value "currentPassword" into "Password"
+// Submit with Enter, not the button: clicking can fire the ajax login twice and the second
+// request logs the customer straight back out.
+press enter
+check that page contains "Edit your account information"

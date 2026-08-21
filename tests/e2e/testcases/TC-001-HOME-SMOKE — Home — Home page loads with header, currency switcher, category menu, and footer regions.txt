@@ -1,0 +1,46 @@
+// Canary: the first test to fail when the container, database or installer is broken.
+check that page contains "Your Store"
+check that page contains "Search"
+check that page contains "0 item(s) - $0.00"
+check that page contains "featured"
+
+// Currency switcher
+click "Currency"
+check that page contains "€ Euro"
+check that page contains "£ Pound Sterling"
+check that page contains "$ US Dollar"
+
+// Account menu, guest options
+click "My account"
+check that page contains "Register"
+check that page contains "Login"
+
+// Category navigation
+check that page contains "Desktops"
+check that page contains "Laptops & Notebooks"
+check that page contains "Components"
+check that page contains "Tablets"
+check that page contains "Software"
+check that page contains "Phones & PDAs"
+check that page contains "Cameras"
+check that page contains "MP3 Players"
+
+// Subcategories on hover
+hover over "Desktops"
+check that page contains "PC"
+check that page contains "Mac"
+check that page contains "Show All Desktops"
+
+// Into a category and back via the logo
+click "Laptops & Notebooks"
+check that page contains "Laptops & Notebooks"
+click "logo"
+check that page contains "featured"
+
+// Footer
+scroll down to the bottom of the page
+check that page contains "Information"
+check that page contains "Customer Service"
+check that page contains "Extras"
+check that page contains "My Account"
+check that page contains "Powered By OpenCart"

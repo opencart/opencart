@@ -1,0 +1,13 @@
+// Flat Rate and Cash On Delivery are preselected on a default install, so each modal only
+// needs confirming. Anchor on the placeholder text, not the section heading: in the guest
+// flow a success alert covers the heading and the wrong button gets picked.
+click "Choose" to the right of "Choose shipping method..."
+check that page contains "Shipping method options"
+check that page contains "Flat Rate"
+click "Continue" below "Please select the preferred shipping method"
+check that page contains "Success: You have changed shipping method"
+click "Choose" to the right of "Choose payment method..."
+check that page contains "Payment method options"
+check that page contains "Cash On Delivery"
+click "Continue" below "Please select the preferred payment method"
+check that page contains "Success: You have changed payment method"

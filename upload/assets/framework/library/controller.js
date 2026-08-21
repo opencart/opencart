@@ -1,20 +1,6 @@
-let event = [
-    // Window Event Attributes
-    'onafterprint',
-    'onbeforeprint',
-    'onbeforeunload',
-    'onerror',
-    'onhashchange',
-    'onload',
-    'onoffline',
-    'ononline',
-    'onpageshow',
-    'onresize',
-    'onunload'
-];
-
 export class Controller {
     element = HTMLElement;
+    bind = new Map();
 
     constructor(element) {
         this.element = element;
@@ -29,11 +15,9 @@ export class Controller {
 
         // Autoload any custom elements not already loaded
         clone.querySelectorAll('[data-bind], [data-on]').forEach(element => {
-            console.log(element);
-
             // Attach Events based on elements that have data-bind attributes
             if (element.hasAttribute('data-bind')) {
-                this['$' + element.getAttribute('data-bind')] = element;
+                this.bind.set(element.getAttribute('data-bind'), element);
 
                 element.removeAttribute('data-bind');
             }

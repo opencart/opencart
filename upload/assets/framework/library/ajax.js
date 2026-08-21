@@ -24,7 +24,12 @@ let ajax = new Ajax({
 ajax.send();
 */
 export class Ajax {
-    base = '';
+    option  = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    };
+    //option.base = '';
     url = '';
     method = 'GET'; // GET, POST, PUT, PATCH
     headers= {
@@ -38,91 +43,80 @@ export class Ajax {
     error = null;
 
     constructor(option) {
-        //this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        //this.headers.append('Accept', 'application/json');
+        this.option = option;
+    }
 
-        this.url = option.url;
+    // Core request method
+    async send() {
+        let url = this.option.url.startsWith('http') ? this.option.url : `${document.baseURI}${this.option.url}`;
 
         // Method to use e.g. GET, POST, PUT, PATCH, DELETE
-        if ('method' in option) {
-            if (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(option.method)) {
-                this.method = option.method;
+        let method = 'GET';
+
+        if ('method' in this.option) {
+            if (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(this.option.method)) {
+                method = this.option.method;
             } else {
                 throw new Error('Method Type ' + option.method + ' is not supported.');
             }
         }
 
         // Headers
-        if ('headers' in option) {
+        if ('headers' in this.option) {
+           // headers: {
+           //     'Content-Type': 'application/x-www-form-urlencoded'
+           // }
+
             //if (typeof option.headers == 'object') {
             //    this.headers.set(key, value);
             //}
 
-            for (let [key, value] of option.headers) {
+            for (let [key, value] of this.option.headers) {
                 this.headers.set(key, value);
             }
         }
 
         // Body
-        if ('body' in option) {
-            this.body = option.body;
+        let body = '';
+
+        if ('body' in this.option) {
+            body = this.option.body;
         }
 
         // Response
-        if ('beforeSend' in option) {
-            this.before = option.beforeSend;
+        if ('beforeSend' in this.option) {
+            this.before = this.option.beforeSend;
         }
-
-        if ('onSuccess' in option) {
-            this.success = option.onSuccess;
-        }
-
-        if ('onComplete' in option) {
-            this.complete = option.onComplete;
-        }
-
-        if ('onError' in option) {
-            this.error = option.onError;
-        }
-    }
-
-    // Core request method
-    async send() {
-        let url = this.url.startsWith('http') ? this.url : `${document.baseURI}${this.url}`;
 
         console.log(url);
-        console.log(this.method);
-        console.log(this.headers);
-        console.log(this.body);
+        console.log(this.option.method);
+        console.log(this.option.headers);
+        console.log(this.option.body);
 
         try {
             let response = await fetch(url, {
-                //headers: this.headers,
-                method: this.method,
-                body: this.body
+                headers: this.option.headers,
+                method: method,
+                body: body
             });
 
             // Try to parse JSON (even on error responses)
-            //let result;
+            let result;
 
+            let response_type = response.headers.get('content-type');
 
-            // arrayBuffer()
-            //const contentType = response.headers.get('content-type');
+            if (response_type && response_type.includes('application/json')) {
+                result = await response.json();
+            } else {
+                result = await response.text();
+            }
 
-           // if (contentType && contentType.includes('application/json')) {
-            //    result = response.json();
-            //} else {
-            ///    result = response.text();
-            //}
-
-            console.log(await response.json());
+            this.option.onSuccess(result);
 
             //console.log(...response.headers.entries());
-
             /*
             if (response.ok) {
                 //this.success(result);
-
 
                 const error = new Error(result.message || `HTTP ${response.status}`);
 
@@ -131,7 +125,21 @@ export class Ajax {
 
                 throw error;
             }
-*/
+            */
+
+            if ('onSuccess' in this.option) {
+                this.success = this.option.onSuccess;
+            }
+
+            if ('onComplete' in this.option) {
+                this.complete = this.option.onComplete;
+            }
+
+            if ('onError' in this.option) {
+                this.error = this.option.onError;
+            }
+
+
             //response.then(this.success);
 
            // response.catch(this.error);
@@ -141,5 +149,46 @@ export class Ajax {
             // Network errors or thrown errors above
             throw err;
         }
+    }
+
+    get(url, params = {}, options = {}) {
+        const query = new URLSearchParams(params).toString();
+        const fullURL = query ? `${url}?${query}` : url;
+
+        return this.send(fullURL, {
+            method: 'GET',
+            ...options
+        });
+    }
+
+    post(url, body = {}, options = {}) {
+        return this.send(url, {
+            method: 'POST',
+            body,
+            ...options
+        });
+    }
+
+    put(url, body = {}, options = {}) {
+        return this.send(url, {
+            method: 'PUT',
+            body,
+            ...options
+        });
+    }
+
+    patch(url, body = {}, options = {}) {
+        return this.send(url, {
+            method: 'PATCH',
+            body,
+            ...options
+        });
+    }
+
+    delete(url, options = {}) {
+        return this.send(url, {
+            method: 'DELETE',
+            ...options
+        });
     }
 }

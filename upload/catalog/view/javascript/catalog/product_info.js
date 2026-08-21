@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { Controller, Ajax } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -177,13 +177,64 @@ export default class extends Controller {
         e.preventDefault();
 
         console.log('addToCart');
-
+        this.bind.get('button-cart').loading = true;
         //this.$button_cart.state = 'loading';
 
         let target = e.target;
 
         let form = new FormData(target);
 
+        let ajax = new Ajax({
+            url: 'index.php?route=checkout/cart.add',
+            method: 'POST', // GET, POST, PUT, PATCH
+            //headers: {},
+            //accept: 'application/json',
+            body: form,
+            accept: 'json', // Return Type json, html, text
+            beforeSend: (e) => {
+                console.log('beforeSend', e);
+
+                this.bind.get('button-cart').loading = true;
+            },
+            onComplete: (json) => {
+                console.log('onComplete', json);
+
+                //this.$button.state = '';
+            },
+            onSuccess: (json) => {
+                console.log('onSuccess', json);
+
+
+            },
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
+
+        ajax.send();
+/*
+        ajax.post('index.php?route=checkout/cart.add', form, {
+            beforeSend: (e) => {
+                console.log('beforeSend', e);
+
+                this.bind.get('button-cart').loading = true;
+            },
+            onComplete: (json) => {
+                console.log('onComplete', json);
+
+                //this.$button.state = '';
+            },
+            onSuccess: (json) => {
+                console.log('onSuccess', json);
+
+
+            },
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
+*/
+        /*
         let response = await fetch('index.php?route=checkout/cart.add', {
             method: 'POST',
             body: form
@@ -246,6 +297,7 @@ export default class extends Controller {
         }
 
        // this.$button_cart.state = '';
+       */
     }
 
     async addToWishList(e) {

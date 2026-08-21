@@ -20,8 +20,8 @@ customElements.define('button-submit', class extends WebComponent {
         let button = this.bind.get('button');
 
         if (loading) {
-            this.width = button.offsetWidth;
-            this.height = button.offsetHeight;
+            ///this.width = button.offsetWidth;
+            //this.height = button.offsetHeight;
 
             this.setAttribute('loading', '');
             this.setAttribute('disabled', '');

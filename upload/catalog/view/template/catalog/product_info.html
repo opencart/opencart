@@ -246,7 +246,16 @@
           <div class="input-group">
             <div class="input-group-text">{{ entry_qty }}</div>
             <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" data-bind="quantity" class="form-control"/>
+
+
+
+
+
+            <button-submit data-bind="button-cart">{{ button_cart }}</button-submit>
+
             <button type="submit" id="button-cart" data-bind="button_cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
+
+
           </div>
           <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
           <div id="error-quantity" class="form-text"></div>

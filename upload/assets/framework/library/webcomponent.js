@@ -1,4 +1,6 @@
 export class WebComponent extends HTMLElement {
+    bind = new Map();
+
     constructor() {
         super();
 
@@ -28,7 +30,7 @@ export class WebComponent extends HTMLElement {
             this.querySelectorAll('[data-bind], [data-on]').forEach((element) => {
                 // Attach Events based on elements that have data-bind attributes
                 if (element.hasAttribute('data-bind')) {
-                    this['$' + element.getAttribute('data-bind')] = element;
+                    this.bind.set(element.getAttribute('data-bind'), element);
 
                     element.removeAttribute('data-bind');
                 }
@@ -44,18 +46,6 @@ export class WebComponent extends HTMLElement {
                     element.removeAttribute('data-on');
                 }
             });
-
-            /*
-            elements = this.querySelectorAll('[data-action]');
-
-            for (let element of elements) {
-                let action = element.getAttribute('data-action');
-
-                if (action in this.action) {
-                    this.action[action](element);
-                }
-            }
-            */
         }
     }
 

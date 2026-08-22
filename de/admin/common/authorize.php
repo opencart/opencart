@@ -11,7 +11,7 @@ $_['text_locked']   = 'Ihr Konto wurde gesperrt!';
 $_['text_link']     = 'Erfolg: Eine E-Mail mit einem Link zum Zurücksetzen wurde an Ihre E-Mail-Adresse gesendet!';
 $_['text_unlocked'] = 'Ihr Konto wurde entsperrt!';
 $_['text_unlock']   = 'Ihr Konto wurde entsperrt. Sie müssen sich erneut anmelden und den 2FA-Prozess wiederholen, um fortzufahren.';
-$_['text_failed']   = 'Could not reset your security code!';
+$_['text_failed']   = 'Konnten ihren Sicherheits-Code nicht zurücksetzen!';
 
 // Entry
 $_['entry_code']    = 'Sicherheitscode';

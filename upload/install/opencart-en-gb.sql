@@ -1217,6 +1217,10 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
 
        ('ssr.setting', 'Triggers setting data creation.', 'admin/model/setting/setting.editSetting/after', 'event/setting', 1),
 
+       ('ssr.stock_status.add', 'Triggers stock status data creation.', 'admin/model/localisation/stock_status.addStockStatus/before', 'event/stock_status', 1),
+       ('ssr.stock_status.edit', 'Triggers stock status data creation.', 'admin/model/localisation/stock_status.editStockStatus/before', 'event/stock_status', 1),
+       ('ssr.stock_status.delete', 'Triggers stock status data creation.', 'admin/model/localisation/stock_status.deleteStockStatus/before', 'event/stock_status', 1),
+
        ('ssr.store.add', 'Triggers store data creation.', 'admin/model/setting/store.addStore/after', 'event/store.addStore', 1),
        ('ssr.store.edit', 'Triggers store data creation.', 'admin/model/setting/store.editStore/before', 'event/store.editStore', 1),
        ('ssr.store.delete', 'Triggers store data creation.', 'admin/model/setting/store.deleteStore/before', 'event/store.deleteStore', 1),
@@ -2986,6 +2990,7 @@ VALUES ('article', 'Generates article data.', 'task/catalog/article', 1, NOW()),
        ('review', 'Generates review data.', 'task/catalog/review', 1, NOW()),
        ('sass', 'Generates sass data.', 'task/catalog/sass', 1, NOW()),
        ('setting', 'Generates setting data.', 'task/catalog/setting', 1, NOW()),
+       ('stock_status', 'Generates stock status data.', 'task/catalog/stock_status', 1, NOW()),
        ('tag', 'Generates tag data.', 'task/catalog/tag', 1, NOW()),
        ('tax_rate', 'Generates tax rate data.', 'task/catalog/tax_rate', 1, NOW()),
        ('template', 'Generates template data.', 'task/catalog/template', 1, NOW()),
@@ -2999,10 +3004,10 @@ VALUES ('article', 'Generates article data.', 'task/catalog/article', 1, NOW()),
 --
 
 INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`)
-VALUES (7, 1, 'In Stock'),
-       (8, 1, 'Pre-Order'),
-       (5, 1, 'Out Of Stock'),
-       (6, 1, '2-3 Days');
+VALUES (1, 1, 'In Stock'),
+       (2, 1, 'Pre-Order'),
+       (3, 1, 'Out Of Stock'),
+       (4, 1, '2-3 Days');
 
 -----------------------------------------------------------
 

@@ -1,110 +1,47 @@
-/*
-// Example
-let ajax = new Ajax({
-    url: 'index.php?route=account/login',
-    type: 'GET',
-    headers: {},
-    accept: 'application/json',
-    body: new FormData({}),
-    responseType: 'json',
-    beforeSend: (e) => {
-        this.$button.state = 'loading';
-    },
-    onComplete: (json) => {
-        this.$button.state = '';
-    },
-    onSuccess: (json) => {
+/* Ajax */
+export default class Ajax {
+    /**
+     * This function can prefix/suffix your string.
+     *
+     * @example
+     *
+     * let ajax = new Ajax();
+     *
+     * ajax.request({
+     *   url: 'index.php?route=account/login',
+     *   type: 'GET',
+     *   headers: {},
+     *   body: new FormData({}),
+     *   beforeSend: (e) => {
+     *      this.$button.state = 'loading';
+     *   },
+     *   onComplete: (json) => {
+     *      this.$button.state = '';
+     *   },
+     *   onSuccess: (json) => {
+     *
+     *   },
+     *   onError: (e) => {
+     *
+     *   }
+     * });
+     */
+    async request(url, options = {}) {
+        url = url.startsWith('http') ? url : `${document.baseURI}${url}`;
 
-    },
-    onError: (e) => {
+        // Default Config
+        let config = {
+            method: options.method.toUpperCase() || 'GET',
+            ...options
+        };
 
-    }
-});
+        if (typeof options.beforeSend === 'function') options.beforeSend(config); // you can modify config here
 
-ajax.send();
-*/
-export class Ajax {
-    option  = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    };
-    //option.base = '';
-    url = '';
-    method = 'GET'; // GET, POST, PUT, PATCH
-    headers= {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    };
-    body = {};
-    responseType = 'json'; // Accepted response Type json, html, text, etc...
-    before = null;
-    success = null;
-    complete = null;
-    error = null;
-
-    constructor(option) {
-        this.option = option;
-    }
-
-    // Core request method
-    async send() {
-        let url = this.option.url.startsWith('http') ? this.option.url : `${document.baseURI}${this.option.url}`;
-
-        // Method to use e.g. GET, POST, PUT, PATCH, DELETE
-        let method = 'GET';
-
-        if ('method' in this.option) {
-            if (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(this.option.method)) {
-                method = this.option.method;
-            } else {
-                throw new Error('Method Type ' + option.method + ' is not supported.');
-            }
-        }
-
-        // Headers
-        if ('headers' in this.option) {
-           // headers: {
-           //     'Content-Type': 'application/x-www-form-urlencoded'
-           // }
-
-            //if (typeof option.headers == 'object') {
-            //    this.headers.set(key, value);
-            //}
-
-            
-            this.option.headers
-
-            for (let [key, value] of this.option.headers) {
-                this.headers.set(key, value);
-            }
-        }
-
-        // Body
-        let body = '';
-
-        if ('body' in this.option) {
-            body = this.option.body;
-        }
-
-        // Response
-        if ('beforeSend' in this.option) {
-            this.before = this.option.beforeSend;
-        }
-
-        console.log(url);
-        console.log(this.option.method);
-        console.log(this.option.headers);
-        console.log(this.option.body);
+        // Try to parse JSON (even on error responses)
+        let result;
 
         try {
-            let response = await fetch(url, {
-                headers: this.option.headers,
-                method: method,
-                body: body
-            });
-
-            // Try to parse JSON (even on error responses)
-            let result;
+            let response = await fetch(url, config);
 
             let response_type = response.headers.get('content-type');
 
@@ -114,58 +51,41 @@ export class Ajax {
                 result = await response.text();
             }
 
-            this.option.onSuccess(result);
-
-            //console.log(...response.headers.entries());
-            /*
-            if (response.ok) {
-                //this.success(result);
-
-                const error = new Error(result.message || `HTTP ${response.status}`);
+            if (!response.ok) {
+                let error = new Error(result.message || `HTTP ${response.status}`);
 
                 error.status = response.status;
                 error.data = result;
 
                 throw error;
             }
-            */
 
-            if ('onSuccess' in this.option) {
-                this.success = this.option.onSuccess;
-            }
+            // ----- onSuccess -----
+            if (typeof options.onSuccess === 'function') options.onSuccess(result, response);
+        } catch (e) {
+            // ----- onError -----
+            if (typeof options.onError === 'function') options.onError(e);
 
-            if ('onComplete' in this.option) {
-                this.complete = this.option.onComplete;
-            }
-
-            if ('onError' in this.option) {
-                this.error = this.option.onError;
-            }
-
-
-            //response.then(this.success);
-
-           // response.catch(this.error);
-
-            //return result;
-        } catch (err) {
-            // Network errors or thrown errors above
-            throw err;
+            throw e;
+        } finally {
+            // ----- onComplete -----
+            if (typeof options.onComplete === 'function') options.onComplete();
         }
+
+        return result;
     }
 
-    get(url, params = {}, options = {}) {
-        const query = new URLSearchParams(params).toString();
-        const fullURL = query ? `${url}?${query}` : url;
+    get(url, data = {}, options = {}) {
+        const query = new URLSearchParams(data).toString();
 
-        return this.send(fullURL, {
+        return this.request(query ? `${url}?${query}` : url, {
             method: 'GET',
             ...options
         });
     }
 
     post(url, body = {}, options = {}) {
-        return this.send(url, {
+        return this.request(url, {
             method: 'POST',
             body,
             ...options
@@ -173,7 +93,7 @@ export class Ajax {
     }
 
     put(url, body = {}, options = {}) {
-        return this.send(url, {
+        return this.request(url, {
             method: 'PUT',
             body,
             ...options
@@ -181,7 +101,7 @@ export class Ajax {
     }
 
     patch(url, body = {}, options = {}) {
-        return this.send(url, {
+        return this.request(url, {
             method: 'PATCH',
             body,
             ...options
@@ -189,7 +109,7 @@ export class Ajax {
     }
 
     delete(url, options = {}) {
-        return this.send(url, {
+        return this.request(url, {
             method: 'DELETE',
             ...options
         });

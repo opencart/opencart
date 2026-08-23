@@ -108,14 +108,14 @@
 
         <br/>
         <div class="row">
-          <div class="col"><a href="{{ continue }}" class="btn btn-light">{{ button_shopping }}</a></div>
-          <div class="col text-end"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>
+          <div class="col"><button type="button" data-on="click:close" class="btn btn-light">{{ button_shopping }}</button></div>
+          <div class="col text-end"><a href="checkout/checkout.js" class="btn btn-primary">{{ button_checkout }}</a></div>
         </div>
         {% else %}
 
 
         <p>{{ text_no_results }}</p>
-        <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="text-end"><a href="common/home.js" class="btn btn-primary">{{ button_continue }}</a></div>
 
         {% endif %}
 

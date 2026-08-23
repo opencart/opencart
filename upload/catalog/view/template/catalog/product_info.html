@@ -247,17 +247,14 @@
             <div class="input-group-text">{{ entry_qty }}</div>
             <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" data-bind="quantity" class="form-control"/>
 
-
-
-
-
             <button-submit data-bind="button-cart">{{ button_cart }}</button-submit>
 
-            <button type="submit" id="button-cart" data-bind="button_cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
-
+            <button type="submit" id="button-cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
 
           </div>
+
           <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+
           <div id="error-quantity" class="form-text"></div>
         </div>
 
@@ -272,8 +269,9 @@
   <li class="nav-item"><a href="#tab-description" data-bs-toggle="tab" class="nav-link active">{{ tab_description }}</a></li>
   {% if attribute_groups %}
   <li class="nav-item"><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
-  {% endif %} {% if config_review_status %}
-  <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review }}</a></li>
+  {% endif %}
+  {% if config_review_status %}
+  <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review | replace_first: '%s', review_total }}</a></li>
   {% endif %}
 </ul>
 <div class="tab-content">
@@ -304,8 +302,9 @@
       </table>
     </div>
   </div>
-  {% endif %} {% if config_review_status %}
-  <div id="tab-review" class="tab-pane fade mb-4">{{ review }}</div>
+  {% endif %}
+  {% if config_review_status %}
+  <div id="tab-review" class="tab-pane fade mb-4"><review-list product_id="{{ product_id }}"></review-list></div>
   {% endif %}
 </div>
 {{ related }}

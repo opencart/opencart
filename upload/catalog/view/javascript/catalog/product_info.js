@@ -1,4 +1,4 @@
-import { Controller, Ajax } from '../component.js';
+import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -8,6 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('catalog/product_info');
 
 // Library
+const ajax = await loader.library('ajax');
 const cart = await loader.library('cart');
 const local = await loader.library('local');
 const tax = await loader.library('tax');
@@ -16,7 +17,7 @@ const tax = await loader.library('tax');
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
 // Storage
-//const stock_status = await loader.storage('localisation/stock_status');
+const stock_status = await loader.storage('localisation/stock_status');
 
 export default class extends Controller {
     async render() {
@@ -66,7 +67,7 @@ export default class extends Controller {
 
             console.log(discounts);
 
-            discounts.sort(() => Math.random() - 0.5);
+            discounts.sort(discounts => discount.quantity);
 
             for (let discount of discounts) {
 
@@ -82,6 +83,15 @@ export default class extends Controller {
             data.tax = '';
 
             if (config.config_tax) data.tax = product.special ? product.special : product.price;
+
+            data.reward = 0;
+
+            // && reward.date_start >= Date.now() && reward.date_end <= Date.now()
+            let reward = product.rewards.find(reward => reward.customer_group_id == config.config_customer_group_id);
+
+            if (reward) {
+                data.reward = reward.points;
+            }
 
             let stock_status_id = 0;
 
@@ -99,6 +109,8 @@ export default class extends Controller {
             }
 
             data.stock_status = product.stock_status;
+
+            //stock_status
 
             // Attributes
             data.attribute_groups = [];
@@ -144,19 +156,8 @@ export default class extends Controller {
                 }
 
                 data.subscription_plans.push({
-                    subscription_plan_id: subscription_plan.subscription_plan_id,
-                    customer_group_id: subscription_plan.customer_group_id,
                     name: subscription_plan.description[config.config_language].name,
-                    trial_price: subscription_plan.trial_price,
-                    trial_frequency: subscription_plan.trial_frequency,
-                    trial_duration: subscription_plan.trial_duration,
-                    trial_cycle: subscription_plan.trial_cycle,
-                    trial_status: subscription_plan.trial_status,
-                    cycle: subscription_plan.cycle,
-                    frequency: subscription_plan.frequency,
-                    duration: subscription_plan.duration,
-                    price: subscription_plan.price,
-                    sort_order: subscription_plan.sort_order
+                    ...subscription_plan
                 });
             }
 
@@ -177,127 +178,77 @@ export default class extends Controller {
         e.preventDefault();
 
         console.log('addToCart');
-        this.bind.get('button-cart').loading = true;
-        //this.$button_cart.state = 'loading';
+
+        this.bind('button-cart').loading = true;
 
         let target = e.target;
 
         let form = new FormData(target);
 
-        let ajax = new Ajax({
-            url: 'index.php?route=checkout/cart.add',
-            method: 'POST', // GET, POST, PUT, PATCH
-            //headers: {},
-            //accept: 'application/json',
-            body: form,
-            accept: 'json', // Return Type json, html, text
-            beforeSend: (e) => {
-                console.log('beforeSend', e);
-
-                this.bind.get('button-cart').loading = true;
-            },
-            onComplete: (json) => {
-                console.log('onComplete', json);
-
-                //this.$button.state = '';
-            },
-            onSuccess: (json) => {
-                console.log('onSuccess', json);
-
-
-            },
-            onError: (e) => {
-                console.log('onError', e);
-            }
-        });
-
-        ajax.send();
-/*
         ajax.post('index.php?route=checkout/cart.add', form, {
-            beforeSend: (e) => {
-                console.log('beforeSend', e);
-
-                this.bind.get('button-cart').loading = true;
+            beforeSend: (request) => {
+               this.bind('button-cart').setAttribute('loading', '');
             },
             onComplete: (json) => {
-                console.log('onComplete', json);
+                console.log(this.bind('button-cart'));
 
-                //this.$button.state = '';
+                //this.bind('button-cart').loading = false;
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);
 
+                // Remove past error classes from inputs
+                target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
+                // Display error messages
+                if (json['error'] !== undefined) {
+                    for (let key in json['error']) {
+                        let value = key.replaceAll('_', '-');
+
+                        let input = target.querySelector('#input-' + value);
+
+                        if (input) {
+                            input.classList.add('is-invalid');
+
+                            // If the element has inputs inside.
+                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                        }
+
+                        let error = target.querySelector('#error-' + value);
+
+                        if (error) {
+                            error.classList.add('d-block');
+                        }
+                    }
+                }
+
+                // Display success message
+                if (json['success'] !== undefined) {
+                    let alert = target.querySelector('#alert');
+
+                    if (alert) {
+                        alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    let output = [];
+
+                    console.log(json['products']);
+
+                    //console.log(Object.fromEntries(form));
+                    for (let product of json['products']) {
+                        cart.add(product);
+                    }
+
+                    let button = document.querySelector('#cart > button');
+
+                    button.click();
+                }
             },
             onError: (e) => {
                 console.log('onError', e);
             }
         });
-*/
-        /*
-        let response = await fetch('index.php?route=checkout/cart.add', {
-            method: 'POST',
-            body: form
-        });
-
-        if (!response.ok) {
-            console.log(response);
-
-            //throw new Error(response.thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-
-        let json = await response.json();
-
-        // Remove past error classes from inputs
-        target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-        // Display error messages
-        if (json['error'] !== undefined) {
-            for (let key in json['error']) {
-                let value = key.replaceAll('_', '-');
-
-                let input = target.querySelector('#input-' + value);
-
-                if (input) {
-                    input.classList.add('is-invalid');
-
-                    // If the element has inputs inside.
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                }
-
-                let error = target.querySelector('#error-' + value);
-
-                if (error) {
-                    error.classList.add('d-block');
-                }
-            }
-        }
-
-        // Display success message
-        if (json['success'] !== undefined) {
-            let alert = target.querySelector('#alert');
-
-            if (alert) {
-                alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            let output = [];
-
-            console.log(json['products']);
-
-            //console.log(Object.fromEntries(form));
-            for (let product of json['products']) {
-                cart.add(product);
-            }
-
-            let button = document.querySelector('#cart > button');
-
-            button.click();
-        }
-
-       // this.$button_cart.state = '';
-       */
     }
 
     async addToWishList(e) {

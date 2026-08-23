@@ -58,6 +58,10 @@ const template = await loader.library('template');
 // Developer Code
 template.addPath('catalog/view/template/');
 
+// Ajax
+
+const ajax = await loader.library('ajax');
+
 // General
 import('./common/header.js');
 import('./common/footer.js');

@@ -227,7 +227,11 @@ class Review extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_review->getReviews($filter_data);
 	 */
 	public function getReviews(array $data = []): array {
-		$sql = "SELECT `r`.`review_id`, `pd`.`name`, `r`.`author`, `r`.`rating`, `r`.`status`, `r`.`date_added` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT `r`.`review_id`, `r`.`product_id`, `pd`.`name`, `r`.`author`, `r`.`rating`, `r`.`status`, `r`.`date_added` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (!empty($data['filter_product_id'])) {
+			$sql .= " AND `r`.`product_id` = '" . (int)$data['filter_product_id'] . "'";
+		}
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_product']) . '%') . "'";
@@ -315,6 +319,10 @@ class Review extends \Opencart\System\Engine\Model {
 	 */
 	public function getTotalReviews(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (!empty($data['filter_product_id'])) {
+			$sql .= " AND `r`.`product_id` = '" . (int)$data['filter_product_id'] . "'";
+		}
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_product']) . '%') . "'";

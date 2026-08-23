@@ -1,9 +1,13 @@
 export class Controller {
     element = HTMLElement;
-    bind = new Map();
+    data = new Map();
 
     constructor(element) {
         this.element = element;
+    }
+
+    bind(name) {
+        return this.data.get(name);
     }
 
     async execute() {
@@ -17,7 +21,7 @@ export class Controller {
         clone.querySelectorAll('[data-bind], [data-on]').forEach(element => {
             // Attach Events based on elements that have data-bind attributes
             if (element.hasAttribute('data-bind')) {
-                this.bind.set(element.getAttribute('data-bind'), element);
+                this.data.set(element.getAttribute('data-bind'), element);
 
                 element.removeAttribute('data-bind');
             }

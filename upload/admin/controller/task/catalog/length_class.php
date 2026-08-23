@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Length Class
  *
- * Generates Length class information.
+ * Generates length class information.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */

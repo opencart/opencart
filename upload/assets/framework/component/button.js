@@ -15,13 +15,14 @@ customElements.define('button-submit', class extends WebComponent {
     }
 
     set loading(loading) {
+        console.log('button');
         console.log(loading);
 
-        let button = this.bind.get('button');
+        let button = this.bind('button-submit');
 
         if (loading) {
-            ///this.width = button.offsetWidth;
-            //this.height = button.offsetHeight;
+            this.width = button.offsetWidth;
+            this.height = button.offsetHeight;
 
             this.setAttribute('loading', '');
             this.setAttribute('disabled', '');
@@ -33,7 +34,6 @@ customElements.define('button-submit', class extends WebComponent {
             this.removeAttribute('disabled');
         }
     }
-
 
     get disabled() {
         return this.hasAttribute('disabled');
@@ -52,16 +52,16 @@ customElements.define('button-submit', class extends WebComponent {
     }
 
     render() {
-        let html = '<button type="submit" data-bind="button"';
-
-        console.log('render');
-        console.log(this.loading);
+        let html = '<button type="submit" data-bind="button-submit" class="btn btn-primary btn-lg btn-block"';
 
         if (this.disabled || this.loading) {
             html += ' disabled';
         }
 
         html += '>';
+
+        console.log('render');
+        console.log(this.loading);
 
         if (!this.loading) {
             html += this.html;

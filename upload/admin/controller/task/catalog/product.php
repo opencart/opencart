@@ -425,6 +425,11 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Reviews
+		$this->load->model('catalog/review');
+
+		$review_total = $this->model_catalog_review->getTotalReviews(['filter_product_id' => $product_info['product_id']]);
+
 		$product_data = [
 			'product_id'         => $product_info['product_id'],
 			'popup'              => $popup,
@@ -458,6 +463,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'width'              => $product_info['width'],
 			'height'             => $product_info['height'],
 			'length_class_id'    => $product_info['length_class_id'],
+			'review_total'       => $review_total,
 			'sales'              => $product_info['sales'],
 			'rating'             => $product_info['rating'],
 			'tags'               => $tag_data,

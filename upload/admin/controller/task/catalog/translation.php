@@ -167,9 +167,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$response = file_get_contents($file);
 
-		print_r($response);
-
-
 		$_ = [];
 
 		$this->load->helper('yaml');

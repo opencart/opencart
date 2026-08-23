@@ -1,4 +1,4 @@
-import { Controller, Ajax } from '../component.js';
+import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Language

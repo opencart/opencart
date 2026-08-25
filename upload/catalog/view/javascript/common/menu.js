@@ -39,7 +39,7 @@ customElements.define('common-menu', class extends WebComponent {
 
         data.config_product_count = config.config_product_count;
 
-        return loader.template('component/menu', { ...data, ...language });
+        return loader.template('common/menu', { ...data, ...language });
     }
 
     onClick(e) {

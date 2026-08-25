@@ -1,5 +1,6 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import './review.js';
 
 // Config
 const config = await loader.config('default');
@@ -17,7 +18,7 @@ const tax = await loader.library('tax');
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
 // Storage
-const stock_status = await loader.storage('localisation/stock_status');
+const stock_statuses = await loader.storage('localisation/stock_status');
 
 export default class extends Controller {
     async render() {
@@ -102,15 +103,16 @@ export default class extends Controller {
             } else if (!config.config_stock_display) {
                 stock_status_id = config.config_stock_status_id;
 
-                data.stock = true;
+                data.stock = false;
             } else {
-
                 data.stock = true;
             }
 
-            data.stock_status = product.stock_status;
+            let stock_status = stock_statuses.find(stock_status => stock_status.stock_status_id == stock_status_id);
 
-            //stock_status
+            if (stock_status) {
+                data.stock_status = stock_status.description[config.config_language].name;
+            }
 
             // Attributes
             data.attribute_groups = [];
@@ -147,8 +149,6 @@ export default class extends Controller {
             data.subscription_plans = [];
 
             for (let subscription_plan of product.subscription_plans) {
-                let description = '';
-
                 let price = product.special ? product.special : product.price;
 
                 if (subscription_plan.duration) {

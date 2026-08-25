@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import {WebComponent} from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -35,7 +35,7 @@ customElements.define('common-footer', class extends WebComponent {
 
         data.year = date.getFullYear();
 
-        return await loader.template('common/footer', { ...data, ...language, ...config });
+        return await loader.template('common/footer', {...data, ...language, ...config});
     }
 
     onClick(e) {
@@ -44,5 +44,22 @@ customElements.define('common-footer', class extends WebComponent {
         let target = document.getElementById('content');
 
         target.src = e.target.getAttribute('href');
+    }
+
+
+    async onClick(e) {
+        e.preventDefault();
+
+        let dialog = document.getElementById('dialog');
+
+        dialog.innerHTML = '';
+
+        let object = await import(config.config_path + 'checkout/cart.js');
+
+        let controller = new object.default(dialog);
+
+        dialog.append(await controller.execute());
+
+        dialog.showModal();
     }
 });

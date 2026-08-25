@@ -6,6 +6,7 @@ const language = await loader.language('account/login');
 
 // Library
 const session = await loader.library('session');
+const cart = await loader.library('cart');
 
 export default class extends Controller {
     connect() {

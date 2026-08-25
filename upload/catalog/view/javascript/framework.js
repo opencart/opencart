@@ -28,6 +28,7 @@ config.cache.set('default', {
     config_product_description_length: 100,
     config_product_count: true,
     config_review_status: true,
+    config_stock_status_id: 4,
     config_file_max_size: 3000
 });
 

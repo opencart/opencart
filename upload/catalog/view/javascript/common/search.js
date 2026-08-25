@@ -7,7 +7,7 @@ const language = await loader.language('component/search');
 // URL
 const url = new URLSearchParams(document.location.search);
 
-customElements.define('component-search', class extends WebComponent {
+customElements.define('common-search', class extends WebComponent {
     constructor() {
         super();
 
@@ -23,7 +23,7 @@ customElements.define('component-search', class extends WebComponent {
             data.search = '';
         }
 
-        return loader.template('component/search', { ...data, ...language });
+        return loader.template('common/search', { ...data, ...language });
     }
 
     onSubmit(e) {

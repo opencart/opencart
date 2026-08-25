@@ -13,7 +13,7 @@ const currencies = await loader.storage('localisation/currency');
 // Language
 const language = await loader.language('component/currency');
 
-customElements.define('component-currency', class extends WebComponent {
+customElements.define('common-currency', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -37,7 +37,7 @@ customElements.define('component-currency', class extends WebComponent {
             data.symbol_right = '';
         }
 
-        return loader.template('component/currency', { ...data, ...language });
+        return loader.template('common/currency', { ...data, ...language });
     }
 
     onClick(e) {

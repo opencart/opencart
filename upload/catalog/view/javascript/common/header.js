@@ -1,10 +1,10 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
-import '../component/currency.js';
-import '../component/language.js';
-import '../component/search.js';
-import '../component/cart.js';
-import '../component/menu.js';
+import '../common/currency.js';
+import '../common/language.js';
+import '../common/search.js';
+import '../common/cart.js';
+import '../common/menu.js';
 
 // Config
 const config = await loader.config('default');

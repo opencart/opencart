@@ -13,7 +13,7 @@ let languages = await loader.storage('localisation/language');
 // Language
 let language = await loader.language('component/language');
 
-customElements.define('component-language', class extends WebComponent {
+customElements.define('common-language', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -37,7 +37,7 @@ customElements.define('component-language', class extends WebComponent {
             data.image = '';
         }
 
-        return loader.template('component/language', { ...data,  ...language });
+        return loader.template('common/language', { ...data,  ...language });
     }
 
     onClick(e) {

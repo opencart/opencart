@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('component/menu');
 
-customElements.define('component-menu', class extends WebComponent {
+customElements.define('common-menu', class extends WebComponent {
     async render() {
         let data = {};
 

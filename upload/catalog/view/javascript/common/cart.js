@@ -16,28 +16,15 @@ const tax = await loader.library('tax');
 // Currency
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
-customElements.define('component-cart', class extends WebComponent {
+customElements.define('common-cart', class extends WebComponent {
     render() {
         let data = {};
 
+        data.quantity = cart.countProducts();
+        data.total = cart.getTotal();
+
         data.currency = currency;
 
-        return loader.template('component/cart', { ...data,  ...language });
-    }
-
-    async onClick(e) {
-        e.preventDefault();
-
-        let dialog = document.getElementById('dialog');
-
-        dialog.innerHTML = '';
-
-        let object = await import(config.config_path + 'checkout/cart.js');
-
-        let controller = new object.default(dialog);
-
-        dialog.append(await controller.execute());
-
-        dialog.showModal();
+        return loader.template('common/cart', { ...data,  ...language });
     }
 });

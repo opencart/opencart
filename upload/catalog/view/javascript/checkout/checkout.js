@@ -19,28 +19,16 @@ export default class extends Controller {
     async render() {
         let data = {};
 
-        //let shipping = cart.hasShipping();
         //let download = cart.hasDownload();
         //let minimum = cart.hasMinimum();
 
+        //data.logged = customer.isLogged();
+        data.shipping = cart.hasShipping();
 
-        if (customer.isLogged() && config.config_checkout_payment_address) {
-
-        }
-
-        if (customer.isLogged() && cart.hasShipping()) {
-            shipping_method
-
-        }
-
-        if (cart.hasShipping()) {
-
-        }
-
-        return loader.template('checkout/checkout', { ...data,  ...language });
+        return loader.template('checkout/checkout', { ...data, ...language, ...config });
     }
 }
-
+/*
 // Account
 $('input[name=\'account\']').on('click', function() {
     if ($(this).val() == 1) {
@@ -765,7 +753,7 @@ $('#input-comment').on('keydown', function() {
     }, 1000, this);
 });
 
-/* Agree to terms */
+
 $(document).on('change', '#input-checkout-agree', function() {
     var element = this;
 
@@ -789,3 +777,4 @@ $(document).on('change', '#input-checkout-agree', function() {
         }
     });
 });
+*/

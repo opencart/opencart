@@ -4,44 +4,61 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
+// Library
+const ajax = await loader.language('ajax');
+
 // Language
 const language = await loader.language('catalog/review');
 
+
+
+customElements.define('review-list', class extends WebComponent {
+
+});
+
+
+
+
+customElements.define('review-list', class extends WebComponent {
+
+});
+
 customElements.define('review-form', class extends WebComponent {
+
+
     async render() {
 
+
+        return loader.template('catalog/review_form', { ...product, ...description, ...data, ...language, ...config });
     }
 
-    onSubmit() {
+    onSubmit(e) {
         e.preventDefault();
 
-        var element = this;
+        let target = e.target;
 
-        $.ajax({
-            url: 'index.php?route=catalog/review.write&language={{ language }}&review_token={{ review_token }}&product_id={{ product_id }}',
-            type: 'post',
-            data: $('#form-review').serialize(),
-            dataType: 'json',
-            cache: false,
-            contentType: 'application/x-www-form-urlencoded',
-            processData: false,
+        let form = new FormData(target);
+
+        ajax.post('index.php?route=catalog/review.write&language=' + config.config_language + '&review_token=' + this.review_token + '&product_id={{ product_id }}', form, {
             beforeSend: function() {
-                $('#button-review').button('loading');
+                this.bind('button-review').loading = true;
             },
             complete: function() {
-                $('#button-review').button('reset');
+                this.bind('button-review').loading = false;
             },
             success: function(json) {
                 $('.alert-dismissible').remove();
-                $('#form-review').find('.is-invalid').removeClass('is-invalid');
-                $('#form-review').find('.invalid-feedback').removeClass('d-block');
+
+                // Remove past error classes from inputs
+                target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 if (json['error']) {
                     if (json['error']['warning']) {
                         $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-                    for (key in json['error']) {
+                    for (let key in json['error']) {
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
@@ -60,8 +77,4 @@ customElements.define('review-form', class extends WebComponent {
         });
 
     }
-});
-
-customElements.define('review-list', class extends WebComponent {
-
 });

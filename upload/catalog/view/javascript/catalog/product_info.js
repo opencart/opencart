@@ -273,7 +273,7 @@ export default class extends Controller {
     }
 
     onChange(e) {
-        let subscription = e.target.value;
+        let subscription = e.currentTarget.value;
 
         subscription.classList.add('d-none');
 

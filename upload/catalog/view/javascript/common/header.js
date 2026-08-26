@@ -33,11 +33,12 @@ customElements.define('common-header', class extends WebComponent {
     onClick(e) {
         e.preventDefault();
 
-        console.log(e);
-
-
         let target = document.getElementById('content');
 
-        target.src = e.target.getAttribute('href');
+        console.log(e);
+        console.log(target);
+
+
+        target.src = e.currentTarget.getAttribute('href');
     }
 });

@@ -19,7 +19,7 @@ export default class extends Controller {
 
         let target = document.getElementById('content');
 
-        target.src = e.target.getAttribute('href');
+        target.src = e.currentTarget.getAttribute('href');
     }
 
     onSubmit(e) {

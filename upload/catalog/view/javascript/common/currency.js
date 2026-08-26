@@ -43,7 +43,7 @@ customElements.define('common-currency', class extends WebComponent {
     onClick(e) {
         e.preventDefault();
 
-        let code = e.target.getAttribute('href');
+        let code = e.currentTarget.getAttribute('href');
 
         local.set('currency', code);
 

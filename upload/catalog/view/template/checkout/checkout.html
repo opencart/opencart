@@ -1,7 +1,7 @@
 <h1>{{ heading_title }}</h1>
 <div class="row">
 
-  {% if !logged or config_checkout_payment_address or shipping %}
+  {% if !logged || config_checkout_payment_address || shipping %}
     <div class="col-md-7 mb-3">
 
       {% if !logged  %}

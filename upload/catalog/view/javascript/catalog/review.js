@@ -4,20 +4,15 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
-// Library
-const ajax = await loader.language('ajax');
-
 // Language
 const language = await loader.language('catalog/review');
 
+// Library
+const ajax = await loader.library('ajax');
 
-
-customElements.define('review-list', class extends WebComponent {
+customElements.define('product-review', class extends WebComponent {
 
 });
-
-
-
 
 customElements.define('review-list', class extends WebComponent {
 
@@ -27,9 +22,9 @@ customElements.define('review-form', class extends WebComponent {
 
 
     async render() {
+        let data = {};
 
-
-        return loader.template('catalog/review_form', { ...product, ...description, ...data, ...language, ...config });
+        return loader.template('catalog/review_form', { ...data, ...language, ...config });
     }
 
     onSubmit(e) {

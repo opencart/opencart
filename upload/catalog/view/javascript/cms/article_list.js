@@ -75,6 +75,6 @@ customElements.define('article-list', class extends WebComponent {
 
         let target = document.getElementById('content');
 
-        target.src = e.target.getAttribute('href');
+        target.src = e.currentTarget.getAttribute('href');
     }
 });

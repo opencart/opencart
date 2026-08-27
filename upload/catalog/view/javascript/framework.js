@@ -59,8 +59,35 @@ const template = await loader.library('template');
 // Developer Code
 template.addPath('catalog/view/template/');
 
-// Ajax
+// Currency
+const currency = await loader.library('currency');
 
+template.addFilter('currency', (amount, code, value, format = false) => {
+    return currency.format(amount, code, value, format);
+});
+
+// Tax
+const tax = await loader.library('tax');
+
+template.addFilter('tax', (value = 0.00, tax_class_id = 0, calculate = true) => {
+    return tax.calculate(amount, code, value, format);
+});
+
+// Weight
+const weight = await loader.library('currency');
+
+template.addFilter('weight', (value, weight_class_id, decimal_point = '.', thousand_point = ',') => {
+    return weight.format(value, weight_class_id, decimal_point = '.', thousand_point = ',');
+});
+
+// Length
+const length = await loader.library('currency');
+
+template.addFilter('length', (value, length_class_id, decimal_point = '.', thousand_point = ',') => {
+    return length.format(value, length_class_id, decimal_point = '.', thousand_point = ',');
+});
+
+// Ajax
 const ajax = await loader.library('ajax');
 
 // General

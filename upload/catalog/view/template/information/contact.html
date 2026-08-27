@@ -4,35 +4,33 @@
   <div class="card-body">
     <div class="row">
       {% if image %}
-        <div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail" style="width: 268px"/></div>
+        <div class="col-sm-3"><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px"/></div>
       {% endif %}
-      <div class="col-sm-3"><strong>{{ store }}</strong>
+      <div class="col-sm-3"><strong>{{ config_name }}</strong>
         <br/>
-        <address>
-          {{ address }}
-        </address>
-        <a href="{{ map }}" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
+        <address>{{ config_address }}</address>
+        <a href="{{ config_map }}" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
       </div>
-      {% if telephone %}
+      {% if config_telephone %}
         <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
           <br/>
-          {{ telephone }}
+          {{ config_telephone }}
           <br/>
           <br/>
         </div>
       {% endif %}
       <div class="col-sm-3">
-        {% if open %}
+        {% if config_open %}
           <strong>{{ text_open }}</strong>
           <br/>
-          {{ open }}
+          {{ config_open }}
           <br/>
           <br/>
         {% endif %}
-        {% if comment %}
+        {% if config_comment %}
           <strong>{{ text_comment }}</strong>
           <br/>
-          {{ comment }}
+          {{ config_comment }}
         {% endif %}
       </div>
     </div>
@@ -83,7 +81,7 @@
     {% endfor %}
   </div>
 {% endif %}
-<form id="form-contact" action="{{ send }}" data-on="submit:onSubmit">
+<form id="form-contact" data-on="submit:onSubmit">
   <fieldset>
     <legend>{{ text_contact }}</legend>
     <div class="row mb-3">

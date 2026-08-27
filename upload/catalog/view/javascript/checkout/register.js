@@ -1,6 +1,10 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
+// library
+const cart = await loader.library('cart');
+const customer = await loader.library('customer');
+
 export default class extends Controller {
     async connected() {
 

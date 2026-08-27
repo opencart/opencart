@@ -2,29 +2,30 @@
 <div class="row">
 
   {% if !logged || config_checkout_payment_address || shipping %}
-    <div class="col-md-7 mb-3">
+  <div class="col-md-7 mb-3">
+    {% if !logged %}
+    <checkout-register></checkout-register>
+    {% endif %}
 
-      {% if !logged  %}
-        <div id="checkout-register">{{ register }}</div>
-      {% endif %}
+    {% if logged && config_checkout_payment_address %}
+    <checkout-payment-address id="checkout-payment-address"></checkout-payment-address>
+    {% endif %}
 
-      {% if logged && config_checkout_payment_address %}
-        <div id="checkout-payment-address">{{ payment_address }}</div>
-      {% endif %}
-
-      {% if logged && shipping %}
-        <div id="checkout-shipping-address">{{ shipping_address }}</div>
-      {% endif %}
-    </div>
+    {% if logged && shipping %}
+    <checkout-shipping-address id="checkout-shipping-address"></checkout-shipping-address>
+    {% endif %}
+  </div>
   {% endif %}
 
   <div class="col">
-
     {% if shipping %}
-      <div id="checkout-shipping-method" class="mb-3">{{ shipping_method }}</div>
+    <checkout-shipping-method id="checkout-shipping-method"></checkout-shipping-method>
     {% endif %}
 
-    <div id="checkout-payment-method" class="mb-4">{{ payment_method }}</div>
-    <div id="checkout-confirm">{{ confirm }}</div>
+    <checkout-payment-method id="checkout-payment-method"></checkout-payment-method>
+
+    <checkout-confirm id="checkout-confirm"></checkout-confirm>
   </div>
+
+
 </div>

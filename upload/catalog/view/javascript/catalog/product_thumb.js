@@ -24,10 +24,29 @@ customElements.define('product-thumb', class extends WebComponent {
         if (product !== undefined && config.config_language in product.description) {
             let description = product.description[config.config_language];
 
-            data.description = description.description.substr(0, config.config_product_description_length);
+            // && discount.date_start >= Date.now() && discount.date_end <= Date.now()
+            let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id);
+
+            if (discount) {
+                let price = '';
+
+                if (discount.type == 'F') {
+                    price = discount.price;
+                } else if (discount.type == 'P') {
+                    price -= (data.price * (discount.price / 100));
+                } else if (discount.type == 'S') {
+                    price -= discount.price;
+                }
+
+                if (!discount.special) {
+                    data.price = discount.price;
+                } else {
+                    data.special = discount.price;
+                }
+            }
 
             data.price = tax.calculate(product.price);
-            //data.special = tax.calculate(product.special);
+            data.special = tax.calculate(product.special);
             data.tax = '';
 
             if (config.config_tax) {

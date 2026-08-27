@@ -7,7 +7,6 @@ import('./component/button.js');
 import('./component/form.js');
 import('./component/include.js');
 import('./component/pagination.js');
-import('./component/currency.js');
 
 // Input
 import('./input/autocomplete.js');

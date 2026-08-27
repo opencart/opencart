@@ -48,19 +48,17 @@
 
       {% if !special %}
       <li>
-        <h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></h2>
+        <h2><span class="price-new">{{ price | tax: tax_class_id, config_tax | currency: currency }}</span></h2>
       </li>
       {% else %}
-      <li><span class="price-old"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></li>
+      <li><span class="price-old">{{ price | tax: tax_class_id, config_tax | currency: currency }}</span></li>
       <li>
-        <h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ special }}"></x-currency></span></h2>
+        <h2><span class="price-new">{{ special | tax: tax_class_id, config_tax | currency: currency }}</span></h2>
       </li>
       {% endif %}
 
       {% if tax %}
-      <li>{{ text_tax }}
-        <x-currency code="{{ currency }}" amount="{{ tax }}"></x-currency>
-      </li>
+      <li>{{ text_tax }} {{ tax | currency: currency }}</li>
       {% endif %}
 
       {% if points %}
@@ -73,9 +71,7 @@
       </li>
 
       {% for discount in discounts %}
-      <li>{{ discount.quantity }}{{ text_discount }}
-        <x-currency code="{{ currency }}" amount="{{ discount.price }}"></x-currency>
-      </li>
+      <li>{{ discount.quantity }} {{ text_discount }} {{ discount.price | tax: tax_class_id, config_tax | currency: currency }}</li>
       {% endfor %}
 
       {% endif %}
@@ -108,7 +104,12 @@
               <option value="">{{ text_select }}</option>
 
               {% for option_value in option.option_value %}
-              <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }} <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>){% endif %}</option>
+              <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price | tax: tax_class_id, config_tax | currency: currency }})
+
+
+
+
+                {% endif %}</option>
               {% endfor %}
 
           </select>
@@ -121,24 +122,12 @@
           <div class="mb-3{% if option.required %} required{% endif %}">
             <label class="form-label">{{ option.name }}</label>
             <div id="input-option-{{ option.product_option_id }}">
-
               {% for option_value in option.option_value %}
-
               <div class="form-check">
-
-
                 <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/>
-
-                <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label"> {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %} {{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}
-                  <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
-                  ) {% endif %} </label>
-
-
+                <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label"> {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %} {{ option_value.name }} {% if option_value.price %} ({{ option_value.price | tax: tax_class_id, config_tax | currency: currency }}) {% endif %} </label>
               </div>
-
-
               {% endfor %}
-
             </div>
             <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
           </div>
@@ -153,9 +142,8 @@
 
               {% for option_value in option.option_value %}
               <div class="form-check">
-                <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label"> {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %} {{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }}
-                <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
-                ) {% endif %}</label>
+                <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/>
+                <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label"> {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %} {{ option_value.name }} {% if option_value.price %}({{ option_value.price | tax: tax_class_id, config_tax | currency: currency }}) {% endif %}</label>
               </div>
               {% endfor %}
 
@@ -224,6 +212,9 @@
 
             {% for subscription_plan in subscription_plans %}
 
+
+            {% assign subscription_price subscription_plan.price | tax: tax_class_id, config_tax | currency: currency %}
+
             {% if subscription_plan.duration %}
             <option value="{{ subscription_plan.subscription_plan_id }}">{{ text_subscription_duration | replace_first: '%s', subscription_plan.price | replace_first: '%d', subscription_plan.cycle | replace_first: '%s', subscription_plan.frequency | replace_first: '%d', subscription_plan.duration }}</option>
             {% else %}
@@ -276,7 +267,8 @@
 </ul>
 <div class="tab-content">
   <div id="tab-description" class="tab-pane fade show active mb-4">
-    {{ description }} {% if tags %}
+    {{ description }}
+    {% if tags %}
     <p><strong>{{ text_tags }}</strong> {% for tag in tags %} <a href="{{ tag }}">{{ tag }}</a>{% if !loop.last %},{% endif %} {% endfor %}</p>
     {% endif %}
   </div>

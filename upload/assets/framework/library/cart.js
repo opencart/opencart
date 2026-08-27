@@ -8,19 +8,22 @@ let weight_class = await loader.library('weight');
 // Config
 let config = await loader.config('default');
 
-//let data = session.get('cart');
-
 export default class Cart {
+    data = new Map();
+
     constructor() {
-        this.customer = null;
-        this.data = new Array();
+        if (session.has('cart')) {
+            this.data = new Map(session.get('cart'));
+        }
     }
 
     async add(item = []) {
         console.log('add');
         console.log(item);
 
-        this.data.push(item);
+        this.data.append(item);
+
+        session.set('cart', this.data);
     }
 
     remove(cart_id) {
@@ -30,7 +33,7 @@ export default class Cart {
     getProducts() {
         console.log(this.data);
 
-        return this.data;
+        return this.data.entries();
     }
 
     update() {
@@ -153,7 +156,7 @@ export default class Cart {
      * $cart = $this->cart->hasProducts();
      */
     hasProducts() {
-        return this.getProducts().length ? true : false;
+        return this.data.length > 0;
     }
 
     /**
@@ -166,7 +169,7 @@ export default class Cart {
      * $cart = $this->cart->hasSubscription();
      */
     hasSubscription() {
-        return this.getSubscriptions().length ? true : false;
+        return this.getSubscriptions().length > 0;
     }
 
     /**

@@ -1,8 +1,8 @@
 import { loader } from './loader.js';
 
-let length_classes = await loader.storage('localisation/length');
+const length_classes = await loader.storage('localisation/length_class');
 
-export default class Weight {
+export default class Length {
     convert(value, from, to) {
         let length_class_from = length_classes.find(length_class => length_class.length_class_id === from);
         let length_class_to = length_classes.find(length_class => length_class.length_class_id === to);
@@ -23,31 +23,27 @@ export default class Weight {
      * @param {string} value Optional and will be added after the string
      * @param {string} format Optional and will be added after the string
      */
-    format(value, weight_class_id, decimal_point = '.', thousand_point = ',') {
-        let weight_class = weight_classes.find(weight_class => weight_class.weight_class_id === weight_class_id);
+    format(value, length_class_id) {
+        let length_class = length_classes.find(length_class => length_class.length_class_id === length_class_id);
 
-        if (!weight_class) return number;
+        if (!length_class) return value;
 
-        value = parseFloat(value ? value : weight_class.value);
+        let string = Intl.NumberFormat(document.querySelector('html').lang).format(parseFloat(value ? value : length_class.value));
 
-        let string = '';
-
-        if (currency.symbol_left) {
-            string += currency.symbol_left;
+        if (length_class.unit) {
+            string += length_class.unit;
         }
-
-        let part = formater.formatToParts(amount * value);
 
         return string;
     }
 
-    getUnit(weight_class_id) {
-        //this.weights[$weight_class_id]
+    getUnit(length_class_id) {
+        let length_class = length_classes.find(length_class => length_class.length_class_id === length_class_id);
 
-        // if () {
-        //     return $this->weights[$weight_class_id]['unit'];
-        //} else {
-        //     return '';
-        //}
+        if (length_class) {
+             return length_class.unit;
+        } else {
+             return '';
+        }
     }
 }

@@ -3,13 +3,13 @@
   <div class="content">
     <div class="description">
       <h4><a href="catalog/product_info.js?product_id={{ product_id }}" data-on="click:onClick">{{ name }}</a></h4>
-
       <p>{{ description | truncate: config_product_description_length, '...' }}</p>
-
       {% if price %}
+
       <div class="price">
-        {% if !special %}<span class="price-new">{{ price | currency: currency }}</span>{% else %}<span class="price-new">{{ special | currency: currency }}</span> <span class="price-old">{{ price | currency: currency }}</span>{% endif %}
-        {% if tax %} <span class="price-tax">{{ text_tax }} {{ tax | currency: currency }}</span>{% endif %}
+        {% if !special %}<span class="price-new">{{ price | tax: tax_class_id, config_tax | currency: currency }}</span>{% else %}<span class="price-new">{{ special | tax: tax_class_id, config_tax | currency: currency }}</span> <span class="price-old">{{ price | tax: tax_class_id, config_tax | currency: currency }}</span>{% endif %}
+
+        {% if tax %}<span class="price-tax">{{ text_tax }} {{ tax | currency: currency }}</span>{% endif %}
       </div>
       {% endif %}
 
@@ -18,7 +18,6 @@
         {% for i in 1..5 %}{% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %}{% endfor %}
       </div>
       {% endif %}
-
     </div>
 
     <form method="post" data-oc-target="#cart">

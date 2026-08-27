@@ -1,6 +1,6 @@
 import { loader } from './loader.js';
 
-let weight_classes = await loader.storage('localisation/weight_class');
+const weight_classes = await loader.storage('localisation/weight_class');
 
 export default class Weight {
     convert(value, from, to) {
@@ -25,33 +25,27 @@ export default class Weight {
      * @param {string} value Optional and will be added after the string
      * @param {string} format Optional and will be added after the string
      */
-    format(value, weight_class_id, decimal_point = '.', thousand_point = ',') {
+    format(value, weight_class_id) {
         let weight_class = weight_classes.find(weight_class => weight_class.weight_class_id === weight_class_id);
 
-        if (!weight_class) return number;
+        if (!weight_class) return value;
 
-        value = parseFloat(value ? value : weight_class.value);
+        let string = Intl.NumberFormat(document.querySelector('html').lang).format(parseFloat(value ? value : weight_class.value));
 
-        let string = '';
-
-        if (currency.symbol_left) {
-            string += currency.symbol_left;
+        if (weight_class.unit) {
+            string += weight_class.unit;
         }
-
-        let formater = new Intl.NumberFormat(document.querySelector('html').lang, option);
-
-        let part = formater.formatToParts(amount * value);
 
         return string;
     }
 
     getUnit(weight_class_id) {
-        //this.weights[$weight_class_id]
+        let weight_class = weight_classes.find(weight_class => weight_class.weight_class_id === weight_class_id);
 
-       // if () {
-       //     return $this->weights[$weight_class_id]['unit'];
-        //} else {
-       //     return '';
-        //}
+        if (weight_class) {
+            return weight_class.unit;
+        } else {
+            return '';
+        }
     }
 }

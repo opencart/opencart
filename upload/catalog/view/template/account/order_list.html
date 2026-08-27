@@ -18,11 +18,9 @@
             <td class="text-end">#{{ order.order_id }}</td>
             <td class="text-end">{{ order.product_total }}</td>
             <td>{{ order.status }}</td>
-            <td class="text-end">
-              <x-currency code="{{ order.currency_code }}" amount="{{ order.total }}" value="{{ order.currency_value }}"></x-currency>
-            </td>
+            <td class="text-end">{{ order.total | currency: order.currency_code, order.currency_value }}</td>
             <td>{{ order.date_added }}</td>
-            <td class="text-end"><a href="{{ order.view }}" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
+            <td class="text-end"><a href="account/order_info.js?order_id={{ order.order_id }}" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
           </tr>
         {% endfor %}
       </tbody>
@@ -35,5 +33,5 @@
 {% else %}
   <p>{{ text_no_results }}</p>
 {% endif %}
-<div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end"><a href="account/account.js" class="btn btn-primary">{{ button_continue }}</a></div>
 

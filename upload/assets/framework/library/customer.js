@@ -8,9 +8,7 @@ export default class Customer {
 
     constructor() {
         if (session.has('customer')) {
-            let customer = session.get('customer');
-
-            this.data = new Map(customer);
+            this.data = new Map(session.get('customer'));
         }
     }
 

@@ -1,17 +1,26 @@
 import { loader } from './loader.js';
 
+// Config
+const config = await loader.config('default');
+
+// Storage
+//let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone_id);
+
 export default class Tax {
+    tax_rates = new Map();
+
     constructor() {
-        this.storage = loader.library('storage');
        // this.tax_classes = tax_classes;
 
         //this.load(3);
     }
 
     async load(geo_zone_id) {
-        let tax_rates = await this.storage.fetch('localisation/tax_rate-' + geo_zone_id);
+        let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone_id);
 
-        //console.log(tax_rates);
+        let tax_rate = tax_rates.filter(tax_rate => tax_rate.customer_group_id === config.config_customer_group_id);
+
+        console.log(tax_rate);
 
         let tax_classes = [];
 
@@ -29,7 +38,7 @@ export default class Tax {
 
             if (tax_classes[tax_class_id][customer_group_id] == undefined) {
 
-            }tax_class_id
+            }
 
             tax_classes[tax_class_id] = [customer_group_id] + [tax_rule_id];
 
@@ -50,8 +59,8 @@ export default class Tax {
 
             let tax_rates = this.getRates(value, tax_class_id);
 
-            for (let i in tax_rates) {
-                amount += tax_rates[i].amount;
+            for (let tax_rate of tax_rates) {
+                amount += tax_rate.amount;
             }
 
             return value + amount;
@@ -65,8 +74,8 @@ export default class Tax {
 
         let tax_rates = this.getRates(value, tax_class_id);
 
-        for (let i in tax_rates) {
-            amount += tax_rates[i].amount;
+        for (let tax_rate of tax_rates) {
+            amount += tax_rate.amount;
         }
 
         return amount;
@@ -75,9 +84,19 @@ export default class Tax {
     getRates(value, tax_class_id) {
         let tax_rate_data = [];
 
-        if (this.tax_classes[tax_class_id] == undefined) {
+
+
+
+        let tax_rate = tax_rates.filter(tax_rate => tax_rate.customer_group_id === config.config_customer_group_id);
+
+
+
+        if (!tax_class_id in this.tax_classes) {
             return [];
         }
+
+
+
 
         for (let [i, tax_rate] in this.tax_classes[tax_class_id].entries()) {
             let amount = 0;
@@ -94,10 +113,10 @@ export default class Tax {
 
             tax_rate_data[tax_rate.tax_rate_id] = {
                 'tax_rate_id': tax_rate.tax_rate_id,
-                'name':        tax_rate.name,
-                'rate':        tax_rate.rate,
-                'type':        tax_rate.type,
-                'amount':      amount
+                'name': tax_rate.name,
+                'rate': tax_rate.rate,
+                'type': tax_rate.type,
+                'amount': amount
             };
         }
 

@@ -24,10 +24,11 @@ config.cache.set('default', {
     config_country_id: 222,
     config_zone_id: 3563,
     config_customer_group_id: 1,
-    config_account_id: 1,
     config_product_description_length: 100,
     config_product_count: true,
     config_review_status: true,
+    config_tax: true,
+    config_account_id: 1,
     config_stock_status_id: 4,
     config_file_max_size: 3000
 });
@@ -69,19 +70,19 @@ template.addFilter('currency', (amount, code, value, format = false) => {
 // Tax
 const tax = await loader.library('tax');
 
-template.addFilter('tax', (value = 0.00, tax_class_id = 0, calculate = true) => {
-    return tax.calculate(amount, code, value, format);
+template.addFilter('tax', (value, tax_class_id = 0, calculate = true) => {
+    return tax.calculate(value, tax_class_id, calculate = true);
 });
 
 // Weight
-const weight = await loader.library('currency');
+const weight = await loader.library('weight');
 
 template.addFilter('weight', (value, weight_class_id, decimal_point = '.', thousand_point = ',') => {
     return weight.format(value, weight_class_id, decimal_point = '.', thousand_point = ',');
 });
 
 // Length
-const length = await loader.library('currency');
+const length = await loader.library('length');
 
 template.addFilter('length', (value, length_class_id, decimal_point = '.', thousand_point = ',') => {
     return length.format(value, length_class_id, decimal_point = '.', thousand_point = ',');

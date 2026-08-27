@@ -37,32 +37,21 @@ export default class extends Controller {
             //description.meta_keyword
 
             // Price
-            data.price = product.price;
             data.special = '';
 
-            // && discount.date_start >= Date.now() && discount.date_end <= Date.now()
-            let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id);
+            let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             if (discount) {
-                let price = '';
-
                 if (discount.type == 'F') {
-                    price = discount.price;
-                } else if (discount.type == 'P') {
-                    price -= (data.price * (discount.price / 100));
-                } else if (discount.type == 'S') {
-                    price -= discount.price;
-                }
-
-                if (!discount.special) {
-                    data.price = discount.price;
-                } else {
                     data.special = discount.price;
+                } else if (discount.type == 'P') {
+                    data.special -= (data.price * (discount.price / 100));
+                } else if (discount.type == 'S') {
+                    data.special -= discount.price;
                 }
             }
 
-            // && discount.date_start >= Date.now() && discount.date_end <= Date.now()
-            data.discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id);
+            data.discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             data.discounts.sort(discounts => discount.quantity);
 

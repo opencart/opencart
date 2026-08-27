@@ -22,11 +22,14 @@
       <tr>
         <td>{{ text_price }}</td>
         {% for product in products %}
-          <td>{% if not product.special %}
-              <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
+          <td>{% if !product.special %}
+            {{ product.price | tax: tax_class_id, config_tax | currency: currency }}
             {% else %}
-              <span class="price-new"><x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency></span>
-              <span class="price-old"><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></span>
+
+
+
+              <span class="price-new">{{ product.special | tax: tax_class_id, config_tax | currency: currency }}</x-currency></span>
+              <span class="price-old">{{ product.price | tax: tax_class_id, config_tax | currency: currency }}</x-currency></span>
             {% endif %}</td>
         {% endfor %}
       </tr>

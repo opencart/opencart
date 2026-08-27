@@ -1,8 +1,6 @@
 import {WebComponent} from '../component.js';
 
 customElements.define('form-submit', class extends WebComponent {
-
-
     render() {
         let icon = '';
         let type = this.getAttribute('type');

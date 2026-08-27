@@ -40,7 +40,7 @@ export default class extends Controller {
             data.price = product.price;
             data.special = '';
 
-            //  && discount.date_start >= Date.now() && discount.date_end <= Date.now()
+            // && discount.date_start >= Date.now() && discount.date_end <= Date.now()
             let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id);
 
             if (discount) {
@@ -61,23 +61,10 @@ export default class extends Controller {
                 }
             }
 
-            data.discounts = [];
-
             // && discount.date_start >= Date.now() && discount.date_end <= Date.now()
-            let discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id);
+            data.discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id);
 
-            console.log(discounts);
-
-            discounts.sort(discounts => discount.quantity);
-
-            for (let discount of discounts) {
-
-                data.discounts.push({
-                    dffd: product.discounts
-
-                });
-
-            }
+            data.discounts.sort(discounts => discount.quantity);
 
             console.log(data.discounts);
 

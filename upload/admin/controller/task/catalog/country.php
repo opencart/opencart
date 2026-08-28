@@ -208,17 +208,17 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($zones as $zone) {
 			if ($zone['status']) {
-				$description_data = [];
+				$zone_description_data = [];
 
 				$descriptions = $this->model_localisation_zone->getDescriptions($zone['zone_id']);
 
 				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = ['name' => $description['name']];
+					$zone_description_data[$code] = ['name' => $description['name']];
 				}
 
 				$zone_data[] = [
 					'zone_id'     => $zone['zone_id'],
-					'description' => $description_data,
+					'description' => $zone_description_data,
 					'code'        => $zone['code']
 				];
 			}
@@ -232,7 +232,10 @@ class Country extends \Opencart\System\Engine\Controller {
 		$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
 
 		foreach ($geo_zones as $geo_zone) {
-			$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
+			$geo_zone_data[] = [
+				'zone_id'     => $geo_zone['zone_id'],
+				'geo_zone_id' => $geo_zone['geo_zone_id']
+			];
 		}
 
 		$country_data = [

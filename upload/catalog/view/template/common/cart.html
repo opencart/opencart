@@ -1,14 +1,14 @@
 <div class="dropdown d-grid">
-
-  <button type="button" data-bind="button-cart" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', total }}</button>
+  {% assign amount = total | currency: currency %}
+  <button type="button" data-bind="button-cart" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
   <ul class="dropdown-menu dropdown-menu-end p-2">
     {% if products %}
     <li>
       <table class="table table-striped mb-2">
         {% for product in products %}
         <tr>
-          <td class="text-center w-25">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
-          <td><a href="{{ product.href }}">{{ product.name }}</a>
+          <td class="text-center w-25">{% if product.thumb %}<a href="catalog/product.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
+          <td><a href="catalog/product.js?product_id={{ product.product_id }}">{{ product.name }}</a>
             <ul class="list-unstyled mb-0">
               <li>
                 <small> - {{ text_model }}: {{ product.model }}</small>
@@ -33,9 +33,9 @@
           <td class="text-end text-nowrap">x {{ product.quantity }}</td>
           <td class="text-end">{{ product.total }}</td>
           <td class="text-end">
-            <form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#cart">
+            <form action="{{ remove }}" data-oc-load="{{ list }}" data-oc-target="#cart">
               <input type="hidden" name="key" value="{{ product.cart_id }}">
-              <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
+              <button type="submit" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
             </form>
           </td>
         </tr>

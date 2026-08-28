@@ -3,7 +3,7 @@
 {% if image || description %}
   <div class="row">
     {% if image %}
-      <div class="col-3"><img src="{{ image }}" alt="{{ name }}" title="{{ name }}" class="img-thumbnail" style="width: 268px"/></div>
+      <div class="col-3"><img src="image/{{ image }}" alt="{{ name }}" title="{{ name }}" class="img-thumbnail" style="width: 268px"/></div>
     {% endif %}
     {% if description %}
       <div class="col-9">{{ description }}</div>

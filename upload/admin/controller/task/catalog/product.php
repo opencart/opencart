@@ -176,7 +176,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
 
 		if (!$product_info || !$product_info['status'] || !in_array($store_info['store_id'], $this->model_catalog_product->getStores($product_info['product_id']))) {
-			return ['success' => $this->language->get('error_product')];
+			return ['error' => $this->language->get('error_product')];
 		}
 
 		// Image
@@ -286,10 +286,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			if ($attribute_group_info) {
 				$attribute_group_description_data = [];
 
-				$attribute_group_descriptions = $this->model_catalog_attribute->getDescriptions($attribute_group_info['attribute_group_id']);
+				$descriptions = $this->model_catalog_attribute->getDescriptions($attribute_group_info['attribute_group_id']);
 
-				foreach ($attribute_group_descriptions as $code => $attribute_group_description) {
-					$attribute_group_description_data[$code] = ['name' => $attribute_group_description['name']];
+				foreach ($descriptions as $code => $description) {
+					$attribute_group_description_data[$code] = ['name' => $description['name']];
 				}
 
 				$attribute_group_data[] = [
@@ -315,10 +315,10 @@ class Product extends \Opencart\System\Engine\Controller {
 				foreach ($option['product_option_value'] as $option_value) {
 					$option_value_description_data = [];
 
-					$option_value_descriptions = $this->model_catalog_option->getValueDescriptions($option_value['option_value_id']);
+					$descriptions = $this->model_catalog_option->getValueDescriptions($option_value['option_value_id']);
 
-					foreach ($option_value_descriptions as $code => $option_value_description) {
-						$option_value_description_data[$code] = ['name' => $option_value_description['name']];
+					foreach ($descriptions as $code => $description) {
+						$option_value_description_data[$code] = ['name' => $description['name']];
 					}
 
 					$option_value_data[] = [
@@ -336,10 +336,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$option_description_data = [];
 
-			$option_descriptions = $this->model_catalog_option->getDescriptions($option['option_id']);
+			$descriptions = $this->model_catalog_option->getDescriptions($option['option_id']);
 
-			foreach ($option_descriptions as $code => $option_description) {
-				$option_description_data[$code] = ['name' => $option_description['name']];
+			foreach ($descriptions as $code => $description) {
+				$option_description_data[$code] = ['name' => $description['name']];
 			}
 
 			$product_option_data[] = [

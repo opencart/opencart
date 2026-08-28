@@ -223,10 +223,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			$custom_field_description_data = [];
 
-			$custom_field_descriptions = $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id']);
+			$descriptions = $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id']);
 
-			foreach ($custom_field_descriptions as $code => $custom_field_description) {
-				$custom_field_description_data[$code] = ['name' => $custom_field_description['name']];
+			foreach ($descriptions as $code => $description) {
+				$custom_field_description_data[$code] = ['name' => $description['name']];
 			}
 
 			$custom_field_value_data = [];
@@ -237,10 +237,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 				foreach ($custom_field_values as $custom_field_value) {
 					$custom_field_value_description_data = [];
 
-					$custom_field_value_descriptions = $this->model_customer_custom_field->getValueDescriptions($custom_field_value['custom_field_value_id']);
+					$descriptions = $this->model_customer_custom_field->getValueDescriptions($custom_field_value['custom_field_value_id']);
 
-					foreach ($custom_field_value_descriptions as $code => $custom_field_value_description) {
-						$custom_field_value_description_data[$code] = ['name' => $custom_field_value_description['name']];
+					foreach ($descriptions as $code => $description) {
+						$custom_field_value_description_data[$code] = ['name' => $description['name']];
 					}
 
 					$custom_field_value_data[] = [

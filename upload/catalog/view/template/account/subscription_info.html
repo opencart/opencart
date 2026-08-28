@@ -82,12 +82,8 @@
             </ul>
           </td>
           <td class="text-end">{{ product.quantity }}</td>
-          <td class="text-end">
-            <x-currency code="{{ currency_code }}" value="{{ currency_value }}" amount="{{ product.trial_price }}"></x-currency>
-          </td>
-          <td class="text-end">
-            <x-currency code="{{ currency_code }}" value="{{ currency_value }}" amount="{{ product.price }}"></x-currency>
-          </td>
+          <td class="text-end">{{ product.trial_price | currency: currency_code, currency_value }}</td>
+          <td class="text-end">{{ product.price | currency: currency_code, currency_value }}</td>
         </tr>
       {% endfor %}
     {% else %}

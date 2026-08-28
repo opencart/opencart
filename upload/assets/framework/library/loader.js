@@ -23,9 +23,7 @@ class Loader {
 
         this.data.set(key, new controller.default());
 
-        let output = this.data.get(key);
-
-        return output;
+        return this.data.get(key);
     }
 
     async storage(path) {
@@ -52,9 +50,7 @@ class Loader {
 
         this.data.set(path, new object.default());
 
-        let output = this.data.get(path);
-
-        return output;
+        return this.data.get(path);
     }
 
     async config(path) {

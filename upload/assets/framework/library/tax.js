@@ -4,9 +4,14 @@ import { loader } from './loader.js';
 const config = await loader.config('default');
 
 // Storage
-//let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone_id);
+let country = await loader.storage('localisation/country-' + config.config_country_id);
+
+let geo_zone = country.geo_zones.find(geo_zone => geo_zone.zone_id == config.config_zone_id);
+
+let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone.geo_zone_id);
 
 export default class Tax {
+    tax_classes = new Map();
     tax_rates = new Map();
 
     constructor() {
@@ -18,27 +23,19 @@ export default class Tax {
     async load(geo_zone_id) {
         let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone_id);
 
-        let tax_rate = tax_rates.filter(tax_rate => tax_rate.customer_group_id === config.config_customer_group_id);
-
         console.log(tax_rate);
 
         let tax_classes = [];
 
-        for (let i in tax_rates) {
+        for (let tax_rate of tax_rates) {
             console.log(i);
             console.log(tax_rates[i]);
 
-            let tax_rule_id = tax_rates[i]['tax_rule_id'];
-            let tax_class_id = tax_rates[i]['tax_class_id'];
-            let customer_group_id = tax_rates[i]['customer_group_id'];
+            let tax_rule_id = tax_rate['tax_rule_id'];
+            let tax_class_id = tax_rate['tax_class_id'];
+            let customer_group_id = tax_rate['customer_group_id'];
 
-            if (tax_classes[tax_class_id] == undefined) {
-                tax_classes[tax_class_id] = [];
-            }
 
-            if (tax_classes[tax_class_id][customer_group_id] == undefined) {
-
-            }
 
             tax_classes[tax_class_id] = [customer_group_id] + [tax_rule_id];
 
@@ -84,25 +81,20 @@ export default class Tax {
     getRates(value, tax_class_id) {
         let tax_rate_data = [];
 
+        let tax_classes = tax_rates.filter(tax_rate => tax_rate.customer_group_id === config.config_customer_group_id && tax_rate.tax_class_id == tax_class_id);
 
-
-
-        let tax_rate = tax_rates.filter(tax_rate => tax_rate.customer_group_id === config.config_customer_group_id);
-
-
-
-        if (!tax_class_id in this.tax_classes) {
+        if (!tax_classes) {
             return [];
         }
 
+console.log(tax_classes);
 
 
-
-        for (let [i, tax_rate] in this.tax_classes[tax_class_id].entries()) {
+        for (let tax_rate of tax_classes) {
             let amount = 0;
 
             if (tax_rate_data[tax_rate.tax_rate_id]) {
-                amount = tax_rate_data[tax_rate['tax_rate_id']].amount;
+                amount = tax_rate_data[tax_rate.tax_rate_id].amount;
             }
 
             if (tax_rate.type == 'F') {
@@ -111,13 +103,13 @@ export default class Tax {
                 amount += (value / 100 * tax_rate.rate);
             }
 
-            tax_rate_data[tax_rate.tax_rate_id] = {
-                'tax_rate_id': tax_rate.tax_rate_id,
-                'name': tax_rate.name,
-                'rate': tax_rate.rate,
-                'type': tax_rate.type,
-                'amount': amount
-            };
+            tax_rate_data.set({
+                tax_rate_id: tax_rate.tax_rate_id,
+                name: tax_rate.name,
+                rate: tax_rate.rate,
+                type: tax_rate.type,
+                amount: amount
+            });
         }
 
         return tax_rate_data;

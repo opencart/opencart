@@ -9,8 +9,6 @@ export default class Weight {
 
         if (!weight_class_from || !weight_class_to) return value;
 
-        console.log(weight_classes);
-
         return value * (weight_class_to.value / weight_class_from.value);
     }
 

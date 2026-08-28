@@ -27,15 +27,18 @@
             <td>{{ product.model }}</td>
             <td class="text-end">{{ product.stock }}</td>
             <td class="text-end text-nowrap">
+
               {% if product.price %}
                 <div class="price">
                   {% if not product.special %}
-                    <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
+                  {{ product.price | currency: currency }}
                   {% else %}
-                    <strong><x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency></strong> <s><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></s>
+                    <strong>{{ product.special | currency: currency }}</strong> <s>{{ product.price | currency: currency }}</s>
                   {% endif %}
                 </div>
-              {% endif %}</td>
+              {% endif %}
+
+            </td>
             <td class="text-end text-nowrap" style="width: 1px;">
               <div class="d-grid">
                 <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_cart }}</button>

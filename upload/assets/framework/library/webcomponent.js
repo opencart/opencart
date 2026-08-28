@@ -15,6 +15,8 @@ export class WebComponent extends HTMLElement {
     }
 
     async connectedCallback() {
+        //this.attachShadow({ mode: 'open' });
+
         if (this.connected !== undefined) {
             this.connected();
         }
@@ -28,11 +30,12 @@ export class WebComponent extends HTMLElement {
         let output = await this.render();
 
         if (output) {
+            //this.shadowRoot.innerHTML = output;
             this.innerHTML = output;
 
             // Autoload any custom elements not already loaded
-            this.querySelectorAll('[data-bind], [data-on]').forEach((element) => {
-                // Attach Events based on elements that have data-bind attributes
+            this.querySelectorAll('[data-bind], [data-on], [data-type]').forEach(element => {
+                // Attach elements that have data-bind attributes
                 if (element.hasAttribute('data-bind')) {
                     this.data.set(element.getAttribute('data-bind'), element);
 
@@ -40,14 +43,23 @@ export class WebComponent extends HTMLElement {
                 }
 
                 // Attach events based on elements that have data-on attributes
-                if (element.getAttribute('data-on')) {
-                    let [event, method] = element.getAttribute('data-on').split(':');
+                if (element.hasAttribute('data-on')) {
+                    let [ event, method] = element.getAttribute('data-on').split(':');
 
                     if (method in this) {
                         element.addEventListener(event, this[method].bind(this));
                     }
 
                     element.removeAttribute('data-on');
+                }
+
+                // Attach
+                if (element.hasAttribute('data-type')) {
+                    let func = this.types.get(element.getAttribute('data-type'));
+
+                    func(element);
+
+                    element.removeAttribute('data-type');
                 }
             });
         }

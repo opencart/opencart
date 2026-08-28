@@ -289,10 +289,10 @@ class Category extends \Opencart\System\Engine\Controller {
 		foreach ($children as $child) {
 			$child_description_data = [];
 
-			$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
+			$descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
 
-			foreach ($child_descriptions as $code => $child_description) {
-				$child_description_data[$code] = ['name' => $child_description['name']];
+			foreach ($descriptions as $code => $description) {
+				$child_description_data[$code] = ['name' => $description['name']];
 			}
 
 			$children_data[] = [
@@ -303,6 +303,10 @@ class Category extends \Opencart\System\Engine\Controller {
 				'sort_order'  => $child['sort_order']
 			];
 		}
+
+
+
+
 
 		$category_data = [
 			'category_id' => $category_info['category_id'],
@@ -366,7 +370,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
 
 		if (!$category_info || !$category_info['status'] || !in_array($store_info['store_id'], $this->model_catalog_category->getStores($category_info['category_id']))) {
-			return ['success' => $this->language->get('error_category')];
+			return ['error' => $this->language->get('error_category')];
 		}
 
 		$product_data = [];

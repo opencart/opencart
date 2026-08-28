@@ -171,7 +171,7 @@ class Tag extends \Opencart\System\Engine\Controller {
 		$tag_info = $this->model_catalog_tag->getTag((int)$args['tag_id']);
 
 		if (!$tag_info) {
-			return ['success' => $this->language->get('error_tag')];
+			return ['error' => $this->language->get('error_tag')];
 		}
 
 		$filter_data = [
@@ -230,7 +230,7 @@ class Tag extends \Opencart\System\Engine\Controller {
 		$tag_info = $this->model_catalog_tag->getTag((int)$args['tag_id']);
 
 		if (!$tag_info) {
-			return ['success' => $this->language->get('error_tag')];
+			return ['error' => $this->language->get('error_tag')];
 		}
 
 		$filter_data = [

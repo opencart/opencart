@@ -177,7 +177,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$filter_group_info = $this->model_catalog_filter->getFilterGroup((int)$args['filter_group_id']);
 
 		if (!$filter_group_info || !$filter_group_info['status']) {
-			return ['success' => $this->language->get('error_filter_group')];
+			return ['error' => $this->language->get('error_filter_group')];
 		}
 
 		// Description
@@ -195,17 +195,17 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$filters = $this->model_catalog_filter->getFilters($filter_group_info['filter_group_id']);
 
 		foreach ($filters as $filter) {
-			$filter_description_data = [];
+			$description_data = [];
 
-			$filter_descriptions = $this->model_catalog_filter->getFilterDescriptions($filter['filter_id']);
+			$descriptions = $this->model_catalog_filter->getFilterDescriptions($filter['filter_id']);
 
-			foreach ($filter_descriptions as $code => $filter_description) {
-				$filter_description_data[$code] = ['name' => $filter_description['name']];
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['name' => $description['name']];
 			}
 
 			$filter_data[] = [
 				'filter_id'   => $filter['filter_id'],
-				'description' => $filter_description_data
+				'description' => $description_data
 			];
 		}
 
@@ -268,7 +268,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$filter_info = $this->model_catalog_filter->getFilter((int)$args['filter_id']);
 
 		if (!$filter_info || !$filter_info['status']) {
-			return ['success' => $this->language->get('error_filter')];
+			return ['error' => $this->language->get('error_filter')];
 		}
 
 		$filter_data = [

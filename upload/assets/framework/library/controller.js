@@ -18,7 +18,7 @@ export class Controller {
         let clone = template.content.cloneNode(true);
 
         // Autoload any custom elements not already loaded
-        clone.querySelectorAll('[data-bind], [data-on]').forEach(element => {
+        clone.querySelectorAll('[data-bind], [data-on], [data-type]').forEach(element => {
             // Attach Events based on elements that have data-bind attributes
             if (element.hasAttribute('data-bind')) {
                 this.data.set(element.getAttribute('data-bind'), element);
@@ -27,8 +27,8 @@ export class Controller {
             }
 
             // Attach events based on elements that have data-on attributes
-            if (element.getAttribute('data-on')) {
-                let [event, method] = element.getAttribute('data-on').split(':');
+            if (element.hasAttribute('data-on')) {
+                let [ event, method] = element.getAttribute('data-on').split(':');
 
                 if (method in this) {
                     element.addEventListener(event, this[method].bind(this));
@@ -36,6 +36,8 @@ export class Controller {
 
                 element.removeAttribute('data-on');
             }
+
+
         });
 
         return clone;

@@ -71,25 +71,22 @@ template.addFilter('currency', (amount, code, value, format = false) => {
 const tax = await loader.library('tax');
 
 template.addFilter('tax', (value, tax_class_id = 0, calculate = true) => {
-    return tax.calculate(value, tax_class_id, calculate = true);
+    return tax.calculate(value, tax_class_id, calculate);
 });
 
 // Weight
 const weight = await loader.library('weight');
 
-template.addFilter('weight', (value, weight_class_id, decimal_point = '.', thousand_point = ',') => {
-    return weight.format(value, weight_class_id, decimal_point = '.', thousand_point = ',');
+template.addFilter('weight', (value, weight_class_id) => {
+    return weight.format(value, weight_class_id);
 });
 
 // Length
 const length = await loader.library('length');
 
-template.addFilter('length', (value, length_class_id, decimal_point = '.', thousand_point = ',') => {
-    return length.format(value, length_class_id, decimal_point = '.', thousand_point = ',');
+template.addFilter('length', (value, length_class_id) => {
+    return length.format(value, length_class_id);
 });
-
-// Ajax
-const ajax = await loader.library('ajax');
 
 // General
 import('./common/header.js');

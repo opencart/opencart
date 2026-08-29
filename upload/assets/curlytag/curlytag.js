@@ -481,8 +481,8 @@ export class CurlyTag {
                 return decodeURIComponent(value);
             },
             base64_encode: (value) => {
-                const bytes = new TextEncoder().encode(String(value ?? ''));
-                const binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join('');
+                let bytes = new TextEncoder().encode(String(value ?? ''));
+                let binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join('');
 
                 return btoa(binary);
             },
@@ -622,14 +622,6 @@ export class CurlyTag {
             index++;
         }
 
-        // Flush any pending output left on the stack when a tag that produces
-        // output (echo, endfilter, include) is the very last token in the template.
-        let pending = stack[stack.length - 1];
-
-        if (pending?.type === 'output' && pending.output != null) {
-            output += pending.output;
-        }
-
         return output;
     }
 
@@ -737,7 +729,7 @@ export class CurlyTag {
 
             return func({ ...ctx });
         } catch (error) {
-            console.log(`[Template] Warning: Evaluate error '${error}'`);
+            console.log(`[Template] Warning: Evaluate error '${expression}'`);
 
             return undefined;
         }
@@ -849,7 +841,7 @@ export class CurlyTag {
     }
 
     /**
-     * Handle set statement
+     * Handle assign statement
      *
      * set var = expression | filter1 | filter2
      */
@@ -913,57 +905,6 @@ export class CurlyTag {
         stack.push({
             type: 'output',
             output: value,
-        });
-    }
-
-    handleCycle(token, stack, ctx, index) {
-        let match = token.value.match(/^cycle\s(.*)/);
-
-        if (!match) {
-            console.warn(`[Template] Invalid 'cycle' syntax ${token.raw}`);
-
-            return;
-        }
-
-        let raw = match[1].trim();
-        let group;
-        let values;
-
-        // Named group: {% cycle 'group': val1, val2 %}
-        // \1 back reference ensures matching quotes around group name
-        const groupMatch = raw.match(/^(['"])(.*?)\1\s*:(.*)/s);
-
-        if (groupMatch) {
-            group = groupMatch[2];
-            values = this.evaluate('[' + groupMatch[3] + ']', ctx);
-        } else {
-            // Unnamed: raw text becomes the group key
-            values = this.evaluate('[' + raw + ']', ctx);
-            group = raw;
-        }
-
-        // Nothing to cycle
-        if (!Array.isArray(values) || values.length === 0) {
-            return;
-        }
-
-        // Init cycle state
-        if (!ctx._cycle) {
-            ctx._cycle = {};
-        }
-
-        // Start at index -1 so first increment lands on 0
-        if (!ctx._cycle[group]) {
-            ctx._cycle[group] = { index: -1 };
-        }
-
-        const state = ctx._cycle[group];
-
-        state.index = (state.index + 1) % values.length;
-
-        stack.push({
-            type: 'output',
-            output: values[state.index],
         });
     }
 
@@ -1125,20 +1066,18 @@ export class CurlyTag {
             items = this.parseFilter(items, filter, ctx);
         }
 
-        let endIndex = token.loopEnd ?? token.end;
-
         stack.push({
             type: 'for',
             name: name,
             items: items,
             index: -1,
             start: index + 1,
-            end: endIndex,
+            end: token.end,
             active: items.length > 0,
             parent: { ...ctx },
         });
 
-        return items.length > 0 ? endIndex : token.end;
+        return token.end;
     }
 
     handleEndfor(token, stack, ctx, index) {
@@ -1157,7 +1096,21 @@ export class CurlyTag {
             // Restore parent context (prevents leakage)
             Object.assign(ctx, top.parent);
 
-            ctx[top.name] = top.items[top.index]; // ← top.name (not top.name)
+            let pos = top.name.indexOf(',');
+
+            if (pos === false) {
+                ctx[top.name] = top.items[top.index]; // ← top.name (not top.name)
+            } else {
+                this.evaluate(ctx, ctx);
+
+                //let keys = top.name.split(',');
+
+                //for (let key of keys) {
+
+                //}
+            }
+
+
 
             ctx.loop = {
                 index: top.index + 1,
@@ -1207,7 +1160,6 @@ export class CurlyTag {
             top = stack[i];
 
             if (top.type == 'for') break;
-
 
             // Remove all tags before endfor loop.
             stack.pop();
@@ -1367,6 +1319,57 @@ export class CurlyTag {
         stack.push({
             type: 'output',
             output: this.parseFilter(top.value, top.filter, ctx),
+        });
+    }
+
+    handleCycle(token, stack, ctx, index) {
+        let match = token.value.match(/^cycle\s(.*)/);
+
+        if (!match) {
+            console.warn(`[Template] Invalid 'cycle' syntax ${token.raw}`);
+
+            return;
+        }
+
+        let raw = match[1].trim();
+        let group;
+        let values;
+
+        // Named group: {% cycle 'group': val1, val2 %}
+        // \1 back reference ensures matching quotes around group name
+        const groupMatch = raw.match(/^(['"])(.*?)\1\s*:(.*)/s);
+
+        if (groupMatch) {
+            group = groupMatch[2];
+            values = this.evaluate('[' + groupMatch[3] + ']', ctx);
+        } else {
+            // Unnamed: raw text becomes the group key
+            values = this.evaluate('[' + raw + ']', ctx);
+            group = raw;
+        }
+
+        // Nothing to cycle
+        if (!Array.isArray(values) || values.length === 0) {
+            return;
+        }
+
+        // Init cycle state
+        if (!ctx._cycle) {
+            ctx._cycle = {};
+        }
+
+        // Start at index -1 so first increment lands on 0
+        if (!ctx._cycle[group]) {
+            ctx._cycle[group] = { index: -1 };
+        }
+
+        const state = ctx._cycle[group];
+
+        state.index = (state.index + 1) % values.length;
+
+        stack.push({
+            type: 'output',
+            output: values[state.index],
         });
     }
 

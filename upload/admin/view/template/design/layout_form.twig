@@ -49,7 +49,7 @@
                         {% endfor %}
                       </select></td>
                       <td><input type="text" name="layout_route[{{ route_row }}][route]" value="{{ layout_route.route }}" placeholder="{{ entry_route }}" class="form-control"/></td>
-                      <td class="text-end"><button type="button" onclick="$('#route-row-{{ route_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" data-remove="#route-row-{{ route_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set route_row = route_row + 1 %}
                 {% endfor %}
@@ -57,7 +57,7 @@
               <tfoot>
                 <tr>
                   <td colspan="2"></td>
-                  <td class="text-end"><button type="button" onclick="addRoute();" title="{{ button_route_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                  <td class="text-end"><button type="button" data-call="addRoute" title="{{ button_route_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -93,7 +93,7 @@
                               {% endfor %}
                               </select>
                               <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/><input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/> <a href="{{ layout_module.edit }}" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a>
-                              <button type="button" onclick="$('#module-row-{{ module_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
+                              <button type="button" data-remove="#module-row-{{ module_row }}" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
                             </div>
                           </td>
                         </tr>
@@ -103,7 +103,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td class="text-end"><button type="button" onclick="addModule('column-left');" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
+                      <td class="text-end"><button type="button" data-call="addModule" data-call-arg="column-left" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -135,7 +135,7 @@
                                 {% endfor %}
                               </select>
                               <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/> <a href="{{ layout_module.edit }}" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a>
-                              <button type="button" onclick="$('#module-row-{{ module_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
+                              <button type="button" data-remove="#module-row-{{ module_row }}" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
                             </div></td>
                         </tr>
                         {% set module_row = module_row + 1 %}
@@ -144,7 +144,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td class="text-end"><button type="button" onclick="addModule('content-top');" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
+                      <td class="text-end"><button type="button" data-call="addModule" data-call-arg="content-top" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -174,7 +174,7 @@
                                 {% endfor %}
                               </select>
                               <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/> <a href="{{ layout_module.edit }}" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a>
-                              <button type="button" onclick="$('#module-row-{{ module_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
+                              <button type="button" data-remove="#module-row-{{ module_row }}" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
                             </div></td>
                         </tr>
                         {% set module_row = module_row + 1 %}
@@ -183,7 +183,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td class="text-end"><button type="button" onclick="addModule('content-bottom');" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
+                      <td class="text-end"><button type="button" data-call="addModule" data-call-arg="content-bottom" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -215,7 +215,7 @@
                                 {% endfor %}
                               </select>
                               <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/> <a href="{{ layout_module.edit }}" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a>
-                              <button type="button" onclick="$('#module-row-{{ module_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
+                              <button type="button" data-remove="#module-row-{{ module_row }}" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
                             </div></td>
                         </tr>
                         {% set module_row = module_row + 1 %}
@@ -224,7 +224,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td class="text-end"><button type="button" onclick="addModule('column-right');" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
+                      <td class="text-end"><button type="button" data-call="addModule" data-call-arg="column-right" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>

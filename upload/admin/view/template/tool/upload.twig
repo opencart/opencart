@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" title="{{ button_filter }}" onclick="$('#filter-upload').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="submit" form="form-upload" formaction="{{ delete }}" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="button" title="{{ button_filter }}" data-toggle="#filter-upload" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="submit" form="form-upload" formaction="{{ delete }}" title="{{ button_delete }}" data-confirm="{{ text_confirm }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">

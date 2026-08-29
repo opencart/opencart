@@ -112,7 +112,7 @@ if (php_sapi_name() != 'cli') {
 	$csp_nonce = base64_encode(random_bytes(16));
 	$config->set('csp_nonce', $csp_nonce);
 
-	$response->addHeader("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-" . $csp_nonce . "'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https: data:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'");
+	$response->addHeader("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-" . $csp_nonce . "'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'");
 
 	$response->setCompression((int)$config->get('response_compression'));
 }

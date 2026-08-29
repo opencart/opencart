@@ -11,7 +11,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><button type="submit" form="form-event" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+            <li><button type="submit" form="form-event" formaction="{{ delete }}" data-confirm="{{ text_confirm }}" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>

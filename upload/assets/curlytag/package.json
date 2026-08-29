@@ -30,28 +30,33 @@
     ".": "./curlytag.js"
   },
   "scripts": {
-    "check": "vp check",
+    "check": "vp check && vp run fmt:js:check",
     "lint": "vp lint",
-    "fmt": "vp fmt",
+    "fmt": "vp fmt && vp run fmt:js",
+    "fmt:js": "vp exec eslint . --fix",
+    "fmt:js:check": "vp exec eslint .",
     "test": "vp test",
     "prepare": "vp config",
     "release": "changelogen --release"
   },
   "devDependencies": {
-    "@codemirror/lang-html": "^6.4.11",
+    "@codemirror/lang-html": "^6.4.12",
     "@codemirror/lang-json": "^6.0.2",
-    "@codemirror/state": "^6.6.0",
-    "@codemirror/view": "^6.41.1",
-    "@fontsource-variable/martian-mono": "^5.2.7",
-    "@vitest/browser": "^4.1.5",
-    "@vitest/browser-playwright": "^4.1.5",
-    "@vitest/ui": "^4.1.5",
+    "@codemirror/state": "^6.7.1",
+    "@codemirror/view": "^6.43.8",
+    "@fontsource-variable/martian-mono": "^5.3.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@vitest/browser": "^4.1.10",
+    "@vitest/browser-playwright": "^4.1.10",
+    "@vitest/coverage-istanbul": "^4.1.10",
+    "@vitest/ui": "^4.1.10",
     "changelogen": "^0.6.2",
     "codemirror": "^6.0.2",
-    "playwright": "^1.59.1",
+    "eslint": "^10.8.1",
+    "playwright": "^1.62.1",
     "remixicon": "^4.9.1",
-    "shiki": "^4.0.2",
-    "vite-plus": "^0.1.19"
+    "shiki": "^4.4.3",
+    "vite-plus": "^0.2.9"
   },
   "packageManager": "npm@11.13.0"
 }

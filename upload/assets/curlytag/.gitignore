@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite+
+.vite-hooks/
+dist/
+
+# Vitest
+playground/.vitest-attachments/
+playground/coverage/
+tests/**/__screenshots__/
+tests/**/__traces__/
+
+# Misc
+*.log

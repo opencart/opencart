@@ -5,18 +5,18 @@
 [![license](https://img.shields.io/npm/l/@curlytag/curlytag)](LICENSE)
 [![CI](https://github.com/curlytag/curlytag/actions/workflows/ci.yml/badge.svg)](https://github.com/curlytag/curlytag/actions/workflows/ci.yml)
 
-CurlyTag - Open Source JavaScript Template Engine
+CurlyTag - Open Source browser JavaScript template engine.
 
 ## Installation
 
-**npm / Node.js**
+**npm (browser project)**
 
 ```sh
 npm install @curlytag/curlytag
 ```
 
 ```js
-import { template } from '@curlytag/curlytag';
+import { curlytag } from '@curlytag/curlytag';
 ```
 
 **CDN (browser)**
@@ -31,9 +31,9 @@ import { template } from '@curlytag/curlytag';
     <!-- your content -->
 
     <script type="module">
-      import { template } from 'https://cdn.jsdelivr.net/npm/@curlytag/curlytag/curlytag.js';
+      import { curlytag } from 'https://cdn.jsdelivr.net/npm/@curlytag/curlytag/curlytag.js';
 
-      template.parse('Hello, {{ name }}!', { name: 'World' });
+      curlytag.parse('Hello, {{ name }}!', { name: 'World' });
     </script>
   </body>
 </html>
@@ -42,20 +42,22 @@ import { template } from '@curlytag/curlytag';
 ## Quick Start
 
 ```js
-template.parse('Hello, {{ name }}!', { name: 'World' });
+curlytag.parse('Hello, {{ name }}!', { name: 'World' });
 // → Hello, World!
 ```
 
+`render()` loads a `.html` template using the browser's `fetch()` API:
+
 ```js
-template.addPath('views/');
-const html = await template.render('home', { title: 'Welcome' });
+curlytag.addPath('/views/');
+const html = await curlytag.render('home', { title: 'Welcome' });
 ```
 
 Full documentation: [curlytag.com](https://www.curlytag.com/)
 
 ## Development
 
-This project uses [Vite+](https://viteplus.dev/) for formatting (Oxfmt), linting (Oxlint), and commit hooks.
+This project uses [Vite+](https://viteplus.dev/) for formatting (Oxfmt and ESLint Stylistic), linting (Oxlint), browser tests (Vitest and Playwright), and commit hooks.
 
 ### Using Dev Container (recommended)
 
@@ -95,7 +97,13 @@ After the container starts, you're ready to work.
     vp install
     ```
 
-3. Set up commit hooks:
+3. Install the browsers for the test suite:
+
+    ```bash
+    vp exec playwright install chromium firefox webkit
+    ```
+
+4. Set up commit hooks:
 
     ```bash
     vp config
@@ -104,11 +112,10 @@ After the container starts, you're ready to work.
 ### Commands
 
 ```bash
-vp check          # Format, lint, and type-check
-vp check --fix    # Auto-fix formatting and lint issues
-vp lint           # Lint only
-vp fmt            # Format only
-vp test           # Run tests once
+vp run check                     # Format, lint, and validate JavaScript style
+vp run fmt                       # Format with Oxfmt and ESLint Stylistic
+vp run lint                      # Lint with Oxlint
+vp test --project browser        # Run Chromium, Firefox, and WebKit tests once
 ```
 
 ### Test Layout
@@ -137,13 +144,13 @@ Vite serves the playground from `playground/` using the config in `vite.config.t
 Run tests in watch mode — tests re-run automatically on file changes:
 
 ```bash
-vp test --watch
+vp test --project browser --watch
 ```
 
 Run tests with a browser UI for interactive exploration:
 
 ```bash
-vp test --ui --watch
+vp test --project browser --ui --watch
 ```
 
 > [!NOTE]

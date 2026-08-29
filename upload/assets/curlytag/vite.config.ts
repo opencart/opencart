@@ -18,6 +18,7 @@ export default defineConfig({
     },
     staged: {
         '*': 'vp check --fix',
+        '**/*.js': 'vp exec eslint --fix',
     },
     lint: {
         ignorePatterns: ['docs/.vitepress/cache/**'],
@@ -27,34 +28,33 @@ export default defineConfig({
         },
     },
     test: {
+        coverage: {
+            provider: 'istanbul',
+            include: [new URL('./curlytag.js', import.meta.url).pathname],
+            allowExternal: true,
+            reporter: ['text', 'html', 'lcov'],
+        },
         projects: [
             {
                 resolve: {
                     alias: {
-                        '#curlytag': new URL('./curlytag.js', import.meta.url).pathname,
+                        '#curlytag': new URL('./tests/helpers/curlytag.js', import.meta.url)
+                            .pathname,
                         '#fixtures': new URL('./tests/fixtures', import.meta.url).pathname,
                     },
                 },
                 test: {
-                    name: 'node',
-                    include: ['../tests/**/*.test.js'],
-                    exclude: ['../tests/**/*.browser.test.js'],
-                },
-            },
-            {
-                resolve: {
-                    alias: {
-                        '#curlytag': new URL('./curlytag.js', import.meta.url).pathname,
-                    },
-                },
-                test: {
                     name: 'browser',
-                    include: ['../tests/**/*.browser.test.js'],
+                    include: ['../tests/**/*.test.js'],
                     browser: {
                         enabled: true,
                         headless: true,
                         provider: playwright(),
-                        instances: [{ browser: 'chromium' }],
+                        instances: [
+                            { browser: 'chromium' },
+                            { browser: 'firefox' },
+                            { browser: 'webkit' },
+                        ],
                     },
                 },
             },
@@ -64,6 +64,7 @@ export default defineConfig({
         tabWidth: 4,
         singleQuote: true,
         ignorePatterns: [
+            '**/*.js',
             '**/*.md',
             '**/*.yml',
             '**/*.yaml',

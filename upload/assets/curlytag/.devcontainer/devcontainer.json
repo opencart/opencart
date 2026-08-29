@@ -1,0 +1,23 @@
+{
+  "name": "CurlyTag",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteEnv": {
+    "PATH": "${containerEnv:HOME}/.vite-plus/bin:${containerEnv:HOME}/.bun/bin:${containerEnv:HOME}/.deno/bin:${containerEnv:PATH}"
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "VoidZero.vite-plus-extension-pack",
+        "EditorConfig.EditorConfig"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "oxc.oxc-vscode",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file"
+      }
+    }
+  }
+}

@@ -1,21 +1,34 @@
-import { readFileSync } from 'node:fs';
-import { describe, expect, test } from 'vite-plus/test';
-import { template } from '#curlytag';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vite-plus/test';
+import { curlytag } from '#curlytag';
+import nestedConditionsTemplate from './fixtures/nested-conditions.html?raw';
+import productCardTemplate from './fixtures/product-card.html?raw';
+import userListTemplate from './fixtures/user-list.html?raw';
 
-const fixture = (name) => readFileSync(new URL(`fixtures/${name}`, import.meta.url), 'utf-8');
+const resetCurlytag = () => {
+    curlytag.directory = '';
+    curlytag.path.clear();
+    curlytag.cache.clear();
+};
 
 describe('CurlyTag - multi-line templates', () => {
-    describe('product card', () => {
-        const tpl = fixture('product-card.html');
+    beforeEach(() => {
+        resetCurlytag();
+    });
 
+    afterEach(() => {
+        resetCurlytag();
+        vi.restoreAllMocks();
+    });
+
+    describe('product card', () => {
         test('in-stock product with tags', () => {
-            const result = template.parse(tpl, {
+            const result = curlytag.parse(productCardTemplate, {
                 product: {
                     name: 'Widget',
                     price: 19.995,
                     in_stock: true,
-                    tags: ['new', 'sale'],
-                },
+                    tags: [ 'new', 'sale' ]
+                }
             });
 
             expect(result).toContain('WIDGET');
@@ -27,13 +40,13 @@ describe('CurlyTag - multi-line templates', () => {
         });
 
         test('sold-out product without tags', () => {
-            const result = template.parse(tpl, {
+            const result = curlytag.parse(productCardTemplate, {
                 product: {
                     name: 'Gadget',
                     price: 5.5,
                     in_stock: false,
-                    tags: null,
-                },
+                    tags: null
+                }
             });
 
             expect(result).toContain('GADGET');
@@ -44,11 +57,9 @@ describe('CurlyTag - multi-line templates', () => {
     });
 
     describe('user list table', () => {
-        const tpl = fixture('user-list.html');
-
         test('renders rows with loop.index and default role', () => {
-            const result = template.parse(tpl, {
-                users: [{ name: 'Alice', role: 'admin' }, { name: 'Bob' }],
+            const result = curlytag.parse(userListTemplate, {
+                users: [ { name: 'Alice', role: 'admin' }, { name: 'Bob' } ]
             });
 
             expect(result).toContain('<td>1</td>');
@@ -60,7 +71,7 @@ describe('CurlyTag - multi-line templates', () => {
         });
 
         test('empty users renders no rows', () => {
-            const result = template.parse(tpl, { users: [] });
+            const result = curlytag.parse(userListTemplate, { users: [] });
 
             expect(result).toContain('<thead>');
             expect(result).not.toContain('<td>');
@@ -68,15 +79,13 @@ describe('CurlyTag - multi-line templates', () => {
     });
 
     describe('nested conditions', () => {
-        const tpl = fixture('nested-conditions.html');
-
         test('admin with permissions', () => {
-            const result = template.parse(tpl, {
+            const result = curlytag.parse(nestedConditionsTemplate, {
                 user: {
                     name: 'Root',
                     is_admin: true,
-                    permissions: ['read', 'write', 'delete'],
-                },
+                    permissions: [ 'read', 'write', 'delete' ]
+                }
             });
 
             expect(result).toContain('Root');
@@ -89,12 +98,12 @@ describe('CurlyTag - multi-line templates', () => {
         });
 
         test('moderator', () => {
-            const result = template.parse(tpl, {
+            const result = curlytag.parse(nestedConditionsTemplate, {
                 user: {
                     name: 'Mod',
                     is_admin: false,
-                    is_moderator: true,
-                },
+                    is_moderator: true
+                }
             });
 
             expect(result).toContain('Moderator');
@@ -102,12 +111,12 @@ describe('CurlyTag - multi-line templates', () => {
         });
 
         test('regular user', () => {
-            const result = template.parse(tpl, {
+            const result = curlytag.parse(nestedConditionsTemplate, {
                 user: {
                     name: 'Guest',
                     is_admin: false,
-                    is_moderator: false,
-                },
+                    is_moderator: false
+                }
             });
 
             expect(result).toContain('<span class="role">User</span>');
@@ -116,7 +125,7 @@ describe('CurlyTag - multi-line templates', () => {
         });
 
         test('no user shows login prompt', () => {
-            const result = template.parse(tpl, {});
+            const result = curlytag.parse(nestedConditionsTemplate, {});
 
             expect(result).toContain('Please log in');
             expect(result).not.toContain('profile');

@@ -13,34 +13,34 @@ const cmTheme = EditorView.theme({
     '&': {
         fontSize: 'inherit',
         height: '100%',
-        background: 'transparent',
+        background: 'transparent'
     },
     '.cm-scroller': {
         fontFamily: 'var(--font-mono)',
         lineHeight: '1.6',
-        overflow: 'auto',
+        overflow: 'auto'
     },
     '.cm-content': {
         padding: '12px 0',
-        caretColor: 'var(--ct-text)',
+        caretColor: 'var(--ct-text)'
     },
     '.cm-line': {
-        padding: '0 14px',
+        padding: '0 14px'
     },
     '.cm-gutters': {
         background: 'transparent',
         border: 'none',
-        color: 'var(--ct-text-dim)',
+        color: 'var(--ct-text-dim)'
     },
     '.cm-lineNumbers': {
-        display: 'none',
+        display: 'none'
     },
     '.cm-foldGutter': {
-        minWidth: '1.5rem',
+        minWidth: '1.5rem'
     },
     '.cm-foldGutter .cm-gutterElement': {
         padding: '0 6px 0 4px',
-        cursor: 'pointer',
+        cursor: 'pointer'
     },
     '.cm-foldPlaceholder': {
         background: 'color-mix(in srgb, var(--ct-paper-wash) 70%, transparent)',
@@ -48,23 +48,23 @@ const cmTheme = EditorView.theme({
         color: 'var(--ct-text-dim)',
         borderRadius: '999px',
         margin: '0 4px',
-        padding: '0 6px',
+        padding: '0 6px'
     },
     '&.cm-focused': {
-        outline: 'none',
+        outline: 'none'
     },
     '&.cm-focused .cm-cursor': {
-        borderLeftColor: 'var(--ct-text)',
+        borderLeftColor: 'var(--ct-text)'
     },
     '.cm-selectionBackground': {
-        background: 'color-mix(in srgb, var(--ct-accent) 22%, transparent) !important',
+        background: 'color-mix(in srgb, var(--ct-accent) 22%, transparent) !important'
     },
     '.cm-activeLine': {
-        background: 'transparent',
+        background: 'transparent'
     },
     '.cm-activeLineGutter': {
-        background: 'transparent',
-    },
+        background: 'transparent'
+    }
 });
 
 const wsSpaceDeco = Decoration.mark({ class: 'cm-ws-space' });
@@ -92,11 +92,12 @@ const whitespacePlugin = ViewPlugin.fromClass(
         constructor(view) {
             this.decorations = buildWhitespaceDeco(view);
         }
+
         update(u) {
             if (u.docChanged || u.viewportChanged) this.decorations = buildWhitespaceDeco(u.view);
         }
     },
-    { decorations: (v) => v.decorations },
+    { decorations: (v) => v.decorations }
 );
 
 const sourceEl = document.getElementById('output-source-code');
@@ -104,17 +105,17 @@ const popover = document.getElementById('examples-panel');
 const examplesTrigger = document.querySelector('.examples__trigger');
 const outputState = {
     kind: 'empty',
-    content: '',
+    content: ''
 };
 const editorControls = {
     template: {
         copyButton: document.querySelector('[data-editor-action="copy-template"]'),
-        resetButton: document.querySelector('[data-editor-action="reset-template"]'),
+        resetButton: document.querySelector('[data-editor-action="reset-template"]')
     },
     data: {
         copyButton: document.querySelector('[data-editor-action="copy-data"]'),
-        resetButton: document.querySelector('[data-editor-action="reset-data"]'),
-    },
+        resetButton: document.querySelector('[data-editor-action="reset-data"]')
+    }
 };
 
 const withSvgClass = (svg) =>
@@ -129,11 +130,11 @@ const getButtonLabel = (button) => button.querySelector('[data-button-label]') ?
 const applyButtonIcons = () => {
     setButtonIcon(examplesTrigger.querySelector('.examples__trigger-icon'), appsIcon);
 
-    for (const [action, button] of [
-        ['copy', editorControls.template.copyButton],
-        ['reset', editorControls.template.resetButton],
-        ['copy', editorControls.data.copyButton],
-        ['reset', editorControls.data.resetButton],
+    for (const [ action, button ] of [
+        [ 'copy', editorControls.template.copyButton ],
+        [ 'reset', editorControls.template.resetButton ],
+        [ 'copy', editorControls.data.copyButton ],
+        [ 'reset', editorControls.data.resetButton ]
     ]) {
         const slot = button.querySelector('.editor-section__action-icon');
 
@@ -148,49 +149,49 @@ const setOutputState = (kind, content = '') => {
 
 const exampleTemplateModules = import.meta.glob('./examples/*/template.html', {
     query: '?raw',
-    import: 'default',
+    import: 'default'
 });
 
 const exampleDataModules = import.meta.glob('./examples/*/data.json', {
-    import: 'default',
+    import: 'default'
 });
 
 const templateFoldBoundaries = {
-    if: new Set(['elseif', 'else', 'endif']),
-    elseif: new Set(['elseif', 'else', 'endif']),
-    else: new Set(['endif', 'endunless', 'endfor', 'endcase']),
-    unless: new Set(['else', 'endunless']),
-    case: new Set(['when', 'else', 'endcase']),
-    when: new Set(['when', 'else', 'endcase']),
-    for: new Set(['else', 'endfor']),
-    capture: new Set(['endcapture']),
-    filter: new Set(['endfilter']),
-    raw: new Set(['endraw']),
-    comment: new Set(['endcomment']),
+    if: new Set([ 'elseif', 'else', 'endif' ]),
+    elseif: new Set([ 'elseif', 'else', 'endif' ]),
+    else: new Set([ 'endif', 'endunless', 'endfor', 'endcase' ]),
+    unless: new Set([ 'else', 'endunless' ]),
+    case: new Set([ 'when', 'else', 'endcase' ]),
+    when: new Set([ 'when', 'else', 'endcase' ]),
+    for: new Set([ 'else', 'endfor' ]),
+    capture: new Set([ 'endcapture' ]),
+    filter: new Set([ 'endfilter' ]),
+    raw: new Set([ 'endraw' ]),
+    comment: new Set([ 'endcomment' ])
 };
 
 const templateNestedClosers = new Map([
-    ['if', 'endif'],
-    ['unless', 'endunless'],
-    ['case', 'endcase'],
-    ['for', 'endfor'],
-    ['capture', 'endcapture'],
-    ['filter', 'endfilter'],
-    ['raw', 'endraw'],
-    ['comment', 'endcomment'],
+    [ 'if', 'endif' ],
+    [ 'unless', 'endunless' ],
+    [ 'case', 'endcase' ],
+    [ 'for', 'endfor' ],
+    [ 'capture', 'endcapture' ],
+    [ 'filter', 'endfilter' ],
+    [ 'raw', 'endraw' ],
+    [ 'comment', 'endcomment' ]
 ]);
 
 const templateFoldOpeners = new Set(templateNestedClosers.keys());
 
 const getTemplateCommands = (text) =>
-    Array.from(text.matchAll(/\{%-?\s*([A-Za-z_][\w-]*)\b/g), ([, command]) =>
-        command.toLowerCase(),
+    Array.from(text.matchAll(/\{%-?\s*([A-Za-z_][\w-]*)\b/g), ([ , command ]) =>
+        command.toLowerCase()
     );
 
 const getTemplateFoldRange = (state, lineStart) => {
     const startLine = state.doc.lineAt(lineStart);
     const startCommand = getTemplateCommands(startLine.text).find(
-        (command) => command in templateFoldBoundaries,
+        (command) => command in templateFoldBoundaries
     );
 
     if (!startCommand) return null;
@@ -227,7 +228,7 @@ const getTemplateFoldRange = (state, lineStart) => {
 
 const templateLanguage = () => [
     html(),
-    foldService.of((state, lineStart) => getTemplateFoldRange(state, lineStart)),
+    foldService.of((state, lineStart) => getTemplateFoldRange(state, lineStart))
 ];
 
 const createEditor = (parent, langExt, onChange) => {
@@ -244,9 +245,9 @@ const createEditor = (parent, langExt, onChange) => {
                 whitespacePlugin,
                 EditorView.updateListener.of((update) => {
                     if (update.docChanged) onChange();
-                }),
-            ],
-        }),
+                })
+            ]
+        })
     });
 };
 
@@ -282,7 +283,7 @@ const replaceEditorDoc = (kind, value) => {
     const view = getEditorView(kind);
 
     view.dispatch({
-        changes: { from: 0, to: view.state.doc.length, insert: value },
+        changes: { from: 0, to: view.state.doc.length, insert: value }
     });
 };
 
@@ -322,9 +323,9 @@ const resetEditorDoc = (kind) => {
 
 const highlighterPromise = import('shiki').then(({ createHighlighter }) =>
     createHighlighter({
-        themes: ['github-light', 'github-dark'],
-        langs: ['html'],
-    }),
+        themes: [ 'github-light', 'github-dark' ],
+        langs: [ 'html' ]
+    })
 );
 
 const getShikiTheme = () => {
@@ -366,7 +367,7 @@ const highlightOutput = async (code) => {
 
     sourceEl.innerHTML = highlighter.codeToHtml(code || ' ', {
         lang: 'html',
-        theme: getShikiTheme(),
+        theme: getShikiTheme()
     });
 
     markWhitespace(sourceEl);
@@ -374,8 +375,8 @@ const highlightOutput = async (code) => {
 
 const presentOutput = async () => {
     if (outputState.kind === 'data-error') {
-        sourceEl.innerHTML =
-            '<div class="editor-section__error">⚠ Invalid JSON in Data panel</div>';
+        sourceEl.innerHTML
+            = '<div class="editor-section__error">⚠ Invalid JSON in Data panel</div>';
         return;
     }
 
@@ -414,11 +415,11 @@ const loadExampleFiles = async (key) => {
 
     if (!templateLoader || !dataLoader) return null;
 
-    const [templateSource, dataSource] = await Promise.all([templateLoader(), dataLoader()]);
+    const [ templateSource, dataSource ] = await Promise.all([ templateLoader(), dataLoader() ]);
 
     return {
         template: templateSource,
-        data: dataSource,
+        data: dataSource
     };
 };
 
@@ -475,7 +476,7 @@ document.addEventListener('click', (e) => {
 
     if (!actionButton) return;
 
-    const [action, kind] = actionButton.dataset.editorAction.split('-');
+    const [ action, kind ] = actionButton.dataset.editorAction.split('-');
 
     if (action === 'copy') {
         copyEditorDoc(kind);

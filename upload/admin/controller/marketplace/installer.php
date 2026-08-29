@@ -28,10 +28,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		// Use the configuration option to get the max file size
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
+		// Use the configuration option to get the max file size both from upload_max_filesize and post_max_size
+		$upload_max_filesize = min(((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024), ((int)preg_filter('/[^0-9]/', '', ini_get('post_max_size')) * 1024 * 1024));
 
-		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $upload_max_filesize / 1024 / 1024);
+
+		$data['config_file_max_size'] =  $upload_max_filesize;
 
 		$data['upload'] = $this->url->link('tool/installer.upload', 'user_token=' . $this->session->data['user_token']);
 

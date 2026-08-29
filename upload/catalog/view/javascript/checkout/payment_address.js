@@ -43,7 +43,7 @@ $('#input-payment-address').on('change', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=checkout/payment_address.address&language={{ language }}&address_id=' + $(element).val(),
+        url: 'action.php?route=checkout/payment_address.address&language={{ language }}&address_id=' + $(element).val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
@@ -72,7 +72,7 @@ $('#input-payment-address').on('change', function() {
                 $('#input-shipping-method').val('');
                 $('#input-payment-method').val('');
 
-                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+                $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

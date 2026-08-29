@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('component/menu');
+const language = await loader.language('common/menu');
 
 customElements.define('common-menu', class extends WebComponent {
     async render() {

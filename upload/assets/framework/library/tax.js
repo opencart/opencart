@@ -40,10 +40,10 @@ export default class Tax {
             tax_classes[tax_class_id] = [customer_group_id] + [tax_rule_id];
 
             if (tax_classes[tax_class_id][customer_group_id] == undefined) {
-             //   this.tax_classes[tax_class_id][customer_group_id] = [];
+                //this.tax_classes[tax_class_id][customer_group_id] = [];
             }
 
-           // tax_classes[tax_class_id][customer_group_id][tax_rule_id] = tax_rates[i];
+            //tax_classes[tax_class_id][customer_group_id][tax_rule_id] = tax_rates[i];
         }
 
 

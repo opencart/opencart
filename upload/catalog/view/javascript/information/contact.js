@@ -39,7 +39,7 @@ export default class extends Controller {
 
         let form = new FormData(target);
 
-        ajax.post('index.php?route=information/contact.send', form, {
+        ajax.post('action.php?route=information/contact.send', form, {
             beforeSend: (request) => {
                 this.$('button-send').loading = true;
             },

@@ -31,7 +31,7 @@ $('form').on('submit', function(e) {
     }
 
     $.ajax({
-        url: 'index.php?route=checkout/cart.add&language={{ language }}',
+        url: 'action.php?route=checkout/cart.add&language={{ language }}',
         type: 'post',
         data: $(element).serialize(),
         dataType: 'json',
@@ -67,7 +67,7 @@ $('form').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
+                $('#cart').load('action.php?route=common/cart.info&language={{ language }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

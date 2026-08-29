@@ -34,7 +34,7 @@ customElements.define('review-form', class extends WebComponent {
 
         let form = new FormData(target);
 
-        ajax.post('index.php?route=catalog/review.write&language=' + config.config_language + '&review_token=' + this.review_token + '&product_id={{ product_id }}', form, {
+        ajax.post('action.php?route=catalog/review.write&language=' + config.config_language + '&review_token=' + this.review_token + '&product_id={{ product_id }}', form, {
             beforeSend: function() {
                 this.bind('button-review').loading = true;
             },

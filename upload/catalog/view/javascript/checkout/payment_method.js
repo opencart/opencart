@@ -25,7 +25,7 @@ $('#button-payment-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=checkout/payment_method.getMethods&language={{ language }}',
+        url: 'action.php?route=checkout/payment_method.getMethods&language={{ language }}',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -114,7 +114,7 @@ $(document).on('submit', '#form-payment-method', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=checkout/payment_method.save&language={{ language }}',
+        url: 'action.php?route=checkout/payment_method.save&language={{ language }}',
         type: 'post',
         data: $('#form-payment-method').serialize(),
         dataType: 'json',
@@ -144,7 +144,7 @@ $(document).on('submit', '#form-payment-method', function(e) {
                 $('#input-payment-method').val($('input[name=\'payment_method\']:checked').parent().find('label').text());
                 $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
 
-                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+                $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -166,7 +166,7 @@ $('#input-comment').on('keydown', function() {
 
     timer = setTimeout(function(object) {
         $.ajax({
-            url: 'index.php?route=checkout/payment_method.comment&language={{ language }}',
+            url: 'action.php?route=checkout/payment_method.comment&language={{ language }}',
             type: 'post',
             data: $('#input-comment').serialize(),
             dataType: 'json',
@@ -212,7 +212,7 @@ $(document).on('change', '#input-checkout-agree', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=checkout/payment_method.agree&language={{ language }}',
+        url: 'action.php?route=checkout/payment_method.agree&language={{ language }}',
         type: 'post',
         data: $('#input-checkout-agree').serialize(),
         dataType: 'json',
@@ -224,7 +224,7 @@ $(document).on('change', '#input-checkout-agree', function() {
             $('#button-confirm').button('reset');
         },
         success: function(json) {
-            $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+            $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

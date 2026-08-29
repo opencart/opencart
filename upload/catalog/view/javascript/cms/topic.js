@@ -61,7 +61,7 @@ export default class extends Controller {
     async onSubmit(e) {
         e.preventDefault();
 
-        let url = 'index.php?route=cms/topic&language={{ language }}';
+        let url = 'action.php?route=cms/topic&language={{ language }}';
 
         var search = $('#input-search').val();
 

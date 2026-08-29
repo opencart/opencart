@@ -41,7 +41,7 @@ export default class extends Controller {
         let form = new FormData(this.$form);
 
         let ajax = new Ajax({
-            url: 'index.php?route=account/login.login',
+            url: 'action.php?route=account/login.login',
             method: 'POST', // GET, POST, PUT, PATCH
             //headers: {},
             //accept: 'application/json',
@@ -68,7 +68,7 @@ export default class extends Controller {
         ajax.send();
 
         /*
-        let response = await fetch('index.php?route=account/login', {
+        let response = await fetch('action.php?route=account/login', {
             method: 'POST',
             body: form
         });

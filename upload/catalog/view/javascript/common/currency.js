@@ -1,41 +1,31 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// library
-const local = await loader.library('local');
-
 // Config
 const config = await loader.config('default');
+
+// library
+const local = await loader.library('local');
 
 // Storage
 const currencies = await loader.storage('localisation/currency');
 
 // Language
-const language = await loader.language('component/currency');
+const language = await loader.language('common/currency');
 
 customElements.define('common-currency', class extends WebComponent {
     async render() {
-        let data = {};
-
         // Config stored currency code
-        data.code = config.config_currency;
+        let code = config.config_currency;
 
         // Local storage currency code
         if (local.has('currency')) {
-            data.code = local.get('currency');
+            code = local.get('currency');
         }
+
+        let data = currencies.find(currency => currency.code === code);
 
         data.currencies = currencies;
-
-        let value = currencies.find(currency => currency.code === data.code);
-
-        if (value !== undefined) {
-            data.symbol_left = value.symbol_left;
-            data.symbol_right = value.symbol_right;
-        } else {
-            data.symbol_left = '';
-            data.symbol_right = '';
-        }
 
         return loader.template('common/currency', { ...data, ...language });
     }

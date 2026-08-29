@@ -44,7 +44,7 @@ $('#input-customer-group').on('change', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=account/custom_field&language={{ language }}&customer_group_id=' + $(element).val(),
+        url: 'action.php?route=account/custom_field&language={{ language }}&customer_group_id=' + $(element).val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
@@ -82,7 +82,7 @@ $('#form-register').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=checkout/register.save&language={{ language }}',
+        url: 'action.php?route=checkout/register.save&language={{ language }}',
         type: 'post',
         dataType: 'json',
         data: $('#form-register').serialize(),
@@ -128,7 +128,7 @@ $('#form-register').on('submit', function(e) {
                 $('#input-shipping-method').val('');
                 $('#input-payment-method').val('');
 
-                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+                $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

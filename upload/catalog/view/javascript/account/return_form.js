@@ -20,7 +20,7 @@ export default class extends Controller {
 
         let form = new FormData(target);
 
-        let response = await fetch('index.php?route=account/register', {
+        let response = await fetch('action.php?route=account/register', {
             method: 'POST',
             body: form
         });

@@ -11,31 +11,21 @@ let local = await loader.library('local');
 let languages = await loader.storage('localisation/language');
 
 // Language
-let language = await loader.language('component/language');
+let language = await loader.language('common/language');
 
 customElements.define('common-language', class extends WebComponent {
     async render() {
-        let data = {};
-
         // Config stored language code
-        data.code = config.config_language;
+        let code = config.config_language;
 
         // Local storage language code
         if (local.has('language')) {
-            data.code = local.get('language');
+            code = local.get('language');
         }
+
+        let data = languages.find(language => language.code === code);
 
         data.languages = languages;
-
-        let value = languages.find(language => language.code === data.code);
-
-        if (value !== undefined) {
-            data.name = value.name;
-            data.image = value.image;
-        } else {
-            data.name = '';
-            data.image = '';
-        }
 
         return loader.template('common/language', { ...data,  ...language });
     }

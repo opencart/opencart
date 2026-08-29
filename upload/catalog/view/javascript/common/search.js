@@ -2,7 +2,7 @@ import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = await loader.language('component/search');
+const language = await loader.language('common/search');
 
 // URL
 const url = new URLSearchParams(document.location.search);

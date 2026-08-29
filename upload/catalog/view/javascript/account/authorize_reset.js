@@ -11,7 +11,7 @@ $('#button-send').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=account/authorize.send&language={{ language }}',
+        url: 'action.php?route=account/authorize.send&language={{ language }}',
         dataType: 'json',
         beforeSend: function() {
             $('#button-send').button('loading');
@@ -44,7 +44,7 @@ $('#button-reset').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=account/authorize.confirm&language={{ language }}',
+        url: 'action.php?route=account/authorize.confirm&language={{ language }}',
         dataType: 'json',
         beforeSend: function() {
             $('#button-reset').button('loading');

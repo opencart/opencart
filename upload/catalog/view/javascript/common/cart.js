@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('component/cart');
+const language = await loader.language('common/cart');
 
 // library
 const session = await loader.library('session');

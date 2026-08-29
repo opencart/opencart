@@ -161,7 +161,7 @@ export default class extends Controller {
 
         let form = new FormData(target);
 
-        ajax.post('index.php?route=checkout/cart.add', form, {
+        ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: (request) => {
                this.bind('button-cart').setAttribute('loading', '');
             },

@@ -5,6 +5,7 @@ import { loader } from '../index.js';
 const language = await loader.language('account/address');
 
 // Library
+const ajax = await loader.library('ajax');
 const session = await loader.library('session');
 
 export default class extends Controller {
@@ -20,6 +21,9 @@ export default class extends Controller {
 
     onSubmit(e) {
         e.preventDefault();
+
+
+
 
     }
 

@@ -32,7 +32,7 @@
 
           <tr>
 
-            <td class="text-center">{% if product.image %}<a href="{{ product.href }}"><img src="image/{{ product.image }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 100px"/></a>{% endif %}</td>
+            <td class="text-center">{% if product.image %}<a href="catalog/product.js?product_id={{ product_id }}" data-on="click:onClick"><img src="image/{{ product.image }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 100px"/></a>{% endif %}</td>
 
             <td class="text-start text-wrap"><a href="catalog/product.js?product_id={{ product_id }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
               <ul class="list-unstyled mb-0">
@@ -59,14 +59,12 @@
                 {% endif %}
               </ul>
             </td>
-
             <td>
               <form data-on="submit:onSubmit">
                 <div class="input-group">
-                  <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/>
-                  <input type="hidden" name="key" value="{{ product.cart_id }}"/>
-                  <button type="submit" formaction="{{ edit }}" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
-                  <a href="{{ product.remove }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a>
+                  <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/> <input type="hidden" name="key" value="{{ product.cart_id }}"/>
+                  <button type="submit" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
+                  <a href="{{ cart_id }}" title="{{ button_remove }}" data-on="click:removeProduct" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
               </form>
 
@@ -82,7 +80,7 @@
           {% endfor %}
 
         </tbody>
-        <tfoot id="checkout-total">
+        <tfoot>
           {% for total in totals %}
           <tr>
             <td colspan="4" class="text-end"><strong>{{ total.title }}</strong></td>
@@ -116,8 +114,6 @@
 <h2>{{ text_next }}</h2>
 <p>{{ text_next_choice }}</p>
 <div id="accordion" class="accordion">
-  {% for module in modules %}
-  {{ module }}
-  {% endfor %}
+  {% for module in modules %} {{ module }} {% endfor %}
 </div>
 {% endif %}

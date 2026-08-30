@@ -54,7 +54,7 @@ export class WebComponent extends HTMLElement {
                 }
 
                 // Attach
-                if (element.hasAttribute('data-type')) {
+                if (element.hasAttribute('data-func')) {
                     let func = this.types.get(element.getAttribute('data-type'));
 
                     func(element);

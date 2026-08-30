@@ -10,6 +10,8 @@ let geo_zone = country.geo_zones.find(geo_zone => geo_zone.zone_id == config.con
 
 let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone.geo_zone_id);
 
+console.log(tax_rates);
+
 export default class Tax {
     tax_classes = new Map();
     tax_rates = new Map();

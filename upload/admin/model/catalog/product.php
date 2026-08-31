@@ -66,7 +66,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		// Description
 		foreach ($data['product_description'] as $language_id => $value) {
-			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
+			$this->model_catalog_product->addDescription($product_id, (int)$language_id, $value);
 		}
 
 		// Code
@@ -129,7 +129,7 @@ class Product extends \Opencart\System\Engine\Model {
 					$this->model_catalog_product->deleteAttributes($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
+						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], (int)$language_id, $product_attribute_description);
 					}
 				}
 			}
@@ -179,7 +179,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
+					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, (int)$language_id);
 				}
 			}
 		}
@@ -188,7 +188,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
+					$this->model_catalog_product->addLayout($product_id, (int)$store_id, $layout_id);
 				}
 			}
 		}
@@ -253,7 +253,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteDescriptions($product_id);
 
 		foreach ($data['product_description'] as $language_id => $value) {
-			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
+			$this->model_catalog_product->addDescription($product_id, (int)$language_id, $value);
 		}
 
 		// Code
@@ -331,7 +331,7 @@ class Product extends \Opencart\System\Engine\Model {
 					$this->model_catalog_product->deleteAttributes($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
+						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], (int)$language_id, $product_attribute_description);
 					}
 				}
 			}
@@ -391,7 +391,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
+					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, (int)$store_id, (int)$language_id);
 				}
 			}
 		}
@@ -402,7 +402,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
+					$this->model_catalog_product->addLayout($product_id, (int)$store_id, $layout_id);
 				}
 			}
 		}
@@ -493,7 +493,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteDiscounts($product_id);
 		$this->model_catalog_product->deleteDownloads($product_id);
 		$this->model_catalog_product->deleteFilters($product_id);
-		$this->model_catalog_product->deleteTags($product_id);
 		$this->model_catalog_product->deleteImages($product_id);
 		$this->model_catalog_product->deleteLayouts($product_id);
 		$this->model_catalog_product->deleteOptions($product_id);
@@ -502,6 +501,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteRewards($product_id);
 		$this->model_catalog_product->deleteStores($product_id);
 		$this->model_catalog_product->deleteSubscriptions($product_id);
+		$this->model_catalog_product->deleteTags($product_id);
 
 		// Reviews
 		$this->load->model('catalog/review');

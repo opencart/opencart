@@ -149,7 +149,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true);
 		} elseif ($token_info['total'] > 2) {
 			$json['redirect'] = $this->url->link('common/authorize.reset', 'user_token=' . $this->session->data['user_token'], true);
-		} elseif (!isset($post_info['code']) || !isset($this->session->data['code']) || ($post_info['code'] != $this->session->data['code'])) {
+		} elseif (!isset($post_info['code']) || !isset($this->session->data['code']) || ($post_info['code'] !== $this->session->data['code'])) {
 			$total = $token_info['total'] + 1;
 
 			if ($total <= 2) {

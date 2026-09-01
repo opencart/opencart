@@ -23,6 +23,14 @@ class Event {
 	 * @var array<int, array<string, mixed>>
 	 */
 	protected array $data = [];
+	/**
+	 * @var array<string, array<string, mixed>>
+	 */
+	protected $processed = [];
+	/**
+	 * @var boolean
+	 */
+	protected $refresh = false;
 
 	/**
 	 * Constructor
@@ -46,16 +54,10 @@ class Event {
 		$this->data[] = [
 			'trigger'  => $trigger,
 			'action'   => $action,
-			'priority' => $priority
+			'priority' => $priority,
+			'wildcard' => (strpos($trigger, '*') !== false) || (strpos($trigger, '?') !== false)
 		];
-
-		$sort_order = [];
-
-		foreach ($this->data as $key => $value) {
-			$sort_order[$key] = $value['priority'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $this->data);
+		$this->refresh = true;
 	}
 
 	/**
@@ -67,10 +69,31 @@ class Event {
 	 * @return mixed
 	 */
 	public function trigger(string $event, array $args = []) {
-		foreach ($this->data as $value) {
-			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
-				$value['action']->execute($this->registry, $args);
+		if ($this->refresh) {
+			array_multisort(
+				array_column($this->data, 'priority'), SORT_ASC,
+				$this->data
+			);
+			$this->processed = [];
+			$this->refresh = false;
+		}
+		
+		if (!isset($this->processed[$event])) {
+			$this->processed[$event] = [];
+			foreach ($this->data as $value) {
+				if (!$value['wildcard'] && ($value['trigger'] == $event)) {
+					// not a wildcard and exactly matches
+					$this->processed[$event][] = $value;
+				} elseif ($value['wildcard']) {
+					if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
+						$this->processed[$event][] = $value;
+					}
+				}
 			}
+		}
+		
+		foreach ($this->processed[$event] as $value) {
+			$value['action']->execute($this->registry, $args);
 		}
 
 		return '';
@@ -88,6 +111,7 @@ class Event {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
 				unset($this->data[$key]);
+				$this->refresh = true;
 			}
 		}
 	}
@@ -103,6 +127,7 @@ class Event {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger']) {
 				unset($this->data[$key]);
+				$this->refresh = true;
 			}
 		}
 	}

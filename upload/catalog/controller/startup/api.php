@@ -30,6 +30,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		if (in_array($route, $allowed)) {
 			$status = true;
+			$request_ip = oc_get_ip(false);
 
 			$required = [
 				'route',
@@ -64,7 +65,7 @@ class Api extends \Opencart\System\Engine\Controller {
 						$ip_data[] = trim($result['ip']);
 					}
 
-					if (!in_array(oc_get_ip(), $ip_data)) {
+					if (!in_array($request_ip, $ip_data)) {
 						$status = false;
 					}
 				} else {
@@ -76,7 +77,7 @@ class Api extends \Opencart\System\Engine\Controller {
 				$time_start = time() - 450;
 				$time_end = time() + 450;
 
-				if ($time < $time_start && $time > $time_end) {
+				if ($time < $time_start || $time > $time_end) {
 					$status = false;
 				}
 			}
@@ -99,7 +100,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($status) {
-				$this->model_user_api->addHistory($api_info['api_id'], $this->request->get['call'], oc_get_ip());
+				$this->model_user_api->addHistory($api_info['api_id'], $this->request->get['call'], $request_ip);
 			} else {
 				return new \Opencart\System\Engine\Action('startup/api.permission');
 			}

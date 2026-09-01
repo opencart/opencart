@@ -12,8 +12,9 @@ class Api extends \Opencart\System\Engine\Controller {
 	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function index() {
+		// Controller resolution is case insensitive, so normalise before matching
 		if (isset($this->request->get['route'])) {
-			$route = (string)$this->request->get['route'];
+			$route = strtolower((string)$this->request->get['route']);
 		} else {
 			$route = '';
 		}

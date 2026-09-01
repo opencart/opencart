@@ -193,6 +193,10 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						// Only extract the contents of the upload folder
 						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
+						if ($destination === '' || str_starts_with($destination, '/') || str_contains($destination, "\0") || in_array('..', explode('/', $destination), true)) {
+							continue;
+						}
+
 						if (substr($destination, 0, 8) == 'install/') {
 							// Default copy location
 							$path = '';

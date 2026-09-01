@@ -33,7 +33,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
-		$data['upload'] = $this->url->link('tool/installer.upload', 'user_token=' . $this->session->data['user_token']);
+		$data['upload'] = $this->url->link('marketplace/installer.upload', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -191,8 +191,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Extension
+		$this->load->model('setting/extension');
+
 		// 1. Validate the file uploaded.
-		if (isset($this->request->files['file']['name'])) {
+		if (!$json && isset($this->request->files['file']['name'])) {
 			$filename = basename($this->request->files['file']['name']);
 			$code = basename($filename, '.ocmod.zip');
 
@@ -238,7 +245,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			// 3. Validate is ocmod file.
-			if (substr($filename, -10) != '.ocmod.zip') {
+			if (substr($filename, -10) != '.ocmod.zip' || !preg_match('/^[A-Za-z0-9._-]+\.ocmod\.zip$/', $filename) || !preg_match('/^[A-Za-z0-9_][A-Za-z0-9._-]*$/', $code)) {
 				$json['error'] = $this->language->get('error_file_type');
 			}
 
@@ -258,7 +265,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if ($this->model_setting_extension->getInstallByCode($code)) {
 				$json['error'] = $this->language->get('error_installed');
 			}
-		} else {
+		} elseif (!$json) {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
@@ -316,8 +323,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 				'author'                => $install_info['author'],
 				'link'                  => $install_info['link']
 			];
-
-			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->addInstall($extension_data);
 

@@ -10,14 +10,16 @@ const session = await loader.library('session');
 const cart = await loader.library('cart');
 
 export default class extends Controller {
-    connect() {
+    token = '';
 
+    connect() {
+        this.token = ajax.get('action.php?route=account/login.token');
     }
 
     async render() {
         let data = {};
 
-        var element = this;
+        data.token = this.token;
 
         return loader.template('account/login', { ...data, ...language });
     }
@@ -34,8 +36,6 @@ export default class extends Controller {
         e.preventDefault();
 
         console.log('onSubmit');
-
-        //this.$button_cart.state = 'loading';
 
         let target = e.target;
 

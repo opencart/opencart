@@ -11,16 +11,16 @@
   <li><a href="account/order.js" data-on="click:onClick">{{ text_order }}</a></li>
   <li><a href="account/subscription.js" data-on="click:onClick">{{ text_subscription }}</a></li>
   <li><a href="account/download.js" data-on="click:onClick">{{ text_download }}</a></li>
-  {% if reward %}
+  {% if config_review_status %}
     <li><a href="account/reward.js" data-on="click:onClick">{{ text_reward }}</a></li>
   {% endif %}
   <li><a href="account/return.js" data-on="click:onClick">{{ text_return }}</a></li>
   <li><a href="account/transaction.js" data-on="click:onClick">{{ text_transaction }}</a></li>
 </ul>
-{% if affiliate %}
+{% if config_affiliate_status %}
   <h2>{{ text_my_affiliate }}</h2>
   <ul class="list-unstyled">
-    {% if not tracking %}
+    {% if not config_affiliate_status %}
       <li><a href="account/affiliate.js" data-on="click:onClick">{{ text_affiliate_add }}</a></li>
     {% else %}
       <li><a href="account/affiliate.js" data-on="click:onClick">{{ text_affiliate_edit }}</a></li>

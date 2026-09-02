@@ -1,6 +1,7 @@
 <div class="dropdown d-grid">
   {% assign amount = total | currency: currency %}
   <button type="button" data-bind="button-cart" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
+
   <ul class="dropdown-menu dropdown-menu-end p-2">
     {% if products %}
     <li>
@@ -33,7 +34,7 @@
           <td class="text-end text-nowrap">x {{ product.quantity }}</td>
           <td class="text-end">{{ product.total }}</td>
           <td class="text-end">
-            <form action="{{ remove }}" data-oc-load="{{ list }}" data-oc-target="#cart">
+            <form data-bind="form-cart">
               <input type="hidden" name="key" value="{{ product.cart_id }}">
               <button type="submit" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
             </form>

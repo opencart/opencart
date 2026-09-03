@@ -22,7 +22,7 @@
 
   <div class="row">
     <div class="col">
-      <a href="{{ back }}" class="btn btn-light" data-on="click:onClick">{{ button_back }}</a>
+      <a href="account/account.js" class="btn btn-light" data-on="click:onClick">{{ button_back }}</a>
     </div>
     <div class="col text-end">
       <a href="{{ add }}" class="btn btn-primary">{{ button_address_add }}</a>
@@ -33,7 +33,7 @@
 
 <div id="address-form">
   <h1>{{ text_address }}</h1>
-  <form id="form-address" action="{{ save }}" data-on="submit:onSubmit">
+  <form id="form-address" data-on="submit:onSubmit">
     <fieldset>
       <div class="row mb-3">
         <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
@@ -229,7 +229,7 @@
     </fieldset>
     <div class="row">
       <div class="col">
-        <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
+        <a href="account/address.js" class="btn btn-light">{{ button_back }}</a>
       </div>
       <div class="col text-end">
         <button type="submit" class="btn btn-primary">{{ button_continue }}</button>

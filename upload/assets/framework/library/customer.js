@@ -8,12 +8,14 @@ export default class Customer {
 
     constructor() {
         if (session.has('customer')) {
-            this.data = new Map(session.get('customer'));
+            this.data = session.get('customer');
         }
     }
 
     login(data) {
-        session.set('customer', data);
+        this.data = new Map(data);
+
+        session.set('customer', this.data);
     }
 
     logout() {
@@ -44,6 +46,10 @@ export default class Customer {
         return this.data.get('email');
     }
 
+    getTelephone() {
+        return this.data.get('telephone');
+    }
+
     getAddressId() {
         return this.data.get('address').find(address => address.default == 1);
     }
@@ -54,6 +60,10 @@ export default class Customer {
 
     getToken() {
         return this.data.get('token');
+    }
+
+    isAffiliate() {
+        return this.data.get('affiliate');
     }
 
     getBalance() {

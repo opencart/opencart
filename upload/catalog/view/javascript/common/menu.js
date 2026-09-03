@@ -16,8 +16,6 @@ customElements.define('common-menu', class extends WebComponent {
         // Storage
         let categories = await loader.storage('category/category');
 
-        console.log(categories);
-
         for (let category of categories) {
             let children = [];
 
@@ -37,9 +35,7 @@ customElements.define('common-menu', class extends WebComponent {
             });
         }
 
-        data.config_product_count = config.config_product_count;
-
-        return loader.template('common/menu', { ...data, ...language });
+        return loader.template('common/menu', { ...data, ...language, ...config });
     }
 
     onClick(e) {

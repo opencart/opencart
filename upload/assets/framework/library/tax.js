@@ -3,62 +3,34 @@ import { loader } from './loader.js';
 // Config
 const config = await loader.config('default');
 
-// Storage
-let country = await loader.storage('localisation/country-' + config.config_country_id);
-
-let geo_zone = country.geo_zones.find(geo_zone => geo_zone.zone_id == config.config_zone_id);
-
-let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone.geo_zone_id);
-
-console.log(tax_rates);
-
 export default class Tax {
-    tax_classes = new Map();
     tax_rates = new Map();
 
-    constructor() {
-       // this.tax_classes = tax_classes;
+    async setGeozone(country_id, zone_id) {
+        let country = await loader.storage('localisation/country-' + country_id);
 
-        //this.load(3);
-    }
+        if (country == undefined) return;
 
-    async load(geo_zone_id) {
-        let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone_id);
+        let geo_zone = country.geo_zones.find(geo_zone => geo_zone.zone_id == zone_id);
 
-        console.log(tax_rate);
+        if (geo_zone == undefined) return;
 
-        let tax_classes = [];
+        let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone.geo_zone_id);
 
-        for (let tax_rate of tax_rates) {
-            console.log(i);
-            console.log(tax_rates[i]);
-
-            let tax_rule_id = tax_rate['tax_rule_id'];
-            let tax_class_id = tax_rate['tax_class_id'];
-            let customer_group_id = tax_rate['customer_group_id'];
-
-
-
-            tax_classes[tax_class_id] = [customer_group_id] + [tax_rule_id];
-
-            if (tax_classes[tax_class_id][customer_group_id] == undefined) {
-                //this.tax_classes[tax_class_id][customer_group_id] = [];
-            }
-
-            //tax_classes[tax_class_id][customer_group_id][tax_rule_id] = tax_rates[i];
+        if (tax_rates !== undefined) {
+            this.tax_rates = tax_rates;
         }
-
-
-        this.tax_classes = tax_classes;
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {
+        value = Number(value);
+
         if (tax_class_id && calculate) {
             let amount = 0;
 
             let tax_rates = this.getRates(value, tax_class_id);
 
-            for (let tax_rate of tax_rates) {
+            for (let tax_rate of tax_rates.values()) {
                 amount += tax_rate.amount;
             }
 
@@ -69,11 +41,13 @@ export default class Tax {
     }
 
     getTax(value, tax_class_id) {
+        value = Number(value);
+
         let amount = 0;
 
         let tax_rates = this.getRates(value, tax_class_id);
 
-        for (let tax_rate of tax_rates) {
+        for (let tax_rate of tax_rates.values()) {
             amount += tax_rate.amount;
         }
 
@@ -81,31 +55,26 @@ export default class Tax {
     }
 
     getRates(value, tax_class_id) {
-        let tax_rate_data = [];
+        value = Number(value);
 
-        let tax_classes = tax_rates.filter(tax_rate => tax_rate.customer_group_id === config.config_customer_group_id && tax_rate.tax_class_id == tax_class_id);
+        let tax_rates = new Map();
 
-        if (!tax_classes) {
-            return [];
-        }
-
-console.log(tax_classes);
-
+        let tax_classes = this.tax_rates.filter(tax_rate => tax_rate.customer_group_id == config.config_customer_group_id && tax_rate.tax_class_id == tax_class_id);
 
         for (let tax_rate of tax_classes) {
             let amount = 0;
 
-            if (tax_rate_data[tax_rate.tax_rate_id]) {
-                amount = tax_rate_data[tax_rate.tax_rate_id].amount;
+            if (tax_rates.has(tax_rate.tax_rate_id)) {
+                amount = tax_rates.get(tax_rate.tax_rate_id).amount;
             }
 
             if (tax_rate.type == 'F') {
-                amount += tax_rate.rate;
+                amount += Number(tax_rate.rate);
             } else if (tax_rate.type == 'P') {
-                amount += (value / 100 * tax_rate.rate);
+                amount += (value / 100 * Number(tax_rate.rate));
             }
 
-            tax_rate_data.set({
+            tax_rates.set(tax_rate.tax_rate_id, {
                 tax_rate_id: tax_rate.tax_rate_id,
                 name: tax_rate.name,
                 rate: tax_rate.rate,
@@ -114,10 +83,10 @@ console.log(tax_classes);
             });
         }
 
-        return tax_rate_data;
+        return tax_rates;
     }
 
     clear() {
-        this.tax_classes = [];
+        this.tax_rates = [];
     }
 }

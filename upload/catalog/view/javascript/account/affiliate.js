@@ -1,4 +1,5 @@
 import { Controller } from '../component.js';
+import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -7,17 +8,22 @@ const config = await loader.config('default');
 const language = await loader.language('cms/article_info');
 
 export default class extends Controller {
-    data = [];
-
     async connected() {
-        this.load.language('account/affiliate');
 
-        return loader.template('account/address', this.language.all());
+
     }
-};
+
+
+    render() {
 
 
 
+        return loader.template('account/affiliate', { ...language });
+    }
+
+
+
+}
 
 $('input[name=\'payment_method\']').on('change', function() {
     $('.payment').hide();

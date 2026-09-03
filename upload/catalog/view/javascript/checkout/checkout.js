@@ -1,5 +1,11 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import './register.js';
+import './payment_address.js';
+import './shipping_address.js';
+import './shipping_method.js';
+import './payment_method.js';
+import './confirm.js';
 
 // Config
 const config = await loader.config('default');

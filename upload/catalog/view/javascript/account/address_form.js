@@ -13,16 +13,45 @@ export default class extends Controller {
         let data = {};
 
         //let customer = session.get('customer');
-        data.addresses = customer.getAddresses();
+
+        //data.address = customer.get('addresses');
+
+        customer.getAddress();
+
+
 
         return loader.template('account/address', { ...data, ...language });
     }
 
-    onDelete(e) {
+    onSubmit(e) {
+        e.preventDefault();
+
+
+
+
+    }
+
+    delete(e) {
         let dismissible = document.querySelectorAll('.alert-dismissible');
 
         dismissible.remove();
 
+        this.request.post({
+            url: '',
+            success: this.onComplete
+        });
+    }
+
+    onSuccess(json) {
+        let alert = document.getElementById('alert');
+
+        if (json['error']) {
+            alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+
+        if (json['success']) {
+            alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
     }
 }
 

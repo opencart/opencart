@@ -10,7 +10,7 @@ export class WebComponent extends HTMLElement {
         }
     }
 
-    bind(name) {
+    element(name) {
         return this.data.get(name);
     }
 
@@ -54,10 +54,15 @@ export class WebComponent extends HTMLElement {
                 }
 
                 // Attach
-                if (element.hasAttribute('data-func')) {
-                    let func = this.types.get(element.getAttribute('data-type'));
+                if (element.hasAttribute('data-type')) {
+                    let test = this.types.get(element.getAttribute('data-type'));
 
-                    func(element);
+                    let tdest = test();
+
+
+                    new test.initialize(element);
+
+
 
                     element.removeAttribute('data-type');
                 }

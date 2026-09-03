@@ -1,4 +1,4 @@
-import {WebComponent} from '../component.js';
+import { WebComponent } from '../component.js';
 
 customElements.define('form-submit', class extends WebComponent {
     render() {

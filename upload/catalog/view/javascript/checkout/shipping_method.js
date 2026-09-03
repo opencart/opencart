@@ -1,10 +1,10 @@
-import { Controller } from '../component.js';
+import {Controller, WebComponent} from '../component.js';
 import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
-export default class extends Controller {
+customElements.define('shipping-method', class extends WebComponent {
     async connected() {
 
     }
@@ -13,10 +13,14 @@ export default class extends Controller {
 
 
 
-
-        return loader.template('checkout/address', { ...data,  ...language });
+        return loader.template('checkout/shipping_method', { ...data,  ...language });
     }
-}
+
+    onSubmit() {
+
+
+    }
+});
 
 
 
@@ -66,6 +70,7 @@ $('#button-shipping-methods').on('click', function() {
 
                     if (!json['shipping_methods'][i]['error']) {
                         for (j in json['shipping_methods'][i]['quote']) {
+                            let html;
                             html += '<div class="form-check">';
 
                             var code = i + '-' + j.replaceAll('_', '-');

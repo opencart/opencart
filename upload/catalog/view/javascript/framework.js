@@ -30,6 +30,7 @@ config.cache.set('default', {
     config_tax: true,
     config_account_id: 1,
     config_stock_status_id: 4,
+    config_affiliate_status: 1,
     config_file_max_size: 3000
 });
 
@@ -68,7 +69,11 @@ template.addFilter('currency', (amount, code, value, format = false) => {
 });
 
 // Tax
+let test = await loader.config('default');
+
 const tax = await loader.library('tax');
+
+tax.setGeozone(test.config_country_id, test.config_zone_id);
 
 template.addFilter('tax', (value, tax_class_id = 0, calculate = true) => {
     return tax.calculate(value, tax_class_id, calculate);

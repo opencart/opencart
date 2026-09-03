@@ -1,0 +1,19 @@
+# Heading
+heading_title: 'Address Book'
+
+# Text
+text_account: 'Account'
+text_address_add: 'Add Address'
+text_address_edit: 'Edit Address'
+
+# Entry
+entry_firstname: 'First Name'
+entry_lastname: 'Last Name'
+entry_company: 'Company'
+entry_address_1: 'Address 1'
+entry_address_2: 'Address 2'
+entry_postcode: 'Post Code'
+entry_city: 'City'
+entry_country: 'Country'
+entry_zone: 'Region / State'
+entry_default: 'Default Address'

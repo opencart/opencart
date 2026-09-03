@@ -1,4 +1,9 @@
-/* Ajax */
+/**
+ * This is a description of the MyClass constructor function.
+ *
+ * @class
+ * @classdesc This is a description of the MyClass class.
+ */
 export default class Ajax {
     /**
      * This function can prefix/suffix your string.
@@ -75,6 +80,10 @@ export default class Ajax {
         return result;
     }
 
+    /**
+     * Get the x value.
+     * @return {url} The x value.
+     */
     get(url, data = {}, options = {}) {
         const query = new URLSearchParams(data).toString();
 

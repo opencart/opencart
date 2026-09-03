@@ -51,25 +51,27 @@ export default class extends Controller {
                 }
             }
 
+            // Discounts
             data.discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             data.discounts.sort(discounts => discount.quantity);
 
-            console.log(data.discounts);
-
             data.tax = '';
 
-            if (config.config_tax) data.tax = product.special ? product.special : product.price;
+            if (config.config_tax) {
+                data.tax = tax.getTax(data.special ? data.special : product.price, product.tax_class_id);
+            }
 
+            // Rewards
             data.reward = 0;
 
-            // && reward.date_start >= Date.now() && reward.date_end <= Date.now()
             let reward = product.rewards.find(reward => reward.customer_group_id == config.config_customer_group_id);
 
             if (reward) {
                 data.reward = reward.points;
             }
 
+            // Stock Status
             let stock_status_id = 0;
 
             if (product.quantity <= 0) {
@@ -139,9 +141,6 @@ export default class extends Controller {
 
             // Tags
             data.tags = product.tags;
-
-            console.log(data.tags);
-
             data.related = [];
 
             data.currency = currency;
@@ -155,18 +154,16 @@ export default class extends Controller {
 
         console.log('addToCart');
 
-        this.bind('button-cart').loading = true;
-
         let target = e.target;
 
         let form = new FormData(target);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: (request) => {
-               this.bind('button-cart').setAttribute('loading', '');
+               //this.$['button-cart'].setAttribute('loading', '');
             },
             onComplete: (json) => {
-                console.log(this.bind('button-cart'));
+                //console.log(this.bind('button-cart'));
 
                 //this.bind('button-cart').loading = false;
             },
@@ -207,18 +204,17 @@ export default class extends Controller {
                         alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
+                    cart.clear();
+
                     let output = [];
 
-                    console.log(json['products']);
-
-                    //console.log(Object.fromEntries(form));
-                    for (let product of json['products']) {
-                        cart.add(product);
+                    for (let product of Object.values(json['products'])) {
+                        cart.add(product.cart_id, product);
                     }
 
-                    let button = document.querySelector('#cart > button');
+                    //let button = document.querySelector('#cart > button');
 
-                    button.click();
+                    //button.click();
                 }
             },
             onError: (e) => {

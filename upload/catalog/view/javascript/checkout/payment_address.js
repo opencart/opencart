@@ -1,10 +1,17 @@
-import { Controller } from '../component.js';
+import {Controller, WebComponent} from '../component.js';
 import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
-export default class extends Controller {
+// Language
+const language = await loader.language('checkout/payment_address');
+
+// library
+const cart = await loader.library('cart');
+const customer = await loader.library('customer');
+
+customElements.define('payment-address', class extends WebComponent {
     async connected() {
 
     }
@@ -13,11 +20,17 @@ export default class extends Controller {
     async render() {
         let data = {};
 
+        customer.getAddresses();
 
 
         return loader.template('checkout/payment_address', { ...data,  ...language });
     }
-}
+
+    onSubmit() {
+
+
+    }
+});
 
 
 $(document).on('change', '#input-address-match', function() {

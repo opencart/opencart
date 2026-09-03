@@ -1,51 +1,71 @@
 import { loader } from './loader.js';
 
-// library
-let session = await loader.library('session');
-let tax = await loader.library('tax');
-let weight_class = await loader.library('weight');
-
 // Config
-let config = await loader.config('default');
+const config = await loader.config('default');
+
+// library
+const ajax = await loader.library('ajax');
+const session = await loader.library('session');
+const tax = await loader.library('tax');
+const weight_class = await loader.library('weight');
 
 export default class Cart {
-    data = new Map();
+    items = new Map();
 
     constructor() {
         if (session.has('cart')) {
-            this.data = new Map(session.get('cart'));
+            let cart = session.get('cart');
+
+            console.log('*****constructor*****');
+
+            console.log('session', cart);
+
+            //let data = Object.entries(cart);
+
+            //console.log('data', data);
+
+            //this.items = new Map(data);
+
+            //console.log('this.items', this.items);
         }
     }
 
-    async add(item = []) {
+    async add(cart_id, item = []) {
         console.log('add');
-        console.log(item);
 
-        this.data.append(item);
+        //this.clear();
 
-        session.set('cart', this.data);
+        this.items.get(cart_id, item);
+
+        //let data = this.items.values();
+
+        console.log('this.items.values', Object.values(this.items));
+
+        session.set('cart', { ...this.items });
+    }
+
+    update(cart_id, item = []) {
+
     }
 
     remove(cart_id) {
-        this.data = this.data.filter(item => item.cart_id !== cart_id);
+        this.items = this.items.filter(item => item.cart_id !== cart_id);
+
+        //session.set('cart', this.items);
     }
 
     getProducts() {
-        console.log(this.data);
+        //console.log(this.items.values());
 
-        return this.data.entries();
+        return [];
     }
 
-    update() {
-    }
+    has(cart_id) {
 
-    has() {
-    }
-
-    remove() {
     }
 
     clear() {
+        this.items = new Map();
     }
 
     /**
@@ -121,7 +141,7 @@ export default class Cart {
         let total = 0.00;
 
         for (let product of this.getProducts()) {
-            total += tax.calculate(product.price, product.tax_class_id, config.get('config_tax')) * product.quantity;
+            total += tax.calculate(product.price, product.tax_class_id, config.config_tax) * product.quantity;
         }
 
         return total;
@@ -156,7 +176,7 @@ export default class Cart {
      * $cart = $this->cart->hasProducts();
      */
     hasProducts() {
-        return this.data.length > 0;
+        return this.items.length > 0;
     }
 
     /**

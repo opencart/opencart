@@ -1,10 +1,10 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
-export default class extends Controller {
+customElements.define('shipping-address', class extends WebComponent {
     async connected() {
 
     }
@@ -15,7 +15,22 @@ export default class extends Controller {
 
         return loader.template('checkout/shipping_address', { ...data,  ...language });
     }
-}
+
+    onExsisting() {
+
+
+    }
+
+    onSubmit() {
+
+
+    }
+
+    onChange() {
+
+
+    }
+});
 
 $('input[name=\'shipping_existing\']').on('change', function() {
     if ($(this).val() == 1) {

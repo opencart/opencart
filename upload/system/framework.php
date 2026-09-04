@@ -106,6 +106,14 @@ if (php_sapi_name() != 'cli') {
 	$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
 	$response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 	$response->addHeader('Pragma: no-cache');
+
+	// Content Security Policy: per-request nonce for inline scripts.
+	// Templates read the nonce via the `nonce` template variable (injected by the loader).
+	$csp_nonce = base64_encode(random_bytes(16));
+	$config->set('csp_nonce', $csp_nonce);
+
+	$response->addHeader("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-" . $csp_nonce . "'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'");
+
 	$response->setCompression((int)$config->get('response_compression'));
 }
 

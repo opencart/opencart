@@ -135,12 +135,6 @@ $registry->set('load', $loader);
 $request = new \Opencart\System\Library\Request();
 $registry->set('request', $request);
 
-// Compatibility
-if (isset($request->get['route'])) {
-	$request->get['route'] = str_replace('|', '.', $request->get['route']);
-	$request->get['route'] = str_replace('%7C', '|', (string)$request->get['route']);
-}
-
 // Response
 $response = new \Opencart\System\Library\Response();
 $registry->set('response', $response);

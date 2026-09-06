@@ -68,7 +68,7 @@ class Loader {
 	 */
 	public function controller(string $route, ...$args) {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $route));
+		$route = preg_replace('/[^a-zA-Z0-9_\/\.]/', '', $route);
 		$trigger = $route;
 
 		// Trigger the pre events

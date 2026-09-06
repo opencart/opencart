@@ -1,0 +1,30 @@
+// --- Admin: create a percentage coupon with a generated code ---
+admin-login
+click "Marketing"
+click "Coupons"
+check that page contains "Coupons"
+click "Add New"
+check that page contains "Coupon Name"
+enter "TestRigor Coupon" into "Coupon Name"
+generate from template "TR#####", then enter into "Code" and save as "couponCode"
+select "Percentage" from "Type"
+enter "10" into "Discount"
+// Status is a toggle switch here, not a dropdown
+click on the checkbox to the right of "Status"
+click "Save"
+check that page contains "Success: You have modified coupons!"
+
+// --- Storefront: a shopper redeems it ---
+go to url stored value "storeUrl"
+check that page contains "featured"
+save "iPhone" as "productName"
+product-add-to-cart
+click "item(s)"
+click "View Cart"
+check that page contains "Shopping Cart"
+
+// The coupon field lives behind an accordion below the totals
+click "Use Coupon Code"
+enter stored value "couponCode" into "Enter your coupon here"
+click "Apply Coupon"
+check that page contains "Success: Your coupon discount has been applied!"

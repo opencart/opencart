@@ -1,0 +1,17 @@
+// Apple Cinema 30" is seeded with one option of every input type.
+enter "Apple Cinema" into "Search"
+press enter
+check that page contains "Apple Cinema 30"
+click "Apple Cinema 30"
+check that page contains "Apple Cinema 30"
+check that page contains "Available Options"
+
+// Every required option type is rendered
+check that page contains "Radio"
+check that page contains "Checkbox"
+check that page contains "Select"
+check that page contains "Text"
+
+// Adding to the cart without completing them is rejected
+click button "Add to Cart"
+check that page contains "required!"

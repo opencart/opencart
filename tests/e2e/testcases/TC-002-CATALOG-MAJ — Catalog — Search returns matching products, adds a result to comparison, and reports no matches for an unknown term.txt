@@ -1,0 +1,24 @@
+// Header search
+enter "MacBook" into "Search"
+press enter
+check that page contains "Search - MacBook"
+check that page contains "MacBook"
+
+// A result opens its detail page
+click "MacBook Air"
+check that page contains "MacBook Air"
+check that page contains "Add to Cart"
+
+// Comparison, which needs no login
+click "Compare this Product"
+check that page contains "Success: You have added"
+click "product comparison"
+check that page contains "Product Comparison"
+check that page contains "MacBook Air"
+
+// A search with no matches
+click "logo"
+check that page contains "featured"
+enter "zzqqxxnomatch123" into "Search"
+press enter
+check that page contains "There is no product that matches the search criteria."

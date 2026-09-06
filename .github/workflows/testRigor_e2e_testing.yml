@@ -1,0 +1,185 @@
+name: E2E
+
+# End-to-end regression run against an ephemeral OpenCart brought up from this repo's
+# own docker-compose.yml. The scenarios are plain-English files under tests/e2e/ and are
+# uploaded to testRigor on each run, so the suite always executes the code in the branch
+# under test. See tests/e2e/README.md. (Suite id comes from the TESTRIGOR_SUITE_ID
+# repository variable.)
+#
+# The job is a no-op unless the repository provides both TESTRIGOR_SUITE_ID (variable) and
+# TESTRIGOR_CI_TOKEN (secret). Forks - and pull requests from forks, which GitHub never
+# grants secrets to - skip cleanly rather than reporting a failure.
+
+# The scenarios encode the 4.x storefront and admin flow. Automatic runs are limited to
+# 4.x.x.x, and a manual dispatch is allowed from any branch except the ones on a different
+# major - see the guard in the config job below.
+on:
+  push:
+    branches: ['4.x.x.x']
+  pull_request:
+    branches: ['4.x.x.x']
+  workflow_dispatch:
+
+# A superseded run tells us nothing and still consumes a run slot.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  config:
+    name: Check E2E configuration
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.check.outputs.enabled }}
+    steps:
+      - name: Detect testRigor configuration
+        id: check
+        shell: bash
+        env:
+          TESTRIGOR_SUITE_ID: ${{ vars.TESTRIGOR_SUITE_ID }}
+          TESTRIGOR_CI_TOKEN: ${{ secrets.TESTRIGOR_CI_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          # push/pull_request are already filtered to 4.x.x.x, but a manual dispatch can pick
+          # any branch and the picker defaults to the repository's default branch. Block only
+          # the branches on a different major, where the scenarios cannot pass, so that a
+          # topic branch off 4.x.x.x can still be dispatched.
+          case "$EVENT_NAME:$REF_NAME" in
+            workflow_dispatch:master|workflow_dispatch:3.0.x.x)
+              echo "enabled=false" >> "$GITHUB_OUTPUT"
+              echo "::notice::The suite covers the 4.x storefront and admin flow, so it is not run against '$REF_NAME'. Dispatch from 4.x.x.x or a branch based on it."
+              exit 0
+              ;;
+          esac
+
+          if [ -n "$TESTRIGOR_SUITE_ID" ] && [ -n "$TESTRIGOR_CI_TOKEN" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::testRigor is not configured here, skipping E2E. Expected on forks and on pull requests from forks."
+          fi
+
+  e2e:
+    name: Storefront & admin E2E
+    needs: config
+    if: needs.config.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+
+    env:
+      TESTRIGOR_SUITE_ID: ${{ vars.TESTRIGOR_SUITE_ID }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      # docker-compose.yml mounts ./upload into the container as uid/gid 1000.
+      - name: Prepare OpenCart bind mount permissions
+        run: sudo chown -R 1000:1000 upload
+
+      - name: Start services
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker compose up -d --build --remove-orphans --quiet-pull opencart mysql
+          docker compose ps
+
+      - name: Resolve store URL
+        shell: bash
+        run: |
+          set -euo pipefail
+          PORT="$(docker compose port opencart 80 | awk -F: 'NF{print $NF}' | tail -n1)"
+          if [ -z "$PORT" ]; then
+            echo "::error::Could not determine the published port for the opencart service."
+            exit 1
+          fi
+          if [ "$PORT" = "80" ]; then
+            echo "LOCAL_BASE_URL=http://localhost" >> "$GITHUB_ENV"
+          else
+            echo "LOCAL_BASE_URL=http://localhost:$PORT" >> "$GITHUB_ENV"
+          fi
+
+      # The tests reach the storefront and the admin panel through the storeUrl / adminUrl
+      # test data, which is stored in the suite and normally points at a long-lived
+      # environment. Override both for this run only, so CI drives the container started
+      # above while the suite keeps its own URLs for manual runs from the testRigor UI.
+      - name: Point the suite test data at this container
+        shell: bash
+        env:
+          # docker-compose.yml installs the store with admin/admin, so those are the
+          # defaults. Override them with repository secrets when running against an
+          # environment provisioned differently.
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME || 'admin' }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD || 'admin' }}
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/testrigor-variables.json" <<JSON
+          {
+            "storeUrl": "$LOCAL_BASE_URL",
+            "adminUrl": "$LOCAL_BASE_URL/admin",
+            "adminUsername": "$ADMIN_USERNAME",
+            "adminPassword": "$ADMIN_PASSWORD"
+          }
+          JSON
+          # Do not print the file - it carries the admin password.
+          echo "storeUrl: $LOCAL_BASE_URL"
+          echo "adminUrl: $LOCAL_BASE_URL/admin"
+
+      # The install runs on first boot (cli_install.php), so the first response can take a while.
+      - name: Wait for OpenCart to be reachable
+        shell: bash
+        run: |
+          set -e
+          for i in {1..90}; do
+            if curl -fsS -o /dev/null -L "$LOCAL_BASE_URL"; then
+              echo "OpenCart is up at $LOCAL_BASE_URL"
+              exit 0
+            fi
+            echo "Waiting for OpenCart... ($i/90)"
+            sleep 3
+          done
+
+          echo "::group::Recent container logs"
+          docker compose logs --no-color --tail=200
+          echo "::endgroup::"
+          exit 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      # The CLI tunnels to the localhost instance above, so the suite tests this checkout
+      # rather than a hosted demo store. The test cases and reusable rules are taken from
+      # tests/e2e/ so the run always reflects the branch, never whatever was last edited in
+      # the testRigor UI.
+      - name: Run testRigor suite against localhost
+        env:
+          TESTRIGOR_CI_TOKEN: ${{ secrets.TESTRIGOR_CI_TOKEN }}
+          # --explicit-mutations writes the local files back to the shared suite. Only a
+          # push to 4.x.x.x - i.e. reviewed and merged code - is allowed to do that. A pull
+          # request executes its own files but leaves the stored suite untouched, so an
+          # in-progress branch cannot overwrite the suite before anyone has reviewed it.
+          MUTATIONS: ${{ github.event_name == 'push' && '--explicit-mutations' || '' }}
+        run: |
+          echo "Suite ID: $TESTRIGOR_SUITE_ID"
+          echo "URL:      $LOCAL_BASE_URL"
+          echo "Sync:     ${MUTATIONS:-run-only (suite not modified)}"
+          npx -y testrigor-cli test-suite run "$TESTRIGOR_SUITE_ID" \
+            --token "$TESTRIGOR_CI_TOKEN" \
+            --localhost --url "$LOCAL_BASE_URL" \
+            --variables-path "$RUNNER_TEMP/testrigor-variables.json" \
+            --test-cases-path "tests/e2e/testcases/**/*.txt" \
+            --rules-path "tests/e2e/reusable-rules/**/*.txt" \
+            $MUTATIONS \
+            --verbose
+
+      - name: Dump container logs on failure
+        if: failure()
+        run: docker compose logs --no-color --tail=300

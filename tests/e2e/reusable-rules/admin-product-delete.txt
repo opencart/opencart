@@ -1,0 +1,15 @@
+// Deletes the product in stored value "productName". Requires an admin session.
+click "Catalog"
+click "Products"
+check that page contains "Products"
+enter stored value "productName" into "Product Name"
+click "Filter"
+check that page contains stored value "productName"
+// The filter leaves one row, so the select-all box selects only that row
+click on the 1st checkbox
+click "Delete"
+// No confirmation dialog follows. A 'click "ok"' here resolves to the logo and navigates
+// away from the alert. Assert the emptied list rather than the absence of the name, which
+// is still present in the filter input.
+check that page contains "Success: You have modified products!"
+check that page contains "No results!"

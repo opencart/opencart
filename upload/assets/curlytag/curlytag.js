@@ -14,7 +14,7 @@ export class CurlyTag {
         this.directory = '';
         this.path = new Map();
         this.cache = new Map();
-        this.macros = new Map(); // name → { params, tokens, fn }
+        this.macro = new Map(); // name → { params, tokens, fn }
         this._imported = {}; // alias → Map of macros (JS importMacros)
 
         this.handler = {
@@ -672,7 +672,7 @@ export class CurlyTag {
             if (match.index > index) {
                 token.push({
                     type: 'text',
-                    raw: template.slice(index, match.index),
+                    raw: template.slice(index, match.index)
                 });
             }
 
@@ -683,7 +683,7 @@ export class CurlyTag {
                     value: output,
                     raw: raw,
                     line: line,
-                    column: index,
+                    column: index
                 });
             }
 
@@ -693,36 +693,19 @@ export class CurlyTag {
 
                 // Handle Close Tags
                 let top = stack[stack.length - 1];
-                let forRef;
 
                 if (top && this.openclose[top.type].includes(command)) {
                     token[top.index].end = token.length;
 
-                    let popped = stack.pop();
-
-                    if (command === 'else' && popped.type === 'for') {
-                        forRef = popped.index;
-                    } else if (
-                        command === 'endfor'
-                        && popped.type === 'else'
-                        && popped.forRef !== undefined
-                    ) {
-                        token[popped.forRef].loopEnd = token.length;
-                    }
+                    stack.pop();
                 }
 
                 // Handle Open Tags
                 if (command in this.openclose) {
-                    let entry = {
+                    stack.push({
                         type: command,
-                        index: token.length,
-                    };
-
-                    if (forRef !== undefined) {
-                        entry.forRef = forRef;
-                    }
-
-                    stack.push(entry);
+                        index: token.length
+                    });
                 }
 
                 token.push({
@@ -800,13 +783,9 @@ export class CurlyTag {
                 return value;
                 break;
             case 'object':
-                if (value === null) {
-                    return false;
-                }
+                if (value === null) return false;
 
-                if (Array.isArray(value)) {
-                    return value.length > 0;
-                }
+                if (Array.isArray(value)) return value.length > 0;
 
                 return Object.keys(value).length > 0 && value.constructor === Object;
                 break;

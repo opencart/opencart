@@ -1,4 +1,4 @@
-import {WebComponent} from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -8,15 +8,14 @@ customElements.define('x-include', class extends WebComponent {
     static observed = ['src'];
 
     get src() {
-        return this.getAttribute('src');    }
+        return this.getAttribute('src');
+    }
 
     set src(src) {
         this.setAttribute('src', src);
     }
 
     async render() {
-        this.innerHTML = '';
-
         // Get the source HTML to load
         if (!this.src) return;
 
@@ -26,7 +25,6 @@ customElements.define('x-include', class extends WebComponent {
 
         let controller = new object.default(this);
 
-        // this.innerHTML = await controller.execute();
-        this.append(await controller.execute());
+        this.innerHTML = await controller.execute();
     }
 });

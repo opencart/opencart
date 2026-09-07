@@ -127,7 +127,7 @@
                         <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
                         <ul class="dropdown-menu dropdown-menu-right">
                           <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
-                          <li><a href="{{ order.order_id }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>
+                          <li><a href="#" class="button-delete-order" data-order-id="{{ order.order_id }}"><i class="fa fa-trash-o"></i> {{ button_delete }}</a></li>
                         </ul>
                       </div>
                     </div></td>
@@ -243,14 +243,14 @@ $('#button-shipping, #button-invoice').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
 });
 
-$('#form-order li:last-child a').on('click', function(e) {
+$('#form-order .button-delete-order').on('click', function(e) {
 	e.preventDefault();
 	
 	var element = this;
 	
 	if (confirm('{{ text_confirm }}')) {
 		$.ajax({
-			url: '{{ catalog }}index.php?route=api/order/delete&api_token={{ api_token }}&store_id={{ store_id }}&order_id=' + $(element).attr('href'),
+			url: '{{ catalog }}index.php?route=api/order/delete&api_token={{ api_token }}&store_id={{ store_id }}&order_id=' + $(element).data('order-id'),
 			dataType: 'json',
 			beforeSend: function() {
 				$(element).parent().parent().parent().find('button').button('loading');

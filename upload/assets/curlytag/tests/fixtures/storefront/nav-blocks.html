@@ -1,0 +1,18 @@
+<nav>
+    {% if categories %} {% for category in categories %}
+    <section>
+        <h2>{{ category.name }}</h2>
+        {% if category.links %}
+        <ul>
+            {% for link in category.links %}
+            <li>{{ link }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Coming soon</p>
+        {% endif %}
+    </section>
+    {% endfor %} {% else %}
+    <p>No categories</p>
+    {% endif %}
+</nav>

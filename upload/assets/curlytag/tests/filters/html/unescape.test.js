@@ -4,16 +4,16 @@ import { curlytag } from '#curlytag';
 describe('html', () => {
     describe('unescape', () => {
         test.each([
-            [ '&amp;', '&' ],
-            [ '&#38;', '&' ],
-            [ '&lt;', '<' ],
-            [ '&#60;', '<' ],
-            [ '&gt;', '>' ],
-            [ '&#62;', '>' ],
-            [ '&apos;', "'" ],
-            [ '&#39;', "'" ],
-            [ '&quot;', '"' ],
-            [ '&#34;', '"' ]
+            ['&amp;', '&'],
+            ['&#38;', '&'],
+            ['&lt;', '<'],
+            ['&#60;', '<'],
+            ['&gt;', '>'],
+            ['&#62;', '>'],
+            ['&apos;', "'"],
+            ['&#39;', "'"],
+            ['&quot;', '"'],
+            ['&#34;', '"']
         ])('decodes %s', (value, expected) => {
             expect(curlytag.filter.unescape(value)).toBe(expected);
         });

@@ -1,0 +1,4 @@
+{% if banners|batch(items)|length > 1 %}
+<p class="indicators">Multiple slides</p>
+{% endif %} {% for row in banners|batch(items) %}<span>{{ row|length }}</span>{% endfor %} {% for
+row in products | batch: 2 %}<b>{{ row|length }}</b>{% endfor %}

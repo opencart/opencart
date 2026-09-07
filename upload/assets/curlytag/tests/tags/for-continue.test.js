@@ -6,7 +6,7 @@ describe('for', () => {
         test('skips current iteration', () => {
             const tpl
                 = '{% for n in nums %}{% if n == 2 %}{% continue %}{% endif %}{{ n }}{% endfor %}';
-            expect(curlytag.parse(tpl, { nums: [ 1, 2, 3 ] })).toBe('13');
+            expect(curlytag.parse(tpl, { nums: [1, 2, 3] })).toBe('13');
         });
 
         test('outside loop is a no-op', () => {

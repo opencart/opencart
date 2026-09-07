@@ -19,7 +19,7 @@ describe('filter / endfilter', () => {
     test('applies filter to block with variable inside', () => {
         expect(
             curlytag.parse('{% filter upper %}{{ name }}{% endfilter %} end', {
-                name: 'alice'
+                name: 'alice',
             })
         ).toBe('ALICE end');
     });
@@ -33,7 +33,7 @@ describe('filter / endfilter', () => {
     test('filter block with mixed static and variable content', () => {
         expect(
             curlytag.parse('{% filter upper %}hello {{ name }}{% endfilter %} end', {
-                name: 'world'
+                name: 'world',
             })
         ).toBe('HELLO WORLD end');
     });

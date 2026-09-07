@@ -6,10 +6,10 @@ import filtersTemplate from '../playground/examples/filters/template.html?raw';
 import nestedTemplate from '../playground/examples/nested/template.html?raw';
 
 const templates = new Map([
-    [ '/templates/examples/loop/template.html', loopTemplate ],
-    [ '/templates/examples/conditions/template.html', conditionsTemplate ],
-    [ '/templates/examples/filters/template.html', filtersTemplate ],
-    [ '/templates/examples/nested/template.html', nestedTemplate ]
+    ['/templates/examples/loop/template.html', loopTemplate],
+    ['/templates/examples/conditions/template.html', conditionsTemplate],
+    ['/templates/examples/filters/template.html', filtersTemplate],
+    ['/templates/examples/nested/template.html', nestedTemplate]
 ]);
 
 const resetCurlytag = () => {
@@ -36,7 +36,7 @@ describe('render (browser)', () => {
 
     test('render() loads a loop template and renders items', async () => {
         const result = await curlytag.render('examples/loop/template', {
-            team: [ 'Alice', 'Bob', 'Carol' ]
+            team: ['Alice', 'Bob', 'Carol'],
         });
         expect(result).toContain('Alice');
         expect(result).toContain('Bob');
@@ -44,7 +44,7 @@ describe('render (browser)', () => {
     });
 
     test('render() loop template renders loop.index correctly', async () => {
-        const result = await curlytag.render('examples/loop/template', { team: [ 'Alice' ] });
+        const result = await curlytag.render('examples/loop/template', { team: ['Alice'] });
         expect(result).toContain('1. Alice');
     });
 
@@ -57,7 +57,7 @@ describe('render (browser)', () => {
 
     test('render() loads a conditions template — elseif branch', async () => {
         const result = await curlytag.render('examples/conditions/template', {
-            role: 'editor'
+            role: 'editor',
         });
         expect(result).toContain('Editor access');
         expect(result).not.toContain('Admin access');
@@ -73,7 +73,7 @@ describe('render (browser)', () => {
             title: 'hello',
             greeting: 'Hello world',
             price: 9.999,
-            tags: [ 'js', 'html' ]
+            tags: ['js', 'html'],
         });
         expect(result).toContain('HELLO');
         expect(result).toContain('Hey world');
@@ -84,9 +84,9 @@ describe('render (browser)', () => {
         const result = await curlytag.render('examples/nested/template', {
             title: 'Team',
             users: [
-                { name: 'Alice', active: true, roles: [ 'admin' ] },
-                { name: 'Bob', active: false, roles: [ 'editor' ] }
-            ]
+                { name: 'Alice', active: true, roles: ['admin'] },
+                { name: 'Bob', active: false, roles: ['editor'] }
+            ],
         });
         expect(result).toContain('Alice');
         expect(result).toContain('ADMIN');
@@ -95,9 +95,9 @@ describe('render (browser)', () => {
     });
 
     test('render() caches the template on second call', async () => {
-        await curlytag.render('examples/loop/template', { team: [ 'Alice' ] });
+        await curlytag.render('examples/loop/template', { team: ['Alice'] });
         expect(curlytag.cache.has('examples/loop/template')).toBe(true);
-        const result = await curlytag.render('examples/loop/template', { team: [ 'Bob' ] });
+        const result = await curlytag.render('examples/loop/template', { team: ['Bob'] });
         expect(result).toContain('Bob');
         expect(globalThis.fetch).toHaveBeenCalledTimes(1);
     });

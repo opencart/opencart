@@ -70,6 +70,7 @@ export default defineConfig({
             '**/*.yaml',
             '**/*.json',
             'playground/examples/**/template.html',
+            'tests/fixtures/storefront/format.html',
             'docs/.vitepress/cache/**',
         ],
     },

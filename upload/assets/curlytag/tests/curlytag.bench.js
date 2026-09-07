@@ -41,8 +41,8 @@ describe('CurlyTag performance', () => {
         users: Array.from({ length: 50 }, (_, i) => ({
             name: `user${i}`,
             age: 20 + i,
-            active: i % 2 === 0
-        }))
+            active: i % 2 === 0,
+        })),
     };
 
     bench('complex template (for + if + filters, 50 items)', () => {

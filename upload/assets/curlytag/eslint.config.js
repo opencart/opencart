@@ -9,20 +9,30 @@ const style = stylistic.configs.customize({
     braceStyle: '1tbs',
     blockSpacing: true,
     quoteProps: 'as-needed',
-    commaDangle: 'never'
+    commaDangle: 'never',
 });
 
 export default [
     {
-        ignores: [ 'dist/**', '.vite-hooks/**' ]
+        ignores: ['dist/**', '.vite-hooks/**'],
     },
     {
-        files: [ '**/*.js' ],
+        files: ['**/*.js'],
         plugins: style.plugins,
         rules: {
             ...style.rules,
-            '@stylistic/array-bracket-spacing': [ 'error', 'always' ],
-            '@stylistic/quotes': [ 'error', 'single', { avoidEscape: true } ]
-        }
+            '@stylistic/array-bracket-spacing': ['error', 'never'],
+            '@stylistic/comma-dangle': [
+                'error',
+                {
+                    arrays: 'never',
+                    objects: 'always-multiline',
+                    imports: 'never',
+                    exports: 'never',
+                    functions: 'never',
+                }
+            ],
+            '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
+        },
     }
 ];

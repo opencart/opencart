@@ -10,53 +10,53 @@ describe('string', () => {
         expect(curlytag.parse('{{ name | lower }}', { name: 'ALICE' })).toBe('alice');
     });
 
-    describe('sprintf', () => {
+    describe('format', () => {
         test('replaces string placeholders', () => {
             expect(
-                curlytag.parse("{{ value | sprintf: 'world' }}", { value: 'Hello %s' })
+                curlytag.parse("{{ value | format: 'world' }}", { value: 'Hello %s' })
             ).toBe('Hello world');
         });
 
         test('truncates numbers for integer placeholders', () => {
-            expect(curlytag.parse('{{ value | sprintf: 12.8 }}', { value: 'Items: %d' })).toBe(
+            expect(curlytag.parse('{{ value | format: 12.8 }}', { value: 'Items: %d' })).toBe(
                 'Items: 12'
             );
         });
 
         test('replaces context values in order', () => {
             expect(
-                curlytag.parse('{{ value | sprintf: product.quantity, product.name }}', {
+                curlytag.parse('{{ value | format: product.quantity, product.name }}', {
                     value: 'OpenCart has %d %s in stock',
-                    product: { name: 'products', quantity: 3 }
+                    product: { name: 'products', quantity: 3 },
                 })
             ).toBe('OpenCart has 3 products in stock');
         });
 
         test('renders escaped percent signs without consuming an argument', () => {
             expect(
-                curlytag.parse("{{ value | sprintf: 'complete' }}", {
-                    value: '100%% %s'
+                curlytag.parse("{{ value | format: 'complete' }}", {
+                    value: '100%% %s',
                 })
             ).toBe('100% complete');
         });
 
         test('preserves zero and false string values', () => {
             expect(
-                curlytag.parse('{{ value | sprintf: quantity, enabled }}', {
+                curlytag.parse('{{ value | format: quantity, enabled }}', {
                     enabled: false,
                     quantity: 0,
-                    value: '%s:%s'
+                    value: '%s:%s',
                 })
             ).toBe('0:false');
         });
 
         test('renders nothing for missing arguments', () => {
-            expect(curlytag.parse('{{ value | sprintf }}', { value: '%s:%d' })).toBe(':');
+            expect(curlytag.parse('{{ value | format }}', { value: '%s:%d' })).toBe(':');
         });
 
         test('renders nothing for a non numeric integer placeholder', () => {
             expect(
-                curlytag.parse("{{ value | sprintf: 'invalid' }}", { value: '%d' })
+                curlytag.parse("{{ value | format: 'invalid' }}", { value: '%d' })
             ).toBe('');
         });
     });
@@ -64,7 +64,7 @@ describe('string', () => {
     test('replace', () => {
         expect(
             curlytag.parse('{{ greeting | replace: "world", "earth" }}', {
-                greeting: 'hello world'
+                greeting: 'hello world',
             })
         ).toBe('hello earth');
     });
@@ -92,7 +92,7 @@ describe('string', () => {
     test('striptag removes style block including contents', () => {
         expect(
             curlytag.parse('{{ html | striptag }}', {
-                html: '<style>body{color:red}</style>hello'
+                html: '<style>body{color:red}</style>hello',
             })
         ).toBe('hello');
     });

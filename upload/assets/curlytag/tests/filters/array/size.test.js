@@ -13,7 +13,7 @@ describe('size', () => {
     });
 
     test('returns length of an array', () => {
-        expect(curlytag.parse('{{ items | size }}', { items: [ 1, 2, 3, 4 ] })).toBe('4');
+        expect(curlytag.parse('{{ items | size }}', { items: [1, 2, 3, 4] })).toBe('4');
     });
 
     test('returns 0 for empty string', () => {
@@ -29,7 +29,7 @@ describe('size', () => {
     });
 
     test('behaves identically to length', () => {
-        const data = { items: [ 'a', 'b', 'c' ] };
+        const data = { items: ['a', 'b', 'c'] };
         expect(curlytag.parse('{{ items | size }}', data)).toBe(
             curlytag.parse('{{ items | length }}', data)
         );

@@ -10,6 +10,14 @@ describe('assign', () => {
         expect(curlytag.parse('{% assign name = "alice" | upper %}{{ name }}')).toBe('ALICE');
     });
 
+    test('accepts set as an alias', () => {
+        expect(curlytag.parse('{% set x = 42 %}{{ x }}')).toBe('42');
+    });
+
+    test('applies filters through the set alias', () => {
+        expect(curlytag.parse('{% set name = "alice" | upper %}{{ name }}')).toBe('ALICE');
+    });
+
     test('invalid syntax is silently ignored', () => {
         expect(curlytag.parse('{% assign %}rest')).toBe('rest');
     });

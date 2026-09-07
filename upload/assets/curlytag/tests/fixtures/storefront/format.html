@@ -1,0 +1,4 @@
+<span>{{ pattern | format(product_name, quantity, store_name) }}</span>
+{% for sorts in sorts %}
+  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
+{% endfor %}

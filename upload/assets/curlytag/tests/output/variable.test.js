@@ -22,7 +22,7 @@ describe('variable output {{ }}', () => {
 
     test('four-level nesting', () => {
         expect(curlytag.parse('{{ catalog.product.manufacturer.name }}', {
-            catalog: { product: { manufacturer: { name: 'OpenCart' } } }
+            catalog: { product: { manufacturer: { name: 'OpenCart' } } },
         })).toBe('OpenCart');
     });
 

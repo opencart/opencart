@@ -69,7 +69,7 @@ describe('browser globals', () => {
 
         expect(window.product).toBe(form);
         expect(curlytag.parse('{{ product.name }}', {
-            product: { name: 'OpenCart' }
+            product: { name: 'OpenCart' },
         })).toBe('OpenCart');
     });
 });

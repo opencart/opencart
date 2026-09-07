@@ -44,7 +44,7 @@ describe('if / elseif / else', () => {
     test('valid if after invalid if works correctly', () => {
         expect(
             curlytag.parse('{% if %}bad{% endif %}{% if show %}good{% endif %}', {
-                show: true
+                show: true,
             })
         ).toBe('good');
     });

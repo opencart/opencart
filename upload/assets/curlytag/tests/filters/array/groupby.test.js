@@ -17,8 +17,8 @@ describe('groupby', () => {
 
     test('groups items into correct buckets', () => {
         const result = curlytag.filter.groupby(items, 'type');
-        expect(result.fruit.map((i) => i.name)).toEqual([ 'apple', 'banana' ]);
-        expect(result.vegetable.map((i) => i.name)).toEqual([ 'carrot', 'broccoli' ]);
+        expect(result.fruit.map((i) => i.name)).toEqual(['apple', 'banana']);
+        expect(result.vegetable.map((i) => i.name)).toEqual(['carrot', 'broccoli']);
     });
 
     test('groups by a key that is not named type', () => {
@@ -46,7 +46,7 @@ describe('groupby', () => {
     });
 
     test('single item produces one group', () => {
-        const result = curlytag.filter.groupby([ { name: 'apple', type: 'fruit' } ], 'type');
+        const result = curlytag.filter.groupby([{ name: 'apple', type: 'fruit' }], 'type');
         expect(result.fruit).toHaveLength(1);
     });
 

@@ -12,9 +12,7 @@ export default class extends Controller {
     render() {
         let data = {};
 
-        //let customer = session.get('customer');
-
-        //data.address = customer.get('addresses');
+        data.addresses = customer.getAddresses();
 
         customer.getAddress();
 

@@ -1,13 +1,12 @@
+import { loader } from '../index.js';
+import { binder } from '../index.js';
+
 export class Controller {
     element = HTMLElement;
     data = new Map();
 
     constructor(element) {
         this.element = element;
-    }
-
-    bind(name) {
-        return this.data.get(name);
     }
 
     async execute() {
@@ -18,10 +17,10 @@ export class Controller {
         let clone = template.content.cloneNode(true);
 
         // Autoload any custom elements not already loaded
-        clone.querySelectorAll('[data-bind], [data-on], [data-type]').forEach(element => {
+        clone.querySelectorAll('[data-bind], [data-on], [data-action]').forEach(element => {
             // Attach Events based on elements that have data-bind attributes
             if (element.hasAttribute('data-bind')) {
-                this.data.set(element.getAttribute('data-bind'), element);
+                $binded.set(element.getAttribute('data-bind'), element);
 
                 element.removeAttribute('data-bind');
             }
@@ -37,7 +36,27 @@ export class Controller {
                 element.removeAttribute('data-on');
             }
 
+            // Attach
+            if (element.hasAttribute('data-apply')) {
 
+
+
+                if (!'$data' in element) {
+
+                }
+
+
+
+                let name = element.getAttribute('data-action');
+
+                let object = action.get(name);
+
+                element[name] = object(element);
+
+                console.log(element);
+
+                element.removeAttribute('data-action');
+            }
         });
 
         return clone;

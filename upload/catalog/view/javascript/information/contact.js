@@ -1,5 +1,5 @@
 import { Controller } from '../component.js';
-import { loader } from '../index.js';
+import { loader, binded } from '../index.js';
 
 // Library
 const session = await loader.library('session');
@@ -41,7 +41,7 @@ export default class extends Controller {
 
         ajax.post('action.php?route=information/contact.send', form, {
             beforeSend: (request) => {
-                this.$('button-send').loading = true;
+                binded('button-send').button('loading');
             },
             onComplete: (json) => {
                 console.log(this.bind('button-send'));
@@ -104,4 +104,4 @@ export default class extends Controller {
             }
         });
     }
-};
+}

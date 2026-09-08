@@ -1,1 +1,1 @@
-export { loader } from '../../../assets/framework/index.js';
+export { loader, binder, action } from '../../../assets/framework/index.js';

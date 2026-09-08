@@ -64,10 +64,6 @@ template.addPath('catalog/view/template/');
 // Currency
 const currency = await loader.library('currency');
 
-template.addFilter('currency', (amount, code, value, format = false) => {
-    return currency.format(amount, code, value, format);
-});
-
 // Tax
 let test = await loader.config('default');
 
@@ -75,19 +71,23 @@ const tax = await loader.library('tax');
 
 tax.setGeozone(test.config_country_id, test.config_zone_id);
 
+// Weight
+const weight = await loader.library('weight');
+
+// Length
+const length = await loader.library('length');
+
+template.addFilter('currency', (amount, code, value, format = false) => {
+    return currency.format(amount, code, value, format);
+});
+
 template.addFilter('tax', (value, tax_class_id = 0, calculate = true) => {
     return tax.calculate(value, tax_class_id, calculate);
 });
 
-// Weight
-const weight = await loader.library('weight');
-
 template.addFilter('weight', (value, weight_class_id) => {
     return weight.format(value, weight_class_id);
 });
-
-// Length
-const length = await loader.library('length');
 
 template.addFilter('length', (value, length_class_id) => {
     return length.format(value, length_class_id);

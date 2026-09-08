@@ -8,6 +8,14 @@ const config = await loader.config('default');
 const language = await loader.language('account/edit');
 
 export default class extends Controller {
+    connect() {
+        if (!customer.isLogged()) {
+            let target = document.getElementById('content');
+
+            target.src = 'account/login';
+        }
+    }
+
     render() {
 
         return loader.template('account/forgotten', { ...language });

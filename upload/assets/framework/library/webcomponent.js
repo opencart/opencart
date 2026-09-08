@@ -1,6 +1,6 @@
-export class WebComponent extends HTMLElement {
-    data = new Map();
+import { binder, action } from '../index.js';
 
+export class WebComponent extends HTMLElement {
     constructor() {
         super();
 
@@ -8,10 +8,6 @@ export class WebComponent extends HTMLElement {
         for (let attribute of this.attributes) {
             this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
         }
-    }
-
-    element(name) {
-        return this.data.get(name);
     }
 
     async connectedCallback() {
@@ -34,10 +30,10 @@ export class WebComponent extends HTMLElement {
             this.innerHTML = output;
 
             // Autoload any custom elements not already loaded
-            this.querySelectorAll('[data-bind], [data-on], [data-type]').forEach(element => {
-                // Attach elements that have data-bind attributes
+            this.querySelectorAll('[data-bind], [data-on], [data-action]').forEach(element => {
+                // Attach Events based on elements that have data-bind attributes
                 if (element.hasAttribute('data-bind')) {
-                    this.data.set(element.getAttribute('data-bind'), element);
+                    binder.set(element.getAttribute('data-bind'), element);
 
                     element.removeAttribute('data-bind');
                 }
@@ -47,24 +43,35 @@ export class WebComponent extends HTMLElement {
                     let [ event, method] = element.getAttribute('data-on').split(':');
 
                     if (method in this) {
-                        element.addEventListener(event, this[method].bind(this));
+                        element.addEventListener(event, this[method]);
                     }
 
                     element.removeAttribute('data-on');
                 }
 
                 // Attach
-                if (element.hasAttribute('data-type')) {
-                    let test = this.types.get(element.getAttribute('data-type'));
+                if (element.hasAttribute('data-action')) {
+                    console.log(element);
 
-                    let tdest = test();
+                    let parts = element.getAttribute('data-action').split(' ');
+
+                    console.log(parts);
+
+                    for (let part of parts) {
+                        let test = action.create(part, element);
+
+                        let value = this.data.get(part);
+
+                        let rrrr = new value(element);
 
 
-                    new test.initialize(element);
+                    }
+
+                    //console.log('element', element);.button('loading')
+                    console.log('element', Object.entries(element));
 
 
-
-                    element.removeAttribute('data-type');
+                    element.removeAttribute('data-action');
                 }
             });
         }
@@ -87,9 +94,9 @@ export class WebComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, value_old, value_new) {
-        //console.log(`${name} changed from ${value_old} to ${value_new}`);
+        console.log(`${name} changed from ${value_old} to ${value_new}`);
 
-        if (value_old !== null && value_old != value_new) {
+        if (value_old != value_new) {
             let event = new CustomEvent('[' + name + ']', {
                 bubbles: false,
                 cancelable: true,

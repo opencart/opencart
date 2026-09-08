@@ -94,12 +94,6 @@ export class CurlyTag {
             ],
         };
 
-        this.operator = {
-            not: ' !',
-            and: ' && ',
-            or: ' || ',
-        };
-
         this.filter = {
             // Tools
             default: (value, alternative, bool) => {
@@ -741,22 +735,6 @@ export class CurlyTag {
     evaluate(expression, ctx) {
         if (!expression) return undefined;
 
-        expression = expression.replaceAll(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\b(not)\s+|\b(and)\b|\b(or)\b/g, (match, not, and, or) => {
-            if (not) {
-                return '!';
-            }
-
-            if (and) {
-                return '&&';
-            }
-
-            if (or) {
-                return '||';
-            }
-
-            return match;
-        });
-
         try {
             let func = new Function('data', `with(data) return (${expression});`);
 
@@ -798,6 +776,26 @@ export class CurlyTag {
         let location = `line ${token.line} column ${token.column}`;
 
         return token.raw ? `${location}: ${token.raw}` : location;
+    }
+
+    parseOperator(value) {
+        let operators = {
+            '(^not )': '!',
+            '( not )': ' !',
+            '( and )': ' && ',
+            '( or )': ' || '
+        };
+
+        let before = value;
+
+        for (let [operator, replace] of Object.entries(operators)) {
+            // Make sure the replacement words are not in 3 different types of quotes.
+            let regex = new RegExp(`("[^"]*"|'[^']*'|\`[^\`]*\`)?${operator}`, 'g');
+
+            value = value.replaceAll(regex, replace);
+        }
+
+        return value;
     }
 
     /**
@@ -971,8 +969,10 @@ export class CurlyTag {
             return token.end;
         }
 
+        let value = this.parseOperator(match[1]);
+
         // Check to see if a previous tag is inactive.
-        let active = this.evaluate(match[1], ctx);
+        let active = this.evaluate(value, ctx);
 
         // Convert the output into bool.
         active = this.truthy(active);
@@ -1021,8 +1021,10 @@ export class CurlyTag {
 
         if (top.active) return token.end;
 
+        let value = this.parseOperator(match[1]);
+
         // If any previous not active tags then set current tag to false;
-        let active = this.evaluate(match[1], ctx);
+        let active = this.evaluate(value, ctx);
 
         // Convert the output into bool
         top.active = this.truthy(active);
@@ -1061,8 +1063,10 @@ export class CurlyTag {
             return;
         }
 
+        let value = this.parseOperator(match[1]);
+
         // Check to see if a previous tag is inactive
-        let active = this.evaluate(match[1], ctx);
+        let active = this.evaluate(value, ctx);
 
         // Convert the output into bool
         active = !this.truthy(active);

@@ -7,7 +7,7 @@
       <td>{{ address.address }}</td>
       <td>{% if address.default %}<strong>{{ text_default }}</strong>{% endif %}</td>
       <td class="text-end">
-        <button type="button" value="{{ address.address.id }}" data-on="click:edit" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-regular fa-solid fa-pencil"></i></button>
+        <a href="acccount/address.js?address_id={{ address.address.id }}" data-on="click:edit" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-regular fa-solid fa-pencil"></i></a>
         <button type="button" value="{{ address.address_id }}" data-on="click:delete" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </td>
     </tr>

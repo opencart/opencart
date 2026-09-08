@@ -1,4 +1,4 @@
-import {Controller, WebComponent} from '../component.js';
+import { Controller, WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -16,29 +16,31 @@ customElements.define('payment-address', class extends WebComponent {
 
     }
 
-
     async render() {
         let data = {};
 
-        customer.getAddresses();
-
+        data.addresses = this.customer.getAddresses();
 
         return loader.template('checkout/payment_address', { ...data,  ...language });
     }
 
-    onSubmit() {
+    onChange() {
+        if ($(this).prop('checked')) {
+            this.id('shipping-address').hide();
+        } else {
+            $('#shipping-address').show();
+        }
+    }
 
+    onSubmit(e) {
+        e.preventDefault();
 
     }
 });
 
 
 $(document).on('change', '#input-address-match', function() {
-    if ($(this).prop('checked')) {
-        $('#shipping-address').hide();
-    } else {
-        $('#shipping-address').show();
-    }
+
 });
 
 $('input[name=\'payment_existing\']').on('change', function() {

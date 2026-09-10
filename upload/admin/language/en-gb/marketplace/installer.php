@@ -42,6 +42,7 @@ $_['error_directory_exists'] = 'Path %s already exists!';
 $_['error_unzip']            = 'Zip file could not be opened!';
 $_['error_upload']           = 'File could not be uploaded!';
 $_['error_unknown']          = 'An unknown error occurred!';
+$_['error_upload_size']      = 'Warning: The uploaded file size exceeds the upload_max_filesize and post_max_size directives of %sM in php.ini!';
 
 // Zip errors
 $_['zip_error_exists']       = 'File already exists!';

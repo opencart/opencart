@@ -1,4 +1,4 @@
-import { Controller, WebComponent } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -12,7 +12,7 @@ const cart = await loader.library('cart');
 const customer = await loader.library('customer');
 
 customElements.define('payment-address', class extends WebComponent {
-    async connected() {
+    async connect() {
 
     }
 
@@ -38,7 +38,7 @@ customElements.define('payment-address', class extends WebComponent {
     }
 });
 
-
+/*
 $(document).on('change', '#input-address-match', function() {
 
 });
@@ -182,3 +182,4 @@ $('#form-payment-address').on('submit', function(e) {
         }
     });
 });
+*/

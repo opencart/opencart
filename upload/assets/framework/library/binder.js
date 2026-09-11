@@ -25,12 +25,8 @@ class Action {
         this.data.set(key, value);
     }
 
-    create(key, element) {
-        console.log(key);
-
-        let value = this.data.get(key);
-
-        return new value(element);
+    get(key) {
+        return this.data.get(key);
     }
 
     static getInstance() {
@@ -72,7 +68,7 @@ class Button {
     width;
 
     constructor(element) {
-        console.log('button');
+        console.log('BUTTON');
 
         this.element = element;
         this.html = element.innerHTML;

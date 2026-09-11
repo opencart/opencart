@@ -1,5 +1,8 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
+
+// Config
+const config = await loader.config('default');
 
 // Language
 const language = await loader.language('account/address');
@@ -8,23 +11,24 @@ const language = await loader.language('account/address');
 const ajax = await loader.library('ajax');
 const customer = await loader.library('customer');
 
-export default class extends Controller {
+// Name
+export const name = 'account-address';
+
+customElements.define('account-address', class extends WebComponent {
     render() {
         let data = {};
 
-        //let customer = session.get('customer');
         data.addresses = customer.getAddresses();
 
-        return loader.template('account/address', { ...data, ...language });
+        return loader.template('account/address', { ...data, ...language, ...config });
     }
 
     onDelete(e) {
         let dismissible = document.querySelectorAll('.alert-dismissible');
 
         dismissible.remove();
-
     }
-}
+});
 
 /*
 const address = document.getElementById('address');

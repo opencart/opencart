@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/edit');
 
-export default class extends Controller {
+customElements.define('account-forgotten', class extends WebComponent {
     connect() {
         if (!customer.isLogged()) {
             let target = document.getElementById('content');
@@ -17,7 +17,6 @@ export default class extends Controller {
     }
 
     render() {
-
         return loader.template('account/forgotten', { ...language });
     }
 

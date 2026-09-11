@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
@@ -7,7 +7,7 @@ const language = await loader.language('account/newsletter');
 // Library
 const session = await loader.library('session');
 
-export default class extends Controller {
+customElements.define('account-newsletter', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -22,4 +22,4 @@ export default class extends Controller {
         e.preventDefault();
 
     }
-}
+});

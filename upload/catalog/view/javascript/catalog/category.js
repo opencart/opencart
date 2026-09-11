@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 import './product_list.js';
 
@@ -8,7 +8,10 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/category');
 
-export default class extends Controller {
+// Name
+export const name = 'catalog-category';
+
+customElements.define('catalog-category', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -46,12 +49,4 @@ export default class extends Controller {
             return loader.template('catalog/category', { ...category, ...description, ...data, ...language, ...config });
         }
     }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-}
+});

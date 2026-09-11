@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 import './register.js';
 import './payment_address.js';
@@ -17,8 +17,9 @@ const language = await loader.language('checkout/checkout');
 const cart = await loader.library('cart');
 const customer = await loader.library('customer');
 
-export default class extends Controller {
-    connected() {
+
+customElements.define('checkout-checkout', class extends WebComponent {
+    connect() {
 
     }
 
@@ -33,4 +34,4 @@ export default class extends Controller {
 
         return loader.template('checkout/checkout', { ...data, ...language, ...config });
     }
-}
+});

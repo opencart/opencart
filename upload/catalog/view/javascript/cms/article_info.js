@@ -1,5 +1,5 @@
-import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import {WebComponent} from "../../../../assets/framework/library/webcomponent";
 
 // Config
 const config = await loader.config('default');
@@ -7,8 +7,11 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('cms/article_info');
 
-export default class extends Controller {
-    async render() {
+// Name
+export const name = 'article-info';
+
+customElements.define('article-info', class extends WebComponent {
+    async render(){
         let request = new URL(import.meta.url).searchParams;
 
         // Article Info
@@ -24,4 +27,4 @@ export default class extends Controller {
             return loader.template('cms/article_info', { ...article, ...description, ...config, ...language });
         }
     }
-}
+});

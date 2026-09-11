@@ -1,16 +1,11 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-export default class extends Controller {
+// Name
+export const name = 'common-home';
+
+customElements.define('common-home', class extends WebComponent {
     render() {
         return loader.template('common/home');
     }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-};
+});

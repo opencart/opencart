@@ -1,5 +1,5 @@
-import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import {WebComponent} from "../../../../assets/framework/library/webcomponent";
 
 // Library
 const session = loader.library('session');
@@ -7,23 +7,15 @@ const session = loader.library('session');
 // Language
 const language = await loader.language('account/password');
 
-export default class extends Controller {
+customElements.define('account-password', class extends WebComponent {
     render() {
         let data = {};
 
         return loader.template('account/password', { ...data, ...language });
     }
 
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-
     onSubmit(e) {
         e.preventDefault();
 
     }
-}
+});

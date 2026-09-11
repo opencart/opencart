@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -10,7 +10,10 @@ const language = await loader.language('catalog/manufacturer_list');
 // Storage
 let manufacturers = await loader.storage('manufacturer/manufacturer');
 
-export default class extends Controller {
+// Name
+export const name = 'manufacturer-list';
+
+customElements.define('manufacturer-list', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -47,21 +50,9 @@ export default class extends Controller {
                     image: manufacturer.image
                 });
                 */
-
-                console.log(data);
             }
         }
 
-        console.log(data);
-
         return loader.template('catalog/manufacturer_list', { ...data, ...language });
     }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-}
+});

@@ -7,14 +7,14 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('common/menu');
 
+// Storage
+let categories = await loader.storage('category/category');
+
 customElements.define('common-menu', class extends WebComponent {
     async render() {
         let data = {};
 
         data.categories = [];
-
-        // Storage
-        let categories = await loader.storage('category/category');
 
         for (let category of categories) {
             let children = [];
@@ -36,13 +36,5 @@ customElements.define('common-menu', class extends WebComponent {
         }
 
         return loader.template('common/menu', { ...data, ...language, ...config });
-    }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
     }
 });

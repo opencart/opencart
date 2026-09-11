@@ -1,5 +1,7 @@
-export default class extends Controller {
-    async connected() {
+import { WebComponent } from '../component.js';
+
+customElements.define('information-gdpr', class extends WebComponent {
+    async connect() {
 
     }
 
@@ -10,7 +12,7 @@ export default class extends Controller {
             $('#collapse-remove').slideUp();
         }
     }
-};
+});
 
 $('input[name=\'action\']').on('change', function() {
 

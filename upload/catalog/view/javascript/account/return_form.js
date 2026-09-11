@@ -1,10 +1,10 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
 const language = await loader.language('account/returns');
 
-export default class extends Controller {
+customElements.define('return-form', class extends WebComponent {
    render() {
        return loader.template('account/return_form', { ...language });
     }
@@ -80,7 +80,5 @@ export default class extends Controller {
 
             button.click();
         }
-
-        // this.$button_cart.state = '';
     }
-}
+});

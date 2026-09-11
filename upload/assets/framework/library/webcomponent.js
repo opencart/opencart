@@ -13,11 +13,11 @@ export class WebComponent extends HTMLElement {
     async connectedCallback() {
         //this.attachShadow({ mode: 'open' });
 
-        if (this.connected !== undefined) {
-            this.connected();
+        if ('connected' in this) {
+            await this.connect();
         }
 
-        if (this.render !== undefined) {
+        if ('render' in this) {
             this.update();
         }
     }
@@ -51,25 +51,18 @@ export class WebComponent extends HTMLElement {
 
                 // Attach
                 if (element.hasAttribute('data-action')) {
-                    console.log(element);
-
                     let parts = element.getAttribute('data-action').split(' ');
 
-                    console.log(parts);
+                    //console.log(parts);
 
                     for (let part of parts) {
-                        let test = action.create(part, element);
+                        let test = action.get(part);
 
-                        let value = this.data.get(part);
-
-                        let rrrr = new value(element);
-
-
+                        new test(element);
                     }
 
                     //console.log('element', element);.button('loading')
-                    console.log('element', Object.entries(element));
-
+                    //console.log('element', Object.entries(element));
 
                     element.removeAttribute('data-action');
                 }

@@ -1,7 +1,7 @@
-import { Controller } from '../component.js';
 import { loader } from '../index.js';
+import {WebComponent} from "../../../../assets/framework/library/webcomponent";
 
-class extends Controller {
+customElements.define('product-thumb', class extends WebComponent {
     get value() {
         return this.getAttribute('value');
     }
@@ -10,7 +10,7 @@ class extends Controller {
         this.setAttribute('value', value);
     }
 
-    async render() {
+    async  render() {
         let html = '';
 
         // Information
@@ -33,4 +33,4 @@ class extends Controller {
             button.removeAttribute('disabled');
         }
     }
-}
+});

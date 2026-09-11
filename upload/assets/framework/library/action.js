@@ -1,6 +1,5 @@
 import { loader } from '../index.js';
 
-
 export let action = new Map(Object.entries({
     form: (element) => {
         return new Form(element);
@@ -15,3 +14,20 @@ export let action = new Map(Object.entries({
         return new Template(element);
     }
 }));
+
+let test = {
+    name: 'common-header',
+    register: () => {
+        customElements.define(name, this);
+    },
+    constructor: () => {
+
+    },
+    render: () => {
+
+    },
+    onClick: () => {
+
+    }
+}
+

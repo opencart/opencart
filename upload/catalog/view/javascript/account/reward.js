@@ -1,8 +1,8 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-class extends Controller {
-    async connected() {
+customElements.define('account-reward', class extends WebComponent {
+    async connect() {
 
     }
-}
+});

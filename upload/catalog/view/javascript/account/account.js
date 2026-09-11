@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -10,7 +10,10 @@ const language = await loader.language('account/account');
 // Library
 const customer = await loader.library('customer');
 
-export default class extends Controller {
+// Name
+export const name = 'account-account';
+
+customElements.define('account-account', class extends WebComponent {
     connect() {
         if (!customer.isLogged()) {
             let target = document.getElementById('content');
@@ -26,12 +29,4 @@ export default class extends Controller {
 
         return loader.template('account/account', { ...data, ...language, ...config });
     }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-};
+});

@@ -1,8 +1,6 @@
 export { WebComponent } from './library/webcomponent.js';
-export { Controller } from './library/controller.js';
 
 // General
-//import('./component/alert.js');
 import('./component/include.js');
 import('./component/pagination.js');
 

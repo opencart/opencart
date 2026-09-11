@@ -29,6 +29,7 @@ config.cache.set('default', {
     config_review_status: true,
     config_tax: true,
     config_account_id: 1,
+    config_gdpr_id: 0,
     config_stock_status_id: 4,
     config_affiliate_status: 1,
     config_file_max_size: 3000
@@ -94,8 +95,7 @@ template.addFilter('length', (value, length_class_id) => {
 });
 
 // General
-import('./common/header.js');
-import('./common/footer.js');
+import('./common/layout.js');
 
 /*
 import '../../../assets/sass/sass.js';

@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
@@ -7,13 +7,13 @@ const language = await loader.language('account/subscription');
 // Library
 const session = await loader.library('session');
 
-export default class extends Controller {
+customElements.define('account-subscription', class extends WebComponent {
     render() {
         let data = {};
 
         return loader.template('account/subscription', { ...data, ...language });
     }
-};
+});
 
 /*
 $('#button-cancel').on('click', function(e) {

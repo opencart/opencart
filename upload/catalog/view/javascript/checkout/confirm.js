@@ -5,13 +5,11 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 customElements.define('checkout-confirm', class extends WebComponent {
-    async connected() {
+    async connect(){
 
     }
 
-    async render() {
-
-
+    async render(){
 
 
         return loader.template('checkout/confirm', { ...data,  ...language });

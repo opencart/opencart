@@ -1,12 +1,10 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 const language = await loader.language('account/reset');
 
-export default class extends Controller {
+customElements.define('account-reset', class extends WebComponent {
     render() {
-
-
         return loader.template('account/reset', { ...language });
     }
 
@@ -84,4 +82,4 @@ export default class extends Controller {
 
         // this.$button_cart.state = '';
     }
-}
+});

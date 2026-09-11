@@ -1,11 +1,11 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
 const language = await loader.language('account/return');
 
-export default class extends Controller {
-    async connected() {
+customElements.define('return-list', class extends WebComponent {
+    async connect() {
 
     }
-}
+});

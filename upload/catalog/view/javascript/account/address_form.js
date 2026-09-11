@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
@@ -8,7 +8,10 @@ const language = await loader.language('account/address');
 const ajax = await loader.library('ajax');
 const customer = await loader.library('customer');
 
-export default class extends Controller {
+// Name
+export const name = 'account-address-form';
+
+customElements.define('account-address-form', class extends WebComponent {
     render() {
         let data = {};
 
@@ -17,15 +20,11 @@ export default class extends Controller {
         customer.getAddress();
 
 
-
         return loader.template('account/address', { ...data, ...language });
     }
 
     onSubmit(e) {
         e.preventDefault();
-
-
-
 
     }
 
@@ -33,14 +32,9 @@ export default class extends Controller {
         let dismissible = document.querySelectorAll('.alert-dismissible');
 
         dismissible.remove();
-
-        this.request.post({
-            url: '',
-            success: this.onComplete
-        });
     }
 
-    onSuccess(json) {
+    onSuccess(json){
         let alert = document.getElementById('alert');
 
         if (json['error']) {
@@ -51,7 +45,7 @@ export default class extends Controller {
             alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
     }
-}
+});
 
 /*
 const address = document.getElementById('address');

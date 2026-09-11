@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -7,8 +7,8 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('information/information');
 
-export default class extends Controller {
-    async render() {
+customElements.define('information-information', class extends WebComponent {
+    async render(){
         let request = new URL(import.meta.url).searchParams;
 
         let information = await loader.storage('information/information-' + request.get('information_id'));
@@ -19,4 +19,4 @@ export default class extends Controller {
             return await loader.template('information/information', { ...information, ...description, ...language, ...config });
         }
     }
-};
+});

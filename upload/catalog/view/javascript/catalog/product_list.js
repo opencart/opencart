@@ -8,8 +8,11 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/product_list');
 
+// Name
+export const name = 'product-list';
+
 customElements.define('product-list', class extends WebComponent {
-    async render() {
+    async render(){
         let data = {};
 
         if (this.hasAttribute('path')) {
@@ -63,8 +66,35 @@ customElements.define('product-list', class extends WebComponent {
     }
 
     onChange(e) {
-        this.setAttribute('sort');
 
 
     }
 });
+/*
+$(document).ready(function() {
+    // Product List
+    $('#button-list').on('click', function() {
+        var element = this;
+
+        $('#product-list').attr('class', 'row row-cols-1 product-list');
+
+        $('#button-grid').removeClass('active');
+        $('#button-list').addClass('active');
+
+        localStorage.setItem('display', 'list');
+    });
+
+    // Product Grid
+    $('#button-grid').on('click', function() {
+        var element = this;
+
+        // What a shame bootstrap does not take into account dynamically loaded columns
+        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
+
+        $('#button-list').removeClass('active');
+        $('#button-grid').addClass('active');
+
+        localStorage.setItem('display', 'grid');
+    });
+
+ */

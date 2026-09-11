@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -15,7 +15,7 @@ const cart = await loader.library('cart');
 // Storage
 const customer_groups = await loader.storage('customer/customer_group');
 
-export default class extends Controller {
+customElements.define('account-register', class extends WebComponent {
     token = '';
 
     connect() {
@@ -125,4 +125,4 @@ export default class extends Controller {
         //     }
         //}
     }
-}
+});

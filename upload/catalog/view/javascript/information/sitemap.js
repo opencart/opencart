@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -11,10 +11,10 @@ const language = await loader.language('information/sitemap');
 const categories = await loader.storage('category/category');
 const informations = await loader.storage('information/information');
 
-console.log(categories);
-console.log(informations);
+// Name
+export const name = 'information-sitemap';
 
-export default class extends Controller {
+customElements.define('information-sitemap', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -48,8 +48,6 @@ export default class extends Controller {
             });
         }
 
-        data.config_product_count = config.config_product_count;
-
-        return loader.template('information/sitemap', { ...data, ...language });
+        return loader.template('information/sitemap', { ...data, ...language, ...config });
     }
-}
+});

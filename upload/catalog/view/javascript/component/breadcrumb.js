@@ -1,8 +1,7 @@
-import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
-export default class extends Controller {
-    async connected() {
+export default class extends WebComponent {
+    connect: async () => {
 
     }
 }

@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
@@ -9,11 +9,11 @@ const ajax = await loader.library('ajax');
 const session = await loader.library('session');
 const cart = await loader.library('cart');
 
-export default class extends Controller {
+customElements.define('account-login', class extends WebComponent {
     token = '';
 
-    connect() {
-        this.token = ajax.get('action.php?route=account/login.token');
+    async connect() {
+        this.token = await ajax.get('action.php?route=account/login.token');
     }
 
     async render() {
@@ -43,7 +43,7 @@ export default class extends Controller {
 
         ajax.post('action.php?route=account/login.login', form, {
             beforeSend: (request) => {
-                //this.bind('button-cart').setAttribute('loading', '');
+                //this.button.button('loading');
             },
             onComplete: (json) => {
                 //console.log(this.bind('button-cart'));
@@ -93,4 +93,4 @@ export default class extends Controller {
             }
         });
     }
-}
+});

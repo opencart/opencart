@@ -1,6 +1,7 @@
+import { WebComponent } from '../component.js';
 
-export default class extends Controller {
-    async connected() {
+customElements.define('account-forgotten-reset', class extends WebComponent {
+    async connect() {
 
     }
 });

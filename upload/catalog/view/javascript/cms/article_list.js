@@ -7,6 +7,9 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('cms/article_list');
 
+// Name
+export const name = 'article-list';
+
 customElements.define('article-list', class extends WebComponent {
     async render() {
         let data = {};
@@ -67,14 +70,6 @@ customElements.define('article-list', class extends WebComponent {
     }
 
     onChange(e) {
-        this.setAttribute('sort');
-    }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
+        this.getAttribute('sort');
     }
 });

@@ -1,12 +1,15 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-class extends Controller {
-    async connected() {
+// Name
+export const name = 'catalog-search';
+
+export default class extends WebComponent {
+    async render() {
 
     }
 }
-
+/*
 $('#button-search').on('click', function() {
     url = 'action.php?route=catalog/search&language={{ language }}';
 
@@ -48,3 +51,4 @@ $('#input-category').on('change', function() {
 });
 
 $('#input-category').trigger('change');
+*/

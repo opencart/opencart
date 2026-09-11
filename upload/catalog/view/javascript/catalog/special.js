@@ -1,15 +1,11 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
 const language = await loader.language('catalog/special');
 
-class extends Controller {
-    async connected() {
-
-    }
-
+customElements.define('catalog-special', class extends WebComponent {
     render() {
         return loader.template('catalog/special', { ...language });
     }
-}
+});

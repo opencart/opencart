@@ -1,15 +1,15 @@
-import {Controller, WebComponent} from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
 customElements.define('payment-method', class extends WebComponent {
-    async connected() {
+    async connect(){
 
     }
 
-    async render() {
+    async render(){
         let data = {};
 
 

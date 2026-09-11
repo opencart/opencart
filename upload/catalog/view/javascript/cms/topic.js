@@ -1,4 +1,3 @@
-import { Controller } from '../component.js';
 import { loader } from '../index.js';
 import './article_list.js';
 
@@ -8,11 +7,10 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('cms/topic');
 
-
 // Storage
 let topics = await loader.storage('topic/topic');
 
-export default class extends Controller {
+customElements.define('topic-topic', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -61,7 +59,7 @@ export default class extends Controller {
     async onSubmit(e) {
         e.preventDefault();
 
-        let url = 'action.php?route=cms/topic&language={{ language }}';
+        let url = 'action.php?route=cms/topic&language=';
 
         var search = $('#input-search').val();
 
@@ -77,12 +75,4 @@ export default class extends Controller {
 
         location = url;
     }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-}
+});

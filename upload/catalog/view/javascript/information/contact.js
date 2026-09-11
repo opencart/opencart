@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader, binded } from '../index.js';
 
 // Library
@@ -15,7 +15,7 @@ const language = await loader.language('information/contact');
 // Storage
 const locations = await loader.storage('information/location');
 
-export default class extends Controller {
+customElements.define('information-contact', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -41,7 +41,7 @@ export default class extends Controller {
 
         ajax.post('action.php?route=information/contact.send', form, {
             beforeSend: (request) => {
-                binded('button-send').button('loading');
+                //this.bind('button-send').button('loading');
             },
             onComplete: (json) => {
                 console.log(this.bind('button-send'));
@@ -104,4 +104,4 @@ export default class extends Controller {
             }
         });
     }
-}
+});

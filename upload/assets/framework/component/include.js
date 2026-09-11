@@ -21,10 +21,10 @@ customElements.define('x-include', class extends WebComponent {
 
         console.log('x-include', this.src);
 
-        let object = await import(config.config_path + this.src);
+        let response = await import(config.config_path + this.src);
 
-        let controller = new object.default(this);
+        let { name } = response;
 
-        this.innerHTML = await controller.execute();
+        return `<${name}></${name}>`;
     }
 });

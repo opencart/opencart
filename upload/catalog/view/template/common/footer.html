@@ -17,7 +17,7 @@
         <ul class="list-unstyled">
           <li><a href="information/contact.js" data-action="link" data-target="content">{{ text_contact }}</a></li>
           <li><a href="account/return_form.js" data-action="link" data-target="content">{{ text_return }}</a></li>
-          {% if gdpr %}
+          {% if config_gdpr_id %}
             <li><a href="information/gdpr.js" data-action="link" data-target="content">{{ text_gdpr }}</a></li>
           {% endif %}
           <li><a href="information/sitemap.js" data-action="link" data-target="content">{{ text_sitemap }}</a></li>
@@ -27,7 +27,7 @@
         <h5>{{ text_extra }}</h5>
         <ul class="list-unstyled">
           <li><a href="catalog/manufacturer_list.js" data-action="link" data-target="content">{{ text_manufacturer }}</a></li>
-          {% if affiliate %}
+          {% if config_affiliate_status %}
             <li><a href="account/affiliate.js" data-action="link" data-target="content">{{ text_affiliate }}</a></li>
           {% endif %}
           <li><a href="catalog/special.js" data-action="link" data-target="content">{{ text_special }}</a></li>

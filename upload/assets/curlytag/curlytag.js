@@ -778,7 +778,7 @@ export class CurlyTag {
         return token.raw ? `${location}: ${token.raw}` : location;
     }
 
-    parseOperator(value) {
+    parseOperator(code) {
         let operators = {
             '(^not )': '!',
             '( not )': ' !',
@@ -786,16 +786,20 @@ export class CurlyTag {
             '( or )': ' || '
         };
 
-        let before = value;
-
         for (let [operator, replace] of Object.entries(operators)) {
             // Make sure the replacement words are not in 3 different types of quotes.
             let regex = new RegExp(`("[^"]*"|'[^']*'|\`[^\`]*\`)?${operator}`, 'g');
 
-            value = value.replaceAll(regex, replace);
+            code = code.replaceAll(regex, replace);
         }
 
-        return value;
+        return code;
+    }
+
+    parseRange(code) {
+        let regex = new RegExp(`("[^"]*"|'[^']*'|\`[^\`]*\`)\((d+|)\.\.\.([])`, 'g');
+
+
     }
 
     /**

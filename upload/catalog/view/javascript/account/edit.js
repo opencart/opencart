@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -10,7 +10,7 @@ const language = await loader.language('account/edit');
 // Library
 const customer = await loader.library('customer');
 
-export default class extends Controller {
+customElements.define('account-edit', class extends WebComponent {
     token = '';
 
     connect() {
@@ -108,4 +108,4 @@ export default class extends Controller {
             }
         });
     }
-}
+});

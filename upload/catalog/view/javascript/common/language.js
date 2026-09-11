@@ -7,11 +7,11 @@ let config = await loader.config('default');
 // library
 let local = await loader.library('local');
 
-// Storage
-let languages = await loader.storage('localisation/language');
-
 // Language
 let language = await loader.language('common/language');
+
+// Storage
+let languages = await loader.storage('localisation/language');
 
 customElements.define('common-language', class extends WebComponent {
     async render() {

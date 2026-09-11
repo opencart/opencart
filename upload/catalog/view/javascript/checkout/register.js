@@ -9,11 +9,11 @@ const customer = await loader.library('customer');
 customElements.define('checkout-register', class extends WebComponent {
     token = '';
 
-    async connected() {
+    async connect() {
         this.token = ajax.get('action.php?route=checkout/register.token');
     }
 
-    async render() {
+    async render(){
         let data = {};
 
 

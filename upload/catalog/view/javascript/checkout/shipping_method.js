@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 customElements.define('shipping-method', class extends WebComponent {
-    async connected() {
+    async connect() {
 
     }
 

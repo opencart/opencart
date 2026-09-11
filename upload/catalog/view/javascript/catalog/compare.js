@@ -1,11 +1,11 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-export class extends Controller {
-    async connected() {
+// Name
+export const name = 'catalog-compare';
 
-
-
+customElements.define('catalog-compare', class extends WebComponent {
+    render() {
 
     }
-}
+});

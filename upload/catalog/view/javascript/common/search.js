@@ -8,13 +8,7 @@ const language = await loader.language('common/search');
 const url = new URLSearchParams(document.location.search);
 
 customElements.define('common-search', class extends WebComponent {
-    constructor() {
-        super();
-
-
-    }
-
-    render() {
+    async render() {
         let data = {};
 
         if (url.has('search')) {

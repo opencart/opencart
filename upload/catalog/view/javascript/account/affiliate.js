@@ -1,29 +1,25 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('cms/article_info');
+const language = await loader.language('account/affiliate');
 
-export default class extends Controller {
-    async connected() {
+// Name
+export const name = 'account-affiliate';
 
+customElements.define('account-affiliate', class extends WebComponent {
+    async connect() {
 
     }
-
 
     render() {
 
-
-
         return loader.template('account/affiliate', { ...language });
     }
-
-
-
-}
+});
 
 $('input[name=\'payment_method\']').on('change', function() {
     $('.payment').hide();

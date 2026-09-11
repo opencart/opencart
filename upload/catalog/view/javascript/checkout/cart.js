@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
@@ -17,12 +17,8 @@ const tax = await loader.library('tax');
 // Currency
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
-export default class extends Controller {
-    connected() {
-
-    }
-
-    async render() {
+customElements.define('review-form', class extends WebComponent {
+    async render(){
         let data = {};
 
         data.products = cart.getProducts();
@@ -118,26 +114,13 @@ export default class extends Controller {
                 console.log('onError', e);
             }
         });
-
     }
 
     deleteProduct(e) {
         e.preventDefault();
 
     }
-
-    open() {
-
-    }
-
-    close(e) {
-        console.log('hi');
-
-        let modal = document.getElementById('dialog');
-
-        modal.close();
-    }
-};
+});
 
 /*
 $('#shopping-cart').on('submit', '#output-cart form', function(e) {

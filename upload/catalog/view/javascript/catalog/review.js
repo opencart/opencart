@@ -21,7 +21,7 @@ customElements.define('review-list', class extends WebComponent {
 customElements.define('review-form', class extends WebComponent {
 
 
-    async render() {
+    async render(){
         let data = {};
 
         return loader.template('catalog/review_form', { ...data, ...language, ...config });
@@ -35,10 +35,10 @@ customElements.define('review-form', class extends WebComponent {
         let form = new FormData(target);
 
         ajax.post('action.php?route=catalog/review.write&language=' + config.config_language + '&review_token=' + this.review_token + '&product_id={{ product_id }}', form, {
-            beforeSend: function() {
+            beforeSend: () => {
                 this.bind('button-review').loading = true;
             },
-            complete: function() {
+            complete: () => {
                 this.bind('button-review').loading = false;
             },
             success: function(json) {

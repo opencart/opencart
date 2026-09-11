@@ -4,12 +4,15 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
+// Language
+const language = await loader.language('checkout/cart');
+
 customElements.define('shipping-address', class extends WebComponent {
-    async connected() {
+    async connect() {
 
     }
 
-    async render() {
+    async render()  {
         let data = {};
 
 

@@ -14,6 +14,8 @@ const language = await loader.language('common/header');
 
 // library
 const session = await loader.library('session');
+const cart = await loader.library('cart');
+const customer = await loader.library('customer');
 
 customElements.define('common-header', class extends WebComponent {
     async render() {
@@ -21,24 +23,10 @@ customElements.define('common-header', class extends WebComponent {
 
         data.wishlist = 0;
 
-        data.logged = session.has('customer');
-
-        if (data.logged) {
-            data.wishlist = session.get('customer').getWishlist().length;
+        if (customer.isLogged()) {
+            data.wishlist = customer.getWishlist().length;
         }
 
         return await loader.template('common/header', { ...data, ...language, ...config });
-    }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        console.log(e);
-        console.log(target);
-
-
-        target.src = e.currentTarget.getAttribute('href');
     }
 });

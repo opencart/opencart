@@ -1,4 +1,4 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 import './review.js';
 
@@ -20,8 +20,11 @@ const currency = local.has('currency') ? local.get('currency') : config.config_c
 // Storage
 const stock_statuses = await loader.storage('localisation/stock_status');
 
-export default class extends Controller {
-    async render() {
+// Name
+export const name = 'product-info';
+
+customElements.define('product-info', class extends WebComponent {
+    async render(){
         let data = {};
 
         let request = new URL(import.meta.url).searchParams;
@@ -149,7 +152,7 @@ export default class extends Controller {
         }
     }
 
-    async addToCart(e) {
+    async addToCart(e){
         e.preventDefault();
 
         console.log('addToCart');
@@ -230,7 +233,7 @@ export default class extends Controller {
         console.log(e);
     }
 
-    async addToCompare(e) {
+    async addToCompare(e){
         e.preventDefault();
 
         console.log('addToCompare');
@@ -261,4 +264,4 @@ export default class extends Controller {
             }
         });
     }
-}
+});

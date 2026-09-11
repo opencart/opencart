@@ -1,9 +1,9 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 const language = await loader.language('account/download');
 
-export default class extends Controller {
+customElements.define('account-download', class extends WebComponent {
     render() {
         let data = {};
 
@@ -19,4 +19,4 @@ export default class extends Controller {
 
         target.src = e.currentTarget.getAttribute('href');
     }
-};
+});

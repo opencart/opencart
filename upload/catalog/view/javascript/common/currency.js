@@ -7,11 +7,11 @@ const config = await loader.config('default');
 // library
 const local = await loader.library('local');
 
-// Storage
-const currencies = await loader.storage('localisation/currency');
-
 // Language
 const language = await loader.language('common/currency');
+
+// Storage
+const currencies = await loader.storage('localisation/currency');
 
 customElements.define('common-currency', class extends WebComponent {
     async render() {

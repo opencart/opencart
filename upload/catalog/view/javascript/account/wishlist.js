@@ -1,13 +1,13 @@
-import { Controller } from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Library
 const session = await loader.library('session');
-console.log(session);
+
 // Language
 const language = await loader.language('account/edit');
 
-class extends Controller {
+customElements.define('account-wishlist', class extends WebComponent {
     render() {
         let data = {};
 
@@ -24,9 +24,8 @@ class extends Controller {
 
     remove() {
 
-
     }
-}
+});
 
 /*
 $('#wishlist').on('click', '.btn-danger', function(e) {

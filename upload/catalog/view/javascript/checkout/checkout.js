@@ -17,12 +17,10 @@ const language = await loader.language('checkout/checkout');
 const cart = await loader.library('cart');
 const customer = await loader.library('customer');
 
+// Name
+export const name = 'checkout-checkout';
 
 customElements.define('checkout-checkout', class extends WebComponent {
-    connect() {
-
-    }
-
     async render() {
         let data = {};
 

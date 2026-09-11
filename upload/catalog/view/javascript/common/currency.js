@@ -36,11 +36,5 @@ customElements.define('common-currency', class extends WebComponent {
         let code = e.currentTarget.getAttribute('href');
 
         local.set('currency', code);
-
-        let elements = document.querySelectorAll('x-currency');
-
-        for (let element of elements) {
-
-        }
     }
 });

@@ -15,6 +15,9 @@ const cart = await loader.library('cart');
 // Storage
 const customer_groups = await loader.storage('customer/customer_group');
 
+// Name
+export const name = 'account-register';
+
 customElements.define('account-register', class extends WebComponent {
     token = '';
 

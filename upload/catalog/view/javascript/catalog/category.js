@@ -15,11 +15,9 @@ customElements.define('catalog-category', class extends WebComponent {
     async render() {
         let data = {};
 
-        let request = new URL(import.meta.url).searchParams;
-
         let category_id = 0
 
-        let path = request.get('path');
+        let path = this.getAttribute('path');
 
         if (path.indexOf('_') !== -1) {
             category_id = path.split('_').pop();

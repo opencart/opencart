@@ -1,7 +1,11 @@
 import { WebComponent } from '../component.js';
+import { loader, binded } from '../index.js';
+
+// Name
+export const name = 'information-gdpr';
 
 customElements.define('information-gdpr', class extends WebComponent {
-    async connect() {
+    async render() {
 
     }
 

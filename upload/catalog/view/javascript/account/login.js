@@ -9,6 +9,9 @@ const ajax = await loader.library('ajax');
 const session = await loader.library('session');
 const cart = await loader.library('cart');
 
+// Name
+export const name = 'account-login';
+
 customElements.define('account-login', class extends WebComponent {
     token = '';
 
@@ -22,14 +25,6 @@ customElements.define('account-login', class extends WebComponent {
         data.token = this.token;
 
         return loader.template('account/login', { ...data, ...language });
-    }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
     }
 
     async onSubmit(e) {

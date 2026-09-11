@@ -5,7 +5,10 @@ import { loader } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('account/edit');
+const language = await loader.language('account/forgotten');
+
+// Name
+export const name = 'account-forgotten';
 
 customElements.define('account-forgotten', class extends WebComponent {
     connect() {

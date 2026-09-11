@@ -6,6 +6,7 @@ const config = await loader.config('default');
 
 customElements.define('x-include', class extends WebComponent {
     static observed = ['src'];
+    data = new Map();
 
     get src() {
         return this.getAttribute('src');
@@ -21,10 +22,24 @@ customElements.define('x-include', class extends WebComponent {
 
         console.log('x-include', this.src);
 
-        let response = await import(config.config_path + this.src);
+        let [path, query] = this.src.split('?');
 
-        let { name } = response;
+        if (!this.data.has(path)) {
+            let response = await import(config.config_path + path);
 
-        return `<${name}></${name}>`;
+            this.data.set(path, response.name);
+        }
+
+        let name = this.data.get(path);
+
+        const params = new URLSearchParams(query);
+
+        let html = '<' + name;
+
+        for (let [ key, value] of params.entries()) {
+            html += ' ' + key + '="' + value + '"';
+        }
+
+        return html + '></' + name + '>';
     }
 });

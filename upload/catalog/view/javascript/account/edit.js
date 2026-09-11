@@ -10,6 +10,9 @@ const language = await loader.language('account/edit');
 // Library
 const customer = await loader.library('customer');
 
+// Name
+export const name = 'account-edit';
+
 customElements.define('account-edit', class extends WebComponent {
     token = '';
 
@@ -37,14 +40,6 @@ customElements.define('account-edit', class extends WebComponent {
         data.token = customer.getToken();
 
         return loader.template('account/edit', { ...data, ...language, ...config });
-    }
-
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
     }
 
     async onSubmit(e) {

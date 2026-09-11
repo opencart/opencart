@@ -21,7 +21,7 @@
     <ul class="list-unstyled mb-1">
 
       {% if manufacturer %}
-      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer.js?manufacturer_id={{ manufacturer_id }}" data-on="click:onClick">{{ manufacturer }}</a></strong></li>
+      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer.js?manufacturer_id={{ manufacturer_id }}" data-action="link" data-target="content">{{ manufacturer }}</a></strong></li>
       {% endif %}
 
       <li>{{ text_model }}: <strong>{{ model }}</strong></li>

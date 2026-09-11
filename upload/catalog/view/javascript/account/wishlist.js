@@ -5,7 +5,10 @@ import { loader } from '../index.js';
 const session = await loader.library('session');
 
 // Language
-const language = await loader.language('account/edit');
+const language = await loader.language('account/wishlist');
+
+// Name
+export const name = 'account-wishlist';
 
 customElements.define('account-wishlist', class extends WebComponent {
     render() {

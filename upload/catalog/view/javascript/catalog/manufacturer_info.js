@@ -14,10 +14,8 @@ customElements.define('manufacturer-info', class extends WebComponent {
     async render(){
         let data = {};
 
-        let request = new URL(import.meta.url).searchParams;
-
         // Product Info
-        let manufacturer = await loader.storage('manufacturer/manufacturer-' + request.get('manufacturer_id'));
+        let manufacturer = await loader.storage('manufacturer/manufacturer-' + this.getAttribute('manufacturer_id'));
 
         if (manufacturer !== undefined && config.config_language in manufacturer.description) {
             let description = manufacturer.description[config.config_language];

@@ -16,13 +16,12 @@
 
   <h3>{{ text_refine }}</h3>
   {% assign total = categories | length %}
-
   {% if total <= 5 %}
     <div class="row">
       <div class="col-sm-3">
         <ul>
           {% for category in categories %}
-            <li><a href="catalog/category.js?path={{ category.path }}" data-on="click:onClick">{{ category.name }}</a></li>
+            <li><a href="catalog/category.js?path={{ category.path }}" data-action="link" data-target="content">{{ category.name }}</a></li>
           {% endfor %}
         </ul>
       </div>
@@ -39,7 +38,7 @@
         <div class="col">
           <ul>
             {% for child in category %}
-              <li><a href="catalog/category.js?path={{ child.path }}" data-on="click:onClick">{{ child.name }}</a></li>
+              <li><a href="catalog/category.js?path={{ child.path }}" data-action="link" data-target="content">{{ child.name }}</a></li>
             {% endfor %}
           </ul>
         </div>

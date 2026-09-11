@@ -1,7 +1,10 @@
 import { WebComponent } from '../component.js';
 
-customElements.define('account-forgotten-reset', class extends WebComponent {
-    async connect() {
+// Name
+export const name = 'forgotten-reset';
+
+customElements.define('forgotten-reset', class extends WebComponent {
+    async render() {
 
     }
 });

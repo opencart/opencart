@@ -17,7 +17,10 @@ const tax = await loader.library('tax');
 // Currency
 const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
-customElements.define('review-form', class extends WebComponent {
+// Name
+export const name = 'checkout-cart';
+
+customElements.define('checkout-cart', class extends WebComponent {
     async render(){
         let data = {};
 

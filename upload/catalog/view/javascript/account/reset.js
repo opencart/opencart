@@ -3,6 +3,9 @@ import { loader } from '../index.js';
 
 const language = await loader.language('account/reset');
 
+// Name
+export const name = 'account-reset';
+
 customElements.define('account-reset', class extends WebComponent {
     render() {
         return loader.template('account/reset', { ...language });
@@ -11,7 +14,7 @@ customElements.define('account-reset', class extends WebComponent {
     async onSubmit(e) {
         e.preventDefault();
 
-        console.log('addToCart');
+        console.log('onSubmit');
 
         //this.$button_cart.state = 'loading';
 
@@ -19,7 +22,7 @@ customElements.define('account-reset', class extends WebComponent {
 
         let form = new FormData(target);
 
-        let response = await fetch('action.php?route=account/register', {
+        let response = await fetch('action.php?route=account/reset', {
             method: 'POST',
             body: form
         });
@@ -79,7 +82,5 @@ customElements.define('account-reset', class extends WebComponent {
 
             button.click();
         }
-
-        // this.$button_cart.state = '';
     }
 });

@@ -4,6 +4,9 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/returns');
 
+// Name
+export const name = 'return-form';
+
 customElements.define('return-form', class extends WebComponent {
    render() {
        return loader.template('account/return_form', { ...language });
@@ -13,8 +16,6 @@ customElements.define('return-form', class extends WebComponent {
         e.preventDefault();
 
         console.log('addToCart');
-
-        //this.$button_cart.state = 'loading';
 
         let target = e.target;
 

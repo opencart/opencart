@@ -4,8 +4,6 @@ import './header.js';
 import './footer.js';
 
 customElements.define('common-layout', class extends WebComponent {
-    content = '';
-
     render() {
         return loader.template('common/layout');
     }

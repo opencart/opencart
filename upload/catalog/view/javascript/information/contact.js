@@ -15,6 +15,9 @@ const language = await loader.language('information/contact');
 // Storage
 const locations = await loader.storage('information/location');
 
+// Name
+export const name = 'information-contact';
+
 customElements.define('information-contact', class extends WebComponent {
     async render() {
         let data = {};

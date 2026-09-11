@@ -1,8 +1,11 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-customElements.define('account-authorize', class extends WebComponent {
-    async connect() {
+// Name
+export const name = 'authorize-reset';
+
+customElements.define('authorize-reset', class extends WebComponent {
+    async render() {
 
     }
 });

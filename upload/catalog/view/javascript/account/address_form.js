@@ -9,16 +9,13 @@ const ajax = await loader.library('ajax');
 const customer = await loader.library('customer');
 
 // Name
-export const name = 'account-address-form';
+export const name = 'address-form';
 
-customElements.define('account-address-form', class extends WebComponent {
+customElements.define('address-form', class extends WebComponent {
     render() {
         let data = {};
 
         data.addresses = customer.getAddresses();
-
-        customer.getAddress();
-
 
         return loader.template('account/address', { ...data, ...language });
     }

@@ -7,6 +7,9 @@ const language = await loader.language('account/newsletter');
 // Library
 const session = await loader.library('session');
 
+// Name
+export const name = 'account-newsletter';
+
 customElements.define('account-newsletter', class extends WebComponent {
     async render() {
         let data = {};

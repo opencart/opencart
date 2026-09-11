@@ -5,7 +5,7 @@
       <p><strong>{{ text_register }}</strong></p>
       <p>{{ text_register_account }}</p>
       <div class="text-end">
-        <a href="account/register.js" data-on="click:onClick" class="btn btn-primary">{{ button_continue }}</a>
+        <a href="account/register.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
         <div class="mb-3">
           <label for="input-password" class="col-form-label">{{ entry_password }}</label>
           <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control mb-1"/>
-          <a href="account/forgotten.js" data-on="click:onClick">{{ text_forgotten }}</a>
+          <a href="account/forgotten.js" data-action="link" data-target="content">{{ text_forgotten }}</a>
         </div>
         {% if redirect %}
           <input type="hidden" name="redirect" value="{{ redirect }}"/>

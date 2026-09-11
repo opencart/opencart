@@ -8,9 +8,6 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/product_list');
 
-// Name
-export const name = 'product-list';
-
 customElements.define('product-list', class extends WebComponent {
     async render(){
         let data = {};

@@ -32,7 +32,7 @@
 
           <tr>
 
-            <td class="text-center">{% if product.image %}<a href="catalog/product.js?product_id={{ product_id }}" data-on="click:onClick"><img src="image/{{ product.image }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 100px"/></a>{% endif %}</td>
+            <td class="text-center">{% if product.image %}<a href="catalog/product.js?product_id={{ product_id }}" data-action="link" data-target="content"><img src="image/{{ product.image }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 100px"/></a>{% endif %}</td>
 
             <td class="text-start text-wrap"><a href="catalog/product.js?product_id={{ product_id }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
               <ul class="list-unstyled mb-0">

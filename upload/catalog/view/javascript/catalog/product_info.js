@@ -27,10 +27,8 @@ customElements.define('product-info', class extends WebComponent {
     async render(){
         let data = {};
 
-        let request = new URL(import.meta.url).searchParams;
-
         // Product Info
-        let product = await loader.storage('product/product-' + request.get('product_id'));
+        let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
         if (product !== undefined && config.config_language in product.description) {
             let description = product.description[config.config_language];

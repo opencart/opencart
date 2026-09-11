@@ -15,13 +15,13 @@
         {% assign batch = 5 %}
         {% assign column = total | divide: 5 | round %}
         {% endif %}
-        <li class="nav-item dropdown"><a href="catalog/category.js?path={{ category.path }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
+        <li class="nav-item dropdown"><a href="catalog/category.js?path={{ category.path }}" data-action="link" data-target="content" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
           <div class="dropdown-menu dropdown-column-{{ column }}">
             <div class="dropdown-inner">
               {% for children in category.children | batch: 5 %}
               <ul class="list-unstyled">
                 {% for child in children %}
-                <li><a href="catalog/category.js?path={{ child.path }}" data-on="click:onClick" class="dropdown-item">{{ child.name }}{% if config_product_count %} ({{ child.product_total }}){% endif %}</a></li>
+                <li><a href="catalog/category.js?path={{ child.path }}" data-action="link" data-target="content" class="dropdown-item">{{ child.name }}{% if config_product_count %} ({{ child.product_total }}){% endif %}</a></li>
                 {% endfor %}
               </ul>
               {% endfor %}
@@ -30,12 +30,12 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a href="catalog/category.js?path={{ category.path }}" data-on="click:onClick" class="dropdown-item">{{ text_all }} {{ category.name }}</a></li>
+              <li><a href="catalog/category.js?path={{ category.path }}" data-action="link" data-target="content" class="dropdown-item">{{ text_all }} {{ category.name }}</a></li>
             </ul>
           </div>
         </li>
         {% else %}
-        <li class="nav-item"><a href="catalog/category.js?path={{ category.path }}" data-on="click:onClick" class="dropdown-item">{{ category.name }}</a></li>
+        <li class="nav-item"><a href="catalog/category.js?path={{ category.path }}" data-action="link" data-target="content" class="dropdown-item">{{ category.name }}</a></li>
         {% endif %}
         {% endfor %}
       </ul>

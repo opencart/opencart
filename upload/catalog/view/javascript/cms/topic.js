@@ -1,3 +1,4 @@
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 import './article_list.js';
 
@@ -18,8 +19,8 @@ customElements.define('topic-topic', class extends WebComponent {
 
        data.topic_id = 0;
 
-        if (request.has('topic_id')) {
-            data.topic_id = request.get('topic_id');
+        if (this.hasAttribute('topic_id')) {
+            data.topic_id = this.getAttribute('topic_id');
         }
 
         data.heading_title = language.heading_title;

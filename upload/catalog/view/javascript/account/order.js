@@ -4,6 +4,9 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/order');
 
+// Name
+export const name = 'account-order';
+
 customElements.define('account-order', class extends WebComponent {
     render() {
 
@@ -11,11 +14,6 @@ customElements.define('account-order', class extends WebComponent {
         return loader.template('account/order', { ...language });
     }
 });
-
-
-
-
-
 
 var product_row = 0;
 

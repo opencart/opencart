@@ -1,6 +1,7 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
-import './review.js';
+import './review_form.js';
+import './review_list.js';
 
 // Config
 const config = await loader.config('default');
@@ -160,13 +161,11 @@ customElements.define('product-info', class extends WebComponent {
         let form = new FormData(target);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
-            beforeSend: (request) => {
-               //this.$['button-cart'].setAttribute('loading', '');
+            beforeSend: () => {
+               //ref.get('button-cart').button('loading');
             },
-            onComplete: (json) => {
-                //console.log(this.bind('button-cart'));
-
-                //this.bind('button-cart').loading = false;
+            onComplete: () => {
+                //ref.get('button-cart').button('reset');
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);
@@ -197,6 +196,8 @@ customElements.define('product-info', class extends WebComponent {
                     }
                 }
 
+                let match;
+
                 // Display success message
                 if (json['success'] !== undefined) {
                     let alert = target.querySelector('#alert');
@@ -205,17 +206,25 @@ customElements.define('product-info', class extends WebComponent {
                         alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-                    cart.clear();
+                    console.log(form);
 
-                    let output = [];
+                    // Code to use [] with js
+                    let option = [];
 
-                    for (let product of Object.values(json['products'])) {
-                        cart.add(product.cart_id, product);
+                    const inputs = target.querySelectorAll('input[name^=\'option\']');
+
+                    for (let input of inputs) {
+                        console.log(input.name);
+
+                        const indices = [...input.name.matchAll(/\[([^\[]*)\]/g)];
+
+                        console.log(indices);
                     }
 
-                    //let button = document.querySelector('#cart > button');
+                    //cart.add(form.get('product_id'), form.get('quantity'), form.get('option'), form.get('subscription_plan_id'));
+                    //cart.add(form.get('product_id'), form.get('quantity'), form.get('option'), form.get('subscription_plan_id'));
 
-                    //button.click();
+                    //console.log(cart.getProducts());
                 }
             },
             onError: (e) => {

@@ -274,8 +274,11 @@
       </table>
     </div>
   </div>
-  {% endif %} {% if config_review_status %}
+  {% endif %}
+  {% if config_review_status %}
   <div id="tab-review" class="tab-pane fade mb-4">
+    <review-form product_id="{{ product_id }}"></review-form>
+
     <review-list product_id="{{ product_id }}"></review-list>
   </div>
   {% endif %}

@@ -33,12 +33,10 @@ customElements.define('checkout-register', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/register.save&language={{ language }}', form, {
             beforeSend: (request) => {
-                //this.bind('button-cart').setAttribute('loading', '');
+                //ref.get('button-continue').button('loading');
             },
             onComplete: (json) => {
-                //console.log(this.bind('button-cart'));
-
-                //this.bind('button-cart').loading = false;
+               // ref.get('button-continue').button('reset');
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);
@@ -82,12 +80,14 @@ customElements.define('checkout-register', class extends WebComponent {
                 console.log('onError', e);
             }
         });
-
     }
 
     onChange() {
 
     }
+
+
+
 });
 
 

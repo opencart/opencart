@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const customer = await loader.library('customer');
 
 customElements.define('order-history', class extends WebComponent {
-    async connect(){
+    render(){
 
     }
 });

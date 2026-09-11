@@ -23,6 +23,22 @@ customElements.define('address-form', class extends WebComponent {
     onSubmit(e) {
         e.preventDefault();
 
+        let target = e.target;
+
+        let form = new FormData(target);
+
+        ajax.post('action.php?route=account/address.save', form, {
+            beforeSend: () => {
+                //ref.get('button-cart').button('loading');
+            },
+            onComplete: (json) => {
+                //ref.get('button-cart').button('reset');
+            },
+            onSuccess: this.onSuccess.bind(this),
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
     }
 
     delete(e) {

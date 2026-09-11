@@ -61,10 +61,10 @@ customElements.define('product-thumb', class extends WebComponent {
         let form = new FormData(target);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
-            beforeSend: (request) => {
+            beforeSend: () => {
 
             },
-            onComplete: (json) => {
+            onComplete: () => {
 
             },
             onSuccess: (json) => {
@@ -108,14 +108,9 @@ customElements.define('product-thumb', class extends WebComponent {
                         alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-                    let output = [];
+                    let item = [];
 
-                    console.log(json['products']);
-
-                    //console.log(Object.fromEntries(form));
-                    for (let product of json['products']) {
-                        cart.add(product);
-                    }
+                    cart.add(cart);
 
                     let button = document.querySelector('#cart > button');
 

@@ -4,11 +4,13 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
+// Language
+const language = await loader.language('checkout/payment_method');
+
+// library
+const ajax = await loader.library('ajax');
+
 customElements.define('payment-method', class extends WebComponent {
-    async connect(){
-
-    }
-
     async render(){
         let data = {};
 
@@ -23,13 +25,11 @@ customElements.define('payment-method', class extends WebComponent {
         let form = new FormData(target);
 
         ajax.post('action.php?route=account/login.login', form, {
-            beforeSend: (request) => {
-                //this.bind('button-cart').setAttribute('loading', '');
-            },
-            onComplete: (json) => {
-                //console.log(this.bind('button-cart'));
+            beforeSend: () => {
 
-                //this.bind('button-cart').loading = false;
+            },
+            onComplete: () => {
+
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);
@@ -77,8 +77,7 @@ customElements.define('payment-method', class extends WebComponent {
     }
 });
 
-
-
+/*
 // Payment Method
 $('#button-payment-methods').on('click', function() {
     var element = this;
@@ -290,3 +289,4 @@ $(document).on('change', '#input-checkout-agree', function() {
         }
     });
 });
+*/

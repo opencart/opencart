@@ -34,7 +34,7 @@ customElements.define('shipping-address', class extends WebComponent {
 
     }
 });
-
+/*
 $('input[name=\'shipping_existing\']').on('change', function() {
     if ($(this).val() == 1) {
         $('#shipping-existing').show();
@@ -173,3 +173,4 @@ $('#form-shipping-address').on('submit', function(e) {
         }
     });
 });
+*/

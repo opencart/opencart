@@ -15,9 +15,7 @@ customElements.define('account-newsletter', class extends WebComponent {
     async render() {
         let data = {};
 
-        //let customer = session.get('customer');
-
-        //data.newsletter = customer.get('newsletter');
+        data.newsletter = customer.getNewsletter();
 
         return loader.template('account/newsletter', { ...data, ...language });
     }

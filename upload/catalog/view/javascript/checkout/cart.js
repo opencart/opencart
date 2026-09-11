@@ -4,6 +4,7 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
+
 // Language
 const language = await loader.language('checkout/cart');
 
@@ -46,13 +47,11 @@ customElements.define('checkout-cart', class extends WebComponent {
         let form = new FormData(target);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
-            beforeSend: (request) => {
-                this.bind('button-cart').setAttribute('loading', '');
-            },
-            onComplete: (json) => {
-                console.log(this.bind('button-cart'));
+            beforeSend: () => {
 
-                //this.bind('button-cart').loading = false;
+            },
+            onComplete: () => {
+
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);

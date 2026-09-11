@@ -1,16 +1,15 @@
-import {Controller, WebComponent} from '../component.js';
+import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
+// Language
+const language = await loader.language('checkout/shipping_method');
+
 customElements.define('shipping-method', class extends WebComponent {
-    async connect() {
-
-    }
-
     async render() {
-
+        let data = {};
 
 
         return loader.template('checkout/shipping_method', { ...data,  ...language });
@@ -22,9 +21,7 @@ customElements.define('shipping-method', class extends WebComponent {
     }
 });
 
-
-
-
+/*
 // Shipping Method
 $('#button-shipping-methods').on('click', function() {
     var element = this;
@@ -161,3 +158,4 @@ $(document).on('submit', '#form-shipping-method', function(e) {
         }
     });
 });
+*/

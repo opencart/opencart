@@ -8,7 +8,7 @@ const customer = await loader.library('customer');
 export const name = 'order-info';
 
 customElements.define('order-info', class extends WebComponent {
-    async connect() {
+    async render() {
 
     }
 });

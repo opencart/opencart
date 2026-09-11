@@ -1,3 +1,13 @@
 <h1>{{ heading_title }}</h1>
-<div id="payment-method">{{ list }}</div>
+<div id="payment-method">
+
+  {% if payment_methods %}
+  {% for payment_method in payment_methods %}
+  {{ payment_method }}
+  {% endfor %}
+  {% else %}
+  <p>{{ text_no_results }}</p>
+  {% endif %}
+
+</div>
 <div><a href="account/account.js" data-action="link" data-target="content" class="btn btn-light">{{ button_back }}</a></div>

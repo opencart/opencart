@@ -8,6 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('account/edit');
 
 // Library
+const ajax = await loader.library('ajax');
 const customer = await loader.library('customer');
 
 // Name
@@ -51,14 +52,12 @@ customElements.define('account-edit', class extends WebComponent {
 
         let form = new FormData(target);
 
-        ajax.post('action.php?route=acccount/edit.save&language={{ language }}', form, {
-            beforeSend: (request) => {
-                //this.bind('button-cart').setAttribute('loading', '');
+        ajax.post('action.php?route=acccount/edit.save', form, {
+            beforeSend: () => {
+                //ref.get('button-cart').button('loading');
             },
             onComplete: (json) => {
-                //console.log(this.bind('button-cart'));
-
-                //this.bind('button-cart').loading = false;
+                //ref.get('button-cart').button('reset');
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);

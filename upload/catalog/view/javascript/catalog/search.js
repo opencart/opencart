@@ -4,11 +4,12 @@ import { loader } from '../index.js';
 // Name
 export const name = 'catalog-search';
 
-export default class extends WebComponent {
+customElements.define('catalog-search', class extends WebComponent {
     async render() {
 
     }
-}
+});
+
 /*
 $('#button-search').on('click', function() {
     url = 'action.php?route=catalog/search&language={{ language }}';

@@ -38,13 +38,11 @@ customElements.define('account-login', class extends WebComponent {
         let form = new FormData(target);
 
         ajax.post('action.php?route=account/login.login', form, {
-            beforeSend: (request) => {
-                //this.button.button('loading');
+            beforeSend: () => {
+                //ref.get('button-cart').button('loading');
             },
             onComplete: (json) => {
-                //console.log(this.bind('button-cart'));
-
-                //this.bind('button-cart').loading = false;
+                //ref.get('button-cart').button('reset');
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);

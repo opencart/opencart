@@ -35,7 +35,7 @@ customElements.define('manufacturer-list', class extends WebComponent {
                     key = key.toUpperCase();
                 }
 
-                data.categories.some();
+                //data.categories.some();
 
                 //if (!key in data.categories) {
                     data.categories.push({

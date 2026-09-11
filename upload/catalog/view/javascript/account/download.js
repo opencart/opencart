@@ -3,6 +3,9 @@ import { loader } from '../index.js';
 
 const language = await loader.language('account/download');
 
+// Library
+const customer = await loader.library('customer');
+
 // Name
 export const name = 'account-download';
 

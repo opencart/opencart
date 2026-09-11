@@ -7,20 +7,19 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/affiliate');
 
+// Library
+const customer = await loader.library('customer');
+
 // Name
 export const name = 'account-affiliate';
 
 customElements.define('account-affiliate', class extends WebComponent {
-    async connect() {
-
-    }
-
     render() {
 
         return loader.template('account/affiliate', { ...language });
     }
 });
-
+/*
 $('input[name=\'payment_method\']').on('change', function() {
     $('.payment').hide();
 
@@ -48,3 +47,4 @@ $('#input-generator').autocomplete({
         $('#input-link').val(item['value']);
     }
 });
+ */

@@ -14,7 +14,7 @@ customElements.define('account-order', class extends WebComponent {
         return loader.template('account/order', { ...language });
     }
 });
-
+/*
 var product_row = 0;
 
 $('form').on('submit', function(e) {
@@ -79,3 +79,4 @@ $('#history').on('click', '.pagination a', function(e) {
 
     $('#history').load(this.href);
 });
+ */

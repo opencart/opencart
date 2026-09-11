@@ -61,7 +61,6 @@ export class WebComponent extends HTMLElement {
                         new test(element);
                     }
 
-                    //console.log('element', element);.button('loading')
                     //console.log('element', Object.entries(element));
 
                     element.removeAttribute('data-action');
@@ -89,7 +88,7 @@ export class WebComponent extends HTMLElement {
     attributeChangedCallback(name, value_old, value_new) {
         console.log(`${name} changed from ${value_old} to ${value_new}`);
 
-        if (value_old != value_new) {
+        if (value_old !== null && value_old != value_new) {
             let event = new CustomEvent('[' + name + ']', {
                 bubbles: false,
                 cancelable: true,

@@ -32,11 +32,9 @@ customElements.define('x-include', class extends WebComponent {
 
         let name = this.data.get(path);
 
-        const params = new URLSearchParams(query);
-
         let html = '<' + name;
 
-        for (let [ key, value] of params.entries()) {
+        for (let [ key, value] of (new URLSearchParams(query).entries())) {
             html += ' ' + key + '="' + value + '"';
         }
 

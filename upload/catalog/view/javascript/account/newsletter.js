@@ -6,6 +6,7 @@ const language = await loader.language('account/newsletter');
 
 // Library
 const session = await loader.library('session');
+const customer = await loader.library('customer');
 
 // Name
 export const name = 'account-newsletter';

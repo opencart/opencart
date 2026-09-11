@@ -7,6 +7,9 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/forgotten');
 
+// Library
+const customer = await loader.library('customer');
+
 // Name
 export const name = 'account-forgotten';
 

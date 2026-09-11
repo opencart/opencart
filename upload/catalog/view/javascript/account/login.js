@@ -8,6 +8,7 @@ const language = await loader.language('account/login');
 const ajax = await loader.library('ajax');
 const session = await loader.library('session');
 const cart = await loader.library('cart');
+const customer = await loader.library('customer');
 
 // Name
 export const name = 'account-login';

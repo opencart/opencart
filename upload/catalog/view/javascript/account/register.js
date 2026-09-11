@@ -11,6 +11,7 @@ const language = await loader.language('account/register');
 const ajax = await loader.library('ajax');
 const session = await loader.library('session');
 const cart = await loader.library('cart');
+const customer = await loader.library('customer');
 
 // Storage
 const customer_groups = await loader.storage('customer/customer_group');

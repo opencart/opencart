@@ -36,9 +36,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			case 'payment_methods':
 				$output = $this->getPaymentMethods();
 				break;
-			case 'payment_methods':
-				$output = $this->getPaymentMethods();
-				break;
 			case 'confirm':
 				$output = $this->confirm();
 				break;

@@ -38,14 +38,6 @@ customElements.define('checkout-cart', class extends WebComponent {
         return loader.template('checkout/cart', { ...data,  ...language });
     }
 
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-
     editProduct(e) {
         e.preventDefault();
 

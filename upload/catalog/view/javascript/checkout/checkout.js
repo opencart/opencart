@@ -24,11 +24,10 @@ customElements.define('checkout-checkout', class extends WebComponent {
     async render() {
         let data = {};
 
-        //let download = cart.hasDownload();
-        //let minimum = cart.hasMinimum();
-
         data.logged = customer.isLogged();
+        data.minimum = cart.hasMinimum();
         data.shipping = cart.hasShipping();
+        data.download = cart.hasDownload();
 
         return loader.template('checkout/checkout', { ...data, ...language, ...config });
     }

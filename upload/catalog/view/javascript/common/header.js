@@ -21,6 +21,8 @@ customElements.define('common-header', class extends WebComponent {
     async render() {
         let data = {};
 
+        data.logged = customer.isLogged();
+
         data.wishlist = 0;
 
         if (customer.isLogged()) {

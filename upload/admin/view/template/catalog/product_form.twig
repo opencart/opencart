@@ -616,7 +616,7 @@
                               <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control">{{ product_attribute.description[language.code] ? product_attribute.description[language.code].text }}</textarea>
                             </div>
                           {% endfor %}</td>
-                        <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" data-remove="#attribute-row-{{ attribute_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set attribute_row = attribute_row + 1 %}
                     {% endfor %}
@@ -716,7 +716,7 @@
                                       <td class="text-end">{{ product_option_value.points }}
                                         <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
                                       <td class="text-end">{{ product_option_value.weight }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
-                                      <td class="text-end"><button type="button" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                                      <td class="text-end"><button type="button" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" data-remove="#option-value-row-{{ option_value_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                                     </tr>
                                     {% set option_value_row = option_value_row + 1 %}
                                   {% endfor %}
@@ -740,7 +740,7 @@
                         </div>
 
                         <div class="col">
-                          <button type="button" class="btn btn-danger" title="{{ button_remove }}" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fa-solid fa-minus-circle"></i></button>
+                          <button type="button" class="btn btn-danger" title="{{ button_remove }}" data-remove="#option-row-{{ option_row }}"><i class="fa-solid fa-minus-circle"></i></button>
                         </div>
                       </div>
                     </fieldset>
@@ -964,7 +964,7 @@
                           </select></td>
                         <td><input type="text" name="product_subscription[{{ subscription_row }}][trial_price]" value="{{ product_subscription.trial_price }}" placeholder="{{ entry_trial_price }}" class="form-control"/></td>
                         <td><input type="text" name="product_subscription[{{ subscription_row }}][price]" value="{{ product_subscription.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
-                        <td class="text-end"><button type="button" onclick="$('#subscription-row-{{ subscription_row }}').remove()" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" data-remove="#subscription-row-{{ subscription_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set subscription_row = subscription_row + 1 %}
                     {% endfor %}
@@ -1013,7 +1013,7 @@
                           </select></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
-                        <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" data-remove="#discount-row-{{ discount_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set discount_row = discount_row + 1 %}
                     {% endfor %}
@@ -1065,7 +1065,7 @@
                             </div>
                           </td>
                           <td><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                          <td class="text-end"><button type="button" onclick="$('#product-image-row-{{ image_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                          <td class="text-end"><button type="button" data-remove="#product-image-row-{{ image_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                         </tr>
                         {% set image_row = image_row + 1 %}
                       {% endfor %}
@@ -1202,7 +1202,7 @@
           <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control"></textarea>
         </div>
       {% endfor %}</td>
-    <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+    <td class="text-end"><button type="button" data-remove="#attribute-row-{{ attribute_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
   </tr>
 </template>
 

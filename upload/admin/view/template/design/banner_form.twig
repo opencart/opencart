@@ -73,7 +73,7 @@
                                   <div id="error-image-{{ language.language_id }}-{{ image_row }}-link" class="invalid-feedback"></div>
                                 </td>
                                 <td class="text-end" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-image-{{ language.language_id }}-{{ image_row }}-sort-order" class="form-control"/></td>
-                                <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                                <td class="text-end"><button type="button" data-remove="#image-row-{{ image_row }}" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                               </tr>
                               {% set image_row = image_row + 1 %}
                             {% endfor %}

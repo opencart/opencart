@@ -182,6 +182,12 @@ class Loader {
 		// Trigger the pre events
 		$this->event->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code, &$output]);
 
+		// Content Security Policy: make the per-request nonce available to every template
+		// so inline <script> elements can declare nonce="{{ nonce }}".
+		if (!isset($data['nonce'])) {
+			$data['nonce'] = (string)$this->config->get('csp_nonce');
+		}
+
 		if (!$output) {
 			// Make sure it's only the last event that returns an output, if required.
 			$output = $this->template->render($route, $data, $code);

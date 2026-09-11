@@ -53,14 +53,6 @@ customElements.define('product-thumb', class extends WebComponent {
         }
     }
 
-    onClick(e) {
-        e.preventDefault();
-
-        let target = document.getElementById('content');
-
-        target.src = e.currentTarget.getAttribute('href');
-    }
-
     addToCart(e) {
         e.preventDefault();
 

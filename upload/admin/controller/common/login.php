@@ -95,6 +95,9 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Regenerate session ID
+			oc_session_regenerate($this->registry);
+
 			$this->session->data['user_token'] = oc_token(32);
 
 			// Remove login token so it cannot be used again.

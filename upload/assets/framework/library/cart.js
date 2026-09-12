@@ -263,8 +263,8 @@ export default class Cart {
         return product_data;
     }
 
-    has(cart_id) {
-
+    has(product_id) {
+        return this.data.has(product_id);
     }
 
     clear() {

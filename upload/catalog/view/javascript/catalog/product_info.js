@@ -198,6 +198,12 @@ customElements.define('product-info', class extends WebComponent {
 
                 let match;
 
+
+
+                let test = [...form.getAll('option')];
+
+                console.log(test);
+
                 // Display success message
                 if (json['success'] !== undefined) {
                     let alert = target.querySelector('#alert');
@@ -206,19 +212,29 @@ customElements.define('product-info', class extends WebComponent {
                         alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-                    console.log(form);
+
 
                     // Code to use [] with js
                     let option = [];
 
                     const inputs = target.querySelectorAll('input[name^=\'option\']');
 
+                    console.log(Object.fromEntries(form.entries()));
+
+
                     for (let input of inputs) {
-                        console.log(input.name);
 
-                        const indices = [...input.name.matchAll(/\[([^\[]*)\]/g)];
+                        //console.log('matchAll', ...input.name.matchAll(/\[([^\[]*)\]/g));
 
-                        console.log(indices);
+                        let [raw, match] = [...input.name.matchAll(/\[([^\[]*)\]/g)];
+
+                        //let match = Object.fromEntries([...input.name.matchAll(/\[([^\[]*)\]/g)]);
+
+                        console.log('raw', raw);
+                        console.log('match', match);
+
+                        option = [];
+
                     }
 
                     //cart.add(form.get('product_id'), form.get('quantity'), form.get('option'), form.get('subscription_plan_id'));

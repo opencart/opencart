@@ -1181,7 +1181,7 @@
             html += '>' + json['zone'][i]['name'] + '</option>';
           }
         } else {
-          html += '<option value="0">{{ text_none }}</option>';
+          html += '<option value="0" selected="selected">{{ text_none }}</option>';
         }
 
         $('select[name=\'address[' + index + '][zone_id]\']').html(html);

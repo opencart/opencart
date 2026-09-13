@@ -15,9 +15,6 @@ const cart = await loader.library('cart');
 const local = await loader.library('local');
 const tax = await loader.library('tax');
 
-// Currency
-const currency = local.has('currency') ? local.get('currency') : config.config_currency;
-
 // Storage
 const stock_statuses = await loader.storage('localisation/stock_status');
 
@@ -145,7 +142,7 @@ customElements.define('product-info', class extends WebComponent {
             data.tags = product.tags;
             data.related = [];
 
-            data.currency = currency;
+            data.currency = local.get('currency');
 
             return loader.template('catalog/product_info', { ...product, ...description, ...data, ...language, ...config });
         }

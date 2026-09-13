@@ -9,67 +9,86 @@ const session = await loader.library('session');
 const tax = await loader.library('tax');
 const weight_class = await loader.library('weight');
 
+let items = [];
+
+//session.delete('cart');
+
+if (session.has('cart')) {
+    items = await session.get('cart');
+}
+
+console.log(items);
+
 export default class Cart {
     data = new Map();
-    items = new Array();
+    items = new Map();
 
     constructor() {
-        if (session.has('cart')) {
-            let items = session.get('cart');
-
-            console.log('session', items);
-
-            for (let item of Object.entries(items)) {
-                this.items.push(item);
-            }
-
-            console.log('session', this.items);
+        for (let item of items) {
+            this.add(item.product_id, item.quantity, [...item.option], item.subscription_plan_id);
         }
     }
 
     async add(product_id, quantity, option, subscription_plan_id) {
         console.log('add');
 
-        let product = this.items.find(product => product.product_id === product_id && product.option === option && product.subscription_plan_id === subscription_plan_id);
-
-        if (product) {
-            product.quantity = quantity + product.quantity;
-        } else {
-            this.items.push({
-                product_id,
-                quantity,
-                option,
-                subscription_plan_id
-            });
-        }
-
+        // Load product data information
         if (!this.data.has(product_id)) {
-            let product_info = await loader.storage('product/product-' + product_id);
+            let product = await loader.storage('product/product-' + product_id);
 
-            this.data.set(product_id, product_info);
+            if (!product) return;
+
+            this.data.set(product_id, product);
+        }
+
+        // Create a key from item data
+        let key = JSON.stringify({ product_id, option, subscription_plan_id });
+
+        // If item exists just increase quantity
+        if (this.items.has(key)) quantity = Number(this.items.get(key).quantity) + Number(quantity);
+
+        // Assign to quantity to item
+        let item = {
+            product_id: product_id,
+            quantity: quantity,
+            option: option ? [...option] : [],
+            subscription_plan_id: subscription_plan_id
+        };
+
+        this.items.set(key, item);
+
+        // Update the session
+        session.set('cart', [...this.items.values()]);
+    }
+
+    update(key, quantity) {
+        if (this.items.has(key)) {
+            // If item exists just increase quantity
+            this.items.set(key, Object.assign(this.items.get(key), { quantity: quantity }));
+
+            // Update the session
+            session.set('cart', [...this.items.values()]);
         }
     }
 
-    update(cart_id, item = []) {
+    remove(key) {
+        this.items.delete(key);
 
+        // Update the session
+        session.set('cart', [...this.items.values()]);
     }
 
-    remove(cart_id) {
-        this.items = this.items.filter(item => item.cart_id !== cart_id);
-
-        //session.set('cart', this.items);
-    }
-
-
-    async getProducts() {
+    getProducts() {
         let product_data = [];
 
-        console.log('getProducts', this.items);
+        for (let item of [...this.items.values()]) {
+            console.log(item);
 
-        for (let item of this.items) {
             let stock_status = true;
 
             let product_info = this.data.get(item.product_id);
+
+            console.log(product_info);
 
             if (product_info !== undefined && item.quantity > 0) {
                 let stock = product_info.quantity;
@@ -80,12 +99,12 @@ export default class Cart {
 
                 let option_data = [];
 
-                for (let [key, value] of item.option) {
+                for (let [key, value] of [...item.option]) {
                     // Get option info
                     let option_info = product_info.options.find(option => option.product_option_id == key);
 
                     if (option_info.type == 'select' || option_info.type == 'radio') {
-                        let option_value_info = option_info.find(option => option.product_option_value_id == value);
+                        let option_value_info = option_info.option_value.find(option => option.product_option_value_id == value);
 
                         option_price += option_value_info.price;
                         option_points += option_value_info.points;
@@ -108,9 +127,9 @@ export default class Cart {
                             points: option_value_info.points,
                             weight: option_value_info.weight
                         });
-                    } else if (option_info.type == 'checkbox' && typeof value == 'array') {
+                    } else if (option_info.type == 'checkbox' && Array.isArray(value)) {
                         for (let product_option_value_id of value) {
-                            let option_value_info = option_info.find(option => option.product_option_value_id == product_option_value_id);
+                            let option_value_info = option_info.option_value.find(option => option.product_option_value_id == product_option_value_id);
 
                             if (option_value_info) {
                                 option_price += option_value_info.price;
@@ -230,7 +249,8 @@ export default class Cart {
                 }
 
                 product_data.push({
-                   // cart_id: item.cart_id,
+                    //key: item.key,
+                    product_id: product_info.product_id,
                     name: product_info.description[config.config_language].name,
                     model: product_info.model,
                     image: product_info.thumb,
@@ -258,8 +278,6 @@ export default class Cart {
             }
         }
 
-        console.log();
-
         return product_data;
     }
 
@@ -280,7 +298,7 @@ export default class Cart {
      *
      * $subscriptions = $this->cart->getSubscriptions();
      */
-    async getSubscriptions() {
+    getSubscriptions() {
         let product_data = [];
 
         for (let product of this.getProducts()) {
@@ -362,7 +380,11 @@ export default class Cart {
     countProducts() {
         let quantity = 0;
 
-        for (let product of this.getProducts()) {
+        let products = this.getProducts();
+
+        console.log('products', products);
+
+        for (let product of products) {
             quantity += product.quantity;
         }
 
@@ -379,7 +401,7 @@ export default class Cart {
      * $cart = $this->cart->hasProducts();
      */
     hasProducts() {
-        return this.items.length > 0;
+        return this.items.size > 0;
     }
 
     /**
@@ -444,7 +466,7 @@ export default class Cart {
      *
      * $cart = $this->cart->hasShipping();
      */
-    async hasShipping() {
+    hasShipping() {
         for (let product of this.getProducts()) {
             if (product.shipping) {
                 return true;

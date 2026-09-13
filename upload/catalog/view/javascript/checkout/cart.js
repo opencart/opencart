@@ -14,9 +14,6 @@ const cart = await loader.library('cart');
 const local = await loader.library('local');
 const tax = await loader.library('tax');
 
-// Currency
-const currency = local.has('currency') ? local.get('currency') : config.config_currency;
-
 // Name
 export const name = 'checkout-cart';
 
@@ -26,14 +23,12 @@ customElements.define('checkout-cart', class extends WebComponent {
 
         data.products = cart.getProducts();
 
-        console.log(data.products);
-
-        let shipping = cart.hasShipping();
-        let download = cart.hasDownload();
-        let minimum = cart.hasMinimum();
+        data.shipping = cart.hasShipping();
+        data.download = cart.hasDownload();
+        data.minimum = cart.hasMinimum();
 
         data.weight = cart.getWeight();
-        data.currency = currency;
+        data.currency = local.get('currency');
 
         return loader.template('checkout/cart', { ...data,  ...language, ...config });
     }

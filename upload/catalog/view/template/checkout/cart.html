@@ -67,8 +67,8 @@
               {% endif %}
 
             </td>
-            <td class="text-end">{{ product.product | currency: config_currency }}</td>
-            <td class="text-end">{{ product.total | currency: config_currency }}</td>
+            <td class="text-end">{{ product.product | tax: product.tax_class_id, config_tax | currency: config_currency }}</td>
+            <td class="text-end">{{ product.total | tax: product.tax_class_id, config_tax | currency: config_currency }}</td>
           </tr>
 
           {% endfor %}
@@ -88,7 +88,7 @@
     <br/>
     <div class="row">
       <div class="col"><a href="common/home.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a></div>
-      <div class="col text-end"><a href="checkout/checkout.js" class="btn btn-primary">{{ button_checkout }}</a></div>
+      <div class="col text-end"><a href="checkout/checkout.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_checkout }}</a></div>
     </div>
 
     {% else %}

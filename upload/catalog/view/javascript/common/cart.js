@@ -13,18 +13,17 @@ const tax = await loader.library('tax');
 // Language
 const language = await loader.language('common/cart');
 
-// Currency
-const currency = local.has('currency') ? local.get('currency') : config.config_currency;
-
 customElements.define('common-cart', class extends WebComponent {
     async render() {
         let data = {};
 
+        data.products = cart.getProducts();
+
         data.quantity = cart.countProducts();
         data.total = cart.getTotal();
 
-        data.currency = currency;
+        data.currency = local.get('currency');
 
-        return loader.template('common/cart', { ...data,  ...language });
+        return loader.template('common/cart', { ...data, ...language, ...config });
     }
 });

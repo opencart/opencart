@@ -19,7 +19,7 @@ customElements.define('payment-address', class extends WebComponent {
     async render() {
         let data = {};
 
-        data.addresses = this.customer.getAddresses();
+        data.addresses = customer.getAddresses();
 
         return loader.template('checkout/payment_address', { ...data,  ...language });
     }

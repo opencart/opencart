@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <button type="button" title="{{ button_filter }}" onclick="$('#filter-manufacturer').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fa-solid fa-filter"></i></button>
+      <button type="button" title="{{ button_filter }}" data-toggle="#filter-manufacturer" class="btn btn-light d-md-none d-lg-none"><i class="fa-solid fa-filter"></i></button>
       <div class="float-end">
         <a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
         <div class="btn-group">
@@ -13,7 +13,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><button type="submit" form="form-manufacturer" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+            <li><button type="submit" form="form-manufacturer" formaction="{{ delete }}" data-confirm="{{ text_confirm }}" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>

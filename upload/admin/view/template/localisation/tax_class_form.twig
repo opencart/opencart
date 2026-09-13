@@ -73,7 +73,7 @@
                         {% endif %}
                       </select></td>
                     <td><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="{{ tax_rule.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
-                    <td class="text-end"><button type="button" onclick="$('#tax-rule-row-{{ tax_rule_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                    <td class="text-end"><button type="button" data-remove="#tax-rule-row-{{ tax_rule_row }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set tax_rule_row = tax_rule_row + 1 %}
                 {% endfor %}

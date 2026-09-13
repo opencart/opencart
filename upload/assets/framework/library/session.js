@@ -1,6 +1,6 @@
 export default class Session {
-    get(key) {
-        return JSON.parse(sessionStorage.getItem(key));
+    async get(key) {
+        return await JSON.parse(sessionStorage.getItem(key));
     }
 
     set(key, value) {
@@ -11,11 +11,7 @@ export default class Session {
         return sessionStorage.getItem(key) !== null;
     }
 
-    remove(key) {
+    delete(key) {
         sessionStorage.removeItem(key);
-    }
-
-    clear() {
-        sessionStorage.clear();
     }
 }

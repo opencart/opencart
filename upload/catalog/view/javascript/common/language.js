@@ -2,16 +2,16 @@ import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
-let config = await loader.config('default');
+const config = await loader.config('default');
 
 // library
-let local = await loader.library('local');
+const local = await loader.library('local');
 
 // Language
-let language = await loader.language('common/language');
+const language = await loader.language('common/language');
 
 // Storage
-let languages = await loader.storage('localisation/language');
+const languages = await loader.storage('localisation/language');
 
 customElements.define('common-language', class extends WebComponent {
     async render() {

@@ -1,7 +1,5 @@
 <h1>{{ heading_title }}</h1>
 <div id="wishlist">
-
-
   {% if products %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
@@ -19,8 +17,8 @@
         {% set product_row = 0 %}
         {% for product in products %}
         <tr>
-          <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
-          <td><a href="{{ product.href }}">{{ product.name }}</a>
+          <td class="text-center">{% if product.thumb %}<a href="catalog/product.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
+          <td><a href="catalog/product.js?product_id={{ product.product_id }}">{{ product.name }}</a>
 
             <form id="form-product-{{ product_row }}" action="{{ cart_add }}" data-on="submit:onSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
@@ -35,9 +33,9 @@
             {% if product.price %}
             <div class="price">
               {% if not product.special %}
-              {{ product.price | currency: currency }}
+              {{ product.price | currency: config_currency }}
               {% else %}
-              <strong>{{ product.special | currency: currency }}</strong> <s>{{ product.price | currency: currency }}</s>
+              <strong>{{ product.special | currency: config_currency }}</strong> <s>{{ product.price | currency: config_currency }}</s>
               {% endif %}
             </div>
             {% endif %}
@@ -58,10 +56,6 @@
   {% else %}
   <p>{{ text_no_results }}</p>
   {% endif %}
-
-
-
-
 
 </div>
 <div class="text-end"><a href="account/account.js" class="btn btn-primary">{{ button_continue }}</a></div>

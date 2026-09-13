@@ -20,7 +20,7 @@
             <td>{{ subscription.description }}</td>
             <td>{{ subscription.status }}</td>
             <td>{{ subscription.date_added }}</td>
-            <td class="text-end"><a href="{{ subscription.view }}" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
+            <td class="text-end"><a href="account/subscription.js?subscription_id={{ subscription.subscription_id }}" title="{{ button_view }}" data-action="link" data-target="content" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
           </tr>
         {% endfor %}
       </tbody>

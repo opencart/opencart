@@ -96,7 +96,7 @@ customElements.define('x-autocomplete', class extends WebComponent {
 });
 
 
-
+/*
 
 // Autocomplete
 +function($) {
@@ -195,3 +195,4 @@ customElements.define('x-autocomplete', class extends WebComponent {
         });
     }
 }(jQuery);
+*/

@@ -59,6 +59,24 @@ const template = await loader.library('template');
 
 //template.addPath('shop/' + base.host + '/template/');
 
+// SASS
+/*
+const sass = await loader.library('sass');
+
+const path = base + 'catalog/view/sass/stylesheet.scss';
+
+//var sass = new Sass();
+
+var option = {
+    style: compile.Sass.style.expanded,
+};
+
+sass.compile(path, option, (result) => {
+    //console.log(result);
+});
+
+console.log(sass);
+*/
 // Developer Code
 template.addPath('catalog/view/template/');
 
@@ -97,18 +115,3 @@ template.addFilter('length', (value, length_class_id) => {
 // General
 import('./common/layout.js');
 
-/*
-import '../../../assets/sass/sass.js';
-
-// Sass Testing Code
-const sass = new Sass();
-const path = '../sass/stylesheet.scss';
-
-const options = {
-    style: compile.Sass.style.expanded,
-};
-
-sass.compile(path, function(result) {
-    console.log(result);
-});
-*/

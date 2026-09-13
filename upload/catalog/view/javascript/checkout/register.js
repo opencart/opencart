@@ -1,10 +1,16 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+// Config
+const config = await loader.config('default');
+
 // library
 const ajax = await loader.library('ajax');
 const cart = await loader.library('cart');
 const customer = await loader.library('customer');
+
+// Language
+const language = await loader.language('checkout/register');
 
 customElements.define('checkout-register', class extends WebComponent {
     token = '';
@@ -19,7 +25,7 @@ customElements.define('checkout-register', class extends WebComponent {
 
         data.token = this.token;
 
-        return loader.template('checkout/register', { ...data,  ...language });
+        return loader.template('checkout/register', { ...data,  ...language, ...config });
     }
 
     onSubmit(e) {
@@ -90,7 +96,7 @@ customElements.define('checkout-register', class extends WebComponent {
 
 });
 
-
+/*
 // Register
 $('#form-register').on('submit', function(e) {
     e.preventDefault();
@@ -206,4 +212,4 @@ $('#input-customer-group').on('change', function() {
 });
 
 $('#input-customer-group').trigger('change');
-
+*/

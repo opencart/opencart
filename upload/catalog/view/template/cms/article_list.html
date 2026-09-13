@@ -29,7 +29,7 @@
   </ul>
 
   <p class="mb-3">{{ article.description }}</p>
-  <div class="text-end"><a href="cms/article_info.js?article_id={{ article.article_id }}" class="btn btn-primary" data-action="link" data-target="content">{{ button_continue }}</a></div>
+  <div class="text-end"><a href="cms/article_info.js?article_id={{ article.article_id }}" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a></div>
 
 </div>
 {% endfor %}

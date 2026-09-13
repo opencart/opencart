@@ -1,6 +1,8 @@
 import { binder, action } from '../index.js';
 
 export class WebComponent extends HTMLElement {
+    data = new Map();
+
     constructor() {
         super();
 

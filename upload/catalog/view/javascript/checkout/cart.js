@@ -4,7 +4,6 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
-
 // Language
 const language = await loader.language('checkout/cart');
 
@@ -36,7 +35,7 @@ customElements.define('checkout-cart', class extends WebComponent {
         data.weight = cart.getWeight();
         data.currency = currency;
 
-        return loader.template('checkout/cart', { ...data,  ...language });
+        return loader.template('checkout/cart', { ...data,  ...language, ...config });
     }
 
     editProduct(e) {

@@ -35,7 +35,7 @@ export class WebComponent extends HTMLElement {
             this.querySelectorAll('[data-bind], [data-on], [data-action]').forEach(element => {
                 // Attach Events based on elements that have data-bind attributes
                 if (element.hasAttribute('data-bind')) {
-                    binder.set(element.getAttribute('data-bind'), element);
+                    this.data.set(element.getAttribute('data-bind'), element);
 
                     element.removeAttribute('data-bind');
                 }

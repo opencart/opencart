@@ -69,6 +69,6 @@ class Image extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		return HTTP_CATALOG . 'image/' . $image_new;
+		return 'image/' . $image_new;
 	}
 }

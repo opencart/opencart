@@ -1,10 +1,8 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_account_already|safe }}</p>
 
-<form id="form-register" action="{{ register }}" data-on="submit:onSubmit">
-
+<form id="form-register" data-on="submit:onSubmit">
   <fieldset id="account">
-
     <legend>{{ text_your_details }}</legend>
 
     {% if customer_groups.length > 1 %}

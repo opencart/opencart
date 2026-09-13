@@ -1,6 +1,6 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_description }}</p>
-<form id="form-return" action="{{ save }}" method="post" data-on="submit:onSubmit">
+<form id="form-return" data-on="submit:onSubmit">
   <fieldset>
     <legend>{{ text_order }}</legend>
     <div class="row mb-3">
@@ -105,11 +105,11 @@
     {{ captcha }}
   </fieldset>
   <div class="row">
-    <div class="col-3"><a href="account/account.js" class="btn btn-light">{{ button_back }}</a></div>
+    <div class="col-3"><a href="account/account.js" data-action="link" data-target="content" class="btn btn-light">{{ button_back }}</a></div>
     <div class="col text-end">
       {% if text_agree %}
         <label for="input-agree" class="form-check-label">{{ text_agree }}</label>
-        <x-switch name="agree" value="1" input-id="input-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline align-top"></x-switch>
+        <x-switch name="agree" value="1" input-id="input-agree"></x-switch>
       {% endif %}
       <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
     </div>

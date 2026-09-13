@@ -83,7 +83,7 @@
               {% endfor %}
               {% if product.subscription %}
                 <li>
-                  <small> - {{ text_subscription }}: {% if product.subscription %}<a href="{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
+                  <small> - {{ text_subscription }}: {% if product.subscription %}<a href="account/subscription_info.js?{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
                   <div id="error-{{ product_row }}-subscription" class="invalid-feedback mt-0"></div>
                 </li>
               {% endif %}

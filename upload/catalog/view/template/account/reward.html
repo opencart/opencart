@@ -15,7 +15,7 @@
           <tr>
             <td>{{ reward.date_added }}</td>
             <td>{% if reward.order_id %}
-              <a href="account/order_info.js?order_id={{ reward.order_id }}">{{ reward.description }}</a>
+              <a href="account/order_info.js?order_id={{ reward.order_id }}" data-action="link" data-target="content">{{ reward.description }}</a>
               {% else %}
                 {{ reward.description }}
               {% endif %}</td>
@@ -34,4 +34,4 @@
   <div class="col-sm-6 text-start">{{ pagination }}</div>
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>
-<div class="text-end"><a href="account/account.js" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end"><a href="account/account.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a></div>

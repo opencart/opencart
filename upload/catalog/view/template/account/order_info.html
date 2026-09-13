@@ -69,7 +69,7 @@
       {% set product_row = 0 %}
       {% for product in products %}
         <tr id="product-row-{{ product_row }}">
-          <td><a href="{{ product.view }}">{{ product.name }}</a>
+          <td><a href="catalog/product_info.js?product_id={{ product.product_id }}" data-action="link" data-target="content">{{ product.name }}</a>
             <div id="error-{{ product_row }}-product" class="invalid-feedback mt-0"></div>
             <ul class="list-unstyled mb-0">
               <li>
@@ -93,9 +93,11 @@
                 </li>
               {% endif %}
             </ul>
+
             <form id="form-product-{{ product_row }}" data-on="submit:onSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
               <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
+
               {% for option in product.option %}
                 {% if option.type == 'select' or option.type == 'radio' %}
                   <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
@@ -107,8 +109,10 @@
                   <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.value }}"/>
                 {% endif %}
               {% endfor %}
+
               <input type="hidden" name="subscription_plan_id" value="{{ product.subscription_plan_id }}"/>
             </form>
+
           </td>
           <td class="text-end">{{ product.quantity }}</td>
           <td class="text-end">{{ product.price | currency: currency_code, currency_value }}</td>
@@ -116,7 +120,7 @@
           <td class="text-end text-nowrap" style="width: 1px;">
             <div class="d-grid">
               <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_reorder }}</button>
-              <a href="{{ product.return }}" class="btn btn-danger">{{ button_return }}</a>
+              <a href="account/return.js?product_id={{ product.product_id }}" data-action="link" data-target="content" class="btn btn-danger">{{ button_return }}</a>
             </div>
           </td>
         </tr>
@@ -144,4 +148,4 @@
 {% endif %}
 <h2>{{ text_history }}</h2>
 <div id="history">{{ history }}</div>
-<div class="text-end mt-3"><a href="account/order.js" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end mt-3"><a href="account/order.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a></div>

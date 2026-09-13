@@ -29,6 +29,8 @@ config.cache.set('default', {
     config_review_status: true,
     config_tax: true,
     config_account_id: 1,
+    config_checkout_guest: true,
+    config_checkout_payment_address: true,
     config_gdpr_id: 0,
     config_stock_status_id: 4,
     config_affiliate_status: 1,

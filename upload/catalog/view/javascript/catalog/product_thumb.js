@@ -13,9 +13,6 @@ const cart = await loader.library('cart');
 const local = await loader.library('local');
 const tax = await loader.library('tax');
 
-// Currency
-const currency = local.has('currency') ? local.get('currency') : config.config_currency;
-
 customElements.define('product-thumb', class extends WebComponent {
     async render() {
         let data = {};
@@ -47,7 +44,7 @@ customElements.define('product-thumb', class extends WebComponent {
                 data.tax = tax.getTax(data.special ? data.special : product.price, product.tax_class_id);
             }
 
-            data.currency = currency;
+            data.currency = local.get('currency');
 
             return await loader.template('catalog/product_thumb', { ...product, ...description, ...data, ...language, ...config });
         }

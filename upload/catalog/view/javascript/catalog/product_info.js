@@ -167,7 +167,7 @@ customElements.define('product-info', class extends WebComponent {
             onComplete: () => {
                 //ref.get('button-cart').button('reset');
             },
-            onSuccess: (json) => {
+            onSuccess: async (json) => {
                 console.log('onSuccess', json);
 
                 // Remove past error classes from inputs
@@ -196,14 +196,6 @@ customElements.define('product-info', class extends WebComponent {
                     }
                 }
 
-                let match;
-
-
-
-                let test = [...form.getAll('option')];
-
-                console.log(test);
-
                 // Display success message
                 if (json['success'] !== undefined) {
                     let alert = target.querySelector('#alert');
@@ -212,35 +204,26 @@ customElements.define('product-info', class extends WebComponent {
                         alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-
-
                     // Code to use [] with js
-                    let option = [];
+                    let option = new Map();
 
-                    const inputs = target.querySelectorAll('input[name^=\'option\']');
+                    let inputs = [...form].filter(input => input[0].indexOf('option') !== -1);
 
-                    console.log(Object.fromEntries(form.entries()));
+                    for (let [key, value] of inputs) {
+                        let option_id = key.match(/\[([^\]]*)\]/)[1];
 
-
-                    for (let input of inputs) {
-
-                        //console.log('matchAll', ...input.name.matchAll(/\[([^\[]*)\]/g));
-
-                        let [raw, match] = [...input.name.matchAll(/\[([^\[]*)\]/g)];
-
-                        //let match = Object.fromEntries([...input.name.matchAll(/\[([^\[]*)\]/g)]);
-
-                        console.log('raw', raw);
-                        console.log('match', match);
-
-                        option = [];
-
+                        if (key.substr(-2) !== '[]') {
+                            option.set(option_id, value);
+                        } else if (!option.has(option_id)) {
+                            option.set(option_id, [value]);
+                        } else {
+                            option.set(option_id, [...option.get(option_id), value]);
+                        }
                     }
 
-                    //cart.add(form.get('product_id'), form.get('quantity'), form.get('option'), form.get('subscription_plan_id'));
-                    //cart.add(form.get('product_id'), form.get('quantity'), form.get('option'), form.get('subscription_plan_id'));
+                    await cart.add(form.get('product_id'), form.get('quantity'), option, form.get('subscription_plan_id'));
 
-                    //console.log(cart.getProducts());
+                    console.log('getProducts', cart.getProducts());
                 }
             },
             onError: (e) => {

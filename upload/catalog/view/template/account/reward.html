@@ -14,7 +14,9 @@
         {% for reward in rewards %}
           <tr>
             <td>{{ reward.date_added }}</td>
-            <td>{% if reward.order_id %} <a href="{{ reward.href }}">{{ reward.description }}</a> {% else %}
+            <td>{% if reward.order_id %}
+              <a href="account/order_info.js?order_id={{ reward.order_id }}">{{ reward.description }}</a>
+              {% else %}
                 {{ reward.description }}
               {% endif %}</td>
             <td class="text-end">{{ reward.points }}</td>

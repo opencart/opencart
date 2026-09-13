@@ -3,7 +3,7 @@
   via emscripten 1.38.31 (040e49a)
  */
 
-(function (root, factory) {
+(function(root, factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define([], factory);
@@ -12,7 +12,7 @@
     } else {
         root.Sass = factory();
     }
-}(this, function () {/*global document*/
+}(this, function() {/*global document*/
 // identify the path sass.js is located at in case we're loaded by a simple
 // <script src="path/to/sass.js"></script>
 // this path can be used to identify the location of
@@ -62,7 +62,8 @@
     /*global Worker, SASSJS_RELATIVE_PATH*/
     'use strict';
 
-    var noop = function(){};
+    var noop = function() {
+    };
     var slice = [].slice;
 // defined upon first Sass.initialize() call
     var globalWorkerUrl;
@@ -155,8 +156,8 @@
 
             try {
                 this._importer(args[0], done);
-            } catch(e) {
-                done({ error: e.message });
+            } catch (e) {
+                done({error: e.message});
                 throw e;
             }
         },

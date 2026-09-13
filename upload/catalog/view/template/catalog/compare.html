@@ -10,13 +10,13 @@
     <tr>
       <td>{{ text_name }}</td>
       {% for product in products %}
-      <td><a href="{{ product.href }}"><strong>{{ product.name }}</strong></a></td>
+      <td><a href="catalog/product_info.js?product_id={{ product.product_id }}"><strong>{{ product.name }}</strong></a></td>
       {% endfor %}
     </tr>
     <tr>
       <td>{{ text_image }}</td>
       {% for product in products %}
-      <td class="text-center">{% if product.thumb %} <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/>{% endif %}</td>
+      <td class="text-center">{% if product.thumb %} <a href="catalog/product_info.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
       {% endfor %}
     </tr>
     <tr>
@@ -77,7 +77,7 @@
   {% for attribute_group in attribute_groups %}
   <thead>
     <tr>
-      <td colspan="{{ products|length + 1 }}"><strong>{{ attribute_group.name }}</strong></td>
+      <td colspan="{{ products.length + 1 }}"><strong>{{ attribute_group.name }}</strong></td>
     </tr>
   </thead>
   {% for key, attribute in attribute_group.attribute %}
@@ -98,7 +98,7 @@
         <button type="submit" id="button-confirm" class="btn btn-primary btn-block">{{ button_cart }}</button>
         <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
         <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
-        <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a>
+        <a href="catalog/compare.js?product_id={{ product.product_id }}" class="btn btn-danger btn-block">{{ button_remove }}</a>
       </form>
     </td>
     {% endfor %}

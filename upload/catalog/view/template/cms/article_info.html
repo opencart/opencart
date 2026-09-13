@@ -2,12 +2,12 @@
 {% if image %}
   <img src="{{ image }}" alt="{{ name }}" title="{{ name }}" class="img-thumbnail mb-2"/>
 {% endif %}
-<p>{{ text_by }} <a href="cms/topic.js?author={{ author }}">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
+<p>{{ text_by }} <a href="cms/topic.js?author={{ author }}" data-action="link" data-target="content">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
 <div>{{ description }}</div>
 {% if tags %}
   <p>{{ text_tags }}
     {% for tag in tags %}
-      <a href="{{ tag.href }}">{{ tag.tag }}</a>{% if not loop.last %},{% endif %}
+      <a href="catalog/search?tag={{ tag.tag }}">{{ tag.tag }}</a>{% if not loop.last %},{% endif %}
     {% endfor %}
   </p>
 {% endif %}

@@ -69,7 +69,7 @@
     {% if products %}
       {% for product in products %}
         <tr>
-          <td><a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
+          <td><a href="catalog/propduct_info.js?product_id={{ product.product_id }}" target="_blank">{{ product.name }}</a>
             <ul class="list-unstyled mb-0">
               <li>
                 <small> - {{ text_model }}: {{ product.model }}</small>
@@ -123,4 +123,4 @@
 <div id="history">{{ history }}</div>
 <h2>{{ text_order }}</h2>
 <div id="order">{{ order }}</div>
-<div class="text-end mt-3"><a href="account/subscription.js" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end mt-3"><a href="account/subscription.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a></div>

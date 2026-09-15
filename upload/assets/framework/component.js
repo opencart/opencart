@@ -12,3 +12,9 @@ import('./input/country.js');
 import('./input/zone.js');
 //import('./input/file.js');
 import('./input/switch.js');
+
+// Types
+import('./type/button.js');
+//import('./type/dropdown.js');
+import('./type/form.js');
+import('./type/link.js');

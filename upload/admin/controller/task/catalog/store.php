@@ -62,8 +62,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		// Translation
 	}
 
-
-
 	public function setting(array $args = []): array {
 		$this->load->model('setting/task');
 

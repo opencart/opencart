@@ -1,14 +1,11 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
 // Language
 const language = await loader.language('account/affiliate');
-
-// Library
-const customer = await loader.library('customer');
 
 // Name
 export const name = 'account-affiliate';

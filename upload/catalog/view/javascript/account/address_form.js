@@ -1,12 +1,8 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, customer } from '../index.js';
 
 // Language
 const language = await loader.language('account/address');
-
-// Library
-const ajax = await loader.library('ajax');
-const customer = await loader.library('customer');
 
 // Name
 export const name = 'address-form';

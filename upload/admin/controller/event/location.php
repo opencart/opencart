@@ -21,7 +21,7 @@ class Location extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function index(string &$route, array &$args): void {
 		$this->load->model('setting/task');
 
 		$this->load->model('setting/store');

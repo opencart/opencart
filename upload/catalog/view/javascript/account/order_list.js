@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, customer } from '../index.js';
 
 // Language
 const language = await loader.language('account/order');
@@ -9,7 +9,6 @@ export const name = 'order-list';
 
 customElements.define('order-list', class extends WebComponent {
     render() {
-
 
         return loader.template('account/order', { ...language });
     }

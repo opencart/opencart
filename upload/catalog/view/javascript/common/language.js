@@ -1,11 +1,8 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
-
-// library
-const local = await loader.library('local');
 
 // Language
 const language = await loader.language('common/language');

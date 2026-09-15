@@ -1,8 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
-
-// Library
-const session = await loader.library('session');
+import { loader, customer } from '../index.js';
 
 // Language
 const language = await loader.language('account/wishlist');
@@ -14,12 +11,10 @@ customElements.define('account-wishlist', class extends WebComponent {
     render() {
         let data = {};
 
-        data.wishlist = {};
+        data.wishlist = [];
 
-        let customer = session.get('customer');
-
-        if (session.has('customer')) {
-            data.wishlist = customer.get('wishlist');
+        if (customer.isLogged()) {
+            data.wishlist = customer.getWishlist();
         }
 
        return loader.template('account/wishlist', { ...data, ...language });

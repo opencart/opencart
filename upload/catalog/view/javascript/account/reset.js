@@ -1,11 +1,7 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, customer } from '../index.js';
 
 const language = await loader.language('account/reset');
-
-// Library
-const ajax = await loader.library('ajax');
-const customer = await loader.library('customer');
 
 // Name
 export const name = 'account-reset';

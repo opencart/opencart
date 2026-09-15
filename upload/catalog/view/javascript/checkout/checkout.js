@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, cart, customer } from '../index.js';
 import './register.js';
 import './payment_address.js';
 import './shipping_address.js';
@@ -12,10 +12,6 @@ const config = await loader.config('default');
 
 // Language
 const language = await loader.language('checkout/checkout');
-
-// library
-const cart = await loader.library('cart');
-const customer = await loader.library('customer');
 
 // Name
 export const name = 'checkout-checkout';

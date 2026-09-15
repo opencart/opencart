@@ -4,9 +4,6 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/subscription');
 
-// Library
-const session = await loader.library('session');
-
 customElements.define('subscription-list', class extends WebComponent {
     render() {
         let data = {};

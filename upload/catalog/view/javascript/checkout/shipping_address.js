@@ -16,7 +16,7 @@ customElements.define('shipping-address', class extends WebComponent {
         let data = {};
 
 
-        return loader.template('checkout/shipping_address', { ...data,  ...language });
+        return loader.template('checkout/shipping_address', { ...data,  ...language,  ...config });
     }
 
     onExsisting() {

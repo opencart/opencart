@@ -1,17 +1,11 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, session, cart, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
 // Language
 const language = await loader.language('account/register');
-
-// Library
-const ajax = await loader.library('ajax');
-const session = await loader.library('session');
-const cart = await loader.library('cart');
-const customer = await loader.library('customer');
 
 // Storage
 const customer_groups = await loader.storage('customer/customer_group');

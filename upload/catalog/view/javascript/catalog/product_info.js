@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, cart, local, tax } from '../index.js';
 import './review_form.js';
 import './review_list.js';
 
@@ -8,12 +8,6 @@ const config = await loader.config('default');
 
 // Language
 const language = await loader.language('catalog/product_info');
-
-// Library
-const ajax = await loader.library('ajax');
-const cart = await loader.library('cart');
-const local = await loader.library('local');
-const tax = await loader.library('tax');
 
 // Storage
 const stock_statuses = await loader.storage('localisation/stock_status');
@@ -42,11 +36,11 @@ customElements.define('product-info', class extends WebComponent {
 
             if (discount) {
                 if (discount.type == 'F') {
-                    data.special = discount.price;
+                    data.special = Number(discount.price);
                 } else if (discount.type == 'P') {
-                    data.special -= (data.price * (discount.price / 100));
+                    data.special -= Number(data.price * (discount.price / 100));
                 } else if (discount.type == 'S') {
-                    data.special -= discount.price;
+                    data.special -= Number(discount.price);
                 }
             }
 

@@ -7,14 +7,11 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('cms/article_info');
 
-let request = new URL(import.meta.url).searchParams;
-
 // Name
 export const name = 'article-info';
 
 customElements.define('article-info', class extends WebComponent {
     async render(){
-
         console.log('article-info', this.getAttribute('article_id'));
 
         // Article Info

@@ -1,14 +1,11 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, cart, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
 // Language
 const language = await loader.language('checkout/payment_method');
-
-// library
-const ajax = await loader.library('ajax');
 
 customElements.define('payment-method', class extends WebComponent {
     async render(){

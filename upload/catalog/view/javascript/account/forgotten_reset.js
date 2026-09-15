@@ -1,10 +1,8 @@
 import { WebComponent } from '../component.js';
+import { loader, customer } from '../index.js';
 
 // Name
 export const name = 'forgotten-reset';
-
-// Library
-const customer = await loader.library('customer');
 
 customElements.define('forgotten-reset', class extends WebComponent {
     async render() {

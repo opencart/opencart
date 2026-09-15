@@ -1,12 +1,8 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, customer } from '../index.js';
 
 // Language
 const language = await loader.language('account/newsletter');
-
-// Library
-const session = await loader.library('session');
-const customer = await loader.library('customer');
 
 // Name
 export const name = 'account-newsletter';

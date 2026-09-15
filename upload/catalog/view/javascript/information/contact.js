@@ -1,10 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
-
-// Library
-const session = await loader.library('session');
-const ajax = await loader.library('ajax');
-const customer = await loader.library('customer');
+import { ajax, loader, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -13,7 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('information/contact');
 
 // Storage
-const locations = await loader.storage('information/location');
+const locations = await loader.storage('localisation/location');
 
 // Name
 export const name = 'information-contact';
@@ -49,14 +44,14 @@ customElements.define('information-contact', class extends WebComponent {
             onComplete: () => {
                 //ref.get('button-send').button('reset');
             },
-            onSuccess: this.onSuccess.bind(this),
+            onSuccess: this.success,
             onError: (e) => {
                 console.log('onError', e);
             }
         });
     }
 
-    onSuccess(json) {
+    success(json) {
         console.log('onSuccess', json);
 
         // Remove past error classes from inputs

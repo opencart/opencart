@@ -1,17 +1,11 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, cart, local, tax } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
 // Language
 const language = await loader.language('catalog/product_thumb');
-
-// library
-const ajax = await loader.library('ajax');
-const cart = await loader.library('cart');
-const local = await loader.library('local');
-const tax = await loader.library('tax');
 
 customElements.define('product-thumb', class extends WebComponent {
     async render() {

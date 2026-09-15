@@ -1,14 +1,8 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, customer, cart } from '../index.js';
 
 // Language
 const language = await loader.language('account/login');
-
-// Library
-const ajax = await loader.library('ajax');
-const session = await loader.library('session');
-const cart = await loader.library('cart');
-const customer = await loader.library('customer');
 
 // Name
 export const name = 'account-login';
@@ -50,6 +44,9 @@ customElements.define('account-login', class extends WebComponent {
                 // Remove past error classes from inputs
                 target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
                 target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+
+
 
                 // Display error messages
                 if (json['error'] !== undefined) {

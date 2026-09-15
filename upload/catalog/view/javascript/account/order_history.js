@@ -1,8 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
-
-// Library
-const customer = await loader.library('customer');
+import { loader, customer } from '../index.js';
 
 customElements.define('order-history', class extends WebComponent {
     render(){

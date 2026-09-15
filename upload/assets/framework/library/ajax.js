@@ -5,6 +5,8 @@
  * @classdesc This is a description of the MyClass class.
  */
 export default class Ajax {
+    instance;
+
     /**
      * This function can prefix/suffix your string.
      *
@@ -123,4 +125,16 @@ export default class Ajax {
             ...options
         });
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Ajax();
+        }
+
+        return this.instance;
+    }
 }
+
+const ajax = Ajax.getInstance();
+
+export { ajax };

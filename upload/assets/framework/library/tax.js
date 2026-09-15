@@ -4,6 +4,7 @@ import { loader } from './loader.js';
 const config = await loader.config('default');
 
 export default class Tax {
+    instance;
     tax_rates = new Map();
 
     async setGeozone(country_id, zone_id) {
@@ -17,9 +18,9 @@ export default class Tax {
 
         let tax_rates = await loader.storage('localisation/tax_rate-' + geo_zone.geo_zone_id);
 
-        if (tax_rates !== undefined) {
-            this.tax_rates = tax_rates;
-        }
+        if (tax_rates == undefined) return;
+
+        this.tax_rates = tax_rates;
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {
@@ -28,10 +29,10 @@ export default class Tax {
         if (tax_class_id && calculate) {
             let amount = 0;
 
-            let tax_rates = this.getRates(value, tax_class_id);
+            let tax_rates = this.getRates(value, Number(tax_class_id));
 
             for (let tax_rate of tax_rates.values()) {
-                amount += tax_rate.amount;
+                amount += Number(tax_rate.amount);
             }
 
             return value + amount;
@@ -48,7 +49,7 @@ export default class Tax {
         let tax_rates = this.getRates(value, tax_class_id);
 
         for (let tax_rate of tax_rates.values()) {
-            amount += tax_rate.amount;
+            amount += Number(tax_rate.amount);
         }
 
         return amount;
@@ -65,7 +66,7 @@ export default class Tax {
             let amount = 0;
 
             if (tax_rates.has(tax_rate.tax_rate_id)) {
-                amount = tax_rates.get(tax_rate.tax_rate_id).amount;
+                amount = Number(tax_rates.get(tax_rate.tax_rate_id).amount);
             }
 
             if (tax_rate.type == 'F') {
@@ -79,7 +80,7 @@ export default class Tax {
                 name: tax_rate.name,
                 rate: tax_rate.rate,
                 type: tax_rate.type,
-                amount: amount
+                amount: Number(amount)
             });
         }
 
@@ -88,5 +89,13 @@ export default class Tax {
 
     clear() {
         this.tax_rates = [];
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Tax();
+        }
+
+        return this.instance;
     }
 }

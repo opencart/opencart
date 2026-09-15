@@ -1,4 +1,6 @@
 export class Storage {
+    instance;
+
     constructor() {
         this.directory = '';
         this.path = new Map();
@@ -48,4 +50,16 @@ export class Storage {
 
         return undefined;
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Storage();
+        }
+
+        return this.instance;
+    }
 }
+
+const storage = Storage.getInstance();
+
+export { storage };

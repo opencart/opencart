@@ -3,6 +3,8 @@ import { loader } from './loader.js';
 let currencies = await loader.storage('localisation/currency');
 
 export default class Currency {
+    instance;
+
     convert(value, from, to) {
         let currency_from = currencies.find(currency => currency.code === from);
         let currency_to = currencies.find(currency => currency.code === to);
@@ -71,5 +73,13 @@ export default class Currency {
         }
 
         return string;
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Currency();
+        }
+
+        return this.instance;
     }
 }

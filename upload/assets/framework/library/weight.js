@@ -46,4 +46,12 @@ export default class Weight {
             return '';
         }
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Weight();
+        }
+
+        return this.instance;
+    }
 }

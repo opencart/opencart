@@ -17,9 +17,8 @@ if (session.has('cart')) {
     items = await session.get('cart');
 }
 
-console.log(items);
-
 export default class Cart {
+    instance;
     data = new Map();
     items = new Map();
 
@@ -30,8 +29,6 @@ export default class Cart {
     }
 
     async add(product_id, quantity, option, subscription_plan_id) {
-        console.log('add');
-
         // Load product data information
         if (!this.data.has(product_id)) {
             let product = await loader.storage('product/product-' + product_id);
@@ -82,13 +79,9 @@ export default class Cart {
         let product_data = [];
 
         for (let item of [...this.items.values()]) {
-            console.log(item);
-
             let stock_status = true;
 
             let product_info = this.data.get(item.product_id);
-
-            console.log(product_info);
 
             if (product_info !== undefined && item.quantity > 0) {
                 let stock = product_info.quantity;
@@ -106,9 +99,9 @@ export default class Cart {
                     if (option_info.type == 'select' || option_info.type == 'radio') {
                         let option_value_info = option_info.option_value.find(option => option.product_option_value_id == value);
 
-                        option_price += option_value_info.price;
-                        option_points += option_value_info.points;
-                        option_weight += option_value_info.weight;
+                        option_price += Number(option_value_info.price);
+                        option_points += Number(option_value_info.points);
+                        option_weight += Number(option_value_info.weight);
 
                         if (option_value_info.subtract && (!option_value_info.quantity || (option_value_info.quantity < item.quantity))) {
                             stock_status = false;
@@ -117,15 +110,16 @@ export default class Cart {
                         option_data.push({
                             product_option_id: option_info.product_option_id,
                             product_option_value_id: option_value_info.product_option_value_id,
-                            option_id: option_info.option_id, option_value_id: option_value_info.option_value_id,
+                            option_id: option_info.option_id,
+                            option_value_id: option_value_info.option_value_id,
                             name: option_info.description[config.config_language].name,
                             value: option_value_info.description[config.config_language].name,
                             type: option_info.type,
-                            quantity: item.quantity,
+                            quantity: Number(item.quantity),
                             subtract: option_value_info.subtract,
-                            price: option_value_info.price,
-                            points: option_value_info.points,
-                            weight: option_value_info.weight
+                            price: Number(option_value_info.price),
+                            points: Number(option_value_info.points),
+                            weight: Number(option_value_info.weight)
                         });
                     } else if (option_info.type == 'checkbox' && Array.isArray(value)) {
                         for (let product_option_value_id of value) {
@@ -146,11 +140,11 @@ export default class Cart {
                                     name: option_info.description[config.config_language].name,
                                     value: option_value_info.description[config.config_language].name,
                                     type: option_info.type,
-                                    quantity: item.quantity,
+                                    quantity: Number(item.quantity),
                                     subtract: option_value_info.subtract,
-                                    price: option_value_info.price,
-                                    points: option_value_info.points,
-                                    weight: option_value_info.weight
+                                    price: Number(option_value_info.price),
+                                    points: Number(option_value_info.points),
+                                    weight: Number(option_value_info.weight)
                                 });
                             }
                         }
@@ -179,7 +173,7 @@ export default class Cart {
                     }
                 }
 
-                let price = product_info.price + option_price;
+                let price = Number(product_info.price + option_price);
 
                 let subscription_data = [];
 
@@ -191,24 +185,24 @@ export default class Cart {
                         subscription_plan_id: subscription_info.subscription_plan_id,
                         customer_group_id: subscription_info.customer_group_id,
                         name: subscription_info.description[config.config_language].name,
-                        trial_price: subscription_info.trial_price,
+                        trial_price: Number(subscription_info.trial_price),
                         trial_frequency: subscription_info.trial_frequency,
                         trial_duration: subscription_info.trial_duration,
                         trial_cycle: subscription_info.trial_cycle,
                         trial_status: subscription_info.trial_status,
                         cycle: subscription_info.cycle,
                         frequency: subscription_info.frequency,
-                        duration: subscription_info.duration,
-                        remaining: subscription_info.duration,
-                        price: subscription_info.price,
+                        duration: Number(subscription_info.duration),
+                        remaining: Number(subscription_info.duration),
+                        price: Number(subscription_info.price),
                         sort_order: subscription_info.sort_order
                     });
 
                     // Set the new price if is subscription product
-                    price = subscription_info.price;
+                    price = Number(subscription_info.price);
 
                     if (subscription_info.trial_status) {
-                        price = subscription_info.trial_price;
+                        price = Number(subscription_info.trial_price);
                     }
                 }
 
@@ -218,12 +212,12 @@ export default class Cart {
                 if (discount_info) {
                     if (discount_info.type == 'F') {
                         // Fixed Price
-                        price = discount_info.price + option_price;
+                        price = Number(discount_info.price + option_price);
                         // Percentage
-                        price -= (price * (discount_info.price / 100));
+                        price -= Number(price * (discount_info.price / 100));
                     } else if (discount_info.type == 'S') {
                         // Subtract
-                        price -= discount_info.price;
+                        price -= Number(discount_info.price);
                     }
                 }
 
@@ -245,7 +239,7 @@ export default class Cart {
                 let reward_info = product_info.rewards.find(reward => reward.customer_group_id == config.config_customer_group_id);
 
                 if (reward_info) {
-                    reward = reward_info.points;
+                    reward = Number(reward_info.points);
                 }
 
                 product_data.push({
@@ -253,27 +247,28 @@ export default class Cart {
                     product_id: product_info.product_id,
                     name: product_info.description[config.config_language].name,
                     model: product_info.model,
-                    image: product_info.thumb,
+                    image: product_info.image,
+                    thumb: product_info.thumb,
                     option: option_data,
                     subscription: subscription_data,
                     shipping: product_info.shipping,
                     download: product_info.download,
-                    quantity: item.quantity,
-                    minimum: product_info.minimum,
+                    quantity: Number(item.quantity),
+                    minimum: Number(product_info.minimum),
                     minimum_status: minimum,
                     stock: stock,
                     stock_status: stock_status,
-                    tax_class_id: product_info.tax_class_id,
-                    price: price,
-                    total: price * item.quantity,
-                    reward: reward * item.quantity,
-                    points: product_info.points ? (product_info.points + option_points) * item.quantity : 0,
-                    weight: (product_info.weight + option_weight) * item.quantity,
-                    weight_class_id: product_info.weight_class_id,
-                    length: product_info.length,
-                    width: product_info.width,
-                    height: product_info.height,
-                    length_class_id: product_info.length_class_id
+                    tax_class_id: Number(product_info.tax_class_id),
+                    price: Number(price),
+                    total: Number(price * item.quantity),
+                    reward: Number(reward * item.quantity),
+                    points: Number(product_info.points ? (product_info.points + option_points) * item.quantity : 0),
+                    weight: Number((product_info.weight + option_weight) * item.quantity),
+                    weight_class_id: Number(product_info.weight_class_id),
+                    length: Number(product_info.length),
+                    width: Number(product_info.width),
+                    height: Number(product_info.height),
+                    length_class_id: Number(product_info.length_class_id)
                 });
             }
         }
@@ -310,6 +305,15 @@ export default class Cart {
         return product_data;
     }
 
+    /**
+     * Get Weight
+     *
+     * @return array<int, array<string, mixed>>
+     *
+     * @example
+     *
+     * $subscriptions = $this->cart->getSubscriptions();
+     */
     getWeight() {
         let weight = 0;
 
@@ -322,6 +326,15 @@ export default class Cart {
         return weight;
     }
 
+    /**
+     * Get SubTotal
+     *
+     * @return array<int, array<string, mixed>>
+     *
+     * @example
+     *
+     * $subscriptions = $this->cart->getSubscriptions();
+     */
     getSubTotal() {
         let total = 0;
 
@@ -493,5 +506,13 @@ export default class Cart {
         }
 
         return false;
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Cart();
+        }
+
+        return this.instance;
     }
 }

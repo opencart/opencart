@@ -1,9 +1,7 @@
-import { loader } from './loader.js';
-
-// library
-const session = await loader.library('session');
+import { session } from '../index.js';
 
 export default class Customer {
+    instance;
     data = new Map();
 
     constructor() {
@@ -72,5 +70,21 @@ export default class Customer {
 
     getRewardPoints() {
         return this.data.get('reward');
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Customer();
+        }
+
+        return this.instance;
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Customer();
+        }
+
+        return this.instance;
     }
 }

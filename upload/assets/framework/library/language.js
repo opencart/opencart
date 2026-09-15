@@ -1,6 +1,8 @@
 import { load } from '../../yaml/js-yaml.js';
 
-export class Language {
+class Language {
+    instance;
+
     constructor() {
         this.directory = '';
         this.path = new Map();
@@ -50,4 +52,16 @@ export class Language {
 
         return undefined;
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Language();
+        }
+
+        return this.instance;
+    }
 }
+
+const language = Language.getInstance();
+
+export { language };

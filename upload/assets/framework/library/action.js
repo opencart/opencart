@@ -1,33 +1,35 @@
-import { loader } from '../index.js';
+export default class Action {
+    data = new Map();
 
-export let action = new Map(Object.entries({
-    form: (element) => {
-        return new Form(element);
-    },
-    button: (element) => {
-        return new Button(element);
-    },
-    link: (element) => {
-        return new Link(element);
-    },
-    template: (element) => {
-        return new Template(element);
+    register(key, value) {
+        this.data.set(key, value);
     }
-}));
 
-let test = {
-    name: 'common-header',
-    register: () => {
-        customElements.define(name, this);
-    },
-    constructor: () => {
+    load(path) {
 
-    },
-    render: () => {
+    }
 
-    },
-    onClick: () => {
+    get(key) {
+        return this.data.get(key);
+    }
 
+    attach(key, element) {
+
+    }
+
+    detach(key, element) {
+
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Action();
+        }
+
+        return this.instance;
     }
 }
 
+const action = new Action();
+
+export { action };

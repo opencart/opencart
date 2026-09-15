@@ -3,6 +3,9 @@ import { loader, config, language, local, storage, template } from './../../../a
 // Base
 const base = new URL(document.querySelector('base').href);
 
+// Add Config Path
+config.addPath('shop/' + base.host + '/data/');
+
 // language
 const lang = document.documentElement.lang.toLowerCase();
 
@@ -10,7 +13,6 @@ const lang = document.documentElement.lang.toLowerCase();
 config.cache.set('default', {
     config_path: base + 'catalog/view/javascript/',
     config_logo: 'catalog/opencart-logo.png',
-    config_theme: '',
     config_url: 'http://localhost/opencart-master/upload/',
 
     config_name: 'OpenCart Store',
@@ -52,9 +54,6 @@ config.cache.set('default', {
 // Testing Code
 local.set('language', 'en-gb');
 local.set('currency', 'EUR');
-
-// Add Config
-config.addPath('shop/' + base.host + '/data/');
 
 // Add Language Path
 // language.addPath('shop/' + base.host + '/language/' + local.get('language') + '/');

@@ -3,6 +3,7 @@
   <fieldset>
     <legend>{{ heading_title }}</legend>
     <div class="row">
+
       {% if config_checkout_guest %}
         <div class="col mb-3">
           <div class="form-check form-check-inline">
@@ -15,6 +16,7 @@
           </div>
         </div>
       {% endif %}
+
       <div class="col mb-3{% if customer_groups|length <= 1 %} d-none{% endif %}">
         <label class="form-label">{{ entry_customer_group }}</label>
         <select name="customer_group_id" id="input-customer-group" class="form-select" required>
@@ -38,6 +40,7 @@
         <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
         <div id="error-email" class="invalid-feedback"></div>
       </div>
+
       {% if config_telephone_status %}
         <div class="col mb-3">
           <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
@@ -45,6 +48,7 @@
           <div id="error-telephone" class="invalid-feedback"></div>
         </div>
       {% endif %}
+
       {% for custom_field in custom_fields %}
 
         {% if custom_field.location == 'account' %}
@@ -139,6 +143,7 @@
       {% endfor %}
     </div>
   </fieldset>
+
   {% if config_checkout_payment_address %}
     <fieldset>
       <legend>{{ text_payment_address }}</legend>
@@ -271,6 +276,8 @@
       </div>
     </fieldset>
   {% endif %}
+
+
   <fieldset id="shipping-address" style="display: {% if not config_checkout_payment_address %}block{% else %}none{% endif %};">
     <legend>{{ text_shipping_address }}</legend>
     <div class="row row-cols-1 row-cols-md-2">

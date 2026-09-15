@@ -7,6 +7,9 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/register');
 
+// Storage
+const customer_groups = await loader.storage('customer/customer_group');
+
 customElements.define('checkout-register', class extends WebComponent {
     token = '';
 
@@ -17,6 +20,14 @@ customElements.define('checkout-register', class extends WebComponent {
     async render(){
         let data = {};
 
+        // Custom Fields
+        data.custom_fields = [];
+
+        let customer_group = await loader.storage('customer/customer_group-' + config.config_customer_group_id);
+
+        if (customer_group) {
+            data.custom_fields = customer_group.custom_fields;
+        }
 
         data.token = this.token;
 

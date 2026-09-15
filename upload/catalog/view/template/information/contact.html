@@ -1,15 +1,15 @@
-<h1>{{ heading_title }}</h1>
+<link rel="stylesheet" href="../../stylesheet/stylesheet.css"><h1>{{ heading_title }}</h1>
 <h3>{{ text_location }}</h3>
 <div class="card mb-3">
   <div class="card-body">
     <div class="row">
-      {% if image %}
+      {% if config_image %}
         <div class="col-sm-3"><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px"/></div>
       {% endif %}
       <div class="col-sm-3"><strong>{{ config_name }}</strong>
         <br/>
         <address>{{ config_address }}</address>
-        <a href="{{ config_map }}" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
+        <a href="" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
       </div>
       {% if config_telephone %}
         <div class="col-sm-3"><strong>{{ text_telephone }}</strong>

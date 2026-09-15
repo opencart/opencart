@@ -16,7 +16,7 @@ export class WebComponent extends HTMLElement {
         //this.attachShadow({ mode: 'open' });
 
         if ('connected' in this) {
-            await this.connect();
+            await this.connected();
         }
 
         if ('render' in this) {

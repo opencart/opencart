@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "../fonts/fontawesome/css/all.min.css";
+@import "../../../assets/fonts/fontawesome/css/all.min.css";
 /*!
    * Bootstrap  v5.3.7 (https://getbootstrap.com/)
    * Copyright 2011-2025 The Bootstrap Authors
@@ -9,6 +9,7 @@
   --bs-blue: #229ac8;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
   --bs-pink: #d63384;
   --bs-red: #da4f49;
   --bs-orange: #fd7e14;

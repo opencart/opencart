@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, session, cart, customer } from '../index.js';
 import '../common/currency.js';
 import '../common/language.js';
 import '../common/search.js';
@@ -11,11 +11,6 @@ const config = await loader.config('default');
 
 // Language
 const language = await loader.language('common/header');
-
-// library
-const session = await loader.library('session');
-const cart = await loader.library('cart');
-const customer = await loader.library('customer');
 
 customElements.define('common-header', class extends WebComponent {
     async render() {

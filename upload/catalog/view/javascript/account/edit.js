@@ -1,15 +1,11 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
 // Language
 const language = await loader.language('account/edit');
-
-// Library
-const ajax = await loader.library('ajax');
-const customer = await loader.library('customer');
 
 // Name
 export const name = 'account-edit';

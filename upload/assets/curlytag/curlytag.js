@@ -8,7 +8,7 @@
 * OpenCart Twig replacement. Based on Django, Nunjucks, Twig template syntax.
 */
 export class CurlyTag {
-    static instance = null;
+    static instance;
 
     constructor() {
         this.directory = '';
@@ -1470,7 +1470,3 @@ export class CurlyTag {
         return this.instance;
     }
 }
-
-const curlytag = CurlyTag.getInstance();
-
-export { curlytag };

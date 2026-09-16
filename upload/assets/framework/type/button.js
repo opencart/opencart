@@ -13,7 +13,7 @@ action.register('button', class Button {
         this.width = element.offsetWidth;
 
         Object.assign(element, {
-            button: this.button.bind(this),
+            button: this.button.bind(this)
         });
     }
 

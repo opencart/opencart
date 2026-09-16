@@ -1,6 +1,9 @@
 export default class Binder {
     instance;
-    data = new Map();
+
+    constructor() {
+        this.data = new Map();
+    }
 
     get(key) {
         this.data.get(key);
@@ -12,7 +15,7 @@ export default class Binder {
 
     static getInstance() {
         if (!this.instance) {
-            this.instance = new Map();
+            this.instance = new Binder();
         }
 
         return this.instance;

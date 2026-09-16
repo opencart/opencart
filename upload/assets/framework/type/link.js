@@ -1,6 +1,4 @@
-import { action } from '../index.js';
-
-action.register('link', class {
+export class Link {
     element;
     target = '';
 
@@ -13,10 +11,8 @@ action.register('link', class {
     onClick(e) {
         e.preventDefault();
 
-        console.log(this.target);
-
         let target = document.getElementById(this.target);
 
         target.src = e.currentTarget.getAttribute('href');
     }
-});
+}

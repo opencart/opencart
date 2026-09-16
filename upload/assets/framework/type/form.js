@@ -1,16 +1,20 @@
-import { action, binder } from '../index.js';
+import { binder } from '../index.js';
 
-action.register('form', class Form {
+export class Form {
     element;
 
     constructor(element) {
         this.element = element;
-        this.element.addEventListener('submit', this.onSubmit);
+        this.element.addEventListener('submit', this.onSubmit.bind(this));
     }
 
     onSubmit(e) {
+
+
         e.preventDefault();
 
-        binder.get('button').button('loading');
+        if (binder.has('button-submitter')) {
+            //binder.get('button-submitter').button('loading');
+        }
     }
-});
+}

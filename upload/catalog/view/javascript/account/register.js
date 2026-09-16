@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader, ajax, session, cart, customer } from '../index.js';
+import { loader, ajax, cart, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');

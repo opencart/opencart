@@ -10,10 +10,7 @@ const language = await loader.language('catalog/manufacturer_list');
 // Storage
 let manufacturers = await loader.storage('manufacturer/manufacturer');
 
-// Name
-export const name = 'manufacturer-list';
-
-customElements.define('manufacturer-list', class extends WebComponent {
+export default class ManufacturerList extends WebComponent {
     async render() {
         let data = {};
 
@@ -55,4 +52,6 @@ customElements.define('manufacturer-list', class extends WebComponent {
 
         return loader.template('catalog/manufacturer_list', { ...data, ...language });
     }
-});
+}
+
+customElements.define('manufacturer-list', ManufacturerList);

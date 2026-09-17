@@ -7,10 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/edit');
 
-// Name
-export const name = 'account-edit';
-
-customElements.define('account-edit', class extends WebComponent {
+export default class AccountEdit extends WebComponent {
     token = '';
 
     connect() {
@@ -98,4 +95,6 @@ customElements.define('account-edit', class extends WebComponent {
             }
         });
     }
-});
+}
+
+customElements.define('account-edit', AccountEdit);

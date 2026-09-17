@@ -4,10 +4,7 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('information/gdpr');
 
-// Name
-export const name = 'information-gdpr';
-
-customElements.define('information-gdpr', class extends WebComponent {
+export default class InformationGdpr extends WebComponent {
     async render() {
 
 
@@ -21,4 +18,6 @@ customElements.define('information-gdpr', class extends WebComponent {
             $('#collapse-remove').slideUp();
         }
     }
-});
+}
+
+customElements.define('information-gdpr', InformationGdpr);

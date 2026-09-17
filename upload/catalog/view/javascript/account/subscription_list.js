@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/subscription');
 
-customElements.define('subscription-list', class extends WebComponent {
+customElements.define('subscription-list', export default class extends WebComponent {
     render() {
         let data = {};
 

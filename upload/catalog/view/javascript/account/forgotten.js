@@ -7,10 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/forgotten');
 
-// Name
-export const name = 'account-forgotten';
-
-customElements.define('account-forgotten', class extends WebComponent {
+export default class AccountForgotten extends WebComponent {
     connect() {
         if (!customer.isLogged()) {
             let target = document.getElementById('content');
@@ -27,4 +24,6 @@ customElements.define('account-forgotten', class extends WebComponent {
         e.preventDefault();
 
     }
-});
+}
+
+customElements.define('account-forgotten', AccountForgotten);

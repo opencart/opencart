@@ -11,10 +11,7 @@ const language = await loader.language('cms/topic');
 // Storage
 let topics = await loader.storage('topic/topic');
 
-// Name
-export const name = 'cms-topic';
-
-customElements.define('cms-topic', class extends WebComponent {
+export default class CmsTopic extends WebComponent {
     async render() {
         let data = {};
 
@@ -79,4 +76,6 @@ customElements.define('cms-topic', class extends WebComponent {
 
         location = url;
     }
-});
+}
+
+customElements.define('cms-topic', CmsTopic);

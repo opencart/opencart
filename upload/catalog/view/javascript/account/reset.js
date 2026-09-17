@@ -3,10 +3,7 @@ import { loader, ajax, customer } from '../index.js';
 
 const language = await loader.language('account/reset');
 
-// Name
-export const name = 'account-reset';
-
-customElements.define('account-reset', class extends WebComponent {
+export default class AccountReset extends WebComponent {
     render() {
         return loader.template('account/reset', { ...language });
     }
@@ -72,4 +69,6 @@ customElements.define('account-reset', class extends WebComponent {
             }
         });
     }
-});
+}
+
+customElements.define('account-reset', AccountReset);

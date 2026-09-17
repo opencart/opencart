@@ -10,10 +10,7 @@ const language = await loader.language('account/register');
 // Storage
 const customer_groups = await loader.storage('customer/customer_group');
 
-// Name
-export const name = 'account-register';
-
-customElements.define('account-register', class extends WebComponent {
+export default class AccountRegister extends WebComponent {
     token = '';
 
     connect() {
@@ -129,4 +126,6 @@ customElements.define('account-register', class extends WebComponent {
             }
         }
     }
-});
+}
+
+customElements.define('account-register', AccountRegister);

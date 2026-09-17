@@ -2,9 +2,10 @@ import { session } from '../index.js';
 
 export default class Customer {
     instance;
-    data = new Map();
 
     constructor() {
+        this.data = new Map();
+
         if (session.has('customer')) {
             this.data = session.get('customer');
         }
@@ -21,7 +22,7 @@ export default class Customer {
     }
 
     isLogged() {
-        return this.data.length > 0;
+        return this.data.size > 0;
     }
 
     getId() {
@@ -70,14 +71,6 @@ export default class Customer {
 
     getRewardPoints() {
         return this.data.get('reward');
-    }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Customer();
-        }
-
-        return this.instance;
     }
 
     static getInstance() {

@@ -12,10 +12,7 @@ const language = await loader.language('catalog/product_info');
 // Storage
 const stock_statuses = await loader.storage('localisation/stock_status');
 
-// Name
-export const name = 'product-info';
-
-customElements.define('product-info', class extends WebComponent {
+export default class ProductInfo extends WebComponent {
     async render(){
         let data = {};
 
@@ -261,4 +258,6 @@ customElements.define('product-info', class extends WebComponent {
             }
         });
     }
-});
+}
+
+customElements.define('product-info', ProductInfo);

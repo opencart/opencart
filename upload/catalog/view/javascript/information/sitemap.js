@@ -11,10 +11,7 @@ const language = await loader.language('information/sitemap');
 const categories = await loader.storage('category/category');
 const informations = await loader.storage('information/information');
 
-// Name
-export const name = 'information-sitemap';
-
-customElements.define('information-sitemap', class extends WebComponent {
+export default class InformationSitemap extends WebComponent {
     async render() {
         let data = {};
 
@@ -50,4 +47,6 @@ customElements.define('information-sitemap', class extends WebComponent {
 
         return loader.template('information/sitemap', { ...data, ...language, ...config });
     }
-});
+}
+
+customElements.define('information-sitemap', InformationSitemap);

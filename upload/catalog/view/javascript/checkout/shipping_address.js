@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/cart');
 
-customElements.define('shipping-address', class extends WebComponent {
+customElements.define('shipping-address', export default class extends WebComponent {
     async connect() {
 
     }

@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/payment_method');
 
-customElements.define('payment-method', class extends WebComponent {
+customElements.define('payment-method', export default class extends WebComponent {
     async render(){
         let data = {};
 

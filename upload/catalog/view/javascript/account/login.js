@@ -4,10 +4,7 @@ import { loader, ajax, customer, cart } from '../index.js';
 // Language
 const language = await loader.language('account/login');
 
-// Name
-export const name = 'account-login';
-
-customElements.define('account-login', class extends WebComponent {
+export default class AccountLogin extends WebComponent {
     token = '';
 
     async connect() {
@@ -84,4 +81,6 @@ customElements.define('account-login', class extends WebComponent {
             }
         });
     }
-});
+}
+
+customElements.define('account-login', AccountLogin);

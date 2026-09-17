@@ -1,14 +1,18 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// Name
-export const name = 'catalog-search';
-
-customElements.define('catalog-search', class extends WebComponent {
+export default class CatalogSearch extends WebComponent {
     async render() {
 
     }
-});
+
+    onSubmit (e)  {
+        e.preventDefault();
+
+    }
+}
+
+customElements.define('catalog-search', CatalogSearch);
 
 /*
 $('#button-search').on('click', function() {

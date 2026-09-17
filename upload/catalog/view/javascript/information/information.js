@@ -7,10 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('information/information');
 
-// Name
-export const name = 'information-information';
-
-customElements.define('information-information', class extends WebComponent {
+export default class InformationInformation extends WebComponent {
     async render(){
         let information = await loader.storage('information/information-' + this.getAttribute('information_id'));
 
@@ -20,4 +17,6 @@ customElements.define('information-information', class extends WebComponent {
             return await loader.template('information/information', { ...information, ...description, ...language, ...config });
         }
     }
-});
+}
+
+customElements.define('information-information', InformationInformation);

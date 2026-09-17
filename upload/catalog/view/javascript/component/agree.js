@@ -1,7 +1,7 @@
 import { loader } from '../index.js';
 import {WebComponent} from "../../../../assets/framework/library/webcomponent";
 
-customElements.define('product-thumb', class extends WebComponent {
+customElements.define('product-thumb', export default class extends WebComponent {
     get value() {
         return this.getAttribute('value');
     }

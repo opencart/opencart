@@ -8,10 +8,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/category');
 
-// Name
-export const name = 'catalog-category';
-
-customElements.define('catalog-category', class extends WebComponent {
+export default class CatalogCategory extends WebComponent {
     async render() {
         let data = {};
 
@@ -47,4 +44,6 @@ customElements.define('catalog-category', class extends WebComponent {
             return loader.template('catalog/category', { ...category, ...description, ...data, ...language, ...config });
         }
     }
-});
+}
+
+customElements.define('catalog-category', CatalogCategory);

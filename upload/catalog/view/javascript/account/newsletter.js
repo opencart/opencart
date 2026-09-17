@@ -4,10 +4,7 @@ import { loader, customer } from '../index.js';
 // Language
 const language = await loader.language('account/newsletter');
 
-// Name
-export const name = 'account-newsletter';
-
-customElements.define('account-newsletter', class extends WebComponent {
+export default class AccountNewsletter extends WebComponent {
     async render() {
         let data = {};
 
@@ -20,4 +17,6 @@ customElements.define('account-newsletter', class extends WebComponent {
         e.preventDefault();
 
     }
-});
+}
+
+customElements.define('account-newsletter', AccountNewsletter);

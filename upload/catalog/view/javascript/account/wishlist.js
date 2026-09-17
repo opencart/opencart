@@ -4,10 +4,7 @@ import { loader, customer } from '../index.js';
 // Language
 const language = await loader.language('account/wishlist');
 
-// Name
-export const name = 'account-wishlist';
-
-customElements.define('account-wishlist', class extends WebComponent {
+export default class AccountWishlist extends WebComponent {
     render() {
         let data = {};
 
@@ -23,7 +20,9 @@ customElements.define('account-wishlist', class extends WebComponent {
     remove() {
 
     }
-});
+}
+
+customElements.define('account-wishlist', AccountWishlist);
 
 /*
 $('#wishlist').on('click', '.btn-danger', function(e) {

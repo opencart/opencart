@@ -1,11 +1,10 @@
 import { WebComponent } from '../component.js';
 import { loader, customer } from '../index.js';
 
-// Name
-export const name = 'order-info';
-
-customElements.define('order-info', class extends WebComponent {
+export default class OrderInfo extends WebComponent {
     async render() {
 
     }
-});
+}
+
+customElements.define('order-info', OrderInfo);

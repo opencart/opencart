@@ -7,15 +7,13 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/affiliate');
 
-// Name
-export const name = 'account-affiliate';
-
-customElements.define('account-affiliate', class extends WebComponent {
+export default class AccountAffiliate extends WebComponent {
     render() {
-
         return loader.template('account/affiliate', { ...language });
     }
-});
+}
+
+customElements.define('account-affiliate', AccountAffiliate);
 /*
 $('input[name=\'payment_method\']').on('change', function() {
     $('.payment').hide();

@@ -7,10 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/cart');
 
-// Name
-export const name = 'checkout-cart';
-
-customElements.define('checkout-cart', class extends WebComponent {
+export default class CheckoutCart extends WebComponent {
     async render(){
         let data = {};
 
@@ -101,7 +98,9 @@ customElements.define('checkout-cart', class extends WebComponent {
         e.preventDefault();
 
     }
-});
+}
+
+customElements.define('checkout-cart', CheckoutCart);
 
 /*
 $('#shopping-cart').on('submit', '#output-cart form', function(e) {

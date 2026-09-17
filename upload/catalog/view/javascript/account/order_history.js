@@ -1,8 +1,10 @@
 import { WebComponent } from '../component.js';
 import { loader, customer } from '../index.js';
 
-customElements.define('order-history', class extends WebComponent {
+ export default class AccountOrderHistory extends WebComponent {
     render(){
 
     }
-});
+}
+
+customElements.define('order-history', AccountOrderHistory);

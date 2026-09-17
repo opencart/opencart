@@ -7,10 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/manufacturer_info');
 
-// Name
-export const name = 'manufacturer-info';
-
-customElements.define('manufacturer-info', class extends WebComponent {
+export default class ManufacturerInfo extends WebComponent {
     async render(){
         let data = {};
 
@@ -27,4 +24,6 @@ customElements.define('manufacturer-info', class extends WebComponent {
             return loader.template('catalog/manufacturer_info', { ...manufacturer, ...description, ...language });
         }
     }
-});
+}
+
+customElements.define('manufacturer-info', ManufacturerInfo);

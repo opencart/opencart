@@ -4,11 +4,10 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/reward');
 
-// Name
-export const name = 'account-reward';
-
-customElements.define('account-reward', class extends WebComponent {
+export default class AccountReward extends WebComponent {
     async render() {
 
     }
-});
+}
+
+customElements.define('account-reward', AccountReward);

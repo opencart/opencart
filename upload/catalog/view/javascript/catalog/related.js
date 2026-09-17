@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/product_info');
 
-customElements.define('product-related', class extends WebComponent {
+customElements.define('product-related', export default class extends WebComponent {
     async render() {
 
     }

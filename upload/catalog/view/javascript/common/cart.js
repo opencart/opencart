@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('common/cart');
 
-customElements.define('common-cart', class extends WebComponent {
+customElements.define('common-cart', export default class extends WebComponent {
     async render() {
         let data = {};
 

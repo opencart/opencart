@@ -1,14 +1,13 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// Name
-export const name = 'authorize-reset';
-
-customElements.define('authorize-reset', class extends WebComponent {
+export default class AuthorizeReset extends WebComponent {
     async render() {
 
     }
-});
+}
+
+customElements.define('authorize-reset', AuthorizeReset);
 
 $('#button-send').on('click', function(e) {
     e.preventDefault();

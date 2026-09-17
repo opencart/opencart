@@ -4,10 +4,7 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/password');
 
-// Name
-export const name = 'account-password';
-
-customElements.define('account-password', class extends WebComponent {
+export default class AccountPassword extends WebComponent {
     render() {
         let data = {};
 
@@ -18,4 +15,6 @@ customElements.define('account-password', class extends WebComponent {
         e.preventDefault();
 
     }
-});
+}
+
+customElements.define('account-password', AccountPassword);

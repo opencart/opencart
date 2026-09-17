@@ -13,10 +13,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/checkout');
 
-// Name
-export const name = 'checkout-checkout';
-
-customElements.define('checkout-checkout', class extends WebComponent {
+export default class CheckoutCheckout extends WebComponent {
     async render() {
         let data = {};
 
@@ -27,4 +24,6 @@ customElements.define('checkout-checkout', class extends WebComponent {
 
         return loader.template('checkout/checkout', { ...data, ...language, ...config });
     }
-});
+}
+
+customElements.define('checkout-checkout', CheckoutCheckout);

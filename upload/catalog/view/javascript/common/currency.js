@@ -10,7 +10,7 @@ const language = await loader.language('common/currency');
 // Storage
 const currencies = await loader.storage('localisation/currency');
 
-customElements.define('common-currency', class extends WebComponent {
+customElements.define('common-currency', export default class extends WebComponent {
     async render() {
         // Config stored currency code
         let code = config.config_currency;

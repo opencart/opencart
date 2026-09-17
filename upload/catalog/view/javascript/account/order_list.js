@@ -4,15 +4,14 @@ import { loader, customer } from '../index.js';
 // Language
 const language = await loader.language('account/order');
 
-// Name
-export const name = 'order-list';
-
-customElements.define('order-list', class extends WebComponent {
+export default class OrderList extends WebComponent {
     render() {
 
         return loader.template('account/order', { ...language });
     }
-});
+}
+
+customElements.define('order-list', OrderList);
 /*
 var product_row = 0;
 

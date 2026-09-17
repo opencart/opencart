@@ -1,6 +1,6 @@
 import { loader } from '../index.js';
 
-customElements.define('cms-comment', export default class extends WebComponent {
+customElements.define('cms-comment', class extends WebComponent {
     async render() {
 
     }

@@ -25,9 +25,12 @@ customElements.define('x-include', class extends WebComponent {
         let [path, query] = this.src.split('?');
 
         if (!this.data.has(path)) {
-            let response = await import(config.config_path + path);
+            let component = await import(config.config_path + path);
 
-            this.data.set(path, response.name);
+            console.log('component', component);
+
+
+            this.data.set(path, customElements.getName(component.default));
         }
 
         let name = this.data.get(path);

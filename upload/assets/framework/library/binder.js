@@ -6,11 +6,15 @@ export default class Binder {
     }
 
     get(key) {
-        this.data.get(key);
+        return this.data.get(key);
     }
 
     set(key, value) {
         this.data.set(key, value);
+    }
+
+    has(key) {
+        return this.data.has(key);
     }
 
     static getInstance() {

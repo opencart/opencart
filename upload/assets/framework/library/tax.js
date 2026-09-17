@@ -5,7 +5,10 @@ const config = await loader.config('default');
 
 export default class Tax {
     instance;
-    tax_rates = new Map();
+
+    constructor() {
+        this.tax_rates = new Map();
+    }
 
     async setGeozone(country_id, zone_id) {
         let country = await loader.storage('localisation/country-' + country_id);

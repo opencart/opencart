@@ -7,11 +7,8 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/account');
 
-// Name
-export const name = 'account-account';
-
-customElements.define('account-account', class extends WebComponent {
-    connect() {
+export default class AccountAccount extends WebComponent {
+    initialize() {
         if (!customer.isLogged()) {
             let target = document.getElementById('content');
 
@@ -26,4 +23,6 @@ customElements.define('account-account', class extends WebComponent {
 
         return loader.template('account/account', { ...data, ...language, ...config });
     }
-});
+}
+
+customElements.define('account-account', AccountAccount);

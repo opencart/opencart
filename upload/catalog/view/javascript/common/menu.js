@@ -10,7 +10,7 @@ const language = await loader.language('common/menu');
 // Storage
 let categories = await loader.storage('category/category');
 
-customElements.define('common-menu', export default class extends WebComponent {
+customElements.define('common-menu', class extends WebComponent {
     async render() {
         let data = {};
 

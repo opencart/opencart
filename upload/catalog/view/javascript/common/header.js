@@ -12,7 +12,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('common/header');
 
-customElements.define('common-header', export default class extends WebComponent {
+customElements.define('common-header', class extends WebComponent {
     async render() {
         let data = {};
 

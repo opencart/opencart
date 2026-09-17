@@ -1,13 +1,11 @@
-import { action } from '../index.js';
+import { binder } from '../index.js';
 
-action.register('button', class Button {
+export class Button {
     element;
     html = '';
     width;
 
     constructor(element) {
-        console.log('BUTTON');
-
         this.element = element;
         this.html = element.innerHTML;
         this.width = element.offsetWidth;
@@ -32,4 +30,4 @@ action.register('button', class Button {
             this.element.removeAttribute('disabled');
         }
     }
-});
+}

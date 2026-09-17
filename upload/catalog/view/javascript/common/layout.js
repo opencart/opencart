@@ -3,7 +3,7 @@ import { loader } from '../index.js';
 import './header.js';
 import './footer.js';
 
-customElements.define('common-layout', export default class extends WebComponent {
+customElements.define('common-layout', class extends WebComponent {
     initialize() {
         this.attachShadow({ mode: 'open' });
     }

@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/payment_method');
 
-customElements.define('payment-method', export default class extends WebComponent {
+customElements.define('payment-method', class extends WebComponent {
     async render(){
         let data = {};
 
@@ -16,7 +16,7 @@ customElements.define('payment-method', export default class extends WebComponen
         return loader.template('checkout/payment_method', { ...data,  ...language });
     }
 
-    onSubmit() {
+    onSubmit(e) {
         let target = e.target;
 
         let form = new FormData(target);

@@ -1,8 +1,6 @@
 import { binder, action } from '../index.js';
 
 export class WebComponent extends HTMLElement {
-    data = new Map();
-
     constructor() {
         super();
 
@@ -14,7 +12,7 @@ export class WebComponent extends HTMLElement {
 
     async connectedCallback() {
         //this.attachShadow({ mode: 'open' });
-
+        //initialize
         if ('connected' in this) {
             await this.connected();
         }
@@ -55,15 +53,9 @@ export class WebComponent extends HTMLElement {
                 if (element.hasAttribute('data-action')) {
                     let parts = element.getAttribute('data-action').split(' ');
 
-                    //console.log(parts);
-
                     for (let part of parts) {
-                        let test = action.get(part);
-
-                        new test(element);
+                        action.attach(part, element);
                     }
-
-                    //console.log('element', Object.entries(element));
 
                     element.removeAttribute('data-action');
                 }

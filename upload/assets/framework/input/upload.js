@@ -129,8 +129,6 @@ customElements.define('input-upload', class extends WebComponent {
 });
 
 customElements.define('form-upload', class extends WebComponent {
-
-
     render() {
         return '<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>';
     }
@@ -146,9 +144,6 @@ customElements.define('form-upload', class extends WebComponent {
     }
 
     timeout() {
-
-
-
         if ($('#form-upload input[name=\'file\']').val() != '') {
             clearInterval(timer);
 

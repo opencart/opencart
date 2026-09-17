@@ -7,10 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('cms/article_info');
 
-// Name
-export const name = 'article-info';
-
-customElements.define('article-info', class extends WebComponent {
+export default class ArticleInfo extends WebComponent {
     async render(){
         console.log('article-info', this.getAttribute('article_id'));
 
@@ -27,4 +24,6 @@ customElements.define('article-info', class extends WebComponent {
             return loader.template('cms/article_info', { ...article, ...description, ...config, ...language });
         }
     }
-});
+}
+
+customElements.define('article-info', ArticleInfo);

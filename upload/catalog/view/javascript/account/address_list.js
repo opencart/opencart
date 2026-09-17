@@ -7,10 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/address');
 
-// Name
-export const name = 'address-list';
-
-customElements.define('address-list', class extends WebComponent {
+class AddressList extends WebComponent {
     render() {
         let data = {};
 
@@ -51,4 +48,6 @@ customElements.define('address-list', class extends WebComponent {
         });
 
     }
-});
+}
+
+customElements.define('address-list', AddressList);

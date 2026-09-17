@@ -19,10 +19,11 @@ if (session.has('cart')) {
 
 export default class Cart {
     instance;
-    data = new Map();
-    items = new Map();
 
     constructor() {
+        this.data = new Map();
+        this.items = new Map();
+
         for (let item of items) {
             this.add(item.product_id, item.quantity, [...item.option], item.subscription_plan_id);
         }

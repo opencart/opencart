@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/confirm');
 
-customElements.define('checkout-confirm', export default class extends WebComponent {
+customElements.define('checkout-confirm', class extends WebComponent {
     async connect(){
 
     }

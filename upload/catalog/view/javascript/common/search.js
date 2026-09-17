@@ -7,7 +7,7 @@ const language = await loader.language('common/search');
 // URL
 const url = new URLSearchParams(document.location.search);
 
-customElements.define('common-search', export default class extends WebComponent {
+customElements.define('common-search', class extends WebComponent {
     async render() {
         let data = {};
 

@@ -1,12 +1,21 @@
+export { loader } from '../library/loader.js';
+import { Button } from '../type/button.js';
+import { Form } from '../type/form.js';
+import { Link } from '../type/link.js';
+
 export default class Action {
-    data = new Map();
+    instance;
+
+    constructor() {
+        this.data = new Map();
+    }
 
     register(key, value) {
         this.data.set(key, value);
     }
 
-    load(path) {
-
+    has(key) {
+        return this.data.has(key);
     }
 
     get(key) {
@@ -14,7 +23,9 @@ export default class Action {
     }
 
     attach(key, element) {
+        let name = this.data.get(key);
 
+        let object = new name(element);
     }
 
     detach(key, element) {
@@ -30,6 +41,12 @@ export default class Action {
     }
 }
 
-const action = new Action();
+const action = Action.getInstance();
+
+// Load defaults
+action.register('button', Button);
+action.register('form', Form);
+action.register('link', Link);
 
 export { action };
+

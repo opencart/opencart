@@ -4,10 +4,7 @@ import { loader, ajax, customer } from '../index.js';
 // Language
 const language = await loader.language('account/address');
 
-// Name
-export const name = 'address-form';
-
-customElements.define('address-form', class extends WebComponent {
+export default class AddressForm extends WebComponent {
     render() {
         let data = {};
 
@@ -40,7 +37,7 @@ customElements.define('address-form', class extends WebComponent {
     delete(e) {
         let dismissible = document.querySelectorAll('.alert-dismissible');
 
-        dismissible.remove();
+        dismissible.forEach(element => element.remove());
     }
 
     onSuccess(json){
@@ -54,7 +51,9 @@ customElements.define('address-form', class extends WebComponent {
             alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
     }
-});
+}
+
+customElements.define('address-form', AddressForm);
 
 /*
 const address = document.getElementById('address');

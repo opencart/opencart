@@ -7,7 +7,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/shipping_method');
 
-customElements.define('shipping-method', export default class extends WebComponent {
+customElements.define('shipping-method', class extends WebComponent {
     async render() {
         let data = {};
 
@@ -15,7 +15,7 @@ customElements.define('shipping-method', export default class extends WebCompone
         return loader.template('checkout/shipping_method', { ...data,  ...language });
     }
 
-    onSubmit() {
+    onSubmit(e) {
 
 
     }

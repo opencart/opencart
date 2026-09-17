@@ -10,7 +10,7 @@ const language = await loader.language('common/language');
 // Storage
 const languages = await loader.storage('localisation/language');
 
-customElements.define('common-language', export default class extends WebComponent {
+customElements.define('common-language', class extends WebComponent {
     async render() {
         // Config stored language code
         let code = config.config_language;

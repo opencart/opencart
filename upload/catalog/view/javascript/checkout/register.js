@@ -10,7 +10,7 @@ const language = await loader.language('checkout/register');
 // Storage
 const customer_groups = await loader.storage('customer/customer_group');
 
-customElements.define('checkout-register', export default class extends WebComponent {
+customElements.define('checkout-register', class extends WebComponent {
     token = '';
 
     async connect() {

@@ -1,11 +1,10 @@
 import { WebComponent } from '../component.js';
 import { loader, customer } from '../index.js';
 
-// Name
-export const name = 'forgotten-reset';
-
-customElements.define('forgotten-reset', class extends WebComponent {
+export default class ForgottenReset extends WebComponent {
     async render() {
 
     }
-});
+}
+
+customElements.define('forgotten-reset', ForgottenReset);

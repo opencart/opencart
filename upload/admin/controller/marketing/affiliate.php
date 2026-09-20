@@ -778,6 +778,21 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if ($this->user->hasPermission('modify', 'marketing/affiliate')) {
 			$this->load->model('marketing/affiliate');
 
+			// Escape affiliate-supplied values so they cannot inject spreadsheet formulas or break out of the row when the payout file is opened.
+			$escape = function($value): string {
+				$value = (string)$value;
+
+				if (preg_match('/^[=+\-@\t\r]/', $value)) {
+					$value = "'" . $value;
+				}
+
+				if (preg_match('/[",\r\n]/', $value)) {
+					$value = '"' . str_replace('"', '""', $value) . '"';
+				}
+
+				return $value;
+			};
+
 			$csv = '';
 
 			foreach ($selected as $customer_id) {
@@ -787,15 +802,15 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 					$balance = $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false);
 
 					if ($affiliate_info['payment_method'] == 'cheque') {
-						$csv .= $affiliate_info['cheque'] . ',' . $balance . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
+						$csv .= $escape($affiliate_info['cheque']) . ',' . $escape($balance) . ',' . $escape($this->config->get('config_currency')) . ',' . $escape($affiliate_info['customer']) . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'paypal') {
-						$csv .= $affiliate_info['paypal'] . ',' . $balance . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . ',Thanks for your business!' . "\n";
+						$csv .= $escape($affiliate_info['paypal']) . ',' . $escape($balance) . ',' . $escape($this->config->get('config_currency')) . ',' . $escape($affiliate_info['customer']) . ',' . $escape('Thanks for your business!') . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'bank') {
-						$csv .= $affiliate_info['bank_name'] . ',' . $affiliate_info['bank_branch_number'] . ',' . $affiliate_info['bank_swift_code'] . ',' . $affiliate_info['bank_account_name'] . ',' . $affiliate_info['bank_account_number'] . ',' . $balance . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
+						$csv .= $escape($affiliate_info['bank_name']) . ',' . $escape($affiliate_info['bank_branch_number']) . ',' . $escape($affiliate_info['bank_swift_code']) . ',' . $escape($affiliate_info['bank_account_name']) . ',' . $escape($affiliate_info['bank_account_number']) . ',' . $escape($balance) . ',' . $escape($this->config->get('config_currency')) . ',' . $escape($affiliate_info['customer']) . "\n";
 					}
 				}
 			}

@@ -7,7 +7,7 @@ const language = await loader.language('account/login');
 export default class AccountLogin extends WebComponent {
     token = '';
 
-    async connect() {
+    async connected() {
         this.token = await ajax.get('action.php?route=account/login.token');
     }
 
@@ -28,9 +28,9 @@ export default class AccountLogin extends WebComponent {
 
         let form = new FormData(target);
 
-        ajax.post('action.php?route=account/login.login', form, {
+        ajax.post('action.php?route=account/login.login&login_token=' + this.token, form, {
             beforeSend: () => {
-                //ref.get('button-cart').button('loading');
+                //$element.get('button-cart').button('loading');
             },
             onComplete: (json) => {
                 //ref.get('button-cart').button('reset');
@@ -41,9 +41,6 @@ export default class AccountLogin extends WebComponent {
                 // Remove past error classes from inputs
                 target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
                 target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-
-
 
                 // Display error messages
                 if (json['error'] !== undefined) {
@@ -74,6 +71,8 @@ export default class AccountLogin extends WebComponent {
                     if (alert) {
                         alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
+
+
                 }
             },
             onError: (e) => {

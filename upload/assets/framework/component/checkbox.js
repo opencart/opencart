@@ -24,11 +24,7 @@ customElements.define('checkbox-all', class extends WebComponent {
 
         for (let element of stack) {
             if (!element.parentElement.matches('checkbox-all')) {
-                if (e.target.checked) {
-                    element.setAttribute('checked', '');
-                } else {
-                    element.removeAttribute('checked');
-                }
+                element.toggleAttribute('checked', !e.target.checked);
             }
         }
     }

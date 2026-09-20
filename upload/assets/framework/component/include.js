@@ -20,15 +20,10 @@ customElements.define('x-include', class extends WebComponent {
         // Get the source HTML to load
         if (!this.src) return;
 
-        console.log('x-include', this.src);
-
-        let [path, query] = this.src.split('?');
+        let [ path, query] = this.src.split('?');
 
         if (!this.data.has(path)) {
             let component = await import(config.config_path + path);
-
-            console.log('component', component);
-
 
             this.data.set(path, customElements.getName(component.default));
         }

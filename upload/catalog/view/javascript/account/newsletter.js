@@ -16,6 +16,8 @@ export default class AccountNewsletter extends WebComponent {
     onSubmit(e) {
         e.preventDefault();
 
+
+
     }
 }
 

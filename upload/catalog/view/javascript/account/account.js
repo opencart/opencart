@@ -8,7 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('account/account');
 
 export default class AccountAccount extends WebComponent {
-    initialize() {
+    connected() {
         if (!customer.isLogged()) {
             let target = document.getElementById('content');
 

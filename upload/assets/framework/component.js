@@ -1,14 +1,14 @@
-export { WebComponent } from './library/webcomponent.js';
+export { WebComponent } from './engine/webcomponent.js';
 
 // General
 import('./component/include.js');
 import('./component/pagination.js');
 
 // Input
-import('./input/autocomplete.js');
-import('./input/checkbox.js');
+import('./component/autocomplete.js');
+import('./component/checkbox.js');
 //import('./input/markdown.js');
-import('./input/country.js');
-import('./input/zone.js');
+import('./component/country.js');
+import('./component/zone.js');
 //import('./input/file.js');
-import('./input/switch.js');
+import('./component/switch.js');

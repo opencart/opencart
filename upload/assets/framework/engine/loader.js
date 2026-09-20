@@ -4,8 +4,8 @@ class Loader {
     instance;
     data = new Map();
 
-    async storage(path) {
-        return await storage.fetch(path);
+    async config(path) {
+        return await config.fetch(path);
     }
 
     async language(path) {
@@ -17,22 +17,22 @@ class Loader {
         return { ...output, ...defaults };
     }
 
-    async template(path, data = {}) {
-        return await template.render(path, data);
-    }
-
     async library(path) {
         if (this.data.has(path)) return this.data.get(path);
 
-        let object = await import('./' + path + '.js');
+        let object = await import('../library/' + path + '.js');
 
         this.data.set(path, object.default.getInstance());
 
         return this.data.get(path);
     }
 
-    async config(path) {
-        return await config.fetch(path);
+    async storage(path) {
+        return await storage.fetch(path);
+    }
+
+    async template(path, data = {}) {
+        return await template.render(path, data);
     }
 
     static getInstance() {

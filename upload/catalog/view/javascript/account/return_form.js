@@ -1,11 +1,22 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, ajax, local, customer } from '../index.js';
+
+// Config
+const config = await loader.config('default');
 
 // Language
 const language = await loader.language('account/returns');
 
 export default class ReturnForm extends WebComponent {
-   render() {
+    connected() {
+        if (!customer.isLogged()) {
+            let target = document.getElementById('content');
+
+            target.src = 'account/account';
+        }
+    }
+
+    render() {
        return loader.template('account/return_form', { ...language });
     }
 
@@ -18,19 +29,60 @@ export default class ReturnForm extends WebComponent {
 
         let form = new FormData(target);
 
-        let response = await fetch('action.php?route=account/register', {
-            method: 'POST',
-            body: form
+        ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
+            beforeSend: () => {
+                //ref.get('button-cart').button('loading');
+            },
+            onComplete: (json) => {
+                //ref.get('button-cart').button('reset');
+            },
+            onSuccess: (json) => {
+                console.log('onSuccess', json);
+
+                // Remove past error classes from inputs
+                target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+                // Display error messages
+                if (json['error'] !== undefined) {
+                    for (let key in json['error']) {
+                        let value = key.replaceAll('_', '-');
+
+                        let input = target.querySelector('#input-' + value);
+
+                        if (input) {
+                            input.classList.add('is-invalid');
+
+                            // If the element has inputs inside.
+                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                        }
+
+                        let error = target.querySelector('#error-' + value);
+
+                        if (error) {
+                            error.classList.add('d-block');
+                        }
+                    }
+                }
+
+                // Display success message
+                if (json['success'] !== undefined) {
+                    let alert = target.querySelector('#alert');
+
+                    if (alert) {
+                        alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+                }
+            },
+            onError: (e) => {
+                console.log('onError', e);
+            }
         });
 
-        if (!response.ok) {
-            console.log(response);
 
-            //throw new Error(response.thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
+    }
 
-        let json = await response.json();
-
+    success(json) {
         // Remove past error classes from inputs
         target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
         target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));

@@ -1,6 +1,6 @@
 import { WebComponent } from '../component.js';
 
-customElements.define('x-autocomplete', class extends WebComponent {
+customElements.define('input-autocomplete', class extends WebComponent {
     async render() {
         let name = this.getAttribute('name');
         let value = this.getAttribute('value');

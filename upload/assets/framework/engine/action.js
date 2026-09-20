@@ -1,4 +1,4 @@
-export { loader } from '../library/loader.js';
+export { loader } from './loader.js';
 import { Button } from '../type/button.js';
 import { Form } from '../type/form.js';
 import { Link } from '../type/link.js';

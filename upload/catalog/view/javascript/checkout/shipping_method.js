@@ -8,6 +8,10 @@ const config = await loader.config('default');
 const language = await loader.language('checkout/shipping_method');
 
 customElements.define('shipping-method', class extends WebComponent {
+    connected() {
+
+    }
+
     async render() {
         let data = {};
 

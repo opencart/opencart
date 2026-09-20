@@ -8,6 +8,8 @@ const config = await loader.config('default');
 const language = await loader.language('checkout/payment_method');
 
 customElements.define('payment-method', class extends WebComponent {
+
+
     async render(){
         let data = {};
 
@@ -16,12 +18,25 @@ customElements.define('payment-method', class extends WebComponent {
         return loader.template('checkout/payment_method', { ...data,  ...language });
     }
 
+    onLoad() {
+        let target = e.target;
+
+        let form = new FormData(target);
+
+        ajax.post('action.php?route=checkout/payment_method', form, {
+
+
+        });
+
+
+    }
+
     onSubmit(e) {
         let target = e.target;
 
         let form = new FormData(target);
 
-        ajax.post('action.php?route=account/login.login', form, {
+        ajax.post('action.php?route=checkout/payment_method', form, {
             beforeSend: () => {
 
             },

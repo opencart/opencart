@@ -1,6 +1,8 @@
 import { WebComponent } from '../component.js';
 
 customElements.define('x-switch', class extends WebComponent {
+    formAssociated = true;
+
     get checked() {
         return this.getAttribute('checked') == 1 ? 1 : 0;
     }
@@ -19,7 +21,7 @@ customElements.define('x-switch', class extends WebComponent {
             html += ' id="' + this.getAttribute('input-id') + '"';
         }
 
-        html += ' bind-on="change:onChange" class="form-check-input"';
+        html += ' data-on="change:onChange" class="form-check-input"';
 
         if (this.checked) {
             html += ' checked';

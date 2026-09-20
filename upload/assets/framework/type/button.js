@@ -1,5 +1,3 @@
-import { binder } from '../index.js';
-
 export class Button {
     element;
     html = '';

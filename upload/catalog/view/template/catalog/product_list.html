@@ -18,13 +18,14 @@
     <div class="input-group mb-3">
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
       <select id="input-sort" class="form-select" data-on="change:onChange">
-        <option value="">{{ text_default }}</option>
-        <option value="name-asc"{% if sort == 'name-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_name }}</option>
-        <option value="name-desc"{% if sort == 'name-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_name }}</option>
-        <option value="price-asc"{% if sort == 'price-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_price }}</option>
-        <option value="price-desc"{% if sort == 'price-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_price }}</option>
-        <option value="rating-asc"{% if sort == 'rating-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_rating }}</option>
-        <option value="rating-desc"{% if sort == 'rating-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_rating }}</option>
+        <option value="latest"{% if sort == 'latest' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_latest }}</option>
+        <option value="popularity"{% if sort == 'popularity' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_popularity }}</option>
+        <option value="price"{% if sort == 'price' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_price }}</option>
+        <option value="rating"{% if sort == 'rating' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_rating }}</option>
+      </select>
+      <select id="input-order" class="form-select" data-on="change:onChange">
+        <option value="asc"{% if order == 'asc' %} selected{% endif %}>{{ text_asc }}</option>
+        <option value="desc"{% if order == 'desc' %} selected{% endif %}>{{ text_desc }}</option>
       </select>
     </div>
   </div>

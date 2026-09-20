@@ -4,9 +4,7 @@ import './header.js';
 import './footer.js';
 
 customElements.define('common-layout', class extends WebComponent {
-    initialize() {
-        this.attachShadow({ mode: 'open' });
-    }
+    open = true;
 
     render() {
         return loader.template('common/layout');

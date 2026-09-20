@@ -1,4 +1,4 @@
-import { loader } from './loader.js';
+import { loader } from '../engine/loader.js';
 
 const length_classes = await loader.storage('localisation/length_class');
 

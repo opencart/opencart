@@ -1,4 +1,4 @@
-import { loader } from './loader.js';
+import { loader } from '../engine/loader.js';
 
 // Config
 const config = await loader.config('default');
@@ -395,8 +395,6 @@ export default class Cart {
         let quantity = 0;
 
         let products = this.getProducts();
-
-        console.log('products', products);
 
         for (let product of products) {
             quantity += product.quantity;

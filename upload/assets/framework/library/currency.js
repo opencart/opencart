@@ -1,4 +1,4 @@
-import { loader } from './loader.js';
+import { loader } from '../engine/loader.js';
 
 let currencies = await loader.storage('localisation/currency');
 
@@ -20,7 +20,7 @@ export default class Currency {
      * @example
      * el.format('foo', { prefix: '...' });
      *
-     * @param {string} number String to format
+     * @param {string} number String to formats
      * @param {string} code Mandatory and will be added before the string
      * @param {string} value Optional and will be added after the string
      * @param {string} format Optional and will be added after the string

@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { loader, cart, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -8,7 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('checkout/cart');
 
 customElements.define('shipping-address', class extends WebComponent {
-    async connect() {
+    async connected() {
 
     }
 

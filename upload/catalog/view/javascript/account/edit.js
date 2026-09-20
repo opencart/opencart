@@ -10,8 +10,8 @@ const language = await loader.language('account/edit');
 export default class AccountEdit extends WebComponent {
     token = '';
 
-    connect() {
-        this.token = ajax.get('action.php?route=account/edit.token');
+    connected() {
+        this.token = ajax.get('action.php?route=account/edit.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
     }
 
     async render() {
@@ -39,13 +39,11 @@ export default class AccountEdit extends WebComponent {
     async onSubmit(e) {
         e.preventDefault();
 
-        console.log('addToCart');
-
         let target = e.target;
 
         let form = new FormData(target);
 
-        ajax.post('action.php?route=acccount/edit.save', form, {
+        ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
                 //ref.get('button-cart').button('loading');
             },

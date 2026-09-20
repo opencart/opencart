@@ -13,14 +13,14 @@ const customer_groups = await loader.storage('customer/customer_group');
 export default class AccountRegister extends WebComponent {
     token = '';
 
-    connect() {
+    connected() {
         if (customer.isLogged()) {
             let target = document.getElementById('content');
 
             target.src = 'account/login';
         }
 
-        this.token = ajax.get('action.php?route=account/register.token');
+        this.token = ajax.get('action.php?route=account/register.token&language=' + local.get('language') + '');
     }
 
     async render() {

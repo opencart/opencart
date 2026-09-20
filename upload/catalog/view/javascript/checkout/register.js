@@ -13,7 +13,7 @@ const customer_groups = await loader.storage('customer/customer_group');
 customElements.define('checkout-register', class extends WebComponent {
     token = '';
 
-    async connect() {
+    async connected() {
         this.token = ajax.get('action.php?route=checkout/register.token');
     }
 

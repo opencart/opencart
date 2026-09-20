@@ -5,6 +5,8 @@ export default class ForgottenReset extends WebComponent {
     async render() {
 
     }
+
+
 }
 
 customElements.define('forgotten-reset', ForgottenReset);

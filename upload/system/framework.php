@@ -33,6 +33,10 @@ set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 		case E_USER_ERROR:
 			$error = 'Fatal Error';
 			break;
+		case E_DEPRECATED:
+		case E_USER_DEPRECATED:
+			$error = 'Deprecated';
+			break;
 		default:
 			$error = 'Unknown';
 			break;

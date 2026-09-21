@@ -966,6 +966,10 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
             case E_USER_ERROR:
                 $error = 'Fatal Error';
                 break;
+			case E_DEPRECATED:
+			case E_USER_DEPRECATED:
+				$error = 'Deprecated';
+				break;
             default:
                 $error = 'Unknown';
                 break;

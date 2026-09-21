@@ -34,6 +34,7 @@ class ControllerCommonHeader extends Controller {
 		$data['scripts'] = $this->document->getScripts('header');
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
+		$data['alternate_links'] = $this->getAlternateLinks();
 
 		$data['name'] = $this->config->get('config_name');
 
@@ -78,5 +79,57 @@ class ControllerCommonHeader extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 
 		return $this->load->view('common/header', $data);
+	}
+
+	private function getAlternateLinks() {
+		if ($this->request->server['REQUEST_METHOD'] != 'GET') {
+			return array();
+		}
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		if (count($languages) < 2) {
+			return array();
+		}
+
+		$url_data = $this->request->get;
+		$route = isset($url_data['route']) ? $url_data['route'] : 'common/home';
+
+		unset($url_data['_route_'], $url_data['route'], $url_data['language'], $url_data['tracking']);
+
+		// A product has one canonical identity regardless of the category or
+		// manufacturer path used to reach it.
+		if ($route == 'product/product') {
+			unset($url_data['path'], $url_data['manufacturer_id']);
+		}
+
+		$alternate_links = array();
+		$default_href = '';
+
+		foreach ($languages as $code => $language) {
+			$language_url_data = $url_data;
+			$language_url_data['language'] = $code;
+			$href = $this->url->link($route, $language_url_data, $this->request->server['HTTPS']);
+
+			$alternate_links[] = array(
+				'href'     => $href,
+				'hreflang' => strtolower(str_replace('_', '-', $code))
+			);
+
+			if ($code == $this->config->get('config_language')) {
+				$default_href = $href;
+			}
+		}
+
+		if ($default_href) {
+			$alternate_links[] = array(
+				'href'     => $default_href,
+				'hreflang' => 'x-default'
+			);
+		}
+
+		return $alternate_links;
 	}
 }

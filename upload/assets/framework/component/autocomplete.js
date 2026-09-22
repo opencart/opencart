@@ -27,7 +27,7 @@ customElements.define('input-autocomplete', class extends WebComponent {
         element.request();
     }
 
-    click() {
+    onClick() {
         e.preventDefault();
 
         var value = $(this).attr('href');

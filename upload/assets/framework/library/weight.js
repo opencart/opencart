@@ -1,4 +1,4 @@
-import { loader } from '../engine/loader.js';
+import { loader } from './loader.js';
 
 const weight_classes = await loader.storage('localisation/weight_class');
 

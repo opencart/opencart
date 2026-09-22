@@ -1,4 +1,4 @@
-import { loader } from '../engine/loader.js';
+import { loader } from './loader.js';
 
 // Config
 const config = await loader.config('default');

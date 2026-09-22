@@ -20,7 +20,7 @@
           <td class="text-center">{% if product.thumb %}<a href="catalog/product.js?product_id={{ product.product_id }}" data-action="link" data-target="content"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
           <td><a href="catalog/product.js?product_id={{ product.product_id }}" data-action="link" data-target="content">{{ product.name }}</a>
 
-            <form id="form-product-{{ product_row }}" data-on="submit:onSubmit">
+            <form id="form-product-{{ product_row }}" @submit="onSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
               <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
             </form>
@@ -44,7 +44,7 @@
           <td class="text-end text-nowrap" style="width: 1px;">
             <div class="d-grid">
               <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_cart }}</button>
-              <a href="{{ product.remove }}" data-on="click:removeProduct" class="btn btn-danger">{{ button_remove }}</a>
+              <a href="{{ product.remove }}" @click="removeProduct" class="btn btn-danger">{{ button_remove }}</a>
             </div>
           </td>
         </tr>

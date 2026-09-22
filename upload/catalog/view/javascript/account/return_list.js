@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const language = await loader.language('account/return');
 
 customElements.define('return-list', class extends WebComponent {
-    async connected() {
+    async onConnect() {
 
     }
 });

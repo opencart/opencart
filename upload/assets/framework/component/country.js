@@ -33,12 +33,7 @@ customElements.define('x-country', class extends WebComponent {
         this.setAttribute('value', value);
     }
 
-    async connected() {
-        this.default = this.innerHTML;
-        this.countries = countries;
-        this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
-        this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
-    }
+
 
     async render() {
         let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select"';
@@ -82,7 +77,14 @@ customElements.define('x-country', class extends WebComponent {
         return html;
     }
 
-    onChange(e) {
+    async handleConnect() {
+        this.default = this.innerHTML;
+        this.countries = countries;
+        this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
+        this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
+    }
+
+    handleChange(e) {
         this.value = e.target.value;
 
         if (this.target) this.target.setAttribute('country_id', this.value);

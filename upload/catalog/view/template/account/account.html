@@ -1,34 +1,34 @@
 <h1>{{ text_my_account }}</h1>
 <ul class="list-unstyled">
-  <li><a href="account/edit.js" data-bind="link[content]">{{ text_edit }}</a></li>
-  <li><a href="account/password.js" data-action="link" data-target="content">{{ text_password }}</a></li>
-  <li><a href="account/payment_method.js" data-action="link" data-target="content">{{ text_payment_method }}</a></li>
-  <li><a href="account/address.js" data-action="link" data-target="content">{{ text_address }}</a></li>
-  <li><a href="account/wishlist.js" data-action="link" data-target="content">{{ text_wishlist }}</a></li>
+  <li><a href="account/edit.js" @click="handleClick">{{ text_edit }}</a></li>
+  <li><a href="account/password.js" @click="handleClick">{{ text_password }}</a></li>
+  <li><a href="account/payment_method.js" @click="handleClick">{{ text_payment_method }}</a></li>
+  <li><a href="account/address.js" @click="handleClick">{{ text_address }}</a></li>
+  <li><a href="account/wishlist.js" @click="handleClick">{{ text_wishlist }}</a></li>
 </ul>
 <h2>{{ text_my_orders }}</h2>
 <ul class="list-unstyled">
-  <li><a href="account/order.js" data-action="link" data-target="content">{{ text_order }}</a></li>
-  <li><a href="account/subscription.js" data-action="link" data-target="content">{{ text_subscription }}</a></li>
-  <li><a href="account/download.js" data-action="link" data-target="content">{{ text_download }}</a></li>
+  <li><x-a href="account/order.js" @click="handleClick">{{ text_order }}</x-a></li>
+  <li><a href="account/subscription.js" @click="handleClick">{{ text_subscription }}</a></li>
+  <li><a href="account/download.js" @click="handleClick">{{ text_download }}</a></li>
   {% if config_review_status %}
-  <li><a href="account/reward.js" data-action="link" data-target="content">{{ text_reward }}</a></li>
+  <li><a href="account/reward.js" @click="handleClick">{{ text_reward }}</a></li>
   {% endif %}
-  <li><a href="account/return.js" data-action="link" data-target="content">{{ text_return }}</a></li>
-  <li><a href="account/transaction.js" data-action="link" data-target="content">{{ text_transaction }}</a></li>
+  <li><a href="account/return.js" @click="handleClick">{{ text_return }}</a></li>
+  <li><a href="account/transaction.js" @click="handleClick">{{ text_transaction }}</a></li>
 </ul>
 {% if config_affiliate_status %}
 <h2>{{ text_my_affiliate }}</h2>
 <ul class="list-unstyled">
   {% if not affiliate %}
-  <li><a href="account/affiliate.js" data-action="link" data-target="content">{{ text_affiliate_add }}</a></li>
+  <li><a href="account/affiliate.js" @click="handleClick">{{ text_affiliate_add }}</a></li>
   {% else %}
-  <li><a href="account/affiliate.js" data-action="link" data-target="content">{{ text_affiliate_edit }}</a></li>
-  <li><a href="account/tracking.js" data-action="link" data-target="content">{{ text_tracking }}</a></li>
+  <li><a href="account/affiliate.js" @click="handleClick">{{ text_affiliate_edit }}</a></li>
+  <li><a href="account/tracking.js" @click="handleClick">{{ text_tracking }}</a></li>
   {% endif %}
 </ul>
 {% endif %}
 <h2>{{ text_my_newsletter }}</h2>
 <ul class="list-unstyled">
-  <li><a href="account/newsletter.js" data-action="link" data-target="content">{{ text_newsletter }}</a></li>
+  <li><a href="account/newsletter.js" @click="handleClick">{{ text_newsletter }}</a></li>
 </ul>

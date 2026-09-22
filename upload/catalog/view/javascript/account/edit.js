@@ -10,7 +10,7 @@ const language = await loader.language('account/edit');
 export default class AccountEdit extends WebComponent {
     token = '';
 
-    connected() {
+    onConnect() {
         this.token = ajax.get('action.php?route=account/edit.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
     }
 

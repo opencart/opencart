@@ -8,7 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('account/forgotten');
 
 export default class AccountForgotten extends WebComponent {
-    connected() {
+    onConnect() {
         if (customer.isLogged()) {
             let target = document.getElementById('content');
 

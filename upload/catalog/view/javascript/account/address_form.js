@@ -16,31 +16,23 @@ export default class AddressForm extends WebComponent {
     onSubmit(e) {
         e.preventDefault();
 
-        let target = e.target;
+        let form = new FormData(this.form);
 
-        let form = new FormData(target);
-
-        ajax.post('action.php?route=account/address.save', form, {
+        ajax.post('action.php?route=account/address.save&token=' + this.token, form, {
             beforeSend: () => {
-                //ref.get('button-cart').button('loading');
+                this.submitter.button('loading');
             },
             onComplete: (json) => {
-                //ref.get('button-cart').button('reset');
+                this.submitter.button('reset');
             },
-            onSuccess: this.onSuccess.bind(this),
+            onSuccess: this.success.bind(this),
             onError: (e) => {
                 console.log('onError', e);
             }
         });
     }
 
-    delete(e) {
-        let dismissible = document.querySelectorAll('.alert-dismissible');
-
-        dismissible.forEach(element => element.remove());
-    }
-
-    onSuccess(json){
+    success(json){
         let alert = document.getElementById('alert');
 
         if (json['error']) {
@@ -54,42 +46,3 @@ export default class AddressForm extends WebComponent {
 }
 
 customElements.define('address-form', AddressForm);
-
-/*
-const address = document.getElementById('address');
-
-$('#address').on('click', '.btn-danger', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).attr('href'),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#address').load('action.php?route=account/address.list&language=' + language + '&customer_token={{ customer_token }}');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-*/

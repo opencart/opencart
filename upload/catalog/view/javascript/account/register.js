@@ -13,14 +13,17 @@ const customer_groups = await loader.storage('customer/customer_group');
 export default class AccountRegister extends WebComponent {
     token = '';
 
-    connected() {
+    onConnect() {
         if (customer.isLogged()) {
             let target = document.getElementById('content');
 
             target.src = 'account/login';
+        } else {
+
+
         }
 
-        this.token = ajax.get('action.php?route=account/register.token&language=' + local.get('language') + '');
+        this.token = ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
     }
 
     async render() {
@@ -42,28 +45,6 @@ export default class AccountRegister extends WebComponent {
         return loader.template('account/register', { ...data, ...language, ...config });
     }
 
-    async onChange(e) {
-        let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
-
-        if (customer_group_info) {
-            data.custom_fields = customer_group_info.custom_field;
-        } else {
-            data.custom_fields = [];
-        }
-
-        //$('.custom-field').addClass('d-none');
-        //$('.custom-field').removeClass('required');
-
-        //for (let i = 0; i < json.length; i++) {
-        //    let custom_field = json[i];
-
-        //    $('.custom-field-' + custom_field['custom_field_id']).removeClass('d-none');
-
-        //    if (custom_field['required']) {
-        //        $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
-        //     }
-        //}
-    }
 
     async onSubmit(e) {
         e.preventDefault();
@@ -76,10 +57,10 @@ export default class AccountRegister extends WebComponent {
 
         ajax.post('action.php?route=account/register', form, {
             beforeSend: () => {
-                //ref.get('button-cart').button('loading');
+                this.button.button('loading');
             },
             onComplete: (json) => {
-                //ref.get('button-cart').button('reset');
+                this.button.button('reset');
             },
             onSuccess: this.success,
             onError: (e) => {
@@ -125,6 +106,29 @@ export default class AccountRegister extends WebComponent {
                 alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         }
+    }
+
+    async onChange(e) {
+        let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
+
+        if (customer_group_info) {
+            data.custom_fields = customer_group_info.custom_field;
+        } else {
+            data.custom_fields = [];
+        }
+
+        //$('.custom-field').addClass('d-none');
+        //$('.custom-field').removeClass('required');
+
+        //for (let i = 0; i < json.length; i++) {
+        //    let custom_field = json[i];
+
+        //    $('.custom-field-' + custom_field['custom_field_id']).removeClass('d-none');
+
+        //    if (custom_field['required']) {
+        //        $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
+        //     }
+        //}
     }
 }
 

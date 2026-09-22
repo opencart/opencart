@@ -79,7 +79,7 @@
     {% endfor %}
   </div>
 {% endif %}
-<form id="form-contact" data-on="submit:onSubmit">
+<form id="form-contact" @submit="onSubmit">
   <fieldset>
     <legend>{{ text_contact }}</legend>
     <div class="row mb-3">

@@ -77,8 +77,8 @@
 
     <form>
       <div class="btn-group">
-        <button type="button" data-bind="wishlist" data-on="submit:addToWishlist" class="btn btn-light btn-lg" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
-        <button type="button" data-bind="compare" data-on="click:addToCompare" data-product-id="{{ product_id }}" class="btn btn-light btn-lg" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+        <button type="button" data-bind="wishlist" @submit="addToWishlist" class="btn btn-light btn-lg" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
+        <button type="button" data-bind="compare" @click="addToCompare" data-product-id="{{ product_id }}" class="btn btn-light btn-lg" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
       </div>
 
       <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ minimum }}"/>
@@ -86,7 +86,7 @@
 
     <br/>
     <div id="product">
-      <form id="form-product" data-on="submit:addToCart">
+      <form id="form-product" @submit="addToCart">
         {% if options %}
         <hr>
         <h3>{{ text_option }}</h3>
@@ -198,7 +198,7 @@
         <hr/>
         <h3>{{ text_subscription }}</h3>
         <div class="mb-3">
-          <select name="subscription_plan_id" id="input-subscription" data-on="change:onChange" class="form-select" required>
+          <select name="subscription_plan_id" id="input-subscription" @change="onChange" class="form-select" required>
             <option value="">{{ text_select }}</option>
 
             {% for subscription_plan in subscription_plans %}

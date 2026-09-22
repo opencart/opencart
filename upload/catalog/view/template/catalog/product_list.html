@@ -17,13 +17,13 @@
   <div class="col-lg-4 offset-lg-1 col-6">
     <div class="input-group mb-3">
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
-      <select id="input-sort" class="form-select" data-on="change:onChange">
+      <select id="input-sort" class="form-select" @change="onChange">
         <option value="latest"{% if sort == 'latest' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_latest }}</option>
         <option value="popularity"{% if sort == 'popularity' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_popularity }}</option>
         <option value="price"{% if sort == 'price' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_price }}</option>
         <option value="rating"{% if sort == 'rating' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_rating }}</option>
       </select>
-      <select id="input-order" class="form-select" data-on="change:onChange">
+      <select id="input-order" class="form-select" @change="onChange">
         <option value="asc"{% if order == 'asc' %} selected{% endif %}>{{ text_asc }}</option>
         <option value="desc"{% if order == 'desc' %} selected{% endif %}>{{ text_desc }}</option>
       </select>
@@ -33,7 +33,7 @@
   <div class="col-lg-3 col-6">
     <div class="input-group mb-3">
       <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
-      <select id="input-limit" class="form-select" data-on="change:onChange">
+      <select id="input-limit" class="form-select" @change="onChange">
 
 
         {% for limits in limits %}

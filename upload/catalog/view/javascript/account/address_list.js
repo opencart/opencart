@@ -20,12 +20,12 @@ class AddressList extends WebComponent {
         e.preventDefault();
 
         ajax.post({
-            url: '',
-            beforeSend: function() {
-                $(element).button('loading');
+            url: 'action.php?route=account/address.delete&address_id=' + e.target.value,
+            beforeSend: () => {
+                this.button.button('loading');
             },
-            complete: function() {
-                $(element).button('reset');
+            complete: () => {
+                this.button.button('reset');
             },
             success: function(json) {
                 let dismissible = document.querySelectorAll('.alert-dismissible');
@@ -39,7 +39,7 @@ class AddressList extends WebComponent {
                 if (json['success']) {
                     $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    //$('#address').load('action.php?route=account/address.list&language=' + language + '&customer_token={{ customer_token }}');
+                    this.update();
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

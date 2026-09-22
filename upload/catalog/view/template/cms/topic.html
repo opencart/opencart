@@ -7,11 +7,11 @@
 {% endif %}
 <hr/>
 <h3>{{ text_refine }}</h3>
-<form data-on="submit:onSubmit">
+<form @submit="onSubmit">
   <div class="input-group dropdown mb-3">
     <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
     {% if topics %}
-    <select name="topic_id" id="input-topic" class="form-select" data-on="change:onChange">
+    <select name="topic_id" id="input-topic" class="form-select" @change="onChange">
     <option value="">{{ text_all }}</option>
     {% for topic in topics %}
     <option value="{{ topic.topic_id }}" {% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>

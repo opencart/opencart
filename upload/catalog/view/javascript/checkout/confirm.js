@@ -8,7 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('checkout/confirm');
 
 customElements.define('checkout-confirm', class extends WebComponent {
-    async connected(){
+    async onConnect(){
 
     }
 

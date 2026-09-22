@@ -94,7 +94,7 @@
               {% endif %}
             </ul>
 
-            <form id="form-product-{{ product_row }}" data-on="submit:onSubmit">
+            <form id="form-product-{{ product_row }}" @submit="onSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
               <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
 
@@ -148,4 +148,4 @@
 {% endif %}
 <h2>{{ text_history }}</h2>
 <div id="history">{{ history }}</div>
-<div class="text-end mt-3"><a href="account/order.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end mt-3"><a href="account/order.js" :click="link-content" class="btn btn-primary">{{ button_continue }}</a></div>

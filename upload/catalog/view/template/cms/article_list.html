@@ -4,7 +4,7 @@
   <div class="col-lg offset-lg-8">
     <div class="input-group">
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
-      <select id="input-sort" class="form-select" data-on="change:onSort">
+      <select id="input-sort" class="form-select" @change="onSort">
       <option value="latest-asc" {% if sort == 'latest-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_date_added }}</option>
       <option value="latest-desc" {% if sort == 'latest-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-up-short-wide"></i> {{ text_date_added }}</option>
       <option value="popularity-asc" {% if sort == 'popularity-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i>{{ text_popularity }}</option>

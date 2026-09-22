@@ -1,16 +1,16 @@
-export class Button {
-    element;
+import { WebComponent } from '../component.js';
+
+export class ButtonSubmit extends WebComponent {
     html = '';
     width;
 
-    constructor(element) {
-        this.element = element;
-        this.html = element.innerHTML;
-        this.width = element.offsetWidth;
+    onConnect() {
+        this.html = this.element.innerHTML;
+        this.width = this.element.offsetWidth;
+    }
 
-        Object.assign(element, {
-            button: this.button.bind(this)
-        });
+    handleState() {
+
     }
 
     button(state) {
@@ -29,3 +29,5 @@ export class Button {
         }
     }
 }
+
+customElements.define('button-submit', ButtonSubmit);

@@ -1,6 +1,6 @@
 import { WebComponent } from '../component.js';
 
-customElements.define('x-switch', class extends WebComponent {
+customElements.define('input-switch', class extends WebComponent {
     formAssociated = true;
 
     get checked() {

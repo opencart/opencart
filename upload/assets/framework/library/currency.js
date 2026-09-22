@@ -1,9 +1,9 @@
-import { loader } from '../engine/loader.js';
+import { loader } from './loader.js';
 
 let currencies = await loader.storage('localisation/currency');
 
 export default class Currency {
-    instance;
+    #instance;
 
     convert(value, from, to) {
         let currency_from = currencies.find(currency => currency.code === from);
@@ -76,10 +76,10 @@ export default class Currency {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Currency();
+        if (!this.#instance) {
+            this.#instance = new Currency();
         }
 
-        return this.instance;
+        return this.#instance;
     }
 }

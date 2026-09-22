@@ -1,4 +1,5 @@
 export { WebComponent } from './engine/webcomponent.js';
+///export { Include } from './component/include.js';
 
 // General
 import('./component/include.js');

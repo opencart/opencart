@@ -1,8 +1,12 @@
 import { config, language, storage, template } from '../index.js';
 
 class Loader {
-    instance;
-    data = new Map();
+    #instance;
+    #data;
+
+    constructor() {
+        this.#data = new Map();
+    }
 
     async config(path) {
         return await config.fetch(path);
@@ -18,13 +22,13 @@ class Loader {
     }
 
     async library(path) {
-        if (this.data.has(path)) return this.data.get(path);
+        if (this.#data.has(path)) return this.#data.get(path);
 
         let object = await import('../library/' + path + '.js');
 
-        this.data.set(path, object.default.getInstance());
+        this.#data.set(path, object.default.getInstance());
 
-        return this.data.get(path);
+        return this.#data.get(path);
     }
 
     async storage(path) {
@@ -36,11 +40,11 @@ class Loader {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Loader();
+        if (!this.#instance) {
+            this.#instance = new Loader();
         }
 
-        return this.instance;
+        return this.#instance;
     }
 }
 

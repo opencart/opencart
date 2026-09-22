@@ -1,46 +1,108 @@
-import { emitter } from '../index.js';
+import { Binder } from './binder.js';
+import { State } from './state.js';
+//import { Sheet } from './Sheet.js';
 
+/**
+ * BaseComponent
+ * -------------
+ * A minimal base class for building web components with:
+ *   - Automatic shadow DOM setup
+ *   - Template + styles rendering
+ *   - Automatic ref/event binding via ElementBinder (data-ref / data-on)
+ *   - Clean lifecycle hooks (onConnect, onDisconnect, onAttributeChange)
+ *   - A simple `define()` helper for registration
+ *
+ * Usage:
+ *
+ *   class MyCounter extends BaseComponent {
+ *     static get observedAttributes() { return ['count']; }
+ *
+ *     styles() {
+ *       return `
+ *         button { font-size: 1rem; }
+ *         span { font-weight: bold; margin-left: 0.5rem; }
+ *       `;
+ *     }
+ *
+ *     template() {
+ *       return `
+ *         <button data-ref="btn" data-on="click:increment">+1</button>
+ *         <span data-ref="display">0</span>
+ *       `;
+ *     }
+ *
+ *     onConnect() {
+ *       this.count = Number(this.getAttribute('count')) || 0;
+ *     }
+ *
+ *     increment() {
+ *       this.count++;
+ *       this.setAttribute('count', this.count);
+ *     }
+ *`
+ *     onAttributeChange(name, value_old, val_new) {
+ *       if (name === 'count') this.display.textContent = new_val;
+ *     }
+ *   }
+ *
+ *   BaseComponent.define('my-counter', MyCounter);
+ */
 export class WebComponent extends HTMLElement {
     static observed = [];
     static formAssociated = false;
-    #open;
+    /** Override: list of external CSS file URLs to adopt into this component. */
+    static get stylesheets() {
+        return [];
+    }
+
     #shadow;
     #internal;
+    #binder;
     #state;
 
     constructor() {
         super();
 
-        this.#open = false;
-        this.#state = new Map();
+        // Attach Shadow
+        this.#shadow = this.attachShadow({ mode: 'open' });
+
+        // Attach Internals
+        this.#internal = this.attachInternals();
+
+        // Binder
+        this.#binder = null;
+
+        // State
+        this.#state = new State(this.initialState(), {
+            onChange: (keys) => this._handleStateChange(keys),
+        });
 
         // Adds reactive component event changes to the attributes of the element to re-render the contents.
         for (let attribute of this.attributes) {
             this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
         }
+    }
 
-        if (this.#open) {
-            this.#shadow = this.attachShadow({ mode: 'open' });
+    /** Override: return the initial values for `this.state`. */
+    initialState() {
+        return {};
+    }
 
-            console.log(this.#open);
-            console.log(this.#shadow);
+    _handleStateChange(changedKeys) {
+        if (typeof this.onStateChange === 'function') {
+            this.onStateChange(changedKeys, this.state);
+        } else {
+            this.update();
         }
-
-        // Attach Internals
-        this.#internal = this.attachInternals();
-
-        // Reactive state: wrap in a Proxy so any mutation (set/delete)
-        // automatically schedules a re-render.
-        //this.state = this.#createReactiveState(typeof this.initialState === 'function' ? this.initialState() : {});
     }
 
     async connectedCallback() {
-        if ('connected' in this) {
-            await this.connected();
+        if (typeof this.onConnect === 'function') {
+            await this.onConnect();
         }
 
-        if ('render' in this) {
-            this.update();
+        if (typeof this.render === 'function') {
+            await this.update();
         }
     }
 
@@ -48,134 +110,41 @@ export class WebComponent extends HTMLElement {
         let output = await this.render();
 
         if (output) {
-            this.innerHTML = output;
+            this.#shadow.innerHTML = output;
 
-            // Autoload any custom elements not already loaded
-            this.querySelectorAll('[data-bind], [data-on], [data-action], [data-state], [data-template]').forEach(element => {
-                // Attach Events based on elements that have data-bind attributes
-                if (element.hasAttribute('data-bind')) {
-                    let name = element.getAttribute('data-bind');
-                    let tag = element.tagName.toLowerCase();
-
-                    let type = {
-                        a: "click",
-                        button: "click",
-                        form: 'submit',
-                        details: "toggle",
-                        input: (element.getAttribute('type') == 'submit' ? 'click' : 'input'),
-                        select: "change",
-                        textarea: "input",
-                    }
-
-                    element.addEventListener(type[tag], this[name]);
-
-
-                    emitter.signal().emit({
-                        element: element,
-                        type: type,
-                        value: element.value
-                    });
-
-                    element.removeAttribute('data-bind');
-
-                    //let test = emitter.signal(element.getAttribute('data-bind')).connect();
-                    //binder.set(element.getAttribute('data-bind'), element);
-                }
-
-                // Attach events based on elements that have data-on attributes
-                if (element.hasAttribute('data-on')) {
-                    let [ event, method] = element.getAttribute('data-on').split(':');
-
-                    if (method in this) {
-                        element.addEventListener(event, this[method].bind(this));
-                    }
-
-                    element.removeAttribute('data-on');
-                }
-
-                // Attach
-                if (element.hasAttribute('data-action')) {
-
-
-
-                    let parts = element.getAttribute('data-action').split(' ');
-
-                    for (let part of parts) {
-                        action.attach(part, element);
-                    }
-
-
-
-                    element.removeAttribute('data-action');
-                }
-
-
-
-
-
-
-
-                // Bind element to a state key: data-state="key" (or "key:attr" to bind
-                // to a specific attribute instead of textContent/value).
-                if (element.hasAttribute('data-state')) {
-                    //let [ key, attr ] = element.getAttribute('data-state').split(':');
-
-                    //this.#bindStateToElement(element, key, attr);
-                }
-            });
-        }
-    }
-
-    // Merge helper: this.setState({ count: 1, name: 'x' })
-    // or functional form: this.setState(state => ({ count: state.count + 1 }))
-    setState(patch) {
-        const updates = typeof patch === 'function' ? patch(this.state) : patch;
-
-        for (let key in updates) {
-            this.state[key] = updates[key];
-        }
-    }
-
-    // Wires an element to display (and, for inputs, write back to) a state key.
-    #bindStateToElement(element, key, attr) {
-        const applyValue = () => {
-            const value = this.state[key];
-
-            if (attr) {
-                if (value === false || value === null || value === undefined) {
-                    element.removeAttribute(attr);
-                } else {
-                    element.setAttribute(attr, value);
-                }
-            } else if ('value' in element && (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT')) {
-                element.value = value ?? '';
+            if (this.#binder) {
+                this.#binder.refresh();
             } else {
-                element.textContent = value ?? '';
+                this.#binder = new Binder(this.#shadow, this);
             }
-        };
+        }
 
-        applyValue();
+        /*
+        const hrefs = this.constructor.stylesheets;
 
-        // Keep this element in sync if state changes again before the next full render.
-        this.addEventListener('[state:' + key + ']', applyValue);
+        if (hrefs && hrefs.length) {
+            // Adopts asynchronously; inline `styles()` above still applies
+            // immediately so there's no unstyled flash for critical CSS.
+            StylesheetImporter.adopt(this.#shadow, hrefs).catch((err) =>
+                console.error('BaseComponent: failed to adopt stylesheets', err)
+            );
+        }
+        */
+    }
 
-        // Two-way binding: form elements write back into state on input.
-        if (!attr && (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT')) {
-            element.addEventListener('input', () => {
-                this.state[key] = element.value;
-            });
+    async disconnectedCallback() {
+        if (this.#binder) {
+            this.#binder.destroy();
+        }
+
+        if (typeof this.onDisconnected === 'function') {
+            await this.onDisconnected();
         }
     }
 
-    disconnectedCallback() {
-        if (this.disconnected !== undefined) {
-            this.disconnected();
-        }
-    }
-
-    adoptedCallback() {
-        if (this.render !== undefined) {
-            this.update();
+    async adoptedCallback() {
+        if (typeof this.render === 'function') {
+            await this.update();
         }
     }
 

@@ -27,6 +27,10 @@ export default class InformationContact extends WebComponent {
         return loader.template('information/contact', { ...data, ...language, ...config });
     }
 
+    handleConnet() {
+
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -36,19 +40,19 @@ export default class InformationContact extends WebComponent {
 
         ajax.post('action.php?route=information/contact.send', form, {
             beforeSend: (request) => {
-                //ref.get('button-send').button('loading');
+                this.button.state('loading');
             },
             onComplete: () => {
-                //ref.get('button-send').button('reset');
+                this.button.state('reset');
             },
-            onSuccess: this.success,
+            onSuccess: this.handleSuccess,
             onError: (e) => {
                 console.log('onError', e);
             }
         });
     }
 
-    success(json) {
+    handleSuccess(json) {
         console.log('onSuccess', json);
 
         // Remove past error classes from inputs

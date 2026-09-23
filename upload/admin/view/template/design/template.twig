@@ -13,7 +13,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><button type="submit" form="form-template" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+            <li><button type="submit" form="form-template" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm|escape('js') }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>
@@ -72,9 +72,9 @@ $('#form-filter').on('submit', function(e) {
 
     let url = $(this).serialize();
 
-    window.history.pushState({}, null, 'index.php?route=design/template&user_token={{ user_token }}&' + url);
+    window.history.pushState({}, null, 'index.php?route=design/template&user_token={{ user_token|escape('js') }}&' + url);
 
-    $('#list').load('index.php?route=design/template.list&user_token={{ user_token }}&' + url);
+    $('#list').load('index.php?route=design/template.list&user_token={{ user_token|escape('js') }}&' + url);
 });
 //--></script>
 {{ footer }}

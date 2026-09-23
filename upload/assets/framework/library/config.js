@@ -32,7 +32,7 @@ export default class Config {
             }
 
             if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.json';
+                file = this.path.get(namespace) + path.substr(namespace.length) + '.json';
             }
         }
 

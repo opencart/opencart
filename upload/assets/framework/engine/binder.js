@@ -71,24 +71,27 @@
  *   }
  */
 export class Binder {
+    static refs = new Map();
+    static listeners = new Map();
+
     #root;
     #host;
     #refs;
     #listeners;
 
     constructor(root, host) {
-        this.#root = root;
-        this.#host = host || root.host || root;
-        this.#refs = new Map();
-        this.#listeners = []; // track for clean teardown
+        this.root = root;
+        this.host = host || root.host || root;
+        this.refs = new Map();
+        this.listeners = []; // track for clean teardown
 
         // Attach events based on elements that have data-bind attributes
-        this.walk(this.#root);
+        this.walk(this.root);
     }
 
     walk(root) {
-        const walker = document.createTreeWalker(this.#root, NodeFilter.SHOW_ELEMENT, {
-            acceptNode: node => node.getAttributeNames().some(name => name.startsWith('@')) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
+        const walker = document.createTreeWalker(this.root, NodeFilter.SHOW_ELEMENT, {
+            acceptNode: node => node.getAttributeNames().some(name => name.startsWith('@') || name.startsWith(':')) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
         });
 
         let node = walker.nextNode();
@@ -101,29 +104,38 @@ export class Binder {
     }
 
     bind(element) {
-        let names = element.getAttributeNames().filter(name => name.startsWith('@'));
+        let names = element.getAttributeNames().filter(name => name.startsWith('@') || name.startsWith(':'));
 
         names.forEach(name => {
+            let global = name.slice(0, 1) == ':';
             let key = name.slice(1);
             let value = element.getAttribute(name);
 
             if (key === 'ref') {
-                this.ref(element, value);
+                this.ref(element, value, global);
             } else {
-                this.event(element, key, value);
+                this.event(element, key, value, global);
             }
         });
     }
 
-    ref(element, name) {
+    ref(element, name, global) {
         if (!name) return;
 
-        this.#refs.set(name, element);
+        if (global) {
+            ElementBinder.globalRefs[name] = element;
+
+            this._globalRefBindings.push({ name, element });
+
+            return;
+        }
+
+        this.refs.set(name, element);
 
         // Attach the getter property to the web component
-        if (this.#host && !(name in this.#host)) {
-            Object.defineProperty(this.#host, name, {
-                get: () => this.#refs.get(name),
+        if (this.host && !(name in this.host)) {
+            Object.defineProperty(this.host, name, {
+                get: () => this.refs.get(name),
                 configurable: true,
             });
         }
@@ -131,46 +143,46 @@ export class Binder {
         element.removeAttribute('@ref');
     }
 
-    event(element, event, method) {
-        const handler = method && this.#host[method];
+    event(element, event, method, global) {
+        const handler = global ? ElementBinder.globalListeners[method] : this.host[method];
 
         if (typeof handler !== 'function') {
-            console.warn(`ElementBinder: no method "${method}" found on host for event "@${event}"`);
+            console.warn(`ElementBinder: no method "${method}" found in ${global} for event "${prefix}${eventName}"`);
 
             return;
         }
 
-        const listener = handler.bind(this.#host);
+        const listener = handler.bind(this.host);
 
         element.addEventListener(event, listener);
 
-        this.#listeners.push({ element, event, listener });
+        this.listeners.push({ element, event, listener });
 
         element.removeAttribute(`@${event}`);
     }
 
     /** Get a bound element by its data-ref name. */
     get(name) {
-        return this.#refs.get(name);
+        return this.refs.get(name);
     }
 
     has(key) {
-        return this.#refs.has(key);
+        return this.refs.has(key);
     }
 
     refresh() {
         this.destroy();
-        this.#refs = new Map();
-        this.#listeners = [];
-        this.walk(this.#root);
+        this.refs = new Map();
+        this.listeners = [];
+        this.walk(this.root);
     }
 
     /** Remove all attached event listeners (call in disconnectedCallback). */
     destroy() {
-        this.#listeners.forEach(({ element, event, listener }) => {
+        this.listeners.forEach(({ element, event, listener }) => {
             element.removeEventListener(event, listener);
         });
 
-        this.#listeners = [];
+        this.listeners = [];
     }
 }

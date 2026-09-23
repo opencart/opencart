@@ -64,16 +64,16 @@ export class WebComponent extends HTMLElement {
         super();
 
         // Attach Shadow
-        this.#shadow = this.attachShadow({ mode: 'open' });
+        this.shadow = this.attachShadow({ mode: 'open' });
 
         // Attach Internals
-        this.#internal = this.attachInternals();
+        this.internal = this.attachInternals();
 
         // Binder
-        this.#binder = null;
+        this.binder = null;
 
         // State
-        this.#state = new State(this.initialState(), {
+        this.state = new State(this.initialState(), {
             onChange: (keys) => this._handleStateChange(keys),
         });
 
@@ -110,12 +110,12 @@ export class WebComponent extends HTMLElement {
         let output = await this.render();
 
         if (output) {
-            this.#shadow.innerHTML = output;
+            this.shadow.innerHTML = output;
 
-            if (this.#binder) {
-                this.#binder.refresh();
+            if (this.binder) {
+                this.binder.refresh();
             } else {
-                this.#binder = new Binder(this.#shadow, this);
+                this.binder = new Binder(this.shadow, this);
             }
         }
 
@@ -125,7 +125,7 @@ export class WebComponent extends HTMLElement {
         if (hrefs && hrefs.length) {
             // Adopts asynchronously; inline `styles()` above still applies
             // immediately so there's no unstyled flash for critical CSS.
-            StylesheetImporter.adopt(this.#shadow, hrefs).catch((err) =>
+            StylesheetImporter.adopt(this.shadow, hrefs).catch((err) =>
                 console.error('BaseComponent: failed to adopt stylesheets', err)
             );
         }
@@ -133,8 +133,8 @@ export class WebComponent extends HTMLElement {
     }
 
     async disconnectedCallback() {
-        if (this.#binder) {
-            this.#binder.destroy();
+        if (this.binder) {
+            this.binder.destroy();
         }
 
         if (typeof this.onDisconnected === 'function') {

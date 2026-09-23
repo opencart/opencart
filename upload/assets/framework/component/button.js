@@ -9,19 +9,13 @@ export class ButtonSubmit extends WebComponent {
         this.width = this.element.offsetWidth;
     }
 
-    handleState() {
-
-    }
-
-    button(state) {
+    handleState(state) {
         if (state === 'loading') {
             this.element.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-light"></i>';
             this.element.style.width = this.width;
 
             this.element.setAttribute('disabled', '');
-        }
-
-        if (state === 'reset') {
+        } else {
             this.element.innerHTML = this.html;
             this.element.style.width = '';
 

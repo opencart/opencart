@@ -1,7 +1,6 @@
 import { WebComponent } from '../engine/webcomponent.js';
-import CustomEditor from '../../ckeditor/ckeditor.js';
 
-customElements.define('x-ckeditor', class extends WebComponent {
+export class Markdown extends WebComponent {
     element = HTMLInputElement;
     editor = [];
 
@@ -26,4 +25,4 @@ customElements.define('x-ckeditor', class extends WebComponent {
     render() {
 
     }
-});
+}

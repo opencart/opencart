@@ -169,9 +169,9 @@ class Loader {
 	 * @param array<string, mixed> $data
 	 * @param string               $code
 	 *
-	 * @return string
+	 * @return \Stringable|string
 	 */
-	public function view(string $route, array $data = [], string $code = ''): string {
+	public function view(string $route, array $data = [], string $code = ''): \Stringable|string {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
@@ -190,7 +190,8 @@ class Loader {
 		// Trigger the post events
 		$this->event->trigger('view/' . $trigger . '/after', [&$route, &$data, &$output]);
 
-		return $output;
+		// Mark sub-view output as trusted HTML so the autoescape of the parent template does not escape it again.
+		return new \Twig\Markup((string)$output, 'utf-8');
 	}
 
 	/**

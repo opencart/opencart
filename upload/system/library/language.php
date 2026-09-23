@@ -26,7 +26,7 @@ class Language {
 	 */
 	protected array $path = [];
 	/**
-	 * @var array<string, string>
+	 * @var array<string, \Stringable|string>
 	 */
 	protected array $data = [];
 	/**
@@ -67,8 +67,10 @@ class Language {
 	 * @link https://www.php.net/sprintf
 	 *
 	 * @param string $key
+	 *
+	 * @return \Stringable|string
 	 */
-	public function get(string $key): string {
+	public function get(string $key): \Stringable|string {
 		if (!isset($this->data[$key])) {
 			return $key;
 		}
@@ -77,16 +79,42 @@ class Language {
 	}
 
 	/**
+	 * Format
+	 *
+	 * Replace the placeholders of a language string with the given arguments.
+	 *
+	 * Plain string arguments are HTML escaped before they are inserted while trusted
+	 * content (\Twig\Markup) is passed through unescaped. The result is marked as
+	 * safe HTML so the template autoescape does not escape it again.
+	 *
+	 * @link https://www.php.net/sprintf
+	 *
+	 * @param string $key
+	 * @param mixed  ...$args
+	 *
+	 * @return \Twig\Markup
+	 */
+	public function format(string $key, ...$args): \Twig\Markup {
+		foreach ($args as &$arg) {
+			if (is_string($arg)) {
+				$arg = htmlspecialchars($arg, ENT_QUOTES, 'UTF-8');
+			}
+		}
+
+		return new \Twig\Markup(sprintf($this->get($key), ...$args), 'utf-8');
+	}
+
+	/**
 	 * Set
 	 *
 	 * Set language text string
 	 *
 	 * @param string $key 
-	 * @param string $value
+	 * @param \Stringable|string $value
 	 *
 	 * @return void
 	 */
-	public function set(string $key, string $value): void {
+	public function set(string $key, \Stringable|string $value): void {
 		$this->data[$key] = $value;
 	}
 
@@ -95,7 +123,7 @@ class Language {
 	 *
 	 * @param string $prefix
 	 *
-	 * @return array<string, string>
+	 * @return array<string, \Stringable|string>
 	 */
 	public function all(string $prefix = ''): array {
 		if (!$prefix) {
@@ -131,7 +159,7 @@ class Language {
 	 * @param string $prefix
 	 * @param string $code     Language code
 	 *
-	 * @return array<string, string>
+	 * @return array<string, \Stringable|string>
 	 */
 	public function load(string $filename, string $prefix = '', string $code = ''): array {
 		if (!$code) {
@@ -162,6 +190,14 @@ class Language {
 
 			if (is_file($file)) {
 				require($file);
+			}
+
+			// Language strings are trusted translation scaffolding so mark them as safe
+			// HTML to prevent them being escaped again by the template autoescape.
+			foreach ($_ as $key => $value) {
+				if (is_string($value)) {
+					$_[$key] = new \Twig\Markup($value, 'utf-8');
+				}
 			}
 
 			$this->cache[$code][$filename] = $_;

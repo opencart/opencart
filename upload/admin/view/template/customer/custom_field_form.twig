@@ -146,7 +146,7 @@
                           <div id="error-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
                         {% endfor %}</td>
                       <td class="text-end"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                      <td class="text-end"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row|escape('js') }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                     </tr>
                     {% set custom_field_value_row = custom_field_value_row + 1 %}
                   {% endfor %}

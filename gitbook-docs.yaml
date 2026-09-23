@@ -1,0 +1,11 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: OpenCart
+  structure:
+    - type: space
+      key: space-1
+      title: OpenCart
+      path: opencart
+      default: true
+      content:
+        directory: ./docs

@@ -13,8 +13,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Trigger view/ * /before
 	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
+	 * @param string               $route
+	 * @param array<string, mixed> $args
 	 *
 	 * @return void
 	 */

@@ -26,7 +26,7 @@ class Language {
 	 */
 	protected array $path = [];
 	/**
-	 * @var array<string, \Stringable|string>
+	 * @var array<string, string|\Stringable>
 	 */
 	protected array $data = [];
 	/**
@@ -64,13 +64,13 @@ class Language {
 	 *
 	 * Get language text string
 	 *
-	 * @link https://www.php.net/sprintf
+	 * @see https://www.php.net/sprintf
 	 *
 	 * @param string $key
 	 *
-	 * @return \Stringable|string
+	 * @return string|\Stringable
 	 */
-	public function get(string $key): \Stringable|string {
+	public function get(string $key): string|\Stringable {
 		if (!isset($this->data[$key])) {
 			return $key;
 		}
@@ -87,7 +87,7 @@ class Language {
 	 * content (\Twig\Markup) is passed through unescaped. The result is marked as
 	 * safe HTML so the template autoescape does not escape it again.
 	 *
-	 * @link https://www.php.net/sprintf
+	 * @see https://www.php.net/sprintf
 	 *
 	 * @param string $key
 	 * @param mixed  ...$args
@@ -109,12 +109,12 @@ class Language {
 	 *
 	 * Set language text string
 	 *
-	 * @param string $key 
-	 * @param \Stringable|string $value
+	 * @param string             $key
+	 * @param string|\Stringable $value
 	 *
 	 * @return void
 	 */
-	public function set(string $key, \Stringable|string $value): void {
+	public function set(string $key, string|\Stringable $value): void {
 		$this->data[$key] = $value;
 	}
 
@@ -123,7 +123,7 @@ class Language {
 	 *
 	 * @param string $prefix
 	 *
-	 * @return array<string, \Stringable|string>
+	 * @return array<string, string|\Stringable>
 	 */
 	public function all(string $prefix = ''): array {
 		if (!$prefix) {
@@ -159,7 +159,7 @@ class Language {
 	 * @param string $prefix
 	 * @param string $code     Language code
 	 *
-	 * @return array<string, \Stringable|string>
+	 * @return array<string, string|\Stringable>
 	 */
 	public function load(string $filename, string $prefix = '', string $code = ''): array {
 		if (!$code) {
@@ -194,11 +194,7 @@ class Language {
 
 			// Language strings are trusted translation scaffolding so mark them as safe
 			// HTML to prevent them being escaped again by the template autoescape.
-			foreach ($_ as $key => $value) {
-				if (is_string($value)) {
-					$_[$key] = new \Twig\Markup($value, 'utf-8');
-				}
-			}
+			$_ = $this->markTrusted($_);
 
 			$this->cache[$code][$filename] = $_;
 		} else {
@@ -216,5 +212,25 @@ class Language {
 		$this->data = array_merge($this->data, $_);
 
 		return $this->data;
+	}
+
+	/**
+	 * Mark Trusted
+	 *
+	 * Wraps plain translation strings in \Twig\Markup so the template engine
+	 * treats them as trusted HTML and does not escape them again on output.
+	 *
+	 * @param array<string, mixed> $language
+	 *
+	 * @return array<string, mixed>
+	 */
+	private function markTrusted(array $language): array {
+		foreach ($language as $key => $value) {
+			if (is_string($value)) {
+				$language[$key] = new \Twig\Markup($value, 'utf-8');
+			}
+		}
+
+		return $language;
 	}
 }

@@ -32,7 +32,7 @@
         <a href="{{ directory.href }}" class="directory mb-1"><i class="fa-solid fa-folder fa-5x"></i></a>
       </div>
       <div class="form-check">
-        <label for="input-path-{{ path_row }}" class="form-check-label">{{ directory.name }}</label>
+        <label for="input-path-{{ path_row }}" class="form-check-label text-break">{{ directory.name }}</label>
         <input type="checkbox" name="path[]" value="{{ directory.path }}" id="input-path-{{ path_row }}" class="form-check-input"/>
       </div>
     </div>
@@ -45,7 +45,7 @@
         <a href="{{ image.href }}" class="thumbnail mb-1"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-fluid"/></a>
       </div>
       <div class="form-check">
-        <label for="input-path-{{ path_row }}" class="form-check-label">{{ image.name }}</label>
+        <label for="input-path-{{ path_row }}" class="form-check-label text-break">{{ image.name }}</label>
         <input type="checkbox" name="path[]" value="{{ image.path }}" id="input-path-{{ path_row }}" class="form-check-input"/>
       </div>
     </div>

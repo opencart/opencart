@@ -169,9 +169,9 @@ class Loader {
 	 * @param array<string, mixed> $data
 	 * @param string               $code
 	 *
-	 * @return \Stringable|string
+	 * @return string|\Stringable
 	 */
-	public function view(string $route, array $data = [], string $code = ''): \Stringable|string {
+	public function view(string $route, array $data = [], string $code = ''): string|\Stringable {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 

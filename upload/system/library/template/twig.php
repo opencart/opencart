@@ -103,7 +103,7 @@ class Twig {
 		try {
 			// Initialize Twig environment
 			$config = [
-				'charset'     => 'utf-8',
+				'charset' => 'utf-8',
 				// Autoescape is enabled by default so all template output is HTML escaped on output.
 				// Trusted HTML (language strings and sub-view output) is passed to templates as
 				// \Twig\Markup objects which are not escaped again. Use |escape('js') for JavaScript

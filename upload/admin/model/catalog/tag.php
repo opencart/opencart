@@ -92,7 +92,7 @@ class Tag extends \Opencart\System\Engine\Model {
 	 * $tag_info = $this->model_catalog_tag->getTag($tag_id);
 	 */
 	public function getTag(int $tag_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tag` WHERE = '" . (int)$tag_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tag` WHERE `tag_id` = '" . (int)$tag_id . "'");
 
 		return $query->row;
 	}

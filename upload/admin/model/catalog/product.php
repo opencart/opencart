@@ -442,8 +442,8 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_description'] = $this->model_catalog_product->getDescriptions($product_id);
 			$product_data['product_discount'] = $this->model_catalog_product->getDiscounts($product_id);
 			$product_data['product_download'] = $this->model_catalog_product->getDownloads($product_id);
-			$product_data['product_tags'] = $this->model_catalog_product->getFilters($product_id);
-			$product_data['product_filter'] = $this->model_catalog_product->getTags($product_id);
+			$product_data['product_tags'] = $this->model_catalog_product->getTags($product_id);
+			$product_data['product_filter'] = $this->model_catalog_product->getFilters($product_id);
 			$product_data['product_image'] = $this->model_catalog_product->getImages($product_id);
 			$product_data['product_layout'] = $this->model_catalog_product->getLayouts($product_id);
 			$product_data['product_option'] = $this->model_catalog_product->getOptions($product_id);
@@ -1115,7 +1115,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `pt` ON (`p`.`product_id` = `pt`.`product_id`)";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `p2t` ON (`p`.`product_id` = `p2t`.`product_id`)";
 		}
 
 		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
@@ -1320,7 +1320,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `pt` ON (`p`.`product_id` = `pt`.`product_id`)";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `p2t` ON (`p`.`product_id` = `p2t`.`product_id`)";
 		}
 
 		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {

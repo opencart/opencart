@@ -14,7 +14,7 @@ customElements.define('product-thumb', class extends WebComponent {
         // Get product by product ID
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
-        if (product !== undefined && local.get('language') in product.description) {
+        if (product instanceof Map && local.get('language') in product.description) {
             let description = product.description[local.get('language')];
 
             // Price
@@ -63,7 +63,7 @@ customElements.define('product-thumb', class extends WebComponent {
                 this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
                 this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
-                if (json['redirect'] !== undefined) {
+                if ('redirect' in json) {
                     location = json['redirect'];
                 }
 
@@ -90,12 +90,8 @@ customElements.define('product-thumb', class extends WebComponent {
                 }
 
                 // Display success message
-                if (json['success'] !== undefined) {
-                    let alert = target.querySelector('#alert');
-
-                    if (alert) {
-                        alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
+                if ('success' in json) {
+                    this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     let item = [];
 

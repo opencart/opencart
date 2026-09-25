@@ -6,15 +6,13 @@ const language = await loader.language('account/newsletter');
 
 export default class AccountNewsletter extends WebComponent {
     async render() {
-        let data = {};
+        if (!customer.isLogged()) return;
+
+        let data = new Map();
 
         data.newsletter = customer.getNewsletter();
 
-        return loader.template('account/newsletter', { ...data, ...language });
-    }
-
-    onConnect() {
-
+        return loader.template('account/newsletter', [ data, language ]);
     }
 
     onSubmit(e) {

@@ -6,9 +6,12 @@ const language = await loader.language('account/order');
 
 export default class OrderList extends WebComponent {
     render() {
+        if (!customer.isLogged()) return;
 
-        return loader.template('account/order', { ...language });
+        return loader.template('account/order', [ language ]);
     }
+
+
 }
 
 customElements.define('order-list', OrderList);

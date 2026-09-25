@@ -42,7 +42,7 @@ customElements.define('payment-method', class extends WebComponent {
                 target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
-                if (json['error'] !== undefined) {
+                if ('error' in json) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 
@@ -64,7 +64,7 @@ customElements.define('payment-method', class extends WebComponent {
                 }
 
                 // Display success message
-                if (json['success'] !== undefined) {
+                if ('success' in json) {
                     let alert = target.querySelector('#alert');
 
                     if (alert) {

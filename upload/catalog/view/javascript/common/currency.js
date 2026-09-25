@@ -17,7 +17,7 @@ customElements.define('common-currency', class extends WebComponent {
 
         currencies.find(currency => currency.code === local.get('currency'));
 
-        data.currencies = currencies;
+        data.set('currencies', currencies);
 
         return loader.template('common/currency', [ data, language, config ]);
     }

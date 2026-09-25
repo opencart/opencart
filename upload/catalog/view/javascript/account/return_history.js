@@ -7,6 +7,6 @@ const language = await loader.language('account/return');
 // Name
 customElements.define('return-history', class extends WebComponent {
     render() {
-        return loader.template('account/return_history', { ...language });
+        return loader.template('account/return_history', [ language ]);
     }
 });

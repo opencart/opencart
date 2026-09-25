@@ -17,7 +17,6 @@ customElements.define('common-header', class extends WebComponent {
         let data = new Map();
 
         data.set('logged', customer.isLogged());
-
         data.set('wishlist', customer.isLogged() ? customer.getWishlist().length : 0);
 
         return await loader.template('common/header', [ data, language, config ]);

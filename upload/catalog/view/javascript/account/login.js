@@ -8,21 +8,19 @@ export default class AccountLogin extends WebComponent {
     token = '';
 
     async render() {
-        let data = {};
+        if (customer.isLogged()) return;
 
-        data.token = this.token;
+        let data = new Map();
+
+        data.set('token', this.token);
 
         return loader.template('account/login', [ data, language ]);
     }
 
     async onConnect() {
-        if (customer.isLogged()) {
-            this.token = await ajax.get('action.php?route=account/login.token');
-        } else {
-            let target = document.getElementById('content');
+        if (customer.isLogged()) return;
 
-            target.src = 'account/login';
-        }
+        this.token = await ajax.get('action.php?route=account/login.token');
     }
 
     async onSubmit(e) {
@@ -50,7 +48,7 @@ export default class AccountLogin extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if (json['error'] !== undefined) {
+        if ('error' in json) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -72,7 +70,7 @@ export default class AccountLogin extends WebComponent {
         }
 
         // Display success message
-        if (json['success'] !== undefined) {
+        if ('success' in json) {
             this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
     }

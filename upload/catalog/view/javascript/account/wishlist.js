@@ -6,15 +6,15 @@ const language = await loader.language('account/wishlist');
 
 export default class AccountWishlist extends WebComponent {
     render() {
-        let data = {};
+        let data = new Map();
 
-        data.wishlist = [];
+        data.set('wishlist', []);
 
         if (customer.isLogged()) {
-            data.wishlist = customer.getWishlist();
+            data.set('wishlist', customer.getWishlist());
         }
 
-       return loader.template('account/wishlist', { ...data, ...language });
+       return loader.template('account/wishlist', [ data, language ]);
     }
 
     remove() {

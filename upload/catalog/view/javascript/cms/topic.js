@@ -30,7 +30,7 @@ export default class CmsTopic extends WebComponent {
         // If Topic ID is set
         let topic = await loader.storage('topic/topic-' + data.topic_id);
 
-        if (topic !== undefined && local.get('language') in topic.description) {
+        if (topic instanceof Map && local.get('language') in topic.description) {
             data.image = topic.image;
 
             let description = topic.description[local.get('language')];

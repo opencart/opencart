@@ -8,7 +8,7 @@ export default class AccountTransaction extends WebComponent {
     render() {
 
 
-        return loader.template('account/transaction', { ...language });
+        return loader.template('account/transaction', [ language ]);
     }
 }
 

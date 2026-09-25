@@ -14,14 +14,14 @@ export default class ArticleInfo extends WebComponent {
         // Article Info
         let article = await loader.storage('article/article-' + this.getAttribute('article_id'));
 
-        if (article !== undefined && config.config_language in article.description) {
+        if (article instanceof Map && config.config_language in article.description) {
             let description = article.description[config.config_language];
 
             //description.meta_title
             //description.meta_description
             //description.meta_keyword
 
-            return loader.template('cms/article_info', { ...article, ...description, ...config, ...language });
+            return loader.template('cms/article_info', [ article, description, config, language ]);
         }
     }
 }

@@ -9,15 +9,13 @@ const url = new URLSearchParams(document.location.search);
 
 customElements.define('common-search', class extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        if (url.has('search')) {
-            data.search = url.get('search');
-        } else {
-            data.search = '';
-        }
+        data.set('search', '');
 
-        return loader.template('common/search', { ...data, ...language });
+        if (url.has('search')) data.set('search', url.get('search'));
+
+        return loader.template('common/search', [ data, language ]);
     }
 
     onSubmit(e) {

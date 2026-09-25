@@ -12,12 +12,11 @@ customElements.define('common-cart', class extends WebComponent {
         let data = new Map();
 
         data.set('products', cart.getProducts());
-
         data.set('quantity', cart.countProducts());
         data.set('total', cart.getTotal());
 
         data.set('currency', local.get('currency'));
 
-        return loader.template('common/cart', { ...language, ...config });
+        return loader.template('common/cart', [ language, config ]);
     }
 });

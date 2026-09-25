@@ -19,7 +19,7 @@ export default class ProductInfo extends WebComponent {
         // Product Info
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
-        if (product !== undefined && local.get('language') in product.description) {
+        if (product instanceof Map && local.get('language') in product.description) {
             let description = product.description[local.get('language')];
 
             //description.meta_title
@@ -159,7 +159,7 @@ export default class ProductInfo extends WebComponent {
                 target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
-                if (json['error'] !== undefined) {
+                if ('error' in json) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 
@@ -181,7 +181,7 @@ export default class ProductInfo extends WebComponent {
                 }
 
                 // Display success message
-                if (json['success'] !== undefined) {
+                if ('success' in json) {
                     let alert = target.querySelector('#alert');
 
                     if (alert) {

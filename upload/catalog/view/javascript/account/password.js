@@ -6,7 +6,9 @@ const language = await loader.language('account/password');
 
 export default class AccountPassword extends WebComponent {
     render() {
-        return loader.template('account/password', { ...language });
+        if (!customer.isLogged()) return;
+
+        return loader.template('account/password', [ language ]);
     }
 
     onSubmit(e) {
@@ -34,7 +36,7 @@ export default class AccountPassword extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if (json['error'] !== undefined) {
+        if ('error' in json) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -56,7 +58,7 @@ export default class AccountPassword extends WebComponent {
         }
 
         // Display success message
-        if (json['success'] !== undefined) {
+        if ('success' in json) {
             this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
     }

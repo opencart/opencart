@@ -120,7 +120,7 @@ customElements.define('checkout-register', class extends WebComponent {
         }
 
         // Display error messages
-        if (json['error'] !== undefined) {
+        if ('error' in json) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -142,7 +142,7 @@ customElements.define('checkout-register', class extends WebComponent {
         }
 
         // Display success message
-        if (json['success'] !== undefined) {
+        if ('success' in json) {
             this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
             if ($('#input-register').prop('checked')) {

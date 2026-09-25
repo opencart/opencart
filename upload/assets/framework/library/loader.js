@@ -48,7 +48,7 @@ export default class Loader {
                 if (value instanceof Map) {
                     values = { ...values, ...value };
                 } else if (typeof value === 'object') {
-                    values = Object.assign(values, value);
+                    values = { ...values, ...value };
                 }
             }
         }

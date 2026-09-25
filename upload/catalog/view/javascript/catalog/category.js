@@ -25,7 +25,7 @@ export default class CatalogCategory extends WebComponent {
         // Product Info
         let category = await loader.storage('category/category-' + category_id);
 
-        if (category !== undefined && local.get('language') in category.description) {
+        if (category instanceof Map && local.get('language') in category.description) {
             let description = category.description[local.get('language')];
 
             //description.meta_title;
@@ -41,7 +41,7 @@ export default class CatalogCategory extends WebComponent {
                 });
             }
 
-            return loader.template('catalog/category', { ...category, ...description, ...this.data, ...language, ...config });
+            return loader.template('catalog/category', [ category, description, data, language, config ]);
         }
     }
 }

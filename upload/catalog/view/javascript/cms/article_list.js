@@ -11,6 +11,9 @@ export default class ArticleList extends WebComponent {
     async render() {
         let data = {};
 
+
+
+
         if (this.hasAttribute('search')) {
             data.search = this.getAttribute('search');
         } else {
@@ -51,11 +54,11 @@ export default class ArticleList extends WebComponent {
 
         let article_ids = await loader.storage('topic/topic-article-' + this.getAttribute('topic_id'));
 
-        if (article_ids !== undefined) {
+        if (article_ids instanceof Map) {
             for (let article_id of article_ids) {
                 let article = await loader.storage('article/article-' + article_id);
 
-                if (article !== undefined && config.config_language in article.description) {
+                if (article instanceof Map && config.config_language in article.description) {
                     let description = article.description[config.config_language];
 
                     data.articles.push({ ...article, ...description });
@@ -63,7 +66,7 @@ export default class ArticleList extends WebComponent {
             }
         }
 
-        return loader.template('cms/article_list', { ...data, ...language, ...config });
+        return loader.template('cms/article_list', [ data, language, config ]);
     }
 
     onChange(e) {

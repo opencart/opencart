@@ -38,7 +38,7 @@ export default class AccountReset extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if (json['error'] !== undefined) {
+        if ('error' in json) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -60,7 +60,7 @@ export default class AccountReset extends WebComponent {
         }
 
         // Display success message
-        if (json['success'] !== undefined) {
+        if ('success' in json) {
             this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
     }

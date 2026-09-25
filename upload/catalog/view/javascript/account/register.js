@@ -21,10 +21,10 @@ export default class AccountRegister extends WebComponent {
         // Custom Fields
         data.set('custom_fields', []);
 
-        let customer_group = await loader.storage('customer/customer_group-' + config.config_customer_group_id);
+        let customer_group = await loader.storage('customer/customer_group-' + config.get('config_customer_group_id'));
 
-        if (customer_group) {
-            data.get('custom_fields').push(customer_group.custom_fields);
+        if (customer_group instanceof Map) {
+            data.get('custom_fields').push(customer_group.get('custom_fields'));
         }
 
         data.set('token', this.token);
@@ -39,17 +39,12 @@ export default class AccountRegister extends WebComponent {
     }
 
     async onChange(e) {
-
-
         data.custom_fields = [];
-
 
         let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
 
-        if (customer_group_info !== undefined) {
+        if (customer_group_info instanceof Map) {
             data.custom_fields = customer_group_info.custom_field;
-        } else {
-
         }
 
         //$('.custom-field').addClass('d-none');

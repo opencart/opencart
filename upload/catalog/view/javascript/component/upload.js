@@ -113,7 +113,7 @@ customElements.define('input-upload', class extends WebComponent {
         // Images
         var thumb = $(this).attr('data-oc-thumb');
 
-        if (thumb !== undefined) {
+        if (thumb instanceof Mapd) {
             $(thumb).attr('src', $(thumb).attr('data-oc-placeholder'));
         }
 

@@ -11,7 +11,7 @@ export default class ReturnForm extends WebComponent {
     render() {
         if (!customer.isLogged()) return;
 
-        return loader.template('account/return_form', { ...language });
+        return loader.template('account/return_form', [ language ]);
     }
 
     async onSubmit(e) {
@@ -39,7 +39,7 @@ export default class ReturnForm extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if (json['error'] !== undefined) {
+        if ('error' in json) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -61,14 +61,9 @@ export default class ReturnForm extends WebComponent {
         }
 
         // Display success message
-        if (json['success'] !== undefined) {
+        if ('success' in json) {
             this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-            let output = [];
-
-            console.log(json['products']);
-
-            //console.log(Object.fromEntries(form));
             for (let product of json['products']) {
                 cart.add(product);
             }

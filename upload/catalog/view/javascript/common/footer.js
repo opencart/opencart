@@ -10,8 +10,6 @@ const language = await loader.language('common/footer');
 // Storage
 const informations = await loader.storage('information/information');
 
-console.log(informations);
-
 customElements.define('common-footer', class extends WebComponent {
     async render() {
         let data = new Map();

@@ -6,9 +6,9 @@ const language = await loader.language('account/subscription');
 
 export default class SubscriptionInfo extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        return loader.template('account/subscription_info', { ...data, ...language });
+        return loader.template('account/subscription_info', [ data, language ]);
     }
 }
 

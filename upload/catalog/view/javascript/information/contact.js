@@ -12,19 +12,19 @@ const locations = await loader.storage('localisation/location');
 
 export default class InformationContact extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
+
+        data.set('name', '');
+        data.set('email', '');
 
         if (customer.isLogged()) {
-            data.name = customer.getFirstName() + ' ' + customer.getLastName();
-            data.email = customer.getEmail();
-        } else {
-            data.name = '';
-            data.email = '';
+            data.set('name', customer.getFirstName() + ' ' + customer.getLastName());
+            data.set('email', customer.getEmail());
         }
 
-        data.locations = locations;
+        data.set('locations', locations);
 
-        return loader.template('information/contact', { ...data, ...language, ...config });
+        return loader.template('information/contact', [ data, language, config ]);
     }
 
     onConnect() {
@@ -56,7 +56,7 @@ export default class InformationContact extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if (json['error'] !== undefined) {
+        if ('error' in json) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -78,7 +78,7 @@ export default class InformationContact extends WebComponent {
         }
 
         // Display success message
-        if (json['success'] !== undefined) {
+        if ('success' in json) {
             this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
             //console.log(Object.fromEntries(form));

@@ -5,9 +5,9 @@ const language = await loader.language('account/download');
 
 export default class AccountDownload extends WebComponent {
     render() {
-        let data = {};
+        let data = new Map();
 
-        data.downloads = {};
+        data.set('downloads', []);
 
         return loader.template('account/download', [ data, language ]);
     }

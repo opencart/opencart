@@ -23,22 +23,24 @@
  *
  *   GlobalBindings.getRef('appHeader'); // → element bound with :ref="appHeader"
  */
-export class Global {
-    static refs = new Map();
-    static listeners = new Map();
+class Global {
+    constructor() {
+        this.refs = new Map();
+        this.listeners = new Map();
+    }
 
-    static setRef(name, element) {
+    setRef(name, element) {
         this.refs.set(name, element);
     }
 
     /** Read a ref bound anywhere with `:ref="name"`. */
-    static getRef(name) {
+    getRef(name) {
         return this.refs.get(name);
     }
 
     /** Clears a ref only if it still points at `el` — avoids one binder's
      *  teardown clobbering a ref another binder has since re-registered. */
-    static clearRef(name, element) {
+    clearRef(name, element) {
         if (this.refs.get(name) === element) this.refs.delete(name);
     }
 
@@ -48,7 +50,7 @@ export class Global {
      * @param {string|object} name - a listener name, or `{ name: fn, ... }`
      * @param {Function} [listener] - the function, when `name` is a string
      */
-    static registerListener(name, listener) {
+    registerListener(name, listener) {
         if (!name) return;
 
         if (typeof name === 'object') {
@@ -58,19 +60,29 @@ export class Global {
         }
     }
 
-    static unregisterListener(name) {
+    unregisterListener(name) {
         this.listeners.delete(name);
     }
 
-    static getListener(name) {
+    getListener(name) {
         return this.listeners.get(name);
     }
 
     /** Clears all refs and listeners. Mainly useful for tests/hot-reload. */
-    static reset() {
+    reset() {
         this.refs = new Map();
         this.listeners = new Map();
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Global();
+        }
+
+        return this.instance;
+    }
 }
 
-// If not using ES modules: module.exports = GlobalBindings;
+const global = Global.getInstance();
+
+export { global };

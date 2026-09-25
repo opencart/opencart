@@ -1,4 +1,4 @@
-import { Global } from './global.js';
+import { global } from './global.js';
 /**
  * Binder
  * -------------
@@ -117,7 +117,7 @@ export class Binder {
         if (!name) return;
 
         if (is_global) {
-            Global.refs.set(name, element);
+            global.refs.set(name, element);
 
             this.global.push({ name, element });
 
@@ -136,7 +136,7 @@ export class Binder {
     }
 
     event(element, event, method, is_global) {
-        let handler = is_global ? Global.getListeners(method) : this.host[method];
+        let handler = is_global ? global.getListeners(method) : this.host[method];
 
         if (typeof handler !== 'function') {
             let scope = is_global ? 'Global' : 'host';
@@ -184,7 +184,7 @@ export class Binder {
         // Only clear a global ref if it still points at the element *this*
         // instance set — avoids wiping out a ref another instance re-registered.
         this.global.forEach(({ name, element }) => {
-            Global.clearRef(name, element);
+            global.clearRef(name, element);
         });
 
         this.global = [];

@@ -34,30 +34,19 @@ export default class Loader {
         return await storage.fetch(path);
     }
 
-    async template(path, data = {}) {
+    async template(path, data = []) {
+        if (!data instanceof Map && !data instanceof Array) return;
+
         let values = {};
 
-        console.log(values);
-
-        if (Array.isArray(data)) {
-            console.log('IS ARRAY');
-
-            for (let value of data) {
-                console.log(typeof value);
-
-                if (value instanceof Map) {
-                    values = { ...values, ...value };
-                } else if (typeof value === 'object') {
-                    values = { ...values, ...value };
-                }
-            }
+        if (data instanceof Map) {
+            Object.assign(values, Object.fromEntries(data));
         }
 
-        console.log(values);
+        if (data instanceof Array) {
+            let entries = data.filter(value => value instanceof Map);
 
-        if (data instanceof Map) {
-            console.log('IS MAP');
-            values = { ...data };
+            for (let entry of entries) Object.assign(values, Object.fromEntries(entry));
         }
 
         return await template.render(path, values);

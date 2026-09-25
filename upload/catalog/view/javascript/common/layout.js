@@ -37,7 +37,7 @@ customElements.define('common-layout', class extends WebComponent {
         let [ path, query] = target.getAttribute('href').split('?');
 
         if (!this.data.has(path)) {
-            let component = await import(config.config_path + path);
+            let component = await import(config.get('config_path') + path);
 
             this.data.set(path, customElements.getName(component.default));
         }

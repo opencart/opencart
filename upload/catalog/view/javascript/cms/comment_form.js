@@ -11,7 +11,7 @@ customElements.define('cms-comment', class extends WebComponent {
 
         var element = this;
 
-        $.ajax({
+        ajax.post({
             url: $(element).val(),
             dataType: 'html',
             beforeSend: function() {

@@ -1,5 +1,6 @@
 // Engine
 export { WebComponent } from './engine/webcomponent.js';
+export { global } from './engine/global.js';
 
 // Library
 export { loader } from './library/loader.js';

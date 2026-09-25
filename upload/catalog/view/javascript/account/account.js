@@ -15,11 +15,6 @@ export default class AccountAccount extends WebComponent {
 
         data.set('affiliate', customer.isAffiliate());
 
-        console.log('AccountAccount');
-        console.log(data);
-        console.log(language);
-        console.log(config);
-
         return loader.template('account/account', [ data, language, config ]);
     }
 }

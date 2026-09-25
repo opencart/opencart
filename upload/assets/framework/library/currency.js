@@ -2,14 +2,12 @@ import { loader } from './loader.js';
 
 let currencies = await loader.storage('localisation/currency');
 
-console.log(currencies);
-
 export default class Currency {
     instance;
 
     convert(value, from, to) {
-        let currency_from = currencies.find(currency => currency.code === from);
-        let currency_to = currencies.find(currency => currency.code === to);
+        let currency_from = currencies.get(from);
+        let currency_to = currencies.get(to);
 
         if (!currency_from || !currency_to) return value;
 
@@ -28,7 +26,7 @@ export default class Currency {
      * @param {string} format Optional and will be added after the string
      */
     format(number, code, value = 0, format = true) {
-        let currency = currencies.find(currency => currency.code === code);
+        let currency = currencies.get(code);
 
         if (!currency) return number;
 

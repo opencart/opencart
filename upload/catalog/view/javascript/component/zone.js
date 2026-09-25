@@ -45,7 +45,7 @@ customElements.define('input-zone', class extends WebComponent {
 
         console.log(country);
 
-        if (country !== undefined) {
+        if (country  instanceof Map) {
             for (let zone of country['zone']) {
                 html += '<option value="' + zone.zone_id + '"';
 

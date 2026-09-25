@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, session, cart, customer } from '../index.js';
+import { loader, customer } from '../index.js';
 import '../common/cart.js';
 import '../common/currency.js';
 import '../common/language.js';

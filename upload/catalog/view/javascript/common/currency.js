@@ -12,12 +12,17 @@ const currencies = await loader.storage('localisation/currency');
 
 customElements.define('common-currency', class extends WebComponent {
     async render() {
-        // Local storage currency code
         let data = new Map();
 
-        currencies.find(currency => currency.code === local.get('currency'));
+        // Local storage currency code
+        let value = currencies.get(local.get('currency'));
 
-        data.set('currencies', currencies);
+        data.set('symbol_left', value.symbol_left);
+        data.set('symbol_right',  value.symbol_right);
+
+
+        console.log(currencies.entries());
+        data.set('currencies', ...currencies);
 
         return loader.template('common/currency', [ data, language, config ]);
     }
@@ -26,6 +31,12 @@ customElements.define('common-currency', class extends WebComponent {
         e.preventDefault();
 
         let code = e.currentTarget.getAttribute('href');
+
+        if (!currencies.has(code)) {
+            this.alert.prepend('<ui-alert type="warning">' + language.get('error_currency') + '</ui-alert>');
+
+            return;
+        }
 
         local.set('currency', code);
     }

@@ -13,6 +13,12 @@ export default class AccountAffiliate extends WebComponent {
 
         return loader.template('account/affiliate', language);
     }
+
+    onSubmit(e) {
+        e.preventDefault();
+
+
+    }
 }
 
 customElements.define('account-affiliate', AccountAffiliate);

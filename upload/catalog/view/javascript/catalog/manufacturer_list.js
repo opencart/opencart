@@ -1,5 +1,5 @@
-import {local, WebComponent} from '../index.js';
-import { loader } from '../index.js';
+import {WebComponent} from '../index.js';
+import { loader, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -12,7 +12,7 @@ let manufacturers = await loader.storage('manufacturer/manufacturer');
 
 export default class ManufacturerList extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
         let request = new URL(import.meta.url).searchParams;
 

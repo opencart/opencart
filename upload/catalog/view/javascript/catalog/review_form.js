@@ -9,9 +9,9 @@ const language = await loader.language('catalog/review');
 
 customElements.define('review-form', class extends WebComponent {
     async render(){
-        let data = {};
+        let data = new Map();
 
-        return loader.template('catalog/review_form', { ...data, ...language, ...config });
+        return loader.template('catalog/review_form', [ data, language, config ]);
     }
 
     onConnect() {

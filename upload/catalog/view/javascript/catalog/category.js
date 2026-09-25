@@ -10,7 +10,7 @@ const language = await loader.language('catalog/category');
 
 export default class CatalogCategory extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
         let category_id = 0;
 
@@ -25,8 +25,8 @@ export default class CatalogCategory extends WebComponent {
         // Product Info
         let category = await loader.storage('category/category-' + category_id);
 
-        if (category instanceof Map && local.get('language') in category.description) {
-            let description = category.description[local.get('language')];
+        if (category instanceof Map && local.get('language') in category.get('description')) {
+            let description = category.get('description')[local.get('language')];
 
             //description.meta_title;
             //description.meta_description;

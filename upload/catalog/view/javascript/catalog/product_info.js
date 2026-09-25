@@ -14,22 +14,22 @@ const stock_statuses = await loader.storage('localisation/stock_status');
 
 export default class ProductInfo extends WebComponent {
     async render(){
-        let data = {};
+        let data = new Map();
 
         // Product Info
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
-        if (product instanceof Map && local.get('language') in product.description) {
-            let description = product.description[local.get('language')];
+        if (product instanceof Map && local.get('language') in product.get('description')) {
+            let description = product.get('description')[local.get('language')];
 
             //description.meta_title
             //description.meta_description
             //description.meta_keyword
 
             // Price
-            data.special = '';
+            data.set('special', '');
 
-            let discount = product.discounts.find(discount => discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+            let discount = product.get('discounts').find(discount => discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             if (discount) {
                 if (discount.type == 'F') {
@@ -42,23 +42,23 @@ export default class ProductInfo extends WebComponent {
             }
 
             // Discounts
-            data.discounts = product.discounts.filter(discount => discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+            data.discounts = product.get('discounts').filter(discount => discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             data.discounts.sort(discounts => discount.quantity);
 
-            data.tax = '';
+            data.set('tax', '');
 
-            if (config.config_tax) {
-                data.tax = tax.getTax(data.special ? data.special : product.price, product.tax_class_id);
+            if (config.get('config_tax')) {
+                data.set('tax', tax.getTax(data.special ? data.special : product.get('price'), product.get('tax_class_id')));
             }
 
             // Rewards
-            data.reward = 0;
+            data.set('reward', 0);
 
-            let reward = product.rewards.find(reward => reward.customer_group_id == config.config_customer_group_id);
+            let reward = product.get('rewards').find(reward => reward.customer_group_id == config.config_customer_group_id);
 
             if (reward) {
-                data.reward = reward.points;
+                data.set('reward', reward.points);
             }
 
             // Stock Status
@@ -83,7 +83,7 @@ export default class ProductInfo extends WebComponent {
             }
 
             // Attributes
-            data.attribute_groups = [];
+            data.set('attribute_groups', []);
 
             for (let attribute_group of product.attribute_groups) {
                 let attributes = [];
@@ -98,7 +98,7 @@ export default class ProductInfo extends WebComponent {
                });
             }
 
-            data.options = [];
+            data.set('options', []);
 
             for (let option of product.options) {
                 let option_values = [];
@@ -107,7 +107,7 @@ export default class ProductInfo extends WebComponent {
                     option_values.push(Object.assign(option_value, option_value.description[local.get('language')]));
                 }
 
-                data.options.push(Object.assign(option, {
+                data.get('options').push(Object.assign(option, {
                     name: option.description[local.get('language')].name,
                     option_value: option_values
                 }));
@@ -130,12 +130,12 @@ export default class ProductInfo extends WebComponent {
             }
 
             // Tags
-            data.tags = product.tags;
-            data.related = [];
+            data.set('tags', product.tags);
+            data.set('related', []);
 
             data.currency = local.get('currency');
 
-            return loader.template('catalog/product_info', { ...product, ...description, ...data, ...language, ...config });
+            return loader.template('catalog/product_info', [ product, description, data, language, config ]);
         }
     }
 
@@ -146,10 +146,10 @@ export default class ProductInfo extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-               //ref.get('button-cart').button('loading');
+               this.button.button('loading');
             },
             onComplete: () => {
-                //ref.get('button-cart').button('reset');
+                this.get('button').button('reset');
             },
             onSuccess: async (json) => {
                 console.log('onSuccess', json);

@@ -45,13 +45,6 @@ export default class Language {
 
             let map = new Map(Object.entries(data));
 
-            if (path == 'account/account') {
-
-                console.log('LANGUAGE');
-                console.log(path);
-                console.log(map);
-            }
-
             this.cache.set(path, map);
 
             return this.cache.get(path);

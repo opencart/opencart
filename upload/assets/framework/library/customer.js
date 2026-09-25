@@ -62,7 +62,7 @@ export default class Customer {
     }
 
     isAffiliate() {
-        return this.data.get('affiliate');
+        return this.data.has('affiliate') ? this.data.get('affiliate') : false;
     }
 
     getBalance() {

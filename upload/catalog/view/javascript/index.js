@@ -1,8 +1,8 @@
 // Engine
-export { WebComponent } from '../../../assets/framework/index.js';
+export { WebComponent, ajax, config, language, global, local, session, storage, template } from '../../../assets/framework/index.js';
 
 // Library
-import { ajax, config, language, loader, local, session, storage, template } from '../../../assets/framework/index.js';
+import { loader } from '../../../assets/framework/index.js';
 
 // Load up the Application classes
 const cart = await loader.library('cart');
@@ -12,5 +12,4 @@ const length = await loader.library('length');
 const tax = await loader.library('tax');
 const weight = await loader.library('weight');
 
-export { ajax, config, language, loader, local, session, storage, template };
-export { cart, currency, customer, length, tax, weight };
+export { loader, cart, currency, customer, length, tax, weight };

@@ -17,6 +17,6 @@ customElements.define('common-cart', class extends WebComponent {
 
         data.set('currency', local.get('currency'));
 
-        return loader.template('common/cart', [ language, config ]);
+        return loader.template('common/cart', [ data, language, config ]);
     }
 });

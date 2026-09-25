@@ -133,8 +133,8 @@ export class WebComponent extends HTMLElement {
             this.binder.destroy();
         }
 
-        if (typeof this.onDisconnected === 'function') {
-            await this.onDisconnected();
+        if (typeof this.onDisconnect === 'function') {
+            await this.onDisconnect();
         }
     }
 

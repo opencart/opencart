@@ -1,0 +1,41 @@
+// --- Cart management ---
+save "iPhone" as "productName"
+product-add-to-cart
+click "item(s)"
+click "View Cart"
+check that page contains "Shopping Cart"
+check that page contains "iPhone"
+
+// Update the quantity
+enter "3" into "quantity"
+click "Update"
+check that page contains "Success: You have modified your shopping cart!"
+
+// Remove the item
+click "Remove"
+check that page contains "Your shopping cart is empty!"
+
+// --- Guest checkout ---
+save "iPhone" as "productName"
+product-add-to-cart
+click "item(s)"
+click "Checkout"
+check that page contains "Checkout"
+click "Guest Checkout"
+
+// A default install shows a single Shipping Address fieldset
+enter "Guest" into "First Name"
+enter "Buyer" into "Last Name"
+generate unique email, then enter into "E-Mail" and save as "guestEmail"
+address-fill
+
+// Asserting the save here stops a validation error from surfacing later as a modal failure
+click "Continue"
+check that page contains "Success: Your guest account information has been saved!"
+
+checkout-select-shipping-and-payment
+
+// Place the order
+wait up to 60 seconds until page contains "Confirm Order"
+click "Confirm Order"
+check that page contains "Your order has been placed!"

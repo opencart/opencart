@@ -1,0 +1,9 @@
+// Reads stored value "productName". Callers set it first:
+//   save "iPhone" as "productName"
+enter stored value "productName" into "Search"
+press enter
+check that page contains stored value "productName"
+click stored value "productName"
+check that page contains "Add to Cart"
+click button "Add to Cart"
+check that page contains "Success: You have added"

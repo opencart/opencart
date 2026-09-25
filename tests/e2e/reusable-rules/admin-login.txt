@@ -1,0 +1,12 @@
+go to url stored value "adminUrl"
+check that page contains "Please enter your login details."
+enter stored value "adminUsername" into "Username"
+enter stored value "adminPassword" into "Password"
+click button "Login"
+check that page contains "Dashboard"
+// Closing the security modal hides it but leaves its heading in the DOM, so never assert
+// the text is gone - it never is. See tests/e2e/README.md.
+if page contains "Important Security Notification!" then
+  click "btn-close" on the right of "Important Security Notification!"
+end
+check that page contains "Dashboard"

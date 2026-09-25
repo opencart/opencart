@@ -1,0 +1,44 @@
+// Runs against a product this test creates itself, so it never mutates the seeded demo
+// data and two concurrent runs cannot collide.
+
+// --- Create ---
+admin-login
+admin-product-create-new
+
+// --- Reachable on the storefront ---
+go to url stored value "storeUrl"
+enter stored value "productName" into "Search"
+press enter
+check that page contains stored value "productName"
+click stored value "productName"
+check that page contains stored value "productName"
+check that page contains "Add to Cart"
+
+// --- Edit the price in admin ---
+admin-login
+click "Catalog"
+click "Products"
+check that page contains "Products"
+enter stored value "productName" into "Product Name"
+click "Filter"
+check that page contains stored value "productName"
+// No positional anchor: the filter leaves one row, and 'on the right of stored value ...'
+// does not resolve against the icon-only Edit control.
+click "Edit"
+check that page contains "Edit Product"
+click "Data"
+enter "199.99" into "Price"
+click "Save"
+check that page contains "Success: You have modified products!"
+
+// --- The change reaches the storefront ---
+go to url stored value "storeUrl"
+enter stored value "productName" into "Search"
+press enter
+check that page contains stored value "productName"
+click stored value "productName"
+check that page contains "199.99"
+
+// --- Delete ---
+admin-login
+admin-product-delete

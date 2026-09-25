@@ -1,6 +1,6 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 
-export class FormAjax extends WebComponent {
+customElements.define('x-form', class extends WebComponent {
     render() {
         return '<form @bind="form" @submit="onSubmit">' + this.innerHTML + '</form>';
     }
@@ -16,6 +16,4 @@ export class FormAjax extends WebComponent {
             //binder.get('button-submitter').button('loading');
         }
     }
-}
-
-customElements.define('form-ajax', FormAjax);
+});

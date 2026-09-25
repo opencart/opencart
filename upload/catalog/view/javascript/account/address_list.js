@@ -1,5 +1,5 @@
-import { WebComponent } from '../component.js';
-import { loader, ajax, customer } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -9,44 +9,40 @@ const language = await loader.language('account/address');
 
 class AddressList extends WebComponent {
     render() {
-        let data = {};
+        let data = new Map();
 
-        data.addresses = customer.getAddresses();
+        data.set('addresses', customer.getAddresses());
 
-        return loader.template('account/address', { ...data, ...language, ...config });
+        return loader.template('account/address', [ data, language, config ]);
     }
 
     onDelete(e) {
         e.preventDefault();
 
-        ajax.post({
-            url: 'action.php?route=account/address.delete&address_id=' + e.target.value,
+        ajax.get('action.php?route=account/address.delete&language=' + local.get('language') + '&customer_token=' + customer.getToken() + '&address_id=' + e.target.value, {
             beforeSend: () => {
-                this.button.button('loading');
+                e.target.button.button('loading');
             },
             complete: () => {
-                this.button.button('reset');
+                e.target.button('reset');
             },
-            success: function(json) {
-                let dismissible = document.querySelectorAll('.alert-dismissible');
-
-                dismissible.remove();
-
-                if (json['error']) {
-                    $('#alert').append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    this.update();
-                }
-            },
+            success: this.success.bind(this),
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
+    }
 
+    success(json) {
+        if (json['error']) {
+            this.alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+
+        if (json['success']) {
+            this.alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+            this.update();
+        }
     }
 }
 

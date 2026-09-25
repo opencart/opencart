@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, local } from '../index.js';
 
 // Config
@@ -12,19 +12,13 @@ const languages = await loader.storage('localisation/language');
 
 customElements.define('common-language', class extends WebComponent {
     async render() {
-        // Config stored language code
-        let code = config.config_language;
 
-        // Local storage language code
-        if (local.has('language')) {
-            code = local.get('language');
-        }
 
-        let data = languages.find(language => language.code === code);
+        let data = languages.find(language => language.code === local.get('language'));
 
         data.languages = languages;
 
-        return loader.template('common/language', { ...data,  ...language });
+        return loader.template('common/language', [ data, language ]);
     }
 
     onClick(e) {
@@ -33,5 +27,7 @@ customElements.define('common-language', class extends WebComponent {
         let code = e.currentTarget.getAttribute('href');
 
         local.set('language', code);
+
+
     }
 });

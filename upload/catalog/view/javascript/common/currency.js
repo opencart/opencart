@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, local } from '../index.js';
 
 // Config
@@ -12,19 +12,14 @@ const currencies = await loader.storage('localisation/currency');
 
 customElements.define('common-currency', class extends WebComponent {
     async render() {
-        // Config stored currency code
-        let code = config.config_currency;
-
         // Local storage currency code
-        if (local.has('currency')) {
-            code = local.get('currency');
-        }
+        let data = new Map();
 
-        let data = currencies.find(currency => currency.code === code);
+        currencies.find(currency => currency.code === local.get('currency'));
 
         data.currencies = currencies;
 
-        return loader.template('common/currency', { ...data, ...language });
+        return loader.template('common/currency', [ data, language, config ]);
     }
 
     onClick(e) {

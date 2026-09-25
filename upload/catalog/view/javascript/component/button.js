@@ -1,6 +1,6 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 
-export class ButtonSubmit extends WebComponent {
+customElements.define('button-submit', class extends WebComponent {
     html = '';
     width;
 
@@ -22,6 +22,4 @@ export class ButtonSubmit extends WebComponent {
             this.element.removeAttribute('disabled');
         }
     }
-}
-
-customElements.define('button-submit', ButtonSubmit);
+});

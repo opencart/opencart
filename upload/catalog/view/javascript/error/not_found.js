@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 
 export default class ErrorNotFound extends WebComponent {
     async render(){

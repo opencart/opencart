@@ -1,13 +1,11 @@
 import { loader } from './loader.js';
+import { ajax } from './ajax.js';
+import { session } from './session.js';
+import { tax } from './tax.js';
+import { weight } from './weight.js';
 
 // Config
 const config = await loader.config('default');
-
-// library
-const ajax = await loader.library('ajax');
-const session = await loader.library('session');
-const tax = await loader.library('tax');
-const weight_class = await loader.library('weight');
 
 let items = [];
 
@@ -515,3 +513,7 @@ export default class Cart {
         return this.instance;
     }
 }
+
+const cart = Cart.getInstance();
+
+export { cart };

@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, customer } from '../index.js';
 
 // Language

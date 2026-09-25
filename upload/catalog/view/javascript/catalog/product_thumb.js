@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, ajax, cart, local, tax } from '../index.js';
 
 // Config
@@ -14,13 +14,13 @@ customElements.define('product-thumb', class extends WebComponent {
         // Get product by product ID
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
-        if (product !== undefined && config.config_language in product.description) {
-            let description = product.description[config.config_language];
+        if (product !== undefined && local.get('language') in product.description) {
+            let description = product.description[local.get('language')];
 
             // Price
             data.special = '';
 
-            let discount = product.discounts.find(discount =>  discount.quantity == 1 && discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+            let discount = product.discounts.find(discount =>  discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             if (discount) {
                 if (discount.type == 'F') {
@@ -47,9 +47,7 @@ customElements.define('product-thumb', class extends WebComponent {
     addToCart(e) {
         e.preventDefault();
 
-        let target = e.target;
-
-        let form = new FormData(target);
+        let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
@@ -62,15 +60,15 @@ customElements.define('product-thumb', class extends WebComponent {
                 console.log('onSuccess', json);
 
                 // Remove past error classes from inputs
-                target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 if (json['redirect'] !== undefined) {
                     location = json['redirect'];
                 }
 
                 // Display error messages
-                if (json['error'] !== undefined) {
+                if ('error' in json) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 

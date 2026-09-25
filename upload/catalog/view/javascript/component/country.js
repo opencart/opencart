@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import {local, WebComponent} from '../index.js';
 import { loader } from '../index.js';
 
 // Config
@@ -8,17 +8,17 @@ const config = await loader.config('default');
 const countries = await loader.storage('localisation/country');
 
 /**
- * XCountry
+ * inputCountry
  *
- * @example <x-country name="" value="" target="" input-id=""></x-country>
+ * @example <input-country name="" value="" target="" input-id=""></input-country>
  *
- * @tag     x-country
+ * @tag     input-country
  *
- * @attr   string    name   name of the form element
+ * @attr   string   name   name of the form element
  *
  * optional required disabled
  */
-customElements.define('x-country', class extends WebComponent {
+customElements.define('input-country', class extends WebComponent {
     static observed = ['value'];
 
     default = HTMLInputElement;
@@ -33,10 +33,8 @@ customElements.define('x-country', class extends WebComponent {
         this.setAttribute('value', value);
     }
 
-
-
     async render() {
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select"';
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" @change="onChange" class="form-select"';
 
         if (this.hasAttribute('required')) {
             html += ' required';
@@ -57,8 +55,8 @@ customElements.define('x-country', class extends WebComponent {
 
             let name = '';
 
-            if (config.config_language in country.description) {
-                name = country.description[config.config_language].name;
+            if (local.get('language') in country.description) {
+                name = country.description[local.get('language')].name;
             }
 
             html += '>' + name + '</option>';

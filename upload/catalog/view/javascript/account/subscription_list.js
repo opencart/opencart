@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader } from '../index.js';
 
 // Language
@@ -6,9 +6,9 @@ const language = await loader.language('account/subscription');
 
 customElements.define('subscription-list', class extends WebComponent {
     render() {
-        let data = {};
+        let data = new Map();
 
-        return loader.template('account/subscription_list', { ...data, ...language });
+        return loader.template('account/subscription_list', [ data, language ]);
     }
 });
 

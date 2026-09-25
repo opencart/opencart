@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader } from '../index.js';
 
 // Config
@@ -8,10 +8,6 @@ const config = await loader.config('default');
 const language = await loader.language('checkout/shipping_method');
 
 customElements.define('shipping-method', class extends WebComponent {
-    onConnect() {
-
-    }
-
     async render() {
         let data = {};
 
@@ -19,6 +15,9 @@ customElements.define('shipping-method', class extends WebComponent {
         return loader.template('checkout/shipping_method', { ...data,  ...language });
     }
 
+    onConnect() {
+
+    }
     onSubmit(e) {
 
 

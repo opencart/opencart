@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, cart, local, tax } from '../index.js';
 
 // Config
@@ -9,15 +9,15 @@ const language = await loader.language('common/cart');
 
 customElements.define('common-cart', class extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        data.products = cart.getProducts();
+        data.set('products', cart.getProducts());
 
-        data.quantity = cart.countProducts();
-        data.total = cart.getTotal();
+        data.set('quantity', cart.countProducts());
+        data.set('total', cart.getTotal());
 
-        data.currency = local.get('currency');
+        data.set('currency', local.get('currency'));
 
-        return loader.template('common/cart', { ...data, ...language, ...config });
+        return loader.template('common/cart', { ...language, ...config });
     }
 });

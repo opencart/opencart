@@ -1,5 +1,6 @@
+import { Global } from './global.js';
 /**
- * ElementBinder
+ * Binder
  * -------------
  * Scans a web component's shadow root (or any root node) for two kinds
  * of attributes and wires them up automatically:
@@ -14,35 +15,35 @@
  *                  the handler. `@click.once="handleClick"` removes
  *                  itself after firing once.
  *
- * A `global:` prefix on either kind binds against a static registry on
- * the ElementBinder class itself, shared across every component instance,
- * instead of the local host/refs:
+ * Prefixing the attribute name with `:` instead of `@` binds against a
+ * static registry on the ElementBinder class itself — shared across
+ * every component instance — instead of the local host/refs:
  *
- *   `@ref="global:appHeader"`   → stored in ElementBinder.globalRefs.appHeader,
- *                                 readable anywhere via ElementBinder.getGlobalRef('appHeader')
- *   `@click="global:trackClick"` → calls a function registered with
- *                                 ElementBinder.registerMethod('trackClick', fn)
- *                                 instead of looking for the method on the host
+ *   `:ref="appHeader"`    → stored in ElementBinder.globalRefs.appHeader,
+ *                           readable anywhere via ElementBinder.getGlobalRef('appHeader')
+ *   `:click="trackClick"` → calls a function registered with
+ *                           ElementBinder.registerListener('trackClick', fn)
+ *                           instead of looking for the method on the host
  *
- * Register global methods once, e.g. at app startup:
+ * Register global listeners once, e.g. at app startup:
  *
- *   ElementBinder.registerMethod('trackClick', (event) => {
+ *   ElementBinder.registerListener('trackClick', (event) => {
  *     analytics.log('click', event.target.id);
  *   });
  *   // or register several at once:
- *   ElementBinder.registerMethod({ trackClick, openModal });
+ *   ElementBinder.registerListener({ trackClick, openModal });
  *
  * Then any component's template can use it without defining a local method:
  *
  *   template() {
- *     return `<button @click="global:trackClick">Buy</button>`;
+ *     return `<button :click="trackClick">Buy</button>`;
  *   }
  *
- * `@`-prefixed attribute names are valid HTML and parse natively in the
- * browser — no template compiler needed. Traversal uses a TreeWalker
- * (filtered to elements that actually carry an `@` attribute) rather
- * than `querySelectorAll('*')`, so only qualifying nodes are visited
- * and instantiated as match candidates.
+ * `@`- and `:`-prefixed attribute names are valid HTML and parse
+ * natively in the browser — no template compiler needed. Traversal uses
+ * a TreeWalker (filtered to elements that actually carry one of these
+ * attributes) rather than `querySelectorAll('*')`, so only qualifying
+ * nodes are visited.
  *
  * Usage inside a custom element:
  *
@@ -71,19 +72,12 @@
  *   }
  */
 export class Binder {
-    static refs = new Map();
-    static listeners = new Map();
-
-    #root;
-    #host;
-    #refs;
-    #listeners;
-
     constructor(root, host) {
         this.root = root;
         this.host = host || root.host || root;
         this.refs = new Map();
         this.listeners = []; // track for clean teardown
+        this.global = [];
 
         // Attach events based on elements that have data-bind attributes
         this.walk(this.root);
@@ -107,25 +101,25 @@ export class Binder {
         let names = element.getAttributeNames().filter(name => name.startsWith('@') || name.startsWith(':'));
 
         names.forEach(name => {
-            let global = name.slice(0, 1) == ':';
+            let is_global = name.startsWith(':');
             let key = name.slice(1);
             let value = element.getAttribute(name);
 
             if (key === 'ref') {
-                this.ref(element, value, global);
+                this.ref(element, value, is_global);
             } else {
-                this.event(element, key, value, global);
+                this.event(element, key, value, is_global);
             }
         });
     }
 
-    ref(element, name, global) {
+    ref(element, name, is_global) {
         if (!name) return;
 
-        if (global) {
-            ElementBinder.globalRefs[name] = element;
+        if (is_global) {
+            Global.refs.set(name, element);
 
-            this._globalRefBindings.push({ name, element });
+            this.global.push({ name, element });
 
             return;
         }
@@ -139,26 +133,27 @@ export class Binder {
                 configurable: true,
             });
         }
-
-        element.removeAttribute('@ref');
     }
 
-    event(element, event, method, global) {
-        const handler = global ? ElementBinder.globalListeners[method] : this.host[method];
+    event(element, event, method, is_global) {
+        let handler = is_global ? Global.getListeners(method) : this.host[method];
 
         if (typeof handler !== 'function') {
-            console.warn(`ElementBinder: no method "${method}" found in ${global} for event "${prefix}${eventName}"`);
+            let scope = is_global ? 'Global' : 'host';
+            let prefix = is_global ? ':' : '@';
+
+            console.warn(`ElementBinder: no method "${method}" found in ${scope} for event "${prefix}${event}"`);
 
             return;
         }
 
-        const listener = handler.bind(this.host);
+        // Global handlers run as plain functions (no implicit `this`);
+        // host handlers are bound to the component instance as before.
+        let listener = is_global ? handler : handler.bind(this.host);
 
         element.addEventListener(event, listener);
 
         this.listeners.push({ element, event, listener });
-
-        element.removeAttribute(`@${event}`);
     }
 
     /** Get a bound element by its data-ref name. */
@@ -173,6 +168,7 @@ export class Binder {
     refresh() {
         this.destroy();
         this.refs = new Map();
+        this.global = new Map();
         this.listeners = [];
         this.walk(this.root);
     }
@@ -184,5 +180,13 @@ export class Binder {
         });
 
         this.listeners = [];
+
+        // Only clear a global ref if it still points at the element *this*
+        // instance set — avoids wiping out a ref another instance re-registered.
+        this.global.forEach(({ name, element }) => {
+            Global.clearRef(name, element);
+        });
+
+        this.global = [];
     }
 }

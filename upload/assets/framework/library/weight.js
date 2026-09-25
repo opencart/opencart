@@ -3,6 +3,8 @@ import { loader } from './loader.js';
 const weight_classes = await loader.storage('localisation/weight_class');
 
 export default class Weight {
+    instance;
+
     convert(value, from, to) {
         let weight_class_from = weight_classes.find(weight_class => weight_class.weight_class_id === from);
         let weight_class_to = weight_classes.find(weight_class => weight_class.weight_class_id === to);
@@ -55,3 +57,7 @@ export default class Weight {
         return this.instance;
     }
 }
+
+const weight = Weight.getInstance();
+
+export { weight };

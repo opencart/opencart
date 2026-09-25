@@ -39,9 +39,9 @@ export default class Config {
         let response = await fetch(file);
 
         if (response.status == 200) {
-            let object = await response.json();
+            let data = await response.json();
 
-            this.cache.set(path, object);
+            this.cache.set(path, new Map(Object.entries(data)));
 
             return this.cache.get(path);
         } else {
@@ -63,3 +63,48 @@ export default class Config {
 const config = Config.getInstance();
 
 export { config };
+
+// Base
+const base = new URL(document.querySelector('base').href);
+
+// Testing Code
+config.cache.set('default', new Map(Object.entries({
+    config_path: base + 'catalog/view/javascript/',
+    config_logo: 'catalog/opencart-logo.png',
+    config_url: 'http://localhost/opencart-master/upload/',
+
+    config_name: 'OpenCart Store',
+    config_owner: '',
+    config_address: '44 Abc Road,' + "\n" + 'TX',
+    config_email: 'test@test.com',
+    config_telephone: '01234 567890',
+
+    config_image: '',
+    config_open: '',
+    config_comment: '',
+    config_location_list: [],
+
+    config_country_id: 222,
+    config_zone_id: 3563,
+    config_timezone: 'UTC',
+    config_language: 'en-gb',
+    config_currency: 'EUR',
+
+    config_length_class_id: 1,
+    config_weight_class_id: 1,
+
+    config_product_description_length: 100,
+
+    config_customer_group_id: 1,
+
+    config_product_count: true,
+    config_review_status: true,
+    config_tax: true,
+    config_account_id: 1,
+    config_checkout_guest: true,
+    config_checkout_payment_address: true,
+    config_gdpr_id: 0,
+    config_stock_status_id: 4,
+    config_affiliate_status: 1,
+    config_file_max_size: 3000
+})));

@@ -1,3 +1,6 @@
+// Engine
+export { WebComponent } from './engine/webcomponent.js';
+
 // Library
 export { loader } from './library/loader.js';
 export { ajax } from './library/ajax.js';

@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import {ajax, WebComponent} from '../index.js';
 import { loader, customer } from '../index.js';
 
 // Language
@@ -13,10 +13,30 @@ export default class AccountNewsletter extends WebComponent {
         return loader.template('account/newsletter', { ...data, ...language });
     }
 
+    onConnect() {
+
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
+        let form = new FormData(this.form);
 
+        ajax.post('action.php?route=account/newsletter.confirm&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+            beforeSend: () => {
+                this.submitter.button('loading');
+            },
+            onComplete: (json) => {
+                this.submitter.button('reset');
+            },
+            onSuccess: this.success.bind(this),
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
+    }
+
+    success(json) {
 
     }
 }

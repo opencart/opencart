@@ -1,5 +1,5 @@
-import { WebComponent } from '../component.js';
-import { loader, ajax, cart, customer } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, ajax, cart, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -13,108 +13,43 @@ const customer_groups = await loader.storage('customer/customer_group');
 export default class AccountRegister extends WebComponent {
     token = '';
 
-    onConnect() {
-        if (customer.isLogged()) {
-            let target = document.getElementById('content');
-
-            target.src = 'account/login';
-        } else {
-
-
-        }
-
-        this.token = ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
-    }
-
     async render() {
-        let data = {};
+        let data = new Map();
 
-        data.customer_groups = customer_groups;
+        data.set('customer_groups', customer_groups);
 
         // Custom Fields
-        data.custom_fields = [];
+        data.set('custom_fields', []);
 
         let customer_group = await loader.storage('customer/customer_group-' + config.config_customer_group_id);
 
         if (customer_group) {
-            data.custom_fields = customer_group.custom_fields;
+            data.get('custom_fields').push(customer_group.custom_fields);
         }
 
-        data.token = this.token;
+        data.set('token', this.token);
 
-        return loader.template('account/register', { ...data, ...language, ...config });
+        return loader.template('account/register', [ data, language, config ]);
     }
 
+    async onConnect() {
+        if (customer.isLogged()) return;
 
-    async onSubmit(e) {
-        e.preventDefault();
-
-        console.log('onSubmit');
-
-        let target = e.target;
-
-        let form = new FormData(target);
-
-        ajax.post('action.php?route=account/register', form, {
-            beforeSend: () => {
-                this.button.button('loading');
-            },
-            onComplete: (json) => {
-                this.button.button('reset');
-            },
-            onSuccess: this.success,
-            onError: (e) => {
-                console.log('onError', e);
-            }
-        });
-    }
-
-    success(json) {
-        console.log('onSuccess', json);
-
-        // Remove past error classes from inputs
-        target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-        // Display error messages
-        if (json['error'] !== undefined) {
-            for (let key in json['error']) {
-                let value = key.replaceAll('_', '-');
-
-                let input = target.querySelector('#input-' + value);
-
-                if (input) {
-                    input.classList.add('is-invalid');
-
-                    // If the element has inputs inside.
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                }
-
-                let error = target.querySelector('#error-' + value);
-
-                if (error) {
-                    error.classList.add('d-block');
-                }
-            }
-        }
-
-        // Display success message
-        if (json['success'] !== undefined) {
-            let alert = target.querySelector('#alert');
-
-            if (alert) {
-                alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        }
+        this.token = ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
     }
 
     async onChange(e) {
+
+
+        data.custom_fields = [];
+
+
         let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
 
-        if (customer_group_info) {
+        if (customer_group_info !== undefined) {
             data.custom_fields = customer_group_info.custom_field;
         } else {
-            data.custom_fields = [];
+
         }
 
         //$('.custom-field').addClass('d-none');
@@ -129,6 +64,60 @@ export default class AccountRegister extends WebComponent {
         //        $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
         //     }
         //}
+    }
+
+    async onSubmit(e) {
+        e.preventDefault();
+
+        if (customer.isLogged()) return;
+
+        let form = new FormData(this.form);
+
+        ajax.post('action.php?route=account/register&language=' + local.get('language') + '&register_token=' + this.token, form, {
+            beforeSend: () => {
+                this.button.button('loading');
+            },
+            onComplete: (json) => {
+                this.button.button('reset');
+            },
+            onSuccess: this.success,
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
+    }
+
+    success(json) {
+        // Remove past error classes from inputs
+        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+        // Display error messages
+        if ('error' in json) {
+            for (let key in json['error']) {
+                let value = key.replaceAll('_', '-');
+
+                let input = this.form.querySelector('#input-' + value);
+
+                if (input) {
+                    input.classList.add('is-invalid');
+
+                    // If the element has inputs inside.
+                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                }
+
+                let error = this.form.querySelector('#error-' + value);
+
+                if (error) {
+                    error.classList.add('d-block');
+                }
+            }
+        }
+
+        // Display success message
+        if ('success' in json) {
+            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
     }
 }
 

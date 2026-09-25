@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import {local, WebComponent} from '../index.js';
 import { loader } from '../index.js';
 
 // Config
@@ -15,7 +15,7 @@ const config = await loader.config('default');
  *
  * optional required disabled
  */
-customElements.define('x-zone', class extends WebComponent {
+customElements.define('input-zone', class extends WebComponent {
     static observed = ['country_id'];
 
     default = HTMLInputElement;
@@ -28,12 +28,8 @@ customElements.define('x-zone', class extends WebComponent {
         this.setAttribute('value', value);
     }
 
-    async connected() {
-        this.default = this.innerHTML;
-    }
-
     async render() {
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select"';
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" @change="onChange" class="form-select"';
 
         if (this.hasAttribute('required')) {
             html += ' required';
@@ -59,8 +55,8 @@ customElements.define('x-zone', class extends WebComponent {
 
                 let name = '';
 
-                if (config.config_language in zone.description) {
-                    name = zone.description[config.config_language].name;
+                if (local.get('language') in zone.description) {
+                    name = zone.description[local.get('language')].name;
                 }
 
                 html += '>' + name + '</option>';
@@ -70,6 +66,10 @@ customElements.define('x-zone', class extends WebComponent {
         html += '</select>';
 
         return html;
+    }
+
+    async onConnect() {
+        this.default = this.innerHTML;
     }
 
     onChange(e) {

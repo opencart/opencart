@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import {local, WebComponent} from '../index.js';
 import { loader } from '../index.js';
 import './article_list.js';
 
@@ -30,10 +30,10 @@ export default class CmsTopic extends WebComponent {
         // If Topic ID is set
         let topic = await loader.storage('topic/topic-' + data.topic_id);
 
-        if (topic !== undefined && config.config_language in topic.description) {
+        if (topic !== undefined && local.get('language') in topic.description) {
             data.image = topic.image;
 
-            let description = topic.description[config.config_language];
+            let description = topic.description[local.get('language')];
 
             data.name = description.name;
             data.description = description.description;
@@ -42,8 +42,8 @@ export default class CmsTopic extends WebComponent {
         data.topics = [];
 
         for (let topic of topics) {
-            if (config.config_language in topic.description) {
-                let description = topic.description[config.config_language];
+            if (local.get('language') in topic.description) {
+                let description = topic.description[local.get('language')];
 
                 data.topics.push({
                     topic_id: topic.topic_id,

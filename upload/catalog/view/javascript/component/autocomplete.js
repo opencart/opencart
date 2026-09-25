@@ -1,19 +1,19 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 
-export class AutoComplete extends WebComponent {
+customElements.define('input-autocomplete', class extends WebComponent {
     async render() {
         let name = this.getAttribute('name');
         let value = this.getAttribute('value');
 
         let html = '<input type="text" name="' + name + '" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" autocomplete="off"/>';
 
-        html = +'<ul class="dropdown-menu" data-bind="dropdown"></ul>';
+        html += '<ul class="dropdown-menu" data-bind="dropdown"></ul>';
 
         return html;
     }
 
     focusin() {
-        element.request();
+        this.request();
     }
 
     focusout() {
@@ -93,4 +93,4 @@ export class AutoComplete extends WebComponent {
 
         $dropdown.html(html);
     }
-}
+});

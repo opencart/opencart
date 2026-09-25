@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import {local, WebComponent} from '../index.js';
 import { loader } from '../index.js';
 
 // Config
@@ -21,8 +21,8 @@ export default class ManufacturerList extends WebComponent {
         console.log(manufacturers);
 
         for (let manufacturer of manufacturers) {
-            if (config.config_language in manufacturer.description) {
-                let name = manufacturer.description[config.config_language].name;
+            if (local.get('language') in manufacturer.description) {
+                let name = manufacturer.description[local.get('language')].name;
 
                 let key = name.substr(0, 1);
 

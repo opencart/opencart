@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import {local, WebComponent} from '../index.js';
 import { loader } from '../index.js';
 
 // Config
@@ -14,8 +14,8 @@ export default class ManufacturerInfo extends WebComponent {
         // Product Info
         let manufacturer = await loader.storage('manufacturer/manufacturer-' + this.getAttribute('manufacturer_id'));
 
-        if (manufacturer !== undefined && config.config_language in manufacturer.description) {
-            let description = manufacturer.description[config.config_language];
+        if (manufacturer !== undefined && local.get('language') in manufacturer.description) {
+            let description = manufacturer.description[local.get('language')];
 
             //description.meta_title
             //description.meta_description

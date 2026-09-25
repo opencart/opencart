@@ -1,14 +1,14 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 
 customElements.define('input-switch', class extends WebComponent {
     formAssociated = true;
 
     get checked() {
-        return this.getAttribute('checked') == 1 ? 1 : 0;
+        return this.hasAttribute('checked');
     }
 
     set checked(value) {
-        if (this.checked != value) this.setAttribute('checked', value);
+        this.toggleAttribute('checked', value);
     }
 
     render() {
@@ -42,6 +42,6 @@ customElements.define('input-switch', class extends WebComponent {
     }
 
     onChange(e) {
-        this.checked = e.target.checked ? 1 : 0;
+        this.checked = e.target.checked;
     }
 });

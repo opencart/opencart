@@ -15,7 +15,7 @@ export default class Tax {
 
         if (country == undefined) return;
 
-        let geo_zone = country.geo_zones.find(geo_zone => geo_zone.zone_id == zone_id);
+        let geo_zone = country.get('geo_zones').find(geo_zone => geo_zone.zone_id == zone_id);
 
         if (geo_zone == undefined) return;
 
@@ -63,7 +63,7 @@ export default class Tax {
 
         let tax_rates = new Map();
 
-        let tax_classes = this.tax_rates.filter(tax_rate => tax_rate.customer_group_id == config.config_customer_group_id && tax_rate.tax_class_id == tax_class_id);
+        let tax_classes = this.tax_rates.filter(tax_rate => tax_rate.customer_group_id == config.get('config_customer_group_id') && tax_rate.tax_class_id == tax_class_id);
 
         for (let tax_rate of tax_classes) {
             let amount = 0;
@@ -102,3 +102,7 @@ export default class Tax {
         return this.instance;
     }
 }
+
+const tax = Tax.getInstance();
+
+export { tax };

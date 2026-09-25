@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader } from '../index.js';
 
 // Language
@@ -17,6 +17,10 @@ export default class InformationGdpr extends WebComponent {
         } else {
             $('#collapse-remove').slideUp();
         }
+    }
+
+    onSubmit() {
+
     }
 }
 

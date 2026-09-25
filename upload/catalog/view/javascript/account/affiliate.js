@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, customer } from '../index.js';
 
 // Config
@@ -9,7 +9,9 @@ const language = await loader.language('account/affiliate');
 
 export default class AccountAffiliate extends WebComponent {
     render() {
-        return loader.template('account/affiliate', { ...language });
+
+
+        return loader.template('account/affiliate', language);
     }
 }
 

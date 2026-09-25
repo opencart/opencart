@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, ajax, cart, customer } from '../index.js';
 
 // Config
@@ -8,33 +8,24 @@ const config = await loader.config('default');
 const language = await loader.language('checkout/payment_method');
 
 customElements.define('payment-method', class extends WebComponent {
-
-
     async render(){
         let data = {};
-
 
 
         return loader.template('checkout/payment_method', { ...data,  ...language });
     }
 
-    onLoad() {
-        let target = e.target;
-
-        let form = new FormData(target);
+    onConnect() {
+        let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/payment_method', form, {
 
 
         });
-
-
     }
 
     onSubmit(e) {
-        let target = e.target;
-
-        let form = new FormData(target);
+        let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/payment_method', form, {
             beforeSend: () => {

@@ -1,8 +1,7 @@
 import { config, language, storage, template } from '../index.js';
 
-class Loader {
+export default class Loader {
     instance;
-    data;
 
     constructor() {
         this.data = new Map();
@@ -18,7 +17,7 @@ class Loader {
         // Load Default Language
         let defaults = await language.fetch('default');
 
-        return { ...output, ...defaults };
+        return new Map([ ...output, ...defaults ]);
     }
 
     async library(path) {
@@ -36,7 +35,32 @@ class Loader {
     }
 
     async template(path, data = {}) {
-        return await template.render(path, data);
+        let values = {};
+
+        console.log(values);
+
+        if (Array.isArray(data)) {
+            console.log('IS ARRAY');
+
+            for (let value of data) {
+                console.log(typeof value);
+
+                if (value instanceof Map) {
+                    values = { ...values, ...value };
+                } else if (typeof value === 'object') {
+                    values = Object.assign(values, value);
+                }
+            }
+        }
+
+        console.log(values);
+
+        if (data instanceof Map) {
+            console.log('IS MAP');
+            values = { ...data };
+        }
+
+        return await template.render(path, values);
     }
 
     static getInstance() {

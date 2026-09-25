@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, ajax, local, customer } from '../index.js';
 
 // Config
@@ -8,6 +8,10 @@ const config = await loader.config('default');
 const language = await loader.language('account/returns');
 
 export default class ReturnForm extends WebComponent {
+    render() {
+       return loader.template('account/return_form', { ...language });
+    }
+
     onConnect() {
         if (!customer.isLogged()) {
             let target = document.getElementById('content');
@@ -16,76 +20,29 @@ export default class ReturnForm extends WebComponent {
         }
     }
 
-    render() {
-       return loader.template('account/return_form', { ...language });
-    }
-
     async onSubmit(e) {
         e.preventDefault();
 
-        console.log('addToCart');
-
-        let target = e.target;
-
-        let form = new FormData(target);
+        let form = new FormData(this.form);
 
         ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
             beforeSend: () => {
-                //ref.get('button-cart').button('loading');
+                this.submitter.button('loading');
             },
             onComplete: (json) => {
-                //ref.get('button-cart').button('reset');
+                this.submitter.button('reset');
             },
-            onSuccess: (json) => {
-                console.log('onSuccess', json);
-
-                // Remove past error classes from inputs
-                target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-                // Display error messages
-                if (json['error'] !== undefined) {
-                    for (let key in json['error']) {
-                        let value = key.replaceAll('_', '-');
-
-                        let input = target.querySelector('#input-' + value);
-
-                        if (input) {
-                            input.classList.add('is-invalid');
-
-                            // If the element has inputs inside.
-                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        }
-
-                        let error = target.querySelector('#error-' + value);
-
-                        if (error) {
-                            error.classList.add('d-block');
-                        }
-                    }
-                }
-
-                // Display success message
-                if (json['success'] !== undefined) {
-                    let alert = target.querySelector('#alert');
-
-                    if (alert) {
-                        alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
-                }
-            },
+            onSuccess: this.success,
             onError: (e) => {
                 console.log('onError', e);
             }
         });
-
-
     }
 
     success(json) {
         // Remove past error classes from inputs
-        target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
         if (json['error'] !== undefined) {
@@ -101,7 +58,7 @@ export default class ReturnForm extends WebComponent {
                     input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
                 }
 
-                let error = target.querySelector('#error-' + value);
+                let error = this.form.querySelector('#error-' + value);
 
                 if (error) {
                     error.classList.add('d-block');
@@ -111,11 +68,7 @@ export default class ReturnForm extends WebComponent {
 
         // Display success message
         if (json['success'] !== undefined) {
-            let alert = target.querySelector('#alert');
-
-            if (alert) {
-                alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
+            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
             let output = [];
 
@@ -125,10 +78,6 @@ export default class ReturnForm extends WebComponent {
             for (let product of json['products']) {
                 cart.add(product);
             }
-
-            let button = document.querySelector('#cart > button');
-
-            button.click();
         }
     }
 }

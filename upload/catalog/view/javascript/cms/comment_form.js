@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, ajax, customer } from '../index.js';
 
 customElements.define('cms-comment', class extends WebComponent {
@@ -36,9 +36,7 @@ customElements.define('cms-comment', class extends WebComponent {
     submit(e) {
         e.preventDefault();
 
-        let target = e.target;
-
-        let form = new FormData(target);
+        let form = new FormData(this.form);
 
         ajax.post('index.php?route=cms/comment', form, {
             beforeSend: function() {

@@ -1,5 +1,5 @@
-import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { WebComponent} from '../index.js';
+import { loader, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -11,10 +11,10 @@ export default class InformationInformation extends WebComponent {
     async render(){
         let information = await loader.storage('information/information-' + this.getAttribute('information_id'));
 
-        if (information != undefined && config.config_language in information.description) {
-            let description = information.description[config.config_language];
+        if (information != undefined && local.get('language') in information.description) {
+            let description = information.description[local.get('language')];
 
-            return await loader.template('information/information', { ...information, ...description, ...language, ...config });
+            return await loader.template('information/information', [ information, description, language, config ]);
         }
     }
 }

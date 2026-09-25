@@ -50,15 +50,11 @@ import { State } from './state.js';
 export class WebComponent extends HTMLElement {
     static observed = [];
     static formAssociated = false;
+
     /** Override: list of external CSS file URLs to adopt into this component. */
     static get stylesheets() {
         return [];
     }
-
-    #shadow;
-    #internal;
-    #binder;
-    #state;
 
     constructor() {
         super();

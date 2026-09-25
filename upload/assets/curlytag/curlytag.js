@@ -1152,8 +1152,6 @@ export class CurlyTag {
 
             let pos = top.name.indexOf(',');
 
-
-
             //console.log('ctx');
             //console.log('pos', pos);
 
@@ -1167,8 +1165,6 @@ export class CurlyTag {
 
                 //ctx = Object.assign(ctx, top.items[top.index]); // ← top.name (not top.name)
 
-
-
                 //console.log(ctx);
 
                 //this.evaluate('[' + top.name]', ctx);
@@ -1179,8 +1175,6 @@ export class CurlyTag {
 
                 //}
             }
-
-
 
             ctx.loop = {
                 index: top.index + 1,

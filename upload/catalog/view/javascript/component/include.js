@@ -1,10 +1,10 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
 
-customElements.define('x-include', class extends WebComponent {
+customElements.define('x-include', class Include extends WebComponent {
     static observed = ['src'];
     data = new Map();
 
@@ -23,7 +23,7 @@ customElements.define('x-include', class extends WebComponent {
         let [ path, query] = this.src.split('?');
 
         if (!this.data.has(path)) {
-            let component = await import(config.config_path + path);
+            let component = await import(config.get('config_path') + path);
 
             this.data.set(path, customElements.getName(component.default));
         }

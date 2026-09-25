@@ -1,35 +1,55 @@
-import { WebComponent } from '../component.js';
-import { AutoComplete } from '../component.js';
-import { Checkbox } from '../component.js';
-import { Country } from '../component.js';
-import { Form } from '../component.js';
-import { Include } from '../component.js';
-import { Link } from '../component.js';
-import { Markdown } from '../component.js';
-import { Pagination } from '../component.js';
-import { Switch } from '../component.js';
-import { Upload } from '../component.js';
-import { Zone } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader } from '../index.js';
 
 // Load local components
 import './header.js';
 import './footer.js';
+import '../component/autocomplete.js';
+import '../component/checkbox.js';
+import '../component/country.js';
+import '../component/form.js';
+import '../component/include.js';
+import '../component/markdown.js';
+import '../component/pagination.js';
+import '../component/switch.js';
+import '../component/upload.js';
+import '../component/zone.js';
 
 customElements.define('common-layout', class extends WebComponent {
+    constructor() {
+        super();
+
+        this.data = new Map();
+    }
+
     render() {
         return loader.template('common/layout');
     }
-});
 
-customElements.define('input-autocomplete', AutoComplete);
-customElements.define('input-checkbox', Checkbox);
-customElements.define('input-country', Country);
-customElements.define('form-ajax', Form);
-customElements.define('x-include', Include);
-customElements.define('x-link', Link);
-customElements.define('input-markdown', Markdown);
-customElements.define('x-pagination', Pagination);
-customElements.define('input-switch', Switch);
-customElements.define('input-upload', Upload);
-customElements.define('input-zone', Zone);
+    async handleContent(e) {
+        e.preventDefault();
+
+        let target = e.currentTarget;
+
+        // Get the source HTML to load
+        if (!target.hasAttribute('href')) return;
+
+        let [ path, query] = target.getAttribute('href').split('?');
+
+        if (!this.data.has(path)) {
+            let component = await import(config.config_path + path);
+
+            this.data.set(path, customElements.getName(component.default));
+        }
+
+        let name = this.data.get(path);
+
+        let html = '<' + name;
+
+        for (let [ key, value] of (new URLSearchParams(query).entries())) {
+            html += ' ' + key + '="' + value + '"';
+        }
+
+        return html + '></' + name + '>';
+    }
+});

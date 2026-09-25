@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, ajax, cart, local, tax } from '../index.js';
 import './review_form.js';
 import './review_list.js';
@@ -19,8 +19,8 @@ export default class ProductInfo extends WebComponent {
         // Product Info
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
-        if (product !== undefined && config.config_language in product.description) {
-            let description = product.description[config.config_language];
+        if (product !== undefined && local.get('language') in product.description) {
+            let description = product.description[local.get('language')];
 
             //description.meta_title
             //description.meta_description
@@ -79,7 +79,7 @@ export default class ProductInfo extends WebComponent {
             let stock_status = stock_statuses.find(stock_status => stock_status.stock_status_id == stock_status_id);
 
             if (stock_status) {
-                data.stock_status = stock_status.description[config.config_language].name;
+                data.stock_status = stock_status.description[local.get('language')].name;
             }
 
             // Attributes
@@ -89,11 +89,11 @@ export default class ProductInfo extends WebComponent {
                 let attributes = [];
 
                 for (let attribute of attribute_group.attribute) {
-                    attributes.push(attribute.description[config.config_language]);
+                    attributes.push(attribute.description[local.get('language')]);
                 }
 
                data.attribute_groups.push({
-                   name: attribute_group.description[config.config_language].name,
+                   name: attribute_group.description[local.get('language')].name,
                    attribute: attributes
                });
             }
@@ -104,11 +104,11 @@ export default class ProductInfo extends WebComponent {
                 let option_values = [];
 
                 for (let option_value of option.option_value) {
-                    option_values.push(Object.assign(option_value, option_value.description[config.config_language]));
+                    option_values.push(Object.assign(option_value, option_value.description[local.get('language')]));
                 }
 
                 data.options.push(Object.assign(option, {
-                    name: option.description[config.config_language].name,
+                    name: option.description[local.get('language')].name,
                     option_value: option_values
                 }));
             }
@@ -124,7 +124,7 @@ export default class ProductInfo extends WebComponent {
                 }
 
                 data.subscription_plans.push({
-                    name: subscription_plan.description[config.config_language].name,
+                    name: subscription_plan.description[local.get('language')].name,
                     ...subscription_plan
                 });
             }
@@ -142,11 +142,7 @@ export default class ProductInfo extends WebComponent {
     async addToCart(e){
         e.preventDefault();
 
-        console.log('addToCart');
-
-        let target = e.target;
-
-        let form = new FormData(target);
+        let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {

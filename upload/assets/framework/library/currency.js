@@ -2,8 +2,10 @@ import { loader } from './loader.js';
 
 let currencies = await loader.storage('localisation/currency');
 
+console.log(currencies);
+
 export default class Currency {
-    #instance;
+    instance;
 
     convert(value, from, to) {
         let currency_from = currencies.find(currency => currency.code === from);

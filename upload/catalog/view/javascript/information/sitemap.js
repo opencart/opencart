@@ -1,5 +1,5 @@
-import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -13,23 +13,23 @@ const informations = await loader.storage('information/information');
 
 export default class InformationSitemap extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        data.categories = [];
+        data.set('categories', []);
 
         for (let category of categories) {
             let children = [];
 
             for (let child of category.children) {
                 children.push({
-                    name: child.description[config.config_language].name,
+                    name: child.description[local.get('language')].name,
                     path: child.path,
                     product_total: child.product_total
                 });
             }
 
             data.categories.push({
-                name: category.description[config.config_language].name,
+                name: category.description[local.get('language')].name,
                 path: category.path,
                 children: children,
                 product_total: category.product_total
@@ -41,11 +41,11 @@ export default class InformationSitemap extends WebComponent {
         for (let information of informations) {
             data.informations.push({
                 information_id: information.information_id,
-                title: information.description[config.config_language].title
+                title: information.description[local.get('language')].title
             });
         }
 
-        return loader.template('information/sitemap', { ...data, ...language, ...config });
+        return loader.template('information/sitemap', [ data, language, config ]);
     }
 }
 

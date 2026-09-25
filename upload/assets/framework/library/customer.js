@@ -2,7 +2,6 @@ import { session } from '../index.js';
 
 export default class Customer {
     instance;
-    data;
 
     constructor() {
         this.data = new Map();

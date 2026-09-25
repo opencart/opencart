@@ -1,5 +1,5 @@
-import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, local } from '../index.js';
 import './product_list.js';
 
 // Config
@@ -12,7 +12,7 @@ export default class CatalogCategory extends WebComponent {
     async render() {
         let data = {};
 
-        let category_id = 0
+        let category_id = 0;
 
         let path = this.getAttribute('path');
 
@@ -25,23 +25,23 @@ export default class CatalogCategory extends WebComponent {
         // Product Info
         let category = await loader.storage('category/category-' + category_id);
 
-        if (category !== undefined && config.config_language in category.description) {
-            let description = category.description[config.config_language];
+        if (category !== undefined && local.get('language') in category.description) {
+            let description = category.description[local.get('language')];
 
             //description.meta_title;
             //description.meta_description;
             //description.meta_keyword;
 
-            data.categories = [];
+            this.data.set('categories', []);
 
             for (let children of category.children) {
-                data.categories.push({
-                    name: children.description[config.config_language].name,
+                this.data.get('categories').push({
+                    name: children.description[local.get('language')].name,
                     path: children.path
                 });
             }
 
-            return loader.template('catalog/category', { ...category, ...description, ...data, ...language, ...config });
+            return loader.template('catalog/category', { ...category, ...description, ...this.data, ...language, ...config });
         }
     }
 }

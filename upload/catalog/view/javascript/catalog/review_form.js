@@ -1,5 +1,5 @@
-import { WebComponent } from '../component.js';
-import { loader, ajax } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -14,37 +14,39 @@ customElements.define('review-form', class extends WebComponent {
         return loader.template('catalog/review_form', { ...data, ...language, ...config });
     }
 
+    onConnect() {
+        this.token = ajax.get('action.php?route=account/review.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
-        let target = e.target;
+        let form = new FormData(this.form);
 
-        let form = new FormData(target);
-
-        ajax.post('action.php?route=catalog/review.write&language=' + config.config_language + '&review_token=' + this.review_token + '&product_id={{ product_id }}', form, {
+        ajax.post('action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.token + '&product_id=' + this.getAttribute('product_id'), form, {
             beforeSend: () => {
-                //this.ref('button-review').button('loading');
+                this.button.button('loading');
             },
             complete: () => {
-                //this.ref('button-review').button('reset');
+                this.button.button('reset');
             },
-            success: this.onSuccess,
+            success: this.success,
             error: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     }
 
-    onSuccess(json) {
+    success(json) {
         $('.alert-dismissible').remove();
 
         // Remove past error classes from inputs
-        target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         if (json['error']) {
             if (json['error']['warning']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                this.alert.prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             for (let key in json['error']) {
@@ -54,10 +56,10 @@ customElements.define('review-form', class extends WebComponent {
         }
 
         if (json['success']) {
-            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-            $('#input-text').val('');
-            $('#input-rating input[type=\'radio\']').prop('checked', false);
+            this.form.querySelector('#input-text').value = '';
+            this.form.querySelector('#input-rating input[type=\'radio\']').checked = false;
         }
     }
 });

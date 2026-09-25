@@ -1,6 +1,6 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 
-export class InputCheckbox extends WebComponent {
+customElements.define('input-checkbox', class extends WebComponent {
     render() {
         return '<input type="checkbox"' + (this.hasAttribute('input-id') ? ' id="' + this.getAttribute('input-id') + '"' : '') + ' class="form-check-input" data-on="change:onChange" data-target="' + this.getAttribute('target') + '"/>';
     }
@@ -28,4 +28,4 @@ export class InputCheckbox extends WebComponent {
             }
         }
     }
-}
+});

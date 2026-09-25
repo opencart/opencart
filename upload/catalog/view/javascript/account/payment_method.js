@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader } from '../index.js';
 
 // Language
@@ -8,7 +8,7 @@ export default class AccountPayment extends WebComponent {
     render() {
         let data = {};
 
-        return loader.template('account/payment_method', { ...data, ...language });
+        return loader.template('account/payment_method', [ data, language ]);
     }
 
     onSubmit(e) {

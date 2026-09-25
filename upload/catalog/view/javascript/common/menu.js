@@ -1,5 +1,5 @@
-import { WebComponent } from '../component.js';
-import { loader } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -12,29 +12,29 @@ let categories = await loader.storage('category/category');
 
 customElements.define('common-menu', class extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        data.categories = [];
+        data.set('categories', []);
 
         for (let category of categories) {
             let children = [];
 
             for (let child of category.children) {
                 children.push({
-                    name: child.description[config.config_language].name,
+                    name: child.description[local.get('language')].name,
                     path: child.path,
                     product_total: child.product_total
                 });
             }
 
-            data.categories.push({
-                name: category.description[config.config_language].name,
+            data.get('categories').push({
+                name: category.description[local.get('language')].name,
                 path: category.path,
                 children: children,
                 product_total: category.product_total
             });
         }
 
-        return loader.template('common/menu', { ...data, ...language, ...config });
+        return loader.template('common/menu', [ data, language, config ]);
     }
 });

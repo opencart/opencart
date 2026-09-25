@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, customer } from '../index.js';
 
 const language = await loader.language('account/download');
@@ -9,7 +9,7 @@ export default class AccountDownload extends WebComponent {
 
         data.downloads = {};
 
-        return loader.template('account/download', { ...data, ...language });
+        return loader.template('account/download', [ data, language ]);
     }
 }
 

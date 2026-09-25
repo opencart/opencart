@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, cart, customer } from '../index.js';
 import './register.js';
 import './payment_address.js';

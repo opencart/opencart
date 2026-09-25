@@ -1,8 +1,12 @@
-import { WebComponent } from '../engine/webcomponent.js';
+import { WebComponent } from '../index.js';
 
-export class Markdown extends WebComponent {
+customElements.define('input-markdown', class extends WebComponent {
     element = HTMLInputElement;
     editor = [];
+
+    render() {
+
+    }
 
     async connected() {
         this.editor = null;
@@ -21,8 +25,4 @@ export class Markdown extends WebComponent {
             this.editor.destroy();
         }
     }
-
-    render() {
-
-    }
-}
+});

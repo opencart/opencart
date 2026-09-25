@@ -48,7 +48,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$language_info = $this->model_localisation_language->getLanguageByCode((string)$code);
 
 			if ($language_info && $language_info['status']) {
-				$language_data[] = [
+				$language_data[$language_info['code']] = [
 					'name'      => $language_info['name'],
 					'code'      => $language_info['code'],
 					'locale'    => $language_info['locale'],

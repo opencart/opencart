@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader, customer } from '../index.js';
 
 // Config
@@ -8,26 +8,19 @@ const config = await loader.config('default');
 const language = await loader.language('account/account');
 
 export default class AccountAccount extends WebComponent {
-    render() {
-        let data = {};
+    async render() {
+        if (customer.isLogged()) return;
 
-        data.affiliate = customer.isAffiliate();
+        let data = new Map();
 
-        return loader.template('account/account', { ...data, ...language, ...config });
-    }
+        data.set('affiliate', customer.isAffiliate());
 
-    handleConnect() {
-        if (!customer.isLogged()) {
-            // let target = document.getElementById('content');
+        console.log('AccountAccount');
+        console.log(data);
+        console.log(language);
+        console.log(config);
 
-            //target.src = 'account/login';
-        }
-    }
-
-    handleClick(e) {
-        e.preventDefault();
-
-
+        return loader.template('account/account', [ data, language, config ]);
     }
 }
 

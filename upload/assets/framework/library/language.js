@@ -1,6 +1,6 @@
 import { load } from '../../yaml/js-yaml.js';
 
-class Language {
+export default class Language {
     instance;
 
     constructor() {
@@ -34,7 +34,7 @@ class Language {
             }
 
             if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.yaml';
+                file = this.path.get(namespace) + path.substr(namespace.length) + '.yaml';
             }
         }
 
@@ -43,7 +43,16 @@ class Language {
         if (response.status == 200) {
             let data = load(await response.text());
 
-            this.cache.set(path, data);
+            let map = new Map(Object.entries(data));
+
+            if (path == 'account/account') {
+
+                console.log('LANGUAGE');
+                console.log(path);
+                console.log(map);
+            }
+
+            this.cache.set(path, map);
 
             return this.cache.get(path);
         } else {

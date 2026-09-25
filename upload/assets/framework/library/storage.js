@@ -1,4 +1,4 @@
-export class Storage {
+export default class Storage {
     instance;
 
     constructor() {
@@ -41,7 +41,11 @@ export class Storage {
         if (response.status == 200) {
             let data = await response.json();
 
-            this.cache.set(path, data);
+            if (!Array.isArray(data)) {
+                this.cache.set(path, new Map(Object.entries(data)));
+            } else {
+                this.cache.set(path, data);
+            }
 
             return this.cache.get(path);
         } else {

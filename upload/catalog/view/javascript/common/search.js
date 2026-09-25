@@ -1,4 +1,4 @@
-import { WebComponent } from '../component.js';
+import { WebComponent } from '../index.js';
 import { loader } from '../index.js';
 
 // Language
@@ -22,6 +22,13 @@ customElements.define('common-search', class extends WebComponent {
 
     onSubmit(e) {
         e.preventDefault();
+
+
+
+    }
+
+    onInput(e) {
+
 
     }
 });

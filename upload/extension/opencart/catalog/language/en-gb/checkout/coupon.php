@@ -3,6 +3,7 @@
 $_['heading_title'] = 'Use Coupon Code';
 
 // Text
+$_['text_remove']   = 'Success: Your coupon discount has been removed!';
 $_['text_success']  = 'Success: Your coupon discount has been applied!';
 
 // Entry

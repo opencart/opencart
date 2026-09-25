@@ -610,7 +610,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($post_info['password'] || !isset($post_info['customer_id'])) {
+		if ($post_info['password'] || !$post_info['customer_id']) {
 			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
 
 			if (!oc_validate_length($password, $this->config->get('config_password_length'), 40)) {

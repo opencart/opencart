@@ -32,7 +32,7 @@
   </div>
   {{ security }}
 </div>
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ nonce }}">
 document.addEventListener('DOMContentLoaded', async () => {
     let response = await fetch('index.php?route=common/developer&user_token={{ user_token }}');
 

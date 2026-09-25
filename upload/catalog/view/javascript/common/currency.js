@@ -20,9 +20,7 @@ customElements.define('common-currency', class extends WebComponent {
         data.set('symbol_left', value.symbol_left);
         data.set('symbol_right',  value.symbol_right);
 
-
-        console.log(currencies.entries());
-        data.set('currencies', ...currencies);
+        data.set('currencies', currencies.forEach((key, value) => value));
 
         return loader.template('common/currency', [ data, language, config ]);
     }

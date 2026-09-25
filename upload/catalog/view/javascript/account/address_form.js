@@ -37,11 +37,11 @@ export default class AddressForm extends WebComponent {
 
     success(json){
         if (json['error']) {
-            this.alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.append('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
         }
 
         if (json['success']) {
-            this.alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.append('<ui-alert type="success">' + json['success'] + '</ui-alert>');
         }
     }
 }

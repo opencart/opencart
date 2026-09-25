@@ -1,7 +1,11 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, cart, local, tax } from '../index.js';
+import { loader, ajax, cart, customer, local, tax } from '../index.js';
 import './review_form.js';
 import './review_list.js';
+
+console.log('product_info');
+console.log(customer.getGroupId());
+
 
 // Config
 const config = await loader.config('default');
@@ -29,7 +33,7 @@ export default class ProductInfo extends WebComponent {
             // Price
             data.set('special', '');
 
-            let discount = product.get('discounts').find(discount => discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+            let discount = product.get('discounts').find(discount => discount.quantity == 1 && (discount.customer_group_id == customer.getGroupId()) && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             if (discount) {
                 if (discount.type == 'F') {
@@ -41,8 +45,10 @@ export default class ProductInfo extends WebComponent {
                 }
             }
 
+
+
             // Discounts
-            data.discounts = product.get('discounts').filter(discount => discount.customer_group_id == config.config_customer_group_id && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+            data.discounts = product.get('discounts').filter(discount => discount.customer_group_id == customer.getGroupId() && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             data.discounts.sort(discounts => discount.quantity);
 
@@ -55,7 +61,7 @@ export default class ProductInfo extends WebComponent {
             // Rewards
             data.set('reward', 0);
 
-            let reward = product.get('rewards').find(reward => reward.customer_group_id == config.config_customer_group_id);
+            let reward = product.get('rewards').find(reward => reward.customer_group_id == customer.getGroupId());
 
             if (reward) {
                 data.set('reward', reward.points);
@@ -64,35 +70,35 @@ export default class ProductInfo extends WebComponent {
             // Stock Status
             let stock_status_id = 0;
 
-            if (product.quantity <= 0) {
-                stock_status_id = product.stock_status_id;
+            if (product.get('quantity') <= 0) {
+                stock_status_id = product.get('stock_status_id');
 
-                data.stock = false;
-            } else if (!config.config_stock_display) {
-                stock_status_id = config.config_stock_status_id;
+                data.set('stock', false);
+            } else if (!config.get('config_stock_display')) {
+                stock_status_id = config.get('config_stock_status_id');
 
-                data.stock = false;
+                data.set('stock', false);
             } else {
-                data.stock = true;
+                data.set('stock', true);
             }
 
             let stock_status = stock_statuses.find(stock_status => stock_status.stock_status_id == stock_status_id);
 
             if (stock_status) {
-                data.stock_status = stock_status.description[local.get('language')].name;
+                data.set('stock_status', stock_status.description[local.get('language')].name);
             }
 
             // Attributes
             data.set('attribute_groups', []);
 
-            for (let attribute_group of product.attribute_groups) {
+            for (let attribute_group of product.get('attribute_groups')) {
                 let attributes = [];
 
                 for (let attribute of attribute_group.attribute) {
                     attributes.push(attribute.description[local.get('language')]);
                 }
 
-               data.attribute_groups.push({
+               data.get('attribute_groups').push({
                    name: attribute_group.description[local.get('language')].name,
                    attribute: attributes
                });
@@ -100,7 +106,7 @@ export default class ProductInfo extends WebComponent {
 
             data.set('options', []);
 
-            for (let option of product.options) {
+            for (let option of product.get('options')) {
                 let option_values = [];
 
                 for (let option_value of option.option_value) {
@@ -114,16 +120,16 @@ export default class ProductInfo extends WebComponent {
             }
 
             // Subscription Plans
-            data.subscription_plans = [];
+            data.set('subscription_plans', []);
 
-            for (let subscription_plan of product.subscription_plans) {
-                let price = product.special ? product.special : product.price;
+            for (let subscription_plan of product.get('subscription_plans')) {
+                let price = product.get('special') > 0 ? product.get('special') : product.get('price');
 
                 if (subscription_plan.duration) {
-                    price = (product.special ? product.special : product.price) / subscription_plan.duration;
+                    price = (product.get('special') ? product.get('special') : product.get('price')) / subscription_plan.duration;
                 }
 
-                data.subscription_plans.push({
+                data.get('subscription_plans').push({
                     name: subscription_plan.description[local.get('language')].name,
                     ...subscription_plan
                 });
@@ -185,7 +191,7 @@ export default class ProductInfo extends WebComponent {
                     let alert = target.querySelector('#alert');
 
                     if (alert) {
-                        alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
                     }
 
                     // Code to use [] with js

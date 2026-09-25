@@ -1,5 +1,5 @@
 export default class Local {
-    instance;
+    static instance;
 
     get(key) {
         return localStorage.getItem(key);

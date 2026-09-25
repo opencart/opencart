@@ -68,7 +68,7 @@ customElements.define('payment-method', class extends WebComponent {
                     let alert = target.querySelector('#alert');
 
                     if (alert) {
-                        alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
                     }
                 }
             },
@@ -194,11 +194,11 @@ $(document).on('submit', '#form-payment-method', function(e) {
             }
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
                 $('#modal-payment').modal('hide');
 
@@ -242,13 +242,13 @@ $('#input-comment').on('keydown', function() {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
 
                     $('#button-confirm').prop('disabled', false);
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
                     $('#button-confirm').prop('disabled', false);
                 }

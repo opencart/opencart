@@ -1,5 +1,5 @@
 export default class Storage {
-    instance;
+    static instance;
 
     constructor() {
         this.directory = '';

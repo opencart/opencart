@@ -139,11 +139,11 @@ $(document).on('submit', '#form-shipping-method', function(e) {
             }
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
                 $('#modal-shipping').modal('hide');
 

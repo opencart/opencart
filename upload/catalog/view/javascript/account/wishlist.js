@@ -43,11 +43,11 @@ $('#wishlist').on('click', '.btn-danger', function(e) {
             console.log(json);
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
 
                 $('#wishlist').load('index.php?route=account/wishlist.list&language={{ language }}&customer_token={{ customer_token }}');
             }

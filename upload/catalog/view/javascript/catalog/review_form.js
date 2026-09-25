@@ -46,7 +46,7 @@ customElements.define('review-form', class extends WebComponent {
 
         if (json['error']) {
             if (json['error']['warning']) {
-                this.alert.prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                this.alert.prepend('<ui-alert type="danger">' + json['error']['warning'] + '</ui-alert>');
             }
 
             for (let key in json['error']) {
@@ -56,7 +56,7 @@ customElements.define('review-form', class extends WebComponent {
         }
 
         if (json['success']) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
 
             this.form.querySelector('#input-text').value = '';
             this.form.querySelector('#input-rating input[type=\'radio\']').checked = false;

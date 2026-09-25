@@ -1,5 +1,5 @@
 export default class Config {
-    instance;
+    static instance = null;
 
     constructor() {
         this.directory = '';
@@ -52,11 +52,11 @@ export default class Config {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Config();
+        if (!Config.instance) {
+            Config.instance = new Config();
         }
 
-        return this.instance;
+        return Config.instance;
     }
 }
 

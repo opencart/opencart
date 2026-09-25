@@ -1,27 +1,27 @@
 <div id="container">
   <div :ref="alert"></div>
   <dialog :ref="dialog" class="position-relative border-0" closedby="any"></dialog>
-  <common-header @ref="header"></common-header>
+  <common-header :ref="header"></common-header>
   <main class="flex-grow-1 mb-4">
-    <div @ref="content" class="container">
-      <x-include id="content" src="account/account.js"></x-include>
+    <div id="content" class="container">
+      <x-include :ref="content" src="catalog/product_info.js?product_id=42"></x-include>
       <!--
-      <x-include id="content" src="catalog/product_info.js?product_id=42"></x-include>
-      <x-include id="content" src="catalog/category.js?path=20"></x-include>
-      <x-include id="content" src="catalog/manufacturer_list.js"></x-include>
-      <x-include id="content" src="catalog/product_info.js?product_id=28"></x-include>
-      <x-include id="content" src="information/information.js?information_id=1"></x-include>
-      <x-include id="content" src="information/contact.js"></x-include>
-      <x-include id="content" src="cms/article_info.js?article_id=1"></x-include>
-      <x-include id="content" src="cms/topic.js?topic_id=0"></x-include>
-      <x-include id="content" src="account/account.js"></x-include>
-      <x-include id="content" src="account/password.js"></x-include>
-      <x-include id="content" src="account/login.js"></x-include>
-      <x-include id="content" src="account/register.js"></x-include>
-      <x-include id="content" src="account/account.js"></x-include>
-      <x-include id="content" src="checkout/cart.js"></x-include>
+      <x-include :ref="content" src="catalog/product_info.js?product_id=42"></x-include>
+      <x-include :ref="content" src="catalog/category.js?path=20"></x-include>
+      <x-include :ref="content" src="catalog/manufacturer_list.js"></x-include>
+      <x-include :ref="content" src="catalog/product_info.js?product_id=28"></x-include>
+      <x-include :ref="content" src="information/information.js?information_id=1"></x-include>
+      <x-include :ref="content" src="information/contact.js"></x-include>
+      <x-include :ref="content" src="cms/article_info.js?article_id=1"></x-include>
+      <x-include :ref="content" src="cms/topic.js?topic_id=0"></x-include>
+      <x-include :ref="content" src="account/account.js"></x-include>
+      <x-include :ref="content" src="account/password.js"></x-include>
+      <x-include :ref="content" src="account/login.js"></x-include>
+      <x-include :ref="content" src="account/register.js"></x-include>
+      <x-include :ref="content" src="account/account.js"></x-include>
+      <x-include :ref="content" src="checkout/cart.js"></x-include>
       //-->
     </div>
   </main>
-  <common-footer @ref="footer"></common-footer>
+  <common-footer :ref="footer"></common-footer>
 </div>

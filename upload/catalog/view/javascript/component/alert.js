@@ -39,7 +39,7 @@ customElements.define('ui-alert', class extends WebComponent {
                 break;
         }
 
-        return '<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + this.innerHTML + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+        return '<ui-alert type="success">' + this.innerHTML + '</ui-alert>';
     }
 
     timeout() {

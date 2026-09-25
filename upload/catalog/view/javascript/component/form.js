@@ -1,6 +1,6 @@
 import { WebComponent } from '../index.js';
 
-customElements.define('x-form', class extends WebComponent {
+customElements.define('form-input', class extends WebComponent {
     render() {
         return '<form @bind="form" @submit="onSubmit">' + this.innerHTML + '</form>';
     }

@@ -1,5 +1,5 @@
 import { loader } from './loader.js';
-import { ajax } from './ajax.js';
+import { customer } from './customer.js';
 import { session } from './session.js';
 import { tax } from './tax.js';
 import { weight } from './weight.js';
@@ -16,7 +16,7 @@ if (session.has('cart')) {
 }
 
 export default class Cart {
-    instance;
+    static instance;
 
     constructor() {
         this.data = new Map();
@@ -318,7 +318,7 @@ export default class Cart {
 
         for (let product of this.getProducts()) {
             if (product.shipping) {
-                weight += weight_class.convert(product.weight, product.weight_class_id, config.config_weight_class_id);
+                weight += weight.convert(product.weight, product.weight_class_id, config.config_weight_class_id);
             }
         }
 

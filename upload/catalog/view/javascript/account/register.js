@@ -39,9 +39,9 @@ export default class AccountRegister extends WebComponent {
     }
 
     async onChange(e) {
-        data.custom_fields = [];
+        let custom_fields = [];
 
-        let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
+        let customer_group = await this.storage.fetch('customer/customer_group-' + this.value);
 
         if (customer_group_info instanceof Map) {
             data.custom_fields = customer_group_info.custom_field;
@@ -111,7 +111,7 @@ export default class AccountRegister extends WebComponent {
 
         // Display success message
         if ('success' in json) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
         }
     }
 }

@@ -55,7 +55,7 @@ customElements.define('cms-comment', class extends WebComponent {
 
                 if (json['error']) {
                     if (json['error']['warning']) {
-                        $('#modal-comment .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#modal-comment .modal-body').prepend('<ui-alert type="danger">' + json['error']['warning'] + '</ui-alert>');
                     }
 
                     for (key in json['error']) {
@@ -65,7 +65,7 @@ customElements.define('cms-comment', class extends WebComponent {
                 }
 
                 if (json['success']) {
-                    $('#modal-comment .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#modal-comment .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
 
                     $('#input-comment').val('');
 
@@ -120,11 +120,11 @@ customElements.define('cms-comment', class extends WebComponent {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

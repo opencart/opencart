@@ -1,7 +1,7 @@
 import { load } from '../../yaml/js-yaml.js';
 
 export default class Language {
-    instance;
+    static instance;
 
     constructor() {
         this.directory = '';

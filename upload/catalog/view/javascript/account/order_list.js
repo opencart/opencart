@@ -48,12 +48,12 @@ $('form').on('submit', function(e) {
             $('form').find('.invalid-feedback').removeClass('d-block');
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_reorder }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="danger">{{ error_reorder }}</ui-alert>');
 
                 product_row = $(element).attr('id').substr(13);
 
                 if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<ui-alert type="danger">' + json['error']['warning'] + '</ui-alert>');
 
                     delete json['error']['warning'];
                 }
@@ -64,7 +64,7 @@ $('form').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
                 $('#cart').load('action.php?route=common/cart.info&language={{ language }}');
             }

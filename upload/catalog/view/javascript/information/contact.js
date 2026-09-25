@@ -79,7 +79,7 @@ export default class InformationContact extends WebComponent {
 
         // Display success message
         if ('success' in json) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
             //console.log(Object.fromEntries(form));
             for (let product of json['products']) {

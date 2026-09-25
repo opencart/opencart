@@ -76,7 +76,7 @@ export default class CheckoutCart extends WebComponent {
 
         // Display success message
         if ('success' in json) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
             let output = [];
 
@@ -125,11 +125,11 @@ $('#shopping-cart').on('submit', '#output-cart form', function(e) {
             }
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
 
                 $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}', {}, function() {
                     $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
@@ -164,11 +164,11 @@ $('#shopping-cart').on('click', '.btn-danger', function(e) {
             }
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
 
                 $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
             }

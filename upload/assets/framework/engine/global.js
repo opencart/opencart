@@ -24,6 +24,8 @@
  *   GlobalBindings.getRef('appHeader'); // → element bound with :ref="appHeader"
  */
 class Global {
+    static instance;
+
     constructor() {
         this.refs = new Map();
         this.listeners = new Map();

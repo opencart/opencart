@@ -1,7 +1,10 @@
-import { config, language, storage, template } from '../index.js';
+import { config } from './config.js';
+import { language } from './language.js';
+import { storage } from './storage.js';
+import { template } from './template.js';
 
 export default class Loader {
-    instance;
+    static instance;
 
     constructor() {
         this.data = new Map();

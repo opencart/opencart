@@ -39,11 +39,11 @@ export default class AuthorizeUnlock extends WebComponent {
         }
 
         if (json['error']) {
-            this.alert.prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
         }
 
         if (json['success']) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '</ui-alert>');
         }
     }
 }

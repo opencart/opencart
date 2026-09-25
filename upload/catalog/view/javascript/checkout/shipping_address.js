@@ -56,7 +56,7 @@ customElements.define('shipping-address', class extends WebComponent {
 
                 if (json['error']) {
                     if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<ui-alert type="danger">' + json['error']['warning'] + '</ui-alert>');
                     }
 
                     for (i in json['error']) {
@@ -68,7 +68,7 @@ customElements.define('shipping-address', class extends WebComponent {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
                     $('#form-shipping-address')[0].reset();
 
@@ -142,7 +142,7 @@ customElements.define('shipping-address', class extends WebComponent {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
 
                     $('#input-shipping-method').val('');
                     $('#input-payment-method').val('');

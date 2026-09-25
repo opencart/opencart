@@ -1,7 +1,12 @@
-import { session } from '../index.js';
+import { loader } from './loader.js';
+import { session } from './session.js';
+
+const config = await loader.config('default');
+
+console.log(config);
 
 export default class Customer {
-    instance;
+    static instance= null;
 
     constructor() {
         this.data = new Map();
@@ -38,7 +43,7 @@ export default class Customer {
     }
 
     getGroupId() {
-        return this.data.get('customer_group_id');
+        return this.isLogged() && this.data.has('customer_group_id') ? this.data.get('customer_group_id') : config.get('config_customer_group_id');
     }
 
     getEmail() {
@@ -74,10 +79,14 @@ export default class Customer {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Customer();
+        if (!Customer.instance) {
+            Customer.instance = new Customer();
         }
 
-        return this.instance;
+        return Customer.instance;
     }
 }
+
+const customer = new Customer();
+
+export { customer };

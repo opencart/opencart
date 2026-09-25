@@ -3,7 +3,7 @@ import { loader } from './loader.js';
 const length_classes = await loader.storage('localisation/length_class');
 
 export default class Length {
-    instance;
+    static instance;
 
     convert(value, from, to) {
         let length_class_from = length_classes.find(length_class => length_class.length_class_id === from);

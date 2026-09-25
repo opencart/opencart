@@ -9,15 +9,9 @@ const language = await loader.language('account/returns');
 
 export default class ReturnForm extends WebComponent {
     render() {
-       return loader.template('account/return_form', { ...language });
-    }
+        if (!customer.isLogged()) return;
 
-    onConnect() {
-        if (!customer.isLogged()) {
-            let target = document.getElementById('content');
-
-            target.src = 'account/account';
-        }
+        return loader.template('account/return_form', { ...language });
     }
 
     async onSubmit(e) {

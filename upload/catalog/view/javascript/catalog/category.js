@@ -27,20 +27,16 @@ export default class CatalogCategory extends WebComponent {
         if (category instanceof Map && local.get('language') in category.get('description')) {
             let description = category.get('description')[local.get('language')];
 
-            //description.meta_title;
-            //description.meta_description;
-            //description.meta_keyword;
-
-            this.data.set('categories', []);
+            data.set('categories', []);
 
             for (let children of category.get('children')) {
-                this.data.get('categories').push({
+                data.get('categories').push({
                     name: children.description[local.get('language')].name,
                     path: children.path
                 });
             }
 
-            return loader.template('catalog/category', [ category, description, data, language, config ]);
+            return loader.template('catalog/category', [ data, category, description, language, config ]);
         }
     }
 }

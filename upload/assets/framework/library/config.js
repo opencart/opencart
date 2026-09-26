@@ -95,12 +95,12 @@ config.cache.set('default', new Map(Object.entries({
 
     config_product_description_length: 100,
 
-    config_customer_group_id: 1,
-
+    config_pagination: 10,
     config_product_count: true,
     config_review_status: true,
     config_tax: true,
     config_account_id: 1,
+    config_customer_group_id: 1,
     config_checkout_guest: true,
     config_checkout_payment_address: true,
     config_gdpr_id: 0,

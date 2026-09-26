@@ -56,11 +56,11 @@ export default class Loader {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Loader();
+        if (!Loader.instance) {
+            Loader.instance = new Loader();
         }
 
-        return this.instance;
+        return Loader.instance;
     }
 }
 

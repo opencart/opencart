@@ -48,11 +48,11 @@ export default class AccountLogin extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if ('error' in json) {
-            for (let key in json['error']) {
-                let value = key.replaceAll('_', '-');
+        if (json.has('error')) {
+            for (let [ key, value ] of json.get('error')) {
+                key = key.replaceAll('_', '-');
 
-                let input = this.form.querySelector('#input-' + value);
+                let input = this.form.querySelector('#input-' + key);
 
                 if (input) {
                     input.classList.add('is-invalid');
@@ -61,7 +61,7 @@ export default class AccountLogin extends WebComponent {
                     input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
                 }
 
-                let error = this.form.querySelector('#error-' + value);
+                let error = this.form.querySelector('#error-' + key);
 
                 if (error) {
                     error.classList.add('d-block');
@@ -70,8 +70,8 @@ export default class AccountLogin extends WebComponent {
         }
 
         // Display success message
-        if ('success' in json) {
-            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
         }
     }
 }

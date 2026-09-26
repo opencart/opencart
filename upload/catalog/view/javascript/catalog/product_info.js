@@ -3,10 +3,6 @@ import { loader, ajax, cart, customer, local, tax } from '../index.js';
 import './review_form.js';
 import './review_list.js';
 
-console.log('product_info');
-console.log(customer.getGroupId());
-
-
 // Config
 const config = await loader.config('default');
 
@@ -20,42 +16,39 @@ export default class ProductInfo extends WebComponent {
     async render(){
         let data = new Map();
 
-        // Product Info
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
         if (product instanceof Map && local.get('language') in product.get('description')) {
             let description = product.get('description')[local.get('language')];
 
-            //description.meta_title
-            //description.meta_description
-            //description.meta_keyword
+            // description.meta_title
+            // description.meta_description
+            // description.meta_keyword
 
-            // Price
+            // Special
             data.set('special', '');
 
             let discount = product.get('discounts').find(discount => discount.quantity == 1 && (discount.customer_group_id == customer.getGroupId()) && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             if (discount) {
                 if (discount.type == 'F') {
-                    data.special = Number(discount.price);
+                    data.set('special', Number(discount.price));
                 } else if (discount.type == 'P') {
-                    data.special -= Number(data.price * (discount.price / 100));
+                    data.set('special', product.get('price') - Number(product.get('price') * (discount.price / 100)));
                 } else if (discount.type == 'S') {
-                    data.special -= Number(discount.price);
+                    data.set('special', product.get('price') - Number(discount.price));
                 }
             }
 
-
-
             // Discounts
-            data.discounts = product.get('discounts').filter(discount => discount.customer_group_id == customer.getGroupId() && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+            let discounts = product.get('discounts').filter(discount => discount.customer_group_id == customer.getGroupId() && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
-            data.discounts.sort(discounts => discount.quantity);
+            //data.discounts.sort(discounts => discount.quantity);
 
             data.set('tax', '');
 
             if (config.get('config_tax')) {
-                data.set('tax', tax.getTax(data.special ? data.special : product.get('price'), product.get('tax_class_id')));
+                data.set('tax', tax.getTax(data.get('special') ? data.get('special') : product.get('price'), product.get('tax_class_id')));
             }
 
             // Rewards
@@ -104,6 +97,7 @@ export default class ProductInfo extends WebComponent {
                });
             }
 
+            // Options
             data.set('options', []);
 
             for (let option of product.get('options')) {
@@ -123,10 +117,10 @@ export default class ProductInfo extends WebComponent {
             data.set('subscription_plans', []);
 
             for (let subscription_plan of product.get('subscription_plans')) {
-                let price = product.get('special') > 0 ? product.get('special') : product.get('price');
+                let price = data.get('special') ? data.get('special') : product.get('price');
 
                 if (subscription_plan.duration) {
-                    price = (product.get('special') ? product.get('special') : product.get('price')) / subscription_plan.duration;
+                    price = (data.get('special') ? data.get('special') : product.get('price')) / subscription_plan.duration;
                 }
 
                 data.get('subscription_plans').push({
@@ -136,10 +130,10 @@ export default class ProductInfo extends WebComponent {
             }
 
             // Tags
-            data.set('tags', product.tags);
+            data.set('tags', product.get('tags'));
             data.set('related', []);
 
-            data.currency = local.get('currency');
+            data.set('currency', local.get('currency'));
 
             return loader.template('catalog/product_info', [ product, description, data, language, config ]);
         }
@@ -161,8 +155,8 @@ export default class ProductInfo extends WebComponent {
                 console.log('onSuccess', json);
 
                 // Remove past error classes from inputs
-                target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
                 if ('error' in json) {
@@ -178,7 +172,7 @@ export default class ProductInfo extends WebComponent {
                             input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
                         }
 
-                        let error = target.querySelector('#error-' + value);
+                        let error = this.form.querySelector('#error-' + value);
 
                         if (error) {
                             error.classList.add('d-block');
@@ -188,7 +182,7 @@ export default class ProductInfo extends WebComponent {
 
                 // Display success message
                 if ('success' in json) {
-                    let alert = target.querySelector('#alert');
+                    let alert = this.form.querySelector('#alert');
 
                     if (alert) {
                         alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');

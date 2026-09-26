@@ -22,7 +22,6 @@ export default class CatalogCategory extends WebComponent {
             category_id = path;
         }
 
-        // Product Info
         let category = await loader.storage('category/category-' + category_id);
 
         if (category instanceof Map && local.get('language') in category.get('description')) {
@@ -34,7 +33,7 @@ export default class CatalogCategory extends WebComponent {
 
             this.data.set('categories', []);
 
-            for (let children of category.children) {
+            for (let children of category.get('children')) {
                 this.data.get('categories').push({
                     name: children.description[local.get('language')].name,
                     path: children.path

@@ -6,7 +6,7 @@ const language = await loader.language('catalog/special');
 
 export default class CatalogSpecial extends WebComponent {
     render() {
-        return loader.template('catalog/special', { ...language });
+        return loader.template('catalog/special', language);
     }
 }
 

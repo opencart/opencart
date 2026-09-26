@@ -53,7 +53,13 @@ export default class Ajax {
             let response_type = response.headers.get('content-type');
 
             if (response_type && response_type.includes('application/json')) {
-                result = await response.json();
+                let data = await response.json();
+
+                if (!Array.isArray(data)) {
+                    result = new Map(Object.entries(data));
+                } else {
+                    result = data;
+                }
             } else {
                 result = await response.text();
             }
@@ -127,11 +133,11 @@ export default class Ajax {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Ajax();
+        if (!Ajax.instance) {
+            Ajax.instance = new Ajax();
         }
 
-        return this.instance;
+        return Ajax.instance;
     }
 }
 

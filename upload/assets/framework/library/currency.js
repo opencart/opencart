@@ -76,10 +76,10 @@ export default class Currency {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Currency();
+        if (!Currency.instance) {
+            Currency.instance = new Currency();
         }
 
-        return this.instance;
+        return Currency.instance;
     }
 }

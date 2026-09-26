@@ -1,4 +1,4 @@
-import {WebComponent} from '../index.js';
+import { WebComponent } from '../index.js';
 import { loader, local } from '../index.js';
 
 // Config
@@ -16,7 +16,7 @@ export default class ManufacturerList extends WebComponent {
 
         let request = new URL(import.meta.url).searchParams;
 
-        data.categories = [];
+        data.set('categories', []);
 
         console.log(manufacturers);
 
@@ -50,7 +50,7 @@ export default class ManufacturerList extends WebComponent {
             }
         }
 
-        return loader.template('catalog/manufacturer_list', { ...data, ...language });
+        return loader.template('catalog/manufacturer_list', [ data, language ]);
     }
 }
 

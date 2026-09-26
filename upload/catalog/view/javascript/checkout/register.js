@@ -14,20 +14,20 @@ customElements.define('checkout-register', class extends WebComponent {
     token = '';
 
     async render(){
-        let data = {};
+        let data = new Map();
 
         // Custom Fields
-        data.custom_fields = [];
+        data.set('custom_fields', []);
 
         let customer_group = await loader.storage('customer/customer_group-' + config.get('config_customer_group_id'));
 
-        if (customer_group) {
-            data.custom_fields = customer_group.custom_fields;
+        if (customer_group instanceof Map) {
+            data.set('custom_fields', customer_group.custom_fields);
         }
 
-        data.token = this.token;
+        data.set('token', this.token);
 
-        return loader.template('checkout/register', { ...data,  ...language, ...config });
+        return loader.template('checkout/register', [ data,  language, config ]);
     }
 
     async onConnect() {

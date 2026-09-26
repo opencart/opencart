@@ -15,14 +15,14 @@ const language = await loader.language('checkout/checkout');
 
 export default class CheckoutCheckout extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        data.logged = customer.isLogged();
-        data.minimum = cart.hasMinimum();
-        data.shipping = cart.hasShipping();
-        data.download = cart.hasDownload();
+        data.set('logged', customer.isLogged());
+        data.set('minimum', cart.hasMinimum());
+        data.set('shipping', cart.hasShipping());
+        data.set('download', cart.hasDownload());
 
-        return loader.template('checkout/checkout', { ...data, ...language, ...config });
+        return loader.template('checkout/checkout', [ data, language, config ]);
     }
 }
 

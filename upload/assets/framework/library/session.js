@@ -22,11 +22,11 @@ export default class Session {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Session();
+        if (!Session.instance) {
+            Session.instance = new Session();
         }
 
-        return this.instance;
+        return Session.instance;
     }
 }
 

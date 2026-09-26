@@ -22,11 +22,11 @@ export default class Local {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Local();
+        if (!Local.instance) {
+            Local.instance = new Local();
         }
 
-        return this.instance;
+        return Local.instance;
     }
 }
 

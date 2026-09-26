@@ -9,16 +9,15 @@ const language = await loader.language('catalog/product_thumb');
 
 customElements.define('product-thumb', class extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        // Get product by product ID
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
-        if (product instanceof Map && local.get('language') in product.description) {
+        if (product instanceof Map && local.get('language') in product.get('description')) {
             let description = product.description[local.get('language')];
 
-            // Price
-            data.special = '';
+            // Special
+            data.set('special', '');
 
             let discount = product.discounts.find(discount =>  discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
@@ -32,15 +31,15 @@ customElements.define('product-thumb', class extends WebComponent {
                 }
             }
 
-            data.tax = '';
+            data.set('tax', '');
 
-            if (config.config_tax) {
-                data.tax = tax.getTax(data.special ? data.special : product.price, product.tax_class_id);
+            if (config.get('config_tax')) {
+                data.set('tax', tax.getTax(data.get('special') ? data.get('special') : product.get('price'), product.get('tax_class_id')));
             }
 
-            data.currency = local.get('currency');
+            data.set('currency', local.get('currency'));
 
-            return await loader.template('catalog/product_thumb', { ...product, ...description, ...data, ...language, ...config });
+            return await loader.template('catalog/product_thumb', [ product, description, data, language, config ]);
         }
     }
 

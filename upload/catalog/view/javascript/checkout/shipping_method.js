@@ -9,7 +9,7 @@ const language = await loader.language('checkout/shipping_method');
 
 customElements.define('shipping-method', class extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
 
         return loader.template('checkout/shipping_method', { ...data,  ...language });

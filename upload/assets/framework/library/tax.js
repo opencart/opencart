@@ -95,11 +95,11 @@ export default class Tax {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Tax();
+        if (!Tax.instance) {
+            Tax.instance = new Tax();
         }
 
-        return this.instance;
+        return Tax.instance;
     }
 }
 

@@ -506,11 +506,11 @@ export default class Cart {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Cart();
+        if (!Cart.instance) {
+            Cart.instance = new Cart();
         }
 
-        return this.instance;
+        return Cart.instance;
     }
 }
 

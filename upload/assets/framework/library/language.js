@@ -56,11 +56,11 @@ export default class Language {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Language();
+        if (!Language.instance) {
+            Language.instance = new Language();
         }
 
-        return this.instance;
+        return Language.instance;
     }
 }
 

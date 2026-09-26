@@ -56,11 +56,11 @@ export default class Storage {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Storage();
+        if (!Storage.instance) {
+            Storage.instance = new Storage();
         }
 
-        return this.instance;
+        return Storage.instance;
     }
 }
 

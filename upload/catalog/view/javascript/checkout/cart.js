@@ -1,5 +1,5 @@
-import { WebComponent } from '../index.js';
-import { loader, ajax, cart, local, session, tax } from '../index.js';
+import {customer, WebComponent} from '../index.js';
+import { loader, ajax, cart, local, tax } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -9,18 +9,18 @@ const language = await loader.language('checkout/cart');
 
 export default class CheckoutCart extends WebComponent {
     async render(){
-        let data = {};
+        let data = new Map();
 
-        data.products = cart.getProducts();
+        data.set('products', cart.getProducts());
 
-        data.shipping = cart.hasShipping();
-        data.download = cart.hasDownload();
-        data.minimum = cart.hasMinimum();
+        data.set('shipping', cart.hasShipping());
+        data.set('download', cart.hasDownload());
+        data.set('minimum', cart.hasMinimum());
+        data.set('weight', cart.getWeight());
 
-        data.weight = cart.getWeight();
-        data.currency = local.get('currency');
+        data.set('currency', local.get('currency'));
 
-        return loader.template('checkout/cart', { ...data,  ...language, ...config });
+        return loader.template('checkout/cart', [ data, language, config ]);
     }
 
     editProduct(e) {

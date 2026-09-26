@@ -50,10 +50,10 @@ export default class Length {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Length();
+        if (!Length.instance) {
+            Length.instance = new Length();
         }
 
-        return this.instance;
+        return Length.instance;
     }
 }

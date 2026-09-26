@@ -9,13 +9,13 @@ const language = await loader.language('checkout/payment_method');
 
 customElements.define('payment-method', class extends WebComponent {
     async render(){
-        let data = {};
+        let data = new Map();
 
 
-        return loader.template('checkout/payment_method', { ...data,  ...language });
+        return loader.template('checkout/payment_method', [ data, language ]);
     }
 
-    onConnect() {
+    getMethods() {
         let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/payment_method', form, {

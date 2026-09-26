@@ -50,11 +50,11 @@ export default class Weight {
     }
 
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new Weight();
+        if (!Weight.instance) {
+            Weight.instance = new Weight();
         }
 
-        return this.instance;
+        return Weight.instance;
     }
 }
 

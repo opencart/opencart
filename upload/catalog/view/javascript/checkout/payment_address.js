@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, cart, customer, local } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -9,14 +9,13 @@ const language = await loader.language('checkout/payment_address');
 
 customElements.define('payment-address', class extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        data.firstname = customer.getFirstName();
-        data.lastname = customer.getLastName();
+        data.set('firstname', customer.getFirstName());
+        data.set('lastname', customer.getLastName());
+        data.set('addresses', customer.getAddresses());
 
-        data.addresses = customer.getAddresses();
-
-        return loader.template('checkout/payment_address', { ...data,  ...language });
+        return loader.template('checkout/payment_address', [ data, language ]);
     }
 
     async onConnect() {
@@ -32,7 +31,7 @@ customElements.define('payment-address', class extends WebComponent {
 
         var element = this;
 
-        ajax('action.php?route=checkout/payment_address.address&language={{ language }}&address_id=' + $(element).val(), {
+        ajax.post('action.php?route=checkout/payment_address.address&language=' + local.get('language') + '&address_id=' + $(element).val(), {
             beforeSend: function() {
                 $(element).prop('disabled', true);
             },
@@ -103,7 +102,7 @@ customElements.define('payment-address', class extends WebComponent {
             }
 
             for (let i in json['error']) {
-                for (key in json['error']) {
+                for (let key in json['error']) {
                     $('#input-payment-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-payment-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }

@@ -20,10 +20,7 @@ customElements.define('common-language', class extends WebComponent {
         data.set('name', value.name);
         data.set('code', value.code);
 
-        console.log(languages.forEach(value => value));
-
-
-        data.set('languages', languages);
+        data.set('languages', Array.from(languages.values()));
 
         return loader.template('common/language', [ data, language ]);
     }

@@ -1,4 +1,4 @@
-import { WebComponent} from '../index.js';
+import { WebComponent } from '../index.js';
 import { ajax, customer, loader, local } from '../index.js';
 
 // Config
@@ -28,7 +28,7 @@ export default class InformationContact extends WebComponent {
     }
 
     onConnect() {
-        this.token = ajax.get('action.php?route=information/contact.send&language=' + local.get('language'));
+        this.token = ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
     }
 
     onSubmit(e) {

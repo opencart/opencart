@@ -1,5 +1,5 @@
-import {ajax, WebComponent} from '../index.js';
-import { loader, customer } from '../index.js';
+import { WebComponent} from '../index.js';
+import { loader, ajax, customer } from '../index.js';
 
 // Language
 const language = await loader.language('account/newsletter');
@@ -10,7 +10,7 @@ export default class AccountNewsletter extends WebComponent {
 
         let data = new Map();
 
-        data.newsletter = customer.getNewsletter();
+        data.set('newsletter', customer.getNewsletter());
 
         return loader.template('account/newsletter', [ data, language ]);
     }
@@ -20,7 +20,7 @@ export default class AccountNewsletter extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/newsletter.confirm&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+        ajax.post('action.php?route=account/newsletter.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
                 this.submitter.button('loading');
             },

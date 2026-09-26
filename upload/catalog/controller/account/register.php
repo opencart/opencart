@@ -37,7 +37,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/register', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		$data['text_account_already'] = $this->language->format('text_account_already', $this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
@@ -101,7 +101,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_account_id'));
 
 		if ($information_info) {
-			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information.info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_account_id')), $information_info['title']);
+			$data['text_agree'] = $this->language->format('text_agree', $this->url->link('information/information.info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_account_id')), $information_info['title']);
 		} else {
 			$data['text_agree'] = '';
 		}

@@ -103,8 +103,13 @@ class Twig {
 		try {
 			// Initialize Twig environment
 			$config = [
-				'charset'     => 'utf-8',
-				'autoescape'  => false,
+				'charset' => 'utf-8',
+				// Autoescape is enabled by default so all template output is HTML escaped on output.
+				// Trusted HTML (language strings and sub-view output) is passed to templates as
+				// \Twig\Markup objects which are not escaped again. Use |escape('js') for JavaScript
+				// contexts (script blocks and on* event attributes) and |raw only for audited
+				// rich text (e.g. CKEditor fields).
+				'autoescape'  => 'html',
 				'debug'       => true,
 				'auto_reload' => true,
 				'cache'       => DIR_CACHE . 'template/'

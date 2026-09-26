@@ -326,7 +326,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						$trial_frequency = $this->language->get('text_' . $order_subscription_info['trial_frequency']);
 						$trial_duration = $order_subscription_info['trial_duration'];
 
-						$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $order_info['currency_code'], $trial_price, $order_info['currency_value'], $trial_cycle, $trial_frequency, $trial_duration);
+						$subscription_plan .= $this->language->format('text_subscription_trial', $order_info['currency_code'], $trial_price, $order_info['currency_value'], $trial_cycle, $trial_frequency, $trial_duration);
 					}
 
 					$price = $order_subscription_info['price'] + ($this->config->get('config_tax') ? $order_subscription_info['tax'] : 0);
@@ -335,9 +335,9 @@ class Order extends \Opencart\System\Engine\Controller {
 					$duration = $order_subscription_info['duration'];
 
 					if ($order_subscription_info['duration']) {
-						$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency, $duration);
+						$subscription_plan .= $this->language->format('text_subscription_duration', $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency, $duration);
 					} else {
-						$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency);
+						$subscription_plan .= $this->language->format('text_subscription_cancel', $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency);
 					}
 
 					$subscription_plan_id = $order_subscription_info['subscription_plan_id'];

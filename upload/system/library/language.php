@@ -26,7 +26,7 @@ class Language {
 	 */
 	protected array $path = [];
 	/**
-	 * @var array<string, string>
+	 * @var array<string, string|\Stringable>
 	 */
 	protected array $data = [];
 	/**
@@ -64,11 +64,13 @@ class Language {
 	 *
 	 * Get language text string
 	 *
-	 * @link https://www.php.net/sprintf
+	 * @see https://www.php.net/sprintf
 	 *
 	 * @param string $key
+	 *
+	 * @return string|\Stringable
 	 */
-	public function get(string $key): string {
+	public function get(string $key): string|\Stringable {
 		if (!isset($this->data[$key])) {
 			return $key;
 		}
@@ -77,16 +79,42 @@ class Language {
 	}
 
 	/**
+	 * Format
+	 *
+	 * Replace the placeholders of a language string with the given arguments.
+	 *
+	 * Plain string arguments are HTML escaped before they are inserted while trusted
+	 * content (\Twig\Markup) is passed through unescaped. The result is marked as
+	 * safe HTML so the template autoescape does not escape it again.
+	 *
+	 * @see https://www.php.net/sprintf
+	 *
+	 * @param string $key
+	 * @param mixed  ...$args
+	 *
+	 * @return \Twig\Markup
+	 */
+	public function format(string $key, ...$args): \Twig\Markup {
+		foreach ($args as &$arg) {
+			if (is_string($arg)) {
+				$arg = htmlspecialchars($arg, ENT_QUOTES, 'UTF-8');
+			}
+		}
+
+		return new \Twig\Markup(sprintf($this->get($key), ...$args), 'utf-8');
+	}
+
+	/**
 	 * Set
 	 *
 	 * Set language text string
 	 *
-	 * @param string $key 
-	 * @param string $value
+	 * @param string             $key
+	 * @param string|\Stringable $value
 	 *
 	 * @return void
 	 */
-	public function set(string $key, string $value): void {
+	public function set(string $key, string|\Stringable $value): void {
 		$this->data[$key] = $value;
 	}
 
@@ -95,7 +123,7 @@ class Language {
 	 *
 	 * @param string $prefix
 	 *
-	 * @return array<string, string>
+	 * @return array<string, string|\Stringable>
 	 */
 	public function all(string $prefix = ''): array {
 		if (!$prefix) {
@@ -131,7 +159,7 @@ class Language {
 	 * @param string $prefix
 	 * @param string $code     Language code
 	 *
-	 * @return array<string, string>
+	 * @return array<string, string|\Stringable>
 	 */
 	public function load(string $filename, string $prefix = '', string $code = ''): array {
 		if (!$code) {
@@ -164,6 +192,10 @@ class Language {
 				require($file);
 			}
 
+			// Language strings are trusted translation scaffolding so mark them as safe
+			// HTML to prevent them being escaped again by the template autoescape.
+			$_ = $this->markTrusted($_);
+
 			$this->cache[$code][$filename] = $_;
 		} else {
 			$_ = $this->cache[$code][$filename];
@@ -180,5 +212,25 @@ class Language {
 		$this->data = array_merge($this->data, $_);
 
 		return $this->data;
+	}
+
+	/**
+	 * Mark Trusted
+	 *
+	 * Wraps plain translation strings in \Twig\Markup so the template engine
+	 * treats them as trusted HTML and does not escape them again on output.
+	 *
+	 * @param array<string, mixed> $language
+	 *
+	 * @return array<string, mixed>
+	 */
+	private function markTrusted(array $language): array {
+		foreach ($language as $key => $value) {
+			if (is_string($value)) {
+				$language[$key] = new \Twig\Markup($value, 'utf-8');
+			}
+		}
+
+		return $language;
 	}
 }

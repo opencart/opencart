@@ -25,10 +25,5 @@
     "php": ">=8.1.0",
     "scssphp/scssphp": "^2.1.0",
     "twig/twig": "^3.24.0"
-  },
-  "autoload-dev": {
-      "psr-4": {
-          "Tools\\PHPStan\\": "tools/phpstan/"
-      }
   }
 }

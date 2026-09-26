@@ -110,6 +110,8 @@ export class Binder {
             } else {
                 this.event(element, key, value, is_global);
             }
+
+            element.removeAttribute(name);
         });
     }
 
@@ -136,7 +138,7 @@ export class Binder {
     }
 
     event(element, event, method, is_global) {
-        let handler = is_global ? global.getListeners(method) : this.host[method];
+        let handler = is_global ? global.getListener(method) : this.host[method];
 
         if (typeof handler !== 'function') {
             let scope = is_global ? 'Global' : 'host';

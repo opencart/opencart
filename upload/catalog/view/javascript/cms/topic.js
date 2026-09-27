@@ -1,4 +1,4 @@
-import {WebComponent} from '../index.js';
+import { WebComponent } from '../index.js';
 import { loader, local } from '../index.js';
 import './article_list.js';
 
@@ -13,54 +13,47 @@ let topics = await loader.storage('topic/topic');
 
 export default class CmsTopic extends WebComponent {
     async render() {
-        let data = {};
+        let data = new Map();
 
-        let request = new URL(import.meta.url).searchParams;
-
-       data.topic_id = 0;
-
-        if (this.hasAttribute('topic_id')) {
-            data.topic_id = this.getAttribute('topic_id');
-        }
-
-        data.heading_title = language.heading_title;
-        data.image = '';
-        data.description = '';
+        data.set('topic_id', 0);
+        data.set('heading_title', language.get('heading_title'));
+        data.set('description', '');
+        data.set('image', '');
 
         // If Topic ID is set
-        let topic = await loader.storage('topic/topic-' + data.topic_id);
+        let topic = await loader.storage('topic/topic-' + this.getAttribute('topic_id'));
 
-        if (topic instanceof Map && local.get('language') in topic.description) {
-            data.image = topic.image;
+        if (topic instanceof Map && local.get('language') in topic.get('description')) {
+            let description = topic.get('description')[local.get('language')];
 
-            let description = topic.description[local.get('language')];
-
-            data.name = description.name;
-            data.description = description.description;
+            data.set('topic_id', topic.get('topic_id'));
+            data.set('name', description.name);
+            data.set('description', description.description);
+            data.set('image', topic.image);
         }
 
-        data.topics = [];
+        data.set('topics', []);
 
         for (let topic of topics) {
             if (local.get('language') in topic.description) {
                 let description = topic.description[local.get('language')];
 
-                data.topics.push({
+                data.get('topics').push({
                     topic_id: topic.topic_id,
                     name: description.name
                 });
             }
         }
 
-        data.search = '';
+        data.set('search', '');
 
-        return loader.template('cms/topic', { ...data, ...language });
+        return loader.template('cms/topic', [ data, language ]);
     }
 
     async onSubmit(e) {
         e.preventDefault();
 
-        let url = 'action.php?route=cms/topic&language=';
+        let url = 'action.php?route=cms/topic&language=' + local.get('language');
 
         var search = $('#input-search').val();
 

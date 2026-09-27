@@ -54,7 +54,7 @@
           </tr>
           {% endfor %}
         </table>
-        <p class="text-end"><a href="chechout/cart.js" data-action="link" data-target="content"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" data-action="link" data-target="content"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
+        <p class="text-end"><a href="chechout/cart.js" :click="handleContent"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" :click="handleContent"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
       </div>
     </li>
     {% else %}

@@ -18,7 +18,14 @@ customElements.define('payment-address', class extends WebComponent {
         return loader.template('checkout/payment_address', [ data, language ]);
     }
 
-    async onConnect() {
+    onChange(e) {
+        if ($(this).val() == 1) {
+            $('#payment-existing').show();
+            $('#payment-new').hide();
+        } else {
+            $('#payment-existing').hide();
+            $('#payment-new').show();
+        }
         if ($(this).prop('checked')) {
             this.id('shipping-address').hide();
         } else {
@@ -26,12 +33,12 @@ customElements.define('payment-address', class extends WebComponent {
         }
     }
 
-    onChange(e) {
+    setAddress(e) {
         e.preventDefault();
 
         var element = this;
 
-        ajax.post('action.php?route=checkout/payment_address.address&language=' + local.get('language') + '&address_id=' + $(element).val(), {
+        ajax.post('action.php?route=checkout/payment_address.address&language=' + local.get('language') + '&customer_token' + customer.getToken() + '&address_id=' + this.address.value, {
             beforeSend: function() {
                 $(element).prop('disabled', true);
             },
@@ -152,25 +159,3 @@ customElements.define('payment-address', class extends WebComponent {
         }
     }
 });
-
-/*
-$(document).on('change', '#input-address-match', function() {
-
-});
-
-$('input[name=\'payment_existing\']').on('change', function() {
-    if ($(this).val() == 1) {
-        $('#payment-existing').show();
-        $('#payment-new').hide();
-    } else {
-        $('#payment-existing').hide();
-        $('#payment-new').show();
-    }
-});
-
-// Existing Payment Address
-$('#input-payment-address').on('change', function() {
-
-});
-
-*/

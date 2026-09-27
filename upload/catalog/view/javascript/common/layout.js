@@ -16,40 +16,7 @@ import '../component/upload.js';
 import '../component/zone.js';
 
 customElements.define('common-layout', class extends WebComponent {
-    constructor() {
-        super();
-
-        this.data = new Map();
-    }
-
     render() {
         return loader.template('common/layout');
-    }
-
-    async handleContent(e) {
-        e.preventDefault();
-
-        let target = e.currentTarget;
-
-        // Get the source HTML to load
-        if (!target.hasAttribute('href')) return;
-
-        let [ path, query] = target.getAttribute('href').split('?');
-
-        if (!this.data.has(path)) {
-            let component = await import(config.get('config_path') + path);
-
-            this.data.set(path, customElements.getName(component.default));
-        }
-
-        let name = this.data.get(path);
-
-        let html = '<' + name;
-
-        for (let [ key, value] of (new URLSearchParams(query).entries())) {
-            html += ' ' + key + '="' + value + '"';
-        }
-
-        return html + '></' + name + '>';
     }
 });

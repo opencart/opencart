@@ -14,20 +14,20 @@ customElements.define('product-thumb', class extends WebComponent {
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
         if (product instanceof Map && local.get('language') in product.get('description')) {
-            let description = product.description[local.get('language')];
+            let description = product.get('description')[local.get('language')];
 
             // Special
             data.set('special', '');
 
-            let discount = product.discounts.find(discount =>  discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+            let discount = product.get('discounts').find(discount =>  discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
 
             if (discount) {
                 if (discount.type == 'F') {
-                    data.special = discount.price;
+                    data.set('special', Number(discount.price));
                 } else if (discount.type == 'P') {
-                    data.special -= (data.price * (discount.price / 100));
+                    data.set('special', product.get('price') - Number(product.get('price') * (discount.price / 100)));
                 } else if (discount.type == 'S') {
-                    data.special -= discount.price;
+                    data.set('special', product.get('price') - Number(discount.price));
                 }
             }
 

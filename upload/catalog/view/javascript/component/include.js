@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader } from '../index.js';
+import { loader, global } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -37,5 +37,15 @@ customElements.define('x-include', class Include extends WebComponent {
         }
 
         return html + '></' + name + '>';
+    }
+
+    onConnect() {
+        global.registerListener('handleContent', this.handleContent.bind(this));
+    }
+
+    handleContent(e) {
+        e.preventDefault();
+
+        this.src = e.target.getAttribute('href');
     }
 });

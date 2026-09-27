@@ -8,7 +8,7 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/product_list');
 
-customElements.define('product-list', class extends WebComponent {
+class ProductList extends WebComponent {
     static observed = [
         'path',
         'filter',
@@ -19,33 +19,50 @@ customElements.define('product-list', class extends WebComponent {
         'page'
     ];
 
+    set path(path) {
+
+    }
+
+    constructor() {
+        super();
+
+        this.setAttribute('sort', 'latest');
+        this.setAttribute('order', 'desc');
+        this.setAttribute('page', 1);
+        this.setAttribute('limit', config.get('config_pagination'));
+    }
+
     async render(){
         let data = new Map();
 
-        console.log(this.observed);
-
-        for (let attribute of attributes) {
+        for (let attribute of ProductList.observed) {
             if (this.hasAttribute(attribute)) {
-                data.get(attribute, this.getAttribute(attribute));
+                data.set(attribute, this.getAttribute(attribute));
+            } else if (!data.has(attribute)) {
+                data.set(attribute, '');
             }
         }
 
         // Products
         data.set('products', []);
+        data.set('total', 0);
 
         let products = await loader.storage('category/category-product-' + this.getAttribute('category_id'));
 
-        if (products instanceof Map) {
-            data.get('products').push(products);
+        if (products instanceof Array) {
+            data.set('products', products);
+            data.set('total', products.length);
         }
 
         return loader.template('catalog/product_list', [ data, language, config ]);
     }
 
     onChange(e) {
-
+        this.update();
     }
-});
+}
+
+customElements.define('product-list', ProductList);
 
 /*
 $(document).ready(function() {

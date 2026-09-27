@@ -18,8 +18,7 @@ customElements.define('shipping-address', class extends WebComponent {
         return loader.template('checkout/shipping_address', [ data,  language,  config ]);
     }
 
-    onExisting(e) {
-
+    onChange(e) {
         if ($(this).val() == 1) {
             $('#shipping-existing').show();
             $('#shipping-new').hide();
@@ -27,11 +26,10 @@ customElements.define('shipping-address', class extends WebComponent {
             $('#shipping-existing').hide();
             $('#shipping-new').show();
         }
+
     }
 
-    onChange(e) {
-        var element = this;
-
+    getAddress() {
         ajax.get('index.php?route=checkout/shipping_address.address&language={{ language }}&address_id=' + $(element).val(), {
             beforeSend: function() {
                 $(element).prop('disabled', true);

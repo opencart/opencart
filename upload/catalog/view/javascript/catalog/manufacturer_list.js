@@ -14,34 +14,14 @@ export default class ManufacturerList extends WebComponent {
     async render() {
         let data = new Map();
 
-        let request = new URL(import.meta.url).searchParams;
-
-        data.set('categories', []);
-
-        console.log(manufacturers);
+        data.set('manufacturers', []);
 
         for (let manufacturer of manufacturers) {
             if (local.get('language') in manufacturer.description) {
-                let name = manufacturer.description[local.get('language')].name;
 
-                let key = name.substr(0, 1);
 
-                if (typeof key === 'number') {
-                    key = '0 - 9';
-                } else {
-                    key = key.toUpperCase();
-                }
-
-                //data.categories.some();
-
-                //if (!key in data.categories) {
-                    data.categories.push({
-                        name: key,
-                        manufacturer: []
-                    });
-                //}
                 /*
-                data.categories[key].manufacturer.push({
+                data.categories.manufacturer.push({
                     manufacturer_id: manufacturer.manufacturer_id,
                     name: name,
                     image: manufacturer.image

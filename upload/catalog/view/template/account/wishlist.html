@@ -17,8 +17,8 @@
         {% set product_row = 0 %}
         {% for product in products %}
         <tr>
-          <td class="text-center">{% if product.thumb %}<a href="catalog/product.js?product_id={{ product.product_id }}" data-action="link" data-target="content"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
-          <td><a href="catalog/product.js?product_id={{ product.product_id }}" data-action="link" data-target="content">{{ product.name }}</a>
+          <td class="text-center">{% if product.thumb %}<a href="catalog/product.js?product_id={{ product.product_id }}" :click="handleContent"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
+          <td><a href="catalog/product.js?product_id={{ product.product_id }}" :click="handleContent">{{ product.name }}</a>
 
             <form id="form-product-{{ product_row }}" @submit="onSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
@@ -58,4 +58,4 @@
   {% endif %}
 
 </div>
-<div class="text-end"><a href="account/account.js" data-action="link" data-target="content" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end"><a href="account/account.js" :click="handleContent" class="btn btn-primary">{{ button_continue }}</a></div>

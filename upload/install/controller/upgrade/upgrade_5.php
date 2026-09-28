@@ -232,7 +232,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			];
 
 			foreach ($events as $event) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "'");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "' OR (`trigger` = '" . $this->db->escape($event['trigger']) . "' AND `action` = '" . $this->db->escape($event['action']) . "')");
 
 				if (!$query->num_rows) {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($event['code']) . "', `trigger` = '" . $this->db->escape($event['trigger']) . "', `action` = '" . $this->db->escape($event['action']) . "', `status` = '1', `sort_order` = '0'");

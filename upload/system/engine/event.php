@@ -17,6 +17,8 @@
 class Event {
 	protected $registry;
 	protected $data = array();
+	protected $processed = array();
+	protected $refresh = false;
 	
 	/**
 	 * Constructor
@@ -38,16 +40,10 @@ class Event {
 		$this->data[] = array(
 			'trigger'  => $trigger,
 			'action'   => $action,
-			'priority' => $priority
+			'priority' => $priority,
+			'wildcard' => (strpos($trigger, '*') !== false) || (strpos($trigger, '?') !== false)
 		);
-		
-		$sort_order = array();
-
-		foreach ($this->data as $key => $value) {
-			$sort_order[$key] = $value['priority'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $this->data);	
+		$this->refresh = true;
 	}
 	
 	/**
@@ -57,13 +53,33 @@ class Event {
 	 * @param	array	$args
  	*/		
 	public function trigger($event, array $args = array()) {
-		foreach ($this->data as $value) {
-			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
-				$result = $value['action']->execute($this->registry, $args);
-
-				if (!is_null($result) && !($result instanceof Exception)) {
-					return $result;
+		if ($this->refresh) {
+			array_multisort(
+				array_column($this->data, 'priority'), SORT_ASC,
+				$this->data
+			);
+			$this->processed = array();
+			$this->refresh = false;
+		}
+		
+		if (!isset($this->processed[$event])) {
+			$this->processed[$event] = array();
+			foreach ($this->data as $value) {
+				if (!$value['wildcard'] && ($value['trigger'] == $event)) {
+					// not a wildcard and exactly matches
+					$this->processed[$event][] = $value;
+				} elseif ($value['wildcard']) {
+					if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
+						$this->processed[$event][] = $value;
+					}
 				}
+			}
+		}
+		
+		foreach ($this->processed[$event] as $value) {
+			$result = $value['action']->execute($this->registry, $args);
+			if (!is_null($result) && !($result instanceof Exception)) {
+				return $result;
 			}
 		}
 	}
@@ -78,8 +94,9 @@ class Event {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
 				unset($this->data[$key]);
+				$this->refresh = true;
 			}
-		}			
+		}
 	}
 	
 	/**
@@ -91,6 +108,7 @@ class Event {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger']) {
 				unset($this->data[$key]);
+				$this->refresh = true;
 			}
 		}
 	}	

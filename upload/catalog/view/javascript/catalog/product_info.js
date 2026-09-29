@@ -163,7 +163,7 @@ export default class ProductInfo extends WebComponent {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 
-                        let input = target.querySelector('#input-' + value);
+                        let input = this.form.querySelector('#input-' + value);
 
                         if (input) {
                             input.classList.add('is-invalid');

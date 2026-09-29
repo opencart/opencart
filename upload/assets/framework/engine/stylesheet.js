@@ -1,5 +1,5 @@
 /**
- * StylesheetImporter
+ * Stylesheet Importer
  * -------------------
  * Loads external CSS files (or raw CSS text) as Constructable Stylesheets
  * and adopts them into a shadow root. Each unique href/text is fetched and
@@ -33,11 +33,21 @@
  *   await Stylesheet.adoptText(shadowRoot, ['.x { color: red; }']);
  */
 class Stylesheet {
-    // href -> Promise<CSSStyleSheet>  (or Promise<string> css text on fallback)
-    static cache = new Map();
+    static instance = null;
 
-    static get supportsConstructableStylesheets() {
-        return (typeof CSSStyleSheet !== 'undefined' && 'replaceSync' in CSSStyleSheet.prototype && 'adoptedStyleSheets' in Document.prototype);
+    // href -> Promise<CSSStyleSheet>  (or Promise<string> css text on fallback)
+    constructor() {
+        this.directory = '';
+        this.path = new Map();
+        this.cache = new Map();
+    }
+
+    addPath(namespace, path = '') {
+        if (!path) {
+            this.directory = namespace;
+        } else {
+            this.path.set(namespace, path);
+        }
     }
 
     /**
@@ -46,21 +56,35 @@ class Stylesheet {
      * @param {string} href
      * @returns {Promise<CSSStyleSheet|string>}
      */
-    static load(href) {
-        if (this.cache.has(href)) {
-            return this.cache.get(href);
+    fetch(path) {
+        if (this.cache.has(path)) return this.cache.get(path);
+
+        let file = this.directory + path;
+        let namespace = '';
+        let parts = path.trimEnd('/').split('/');
+
+        for (let part of parts) {
+            if (!namespace) {
+                namespace += part;
+            } else {
+                namespace += '/' + part;
+            }
+
+            if (this.path.has(namespace + '/')) {
+                file = this.path.get(namespace + '/') + path.substr(namespace.length);
+            }
         }
 
-        const promise = fetch(href)
-        .then((res) => {
-            if (!res.ok) {
-                throw new Error(`Stylesheet: failed to fetch "${href}" (${res.status})`);
+        let promise = fetch(file).then(response => {
+            if (response.status !== 200) {
+                console.log(`Stylesheet: failed to fetch "${path}" (${response.status})`);
             }
-            return res.text();
-        })
-        .then((cssText) => this._compile(cssText));
 
-        this._cache.set(href, promise);
+            return response.text();
+        }).then(this.compile);
+
+        this.cache.set(path, promise);
+
         return promise;
     }
 
@@ -70,27 +94,12 @@ class Stylesheet {
      * @param {string} cssText
      * @returns {CSSStyleSheet|string}
      */
-    static _compile(cssText) {
-        if (this.supportsConstructableStylesheets) {
-            const sheet = new CSSStyleSheet();
-            sheet.replaceSync(cssText);
-            return sheet;
-        }
-        // Fallback: caller will inject a <style> tag with this raw text.
-        return cssText;
-    }
+    compile(text) {
+        const sheet = new CSSStyleSheet();
 
-    /**
-     * Compiles and caches raw CSS text by a cache key (so repeated calls
-     * with the same key reuse the same sheet, just like `load()` does for URLs).
-     * @param {string} key - a unique identifier for this CSS text
-     * @param {string} cssText
-     */
-    static loadText(key, cssText) {
-        if (!this._cache.has(key)) {
-            this._cache.set(key, Promise.resolve(this._compile(cssText)));
-        }
-        return this._cache.get(key);
+        sheet.replaceSync(text);
+
+        return sheet;
     }
 
     /**
@@ -99,12 +108,26 @@ class Stylesheet {
      * @param {ShadowRoot} root
      * @param {string[]} hrefs
      */
-    static async adopt(root, hrefs = []) {
+    async adopt(root, hrefs = []) {
         if (!hrefs.length) return;
 
-        const results = await Promise.all(hrefs.map((href) => this.load(href)));
+        const result = await Promise.all(hrefs.map(href => this.fetch(href)));
 
-        this._apply(root, results);
+        this.apply(root, result);
+    }
+
+    /**
+     * Compiles and caches raw CSS text by a cache key (so repeated calls
+     * with the same key reuse the same sheet, just like `load()` does for URLs).
+     * @param {string} key - a unique identifier for this CSS text
+     * @param {string} cssText
+     */
+    addText(key, text) {
+        if (!this.cache.has(key)) {
+            this.cache.set(key, Promise.resolve(this.compile(text)));
+        }
+
+        return this.cache.get(key);
     }
 
     /**
@@ -114,46 +137,56 @@ class Stylesheet {
      * @param {ShadowRoot} root
      * @param {(string|{key: string, css: string})[]} entries
      */
-    static async adoptText(root, entries = []) {
+    async adoptText(root, entries = []) {
         if (!entries.length) return;
 
-        const results = await Promise.all(
-            entries.map((entry) => {
-                const isObj = typeof entry === 'object' && entry !== null;
-                const key = isObj ? entry.key : entry;
-                const css = isObj ? entry.css : entry;
-                return this.loadText(key, css);
-            })
-        );
-        this._apply(root, results);
+        let promise = entries.map((entry) => {
+            const isObj = typeof entry === 'object' && entry !== null;
+            const key = isObj ? entry.key : entry;
+            const css = isObj ? entry.css : entry;
+
+            return this.addText(key, css);
+        })
+
+        const results = await Promise.all(promise);
+
+        this.apply(root, results);
     }
 
-    static _apply(root, compiled) {
+    apply(root, compiled) {
         const sheets = compiled.filter((c) => c instanceof CSSStyleSheet);
-        const rawTexts = compiled.filter((c) => typeof c === 'string');
+        const raw = compiled.filter((c) => typeof c === 'string');
 
         if (sheets.length) {
             const existing = root.adoptedStyleSheets || [];
             // Avoid re-adding a sheet that's already adopted.
-            const merged = [...existing, ...sheets.filter((s) => !existing.includes(s))];
 
-            root.adoptedStyleSheets = merged;
+            root.adoptedStyleSheets = [ ...existing, ...sheets.filter(sheet => !existing.includes(sheet))];
         }
 
-        rawTexts.forEach((cssText) => {
+        raw.forEach(text => {
             const style = document.createElement('style');
 
-            style.textContent = cssText;
+            style.textContent = text;
 
             root.appendChild(style);
         });
     }
 
     /** Clears the cache — mainly useful for tests or hot-reload scenarios. */
-    static clearCache() {
+    clear() {
         this.cache.clear();
+    }
+
+    static getInstance() {
+        if (!Stylesheet.instance) {
+            Stylesheet.instance = new Stylesheet();
+        }
+
+        return Stylesheet.instance;
     }
 }
 
-export default StylesheetImporter;
-// If not using ES modules: module.exports = StylesheetImporter;
+const stylesheet = Stylesheet.getInstance();
+
+export { stylesheet };

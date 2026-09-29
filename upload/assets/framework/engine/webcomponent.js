@@ -1,6 +1,6 @@
 import { Binder } from './binder.js';
 import { State } from './state.js';
-//import { Sheet } from './Sheet.js';
+import { stylesheet } from './stylesheet.js';
 
 /**
  * BaseComponent
@@ -25,10 +25,7 @@ import { State } from './state.js';
  *     }
  *
  *     template() {
- *       return `
- *         <button data-ref="btn" data-on="click:increment">+1</button>
- *         <span data-ref="display">0</span>
- *       `;
+ *       return `<button data-ref="btn" data-on="click:increment">+1</button><span data-ref="display">0</span>`;
  *     }
  *
  *     onConnect() {
@@ -50,12 +47,9 @@ import { State } from './state.js';
 export class WebComponent extends HTMLElement {
     static observed = [];
     static formAssociated = false;
-    static global = [];
 
-    /** Override: list of external CSS file URLs to adopt into this component. */
-    /** Override: list of external CSS file URLs to adopt into this component. */
-    static get stylesheets() {
-        return [];
+    static get observedAttributes() {
+        return this.observed;
     }
 
     constructor() {
@@ -72,13 +66,8 @@ export class WebComponent extends HTMLElement {
 
         // State
         this.state = new State(this.initialState(), {
-            onChange: (keys) => this._handleStateChange(keys),
+            onChange: (keys) => this.handleState(keys),
         });
-
-        // Adds reactive component event changes to the attributes of the element to re-render the contents.
-        for (let attribute of this.attributes) {
-            this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
-        }
     }
 
     /** Override: return the initial values for `this.state`. */
@@ -86,9 +75,9 @@ export class WebComponent extends HTMLElement {
         return {};
     }
 
-    _handleStateChange(changedKeys) {
+    handleState(keys) {
         if (typeof this.onStateChange === 'function') {
-            this.onStateChange(changedKeys, this.state);
+            this.onStateChange(keys, this.state);
         } else {
             this.update();
         }
@@ -102,6 +91,30 @@ export class WebComponent extends HTMLElement {
         if (typeof this.render === 'function') {
             await this.update();
         }
+
+        // Adds reactive component event changes to the attributes of the element to re-render the contents.
+        for (let attribute of this.attributes) {
+            this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
+        }
+    }
+
+    /** Override: list of external CSS file URLs to adopt into this component. */
+    /** Override: list of external CSS file URLs to adopt into this component. */
+    stylesheets() {
+        return [
+            'stylesheet.css',
+            'fontawesome/css/all.css'
+        ];
+    }
+
+    /** Override: return a CSS string scoped to this component's shadow root. */
+    styles() {
+        return '';
+    }
+
+    /** Override: return the HTML string for the component's shadow DOM. */
+    template() {
+        return '';
     }
 
     async update() {
@@ -117,22 +130,23 @@ export class WebComponent extends HTMLElement {
             }
         }
 
-        /*
-        const hrefs = this.constructor.stylesheets;
+        // Stylesheet
+        const hrefs = this.stylesheets();
 
         if (hrefs && hrefs.length) {
             // Adopts asynchronously; inline `styles()` above still applies
             // immediately so there's no unstyled flash for critical CSS.
-            StylesheetImporter.adopt(this.shadow, hrefs).catch((err) =>
-                console.error('BaseComponent: failed to adopt stylesheets', err)
-            );
+            stylesheet.adopt(this.shadow, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
         }
-        */
     }
 
     async disconnectedCallback() {
         if (this.binder) {
             this.binder.destroy();
+        }
+
+        if (this.state) {
+            this.state.destroy();
         }
 
         if (typeof this.onDisconnect === 'function') {
@@ -146,25 +160,21 @@ export class WebComponent extends HTMLElement {
         }
     }
 
-    static get observedAttributes() {
-        return this.observed;
-    }
-
     attributeChangedCallback(name, value_old, value_new) {
         console.log(`${name} changed from ${value_old} to ${value_new}`);
 
-        if (value_old !== null && value_old != value_new) {
-            let event = new CustomEvent('[' + name + ']', {
-                bubbles: false,
-                cancelable: true,
-                detail: {
-                    value_old: value_old,
-                    value_new: value_new
-                }
-            });
+        if (value_old !== null && old_value === new_value) return;
 
-            // Dispatch the event
-            this.dispatchEvent(event);
-        }
+        let event = new CustomEvent('[' + name + ']', {
+            bubbles: false,
+            cancelable: true,
+            detail: {
+                value_old: value_old,
+                value_new: value_new
+            }
+        });
+
+        // Dispatch the event
+        this.dispatchEvent(event);
     }
 }

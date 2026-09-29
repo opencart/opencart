@@ -68,6 +68,11 @@ export class WebComponent extends HTMLElement {
         this.state = new State(this.initialState(), {
             onChange: (keys) => this.handleState(keys),
         });
+
+        // Adds reactive component event changes to the attributes of the element to re-render the contents.
+        for (let attribute of this.attributes) {
+            this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
+        }
     }
 
     /** Override: return the initial values for `this.state`. */
@@ -92,13 +97,9 @@ export class WebComponent extends HTMLElement {
             await this.update();
         }
 
-        // Adds reactive component event changes to the attributes of the element to re-render the contents.
-        for (let attribute of this.attributes) {
-            this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
-        }
+
     }
 
-    /** Override: list of external CSS file URLs to adopt into this component. */
     /** Override: list of external CSS file URLs to adopt into this component. */
     stylesheets() {
         return [
@@ -162,8 +163,8 @@ export class WebComponent extends HTMLElement {
 
     attributeChangedCallback(name, value_old, value_new) {
         console.log(`${name} changed from ${value_old} to ${value_new}`);
-
-        if (value_old !== null && old_value === new_value) return;
+        //value_old !== null ||
+        if (value_old === value_new) return;
 
         let event = new CustomEvent('[' + name + ']', {
             bubbles: false,

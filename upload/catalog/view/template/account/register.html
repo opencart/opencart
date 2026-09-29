@@ -199,6 +199,6 @@
     {% if config_account_id %}
       <x-agree name="agree" value="{{ config_account_id }}" target="#button-continue"></x-agree>
     {% endif %}
-    <button-submit @bind="submit" class="btn btn-primary">{{ button_continue }}</button-submit>
+    <button-submit @ref="submit" class="btn btn-primary">{{ button_continue }}</button-submit>
   </div>
 </form>

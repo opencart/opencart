@@ -1,6 +1,6 @@
 <div class="dropdown d-grid">
   {% assign amount = total | currency: currency %}
-  <button type="button" data-bind="button-cart" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
+  <button type="button" @ref="button-cart" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
 
   <ul class="dropdown-menu dropdown-menu-end p-2">
     {% if products %}
@@ -37,7 +37,7 @@
           <td class="text-end text-nowrap">x {{ product.quantity }}</td>
           <td class="text-end">{{ product.total | tax: product.tax_class_id, config_tax | currency: currency }}</td>
           <td class="text-end">
-            <form data-bind="form-cart">
+            <form @ref="form-cart">
               <input type="hidden" name="key" value="{{ product.cart_id }}">
               <button type="submit" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
             </form>
@@ -54,7 +54,7 @@
           </tr>
           {% endfor %}
         </table>
-        <p class="text-end"><a href="chechout/cart.js" :click="handleContent"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" :click="handleContent"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
+        <p class="text-end"><a href="chechout/cart.js" :click="link"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" :click="link"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
       </div>
     </li>
     {% else %}

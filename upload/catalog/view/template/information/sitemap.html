@@ -3,11 +3,11 @@
   <div class="col-sm-6">
     <ul>
       {% for category in categories %}
-        <li><a href="catalog/category.js?path={{ category.path }}" :click="handleContent">{{ category.name }}</a>
+        <li><a href="catalog/category.js?path={{ category.path }}" :click="link">{{ category.name }}</a>
           {% if category.children %}
             <ul>
               {% for children in category.children %}
-                <li><a href="catalog/category.js?path={{ children.path }}" :click="handleContent">{{ children.name }}</a></li>
+                <li><a href="catalog/category.js?path={{ children.path }}" :click="link">{{ children.name }}</a></li>
               {% endfor %}
             </ul>
           {% endif %}
@@ -17,25 +17,25 @@
   </div>
   <div class="col-sm-6">
     <ul>
-      <li><a href="catalog/search.js" :click="handleContent">{{ text_search }}</a></li>
-      <li><a href="catalog/special.js" :click="handleContent">{{ text_special }}</a></li>
-      <li><a href="account/account.js" :click="handleContent">{{ text_account }}</a>
+      <li><a href="catalog/search.js" :click="link">{{ text_search }}</a></li>
+      <li><a href="catalog/special.js" :click="link">{{ text_special }}</a></li>
+      <li><a href="account/account.js" :click="link">{{ text_account }}</a>
         <ul>
-          <li><a href="account/edit.js" :click="handleContent">{{ text_edit }}</a></li>
-          <li><a href="account/password.js" :click="handleContent">{{ text_password }}</a></li>
-          <li><a href="account/address.js" :click="handleContent">{{ text_address }}</a></li>
-          <li><a href="account/history.js" :click="handleContent">{{ text_history }}</a></li>
-          <li><a href="account/download.js" :click="handleContent">{{ text_download }}</a></li>
+          <li><a href="account/edit.js" :click="link">{{ text_edit }}</a></li>
+          <li><a href="account/password.js" :click="link">{{ text_password }}</a></li>
+          <li><a href="account/address.js" :click="link">{{ text_address }}</a></li>
+          <li><a href="account/history.js" :click="link">{{ text_history }}</a></li>
+          <li><a href="account/download.js" :click="link">{{ text_download }}</a></li>
         </ul>
       </li>
-      <li><a href="checkout/cart.js" :click="handleContent">{{ text_cart }}</a></li>
-      <li><a href="checkout/checkout.js" :click="handleContent">{{ text_checkout }}</a></li>
+      <li><a href="checkout/cart.js" :click="link">{{ text_cart }}</a></li>
+      <li><a href="checkout/checkout.js" :click="link">{{ text_checkout }}</a></li>
       <li>{{ text_information }}
         <ul>
           {% for information in informations %}
-            <li><a href="catalog/information.js?information_id={{ information.information_id }}" :click="handleContent">{{ information.title }}</a></li>
+            <li><a href="catalog/information.js?information_id={{ information.information_id }}" :click="link">{{ information.title }}</a></li>
           {% endfor %}
-          <li><a href="information/contact.js" :click="handleContent">{{ text_contact }}</a></li>
+          <li><a href="information/contact.js" :click="link">{{ text_contact }}</a></li>
         </ul>
       </li>
     </ul>

@@ -146,7 +146,7 @@ class Stylesheet {
             const css = isObj ? entry.css : entry;
 
             return this.addText(key, css);
-        })
+        });
 
         const results = await Promise.all(promise);
 
@@ -160,7 +160,6 @@ class Stylesheet {
         if (sheets.length) {
             const existing = root.adoptedStyleSheets || [];
             // Avoid re-adding a sheet that's already adopted.
-
             root.adoptedStyleSheets = [ ...existing, ...sheets.filter(sheet => !existing.includes(sheet))];
         }
 

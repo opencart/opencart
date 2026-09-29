@@ -69,7 +69,7 @@
       {% set product_row = 0 %}
       {% for product in products %}
         <tr id="product-row-{{ product_row }}">
-          <td><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="handleContent">{{ product.name }}</a>
+          <td><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>
             <div id="error-{{ product_row }}-product" class="invalid-feedback mt-0"></div>
             <ul class="list-unstyled mb-0">
               <li>
@@ -120,7 +120,7 @@
           <td class="text-end text-nowrap" style="width: 1px;">
             <div class="d-grid">
               <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_reorder }}</button>
-              <a href="account/return.js?product_id={{ product.product_id }}" :click="handleContent" class="btn btn-danger">{{ button_return }}</a>
+              <a href="account/return.js?product_id={{ product.product_id }}" :click="link" class="btn btn-danger">{{ button_return }}</a>
             </div>
           </td>
         </tr>

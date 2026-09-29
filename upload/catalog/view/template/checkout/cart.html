@@ -23,8 +23,8 @@
           {% for product in products %}
 
           <tr>
-            <td class="text-center">{% if product.thumb %}<a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="handleContent"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 200px"/></a>{% endif %}</td>
-            <td class="text-start text-wrap"><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="handleContent">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
+            <td class="text-center">{% if product.thumb %}<a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 200px"/></a>{% endif %}</td>
+            <td class="text-start text-wrap"><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
               <ul class="list-unstyled mb-0">
                 <li>
                   <small> - {{ text_model }}: {{ product.model }}</small>
@@ -85,13 +85,13 @@
 
     <br/>
     <div class="row">
-      <div class="col"><a href="common/home.js" :click="handleContent" class="btn btn-primary">{{ button_continue }}</a></div>
-      <div class="col text-end"><a href="checkout/checkout.js" :click="handleContent" class="btn btn-primary">{{ button_checkout }}</a></div>
+      <div class="col"><a href="common/home.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
+      <div class="col text-end"><a href="checkout/checkout.js" :click="link" class="btn btn-primary">{{ button_checkout }}</a></div>
     </div>
 
     {% else %}
     <p>{{ text_no_results }}</p>
-    <div class="text-end"><a href="common/home.js" :click="handleContent" class="btn btn-primary">{{ button_continue }}</a></div>
+    <div class="text-end"><a href="common/home.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
     {% endif %}
 
 

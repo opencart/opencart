@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, global } from '../index.js';
+import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -20,6 +20,8 @@ customElements.define('x-include', class Include extends WebComponent {
         // Get the source HTML to load
         if (!this.src) return;
 
+        console.log(this.src);
+
         let [ path, query] = this.src.split('?');
 
         if (!this.data.has(path)) {
@@ -37,15 +39,5 @@ customElements.define('x-include', class Include extends WebComponent {
         }
 
         return html + '></' + name + '>';
-    }
-
-    onConnect() {
-        global.registerListener('handleContent', this.handleContent.bind(this));
-    }
-
-    handleContent(e) {
-        e.preventDefault();
-
-        this.src = e.target.getAttribute('href');
     }
 });

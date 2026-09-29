@@ -14,7 +14,7 @@ export default class ArticleInfo extends WebComponent {
         let article = await loader.storage('article/article-' + this.getAttribute('article_id'));
 
         if (article instanceof Map && local.get('language') in article.get('description')) {
-            let description = article.description[config.get('config_language')];
+            let description = article.get('description')[config.get('config_language')];
 
             //description.meta_title
             //description.meta_description

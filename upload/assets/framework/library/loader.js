@@ -46,10 +46,19 @@ export default class Loader {
             Object.assign(values, Object.fromEntries(data));
         }
 
+        //
         if (data instanceof Array) {
-            let entries = data.filter(value => value instanceof Map);
+            for (let entry of data) {
+                if (entry instanceof Map) {
+                    Object.assign(values, Object.fromEntries(entry));
 
-            for (let entry of entries) Object.assign(values, Object.fromEntries(entry));
+                    continue;
+                }
+
+                if (typeof entry == 'object') {
+                    Object.assign(values, entry);
+                }
+            }
         }
 
         return await template.render(path, values);

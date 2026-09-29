@@ -8,11 +8,10 @@ const config = await loader.config('default');
 const language = await loader.language('cms/article_list');
 
 export default class ArticleList extends WebComponent {
+
+
     async render() {
         let data = {};
-
-
-
 
         if (this.hasAttribute('search')) {
             data.search = this.getAttribute('search');
@@ -59,9 +58,9 @@ export default class ArticleList extends WebComponent {
                 let article = await loader.storage('article/article-' + article_id);
 
                 if (article instanceof Map && config.config_language in article.description) {
-                    let description = article.description[config.config_language];
+                    let description = article.get('description')[config.config_language];
 
-                    data.articles.push({ ...article, ...description });
+                    data.articles.push([ article, description ]);
                 }
             }
         }

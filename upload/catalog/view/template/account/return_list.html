@@ -18,7 +18,7 @@
             <td>{{ return.status }}</td>
             <td>{{ return.date_added }}</td>
             <td class="text-end">{{ return.order_id }}</td>
-            <td class="text-end"><a href="account/return.js?return_id={{ return.return_id }}" :click="handleContent" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
+            <td class="text-end"><a href="account/return.js?return_id={{ return.return_id }}" :click="link" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
           </tr>
         {% endfor %}
       </tbody>
@@ -31,5 +31,5 @@
 {% else %}
   <p>{{ text_no_results }}</p>
 {% endif %}
-<div class="text-end"><a href="account/account.js" :click="handleContent" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end"><a href="account/account.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
 

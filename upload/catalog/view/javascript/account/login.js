@@ -44,8 +44,8 @@ export default class AccountLogin extends WebComponent {
 
     success(json) {
         // Remove past error classes from inputs
-        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+        this.ref('form').querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        this.ref('form').querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
         if (json.has('error')) {
@@ -71,7 +71,9 @@ export default class AccountLogin extends WebComponent {
 
         // Display success message
         if (json.has('success')) {
-            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+            this.ref('alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+
+            cart
         }
     }
 }

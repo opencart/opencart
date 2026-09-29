@@ -14,7 +14,7 @@ export default class ManufacturerInfo extends WebComponent {
         let manufacturer = await loader.storage('manufacturer/manufacturer-' + this.getAttribute('manufacturer_id'));
 
         if (manufacturer instanceof Map && local.get('language') in manufacturer.get('description')) {
-            let description = manufacturer.description[local.get('language')];
+            let description = manufacturer.get('description')[local.get('language')];
 
             //description.meta_title
             //description.meta_description

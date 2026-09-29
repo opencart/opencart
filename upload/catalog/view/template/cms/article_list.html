@@ -16,20 +16,20 @@
 
 {% for article in articles %}
 <div class="mb-3">
-  <h2><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="handleContent">{{ article.name }}</a></h2>
+  <h2><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link">{{ article.name }}</a></h2>
 
   {% if article.thumb %}
-  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="handleContent"><img src="{{ article.thumb }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
+  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link"><img src="{{ article.thumb }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
   {% endif %}
 
   <ul class="list-inline">
-    <li class="list-inline-item">{{ text_by }} <a href="cms/article.js?author={{ article.filter_author }}" :click="handleContent">{{ article.author }}</a></li>
+    <li class="list-inline-item">{{ text_by }} <a href="cms/article.js?author={{ article.filter_author }}" :click="link">{{ article.author }}</a></li>
     <li class="list-inline-item">{{ article.date_added }}</li>
     <li class="list-inline-item">{{ article.comment_total }} {{ text_comment }}</li>
   </ul>
 
   <p class="mb-3">{{ article.description }}</p>
-  <div class="text-end"><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="handleContent" class="btn btn-primary">{{ button_continue }}</a></div>
+  <div class="text-end"><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
 
 </div>
 {% endfor %}

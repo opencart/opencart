@@ -1,7 +1,7 @@
 <div id="container">
   <div :ref="alert"></div>
   <dialog :ref="dialog" class="position-relative border-0" closedby="any"></dialog>
-  <common-header :ref="header"></common-header>
+  <common-header :ref="common-header"></common-header>
   <main class="flex-grow-1 mb-4">
     <div id="content" class="container">
       <x-include :ref="content" src="catalog/product_info.js?product_id=42"></x-include>
@@ -23,5 +23,5 @@
       //-->
     </div>
   </main>
-  <common-footer :ref="footer"></common-footer>
+  <common-footer :ref="common-footer"></common-footer>
 </div>

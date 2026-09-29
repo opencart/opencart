@@ -21,7 +21,7 @@
     <ul class="list-unstyled mb-1">
 
       {% if manufacturer %}
-      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer.js?manufacturer_id={{ manufacturer_id }}" :click="handleContent">{{ manufacturer }}</a></strong></li>
+      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer.js?manufacturer_id={{ manufacturer_id }}" :click="link">{{ manufacturer }}</a></strong></li>
       {% endif %}
 
       <li>{{ text_model }}: <strong>{{ model }}</strong></li>
@@ -227,7 +227,7 @@
         <div class="mb-3">
           <div class="input-group">
             <div class="input-group-text">{{ entry_qty }}</div>
-            <input type="number" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" data-bind="quantity" class="form-control"/>
+            <input type="number" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" @ref="quantity" class="form-control"/>
             <button type="submit" id="button-cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
           </div>
           <div id="error-quantity" class="form-text"></div>

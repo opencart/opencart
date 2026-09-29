@@ -1,4 +1,4 @@
-import { loader, config, language, local, storage, template } from '../../../assets/framework/index.js';
+import { loader, config, language, local, storage, template, stylesheet } from '../../../assets/framework/index.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
@@ -46,6 +46,10 @@ storage.addPath('shop/' + base.host + '/data/');
 
 // Developer Code
 template.addPath('catalog/view/template/');
+
+// Stylesheet
+stylesheet.addPath('catalog/view/stylesheet/');
+stylesheet.addPath('fontawesome/css/', 'assets/fonts/fontawesome/css/');
 
 // Currency
 const currency = await loader.library('currency');

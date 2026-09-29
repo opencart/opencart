@@ -75,18 +75,19 @@
     </ul>
     {% endif %}
 
-    <form>
+    <form @ref="form">
       <div class="btn-group">
-        <button type="button" data-bind="wishlist" @submit="addToWishlist" class="btn btn-light btn-lg" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
-        <button type="button" data-bind="compare" @click="addToCompare" data-product-id="{{ product_id }}" class="btn btn-light btn-lg" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+        <button type="button" class="btn btn-light btn-lg" @click="addToWishList" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
+        <button type="button" class="btn btn-light btn-lg" @click="addToCompare" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
       </div>
 
-      <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ minimum }}"/>
+      <input type="hidden" name="product_id" value="{{ product_id }}"/>
+      <input type="hidden" name="quantity" value="{{ minimum }}"/>
     </form>
 
     <br/>
     <div id="product">
-      <form id="form-product" @submit="addToCart">
+      <form @submit="addToCart">
         {% if options %}
         <hr>
         <h3>{{ text_option }}</h3>

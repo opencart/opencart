@@ -3,8 +3,6 @@ import { session } from './session.js';
 
 const config = await loader.config('default');
 
-console.log(config);
-
 export default class Customer {
     static instance= null;
 

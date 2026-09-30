@@ -11,9 +11,9 @@ final class PDO {
 			throw new \Exception('Failed to connect to database. Reason: \'' . $e->getMessage() . '\'');
 		}
 
-		$this->connection->exec("SET NAMES 'utf8'");
-		$this->connection->exec("SET CHARACTER SET utf8");
-		$this->connection->exec("SET CHARACTER_SET_CONNECTION=utf8");
+		$this->connection->exec("SET NAMES 'utf8mb4'");
+		$this->connection->exec("SET CHARACTER SET utf8mb4");
+		$this->connection->exec("SET CHARACTER_SET_CONNECTION=utf8mb4");
 		$this->connection->exec("SET SQL_MODE = ''");
 	}
 

@@ -87,6 +87,10 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "extension` SET `extension` = 'opencart' WHERE `code` = '" . $this->db->escape($extension['code']) . "'");
 				}
 			}
+
+			// Migrate layout_module codes from 3.x format to 4.x format
+			// 3.x used codes like 'html.1', 'category' — 4.x requires 'opencart.html.1', 'opencart.category'
+			$this->db->query("UPDATE `" . DB_PREFIX . "layout_module` SET `code` = CONCAT('opencart.', `code`) WHERE `code` NOT LIKE '%.%.%' AND `code` NOT LIKE 'opencart.%'");
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

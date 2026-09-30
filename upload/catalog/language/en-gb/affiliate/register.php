@@ -47,6 +47,6 @@ $_['error_cheque']              = 'Cheque Payee Name required!';
 $_['error_paypal']              = 'PayPal Email Address does not appear to be valid!';
 $_['error_bank_account_name']   = 'Account Name required!';
 $_['error_bank_account_number'] = 'Account Number required!';
-$_['error_password']            = 'Password must be between 4 and 20 characters!';
+$_['error_password']            = 'Password must be between 4 and 40 characters!';
 $_['error_confirm']             = 'Password confirmation does not match password!';
 $_['error_agree']               = 'Warning: You must agree to the %s!';

@@ -87,6 +87,13 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "extension` SET `extension` = 'opencart' WHERE `code` = '" . $this->db->escape($extension['code']) . "'");
 				}
 			}
+
+			// Ensure extension_install has the default OpenCart extensions entry
+			$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install` WHERE `code` = 'opencart'");
+
+			if (!$query->row['total']) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '0', `extension_download_id` = '0', `name` = 'OpenCart Default Extensions', `description` = 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', `code` = 'opencart', `version` = '1.0', `author` = 'OpenCart Ltd', `link` = 'https://www.opencart.com', `status` = '1', `date_added` = NOW()");
+			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

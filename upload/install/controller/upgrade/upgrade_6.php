@@ -87,6 +87,15 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "extension` SET `extension` = 'opencart' WHERE `code` = '" . $this->db->escape($extension['code']) . "'");
 				}
 			}
+
+			// Remove extensions that no longer exist in 4.x
+			$removed = [
+				['type' => 'total', 'code' => 'voucher']
+			];
+
+			foreach ($removed as $remove) {
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($remove['type']) . "' AND `code` = '" . $this->db->escape($remove['code']) . "'");
+			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

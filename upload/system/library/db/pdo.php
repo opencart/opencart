@@ -6,14 +6,11 @@ final class PDO {
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		try {
-			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
+			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database . ";charset=utf8mb4", $username, $password, array(\PDO::ATTR_PERSISTENT => true));
 		} catch (\PDOException $e) {
 			throw new \Exception('Failed to connect to database. Reason: \'' . $e->getMessage() . '\'');
 		}
 
-		$this->connection->exec("SET NAMES 'utf8mb4'");
-		$this->connection->exec("SET CHARACTER SET utf8mb4");
-		$this->connection->exec("SET CHARACTER_SET_CONNECTION=utf8mb4");
 		$this->connection->exec("SET SQL_MODE = ''");
 	}
 

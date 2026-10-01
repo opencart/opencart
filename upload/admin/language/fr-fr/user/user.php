@@ -60,5 +60,5 @@ $_['error_password_uppercase'] = 'majuscule';
 $_['error_password_lowercase'] = 'minuscule';
 $_['error_password_number']    = 'numéro';
 $_['error_password_symbol']    = 'symbole';
-$_['error_password_length']    = 'Le mot de passe doit contenir entre %d et 20 caractères!';
+$_['error_password_length']    = 'Le mot de passe doit contenir entre %d et 40 caractères!';
 $_['error_confirm']         = 'Le mot de passe et la confirmation ne correspondent pas!';

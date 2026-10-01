@@ -69,7 +69,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			if ($shipping_methods) {
 				$json['shipping_methods'] = $this->session->data['shipping_methods'] = $shipping_methods;
 			} else {
-				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				$json['error'] = $this->language->format('error_no_shipping', $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
 		}
 

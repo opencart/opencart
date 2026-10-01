@@ -1,0 +1,2767 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Path in require_once\(\) "config\.php" is not a file or it does not exist\.$#'
+			identifier: requireOnce.fileNotFound
+			count: 1
+			path: upload/action.php
+
+		-
+			message: '#^Undefined variable\: \$attribute_info$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/catalog/attribute.php
+
+		-
+			message: '#^Variable \$attribute_info in empty\(\) is never defined\.$#'
+			identifier: empty.variable
+			count: 1
+			path: upload/admin/controller/catalog/attribute.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Cms\\Article\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Cms\\Article\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/cms/article.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Cms\\Topic\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Cms\\Topic\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/cms/topic.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\Admin\\Controller\\Common\\Developer\:\:getList\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: upload/admin/controller/common/developer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Common\\Security\:\:storage_delete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: upload/admin/controller/common/security.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Customer\\Customer\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/customer/customer.php
+
+		-
+			message: '#^Offset ''image'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/design/banner.php
+
+		-
+			message: '#^Offset ''link'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/design/banner.php
+
+		-
+			message: '#^Offset ''sort_order'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/design/banner.php
+
+		-
+			message: '#^Offset ''title'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/design/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Design\\Translation\:\:getTotalTranslations\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: upload/admin/controller/design/translation.php
+
+		-
+			message: '#^PHPDoc tag @return with type array is incompatible with native type void\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/admin/controller/design/translation.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\AddressFormat\:\:editAddressFormat\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/address_format.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and array\<string, string\> results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: upload/admin/controller/event/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Article\:\:deleteArticle\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Article\:\:editArticle\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/article.php
+
+		-
+			message: '#^Offset 1 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: upload/admin/controller/event/article.php
+
+		-
+			message: '#^Offset 1 on array\<string, string\> in isset\(\) does not exist\.$#'
+			identifier: isset.offset
+			count: 2
+			path: upload/admin/controller/event/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Attribute\:\:editAttribute\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/attribute.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Banner\:\:addBanner\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Banner\:\:addBanner\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Banner\:\:deleteBanner\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Banner\:\:editBanner\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Category\:\:addCategory\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Category\:\:addCategory\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Category\:\:deleteCategory\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Category\:\:deleteCategory\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Category\:\:editCategory\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Comment\:\:addComment\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/comment.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Comment\:\:addComment\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/comment.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Comment\:\:deleteComment\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/comment.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Comment\:\:deleteComment\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/comment.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Comment\:\:editComment\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/comment.php
+
+		-
+			message: '#^Binary operation "\." between ''admin\.country\.info\.'' and array\<string, string\> results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: upload/admin/controller/event/country.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and array\<string, string\> results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: upload/admin/controller/event/country.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 8
+			path: upload/admin/controller/event/country.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/event/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Currency\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/currency.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Currency\:\:index\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/currency.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/event/custom_field.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\CustomerGroup\:\:addCustomerGroup\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\CustomerGroup\:\:deleteCustomerGroup\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/customer_group.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 7
+			path: upload/admin/controller/event/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Filter\:\:addFilter\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Filter\:\:addFilter\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Filter\:\:deleteFilter\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Filter\:\:deleteFilter\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Filter\:\:editFilter\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/filter.php
+
+		-
+			message: '#^Parameter \#1 \$data of method Opencart\\Admin\\Model\\Catalog\\Filter\:\:getFilters\(\) expects array\<string, mixed\>, int given\.$#'
+			identifier: argument.type
+			count: 2
+			path: upload/admin/controller/event/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\GeoZone\:\:addGeoZone\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/geo_zone.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\GeoZone\:\:deleteGeoZone\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/geo_zone.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 6
+			path: upload/admin/controller/event/geo_zone.php
+
+		-
+			message: '#^Offset 1 on array\<string, string\> in isset\(\) does not exist\.$#'
+			identifier: isset.offset
+			count: 2
+			path: upload/admin/controller/event/geo_zone.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/event/information.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/event/language.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\LengthClass\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/length_class.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/event/location.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/event/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Option\:\:editOption\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/option.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/event/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Review\:\:addReview\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Review\:\:addReview\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Review\:\:deleteReview\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Review\:\:deleteReview\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Review\:\:editReview\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/review.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/controller/event/store.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and array\<string, mixed\> results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Tag\:\:addTag\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Tag\:\:addTag\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Tag\:\:deleteFilter\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Tag\:\:deleteFilter\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Tag\:\:editFilter\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Parameter \#1 \$data of method Opencart\\Admin\\Model\\Catalog\\Filter\:\:getFilters\(\) expects array\<string, mixed\>, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Parameter \#1 \$data of method Opencart\\Admin\\Model\\Catalog\\Tag\:\:getTags\(\) expects array\<string, mixed\>, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/event/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\TaxClass\:\:addTaxClass\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/tax_class.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: upload/admin/controller/event/tax_class.php
+
+		-
+			message: '#^Offset 1 on array\<string, string\> in isset\(\) does not exist\.$#'
+			identifier: isset.offset
+			count: 2
+			path: upload/admin/controller/event/tax_class.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\TaxRate\:\:addTaxRate\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/tax_rate.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: upload/admin/controller/event/tax_rate.php
+
+		-
+			message: '#^Offset 1 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 5
+			path: upload/admin/controller/event/tax_rate.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/controller/event/template.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Topic\:\:addTopic\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Topic\:\:addTopic\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Topic\:\:deleteTopic\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Topic\:\:deleteTopic\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Topic\:\:editTopic\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Translation\:\:addTranslation\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/translation.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Translation\:\:deleteTranslation\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/translation.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 8
+			path: upload/admin/controller/event/translation.php
+
+		-
+			message: '#^Offset 1 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 9
+			path: upload/admin/controller/event/translation.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\WeightClass\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/event/weight_class.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Zone\:\:addZone\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/zone.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Event\\Zone\:\:deleteZone\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/controller/event/zone.php
+
+		-
+			message: '#^Offset 0 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: upload/admin/controller/event/zone.php
+
+		-
+			message: '#^Offset 1 does not exist on array\<string, string\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 10
+			path: upload/admin/controller/event/zone.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Localisation\\Currency\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Localisation\\Currency\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/localisation/currency.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Localisation\\Language\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Localisation\\Language\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/localisation/language.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Localisation\\Zone\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Localisation\\Zone\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/localisation/zone.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Marketing\\Affiliate\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/marketing/affiliate.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Marketing\\Affiliate\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: upload/admin/controller/marketing/coupon.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Store\:\:createStoreInstance\(\) invoked with 3 parameters, 0\-2 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: upload/admin/controller/sale/subscription.php
+
+		-
+			message: '#^Class Opencart\\System\\Engine\\Action constructor invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 2
+			path: upload/admin/controller/startup/cli.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Startup\\Cli\:\:usage\(\) should return Opencart\\System\\Engine\\Action\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: upload/admin/controller/startup/cli.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: upload/admin/controller/startup/cli.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Startup\\Task\:\:start\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: upload/admin/controller/startup/task.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$args$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/startup/task.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/startup/task.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$route$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/startup/task.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Country\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Country\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Country\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Country\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/country.php
+
+		-
+			message: '#^Offset ''name'' does not exist on array\{country_id\: mixed, description\: array\<int, array\{name\: string\}\>\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/admin/country.php
+
+		-
+			message: '#^Undefined variable\: \$description_data$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/task/admin/country.php
+
+		-
+			message: '#^Undefined variable\: \$geo_zone_data$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/task/admin/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Currency\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/currency.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Currency\:\:refresh\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/currency.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Currency\:\:refresh\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/currency.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\CustomerGroup\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\CustomerGroup\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\CustomerGroup\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Language\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/language.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Sass\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/sass.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Sass\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/sass.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type array\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/admin/controller/task/admin/sass.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Store\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/store.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Subscription\:\:confirm\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/subscription.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Subscription\:\:confirm\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/subscription.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Admin\\Subscription\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/admin/subscription.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Store\:\:createStoreInstance\(\) invoked with 3 parameters, 0\-2 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: upload/admin/controller/task/admin/subscription.php
+
+		-
+			message: '#^Undefined variable\: \$value$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/task/admin/subscription.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Information\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/Information.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Information\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/Information.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Information\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/Information.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Information\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/Information.php
+
+		-
+			message: '#^Call to function array_key_exists\(\) with ''store_id'' and array\<int, mixed\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Cannot access offset ''tag_id'' on int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Article\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Article\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Article\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Article\:\:list\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Article\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: upload/admin/controller/task/catalog/article.php
+
+		-
+			message: '#^Call to function array_key_exists\(\) with ''store_id'' and array\<int, mixed\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Banner\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Banner\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Banner\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Banner\:\:list\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Banner\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Offset ''image'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Offset ''link'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Offset ''sort_order'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Offset ''title'' does not exist on array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: upload/admin/controller/task/catalog/banner.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Category\:\:delete\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Category\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Category\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Category\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Category\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Category\:\:product\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Comment\:\:clear\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/comment.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Comment\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/comment.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Comment\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/comment.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Country\:\:delete\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Country\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Country\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Country\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Country\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/country.php
+
+		-
+			message: '#^Parameter \#1 \$store_id of method Opencart\\Admin\\Model\\Setting\\Store\:\:getStore\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/task/catalog/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Currency\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/currency.php
+
+		-
+			message: '#^Argument of an invalid type string supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: upload/admin/controller/task/catalog/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\CustomerGroup\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\CustomerGroup\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\CustomerGroup\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\CustomerGroup\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/customer_group.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of function in_array expects array, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/task/catalog/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:deleteFilter\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:deleteFilter\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:list\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Filter\:\:product\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Language\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/language.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\LengthClass\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/length_class.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Location\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/location.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Manufacturer\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Manufacturer\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Manufacturer\:\:info\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Manufacturer\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Manufacturer\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Manufacturer\:\:product\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/manufacturer.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Catalog\\SubscriptionPlan\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Catalog\\SubscriptionPlan\>\:\:getSubscription\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Call to function array_key_exists\(\) with ''store_id'' and array\<int, mixed\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Cannot access offset ''tag_id'' on int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Product\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Product\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Product\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Product\:\:list\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Product\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$route$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type array\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: upload/admin/controller/task/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\ReturnReason\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/return_reason.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Review\:\:clear\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Review\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Review\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/review.php
+
+		-
+			message: '#^Undefined variable\: \$language_info$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/task/catalog/review.php
+
+		-
+			message: '#^Undefined variable\: \$limit$#'
+			identifier: variable.undefined
+			count: 3
+			path: upload/admin/controller/task/catalog/review.php
+
+		-
+			message: '#^Undefined variable\: \$store$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/task/catalog/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Setting\:\:clear\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Setting\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Setting\:\:store\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Setting\:\:getSettings\(\) invoked with 2 parameters, 0\-1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_country_list'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_currency_list'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_customer_group_id'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_description'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_language_list'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_pagination'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_tax'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_tax_customer'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_tax_default'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''config_theme'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''country_id'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''currency'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''language'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''name'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Offset ''zone_id'' does not exist on non\-empty\-array\<int, array\<string, mixed\>\>\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Parameter \#1 \$store_id of method Opencart\\Admin\\Model\\Setting\\Setting\:\:getSettings\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Undefined variable\: \$language$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Undefined variable\: \$store$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/admin/controller/task/catalog/setting.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\StockStatus\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/stock_status.php
+
+		-
+			message: '#^Call to function array_key_exists\(\) with ''store_id'' and array\<int, mixed\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^Method Opencart\\admin\\controller\\task\\shop\\Store\:\:deleteStore\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^Method Opencart\\admin\\controller\\task\\shop\\Store\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^Method Opencart\\admin\\controller\\task\\shop\\Store\:\:setting\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^Method Opencart\\admin\\controller\\task\\shop\\Store\:\:setting\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$output$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$route$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type array\.$#'
+			identifier: return.phpDocType
+			count: 2
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: upload/admin/controller/task/catalog/store.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Stylesheet\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/stylesheet.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Stylesheet\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/stylesheet.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Catalog\\Product\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Catalog\\Product\>\:\:getArticles\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Cannot access offset ''tag_id'' on int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:article\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:article\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:autocomplete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:list\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:product\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Tag\:\:product\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Parameter \#1 \$product_id of method Opencart\\Admin\\Model\\Catalog\\Product\:\:getTags\(\) expects int, array\<string, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/task/catalog/tag.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\TaxRate\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tax_rate.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\TaxRate\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tax_rate.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\TaxRate\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/tax_rate.php
+
+		-
+			message: '#^Parameter \#1 \$store_id of method Opencart\\Admin\\Model\\Setting\\Store\:\:getStore\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/task/catalog/tax_rate.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Template\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/template.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Template\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/template.php
+
+		-
+			message: '#^Call to function array_key_exists\(\) with ''store_id'' and array\<int, mixed\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: upload/admin/controller/task/catalog/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Topic\:\:article\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Topic\:\:delete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Topic\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Topic\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Topic\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/topic.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: upload/admin/controller/task/catalog/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Translation\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/translation.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\Translation\:\:info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/translation.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Catalog\\WeightClass\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/catalog/weight_class.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Order\:\:complete\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/order.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Order\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/order.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Order\:\:other\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/order.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Order\:\:processing\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/order.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Order\:\:sale\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/order.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Rating\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/rating.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Rating\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/rating.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Rating\:\:list\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/rating.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Rating\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/rating.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Returns\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/returns.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Returns\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/returns.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Review\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Review\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/review.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Sale\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/sale.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Sale\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/sale.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Sale\:\:list\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/sale.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Sale\:\:list\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/sale.php
+
+		-
+			message: '#^Parameter \#2 \$total of method Opencart\\Admin\\Model\\Catalog\\Product\:\:editSale\(\) expects int, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/admin/controller/task/report/sale.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Stock\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/stock.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\Report\\Stock\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/report/stock.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Backup\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/backup.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Backup\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/backup.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Backup\:\:write\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/backup.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Backup\:\:write\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/backup.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Mail\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/mail.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Mail\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/mail.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Restore\:\:index\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/restore.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Restore\:\:index\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/restore.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Restore\:\:read\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/restore.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Controller\\Task\\System\\Restore\:\:read\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/controller/task/system/restore.php
+
+		-
+			message: '#^Invalid array key type list\<mixed\>\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: upload/admin/controller/tool/menu.php
+
+		-
+			message: '#^Offset non\-empty\-list\<mixed\> on array\<array\{children\: non\-empty\-list\<mixed\>\}\> in isset\(\) does not exist\.$#'
+			identifier: isset.offset
+			count: 1
+			path: upload/admin/controller/tool/menu.php
+
+		-
+			message: '#^PHPDoc tag @return with type array is incompatible with native type void\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/admin/controller/tool/upgrade.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\User\\Api\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\User\\Api\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/user/api.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\User\\User\>\:\:editStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: upload/admin/controller/user/user.php
+
+		-
+			message: '#^Path in require_once\(\) "config\.php" is not a file or it does not exist\.$#'
+			identifier: requireOnce.fileNotFound
+			count: 1
+			path: upload/admin/index.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Attribute\:\:addAttribute\(\) has parameter \$attribute_group_id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/model/catalog/attribute.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Attribute\:\:getTotalAttributeGroups\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/attribute.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Attribute\:\:getTotalAttributes\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/attribute.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$filter_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/catalog/attribute.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Category\:\:getCategoriesByFilterId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Category\:\:getStoresByStoreId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/category.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Download\:\:getTotalDownloads\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/download.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Filter\:\:getTotalFilterGroups\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/filter.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$filter_group_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/catalog/filter.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$filter_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/catalog/filter.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Information\:\:getStoresByStoreId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/information.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Information\:\:getTotalInformations\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/information.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Manufacturer\:\:getStoresByStoreId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Manufacturer\:\:getTotalManufacturers\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/manufacturer.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$option_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/catalog/option.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getAttributeDescriptions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getOptionValues\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getProductsByAttributeId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getProductsByCategoryId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getProductsByFilterId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getProductsByOptionId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getSeoUrls\(\) should return array\<int, string\> but returns array\<array\>\.$#'
+			identifier: return.type
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Product\:\:getStoresByStoreId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$category_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$rating$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/catalog/product.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Admin\\Model\\Catalog\\SubscriptionPlan\>\|Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Catalog\\SubscriptionPlan\>\:\:getDescription\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: upload/admin/model/catalog/subscription_plan.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\SubscriptionPlan\:\:getTotalSubscriptionPlans\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/subscription_plan.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Catalog\\Tag\:\:getTotalTags\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/catalog/tag.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$category_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/cms/article.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$product_id$#'
+			identifier: parameter.notFound
+			count: 3
+			path: upload/admin/model/cms/article.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Cms\\Topic\:\:getStoresByStoreId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/cms/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Cms\\Topic\:\:getTotalTopics\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/cms/topic.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Customer\\CustomField\:\:getTotalCustomFields\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/customer/custom_field.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$custom_field_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/customer/custom_field.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$information_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/customer/custom_field.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Customer\\CustomerGroup\:\:getTotalCustomerGroups\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/customer/customer_group.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Design\\SeoRegex\:\:addSeoRegex\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Design\\SeoRegex\:\:editSeoRegex\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$key$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$keyword$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$language_id$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$sort_order$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$store_id$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$value$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/design/seo_regex.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Design\\Template\:\:getTemplates\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/design/template.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$category_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/design/template.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$limit$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/design/template.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$start$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/design/template.php
+
+		-
+			message: '#^Undefined variable\: \$data$#'
+			identifier: variable.undefined
+			count: 3
+			path: upload/admin/model/design/template.php
+
+		-
+			message: '#^Variable \$data in empty\(\) is never defined\.$#'
+			identifier: empty.variable
+			count: 3
+			path: upload/admin/model/design/template.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$attribute_group_id$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/design/translation.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$category_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/design/translation.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$language_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/design/translation.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type int\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/admin/model/design/translation.php
+
+		-
+			message: '#^Undefined variable\: \$data$#'
+			identifier: variable.undefined
+			count: 4
+			path: upload/admin/model/design/translation.php
+
+		-
+			message: '#^Variable \$data in empty\(\) is never defined\.$#'
+			identifier: empty.variable
+			count: 4
+			path: upload/admin/model/design/translation.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\Country\:\:getCountriesByAddressFormatId\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: upload/admin/model/localisation/country.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$information_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/country.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\GeoZone\:\:getZone\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: upload/admin/model/localisation/geo_zone.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\GeoZone\:\:getZone\(\) has parameter \$zone_to_geo_zone_id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/model/localisation/geo_zone.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$geo_zone_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/geo_zone.php
+
+		-
+			message: '#^Cannot call method addDescription\(\) on null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: upload/admin/model/localisation/language.php
+
+		-
+			message: '#^Cannot call method getDescriptionsByLanguageId\(\) on null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: upload/admin/model/localisation/language.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\LengthClass\:\:getTotalLengthClasses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/length_class.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/length_class.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\OrderStatus\:\:getTotalOrderStatuses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/order_status.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/order_status.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\ReturnAction\:\:getTotalReturnActions\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/return_action.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/return_action.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\ReturnReason\:\:getTotalReturnReasons\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/return_reason.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/return_reason.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\ReturnStatus\:\:getTotalReturnStatuses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/return_status.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/return_status.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\StockStatus\:\:getTotalStockStatuses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/stock_status.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/stock_status.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\SubscriptionStatus\:\:getTotalSubscriptionStatuses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/subscription_status.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/subscription_status.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\TaxRate\:\:getTaxRatesByGeoZoneId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/tax_rate.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Localisation\\WeightClass\:\:getTotalWeightClasses\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/localisation/weight_class.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$country_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/localisation/weight_class.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$information_id$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/admin/model/marketing/coupon.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Event\:\:getTotalEvents\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/setting/event.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Task\:\:addLog\(\) has parameter \$code with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/model/setting/task.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Task\:\:addLog\(\) has parameter \$comment with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/model/setting/task.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Task\:\:addLog\(\) has parameter \$status with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/admin/model/setting/task.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Task\:\:addTask\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/setting/task.php
+
+		-
+			message: '#^Method Opencart\\Admin\\Model\\Setting\\Task\:\:getTotalTasks\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/admin/model/setting/task.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$return_id$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/admin/model/setting/task.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Controller\\Product\\Manufacturer\:\:index\(\) with return type void returns mixed but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: upload/catalog/controller/catalog/manufacturer.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Controller\\Product\\Special\:\:index\(\) with return type void returns mixed but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: upload/catalog/controller/catalog/special.php
+
+		-
+			message: '#^PHPDoc tag @return with type array\<string, mixed\> is incompatible with native type void\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/catalog/controller/checkout/cart.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Controller\\Event\\Comment\:\:addComment\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/catalog/controller/event/comment.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Controller\\Event\\Comment\:\:addComment\(\) has parameter \$output with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/catalog/controller/event/comment.php
+
+		-
+			message: '#^PHPDoc tag @return with type Opencart\\System\\Engine\\Action\|null is incompatible with native type void\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/catalog/controller/startup/language.php
+
+		-
+			message: '#^Binary operation "\+" between array\{keyword\: array\<string\>\|string\|null\} and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: upload/catalog/controller/startup/seo_url.php
+
+		-
+			message: '#^Cannot assign new offset to string\.$#'
+			identifier: offsetAssign.dimType
+			count: 1
+			path: upload/catalog/controller/startup/seo_url.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Controller\\Startup\\SeoUrl\:\:index\(\) should return null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 2
+			path: upload/catalog/controller/startup/seo_url.php
+
+		-
+			message: '#^Offset ''match'' does not exist on string\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: upload/catalog/controller/startup/seo_url.php
+
+		-
+			message: '#^Offset ''replace'' does not exist on string\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: upload/catalog/controller/startup/seo_url.php
+
+		-
+			message: '#^Property Opencart\\Catalog\\Controller\\Startup\\SeoUrl\:\:\$data type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/catalog/controller/startup/seo_url.php
+
+		-
+			message: '#^Array has 2 duplicate keys with value ''sort_order'' \(''sort_order'', ''sort_order''\)\.$#'
+			identifier: array.duplicateKey
+			count: 1
+			path: upload/catalog/model/catalog/product.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''rating''\|''sort_order'' and ''price'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: upload/catalog/model/catalog/product.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type int\.$#'
+			identifier: return.phpDocType
+			count: 4
+			path: upload/catalog/model/checkout/order.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$keyword$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/catalog/model/design/seo_regex.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Model\\Setting\\Extension\:\:getInstalls\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/catalog/model/setting/extension.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Model\\Setting\\Task\:\:addTask\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/catalog/model/setting/task.php
+
+		-
+			message: '#^Method Opencart\\Catalog\\Model\\Setting\\Task\:\:getTotalTasks\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/catalog/model/setting/task.php
+
+		-
+			message: '#^Cannot call method getDdos\(\) on null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: upload/extension/opencart/admin/controller/fraud/ddos.php
+
+		-
+			message: '#^Cannot call method getTotalDdos\(\) on null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: upload/extension/opencart/admin/controller/fraud/ddos.php
+
+		-
+			message: '#^Cannot call method install\(\) on null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: upload/extension/opencart/admin/controller/fraud/ddos.php
+
+		-
+			message: '#^Cannot call method uninstall\(\) on null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: upload/extension/opencart/admin/controller/fraud/ddos.php
+
+		-
+			message: '#^Undefined variable\: \$page$#'
+			identifier: variable.undefined
+			count: 1
+			path: upload/extension/opencart/admin/controller/task/product_viewed.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''date_added''\|''name'' and ''ad\.name'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: upload/extension/opencart/catalog/model/module/blog.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Account\\Transaction\>\:\:deleteTransactionByOrderId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: upload/extension/opencart/catalog/model/total/credit.php
+
+		-
+			message: '#^Call to an undefined method Opencart\\System\\Engine\\Proxy\<Opencart\\Catalog\\Model\\Account\\Reward\>\:\:deleteRewardByOrderId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: upload/extension/opencart/catalog/model/total/reward.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: upload/install/cli_install.php
+
+		-
+			message: '#^Property \$this\(Opencart\\Install\\Controller\\Install\\Step3\)\:\:\$db is not writable\.$#'
+			identifier: assign.propertyReadOnly
+			count: 1
+			path: upload/install/controller/install/step_3.php
+
+		-
+			message: '#^Dead catch \- ErrorException is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 1
+			path: upload/install/controller/upgrade/upgrade_19.php
+
+		-
+			message: '#^Method Opencart\\Install\\Model\\Upgrade\\Upgrade\:\:addRecord\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/install/model/upgrade/upgrade.php
+
+		-
+			message: '#^Method Opencart\\Install\\Model\\Upgrade\\Upgrade\:\:addRecord\(\) has parameter \$table with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/install/model/upgrade/upgrade.php
+
+		-
+			message: '#^Parameter \#1 \$value of method Opencart\\System\\Library\\DB\:\:escape\(\) expects string, list\<bool\|string\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: upload/install/model/upgrade/upgrade.php
+
+		-
+			message: '#^Method Opencart\\System\\Engine\\Factory\:\:model\(\) should return Opencart\\System\\Engine\\Model but returns Exception\.$#'
+			identifier: return.type
+			count: 1
+			path: upload/system/engine/factory.php
+
+		-
+			message: '#^Class Opencart\\System\\Library\\DB constructor invoked with 9 parameters, 0\-1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: upload/system/helper/db_schema.php
+
+		-
+			message: '#^Parameter \#1 \$option of class Opencart\\System\\Library\\DB constructor expects array\<string, mixed\>, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: upload/system/helper/db_schema.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and non\-empty\-array\<mixed, mixed\> results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: upload/system/helper/vendor.php
+
+		-
+			message: '#^Function oc_yaml_decode\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: upload/system/helper/yaml.php
+
+		-
+			message: '#^Function oc_yaml_decode\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/system/helper/yaml.php
+
+		-
+			message: '#^Function oc_yaml_encode\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: upload/system/helper/yaml.php
+
+		-
+			message: '#^Function oc_yaml_encode\(\) has parameter \$yaml with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: upload/system/helper/yaml.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type int\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: upload/system/library/cart/cart.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Cart\\Customer\:\:\$request is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/cart/customer.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Cart\\User\:\:\$request is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/cart/user.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$route$#'
+			identifier: parameter.notFound
+			count: 1
+			path: upload/system/library/curl.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Cart\\Curl\:\:\$url is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/curl.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: upload/system/library/db/mysqli.php
+
+		-
+			message: '#^Method Opencart\\System\\Library\\Document\:\:getScripts\(\) should return array\<string, array\<string, string\>\> but returns array\<string, array\<string, array\<string, string\>\>\>\.$#'
+			identifier: return.type
+			count: 1
+			path: upload/system/library/document.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$position$#'
+			identifier: parameter.notFound
+			count: 2
+			path: upload/system/library/document.php
+
+		-
+			message: '#^Access to an undefined property Opencart\\System\\Library\\Mail\:\:\$attachments\.$#'
+			identifier: property.notFound
+			count: 1
+			path: upload/system/library/mail.php
+
+		-
+			message: '#^PHPDoc tag @var for property Opencart\\System\\Library\\Mail\:\:\$adaptor with type array\<string, mixed\> is incompatible with native type object\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: upload/system/library/mail.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Mail\\Mail\:\:\$to type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/system/library/mail/mail.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Mail\\Smtp\:\:\$to type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: upload/system/library/mail/smtp.php
+
+		-
+			message: '#^Access to an undefined property Opencart\\System\\Library\\Url\:\:\$pass\.$#'
+			identifier: property.notFound
+			count: 1
+			path: upload/system/library/url.php
+
+		-
+			message: '#^Access to an undefined property Opencart\\System\\Library\\Url\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: upload/system/library/url.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Url\:\:\$fragment is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/url.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Url\:\:\$host is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/url.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Url\:\:\$path is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/url.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Url\:\:\$port is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/url.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Url\:\:\$query is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/url.php
+
+		-
+			message: '#^Property Opencart\\System\\Library\\Url\:\:\$scheme is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: upload/system/library/url.php

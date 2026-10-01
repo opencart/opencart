@@ -252,7 +252,7 @@ $('#form-step-2').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=install/step_2.save&language={{ language }}',
+        url: 'index.php?route=install/step_2.save&language={{ language|escape('js') }}',
         type: 'post',
         data: $('#form-step-2').serialize(),
         dataType: 'json',

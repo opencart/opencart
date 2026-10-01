@@ -106,7 +106,9 @@ class Request {
 				$data[$this->clean($key)] = $this->clean($value);
 			}
 		} else {
-			$data = trim(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+			// Input is kept raw. Escaping is done on output in the templates
+			// (autoescape) so data escaped here would be escaped twice.
+			$data = trim((string)$data);
 		}
 
 		return $data;

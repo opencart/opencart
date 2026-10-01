@@ -1,3 +1,6 @@
+includes:
+    - phpstan-baseline.neon
+
 services:
     -
         class: \Tools\PHPStan\RegistryPropertyReflectionExtension

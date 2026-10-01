@@ -34,7 +34,7 @@
 </div>
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', async () => {
-    let response = await fetch('index.php?route=common/developer&user_token={{ user_token }}');
+    let response = await fetch('index.php?route=common/developer&user_token={{ user_token|escape('js') }}');
 
     let html = await response.text();
 

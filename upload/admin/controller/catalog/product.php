@@ -462,7 +462,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$url = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['master_id']);
 
-			$data['text_variant'] = sprintf($this->language->get('text_variant'), $url, $url);
+			$data['text_variant'] = $this->language->format('text_variant', $url, $url);
 		} else {
 			$data['text_variant'] = '';
 		}
@@ -1469,9 +1469,9 @@ class Product extends \Opencart\System\Engine\Controller {
 					$duration = $subscription_plan_info['duration'];
 
 					if ($subscription_plan_info['duration']) {
-						$description = sprintf($this->language->get('text_subscription_duration'), $this->config->get('config_currency'), $price, $cycle, $frequency, $duration);
+						$description = $this->language->format('text_subscription_duration', $this->config->get('config_currency'), $price, $cycle, $frequency, $duration);
 					} else {
-						$description = sprintf($this->language->get('text_subscription_cancel'), $this->config->get('config_currency'), $price, $cycle, $frequency);
+						$description = $this->language->format('text_subscription_cancel', $this->config->get('config_currency'), $price, $cycle, $frequency);
 					}
 
 					$subscription_plan_data[] = [

@@ -40,7 +40,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_checkout_id'));
 
 		if ($information_info) {
-			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information.info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
+			$data['text_agree'] = $this->language->format('text_agree', $this->url->link('information/information.info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
 		} else {
 			$data['text_agree'] = '';
 		}
@@ -106,7 +106,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if ($payment_methods) {
 				$json['payment_methods'] = $this->session->data['payment_methods'] = $payment_methods;
 			} else {
-				$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				$json['error'] = $this->language->format('error_no_payment', $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
 		}
 

@@ -79,7 +79,7 @@ $('#button-sync').on('click', function() {
 
     $(element).button('loading');
 
-    var next = 'index.php?route=extension/opencart/module/bestseller.sync&user_token={{ user_token }}';
+    var next = 'index.php?route=extension/opencart/module/bestseller.sync&user_token={{ user_token|escape('js') }}';
 
     var rating = function() {
         return $.ajax({
@@ -95,7 +95,7 @@ $('#button-sync').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
+                    $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token|escape('js') }}');
                 }
 
                 if (json['text']) {
@@ -107,7 +107,7 @@ $('#button-sync').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
+                    $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token|escape('js') }}');
                 }
 
                 if (json['next']) {
@@ -121,7 +121,7 @@ $('#button-sync').on('click', function() {
 
                 $(element).button('reset');
 
-                $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
+                $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token|escape('js') }}');
             }
         });
     };

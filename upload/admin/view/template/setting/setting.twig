@@ -1203,6 +1203,20 @@
                   </div>
                 </div>
                 <div class="row mb-3 required">
+                  <label for="input-image-option-width" class="col-sm-2 col-form-label">{{ entry_image_option }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-image-option" class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_option_width" value="{{ config_image_option_width }}" placeholder="{{ entry_width }}" id="input-image-option-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_option_height" value="{{ config_image_option_height }}" placeholder="{{ entry_height }}" id="input-image-option-height" class="form-control"/>
+                      </div>
+                    </div>
+                    <div id="error-image-option" class="invalid-feedback"></div>
+                  </div>
+                </div>
+                <div class="row mb-3 required">
                   <label for="input-image-related-width" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-related" class="row">

@@ -404,6 +404,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_image_product_height'] = $this->config->get('config_image_product_height');
 		$data['config_image_additional_width'] = $this->config->get('config_image_additional_width');
 		$data['config_image_additional_height'] = $this->config->get('config_image_additional_height');
+		$data['config_image_option_width'] = $this->config->get('config_image_option_width');
+		$data['config_image_option_height'] = $this->config->get('config_image_option_height');
 		$data['config_image_related_width'] = $this->config->get('config_image_related_width');
 		$data['config_image_related_height'] = $this->config->get('config_image_related_height');
 		$data['config_image_compare_width'] = $this->config->get('config_image_compare_width');
@@ -590,6 +592,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_image_additional_width'] || !$this->request->post['config_image_additional_height']) {
 			$json['error']['image_additional'] = $this->language->get('error_image_additional');
+		}
+
+		if (!$this->request->post['config_image_option_width'] || !$this->request->post['config_image_option_height']) {
+			$json['error']['image_option'] = $this->language->get('error_image_option');
 		}
 
 		if (!$this->request->post['config_image_related_width'] || !$this->request->post['config_image_related_height']) {

@@ -25,6 +25,8 @@ class Upgrade12 extends \Opencart\System\Engine\Controller {
 			$has_config_product_filters = false;
 			$has_config_product_search = false;
 			$has_config_product_search_admin = false;
+			$has_config_image_option_width = false;
+			$has_config_image_option_height = false;
 
 			foreach ($setting_records as $row) {
 				if ($row['key'] == 'config_product_filters') {
@@ -35,6 +37,12 @@ class Upgrade12 extends \Opencart\System\Engine\Controller {
 				}
 				if ($row['key'] == 'config_product_search_admin') {
 					$has_config_product_search_admin = true;
+				}
+				if ($row['key'] == 'config_image_option_width') {
+					$has_config_image_option_width = true;
+				}
+				if ($row['key'] == 'config_image_option_height') {
+					$has_config_image_option_height = true;
 				}
 			}
 
@@ -66,6 +74,28 @@ class Upgrade12 extends \Opencart\System\Engine\Controller {
 					'code'       => 'config',
 					'key'        => 'config_product_search_admin',
 					'value'      => 'and',
+					'serialized' => 0
+				];
+				$this->model_upgrade_upgrade->addRecord('setting', $setting_data);
+			}
+
+			if (!$has_config_image_option_width) {
+				$setting_data = [
+					'store_id'   => 0,
+					'code'       => 'config',
+					'key'        => 'config_image_option_width',
+					'value'      => '50',
+					'serialized' => 0
+				];
+				$this->model_upgrade_upgrade->addRecord('setting', $setting_data);
+			}
+
+			if (!$has_config_image_option_height) {
+				$setting_data = [
+					'store_id'   => 0,
+					'code'       => 'config',
+					'key'        => 'config_image_option_height',
+					'value'      => '50',
 					'serialized' => 0
 				];
 				$this->model_upgrade_upgrade->addRecord('setting', $setting_data);

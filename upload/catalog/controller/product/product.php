@@ -389,6 +389,8 @@ class ControllerProductProduct extends Controller {
 
 			$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
 
+			$data['structured_data'] = $this->getStructuredData($product_info, $data);
+
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
 			$data['products'] = array();
@@ -538,6 +540,147 @@ class ControllerProductProduct extends Controller {
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
+	}
+
+	private function getStructuredData($product_info, $data) {
+		$product_url = html_entity_decode($data['share'], ENT_QUOTES, 'UTF-8');
+
+		$product = array(
+			'@type' => 'Product',
+			'@id'   => $product_url . '#product',
+			'url'   => $product_url,
+			'name'  => $product_info['name']
+		);
+
+		$description = trim(preg_replace('/\s+/', ' ', strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8'))));
+
+		if ($description) {
+			$product['description'] = $description;
+		}
+
+		$images = array();
+
+		if ($data['popup']) {
+			$images[] = $data['popup'];
+		}
+
+		foreach ($data['images'] as $image) {
+			if ($image['popup']) {
+				$images[] = $image['popup'];
+			}
+		}
+
+		if ($images) {
+			$product['image'] = array_values(array_unique($images));
+		}
+
+		if ($product_info['manufacturer']) {
+			$product['brand'] = array(
+				'@type' => 'Brand',
+				'name'  => $product_info['manufacturer']
+			);
+		}
+
+		if ($product_info['model']) {
+			$product['model'] = $product_info['model'];
+		}
+
+		if ($product_info['sku']) {
+			$product['sku'] = $product_info['sku'];
+		}
+
+		if ($product_info['mpn']) {
+			$product['mpn'] = $product_info['mpn'];
+		}
+
+		foreach (array('upc', 'ean', 'jan', 'isbn') as $identifier) {
+			$value = trim($product_info[$identifier]);
+
+			if (ctype_digit($value) && in_array(strlen($value), array(8, 12, 13, 14))) {
+				$property = 'gtin' . strlen($value);
+
+				if (!isset($product[$property])) {
+					$product[$property] = $value;
+				}
+			}
+		}
+
+		if ($this->config->get('config_review_status') && (int)$product_info['reviews'] > 0 && (float)$product_info['rating'] > 0) {
+			$product['aggregateRating'] = array(
+				'@type'       => 'AggregateRating',
+				'ratingValue' => (float)$product_info['rating'],
+				'reviewCount' => (int)$product_info['reviews'],
+				'bestRating'  => 5,
+				'worstRating' => 1
+			);
+		}
+
+		if ($data['price'] !== false) {
+			if (!is_null($product_info['special']) && (float)$product_info['special'] >= 0) {
+				$price = $product_info['special'];
+			} else {
+				$price = $product_info['price'];
+			}
+
+			$currency = $this->session->data['currency'];
+			$price = $this->tax->calculate($price, $product_info['tax_class_id'], $this->config->get('config_tax'));
+			$price = $this->currency->format($price, $currency, '', false);
+
+			if ((int)$product_info['quantity'] > 0) {
+				$availability = 'https://schema.org/InStock';
+			} elseif ($this->config->get('config_stock_checkout')) {
+				$availability = 'https://schema.org/BackOrder';
+			} else {
+				$availability = 'https://schema.org/OutOfStock';
+			}
+
+			$product['offers'] = array(
+				'@type'         => 'Offer',
+				'url'           => $product_url,
+				'priceCurrency' => $currency,
+				'price'         => number_format($price, $this->currency->getDecimalPlace($currency), '.', ''),
+				'availability'  => $availability
+			);
+
+			if ($this->config->get('config_name')) {
+				$product['offers']['seller'] = array(
+					'@type' => 'Organization',
+					'name'  => $this->config->get('config_name')
+				);
+			}
+		}
+
+		$graph = array($product);
+		$items = array();
+
+		foreach ($data['breadcrumbs'] as $breadcrumb) {
+			$name = trim(strip_tags(html_entity_decode($breadcrumb['text'], ENT_QUOTES, 'UTF-8')));
+			$url = html_entity_decode($breadcrumb['href'], ENT_QUOTES, 'UTF-8');
+
+			if ($name && $url) {
+				$items[] = array(
+					'@type'    => 'ListItem',
+					'position' => count($items) + 1,
+					'name'     => $name,
+					'item'     => $url
+				);
+			}
+		}
+
+		if (count($items) > 1) {
+			$graph[] = array(
+				'@type'           => 'BreadcrumbList',
+				'itemListElement' => $items
+			);
+		}
+
+		return json_encode(
+			array(
+				'@context' => 'https://schema.org',
+				'@graph'   => $graph
+			),
+			JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE
+		);
 	}
 
 	public function review() {

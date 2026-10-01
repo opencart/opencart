@@ -13,7 +13,7 @@ $_['entry_confirm']            = 'Confirmer le Mot de Passe';
 
 // Erreur
 $_['error_token']              = 'Attention: Jeton de mot de passe invalide!';
-$_['error_password']           = 'Le mot de passe doit contenir entre 4 et 20 caractères!';
+$_['error_password']           = 'Le mot de passe doit contenir entre 4 et 40 caractères!';
 $_['error_password_uppercase'] = 'majuscule';
 $_['error_password_lowercase'] = 'minuscule';
 $_['error_password_number']    = 'numéro';

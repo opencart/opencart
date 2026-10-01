@@ -89,14 +89,27 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 				while (count($directory) != 0) {
 					$next = array_shift($directory);
 
-					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-						// If directory add to path array
-						if (is_dir($file)) {
-							$directory[] = $file;
-						}
+					// Fix for Alpine Linux: Replace glob with GLOB_BRACE using scandir
+					if (is_dir($next)) {
+						$files_scanned = scandir($next);
 
-						// Add the file to the files to be deleted array
-						$files[] = $file;
+						if ($files_scanned !== false) {
+							foreach ($files_scanned as $file) {
+								if ($file == '.' || $file == '..') {
+									continue;
+								}
+
+								$file = rtrim($next, '/') . '/' . $file;
+
+								// If directory add to path array
+								if (is_dir($file)) {
+									$directory[] = $file;
+								}
+
+								// Add the file to the files to be deleted array
+								$files[] = $file;
+							}
+						}
 					}
 				}
 

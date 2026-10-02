@@ -34,8 +34,8 @@ $('#button-cancel').on('click', function(e) {
                 $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
-            if (json['success']) {
-                $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+            if (json.has('success')) {
+                $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                 $('#history').load('action.php?route=account/subscription.history&language={{ language }}&customer_token={{ customer_token }}&subscription_id={{ subscription_id }}');
             }

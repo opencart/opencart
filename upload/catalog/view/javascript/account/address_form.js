@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, customer } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -9,6 +9,8 @@ const language = await loader.language('account/address');
 
 export default class AddressForm extends WebComponent {
     render() {
+        //if (!customer.isLogged()) return;
+
         let data = new Map();
 
         data.set('addresses', customer.getAddresses());
@@ -21,11 +23,11 @@ export default class AddressForm extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/address.save&language=' + + '&customer_token=' + customer.getToken(), form, {
+        ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
                 this.submitter.button('loading');
             },
-            onComplete: (json) => {
+            onComplete: () => {
                 this.submitter.button('reset');
             },
             onSuccess: this.success.bind(this),
@@ -36,12 +38,12 @@ export default class AddressForm extends WebComponent {
     }
 
     success(json){
-        if (json['error']) {
-            this.alert.append('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
+        if (json.get('error')) {
+            this.alert.append('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
         }
 
-        if (json['success']) {
-            this.alert.append('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.get('success')) {
+            this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
         }
     }
 }

@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, customer } from '../index.js';
+import { loader, ajax, customer } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -8,16 +8,35 @@ const config = await loader.config('default');
 const language = await loader.language('account/affiliate');
 
 export default class AccountAffiliate extends WebComponent {
-    render() {
+    token = '';
 
+    render() {
+        //if (!customer.isLogged()) return;
 
         return loader.template('account/affiliate', language);
+    }
+
+    onChange(e) {
+
     }
 
     onSubmit(e) {
         e.preventDefault();
 
+        let form = new FormData(this.form);
 
+        ajax.post('action.php?route=account/affiliate.save&affiliate_token=' + this.token, form, {
+            beforeSend: () => {
+                this.button.button('loading');
+            },
+            onComplete: (json) => {
+                this.button.button('reset');
+            },
+            onSuccess: this.success.bind(this),
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
     }
 }
 

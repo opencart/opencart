@@ -55,8 +55,8 @@ customElements.define('review-form', class extends WebComponent {
             }
         }
 
-        if (json['success']) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
 
             this.form.querySelector('#input-text').value = '';
             this.form.querySelector('#input-rating input[type=\'radio\']').checked = false;

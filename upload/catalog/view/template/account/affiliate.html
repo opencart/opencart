@@ -1,5 +1,6 @@
 <h1>{{ heading_title }}</h1>
 <form id="form-affiliate" @submit="onSubmit">
+
   <fieldset>
     <legend>{{ text_my_affiliate }}</legend>
     <div class="row mb-3">
@@ -15,6 +16,7 @@
       </div>
     </div>
   </fieldset>
+
   <fieldset>
     <legend>{{ text_payment }}</legend>
     <div class="row mb-3">
@@ -93,6 +95,7 @@
       </div>
     </div>
   </fieldset>
+
   <div class="text-end">
     {% if text_agree %}
       <label for="input-agree" class="form-check-label">{{ text_agree }}</label>

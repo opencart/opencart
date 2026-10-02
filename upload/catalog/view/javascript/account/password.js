@@ -6,7 +6,7 @@ const language = await loader.language('account/password');
 
 export default class AccountPassword extends WebComponent {
     render() {
-        if (!customer.isLogged()) return;
+        //if (!customer.isLogged()) return;
 
         return loader.template('account/password', [ language ]);
     }
@@ -18,7 +18,7 @@ export default class AccountPassword extends WebComponent {
 
         ajax.post('action.php?route=account/password.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.button.button('loading');
+                button.button('loading');
             },
             onComplete: (json) => {
                 this.button.button('reset');
@@ -36,7 +36,7 @@ export default class AccountPassword extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if ('error' in json) {
+        if (json.get('error')) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -58,8 +58,8 @@ export default class AccountPassword extends WebComponent {
         }
 
         // Display success message
-        if ('success' in json) {
-            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
         }
     }
 }

@@ -1,8 +1,20 @@
 import { WebComponent } from '../index.js';
 
 customElements.define('form-input', class extends WebComponent {
+    static observed = [
+        'action',
+        'method'
+    ];
+
+    initialState() {
+        return {
+            submitting: false,
+            submit_count: 0
+        };
+    }
+
     render() {
-        return '<form @bind="form" @submit="onSubmit">' + this.innerHTML + '</form>';
+        return '<form @bind="form" @submit="onSubmit"><slot></slot></form>';
     }
 
     onSubmit(e) {

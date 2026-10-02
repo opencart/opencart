@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, local, customer } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -8,10 +8,16 @@ const config = await loader.config('default');
 const language = await loader.language('account/returns');
 
 export default class ReturnForm extends WebComponent {
+    token = '';
+
     render() {
-        if (!customer.isLogged()) return;
+        //if (!customer.isLogged()) return;
 
         return loader.template('account/return_form', [ language ]);
+    }
+
+    onConnect() {
+        this.token = ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
     }
 
     async onSubmit(e) {
@@ -39,8 +45,8 @@ export default class ReturnForm extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if ('error' in json) {
-            for (let key in json['error']) {
+        if (json.has('error')) {
+            for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 
                 let input = target.querySelector('#input-' + value);
@@ -61,8 +67,8 @@ export default class ReturnForm extends WebComponent {
         }
 
         // Display success message
-        if ('success' in json) {
-            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
             for (let product of json['products']) {
                 cart.add(product);

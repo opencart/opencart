@@ -16,15 +16,6 @@ customElements.define('checkout-register', class extends WebComponent {
     async render(){
         let data = new Map();
 
-        // Custom Fields
-        data.set('custom_fields', []);
-
-        let customer_group = await loader.storage('customer/customer_group-' + config.get('config_customer_group_id'));
-
-        if (customer_group instanceof Map) {
-            data.set('custom_fields', customer_group.custom_fields);
-        }
-
         data.set('token', this.token);
 
         return loader.template('checkout/register', [ data,  language, config ]);
@@ -105,8 +96,8 @@ customElements.define('checkout-register', class extends WebComponent {
         }
 
         // Display success message
-        if ('success' in json) {
-            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
             if ($('#input-register').prop('checked')) {
                 $('input[name=\'account\']').prop('disabled', true);

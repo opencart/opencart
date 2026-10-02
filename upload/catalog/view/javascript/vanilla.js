@@ -79,10 +79,7 @@ Global.registerListener('link', (e) => {
 
     let a = elements.find(element => element.tagName == 'A');
 
-
     console.log(a);
-
-
 
     Global.get('content').src = a.getAttribute('href');
 });

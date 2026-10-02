@@ -19,7 +19,7 @@ export default class AccountReset extends WebComponent {
                 this.get('button').button('loading');
             },
             onComplete: () => {
-                this.button.button('reset');
+                this.get('button').button('reset');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {
@@ -38,8 +38,8 @@ export default class AccountReset extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if ('error' in json) {
-            for (let key in json['error']) {
+        if (json.has('error')) {
+            for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 
                 let input = this.form.querySelector('#input-' + value);
@@ -60,8 +60,8 @@ export default class AccountReset extends WebComponent {
         }
 
         // Display success message
-        if ('success' in json) {
-            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
         }
     }
 }

@@ -7,9 +7,6 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/register');
 
-// Storage
-const customer_groups = await loader.storage('customer/customer_group');
-
 export default class AccountRegister extends WebComponent {
     token = '';
 
@@ -25,29 +22,6 @@ export default class AccountRegister extends WebComponent {
         if (customer.isLogged()) return;
 
         this.token = ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
-    }
-
-    async onChange(e) {
-        let custom_fields = [];
-
-        let customer_group = await this.storage.fetch('customer/customer_group-' + this.value);
-
-        if (customer_group_info instanceof Map) {
-            data.custom_fields = customer_group_info.custom_field;
-        }
-
-        //$('.custom-field').addClass('d-none');
-        //$('.custom-field').removeClass('required');
-
-        //for (let i = 0; i < json.length; i++) {
-        //    let custom_field = json[i];
-
-        //    $('.custom-field-' + custom_field['custom_field_id']).removeClass('d-none');
-
-        //    if (custom_field['required']) {
-        //        $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
-        //     }
-        //}
     }
 
     async onSubmit(e) {
@@ -77,7 +51,7 @@ export default class AccountRegister extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if ('error' in json) {
+        if (json.get('error')) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
@@ -99,8 +73,8 @@ export default class AccountRegister extends WebComponent {
         }
 
         // Display success message
-        if ('success' in json) {
-            this.alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
         }
     }
 }

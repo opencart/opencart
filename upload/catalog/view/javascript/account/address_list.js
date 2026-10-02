@@ -7,13 +7,15 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('account/address');
 
-class AddressList extends WebComponent {
+export default class AddressList extends WebComponent {
     render() {
+        //if (!customer.isLogged()) return;
+
         let data = new Map();
 
         data.set('addresses', customer.getAddresses());
 
-        return loader.template('account/address', [ data, language, config ]);
+        return loader.template('account/address_list', [ data, language, config ]);
     }
 
     onDelete(e) {
@@ -38,8 +40,8 @@ class AddressList extends WebComponent {
             this.alert.append('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
         }
 
-        if (json['success']) {
-            this.alert.append('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
             this.update();
         }

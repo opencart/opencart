@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { ajax, customer, loader, local } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -11,6 +11,8 @@ const language = await loader.language('information/contact');
 const locations = await loader.storage('localisation/location');
 
 export default class InformationContact extends WebComponent {
+    token = '';
+
     async render() {
         let data = new Map();
 

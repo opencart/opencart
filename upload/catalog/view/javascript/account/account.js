@@ -9,7 +9,7 @@ const language = await loader.language('account/account');
 
 export default class AccountAccount extends WebComponent {
     async render() {
-        if (customer.isLogged()) return;
+        //if (!customer.isLogged()) return;
 
         let data = new Map();
 

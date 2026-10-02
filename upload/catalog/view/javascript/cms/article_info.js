@@ -9,19 +9,17 @@ const language = await loader.language('cms/article_info');
 
 export default class ArticleInfo extends WebComponent {
     async render(){
-
-
         let article = await loader.storage('article/article-' + this.getAttribute('article_id'));
 
-        if (article instanceof Map && local.get('language') in article.get('description')) {
-            let description = article.get('description')[config.get('config_language')];
+        if (article instanceof Map && local.get('language') in article.get('description')) return;
 
-            //description.meta_title
-            //description.meta_description
-            //description.meta_keyword
+        let description = article.get('description')[config.get('config_language')];
 
-            return loader.template('cms/article_info', [ article, description, language, config ]);
-        }
+        //description.meta_title
+        //description.meta_description
+        //description.meta_keyword
+
+        return loader.template('cms/article_info', [ article, description, language, config ]);
     }
 }
 

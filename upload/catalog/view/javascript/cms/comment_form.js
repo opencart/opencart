@@ -64,8 +64,8 @@ customElements.define('cms-comment', class extends WebComponent {
                     }
                 }
 
-                if (json['success']) {
-                    $('#modal-comment .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
+                if (json.has('success')) {
+                    $('#modal-comment .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
 
                     $('#input-comment').val('');
 
@@ -123,8 +123,8 @@ customElements.define('cms-comment', class extends WebComponent {
                     $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
                 }
 
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
+                if (json.has('success')) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

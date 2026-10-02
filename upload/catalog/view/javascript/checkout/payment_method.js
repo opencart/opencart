@@ -42,7 +42,7 @@ customElements.define('payment-method', class extends WebComponent {
                 target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
-                if ('error' in json) {
+                if (json.get('error')) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 
@@ -64,11 +64,11 @@ customElements.define('payment-method', class extends WebComponent {
                 }
 
                 // Display success message
-                if ('success' in json) {
+                if (json.has('success')) {
                     let alert = target.querySelector('#alert');
 
                     if (alert) {
-                        alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+                        alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
                     }
                 }
             },
@@ -197,8 +197,8 @@ $(document).on('submit', '#form-payment-method', function(e) {
                 $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
-            if (json['success']) {
-                $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+            if (json.has('success')) {
+                $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                 $('#modal-payment').modal('hide');
 
@@ -247,8 +247,8 @@ $('#input-comment').on('keydown', function() {
                     $('#button-confirm').prop('disabled', false);
                 }
 
-                if (json['success']) {
-                    $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+                if (json.has('success')) {
+                    $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                     $('#button-confirm').prop('disabled', false);
                 }

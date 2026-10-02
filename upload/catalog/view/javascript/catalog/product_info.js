@@ -159,7 +159,7 @@ export default class ProductInfo extends WebComponent {
                 this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
-                if ('error' in json) {
+                if (json.get('error')) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 
@@ -181,11 +181,11 @@ export default class ProductInfo extends WebComponent {
                 }
 
                 // Display success message
-                if ('success' in json) {
+                if (json.has('success')) {
                     let alert = this.form.querySelector('#alert');
 
                     if (alert) {
-                        alert.prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+                        alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
                     }
 
                     // Code to use [] with js

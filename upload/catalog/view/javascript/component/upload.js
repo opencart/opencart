@@ -168,8 +168,8 @@ customElements.define('form-upload', class extends WebComponent {
                         alert(json['error']);
                     }
 
-                    if (json['success']) {
-                        alert(json['success']);
+                    if (json.has('success')) {
+                        alert(json.get('success'));
                     }
 
                     if (json['code']) {

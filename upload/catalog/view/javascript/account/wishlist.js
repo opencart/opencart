@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, customer } from '../index.js';
+import { loader, customer, local } from '../index.js';
 
 // Language
 const language = await loader.language('account/wishlist');
@@ -17,44 +17,43 @@ export default class AccountWishlist extends WebComponent {
        return loader.template('account/wishlist', [ data, language ]);
     }
 
-    remove() {
+    add(e) {
+        e.preventDefault();
 
+    }
+
+    remove(e) {
+        e.preventDefault();
+
+        let form = new FormData(this.form);
+
+        ajax.post('index.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
+            beforeSend: function() {
+                this.submitter.button('loading');
+            },
+            complete: function() {
+                this.submitter.button('reset');
+            },
+            success: function(json) {
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+
+    success(json) {
+        console.log(json);
+
+        if (json.has('error')) {
+            $('#alert').prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+        }
+
+        if (json.has('success')) {
+            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
+        }
     }
 }
 
 customElements.define('account-wishlist', AccountWishlist);
-
-/*
-$('#wishlist').on('click', '.btn-danger', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).attr('href'),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            if (json['error']) {
-                $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + '</ui-alert>');
-
-                $('#wishlist').load('index.php?route=account/wishlist.list&language={{ language }}&customer_token={{ customer_token }}');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-*/

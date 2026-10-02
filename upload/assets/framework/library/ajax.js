@@ -38,7 +38,7 @@ export default class Ajax {
 
         // Default Config
         let config = {
-            method: options.method.toUpperCase() || 'GET',
+            method: (options.method || 'GET').toUpperCase(),
             ...options
         };
 

@@ -63,8 +63,8 @@ $('form').on('submit', function(e) {
                 }
             }
 
-            if (json['success']) {
-                $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+            if (json.has('success')) {
+                $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                 $('#cart').load('action.php?route=common/cart.info&language={{ language }}');
             }

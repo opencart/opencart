@@ -63,8 +63,8 @@ customElements.define('payment-address', class extends WebComponent {
                     $('#error-payment-address').html(json['error']).addClass('d-block');
                 }
 
-                if (json['success']) {
-                    $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+                if (json.has('success')) {
+                    $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                     $('#input-shipping-method').val('');
                     $('#input-payment-method').val('');
@@ -119,8 +119,8 @@ customElements.define('payment-address', class extends WebComponent {
             }
         }
 
-        if (json['success']) {
-            $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
             $('#form-payment-address')[0].reset();
 

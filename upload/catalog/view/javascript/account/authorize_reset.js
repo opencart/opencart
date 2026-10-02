@@ -40,8 +40,8 @@ export default class AuthorizeReset extends WebComponent {
             this.alert.prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
         }
 
-        if (json['success']) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '</ui-alert>');
+        if (json.has('success')) {
+            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json.get('success') + '</ui-alert>');
         }
     }
 }

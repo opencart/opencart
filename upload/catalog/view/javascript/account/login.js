@@ -8,7 +8,7 @@ export default class AccountLogin extends WebComponent {
     token = '';
 
     async render() {
-        if (customer.isLogged()) return;
+        //if (customer.isLogged()) return;
 
         let data = new Map();
 
@@ -18,9 +18,9 @@ export default class AccountLogin extends WebComponent {
     }
 
     async onConnect() {
-        if (customer.isLogged()) return;
+        //if (customer.isLogged()) return;
 
-        this.token = await ajax.get('action.php?route=account/login.token');
+        //this.token = await ajax.get('action.php?route=account/login.token');
     }
 
     async onSubmit(e) {
@@ -73,7 +73,7 @@ export default class AccountLogin extends WebComponent {
         if (json.has('success')) {
             this.ref('alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
-            cart
+            //cart
         }
     }
 }

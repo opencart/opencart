@@ -142,8 +142,8 @@ $(document).on('submit', '#form-shipping-method', function(e) {
                 $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
             }
 
-            if (json['success']) {
-                $('#alert').prepend('<ui-alert type="success">' + json['success'] + '</ui-alert>');
+            if (json.has('success')) {
+                $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                 $('#modal-shipping').modal('hide');
 

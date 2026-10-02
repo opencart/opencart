@@ -24,7 +24,7 @@ export default class Language {
 
         let file = this.directory + path + '.yaml';
         let namespace = '';
-        let parts = path.split('/');
+        let parts = path.replace(/\/+$/, '').split('/');
 
         for (let part of parts) {
             if (!namespace) {
@@ -43,9 +43,7 @@ export default class Language {
         if (response.status == 200) {
             let data = load(await response.text());
 
-            let map = new Map(Object.entries(data));
-
-            this.cache.set(path, map);
+            this.cache.set(path, new Map(Object.entries(data)));
 
             return this.cache.get(path);
         } else {

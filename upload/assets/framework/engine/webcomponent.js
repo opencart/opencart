@@ -3,19 +3,18 @@ import { State } from './state.js';
 import { stylesheet } from './stylesheet.js';
 
 /**
- * BaseComponent
+ * WebComponent
  * -------------
  * A minimal base class for building web components with:
  *   - Automatic shadow DOM setup
  *   - Template + styles rendering
  *   - Automatic ref/event binding via ElementBinder (data-ref / data-on)
  *   - Clean lifecycle hooks (onConnect, onDisconnect, onAttributeChange)
- *   - A simple `define()` helper for registration
  *
  * Usage:
  *
  *   class MyCounter extends BaseComponent {
- *     static get observedAttributes() { return ['count']; }
+ *     static get observed { return ['count']; }
  *
  *     styles() {
  *       return `
@@ -66,7 +65,7 @@ export class WebComponent extends HTMLElement {
 
         // State
         this.state = new State(this.initialState(), {
-            onChange: (keys) => this.handleState(keys),
+            onChange: this.handleState.bind(this)
         });
 
         // Adds reactive component event changes to the attributes of the element to re-render the contents.
@@ -96,8 +95,6 @@ export class WebComponent extends HTMLElement {
         if (typeof this.render === 'function') {
             await this.update();
         }
-
-
     }
 
     /** Override: list of external CSS file URLs to adopt into this component. */

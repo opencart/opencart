@@ -61,7 +61,7 @@ class Stylesheet {
 
         let file = this.directory + path;
         let namespace = '';
-        let parts = path.trimEnd('/').split('/');
+        let parts = path.replace(/\/+$/, '').split('/');
 
         for (let part of parts) {
             if (!namespace) {

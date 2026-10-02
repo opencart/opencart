@@ -1,5 +1,5 @@
 // Engine
-export { WebComponent, ajax, config, language, global, local, session, storage, stylesheet, template } from '../../../assets/framework/index.js';
+export { WebComponent, Global, ajax, config, language, local, session, storage, stylesheet, template } from '../../../assets/framework/index.js';
 
 // Library
 import { loader } from '../../../assets/framework/index.js';

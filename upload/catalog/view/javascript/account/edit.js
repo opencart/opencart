@@ -18,16 +18,7 @@ export default class AccountEdit extends WebComponent {
         data.set('email', customer.getEmail());
         data.set('telephone', customer.getTelephone());
 
-        // Custom Fields
-        data.set('custom_fields', []);
-
-        let customer_group = await loader.storage('customer/customer_group-' + customer.getGroupId());
-
-        if (customer_group) {
-            data.get('custom_fields').push(customer_group.custom_fields);
-        }
-
-        data.token = customer.getToken();
+        data.set('token', customer.getToken());
 
         return loader.template('account/edit', [ data, language, config ]);
     }

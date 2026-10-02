@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, global } from '../index.js';
+import { loader } from '../index.js';
 
 // Load local components
 import './header.js';
@@ -16,31 +16,32 @@ import '../component/upload.js';
 import '../component/zone.js';
 
 customElements.define('common-layout', class extends WebComponent {
+    global = {
+        link: () => {
+
+        }
+    };
+
     render() {
         return loader.template('common/layout');
     }
 
-    onConnect() {
-        global.registerListener('link', this.handleContent.bind(this));
-    }
-
-    handleContent(e) {
+    link(e) {
         e.preventDefault();
-        //e.stopPropagation();
+        e.stopPropagation();
 
         console.log('e', e);
         console.log('e.target', e.target);
         console.log('this', this);
         console.log('global', global);
-        console.log('getRef', global.getRef('content'));
+        console.log('getRef', global.get('content'));
 
-        //const path = e.composedPath();
+        const elements = e.composedPath();
 
-        //console.log(path);
-        //e.target.update();
+        console.log(elements);
 
-        //this.update();
+        console.log(elements.find(element => element.tagName == 'a'));
 
-        global.getRef('content').src = e.target.getAttribute('href');
+        global.get('content').src = e.target.getAttribute('href');
     }
 });

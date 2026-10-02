@@ -1125,11 +1125,11 @@ export class CurlyTag {
         let [, name, key, filter] = match;
 
         // Match any global function
-        let items = this.evaluate(key, ctx);
+        let items = this.evaluate(this.parseRange(key), ctx);
 
         if (items instanceof Map) {
             // `for key, value in someMap` iterates [key, value] entry pairs.
-            items = [...items.entries()];
+            items = [ ...items.entries() ];
         } else if (items !== null && typeof items === 'object' && !Array.isArray(items)) {
             // `for key, value in someObject` iterates [key, value] entry pairs.
             items = Object.entries(items);
@@ -1142,7 +1142,7 @@ export class CurlyTag {
             items = this.parseFilter(items, filter, ctx);
         }
 
-        let endIndex = token.loopEnd ?? token.end;
+        let end = token.loopEnd ?? token.end;
 
         stack.push({
             type: 'for',
@@ -1150,12 +1150,12 @@ export class CurlyTag {
             items: items,
             index: -1,
             start: index + 1,
-            end: endIndex,
+            end: end,
             active: items.length > 0,
-            parent: { ...ctx },
+            parent: { ...ctx }
         });
 
-        return items.length > 0 ? endIndex : token.end;
+        return items.length > 0 ? end : token.end;
     }
 
     handleEndFor(token, stack, ctx, index) {
@@ -1179,18 +1179,18 @@ export class CurlyTag {
             if (pos === -1) {
                 ctx[top.name] = top.items[top.index];
             } else {
-                let key_name = top.name.slice(0, pos).trim();
-                let value_name = top.name.slice(pos + 1).trim();
+                let key = top.name.slice(0, pos).trim();
+                let value = top.name.slice(pos + 1).trim();
                 let entry = top.items[top.index];
 
                 if (Array.isArray(entry)) {
                     // [key, value] pair — from a Map or Object source (see handleFor).
-                    ctx[key_name] = entry[0];
-                    ctx[value_name] = entry[1];
+                    ctx[key] = entry[0];
+                    ctx[value] = entry[1];
                 } else {
                     // Plain array iterated as "index, value".
-                    ctx[key_name] = top.index;
-                    ctx[value_name] = entry;
+                    ctx[key] = top.index;
+                    ctx[value] = entry;
                 }
             }
 
@@ -1210,7 +1210,15 @@ export class CurlyTag {
         // Loop finished → cleanup
         stack.pop();
 
-        delete ctx[top.name];
+        let pos = top.name.indexOf(',');
+
+        if (pos === -1) {
+            delete ctx[top.name];
+        } else {
+            delete ctx[top.name.slice(0, pos).trim()];
+            delete ctx[top.name.slice(pos + 1).trim()];
+        }
+
         delete ctx.loop;
     }
 
@@ -1250,7 +1258,15 @@ export class CurlyTag {
         // Loop finished → cleanup
         stack.pop();
 
-        delete ctx[top.name];
+        let pos = top.name.indexOf(',');
+
+        if (pos === -1) {
+            delete ctx[top.name];
+        } else {
+            delete ctx[top.name.slice(0, pos).trim()];
+            delete ctx[top.name.slice(pos + 1).trim()];
+        }
+
         delete ctx.loop;
 
         return top.end + 1;

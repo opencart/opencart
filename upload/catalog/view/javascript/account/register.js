@@ -16,17 +16,6 @@ export default class AccountRegister extends WebComponent {
     async render() {
         let data = new Map();
 
-        data.set('customer_groups', customer_groups);
-
-        // Custom Fields
-        data.set('custom_fields', []);
-
-        let customer_group = await loader.storage('customer/customer_group-' + config.get('config_customer_group_id'));
-
-        if (customer_group instanceof Map) {
-            data.get('custom_fields').push(customer_group.get('custom_fields'));
-        }
-
         data.set('token', this.token);
 
         return loader.template('account/register', [ data, language, config ]);

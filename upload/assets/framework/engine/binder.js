@@ -171,7 +171,7 @@ export class Binder {
         this.destroy();
         this.refs = new Map();
         this.listeners = [];
-        this.bindings = new Map();
+        this.bindings = [];
 
         this.walk(this.root);
     }

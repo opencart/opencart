@@ -22,7 +22,7 @@ export default class Storage {
 
         let file = this.directory + path + '.json';
         let namespace = '';
-        let parts = path.split('/');
+        let parts = path.replace(/\/+$/, '').split('/');
 
         for (let part of parts) {
             if (!namespace) {

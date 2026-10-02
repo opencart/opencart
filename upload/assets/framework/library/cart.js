@@ -166,9 +166,9 @@ export default class Cart {
                 // Get total products of the same product but with different options
                 let product_total = 0;
 
-                for (let item_2 of this.data) {
+                for (let item_2 of this.items.values()) {
                     if (item_2.product_id == item.product_id) {
-                        product_total += item_2.quantity;
+                        product_total += Number(item_2.quantity);
                     }
                 }
 
@@ -314,15 +314,15 @@ export default class Cart {
      * $subscriptions = $this->cart->getSubscriptions();
      */
     getWeight() {
-        let weight = 0;
+        let total = 0;
 
         for (let product of this.getProducts()) {
             if (product.shipping) {
-                weight += weight.convert(product.weight, product.weight_class_id, config.config_weight_class_id);
+                total += weight.convert(product.weight, product.weight_class_id, config.config_weight_class_id);
             }
         }
 
-        return weight;
+        return total;
     }
 
     /**

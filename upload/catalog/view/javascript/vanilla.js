@@ -10,10 +10,7 @@ config.addPath('shop/' + base.host + '/config/');
 storage.addPath('shop/' + base.host + '/data/');
 
 // language
-const lang = document.documentElement.lang.toLowerCase();
-
-// Developer Code
-local.set('language', 'en-gb');
+local.set('language', document.documentElement.lang.toLowerCase());
 
 // Language Path
 //language.addPath('shop/' + base.host + '/language/' + local.get('language') + '/');
@@ -22,9 +19,6 @@ language.addPath('catalog/view/language/' + local.get('language') + '/');
 // Template Path
 //template.addPath('shop/' + base.host + '/template/');
 template.addPath('catalog/view/template/');
-
-// Storage
-storage.addPath('shop/' + base.host + '/data/');
 
 // Stylesheets
 //stylesheet.addPath('shop/' + base.host + '/stylesheet/');
@@ -41,47 +35,38 @@ template.addFilter('currency', (amount, code, value, format = false) => currency
 // Tax
 const tax = await loader.library('tax');
 
-tax.setGeozone(config.cache.get('default').get('config_country_id'), config.cache.get('default').get('config_zone_id'));
+await tax.setGeozone(config.cache.get('default').get('config_country_id'), config.cache.get('default').get('config_zone_id'));
 
 template.addFilter('tax', (value, tax_class_id = 0, calculate = true) => {
-    return tax.calculate(value, tax_class_id, calculate)
+    return tax.calculate(value, tax_class_id, calculate);
 });
 
 // Weight
 const weight = await loader.library('weight');
 
 template.addFilter('weight', (value, weight_class_id) => {
-    weight.format(value, weight_class_id)
+    return weight.format(value, weight_class_id);
 });
 
 // Length
 const length = await loader.library('length');
 
 template.addFilter('length', (value, length_class_id) => {
-    length.format(value, length_class_id)
+    return length.format(value, length_class_id);
 });
 
 Global.registerListener('link', (e) => {
     e.preventDefault();
-    //e.stopPropagation();
 
-    console.log('e', e);
+    let link = e.composedPath().find(element => element.tagName === 'A');
 
-    if (e.target !== null && e.target.tagName == 'A') {
-        Global.get('content').src = e.target.getAttribute('href');
+    if (!link) return;
 
-        return;
-    }
+    let href = link.getAttribute('href');
 
-    const elements = e.composedPath();
+    if (href == null) return;
 
-    console.log('elements', elements);
-
-    let a = elements.find(element => element.tagName == 'A');
-
-    console.log(a);
-
-    Global.get('content').src = a.getAttribute('href');
+    Global.get('content').src = href;
 });
 
 // General

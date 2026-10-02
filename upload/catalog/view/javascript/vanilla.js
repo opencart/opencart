@@ -1,4 +1,4 @@
-import { loader, config, language, local, storage, template, stylesheet } from '../../../assets/framework/index.js';
+import { Global, loader, config, language, local, storage, template, stylesheet } from '../../../assets/framework/index.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
@@ -59,6 +59,32 @@ const length = await loader.library('length');
 
 template.addFilter('length', (value, length_class_id) => {
     length.format(value, length_class_id)
+});
+
+Global.registerListener('link', (e) => {
+    e.preventDefault();
+    //e.stopPropagation();
+
+    console.log('e', e);
+
+    if (e.target !== null && e.target.tagName == 'A') {
+        Global.get('content').src = e.target.getAttribute('href');
+
+        return;
+    }
+
+    const elements = e.composedPath();
+
+    console.log('elements', elements);
+
+    let a = elements.find(element => element.tagName == 'A');
+
+
+    console.log(a);
+
+
+
+    Global.get('content').src = a.getAttribute('href');
 });
 
 // General

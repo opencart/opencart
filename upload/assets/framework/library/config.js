@@ -31,8 +31,8 @@ export default class Config {
                 namespace += '/' + part;
             }
 
-            if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(namespace.length) + '.json';
+            if (this.path.has(namespace + '/')) {
+                file = this.path.get(namespace + '/') + path.substr(namespace.length) + '.json';
             }
         }
 

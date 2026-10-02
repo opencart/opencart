@@ -530,7 +530,7 @@ export class CurlyTag {
     async fetch(path) {
         let file = this.directory + path + '.html';
         let namespace = '';
-        let parts = path.split('/');
+        let parts = path.replace(/\/+$/, '').split('/');
 
         for (let part of parts) {
             if (!namespace) {
@@ -539,8 +539,8 @@ export class CurlyTag {
                 namespace += '/' + part;
             }
 
-            if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(namespace.length) + '.html';
+            if (this.path.has(namespace + '/')) {
+                file = this.path.get(namespace + '/') + path.substr(namespace.length) + '.html';
             }
         }
 
@@ -598,6 +598,10 @@ export class CurlyTag {
                 code = top?.output;
 
                 stack.pop();
+
+                // Re-read the top of stack now that the output frame is gone,
+                // so a capture/filter block beneath it is correctly detected below.
+                top = stack[stack.length - 1];
             }
 
             if (token.type == 'text') {
@@ -755,7 +759,7 @@ export class CurlyTag {
                 return value !== '';
                 break;
             case 'number':
-                return value >= 0;
+                return value !== 0 && !Number.isNaN(value);
                 break;
             case 'boolean':
                 return value;
@@ -796,10 +800,28 @@ export class CurlyTag {
         return code;
     }
 
+    /**
+     * Expands numeric range literals, e.g. `(1...5)` or `(5...1)`, into an
+     * actual array literal (`[1,2,3,4,5]`), so they can be used directly
+     * inside an expression — e.g. `{% for i in (1...5) %}`. Quoted strings
+     * are left untouched so a `...` inside a string literal isn't matched.
+     */
     parseRange(code) {
-        let regex = new RegExp(`("[^"]*"|'[^']*'|\`[^\`]*\`)\((d+|)\.\.\.([])`, 'g');
+        let regex = /("[^"]*"|'[^']*'|`[^`]*`)|\((-?\d+)\s*\.\.\.\s*(-?\d+)\)/g;
 
+        return code.replace(regex, (match, quoted, start, end) => {
+            // Leave quoted strings untouched — only the unquoted alternative matched a range.
+            if (quoted !== undefined) return quoted;
 
+            let from = Number(start);
+            let to = Number(end);
+            let step = from <= to ? 1 : -1;
+            let length = Math.abs(to - from) + 1;
+
+            let values = Array.from({ length }, (_, i) => from + i * step);
+
+            return `[${values.join(',')}]`;
+        });
     }
 
     /**
@@ -860,6 +882,8 @@ export class CurlyTag {
 
         if (!match) {
             console.log(`[Template] Invalid output ${this.describeToken(token)}`);
+
+            return '';
         }
 
         let [, name, filter] = match;

@@ -1,12 +1,12 @@
 <?php
 /**
- * @package		OpenCart
+ * @package   OpenCart
  *
- * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
- * @license		https://opensource.org/licenses/GPL-3.0
+ * @author    Daniel Kerr
+ * @copyright Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license   https://opensource.org/licenses/GPL-3.0
  *
- * @see		https://www.opencart.com
+ * @see       https://www.opencart.com
  */
 namespace Opencart\System\Engine;
 /**
@@ -28,7 +28,7 @@ class Event {
 	 */
 	protected $processed = [];
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $refresh = false;
 
@@ -71,13 +71,14 @@ class Event {
 	public function trigger(string $event, array $args = []) {
 		if ($this->refresh) {
 			array_multisort(
-				array_column($this->data, 'priority'), SORT_ASC,
+				array_column($this->data, 'priority'),
+				SORT_ASC,
 				$this->data
 			);
 			$this->processed = [];
 			$this->refresh = false;
 		}
-		
+
 		if (!isset($this->processed[$event])) {
 			$this->processed[$event] = [];
 			foreach ($this->data as $value) {
@@ -91,7 +92,7 @@ class Event {
 				}
 			}
 		}
-		
+
 		foreach ($this->processed[$event] as $value) {
 			$value['action']->execute($this->registry, $args);
 		}

@@ -89,8 +89,11 @@ export default class Ajax {
     }
 
     /**
-     * Get the x value.
-     * @return {url} The x value.
+     * Sends a GET request, appending `data` to the URL as a query string.
+     * @param {string} url
+     * @param {object} [data] - key/value pairs serialized into the query string
+     * @param {object} [options] - extra request options, same shape as `request()`
+     * @return {Promise<*>} resolves with the parsed response body
      */
     get(url, data = {}, options = {}) {
         const query = new URLSearchParams(data).toString();

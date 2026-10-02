@@ -33,8 +33,8 @@ export default class Language {
                 namespace += '/' + part;
             }
 
-            if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(namespace.length) + '.yaml';
+            if (this.path.has(namespace + '/')) {
+                file = this.path.get(namespace + '/') + path.substr(namespace.length) + '.yaml';
             }
         }
 

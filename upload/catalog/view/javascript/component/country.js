@@ -1,5 +1,5 @@
-import {local, WebComponent} from '../index.js';
-import { loader } from '../index.js';
+import { WebComponent} from '../index.js';
+import { loader, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -21,7 +21,7 @@ const countries = await loader.storage('localisation/country');
 customElements.define('input-country', class extends WebComponent {
     static observed = ['value'];
 
-    default = HTMLInputElement;
+    default = '';
     countries = [];
     target = '';
 
@@ -46,7 +46,7 @@ customElements.define('input-country', class extends WebComponent {
 
         html += '>' + this.default;
 
-        for (let country of this.countries) {
+        for (let country of countries) {
             html += '<option value="' + country.country_id + '"';
 
             if (country.country_id == this.value) {
@@ -75,7 +75,7 @@ customElements.define('input-country', class extends WebComponent {
         return html;
     }
 
-    async handleConnect() {
+    async onConnect() {
         this.default = this.innerHTML;
         this.countries = countries;
         this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';

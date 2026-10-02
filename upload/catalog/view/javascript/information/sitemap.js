@@ -28,7 +28,7 @@ export default class InformationSitemap extends WebComponent {
                 });
             }
 
-            data.categories.push({
+            data.get('categories').push({
                 name: category.description[local.get('language')].name,
                 path: category.path,
                 children: children,
@@ -36,10 +36,10 @@ export default class InformationSitemap extends WebComponent {
             });
         }
 
-        data.informations = [];
+        data.set('informations', []);
 
         for (let information of informations) {
-            data.informations.push({
+            data.get('informations').push({
                 information_id: information.information_id,
                 title: information.description[local.get('language')].title
             });

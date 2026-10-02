@@ -19,6 +19,9 @@ customElements.define('payment-address', class extends WebComponent {
     }
 
     onChange(e) {
+        this.existing;
+
+
         if ($(this).val() == 1) {
             $('#payment-existing').show();
             $('#payment-new').hide();

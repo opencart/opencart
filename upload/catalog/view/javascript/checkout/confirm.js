@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import {local, WebComponent} from '../index.js';
 import { loader, ajax, cart, customer } from '../index.js';
 
 // Config
@@ -13,14 +13,31 @@ customElements.define('checkout-confirm', class extends WebComponent {
     }
 
     async render(){
-        let data = {};
+        let data = new Map();
 
-        return loader.template('checkout/confirm', { ...data,  ...language });
+        data.set('products', cart.getProducts());
+        data.set('currency', local.get('currency'));
+
+        return loader.template('checkout/confirm', [ data, language, config ]);
     }
 
-    onSubmit() {
+    onSubmit(e) {
+        e.preventDefault();
 
+        let form = new FormData(this.form);
 
+        ajax.post('action.php?route=checkout/cart.add', form, {
+            beforeSend: () => {
+
+            },
+            onComplete: () => {
+
+            },
+            onSuccess: this.succcess.bind(this),
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
     }
 });
 

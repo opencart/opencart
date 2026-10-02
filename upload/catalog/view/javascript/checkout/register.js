@@ -39,7 +39,7 @@ customElements.define('checkout-register', class extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=checkout/register.save&language=' + local.get('language'), form, {
+        ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             beforeSend: (request) => {
                 this.button.button('loading');
             },
@@ -53,7 +53,7 @@ customElements.define('checkout-register', class extends WebComponent {
         });
     }
 
-    onClick() {
+    onChange() {
         $('input[name=\'account\']').on('click', function() {
             if ($(this).val() == 1) {
                 $('#password').removeClass('d-none');
@@ -73,54 +73,17 @@ customElements.define('checkout-register', class extends WebComponent {
         $('input[name=\'account\']:checked').trigger('click');
     }
 
-    onChange() {
-        // Customer Group
-        $('#input-customer-group').on('change', function() {
-            var element = this;
-
-            $.ajax({
-                url: 'action.php?route=account/custom_field&language={{ language }}&customer_group_id=' + $(element).val(),
-                dataType: 'json',
-                beforeSend: function() {
-                    $(element).prop('disabled', true);
-                },
-                complete: function() {
-                    $(element).prop('disabled', false);
-                },
-                success: function(json) {
-                    $('.custom-field').addClass('d-none');
-                    $('.custom-field').removeClass('required');
-
-                    for (i = 0; i < json.length; i++) {
-                        custom_field = json[i];
-
-                        $('.custom-field-' + custom_field['custom_field_id']).removeClass('d-none');
-
-                        if (custom_field['required']) {
-                            $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
-                        }
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
-        });
-
-        $('#input-customer-group').trigger('change');
-    }
-
     success(json) {
         // Remove past error classes from inputs
         this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
-        if (json['redirect']) {
-            location = json['redirect'];
+        if (json.has('redirect')) {
+            location = json.get('redirect');
         }
 
         // Display error messages
-        if ('error' in json) {
+        if (json.has('error')) {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 

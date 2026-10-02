@@ -8,7 +8,7 @@ export default class InformationGdpr extends WebComponent {
     async render() {
 
 
-        return loader.template('information/gdpr', { ...language });
+        return loader.template('information/gdpr', [ language ]);
     }
 
     onChange() {

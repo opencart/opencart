@@ -60,6 +60,10 @@ export default class Customer {
         return this.data.get('address').find(address => address.address == address_id);
     }
 
+    getAddresses() {
+        return this.data.get('address');
+    }
+
     getToken() {
         return this.data.get('token');
     }

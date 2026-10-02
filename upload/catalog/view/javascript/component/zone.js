@@ -1,5 +1,5 @@
-import {local, WebComponent} from '../index.js';
-import { loader } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');

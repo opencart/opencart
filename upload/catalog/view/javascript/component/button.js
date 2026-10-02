@@ -5,8 +5,8 @@ customElements.define('button-submit', class extends WebComponent {
     width;
 
     onConnect() {
-        this.html = this.element.innerHTML;
-        this.width = this.element.offsetWidth;
+        this.html = this.innerHTML;
+        this.width = this.offsetWidth;
     }
 
     handleState(state) {

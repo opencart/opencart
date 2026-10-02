@@ -172,6 +172,7 @@ export class Binder {
         this.refs = new Map();
         this.listeners = [];
         this.bindings = new Map();
+
         this.walk(this.root);
     }
 

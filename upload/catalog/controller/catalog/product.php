@@ -452,15 +452,11 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Tag
 		$data['tags'] = [];
 
-		if ($product_info['tag']) {
-			$tags = explode(',', $product_info['tag']);
-
-			foreach ($tags as $tag) {
-				$data['tags'][] = [
-					'tag'  => trim($tag),
-					'href' => $this->url->link('product/search', 'language=' . $this->config->get('config_language') . '&tag=' . trim($tag))
-				];
-			}
+		foreach ($this->model_catalog_product->getTags($product_id) as $tag) {
+			$data['tags'][] = [
+				'tag'  => trim($tag),
+				'href' => $this->url->link('product/search', 'language=' . $this->config->get('config_language') . '&tag=' . trim($tag))
+			];
 		}
 
 		if ($this->config->get('config_product_report_status')) {

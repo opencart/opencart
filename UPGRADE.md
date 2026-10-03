@@ -1,3 +1,22 @@
+# Upgrading OpenCart
+
+## ⚠️ Upgrading from OpenCart 3.x to 4.x is NOT supported
+
+**Do not attempt to upgrade directly from OpenCart 3.x to 4.x.**
+
+OpenCart 4.x is a major rewrite with fundamental breaking changes:
+
+- All PHP code is now **namespaced** — 3.x extensions and themes will not load
+- The **extension directory structure** changed entirely (3.x OCMODs are incompatible)
+- The **database schema** has significant structural differences
+- There is **no migration path** for 3.x extensions, themes, or modifications
+
+**If you are coming from OpenCart 3.x, you must do a fresh installation of OpenCart 4.x** and manually migrate your data (products, customers, orders) using database tools or a third-party migration service.
+
+See the [OpenCart documentation](https://docs.opencart.com/) for guidance on fresh installations.
+
+---
+
 # Upgrading from versions 4.1.0.0 - 4.1.0.3
 
 * For existing installs only
@@ -54,4 +73,4 @@ Many bugs may have already been reported and fixes will be offered in the first 
 You should always visit this thread immediately after a fresh upgrade to see if there are any immediate bug fixes
 If nobody has reported your bug, then please report it.
 
-See also our online documentation at https://docs.opencart.com/ 
+See also our online documentation at https://docs.opencart.com/

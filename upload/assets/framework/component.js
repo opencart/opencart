@@ -1,5 +1,6 @@
 // Input
 import './component/input/autocomplete.js';
+import './component/input/button.js';
 import './component/input/checkbox.js';
 import './component/input/country.js';
 import './component/input/form.js';
@@ -10,7 +11,8 @@ import './component/input/zone.js';
 
 // UI
 import './component/ui/alert.js';
+import './component/ui/modal.js';
 
-// Tools
-import './component/pagination.js';
-import './component/include.js';
+// Navigation
+import './component/navigation/pagination.js';
+import './component/navigation/include.js';

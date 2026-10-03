@@ -23,16 +23,17 @@ function oc_get_ip(): string {
 
 	foreach ($headers as $header) {
 		if (array_key_exists($header, $_SERVER)) {
-			$ip = $_SERVER[$header];
+			// A proxy may send a comma separated list, the client address is the first entry.
+			$ip = trim(explode(',', $_SERVER[$header])[0]);
 
-			// This line might or might not be used.
-			$ip = trim(explode(',', $ip)[0]);
-
-			return $ip;
+			// Only trust the forwarded header when it actually holds an IP address.
+			if (filter_var($ip, FILTER_VALIDATE_IP)) {
+				return $ip;
+			}
 		}
 	}
 
-	return $_SERVER['REMOTE_ADDR'];
+	return filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_IP) ?: '';
 }
 
 // Sting functions

@@ -111,9 +111,9 @@ class Customer {
 			if (!$override) {
 				if (password_verify($password, $customer_query->row['password'])) {
 					$rehash = password_needs_rehash($customer_query->row['password'], PASSWORD_DEFAULT);
-				} elseif (isset($customer_query->row['salt']) && $customer_query->row['password'] == sha1($customer_query->row['salt'] . sha1($customer_query->row['salt'] . sha1($password)))) {
+				} elseif (isset($customer_query->row['salt']) && hash_equals((string)$customer_query->row['password'], sha1($customer_query->row['salt'] . sha1($customer_query->row['salt'] . sha1($password))))) {
 					$rehash = true;
-				} elseif ($customer_query->row['password'] == md5($password)) {
+				} elseif (hash_equals((string)$customer_query->row['password'], md5($password))) {
 					$rehash = true;
 				} else {
 					return false;

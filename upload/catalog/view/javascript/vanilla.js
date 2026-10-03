@@ -1,5 +1,7 @@
 import { Global, loader, config, language, local, storage, template, stylesheet } from '../../../assets/framework/index.js';
 
+console.log('vanilla');
+
 // Base
 const base = new URL(document.querySelector('base').href);
 
@@ -30,31 +32,26 @@ local.set('currency', 'EUR');
 
 const currency = await loader.library('currency');
 
-template.addFilter('currency', (amount, code, value, format = false) => currency.format(amount, code, value, format));
-
+template.addFilter('currency', currency.format);
+/*
 // Tax
 const tax = await loader.library('tax');
 
 await tax.setGeozone(config.cache.get('default').get('config_country_id'), config.cache.get('default').get('config_zone_id'));
 
-template.addFilter('tax', (value, tax_class_id = 0, calculate = true) => {
-    return tax.calculate(value, tax_class_id, calculate);
-});
+template.addFilter('tax', tax.calculate);
 
 // Weight
 const weight = await loader.library('weight');
 
-template.addFilter('weight', (value, weight_class_id) => {
-    return weight.format(value, weight_class_id);
-});
+template.addFilter('weight', weight.format);
 
 // Length
 const length = await loader.library('length');
 
-template.addFilter('length', (value, length_class_id) => {
-    return length.format(value, length_class_id);
-});
-
+template.addFilter('length', length.format);
+*/
+/*
 Global.registerListener('link', (e) => {
     e.preventDefault();
 
@@ -68,6 +65,11 @@ Global.registerListener('link', (e) => {
 
     Global.get('content').src = href;
 });
+*/
 
-import './component.js';
-import('./common/layout.js');
+document.addEventListener('DOMContentLoaded', () => {
+
+    console.log(config);
+});
+
+import './common/layout.js';

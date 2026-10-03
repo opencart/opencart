@@ -22,12 +22,12 @@ export default class AccountWishlist extends WebComponent {
 
     }
 
-    remove(e) {
+    async remove(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('index.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
+        await ajax.post('index.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
             beforeSend: function() {
                 this.submitter.button('loading');
             },

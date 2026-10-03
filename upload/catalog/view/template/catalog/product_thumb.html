@@ -12,7 +12,7 @@
       {% endif %}
       {% if config_review_status && rating %}
       <div class="rating">
-        {% for i in 1..5 %}{% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %}{% endfor %}
+        {% for i in (1..5) %}{% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %}{% endfor %}
       </div>
       {% endif %}
     </div>

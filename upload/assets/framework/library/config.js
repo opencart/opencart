@@ -72,9 +72,8 @@ config.cache.set('default', new Map(Object.entries({
     config_path: base + 'catalog/view/javascript/',
     config_logo: 'catalog/opencart-logo.png',
     config_url: 'http://localhost/opencart-master/upload/',
-
     config_name: 'OpenCart Store',
-    config_owner: '',
+    config_owner: 'John Doe',
     config_address: '44 Abc Road,' + "\n" + 'TX',
     config_email: 'test@test.com',
     config_telephone: '01234 567890',
@@ -89,7 +88,6 @@ config.cache.set('default', new Map(Object.entries({
     config_timezone: 'UTC',
     config_language: 'en-gb',
     config_currency: 'EUR',
-
     config_length_class_id: 1,
     config_weight_class_id: 1,
 
@@ -103,6 +101,8 @@ config.cache.set('default', new Map(Object.entries({
     config_customer_group_id: 1,
     config_checkout_guest: true,
     config_checkout_payment_address: true,
+    config_telephone_status: true,
+    config_telephone_required: true,
     config_gdpr_id: 0,
     config_stock_status_id: 4,
     config_affiliate_status: 1,

@@ -3,7 +3,6 @@
 <form @submit="onSubmit">
   <fieldset id="account">
     <legend>{{ text_your_details }}</legend>
-
     <div class="row mb-3">
       <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
       <div class="col-sm-10">
@@ -11,7 +10,6 @@
         <div id="error-firstname" class="invalid-feedback"></div>
       </div>
     </div>
-
     <div class="row mb-3">
       <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
       <div class="col-sm-10">
@@ -19,7 +17,6 @@
         <div id="error-lastname" class="invalid-feedback"></div>
       </div>
     </div>
-
     <div class="row mb-3">
       <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
       <div class="col-sm-10">
@@ -27,17 +24,15 @@
         <div id="error-email" class="invalid-feedback"></div>
       </div>
     </div>
-
     {% if config_telephone_status %}
-      <div class="row mb-3">
-        <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
-        <div class="col-sm-10">
-          <input type="tel" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>
-          <div id="error-telephone" class="invalid-feedback"></div>
-        </div>
+    <div class="row mb-3">
+      <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
+      <div class="col-sm-10">
+        <input type="tel" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" {% if config_telephone_required %} required{% endif %}/>
+        <div id="error-telephone" class="invalid-feedback"></div>
       </div>
+    </div>
     {% endif %}
-
   </fieldset>
 
   <fieldset>
@@ -56,17 +51,24 @@
     <div class="row mb-3">
       <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
       <div class="col-sm-10">
-        <x-switch name="newsletter" value="1" input-id="input-newsletter" input-class="form-switch form-switch-lg"></x-switch>
+        <input-switch name="newsletter" value="1" input-id="input-newsletter" input-class="form-switch form-switch-lg"></input-switch>
       </div>
     </div>
   </fieldset>
+
   {% if config_captcha %}
   <account-captcha type="{{ config_captcha }}"></account-captcha>
   {% endif %}
+
   <div class="text-end">
     {% if config_account_id %}
-      <x-agree name="agree" value="{{ config_account_id }}" target="#button-continue"></x-agree>
+
+    <label class="form-check-label">{{ text_agree }}</label>
+    <input-switch name="agree" value="1" @change="onAgree" input-class="form-switch form-switch-lg"></input-switch>
+
     {% endif %}
-    <button-submit @ref="submit" class="btn btn-primary">{{ button_continue }}</button-submit>
+
+    <button-submit @ref="submitter" class="btn btn-primary">{{ button_continue }}</button-submit>
+
   </div>
 </form>

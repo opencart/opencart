@@ -11,12 +11,12 @@ export default class AccountPassword extends WebComponent {
         return loader.template('account/password', [ language ]);
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/password.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+        await ajax.post('action.php?route=account/password.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
                 button.button('loading');
             },
@@ -37,7 +37,7 @@ export default class AccountPassword extends WebComponent {
 
         // Display error messages
         if (json.get('error')) {
-            for (let key in json['error']) {
+            for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 
                 let input = this.form.querySelector('#input-' + value);

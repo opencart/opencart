@@ -46,7 +46,6 @@ export default class Loader {
             Object.assign(values, Object.fromEntries(data));
         }
 
-        //
         if (data instanceof Array) {
             for (let entry of data) {
                 if (entry instanceof Map) {

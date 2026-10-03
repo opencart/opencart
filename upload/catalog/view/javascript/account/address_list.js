@@ -36,8 +36,8 @@ export default class AddressList extends WebComponent {
     }
 
     success(json) {
-        if (json['error']) {
-            this.alert.append('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
+        if (json.has('error')) {
+            this.alert.append('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
         }
 
         if (json.has('success')) {

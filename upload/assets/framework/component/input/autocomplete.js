@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../../index.js';
 
 customElements.define('input-autocomplete', class extends WebComponent {
     async render() {
@@ -6,7 +6,6 @@ customElements.define('input-autocomplete', class extends WebComponent {
         let value = this.getAttribute('value');
 
         let html = '<input type="text" name="' + name + '" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" autocomplete="off"/>';
-
         html += '<ul class="dropdown-menu" data-bind="dropdown"></ul>';
 
         return html;

@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../../index.js';
 
 customElements.define('input-checkbox', class extends WebComponent {
     render() {

@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../../index.js';
 
 customElements.define('ui-alert', class extends WebComponent {
     static observed = ['type'];

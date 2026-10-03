@@ -18,12 +18,12 @@ export default class AddressForm extends WebComponent {
         return loader.template('account/address', [ data, language, config ]);
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+        await ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
                 this.submitter.button('loading');
             },

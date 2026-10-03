@@ -14,12 +14,12 @@ export default class AuthorizeUnlock extends WebComponent {
         return loader.template('account/authorize_reset', language);
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
+        await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
             beforeSend: () => {
                 this.submitter.button('loading');
             },
@@ -38,8 +38,8 @@ export default class AuthorizeUnlock extends WebComponent {
             location = json['redirect'];
         }
 
-        if (json['error']) {
-            this.alert.prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
+        if (json.has('error')) {
+            this.alert.prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
         }
 
         if (json.has('success')) {

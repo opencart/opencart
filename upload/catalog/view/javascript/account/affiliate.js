@@ -20,12 +20,12 @@ export default class AccountAffiliate extends WebComponent {
 
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/affiliate.save&affiliate_token=' + this.token, form, {
+        await ajax.post('action.php?route=account/affiliate.save&affiliate_token=' + this.token, form, {
             beforeSend: () => {
                 this.button.button('loading');
             },

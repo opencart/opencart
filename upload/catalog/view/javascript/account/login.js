@@ -28,7 +28,7 @@ export default class AccountLogin extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/login.login&login_token=' + this.token, form, {
+        await ajax.post('action.php?route=account/login.login&login_token=' + this.token, form, {
             beforeSend: () => {
                 this.button.button('loading');
             },

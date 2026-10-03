@@ -25,7 +25,7 @@ export default class ReturnForm extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
+        await ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
             beforeSend: () => {
                 this.submitter.button('loading');
             },

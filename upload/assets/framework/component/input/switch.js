@@ -1,6 +1,7 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../../index.js';
 
 customElements.define('input-switch', class extends WebComponent {
+    observed = [];
     formAssociated = true;
 
     get checked() {
@@ -21,7 +22,7 @@ customElements.define('input-switch', class extends WebComponent {
             html += ' id="' + this.getAttribute('input-id') + '"';
         }
 
-        html += ' data-on="change:onChange" class="form-check-input"';
+        html += ' @change="onChange" class="form-check-input"';
 
         if (this.checked) {
             html += ' checked';

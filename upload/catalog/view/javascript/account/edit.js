@@ -11,6 +11,8 @@ export default class AccountEdit extends WebComponent {
     token = '';
 
     async render() {
+        if (!customer.isLogged()) return;
+
         let data = new Map();
 
         data.set('firstname', customer.getFirstName());
@@ -24,6 +26,8 @@ export default class AccountEdit extends WebComponent {
     }
 
     async onConnect() {
+        if (!customer.isLogged()) return;
+
         this.token = await ajax.get('action.php?route=account/edit.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
     }
 
@@ -32,12 +36,12 @@ export default class AccountEdit extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+        await ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.button.button('loading');
+                this.submitter.button('loading');
             },
             onComplete: (json) => {
-                this.button.button('reset');
+                this.submitter.button('reset');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {
@@ -53,7 +57,7 @@ export default class AccountEdit extends WebComponent {
 
         // Display error messages
         if (json.get('error')) {
-            for (let key in json['error']) {
+            for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 
                 let input = this.form.querySelector('#input-' + value);
@@ -65,11 +69,7 @@ export default class AccountEdit extends WebComponent {
                     input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
                 }
 
-                let error = this.form.querySelector('#error-' + value);
-
-                if (error) {
-                    error.classList.add('d-block');
-                }
+                this.form.querySelector('#error-' + value).classList.add('d-block');
             }
         }
 

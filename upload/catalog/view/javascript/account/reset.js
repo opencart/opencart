@@ -14,7 +14,7 @@ export default class AccountReset extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/reset&language=' + local.get('language') + '&reset_token=' + this.token, form, {
+        await ajax.post('action.php?route=account/reset&language=' + local.get('language') + '&reset_token=' + this.token, form, {
             beforeSend: () => {
                 this.get('button').button('loading');
             },

@@ -69,5 +69,5 @@ Global.registerListener('link', (e) => {
     Global.get('content').src = href;
 });
 
-// General
+import './component.js';
 import('./common/layout.js');

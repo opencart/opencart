@@ -14,12 +14,12 @@ export default class AccountForgotten extends WebComponent {
         return loader.template('account/forgotten', [ language ]);
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=account/forgotten.confirm&language=' + local.get('language'), form, {
+        await ajax.post('action.php?route=account/forgotten.confirm&language=' + local.get('language'), form, {
             beforeSend: () => {
                 this.submitter.button('loading');
             },
@@ -40,7 +40,7 @@ export default class AccountForgotten extends WebComponent {
 
         // Display error messages
         if (json.get('error')) {
-            for (let key in json['error']) {
+            for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 
                 let input = this.form.querySelector('#input-' + value);

@@ -6,4 +6,5 @@ $_['text_upload']     = 'Your file was successfully uploaded!';
 $_['error_token']     = 'Warning: upload token invalid!';
 $_['error_filename']  = 'Filename must be between 3 and 64 characters!';
 $_['error_file_type'] = 'Invalid file type!';
+$_['error_file_size'] = 'File size exceeds the maximum allowed size!';
 $_['error_upload']    = 'Upload required!';

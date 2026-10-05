@@ -45,10 +45,14 @@ import { stylesheet } from './stylesheet.js';
  */
 export class WebComponent extends HTMLElement {
     static observed = [];
-    static formAssociated = false;
+    static is_form = false;
 
     static get observedAttributes() {
         return this.observed;
+    }
+
+    static get formAssociated() {
+        return this.is_form;
     }
 
     constructor() {
@@ -83,8 +87,8 @@ export class WebComponent extends HTMLElement {
     }
 
     handleState(keys) {
-        if (typeof this.onStateChange === 'function') {
-            this.onStateChange(keys, this.state);
+        if (typeof this.handleEvent === 'function') {
+            this.handleEvent(keys, this.state);
         } else {
             this.update();
         }
@@ -166,18 +170,16 @@ export class WebComponent extends HTMLElement {
     attributeChangedCallback(name, value_old, value_new) {
         if (!this.connected || value_old === value_new) return;
 
-        console.log(`${name} changed from ${value_old} to ${value_new}`);
+        //console.log(`${name} changed from ${value_old} to ${value_new}`);
 
-        let event = new CustomEvent('[' + name + ']', {
+        // Dispatch the event
+        this.dispatchEvent(new CustomEvent('[' + name + ']', {
             bubbles: false,
             cancelable: true,
             detail: {
                 value_old: value_old,
                 value_new: value_new
             }
-        });
-
-        // Dispatch the event
-        this.dispatchEvent(event);
+        }));
     }
 }

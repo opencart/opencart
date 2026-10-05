@@ -20,8 +20,6 @@ customElements.define('nav-include', class Include extends WebComponent {
         // Get the source HTML to load
         if (!this.src) return;
 
-        console.log(this.src);
-
         let [ path, query] = this.src.split('?');
 
         if (!this.data.has(path)) {

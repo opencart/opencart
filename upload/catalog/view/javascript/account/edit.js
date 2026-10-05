@@ -11,7 +11,7 @@ export default class AccountEdit extends WebComponent {
     token = '';
 
     async render() {
-        if (!customer.isLogged()) return;
+        //if (!customer.isLogged()) return;
 
         let data = new Map();
 
@@ -41,7 +41,7 @@ export default class AccountEdit extends WebComponent {
                 this.submitter.state.add('loading');
             },
             onComplete: (json) => {
-                this.submitter.button('reset');
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {
@@ -52,7 +52,7 @@ export default class AccountEdit extends WebComponent {
 
     success(json) {
         // Remove past error classes from inputs
-        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        this.form.querySelectorAll(':invalid').forEach(element => element.removeAttribute('invalid'));
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
@@ -60,7 +60,7 @@ export default class AccountEdit extends WebComponent {
             for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 
-                this.form.querySelector('#input-' + value).classList.add('is-invalid');
+                this.form.querySelector('#input-' + value).addAttribute('invalid');
                 this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
                 this.form.querySelector('#error-' + value).classList.add('d-block');
             }

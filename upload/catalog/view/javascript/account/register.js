@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, cart, customer, local } from '../index.js';
+import { loader, ajax, cart, customer, local, session } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -11,7 +11,23 @@ export default class AccountRegister extends WebComponent {
     token = '';
 
     async render() {
+        if (!customer.isLogged()) return;
+
         let data = new Map();
+
+        data.set('firstname', '');
+        data.set('lastname', '');
+        data.set('email', '');
+        data.set('telephone', '');
+
+        if (session.has('customer')) {
+            let customer = session.get('customer');
+
+            data.set('firstname', customer.firstname);
+            data.set('lastname', customer.lastname);
+            data.set('email', customer.email);
+            data.set('telephone', customer.telephone);
+        }
 
         data.set('token', this.token);
 
@@ -22,6 +38,23 @@ export default class AccountRegister extends WebComponent {
         if (customer.isLogged()) return;
 
         this.token = await ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
+    }
+
+    onChange(e) {
+        //this.existing;
+
+        if ($(this).val() == 1) {
+            $('#payment-existing').show();
+            $('#payment-new').hide();
+        } else {
+            $('#payment-existing').hide();
+            $('#payment-new').show();
+        }
+        if ($(this).prop('checked')) {
+            this.id('shipping-address').hide();
+        } else {
+            $('#shipping-address').show();
+        }
     }
 
     async onSubmit(e) {
@@ -57,7 +90,7 @@ export default class AccountRegister extends WebComponent {
 
                 // If the element has inputs inside.
                 this.form.querySelector('#input-' + value).classList.add('is-invalid');
-                this.form.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
                 this.form.querySelector('#error-' + value).classList.add('d-block');
             }
         }

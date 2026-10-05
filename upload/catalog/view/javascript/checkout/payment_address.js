@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, customer, local } from '../index.js';
+import { loader, ajax, customer, local, session } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -11,29 +11,37 @@ customElements.define('payment-address', class extends WebComponent {
     async render() {
         let data = new Map();
 
-        data.set('firstname', customer.getFirstName());
-        data.set('lastname', customer.getLastName());
-        data.set('addresses', customer.getAddresses());
+        data.set('firstname', '');
+        data.set('lastname', '');
+        data.set('address_1', '');
+        data.set('address_2', '');
+        data.set('city', '');
+        data.set('postcode', '');
+        data.set('country_id', config.get('config_country_id'));
+        data.set('zone_id', '');
+        data.set('addresses', []);
+
+        if (customer.isLogged()) {
+            data.set('logged', true);
+            data.set('firstname', customer.getFirstName());
+            data.set('lastname', customer.getLastName());
+            data.set('addresses', customer.getAddresses());
+        }
+
+        if (session.has('payment_address')) {
+            let address = session.get('payment_address');
+
+            data.set('firstname', address.firstname);
+            data.set('lastname', address.lastname);
+            data.set('address_1', address.address_1);
+            data.set('address_2', address.address_2);
+            data.set('city', address.city);
+            data.set('postcode', address.postcode);
+            data.set('country_id', address.country_id);
+            data.set('zone_id', address.zone_id);
+        }
 
         return loader.template('checkout/payment_address', [ data, language ]);
-    }
-
-    onChange(e) {
-        //this.existing;
-
-
-        if ($(this).val() == 1) {
-            $('#payment-existing').show();
-            $('#payment-new').hide();
-        } else {
-            $('#payment-existing').hide();
-            $('#payment-new').show();
-        }
-        if ($(this).prop('checked')) {
-            this.id('shipping-address').hide();
-        } else {
-            $('#shipping-address').show();
-        }
     }
 
     setAddress(e) {

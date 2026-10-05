@@ -10,6 +10,8 @@ export default class AccountTransaction extends WebComponent {
 
         return loader.template('account/transaction', [ language ]);
     }
+
+
 }
 
 customElements.define('account-transaction', AccountTransaction);

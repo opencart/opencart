@@ -50,7 +50,7 @@ customElements.define('input-upload', class extends WebComponent {
     }
 
     render() {
-
+        return '<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>';
         // data-oc-toggle="upload"
         // data-oc-url="{{ upload }}"
         // data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"
@@ -126,12 +126,8 @@ customElements.define('input-upload', class extends WebComponent {
 
         $($(this).attr('data-oc-target')).val('');
     }
-});
 
-customElements.define('form-upload', class extends WebComponent {
-    render() {
-        return '<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>';
-    }
+
 
     onClick() {
         if (typeof timer != 'undefined') {

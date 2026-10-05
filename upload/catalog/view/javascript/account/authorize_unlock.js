@@ -9,7 +9,7 @@ const language = await loader.language('account/address');
 
 export default class AuthorizeUnlock extends WebComponent {
     async render() {
-        if (customer.isLogged()) return;
+        //if (customer.isLogged()) return;
 
         return loader.template('account/authorize_reset', language);
     }
@@ -23,8 +23,8 @@ export default class AuthorizeUnlock extends WebComponent {
             beforeSend: () => {
                 this.submitter.state.add('loading');
             },
-            onComplete: (json) => {
-                this.submitter.button('reset');
+            onComplete: () => {
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (xhr, ajaxOptions, thrownError) => {

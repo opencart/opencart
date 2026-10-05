@@ -19,16 +19,19 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-2">
+
       <div class="col mb-3">
         <label for="input-firstname" class="form-label">{{ entry_firstname }}</label>
         <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
         <div id="error-firstname" class="invalid-feedback"></div>
       </div>
+
       <div class="col mb-3">
         <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
         <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
         <div id="error-lastname" class="invalid-feedback"></div>
       </div>
+
       <div class="col mb-3">
         <label for="input-email" class="form-label">{{ entry_email }}</label>
         <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
@@ -42,8 +45,38 @@
           <div id="error-telephone" class="invalid-feedback"></div>
         </div>
       {% endif %}
+
     </div>
   </fieldset>
+
+  <div class="row row-cols-1 row-cols-md-2">
+    <div id="password" class="col mb-2">
+      <fieldset>
+        <legend>{{ text_your_password }}</legend>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="input-password" class="form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" required/>
+            <div id="error-password" class="invalid-feedback"></div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="col mb-3">{{ captcha }}</div>
+  </div>
+
+  <div class="mb-3">
+    <div>
+      <x-switch name="agree" value="0" input-id="input-newsletter" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
+      <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label>
+    </div>
+    {% if text_agree %}
+    <div>
+      <x-switch name="agree" value="1" checked="{{ agree }}" input-id="input-register-agree" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
+      <label for="input-register-agree" class="form-check-label">{{ text_agree }}</label>
+    </div>
+    {% endif %}
+  </div>
+  <button type="submit" id="button-register" class="btn btn-primary mt-2">{{ button_continue }}</button>
 
   {% if config_checkout_payment_address %}
     <fieldset>
@@ -72,6 +105,7 @@
           <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control" required/>
           <div id="error-payment-postcode" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3">
           <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
           <x-country name="payment_country_id" value="{{ payment_country_id }}" id="x-payment-country" postcode="1" target="input-payment-postcode" input-id="input-payment-country" input-class="form-select" required>
@@ -79,6 +113,7 @@
           </x-country>
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3">
           <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
           <x-zone name="payment_zone_id" value="{{ payment_zone_id }}" target="x-payment-country" input-id="input-payment-zone" input-class="form-select" required>
@@ -146,31 +181,5 @@
       </div>
     </div>
   </fieldset>
-  <div class="row row-cols-1 row-cols-md-2">
-    <div id="password" class="col mb-2">
-      <fieldset>
-        <legend>{{ text_your_password }}</legend>
-        <div class="row">
-          <div class="col mb-3">
-            <label for="input-password" class="form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" required/>
-            <div id="error-password" class="invalid-feedback"></div>
-          </div>
-        </div>
-      </fieldset>
-    </div>
-    <div class="col mb-3">{{ captcha }}</div>
-  </div>
-  <div class="mb-3">
-    <div>
-      <x-switch name="agree" value="0" input-id="input-newsletter" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
-      <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label>
-    </div>
-    {% if text_agree %}
-      <div>
-        <x-switch name="agree" value="1" checked="{{ agree }}" input-id="input-register-agree" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
-        <label for="input-register-agree" class="form-check-label">{{ text_agree }}</label>
-      </div>
-    {% endif %}
-  </div>
-  <button type="submit" id="button-register" class="btn btn-primary mt-2">{{ button_continue }}</button>
+
 </form>

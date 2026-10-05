@@ -9,16 +9,34 @@ const language = await loader.language('checkout/shipping_address');
 
 customElements.define('shipping-address', class extends WebComponent {
     async render()  {
+        if (!cart.hasShipping()) return;
+
         let data = new Map();
 
-        data.set('firstname', customer.getFirstName());
-        data.set('lastname', customer.getLastName());
-        data.set('addresses', customer.getAddresses());
+        if (customer.isLogged()) {
+            data.set('logged', true);
+            data.set('firstname', customer.getFirstName());
+            data.set('lastname', customer.getLastName());
+            data.set('addresses', customer.getAddresses());
+        } else {
+            data.set('logged', false);
+            data.set('firstname', '');
+            data.set('lastname', '');
+        }
+
+        data.set('address_1', '');
+        data.set('address_2', '');
+        data.set('city', '');
+        data.set('postcode', '');
+        data.set('country_id', config.get('config_country_id'));
+        data.set('zone_id', 0);
 
         return loader.template('checkout/shipping_address', [ data,  language,  config ]);
     }
 
     onChange(e) {
+        e.target
+
         if ($(this).val() == 1) {
             $('#shipping-existing').show();
             $('#shipping-new').hide();

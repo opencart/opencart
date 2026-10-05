@@ -9,7 +9,7 @@ const language = await loader.language('account/forgotten');
 
 export default class AccountForgotten extends WebComponent {
     render() {
-        if (customer.isLogged()) return;
+        //if (customer.isLogged()) return;
 
         return loader.template('account/forgotten', [ language ]);
     }
@@ -23,8 +23,8 @@ export default class AccountForgotten extends WebComponent {
             beforeSend: () => {
                 this.submitter.state.add('loading');
             },
-            onComplete: (json) => {
-                this.submitter.button('reset');
+            onComplete: () => {
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {
@@ -43,20 +43,9 @@ export default class AccountForgotten extends WebComponent {
             for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 
-                let input = this.form.querySelector('#input-' + value);
-
-                if (input) {
-                    input.classList.add('is-invalid');
-
-                    // If the element has inputs inside.
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                }
-
-                let error = this.form.querySelector('#error-' + value);
-
-                if (error) {
-                    error.classList.add('d-block');
-                }
+                this.form.querySelector('#input-' + value).classList.add('is-invalid');
+                this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                this.form.querySelector('#error-' + value).classList.add('d-block');
             }
         }
 

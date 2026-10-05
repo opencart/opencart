@@ -1,5 +1,3 @@
-console.log('javascript/index loaded');
-
 // Engine
 export * from '../../../assets/framework/engine.js';
 

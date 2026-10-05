@@ -16,6 +16,8 @@ customElements.define('checkout-register', class extends WebComponent {
     async render(){
         let data = new Map();
 
+
+
         data.set('token', this.token);
 
         return loader.template('checkout/register', [ data,  language, config ]);
@@ -25,25 +27,6 @@ customElements.define('checkout-register', class extends WebComponent {
         //if (customer.isLogged()) return;
 
         this.token = await ajax.get('action.php?route=checkout/register.token');
-    }
-
-    async onSubmit(e) {
-        e.preventDefault();
-
-        let form = new FormData(this.form);
-
-        await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
-            beforeSend: () => {
-                this.submitter.state.add('loading');
-            },
-            onComplete: () => {
-                this.submitter.state.remove('loading');
-            },
-            onSuccess: this.success.bind(this),
-            onError: (e) => {
-                console.log('onError', e);
-            }
-        });
     }
 
     onChange() {
@@ -64,6 +47,25 @@ customElements.define('checkout-register', class extends WebComponent {
         });
 
         $('input[name=\'account\']:checked').trigger('click');
+    }
+
+    async onSubmit(e) {
+        e.preventDefault();
+
+        let form = new FormData(this.form);
+
+        await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
+            beforeSend: () => {
+                this.submitter.state.add('loading');
+            },
+            onComplete: () => {
+                this.submitter.state.remove('loading');
+            },
+            onSuccess: this.success.bind(this),
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
     }
 
     success(json) {

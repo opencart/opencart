@@ -23,7 +23,7 @@ export default class Cart {
         this.items = new Map();
 
         for (let item of items) {
-            this.add(item.product_id, item.quantity, [...item.option], item.subscription_plan_id);
+            this.add(item.product_id, item.quantity, [ ...item.option ], item.subscription_plan_id);
         }
     }
 
@@ -47,14 +47,14 @@ export default class Cart {
         let item = {
             product_id: product_id,
             quantity: quantity,
-            option: option ? [...option] : [],
+            option: option ? [ ...option ] : [],
             subscription_plan_id: subscription_plan_id
         };
 
         this.items.set(key, item);
 
         // Update the session
-        session.set('cart', [...this.items.values()]);
+        session.set('cart', [ ...this.items.values() ]);
     }
 
     update(key, quantity) {
@@ -63,7 +63,7 @@ export default class Cart {
             this.items.set(key, Object.assign(this.items.get(key), { quantity: quantity }));
 
             // Update the session
-            session.set('cart', [...this.items.values()]);
+            session.set('cart', [ ...this.items.values() ]);
         }
     }
 
@@ -71,13 +71,13 @@ export default class Cart {
         this.items.delete(key);
 
         // Update the session
-        session.set('cart', [...this.items.values()]);
+        session.set('cart', [ ...this.items.values() ]);
     }
 
     getProducts() {
         let product_data = [];
 
-        for (let item of [...this.items.values()]) {
+        for (let item of [ ...this.items.values() ]) {
             let stock_status = true;
 
             let product_info = this.data.get(item.product_id);
@@ -91,7 +91,7 @@ export default class Cart {
 
                 let option_data = [];
 
-                for (let [key, value] of [...item.option]) {
+                for (let [key, value] of [ ...item.option ]) {
                     // Get option info
                     let option_info = product_info.options.find(option => option.product_option_id == key);
 

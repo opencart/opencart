@@ -1,5 +1,3 @@
-console.log('framework/component loaded');
-
 // Input
 import './component/input/autocomplete.js';
 import './component/input/button.js';
@@ -16,5 +14,5 @@ import './component/ui/alert.js';
 import './component/ui/modal.js';
 
 // Navigation
-import './component/navigation/pagination.js';
-import './component/navigation/include.js';
+import './component/nav/pagination.js';
+import './component/nav/include.js';

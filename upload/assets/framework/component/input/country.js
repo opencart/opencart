@@ -34,6 +34,10 @@ customElements.define('input-country', class extends WebComponent {
     }
 
     async render() {
+        if (config.has('config_contry_id')) {
+
+        }
+
         let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" @change="onChange" class="form-select"';
 
         if (this.hasAttribute('required')) {
@@ -77,7 +81,6 @@ customElements.define('input-country', class extends WebComponent {
 
     async onConnect() {
         this.default = this.innerHTML;
-        this.countries = countries;
         this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
         this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
     }

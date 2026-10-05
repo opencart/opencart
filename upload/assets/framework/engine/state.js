@@ -57,7 +57,7 @@ export class State {
                 return true;
             },
             deleteProperty: (target, key) => {
-                if (!(key in target)) return true;
+                if (!key in target) return true;
 
                 const value_old = target[key];
 

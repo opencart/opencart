@@ -1,11 +1,23 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('button-submit', class extends WebComponent {
+    observed = [
+        'loading',
+        'disabled'
+    ];
     html = '';
     width;
 
-    render() {
+    HandleDisabled() {
 
+    }
+
+    handleLoading() {
+
+    }
+
+    render() {
+        return '<button type="submit" @ref="button"></button>';
     }
 
     onConnect() {
@@ -15,15 +27,15 @@ customElements.define('button-submit', class extends WebComponent {
 
     handleState(state) {
         if (state === 'loading') {
-            this.element.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-light"></i>';
-            this.element.style.width = this.width;
+            this.button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-light"></i>';
+            this.button.style.width = this.width;
 
-            this.element.setAttribute('disabled', '');
+            this.button.setAttribute('disabled', '');
         } else {
-            this.element.innerHTML = this.html;
-            this.element.style.width = '';
+            this.button.innerHTML = this.html;
+            this.button.style.width = '';
 
-            this.element.removeAttribute('disabled');
+            this.button.removeAttribute('disabled');
         }
     }
 });

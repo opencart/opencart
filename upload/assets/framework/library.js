@@ -1,5 +1,3 @@
-console.log('framework/library loaded');
-
 // Library
 export { loader } from './library/loader.js';
 export { ajax } from './library/ajax.js';

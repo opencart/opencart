@@ -26,6 +26,8 @@ export default class AccountLogin extends WebComponent {
     async onSubmit(e) {
         e.preventDefault();
 
+        this.form.state.submitting = true;
+
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/login.login&login_token=' + this.token, form, {
@@ -43,24 +45,22 @@ export default class AccountLogin extends WebComponent {
     }
 
     success(json) {
-        // Remove past error classes from inputs
-        this.ref('form').querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        this.ref('form').querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
-        // Display error messages
         if (json.has('error')) {
             for (let [ key, value ] of json.get('error')) {
-                key = key.replaceAll('_', '-');
+                let value = key.replaceAll('_', '-');
 
-                this.form.querySelector('#input-' + key).classList.add('is-invalid');
-                this.form.querySelector('#input-' + key).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                this.form.querySelector('#error-' + key).classList.add('d-block');
+                this.form.querySelector('#input-' + value).classList.add('is-invalid');
+                this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                this.form.querySelector('#error-' + value).classList.add('d-block');
             }
         }
 
         // Display success message
         if (json.has('success')) {
-            this.ref('alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
         }
     }
 }

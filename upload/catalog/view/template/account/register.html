@@ -3,6 +3,7 @@
 <form @submit="onSubmit">
   <fieldset id="account">
     <legend>{{ text_your_details }}</legend>
+
     <div class="row mb-3">
       <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
       <div class="col-sm-10">
@@ -10,6 +11,7 @@
         <div id="error-firstname" class="invalid-feedback"></div>
       </div>
     </div>
+
     <div class="row mb-3">
       <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
       <div class="col-sm-10">
@@ -17,6 +19,7 @@
         <div id="error-lastname" class="invalid-feedback"></div>
       </div>
     </div>
+
     <div class="row mb-3">
       <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
       <div class="col-sm-10">
@@ -24,6 +27,7 @@
         <div id="error-email" class="invalid-feedback"></div>
       </div>
     </div>
+
     {% if config_telephone_status %}
     <div class="row mb-3">
       <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>

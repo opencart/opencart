@@ -12,7 +12,7 @@
   <div class="col mb-3">
     <div class="border rounded p-3 d-flex flex-column h-100">
 
-      <form-input @ref="form-login" @submit="onSubmit">
+      <form-input @ref="form" @submit="onSubmit">
         <h2>{{ text_returning_customer }}</h2>
         <p><strong>{{ text_i_am_returning_customer }}</strong></p>
 
@@ -32,7 +32,7 @@
         {% endif %}
 
         <div class="text-end">
-          <button type="submit" @ref="button-login" class="btn btn-primary">{{ button_login }}</button>
+          <button type="submit" @ref="button" class="btn btn-primary">{{ button_login }}</button>
         </div>
 
       </form-input>

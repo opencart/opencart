@@ -1,5 +1,3 @@
-console.log('framework/application loaded');
-
 // Library
 export { cart } from './library/cart.js';
 export { currency } from './library/currency.js';

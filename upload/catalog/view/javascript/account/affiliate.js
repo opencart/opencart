@@ -13,7 +13,7 @@ export default class AccountAffiliate extends WebComponent {
     render() {
         //if (!customer.isLogged()) return;
 
-        return loader.template('account/affiliate', language);
+        return loader.template('account/affiliate', [ language ]);
     }
 
     onChange(e) {

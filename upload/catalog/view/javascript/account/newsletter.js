@@ -25,7 +25,7 @@ export default class AccountNewsletter extends WebComponent {
                 this.submitter.state.add('loading');
             },
             onComplete: (json) => {
-                this.submitter.button('reset');
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {

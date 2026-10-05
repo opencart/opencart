@@ -30,10 +30,10 @@ export default class AccountLogin extends WebComponent {
 
         await ajax.post('action.php?route=account/login.login&login_token=' + this.token, form, {
             beforeSend: () => {
-                this.button.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: (json) => {
-                this.button.button('reset');
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {
@@ -52,28 +52,15 @@ export default class AccountLogin extends WebComponent {
             for (let [ key, value ] of json.get('error')) {
                 key = key.replaceAll('_', '-');
 
-                let input = this.form.querySelector('#input-' + key);
-
-                if (input) {
-                    input.classList.add('is-invalid');
-
-                    // If the element has inputs inside.
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                }
-
-                let error = this.form.querySelector('#error-' + key);
-
-                if (error) {
-                    error.classList.add('d-block');
-                }
+                this.form.querySelector('#input-' + key).classList.add('is-invalid');
+                this.form.querySelector('#input-' + key).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                this.form.querySelector('#error-' + key).classList.add('d-block');
             }
         }
 
         // Display success message
         if (json.has('success')) {
             this.ref('alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-
-            //cart
         }
     }
 }

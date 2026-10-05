@@ -4,7 +4,7 @@ import { loader } from '../../library.js';
 // Config
 const config = await loader.config('default');
 
-customElements.define('x-include', class Include extends WebComponent {
+customElements.define('nav-include', class Include extends WebComponent {
     static observed = ['src'];
     data = new Map();
 

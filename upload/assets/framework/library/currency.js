@@ -83,3 +83,7 @@ export default class Currency {
         return Currency.instance;
     }
 }
+
+const currency = Currency.getInstance();
+
+export { currency };

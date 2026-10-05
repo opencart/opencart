@@ -1,9 +1,4 @@
-// Engine
-export { WebComponent } from './engine/webcomponent.js';
-export { Binder } from './engine/binder.js';
-export { Global } from './engine/global.js';
-export { State } from './engine/state.js';
-export { stylesheet } from './engine/stylesheet.js';
+console.log('framework/library loaded');
 
 // Library
 export { loader } from './library/loader.js';

@@ -1,35 +1,28 @@
+console.log('common-layout');
+
 import { WebComponent } from '../index.js';
-import { loader } from '../index.js';
+import { loader, currency, tax, template, weight, length } from '../index.js';
 import './header.js';
 import './footer.js';
 
-customElements.define('common-layout', class extends WebComponent {
-    global = {
-        link: () => {
+const config = await loader.config('default');
 
-        }
-    };
+// Currency
+template.addFilter('currency', currency.format);
 
-    render() {
+// Tax
+await tax.setGeozone(config.get('config_country_id'), config.get('config_zone_id'));
+
+template.addFilter('tax', tax.calculate);
+
+// Weight
+template.addFilter('weight', weight.format);
+
+// Length
+template.addFilter('length', length.format);
+
+export default class CommonLayout extends WebComponent {
+    async render() {
         return loader.template('common/layout');
     }
-
-    link(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        console.log('e', e);
-        console.log('e.target', e.target);
-        console.log('this', this);
-        console.log('global', global);
-        console.log('getRef', global.get('content'));
-
-        const elements = e.composedPath();
-
-        console.log(elements);
-
-        console.log(elements.find(element => element.tagName == 'a'));
-
-        global.get('content').src = e.target.getAttribute('href');
-    }
-});
+}

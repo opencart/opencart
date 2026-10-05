@@ -1,15 +1,10 @@
+console.log('javascript/index loaded');
+
 // Engine
-export { WebComponent, Global, ajax, config, language, local, session, storage, stylesheet, template } from '../../../assets/framework/index.js';
+export { WebComponent, Global } from '../../../assets/framework/engine.js';
 
 // Library
-import { loader } from '../../../assets/framework/index.js';
+export { loader, ajax, config, language, local, session, storage, template } from '../../../assets/framework/library.js';
 
-// Load up the Application classes
-const cart = await loader.library('cart');
-const currency = await loader.library('currency');
-const customer = await loader.library('customer');
-const length = await loader.library('length');
-const tax = await loader.library('tax');
-const weight = await loader.library('weight');
-
-export { loader, cart, currency, customer, length, tax, weight };
+// Application
+export { cart, currency, customer, length, tax, weight } from '../../../assets/framework/application.js';

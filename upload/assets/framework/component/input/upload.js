@@ -1,4 +1,4 @@
-import { WebComponent } from '../../index.js';
+import { WebComponent } from '../../engine.js';
 
 customElements.define('input-upload', class extends WebComponent {
     static observed = [

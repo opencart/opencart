@@ -62,8 +62,6 @@ export default class Config {
 
 const config = Config.getInstance();
 
-export { config };
-
 // Base
 const base = new URL(document.querySelector('base').href);
 
@@ -108,3 +106,5 @@ config.cache.set('default', new Map(Object.entries({
     config_affiliate_status: 1,
     config_file_max_size: 3000
 })));
+
+export { config };

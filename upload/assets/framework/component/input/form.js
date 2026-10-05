@@ -1,4 +1,4 @@
-import { WebComponent } from '../../index.js';
+import { WebComponent } from '../../engine.js';
 
 customElements.define('form-input', class extends WebComponent {
     static observed = [

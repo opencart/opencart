@@ -1,11 +1,13 @@
-import { Global, loader, config, language, local, storage, template, stylesheet } from '../../../assets/framework/index.js';
+import { Global, stylesheet } from '../../../assets/framework/engine.js';
+import { loader, config, language, local, storage, template } from '../../../assets/framework/library.js';
 
-console.log('vanilla');
+console.log('Vanilla');
 
 // Base
 const base = new URL(document.querySelector('base').href);
 
 // Config Path
+//config.addPath('catalog/view/' + base.host + '/config/');
 config.addPath('shop/' + base.host + '/config/');
 
 // Storage Path
@@ -18,40 +20,19 @@ local.set('language', document.documentElement.lang.toLowerCase());
 //language.addPath('shop/' + base.host + '/language/' + local.get('language') + '/');
 language.addPath('catalog/view/language/' + local.get('language') + '/');
 
+// Currency
+local.set('currency', 'EUR');
+
 // Template Path
 //template.addPath('shop/' + base.host + '/template/');
 template.addPath('catalog/view/template/');
 
 // Stylesheets
-//stylesheet.addPath('shop/' + base.host + '/stylesheet/');
+stylesheet.addPath('shop/' + base.host + '/stylesheet/');
 stylesheet.addPath('catalog/view/stylesheet/');
 stylesheet.addPath('fontawesome/css/', 'assets/fontawesome/css/');
 
-// Currency
-local.set('currency', 'EUR');
-
-const currency = await loader.library('currency');
-
-template.addFilter('currency', currency.format);
-/*
-// Tax
-const tax = await loader.library('tax');
-
-await tax.setGeozone(config.cache.get('default').get('config_country_id'), config.cache.get('default').get('config_zone_id'));
-
-template.addFilter('tax', tax.calculate);
-
-// Weight
-const weight = await loader.library('weight');
-
-template.addFilter('weight', weight.format);
-
-// Length
-const length = await loader.library('length');
-
-template.addFilter('length', length.format);
-*/
-/*
+// Register Global Events
 Global.registerListener('link', (e) => {
     e.preventDefault();
 
@@ -65,11 +46,14 @@ Global.registerListener('link', (e) => {
 
     Global.get('content').src = href;
 });
-*/
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    let component = await import(config.cache.get('default').get('config_path') + 'common/layout.js');
 
-    console.log(config);
+    customElements.define('common-layout', component.default);
+
+    // Start the root path
+    const root = document.getElementById('root');
+
+    root.innerHTML = '<common-layout></common-layout>';
 });
-
-import './common/layout.js';

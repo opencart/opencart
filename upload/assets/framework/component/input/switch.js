@@ -1,4 +1,4 @@
-import { WebComponent } from '../../index.js';
+import { WebComponent } from '../../engine.js';
 
 customElements.define('input-switch', class extends WebComponent {
     observed = [];

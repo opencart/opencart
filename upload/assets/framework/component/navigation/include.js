@@ -1,0 +1,43 @@
+import { WebComponent } from '../../engine.js';
+import { loader } from '../../library.js';
+
+// Config
+const config = await loader.config('default');
+
+customElements.define('x-include', class Include extends WebComponent {
+    static observed = ['src'];
+    data = new Map();
+
+    get src() {
+        return this.getAttribute('src');
+    }
+
+    set src(src) {
+        this.setAttribute('src', src);
+    }
+
+    async render() {
+        // Get the source HTML to load
+        if (!this.src) return;
+
+        console.log(this.src);
+
+        let [ path, query] = this.src.split('?');
+
+        if (!this.data.has(path)) {
+            let component = await import(config.get('config_path') + path);
+
+            this.data.set(path, customElements.getName(component.default));
+        }
+
+        let name = this.data.get(path);
+
+        let html = '<' + name;
+
+        for (let [ key, value] of (new URLSearchParams(query).entries())) {
+            html += ' ' + key + '="' + value + '"';
+        }
+
+        return html + '></' + name + '>';
+    }
+});

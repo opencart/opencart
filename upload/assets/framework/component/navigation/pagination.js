@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../../engine.js';
 
 customElements.define('x-pagination', class extends WebComponent {
     static observed = [

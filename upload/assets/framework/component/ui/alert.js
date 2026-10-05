@@ -1,4 +1,4 @@
-import { WebComponent } from '../../index.js';
+import { WebComponent } from '../../engine.js';
 
 customElements.define('ui-alert', class extends WebComponent {
     static observed = ['type'];
@@ -8,7 +8,7 @@ customElements.define('ui-alert', class extends WebComponent {
             clearInterval(timer);
         }
 
-        let timer = setInterval(this.timeout, 500);
+        this.timer = setInterval(this.timeout, 500);
 
         let type = 'primary';
 
@@ -39,10 +39,10 @@ customElements.define('ui-alert', class extends WebComponent {
                 break;
         }
 
-        return '<ui-alert type="success">' + this.innerHTML + '</ui-alert>';
+        return '<ui-alert type="success">' + icon + ' ' + this.innerHTML + '</ui-alert>';
     }
 
     timeout() {
-        clearInterval(timer);
+        clearInterval(this.timer);
     }
 });

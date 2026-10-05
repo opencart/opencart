@@ -1,6 +1,10 @@
 import { loader } from './loader.js';
 
+console.log('weight_classes loaded');
+
 const weight_classes = await loader.storage('localisation/weight_class');
+
+console.log(weight_classes);
 
 export default class Weight {
     static instance;

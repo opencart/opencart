@@ -22,7 +22,6 @@ customElements.define('common-search', class extends WebComponent {
         e.preventDefault();
 
 
-
     }
 
     onInput(e) {

@@ -38,32 +38,32 @@ export class State {
      *        `subscribe()`.
      */
     constructor(initial = {}, options = {}) {
-        this._listeners = new Set();
-        this._onChange = typeof options.onChange === 'function' ? options.onChange : null;
-        this._dirty = new Set();
-        this._scheduled = false;
-        this._batchDepth = 0;
+        this.listeners = new Set();
+        this.onChange = typeof options.onChange === 'function' ? options.onChange : null;
+        this.dirty = new Set();
+        this.scheduled = false;
+        this.batchDepth = 0;
 
-        this._data = new Proxy({ ...initial }, {
+        this.data = new Proxy({ ...initial }, {
             set: (target, key, value) => {
                 if (target[key] === value) return true;
 
-                const oldValue = target[key];
+                const value_old = target[key];
 
                 target[key] = value;
 
-                this._markDirty(key, value, oldValue);
+                this.markDirty(key, value, value_old);
 
                 return true;
             },
             deleteProperty: (target, key) => {
                 if (!(key in target)) return true;
 
-                const oldValue = target[key];
+                const value_old = target[key];
 
                 delete target[key];
 
-                this._markDirty(key, undefined, oldValue);
+                this.markDirty(key, undefined, value_old);
 
                 return true;
             }
@@ -77,45 +77,62 @@ export class State {
                 if (prop in target || typeof prop === 'symbol') {
                     return Reflect.get(target, prop, receiver);
                 }
-                return target._data[prop];
+
+                return target.data[prop];
             },
             set: (target, prop, value) => {
                 if (prop in target) {
                     target[prop] = value;
+
                     return true;
                 }
-                target._data[prop] = value; // routes through the proxy trap above
+
+                target.data[prop] = value; // routes through the proxy trap above
+
                 return true;
             },
-            has: (target, prop) => prop in target._data || prop in target,
+            has: (target, prop) => prop in target.data || prop in target,
             deleteProperty: (target, prop) => {
-                if (prop in target._data) {
-                    delete target._data[prop];
+                if (prop in target.data) {
+                    delete target.data[prop];
+
                     return true;
                 }
+
                 delete target[prop];
+
                 return true;
             },
         });
     }
 
-    _markDirty(key, newValue, oldValue) {
-        this._dirty.add(key);
-        if (this._batchDepth > 0) return;
-        this._schedule();
+    markDirty(key, value_new, value_old) {
+        this.dirty.add(key);
+
+        if (this.batchDepth > 0) return;
+
+        this.schedule();
     }
 
-    _schedule() {
-        if (this._scheduled) return;
-        this._scheduled = true;
+    schedule() {
+        if (this.scheduled) return;
+
+        this.scheduled = true;
+
         queueMicrotask(() => {
-            this._scheduled = false;
+            this.scheduled = false;
+
             if (!this._dirty.size) return;
-            const changedKeys = [...this._dirty];
-            this._dirty.clear();
+
+            const changedKeys = [...this.dirty];
+
+            this.dirty.clear();
+
             const snapshot = this.toObject();
-            this._listeners.forEach((fn) => fn(changedKeys, snapshot));
-            if (this._onChange) this._onChange(changedKeys, snapshot);
+
+            this.listeners.forEach((fn) => fn(changedKeys, snapshot));
+
+            if (this.onChange) this.onChange(changedKeys, snapshot);
         });
     }
 
@@ -134,13 +151,14 @@ export class State {
 
     /** Subscribe to state changes. Returns an unsubscribe function. */
     subscribe(fn) {
-        this._listeners.add(fn);
-        return () => this._listeners.delete(fn);
+        this.listeners.add(fn);
+
+        return () => this.listeners.delete(fn);
     }
 
     /** Explicit get/set, equivalent to `state.key` / `state.key = value`. */
     get(key) {
-        return this._data[key];
+        return this.data[key];
     }
 
     set(key, value) {
@@ -150,20 +168,20 @@ export class State {
     /** Merge multiple values in as a single batched update. */
     assign(partial) {
         this.batch((s) => {
-            Object.entries(partial).forEach(([k, v]) => {
-                s._data[k] = v;
+            Object.entries(partial).forEach(([key, value]) => {
+                s.data[key] = value;
             });
         });
     }
 
     /** Plain-object snapshot of current state. */
     toObject() {
-        return { ...this._data };
+        return { ...this.data };
     }
 
     /** Remove all subscribers (does not clear state values). */
     destroy() {
-        this._listeners.clear();
-        this._onChange = null;
+        this.listeners.clear();
+        this.onChange = null;
     }
 }

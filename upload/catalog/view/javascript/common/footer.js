@@ -17,14 +17,12 @@ customElements.define('common-footer', class extends WebComponent {
         // Information Pages
         data.set('informations', []);
 
-        if (informations instanceof Array) {
-            for (let information of informations) {
-                if (local.get('language') in information.description) {
-                    data.get('informations').push({
-                        information_id: information.information_id,
-                        title: information.description[local.get('language')].title
-                    });
-                }
+        for (let information of informations) {
+            if (local.get('language') in information.description) {
+                data.get('informations').push({
+                    information_id: information.information_id,
+                    title: information.description[local.get('language')].title
+                });
             }
         }
 

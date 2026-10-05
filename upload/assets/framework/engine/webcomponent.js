@@ -60,6 +60,8 @@ export class WebComponent extends HTMLElement {
         // Attach Internals
         this.internal = this.attachInternals();
 
+        //this.connected = false;
+
         // Binder
         this.binder = null;
 
@@ -95,6 +97,8 @@ export class WebComponent extends HTMLElement {
         if (typeof this.render === 'function') {
             await this.update();
         }
+
+        //this.connected = true;
     }
 
     /** Override: list of external CSS file URLs to adopt into this component. */
@@ -160,8 +164,11 @@ export class WebComponent extends HTMLElement {
 
     attributeChangedCallback(name, value_old, value_new) {
         console.log(`${name} changed from ${value_old} to ${value_new}`);
+
+        console.log({ ...this });
+
         //value_old !== null ||
-        if (value_old === value_new) return;
+        if (!this.isConnected || value_old === value_new) return;
 
         let event = new CustomEvent('[' + name + ']', {
             bubbles: false,

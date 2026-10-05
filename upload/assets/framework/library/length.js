@@ -57,3 +57,7 @@ export default class Length {
         return Length.instance;
     }
 }
+
+const length = Length.getInstance();
+
+export { length };

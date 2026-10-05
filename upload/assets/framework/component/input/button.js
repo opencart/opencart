@@ -1,8 +1,12 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../../engine.js';
 
 customElements.define('button-submit', class extends WebComponent {
     html = '';
     width;
+
+    render() {
+
+    }
 
     onConnect() {
         this.html = this.innerHTML;

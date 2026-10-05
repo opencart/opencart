@@ -10,7 +10,7 @@ export default class Session {
     }
 
     has(key) {
-        return sessionStorage.getItem(key) !== null;
+        return sessionStorage.getItem(key) !== null;weight
     }
 
     delete(key) {

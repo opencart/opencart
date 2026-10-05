@@ -6,6 +6,40 @@ console.log('Vanilla');
 // Base
 const base = new URL(document.querySelector('base').href);
 
+export const test = {
+    path: {
+        config: 'catalog/view/' + base.host + '/config/',
+        storage: '',
+        language: '',
+        template: '',
+        stylesheet: ''
+    },
+    library: [
+        'ajax',
+        'cart',
+        'config',
+        'currency',
+        'customer',
+        'language',
+        'length',
+        'config',
+        'config'
+    ],
+    component: [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        ''
+    ],
+    start: 'commmon/layout',
+    stylesheet: [
+
+    ]
+};
+
 // Config Path
 //config.addPath('catalog/view/' + base.host + '/config/');
 config.addPath('shop/' + base.host + '/config/');
@@ -48,6 +82,21 @@ Global.registerListener('link', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Currency
+    template.addFilter('currency', currency.format);
+
+    // Geo Zone
+    await tax.setGeozone(config.get('config_country_id'), config.get('config_zone_id'));
+
+    // Tax
+    template.addFilter('tax', tax.calculate.bind(tax));
+
+    // Weight
+    template.addFilter('weight', weight.format);
+
+    // Length
+    template.addFilter('length', length.format);
+
     let component = await import(config.cache.get('default').get('config_path') + 'common/layout.js');
 
     customElements.define('common-layout', component.default);

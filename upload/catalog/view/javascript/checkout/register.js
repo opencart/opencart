@@ -32,10 +32,10 @@ customElements.define('checkout-register', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             beforeSend: (request) => {
-                this.button.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: (json) => {
-                this.button.button('reset');
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {

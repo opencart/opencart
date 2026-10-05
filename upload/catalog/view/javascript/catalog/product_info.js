@@ -146,7 +146,7 @@ export default class ProductInfo extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-               this.button.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: () => {
                 this.get('button').button('reset');

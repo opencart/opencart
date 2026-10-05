@@ -1,6 +1,6 @@
 import { WebComponent } from '../../engine.js';
 
-customElements.define('x-pagination', class extends WebComponent {
+customElements.define('nav-pagination', class extends WebComponent {
     static observed = [
         'href',
         'target',

@@ -1,3 +1,5 @@
+console.log('framework/component loaded');
+
 // Input
 import './component/input/autocomplete.js';
 import './component/input/button.js';

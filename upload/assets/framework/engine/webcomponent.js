@@ -60,8 +60,6 @@ export class WebComponent extends HTMLElement {
         // Attach Internals
         this.internal = this.attachInternals();
 
-        //this.connected = false;
-
         // Binder
         this.binder = null;
 
@@ -69,6 +67,9 @@ export class WebComponent extends HTMLElement {
         this.state = new State(this.initialState(), {
             onChange: this.handleState.bind(this)
         });
+
+        // Make sure reactive attributes don't work until after render has been called.
+        this.connected = false;
 
         // Adds reactive component event changes to the attributes of the element to re-render the contents.
         for (let attribute of this.attributes) {
@@ -98,7 +99,7 @@ export class WebComponent extends HTMLElement {
             await this.update();
         }
 
-        //this.connected = true;
+        this.connected = true;
     }
 
     /** Override: list of external CSS file URLs to adopt into this component. */
@@ -163,12 +164,9 @@ export class WebComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, value_old, value_new) {
+        if (!this.connected || value_old === value_new) return;
+
         console.log(`${name} changed from ${value_old} to ${value_new}`);
-
-        console.log({ ...this });
-
-        //value_old !== null ||
-        if (!this.isConnected || value_old === value_new) return;
 
         let event = new CustomEvent('[' + name + ']', {
             bubbles: false,

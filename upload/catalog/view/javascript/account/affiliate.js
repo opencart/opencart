@@ -27,10 +27,10 @@ export default class AccountAffiliate extends WebComponent {
 
         await ajax.post('action.php?route=account/affiliate.save&affiliate_token=' + this.token, form, {
             beforeSend: () => {
-                this.button.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: (json) => {
-                this.button.button('reset');
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {

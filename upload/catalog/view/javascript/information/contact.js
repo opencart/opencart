@@ -29,11 +29,11 @@ export default class InformationContact extends WebComponent {
         return loader.template('information/contact', [ data, language, config ]);
     }
 
-    onConnect() {
-        this.token = ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
+    async onConnect() {
+        this.token = await ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

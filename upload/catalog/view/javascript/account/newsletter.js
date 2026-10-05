@@ -22,7 +22,7 @@ export default class AccountNewsletter extends WebComponent {
 
         await ajax.post('action.php?route=account/newsletter.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.submitter.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: (json) => {
                 this.submitter.button('reset');

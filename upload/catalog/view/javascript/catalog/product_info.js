@@ -149,7 +149,7 @@ export default class ProductInfo extends WebComponent {
                 this.submitter.state.add('loading');
             },
             onComplete: () => {
-                this.get('button').button('reset');
+                this.submitter.state.remove('loading');
             },
             onSuccess: async (json) => {
                 console.log('onSuccess', json);
@@ -159,7 +159,7 @@ export default class ProductInfo extends WebComponent {
                 this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
-                if (json.get('error')) {
+                if (json.has('error')) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 

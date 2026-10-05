@@ -25,10 +25,10 @@ export default class AddressForm extends WebComponent {
 
         await ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.submitter.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: () => {
-                this.submitter.button('reset');
+                this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {
@@ -38,7 +38,7 @@ export default class AddressForm extends WebComponent {
     }
 
     success(json){
-        if (json.get('error')) {
+        if (json.has('error')) {
             this.alert.append('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
         }
 

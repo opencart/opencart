@@ -19,7 +19,7 @@ customElements.define('payment-address', class extends WebComponent {
     }
 
     onChange(e) {
-        this.existing;
+        //this.existing;
 
 
         if ($(this).val() == 1) {
@@ -102,11 +102,11 @@ customElements.define('payment-address', class extends WebComponent {
         $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
         $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
 
-        if (json['redirect']) {
-            location = json['redirect'];
+        if (json.has('redirect')) {
+            location = json.get('redirect');
         }
 
-        if (json['error']) {
+        if (json.has('error')) {
             if (json['error']['warning']) {
                 $('#alert').prepend('<ui-alert type="danger">' + json['error']['warning'] + '</ui-alert>');
             }

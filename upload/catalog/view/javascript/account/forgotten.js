@@ -21,7 +21,7 @@ export default class AccountForgotten extends WebComponent {
 
         await ajax.post('action.php?route=account/forgotten.confirm&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: (json) => {
                 this.submitter.button('reset');
@@ -39,7 +39,7 @@ export default class AccountForgotten extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if (json.get('error')) {
+        if (json.has('error')) {
             for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 

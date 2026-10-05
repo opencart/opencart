@@ -67,7 +67,7 @@ customElements.define('product-thumb', class extends WebComponent {
                 }
 
                 // Display error messages
-                if (json.get('error')) {
+                if (json.has('error')) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 

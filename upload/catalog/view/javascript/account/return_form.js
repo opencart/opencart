@@ -27,7 +27,7 @@ export default class ReturnForm extends WebComponent {
 
         await ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: (json) => {
                 this.submitter.button('reset');

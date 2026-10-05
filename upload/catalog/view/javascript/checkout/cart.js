@@ -30,12 +30,54 @@ export default class CheckoutCart extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-
+                this.submitter.state.add('loading');
             },
             onComplete: () => {
-
+                this.submitter.state.remove('loading');
             },
-            onSuccess: this.succcess.bind(this),
+            onSuccess: (json) => {
+                // Remove past error classes from inputs
+                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+                if (json.has('redirect')) {
+                    location = json.get('redirect');
+                }
+
+                // Display error messages
+                if (json.has('error')) {
+                    for (let key in json['error']) {
+                        let value = key.replaceAll('_', '-');
+
+                        let input = target.querySelector('#input-' + value);
+
+                        if (input) {
+                            input.classList.add('is-invalid');
+
+                            // If the element has inputs inside.
+                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                        }
+
+                        let error = target.querySelector('#error-' + value);
+
+                        if (error) {
+                            error.classList.add('d-block');
+                        }
+                    }
+                }
+
+                // Display success message
+                if (json.has('success')) {
+                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+
+                    //console.log(Object.fromEntries(form));
+                    for (let product of json['products']) {
+                        cart.add(product);
+                    }
+
+                    this.cart.update();
+                }
+            },
             onError: (e) => {
                 console.log('onError', e);
             }
@@ -45,50 +87,36 @@ export default class CheckoutCart extends WebComponent {
     deleteProduct(e) {
         e.preventDefault();
 
-    }
+        var element = this;
 
-    succcess(json) {
-        // Remove past error classes from inputs
-        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+        ajax.post('', {
+            beforeSend: function() {
+                this.submitter.state.add('loading');
+            },
+            complete: function() {
+                this.submitter.state.remove('loading');
+            },
+            success: function(json) {
+                console.log(json);
 
-        // Display error messages
-        if (json.get('error')) {
-            for (let key in json['error']) {
-                let value = key.replaceAll('_', '-');
-
-                let input = target.querySelector('#input-' + value);
-
-                if (input) {
-                    input.classList.add('is-invalid');
-
-                    // If the element has inputs inside.
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                if (json['redirect']) {
+                    location = json['redirect'];
                 }
 
-                let error = target.querySelector('#error-' + value);
-
-                if (error) {
-                    error.classList.add('d-block');
+                if (json.has('error')) {
+                    $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
                 }
+
+                if (json.has('success')) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
+
+                    //$('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
-        }
-
-        // Display success message
-        if (json.has('success')) {
-            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-
-            let output = [];
-
-            //console.log(Object.fromEntries(form));
-            for (let product of json['products']) {
-                cart.add(product);
-            }
-
-            let button = document.querySelector('#cart > button');
-
-            button.click();
-        }
+        });
     }
 }
 
@@ -143,40 +171,7 @@ $('#shopping-cart').on('submit', '#output-cart form', function(e) {
 });
 
 $('#shopping-cart').on('click', '.btn-danger', function(e) {
-    e.preventDefault();
 
-    var element = this;
-
-    $.ajax({
-        url: $(element).attr('href'),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            if (json['redirect']) {
-                location = json['redirect'];
-            }
-
-            if (json['error']) {
-                $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
-            }
-
-            if (json.has('success')) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
-
-                $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
 });
 
 $('#shopping-cart').observe(function(e) {

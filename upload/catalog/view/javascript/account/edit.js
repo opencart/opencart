@@ -26,7 +26,7 @@ export default class AccountEdit extends WebComponent {
     }
 
     async onConnect() {
-        if (!customer.isLogged()) return;
+        //if (!customer.isLogged()) return;
 
         this.token = await ajax.get('action.php?route=account/edit.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
     }
@@ -38,7 +38,7 @@ export default class AccountEdit extends WebComponent {
 
         await ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.submitter.button('loading');
+                this.submitter.state.add('loading');
             },
             onComplete: (json) => {
                 this.submitter.button('reset');
@@ -56,7 +56,7 @@ export default class AccountEdit extends WebComponent {
         this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
         // Display error messages
-        if (json.get('error')) {
+        if (json.has('error')) {
             for (let key in json.get('error')) {
                 let value = key.replaceAll('_', '-');
 

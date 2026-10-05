@@ -42,7 +42,7 @@ customElements.define('payment-method', class extends WebComponent {
                 target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
-                if (json.get('error')) {
+                if (json.has('error')) {
                     for (let key in json['error']) {
                         let value = key.replaceAll('_', '-');
 

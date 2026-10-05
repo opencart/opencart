@@ -23,10 +23,10 @@ export default class AddressList extends WebComponent {
 
         ajax.get('action.php?route=account/address.delete&language=' + local.get('language') + '&customer_token=' + customer.getToken() + '&address_id=' + e.target.value, {
             beforeSend: () => {
-                e.target.button.button('loading');
+                this.submitter.state.add('loading');
             },
             complete: () => {
-                e.target.button('reset');
+                this.submitter.state.remove('loading');
             },
             success: this.success.bind(this),
             error: function(xhr, ajaxOptions, thrownError) {

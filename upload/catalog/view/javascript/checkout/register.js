@@ -22,19 +22,21 @@ customElements.define('checkout-register', class extends WebComponent {
     }
 
     async onConnect() {
+        //if (customer.isLogged()) return;
+
         this.token = await ajax.get('action.php?route=checkout/register.token');
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
-            beforeSend: (request) => {
+        await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
+            beforeSend: () => {
                 this.submitter.state.add('loading');
             },
-            onComplete: (json) => {
+            onComplete: () => {
                 this.submitter.state.remove('loading');
             },
             onSuccess: this.success.bind(this),
@@ -78,20 +80,9 @@ customElements.define('checkout-register', class extends WebComponent {
             for (let key in json['error']) {
                 let value = key.replaceAll('_', '-');
 
-                let input = this.form.querySelector('#input-' + value);
-
-                if (input) {
-                    input.classList.add('is-invalid');
-
-                    // If the element has inputs inside.
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                }
-
-                let error = this.form.querySelector('#error-' + value);
-
-                if (error) {
-                    error.classList.add('d-block');
-                }
+                this.form.querySelector('#input-' + value).classList.add('is-invalid');
+                this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                this.form.querySelector('#error-' + value).classList.add('d-block');
             }
         }
 
@@ -110,7 +101,7 @@ customElements.define('checkout-register', class extends WebComponent {
             $('#input-shipping-method').val('');
             $('#input-payment-method').val('');
 
-            $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
+            //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
         }
     }
 });

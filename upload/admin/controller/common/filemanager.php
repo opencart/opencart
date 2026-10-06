@@ -11,7 +11,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = rtrim(str_replace(array('*', '/', '\\'), '', $this->request->get['filter_name']), '/');
+			$filter_name = str_replace(array('/', '\\'), '', $this->request->get['filter_name']);
 		} else {
 			$filter_name = '';
 		}
@@ -38,17 +38,30 @@ class ControllerCommonFileManager extends Controller {
 
 		if (substr(str_replace('\\', '/', realpath($directory) . '/' . $filter_name), 0, strlen(DIR_IMAGE . 'catalog')) == str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
 			// Get directories
-			$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
+			$directories = glob($directory . '/*', GLOB_ONLYDIR);
 
 			if (!$directories) {
 				$directories = array();
 			}
 
 			// Get files
-			$files = safe_glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}', GLOB_BRACE);
+			$files = safe_glob($directory . '/*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}', GLOB_BRACE);
 
 			if (!$files) {
 				$files = array();
+			}
+
+			// Filter by name: case-insensitive, with * and ? wildcards
+			if ($filter_name) {
+				$pattern = '~' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($filter_name, '~')) . '~i';
+
+				$directories = array_values(array_filter($directories, function($directory) use ($pattern) {
+					return preg_match($pattern, basename($directory));
+				}));
+
+				$files = array_values(array_filter($files, function($file) use ($pattern) {
+					return preg_match($pattern, basename($file));
+				}));
 			}
 		}
 

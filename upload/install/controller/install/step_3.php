@@ -168,7 +168,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'APPLICATION\', \'Catalog\');' . "\n\n";
 
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . addslashes(HTTP_OPENCART) . '\');' . "\n\n";
 
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
@@ -225,8 +225,8 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'APPLICATION\', \'Admin\');' . "\n\n";
 
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . addslashes(HTTP_OPENCART) . 'admin/\');' . "\n";
+			$output .= 'define(\'HTTP_CATALOG\', \'' . addslashes(HTTP_OPENCART) . '\');' . "\n\n";
 
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";

@@ -133,7 +133,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 				continue;
 			}
 
-			if ($filter_name && !str_starts_with(basename($path), $filter_name)) {
+			if ($filter_name && !preg_match('~' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($filter_name, '~')) . '~i', basename($path))) {
 				continue;
 			}
 

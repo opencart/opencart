@@ -90,7 +90,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$paths = array_diff(scandir($directory), ['..', '.']);
 
 		foreach ($paths as $value) {
-			if ($filter_name && !str_starts_with($value, $filter_name)) {
+			if ($filter_name && !preg_match('~' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($filter_name, '~')) . '~i', $value)) {
 				continue;
 			}
 

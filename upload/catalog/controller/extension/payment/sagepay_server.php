@@ -374,7 +374,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		$str_my_signature = strtoupper(md5($str_message));
 
 		/** We can now compare our MD5 Hash signature with that from Sage Pay Server * */
-		if ($str_my_signature != $str_vps_signature) {
+		if (!hash_equals((string)$str_my_signature, (string)$str_vps_signature)) {
 			$this->model_extension_payment_sagepay_server->deleteOrder($order_id);
 
 			echo "Status=INVALID" . $end_ln;

@@ -79,7 +79,7 @@ class ControllerExtensionPaymentSkrill extends Controller {
 				$md5hash = strtoupper(md5($hash));
 				$md5sig = $this->request->post['md5sig'];
 
-				if (($md5hash != $md5sig) || (strtolower($this->request->post['pay_to_email']) != strtolower($this->config->get('config_moneybookers_email'))) || ((float)$this->request->post['amount'] != $this->currency->format((float)$order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false))) {
+				if ((!hash_equals((string)$md5hash, (string)$md5sig)) || (strtolower($this->request->post['pay_to_email']) != strtolower($this->config->get('config_moneybookers_email'))) || ((float)$this->request->post['amount'] != $this->currency->format((float)$order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false))) {
 					$verified = false;
 				}
 			}

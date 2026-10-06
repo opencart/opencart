@@ -101,7 +101,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 		$hash = sha1($tmp);
 
 		//Check to see if hashes match or not
-		if ($hash != $this->request->post['SHA1HASH']) {
+		if (!hash_equals((string)$hash, (string)$this->request->post['SHA1HASH'])) {
 			$data['text_response'] = $this->language->get('text_hash_failed');
 			$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 		} else {

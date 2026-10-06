@@ -97,7 +97,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 		if (isset($this->request->post['txntype']) && isset($this->request->post['notification_hash']) && isset($this->request->post['oid'])) {
 			$local_hash = $this->model_extension_payment_firstdata->responseHash($this->request->post['chargetotal'], $this->request->post['currency'], $this->request->post['txndatetime'], $this->request->post['approval_code']);
 
-			if ($local_hash == $this->request->post['notification_hash']) {
+			if (hash_equals((string)$local_hash, (string)$this->request->post['notification_hash'])) {
 				$order_id_parts = explode('T', $this->request->post['oid']);
 
 				$order_id = str_replace("CON-","",$order_id_parts[0]);

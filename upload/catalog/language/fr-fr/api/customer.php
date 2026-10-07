@@ -9,5 +9,4 @@ $_['error_firstname']      = 'Le prénom doit contenir entre 1 et 32 caractères
 $_['error_lastname']       = 'Le nom de famille doit contenir entre 1 et 32 caractères!';
 $_['error_email']          = 'L\'adresse e-mail ne semble pas être valide!';
 $_['error_telephone']      = 'Le téléphone doit contenir entre 3 et 32 caractères!';
-$_['error_custom_field']   = '%s requis!';
 $_['error_regex']          = '%s n\'est pas une entrée valide!';

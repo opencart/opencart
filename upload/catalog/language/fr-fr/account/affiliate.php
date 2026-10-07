@@ -34,5 +34,4 @@ $_['error_cheque']              = 'Le nom du bénéficiaire du chèque est requi
 $_['error_paypal']              = 'L\'adresse e-mail PayPal ne semble pas être valide!';
 $_['error_bank_account_name']   = 'Le nom du compte est requis!';
 $_['error_bank_account_number'] = 'Le numéro de compte est requis!';
-$_['error_custom_field']        = '%s requis!';
 $_['error_regex']               = '%s n\'est pas une entrée valide!';

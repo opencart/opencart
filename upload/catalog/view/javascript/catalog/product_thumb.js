@@ -13,34 +13,34 @@ customElements.define('product-thumb', class extends WebComponent {
 
         let product = await loader.storage('product/product-' + parseInt(this.getAttribute('product_id')));
 
-        if (product instanceof Map && local.get('language') in product.get('description')) {
-            let description = product.get('description')[local.get('language')];
+        if (!product instanceof Map || !local.get('language') in product.get('description')) return;
 
-            // Special
-            data.set('special', '');
+        let description = product.get('description')[local.get('language')];
 
-            let discount = product.get('discounts').find(discount =>  discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+        // Special
+        data.set('special', '');
 
-            if (discount) {
-                if (discount.type == 'F') {
-                    data.set('special', Number(discount.price));
-                } else if (discount.type == 'P') {
-                    data.set('special', product.get('price') - Number(product.get('price') * (discount.price / 100)));
-                } else if (discount.type == 'S') {
-                    data.set('special', product.get('price') - Number(discount.price));
-                }
+        let discount = product.get('discounts').find(discount =>  discount.quantity == 1 && discount.customer_group_id == config.get('config_customer_group_id') && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
+
+        if (discount) {
+            if (discount.type == 'F') {
+                data.set('special', Number(discount.price));
+            } else if (discount.type == 'P') {
+                data.set('special', Number(product.get('price')) - Number(product.get('price') * (discount.price / 100)));
+            } else if (discount.type == 'S') {
+                data.set('special', Number(product.get('price')) - Number(discount.price));
             }
-
-            data.set('tax', '');
-
-            if (config.get('config_tax')) {
-                data.set('tax', tax.getTax(data.get('special') ? data.get('special') : product.get('price'), product.get('tax_class_id')));
-            }
-
-            data.set('currency', local.get('currency'));
-
-            return await loader.template('catalog/product_thumb', [ product, description, data, language, config ]);
         }
+
+        data.set('tax', '');
+
+        if (config.get('config_tax')) {
+            data.set('tax', tax.getTax(data.get('special') ? data.get('special') : product.get('price'), product.get('tax_class_id')));
+        }
+
+        data.set('currency', local.get('currency'));
+
+        return await loader.template('catalog/product_thumb', [ product, description, data, language, config ]);
     }
 
     addToCart(e) {
@@ -92,13 +92,8 @@ customElements.define('product-thumb', class extends WebComponent {
                 if (json.has('success')) {
                     this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
-                    let item = [];
+                   // cart.add(cart);
 
-                    cart.add(cart);
-
-                    let button = document.querySelector('#cart > button');
-
-                    button.click();
                 }
             },
             onError: (e) => {

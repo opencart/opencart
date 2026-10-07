@@ -5,7 +5,11 @@ import { loader, ajax, cart, customer, local } from '../index.js';
 const language = await loader.language('account/login');
 
 export default class AccountLogin extends WebComponent {
-    token = '';
+    constructor() {
+        super();
+
+        this.token = '';
+    }
 
     async render() {
         //if (customer.isLogged()) return;
@@ -43,11 +47,13 @@ export default class AccountLogin extends WebComponent {
                 this.submitter.removeAttribute('loading');
             },
             onSuccess: (json) => {
-                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
                 if (json.has('error')) {
                     for (let [ key, value ] of json.get('error')) {
+
+
+
+                        input.setCustomValidity("You gotta fill this out, yo!");
+
                         let value = key.replaceAll('_', '-');
 
                         this.form.querySelector('#input-' + value).classList.add('is-invalid');

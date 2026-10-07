@@ -105,7 +105,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['lastname'] = $this->session->data['customer']['lastname'];
 			$order_data['email'] = $this->session->data['customer']['email'];
 			$order_data['telephone'] = $this->session->data['customer']['telephone'];
-			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 			// Payment Details
 			if ($this->config->get('config_checkout_payment_address')) {
@@ -122,7 +121,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_country'] = $this->session->data['payment_address']['country'];
 				$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
 				$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
-				$order_data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'] ?? [];
 			} else {
 				$order_data['payment_address_id'] = 0;
 				$order_data['payment_firstname'] = '';
@@ -137,7 +135,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_country'] = '';
 				$order_data['payment_country_id'] = 0;
 				$order_data['payment_address_format'] = '';
-				$order_data['payment_custom_field'] = [];
 			}
 
 			$order_data['payment_method'] = $this->session->data['payment_method'];
@@ -157,7 +154,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
 				$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
-				$order_data['shipping_custom_field'] = $this->session->data['shipping_address']['custom_field'] ?? [];
 
 				$order_data['shipping_method'] = $this->session->data['shipping_method'];
 			} else {
@@ -174,7 +170,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_country'] = '';
 				$order_data['shipping_country_id'] = 0;
 				$order_data['shipping_address_format'] = '';
-				$order_data['shipping_custom_field'] = [];
 
 				$order_data['shipping_method'] = [];
 			}

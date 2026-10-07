@@ -11,12 +11,14 @@ const language = await loader.language('checkout/register');
 const customer_groups = await loader.storage('customer/customer_group');
 
 customElements.define('checkout-register', class extends WebComponent {
-    token = '';
+    constructor() {
+        super();
+
+        this.token = '';
+    }
 
     async render(){
         let data = new Map();
-
-
 
         data.set('token', this.token);
 
@@ -26,7 +28,11 @@ customElements.define('checkout-register', class extends WebComponent {
     async onConnect() {
         //if (customer.isLogged()) return;
 
-        this.token = await ajax.get('action.php?route=checkout/register.token');
+        let json = await ajax.get('action.php?route=checkout/register.token');
+
+        if (json.has('token')) {
+            this.token = json.get('token');
+        }
     }
 
     onChange() {

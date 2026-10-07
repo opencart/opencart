@@ -17,6 +17,8 @@ export default class AuthorizeReset extends WebComponent {
     async onSubmit(e) {
         e.preventDefault();
 
+        //if (customer.isLogged()) return;
+
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
@@ -26,8 +28,8 @@ export default class AuthorizeReset extends WebComponent {
             onComplete: (json) => {
                 this.submitter.button('reset');
             },
-            onSuccess: success(json) {
-                if (json['redirect']) {
+            onSuccess: (json) => {
+                if (json.has('redirect')) {
                     location = json['redirect'];
                 }
 
@@ -36,7 +38,7 @@ export default class AuthorizeReset extends WebComponent {
                 }
 
                 if (json.has('success')) {
-                    this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json.get('success') + '</ui-alert>');
+                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
                 }
             },
             onError: (xhr, ajaxOptions, thrownError) => {

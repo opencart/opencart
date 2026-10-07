@@ -18,15 +18,11 @@ export default class ManufacturerList extends WebComponent {
 
         for (let manufacturer of manufacturers) {
             if (local.get('language') in manufacturer.description) {
-
-
-                /*
                 data.categories.manufacturer.push({
                     manufacturer_id: manufacturer.manufacturer_id,
                     name: name,
                     image: manufacturer.image
                 });
-                */
             }
         }
 

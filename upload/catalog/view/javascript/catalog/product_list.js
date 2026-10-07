@@ -37,7 +37,7 @@ class ProductList extends WebComponent {
         }
 
         if (this.hasAttribute('path')) {
-            data.set('path', this.getAttribute('path').replace(/^[^0-9_]$/));
+            data.set('path', this.getAttribute('path').replace(/[^0-9_]+/));
         }
 
         if (this.hasAttribute('filter')) {
@@ -57,11 +57,11 @@ class ProductList extends WebComponent {
         }
 
         if (this.hasAttribute('limit')) {
-            data.set('limit', this.getAttribute('limit').replace(/^[^0-9]$/));
+            data.set('limit', parseInt(this.getAttribute('limit')));
         }
 
         if (this.hasAttribute('page')) {
-            data.set('page', this.getAttribute('page').replace(/^[^0-9]$/));
+            data.set('page', parseInt(this.getAttribute('page')));
         }
 
         data.set('limits', [10, 20, 30, 40, 50]);

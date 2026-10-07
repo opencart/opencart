@@ -61,14 +61,12 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = $this->session->data['customer']['lastname'];
 			$data['email'] = $this->session->data['customer']['email'];
 			$data['telephone'] = $this->session->data['customer']['telephone'];
-			$data['account_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
 			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 			$data['firstname'] = '';
 			$data['lastname'] = '';
 			$data['email'] = '';
 			$data['telephone'] = '';
-			$data['account_custom_field'] = [];
 		}
 
 		if (isset($this->session->data['payment_address'])) {
@@ -81,7 +79,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['payment_city'] = $this->session->data['payment_address']['city'];
 			$data['payment_country_id'] = (int)$this->session->data['payment_address']['country_id'];
 			$data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
-			$data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'];
 		} else {
 			$data['payment_firstname'] = '';
 			$data['payment_lastname'] = '';
@@ -92,7 +89,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['payment_city'] = '';
 			$data['payment_country_id'] = (int)$this->config->get('config_country_id');
 			$data['payment_zone_id'] = 0;
-			$data['payment_custom_field'] = [];
 		}
 
 		if (isset($this->session->data['shipping_address']['address_id'])) {
@@ -105,7 +101,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['shipping_city'] = $this->session->data['shipping_address']['city'];
 			$data['shipping_country_id'] = (int)$this->session->data['shipping_address']['country_id'];
 			$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
-			$data['shipping_custom_field'] = $this->session->data['shipping_address']['custom_field'];
 		} else {
 			$data['shipping_firstname'] = '';
 			$data['shipping_lastname'] = '';
@@ -132,14 +127,8 @@ class Register extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['shipping_zone_id'] = 0;
 			}
-
-			$data['shipping_custom_field'] = [];
 		}
 
-		// Custom Fields
-		$this->load->model('account/custom_field');
-
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		// Captcha
 		$this->load->model('setting/extension');
@@ -192,7 +181,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			'payment_postcode'      => '',
 			'payment_country_id'    => 0,
 			'payment_zone_id'       => 0,
-			'payment_custom_field'  => [],
 			'address_match'         => 0,
 			'shipping_firstname'    => '',
 			'shipping_lastname'     => '',
@@ -203,7 +191,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			'shipping_postcode'     => '',
 			'shipping_country_id'   => 0,
 			'shipping_zone_id'      => 0,
-			'shipping_custom_field' => [],
 			'password'              => '',
 			'agree'                 => 0
 		];
@@ -273,21 +260,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			// Custom fields validation
-			$this->load->model('account/custom_field');
-
-			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
-
-			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'account') {
-					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], $custom_field['validation'])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-					}
-				}
-			}
-
 			if ($this->config->get('config_checkout_payment_address')) {
 				if (!oc_validate_length($post_info['payment_address_1'], 3, 128)) {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
@@ -318,17 +290,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				if ($zone_total && !$post_info['payment_zone_id']) {
 					$json['error']['payment_zone'] = $this->language->get('error_zone');
-				}
-
-				// Custom fields validation
-				foreach ($custom_fields as $custom_field) {
-					if ($custom_field['location'] == 'address') {
-						if ($custom_field['required'] && empty($post_info['payment_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-							$json['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['payment_custom_field'][$custom_field['location']][$custom_field['custom_field_id']], $custom_field['validation'])) {
-							$json['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-						}
-					}
 				}
 			}
 
@@ -373,17 +334,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				if ($zone_total && !$post_info['shipping_zone_id']) {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
-				}
-
-				// Custom fields validation
-				foreach ($custom_fields as $custom_field) {
-					if ($custom_field['location'] == 'address') {
-						if ($custom_field['required'] && empty($post_info['shipping_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-							$json['error']['shipping_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['shipping_custom_field'][$custom_field['location']][$custom_field['custom_field_id']], $custom_field['validation'])) {
-							$json['error']['shipping_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-						}
-					}
 				}
 			}
 
@@ -451,8 +401,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				'firstname'         => $post_info['firstname'],
 				'lastname'          => $post_info['lastname'],
 				'email'             => $post_info['email'],
-				'telephone'         => $post_info['telephone'],
-				'custom_field'      => $post_info['custom_field'] ?? []
+				'telephone'         => $post_info['telephone']
 			];
 
 			// Register
@@ -532,8 +481,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					'country'        => $country,
 					'iso_code_2'     => $iso_code_2,
 					'iso_code_3'     => $iso_code_3,
-					'address_format' => $address_format,
-					'custom_field'   => $post_info['payment_custom_field'] ?? []
+					'address_format' => $address_format
 				];
 
 				// Add
@@ -623,8 +571,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						'country'        => $country,
 						'iso_code_2'     => $iso_code_2,
 						'iso_code_3'     => $iso_code_3,
-						'address_format' => $address_format,
-						'custom_field'   => $post_info['shipping_custom_field'] ?? []
+						'address_format' => $address_format
 					];
 
 					// Add Address to account if account is being created.

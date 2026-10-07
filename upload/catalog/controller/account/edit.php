@@ -61,21 +61,6 @@ class Edit extends \Opencart\System\Engine\Controller {
 		$data['email'] = $customer_info['email'];
 		$data['telephone'] = $customer_info['telephone'];
 
-		// Custom Fields
-		$data['custom_fields'] = [];
-
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account') {
-				$data['custom_fields'][] = $custom_field;
-			}
-		}
-
-		$data['account_custom_field'] = $customer_info['custom_field'];
-
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['language'] = $this->config->get('config_language');
@@ -138,21 +123,6 @@ class Edit extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
-
-			// Custom fields validation
-			$this->load->model('account/custom_field');
-
-			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
-
-			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'account') {
-					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif ($custom_field['type'] == 'text' && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-					}
-				}
-			}
 		}
 
 		if (!$json) {
@@ -168,8 +138,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 				'firstname'         => $post_info['firstname'],
 				'lastname'          => $post_info['lastname'],
 				'email'             => $post_info['email'],
-				'telephone'         => $post_info['telephone'],
-				'custom_field'      => $post_info['custom_field'] ?? []
+				'telephone'         => $post_info['telephone']
 			];
 
 			unset($this->session->data['order_id']);

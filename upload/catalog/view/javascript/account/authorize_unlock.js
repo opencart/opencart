@@ -17,6 +17,8 @@ export default class AuthorizeUnlock extends WebComponent {
     async onSubmit(e) {
         e.preventDefault();
 
+        //if (customer.isLogged()) return;
+
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
@@ -26,25 +28,23 @@ export default class AuthorizeUnlock extends WebComponent {
             onComplete: () => {
                 this.submitter.state.remove('loading');
             },
-            onSuccess: this.success.bind(this),
+            onSuccess: (json) => {
+                if (json.has('redirect')) {
+                    location = json.get('redirect');
+                }
+
+                if (json.has('error')) {
+                    this.alert.prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                }
+
+                if (json.has('success')) {
+                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                }
+            },
             onError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    }
-
-    success(json) {
-        if (json['redirect']) {
-            location = json['redirect'];
-        }
-
-        if (json.has('error')) {
-            this.alert.prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
-        }
-
-        if (json.has('success')) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json.get('success') + '</ui-alert>');
-        }
     }
 }
 

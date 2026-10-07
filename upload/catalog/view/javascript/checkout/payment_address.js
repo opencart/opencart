@@ -17,8 +17,8 @@ customElements.define('payment-address', class extends WebComponent {
         data.set('address_2', '');
         data.set('city', '');
         data.set('postcode', '');
-        data.set('country_id', config.get('config_country_id'));
-        data.set('zone_id', '');
+        data.set('country_id', parseInt(config.get('config_country_id')));
+        data.set('zone_id', 0);
         data.set('addresses', []);
 
         if (customer.isLogged()) {

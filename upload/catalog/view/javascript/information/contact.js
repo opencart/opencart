@@ -11,7 +11,11 @@ const language = await loader.language('information/contact');
 const locations = await loader.storage('localisation/location');
 
 export default class InformationContact extends WebComponent {
-    token = '';
+    constructor() {
+        super();
+
+        this.token = '';
+    }
 
     async render() {
         let data = new Map();
@@ -57,8 +61,6 @@ export default class InformationContact extends WebComponent {
                 // Display error messages
                 if (json.has('error')) {
                     for (let key in json.get('error')) {
-                        this.ref(key).setFormValue();
-
                         let value = key.replaceAll('_', '-');
 
                         this.form.querySelector('#input-' + value).classList.add('is-invalid');

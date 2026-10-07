@@ -12,15 +12,15 @@ export default class ManufacturerInfo extends WebComponent {
     async render(){
         let manufacturer = await loader.storage('manufacturer/manufacturer-' + parseInt(this.getAttribute('manufacturer_id')));
 
-        if (manufacturer instanceof Map && local.get('language') in manufacturer.get('description')) {
-            let description = manufacturer.get('description')[local.get('language')];
+        if (!manufacturer instanceof Map || !local.get('language') in manufacturer.get('description')) return;
 
-            //description.meta_title
-            //description.meta_description
-            //description.meta_keyword
+        let description = manufacturer.get('description')[local.get('language')];
 
-            return loader.template('catalog/manufacturer_info', [ manufacturer, description, language ]);
-        }
+        //description.meta_title
+        //description.meta_description
+        //description.meta_keyword
+
+        return loader.template('catalog/manufacturer_info', [ manufacturer, description, language ]);
     }
 }
 

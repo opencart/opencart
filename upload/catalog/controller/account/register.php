@@ -38,7 +38,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			'lastname'          => '',
 			'email'             => '',
 			'telephone'         => '',
-			'custom_field'      => [],
 			'password'          => '',
 			'agree'             => 0
 		];
@@ -153,8 +152,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					'firstname'         => $post_info['firstname'],
 					'lastname'          => $post_info['lastname'],
 					'email'             => $post_info['email'],
-					'telephone'         => $post_info['telephone'],
-					'custom_field'      => $post_info['custom_field']
+					'telephone'         => $post_info['telephone']
 				];
 
 				// Log the IP info

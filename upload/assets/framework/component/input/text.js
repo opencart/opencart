@@ -75,9 +75,13 @@ customElements.define('input-text', class extends WebComponent {
         html += ' @ref="input" @input="onInput" @change="onChange"';
 
         if (this.hasAttribute('placeholder')) html += ' placeholder="' + escapeAttribute(this.getAttribute('placeholder')) + '"';
+
         if (this.hasAttribute('autocomplete')) html += ' autocomplete="' + escapeAttribute(this.getAttribute('autocomplete')) + '"';
+
         if (label) html += ' aria-label="' + escapeAttribute(label) + '"';
+
         if (this.hasAttribute('required')) html += ' required';
+
         if (this.hasAttribute('disabled')) html += ' disabled';
 
         return html + '/>';

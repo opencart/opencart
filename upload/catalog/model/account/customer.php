@@ -26,7 +26,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'lastname'     => 'Doe',
 	 *     'email'        => 'demo@opencart.com',
 	 *     'telephone'    => '1234567890',
-	 *     'custom_field' => [],
 	 *     'password'     => '',
 	 *     'newsletter'   => 0,
 	 *     'ip'           => '',
@@ -49,7 +48,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `customer_group_id` = '" . (int)$customer_group_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `telephone` = '" . $this->db->escape($data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `newsletter` = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', `ip` = '" . $this->db->escape(oc_get_ip()) . "', `status` = '" . (int)!$customer_group_info['approval'] . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `customer_group_id` = '" . (int)$customer_group_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `telephone` = '" . $this->db->escape($data['telephone']) . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `newsletter` = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', `ip` = '" . $this->db->escape(oc_get_ip()) . "', `status` = '" . (int)!$customer_group_info['approval'] . "', `date_added` = NOW()");
 
 		$customer_id = $this->db->getLastId();
 
@@ -79,8 +78,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'firstname'    => 'John',
 	 *     'lastname'     => 'Doe',
 	 *     'email'        => 'demo@opencart.com',
-	 *     'telephone'    => '123467890',
-	 *     'custom_field' => []
+	 *     'telephone'    => '123467890'
 	 * ];
 	 *
 	 * $this->load->model('account/customer');
@@ -88,7 +86,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * $this->model_account_customer_customer->editCustomer($customer_id, $customer_data);
 	 */
 	public function editCustomer(int $customer_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `telephone` = '" . $this->db->escape($data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `telephone` = '" . $this->db->escape($data['telephone']) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
@@ -196,7 +194,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($query->num_rows) {
-			return ['custom_field' => $query->row['custom_field'] ? json_decode($query->row['custom_field'], true) : []] + $query->row;
+			return $query->row;
 		} else {
 			return [];
 		}
@@ -219,7 +217,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		if ($query->num_rows) {
-			return ['custom_field' => $query->row['custom_field'] ? json_decode($query->row['custom_field'], true) : []] + $query->row;
+			return $query->row;
 		} else {
 			return [];
 		}

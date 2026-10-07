@@ -8,7 +8,11 @@ const config = await loader.config('default');
 const language = await loader.language('account/register');
 
 export default class AccountRegister extends WebComponent {
-    token = '';
+    constructor() {
+        super();
+
+        this.token = '';
+    }
 
     async render() {
         //if (!customer.isLogged()) return;
@@ -39,27 +43,32 @@ export default class AccountRegister extends WebComponent {
 
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: (json) => {
                 console.log(json);
-
-                // Remove past error classes from inputs
-                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
                 // Display error messages
                 if (json.has('error')) {
                     for (let key in json.get('error')) {
                         let value = key.replaceAll('_', '-');
 
-                        // If the element has inputs inside.
-                        this.form.querySelector('#input-' + value).classList.add('is-invalid');
-                        this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        this.form.querySelector('#error-' + value).classList.add('d-block');
+                        console.log('#input-' + value);
+
+                        let input = this.form.querySelector('#input-' + value);
+
+                        console.log(input);
+
+                        if (input) {
+                            console.log('works');
+
+                            input.internal.validationMessage("Please fill out this field—it is required!");
+
+                            input.internal.setCustomValidity("Please fill out this field—it is required!");
+                        }
                     }
                 }
 

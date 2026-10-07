@@ -73,7 +73,6 @@ customElements.define('nav-include', class Include extends WebComponent {
             }
 
             return html + '></' + name + '>';
-
         } catch (error) {
             console.error('nav-include: could not load "' + this.src + '"', error);
 

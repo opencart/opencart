@@ -75,21 +75,6 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
-			// Custom fields validation
-			$this->load->model('account/custom_field');
-
-			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
-
-			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'address') {
-					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex((string)$post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-					}
-				}
-			}
-
 			if (isset($this->request->get['address_id']) && ($this->customer->getAddressId() == (int)$this->request->get['address_id']) && !(bool)$post_info['default']) {
 				$json['error']['warning'] = $this->language->get('error_default');
 			}

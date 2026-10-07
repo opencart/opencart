@@ -8,10 +8,24 @@ const config = await loader.config('default');
 const language = await loader.language('account/forgotten');
 
 export default class AccountForgotten extends WebComponent {
+    constructor() {
+        super();
+
+        this.token = '';
+    }
+
     render() {
         //if (customer.isLogged()) return;
 
         return loader.template('account/forgotten', [ language ]);
+    }
+
+    async onConnect() {
+        let json = await ajax.get('action.php?route=account/forgotten.token&language=' + local.get('language'));
+
+        if (json.has('token')) {
+            this.token = json.get('token');
+        }
     }
 
     async onSubmit(e) {
@@ -21,7 +35,7 @@ export default class AccountForgotten extends WebComponent {
 
         let form = new FormData(this.form);
 
-        await ajax.post('action.php?route=account/forgotten.confirm&language=' + local.get('language'), form, {
+        await ajax.post('action.php?route=account/forgotten.confirm&language=' + local.get('language') + '&token=' + this.token, form, {
             beforeSend: () => {
                 this.submitter.state.add('loading');
             },

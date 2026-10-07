@@ -8,7 +8,11 @@ const config = await loader.config('default');
 const language = await loader.language('catalog/review');
 
 customElements.define('review-form', class extends WebComponent {
-    token = '';
+    constructor() {
+        super();
+
+        this.token = '';
+    }
 
     async render(){
         let data = new Map();

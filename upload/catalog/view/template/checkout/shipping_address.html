@@ -62,17 +62,17 @@
 
         <div class="col mb-3">
           <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
-          <x-country name="country_id" value="{{ country_id }}" id="x-shipping-country" postcode="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
+          <input-country name="country_id" value="{{ country_id }}" id="x-shipping-country" postcode="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
             <option value="0">{{ text_select }}</option>
-          </x-country>
+          </input-country>
           <div id="error-shipping-country" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3">
           <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-          <x-zone name="zone_id" value="{{ zone_id }}" target="x-shipping-country" input-id="input-shipping-zone" input-class="form-select" required>
+          <input-zone name="zone_id" value="{{ zone_id }}" target="x-shipping-country" input-id="input-shipping-zone" input-class="form-select" required>
             <option value="0">{{ text_select }}</option>
-          </x-zone>
+          </input-zone>
           <div id="error-shipping-zone" class="invalid-feedback"></div>
         </div>
 

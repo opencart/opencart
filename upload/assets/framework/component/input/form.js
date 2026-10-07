@@ -11,12 +11,12 @@ customElements.define('form-input', class extends WebComponent {
         return {
             submitting: false,
             error: '',
-            success: false
+            success: ''
         };
     }
 
     render() {
-        return `<form @ref="form" @submit="onSubmit" ${this.state.submitting ? ' disabled' : ''}>' + + '</form>`;
+        return `<form @ref="form" @submit="onSubmit" ${this.state.submitting ? ' disabled' : ''}></form>`;
     }
 
     async onSubmit(e) {

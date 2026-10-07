@@ -6,7 +6,7 @@ const language = await loader.language('account/newsletter');
 
 export default class AccountNewsletter extends WebComponent {
     async render() {
-        if (!customer.isLogged()) return;
+        //if (!customer.isLogged()) return;
 
         let data = new Map();
 
@@ -18,6 +18,8 @@ export default class AccountNewsletter extends WebComponent {
     async onSubmit(e) {
         e.preventDefault();
 
+        //if (!customer.isLogged()) return;
+
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/newsletter.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
@@ -27,15 +29,21 @@ export default class AccountNewsletter extends WebComponent {
             onComplete: (json) => {
                 this.submitter.state.remove('loading');
             },
-            onSuccess: this.success.bind(this),
+            onSuccess: (json) => {
+                // Display error messages
+                if (json.has('error')) {
+                    this.alert.prepend('<ui-alert type="warning">' + json.get('error') + '</ui-alert>');
+                }
+
+                // Display success message
+                if (json.has('success')) {
+                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                }
+            },
             onError: (e) => {
                 console.log('onError', e);
             }
         });
-    }
-
-    success(json) {
-
     }
 }
 

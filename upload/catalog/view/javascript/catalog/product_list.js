@@ -10,6 +10,7 @@ const language = await loader.language('catalog/product_list');
 
 class ProductList extends WebComponent {
     static observed = [
+        'search',
         'path',
         'filter',
         'manufacturer_id',
@@ -19,46 +20,97 @@ class ProductList extends WebComponent {
         'page'
     ];
 
-    set path(path) {
-
-    }
-
-    constructor() {
-        super();
-
-        this.setAttribute('sort', 'latest');
-        this.setAttribute('order', 'desc');
-        this.setAttribute('page', 1);
-        this.setAttribute('limit', config.get('config_pagination'));
-    }
-
     async render(){
         let data = new Map();
 
-        for (let attribute of ProductList.observed) {
-            if (this.hasAttribute(attribute)) {
-                data.set(attribute, this.getAttribute(attribute));
-            } else if (!data.has(attribute)) {
-                data.set(attribute, '');
-            }
+        data.set('search', '');
+        data.set('path', '');
+        data.set('filter', '');
+        data.set('manufacturer_id', 0);
+        data.set('sort', 'asc');
+        data.set('order', 'latest');
+        data.set('page', 1);
+        data.set('limit', Number(config.get('config_pagination')));
+
+        if (this.hasAttribute('search')) {
+            data.set('search', this.getAttribute('search'));
         }
+
+        if (this.hasAttribute('path')) {
+            data.set('path', this.getAttribute('path').replace(/^(\d+(_\d+)*)$/));
+        }
+
+        if (this.hasAttribute('filter')) {
+            data.set('filter', this.getAttribute('filter'));
+        }
+
+        if (this.hasAttribute('manufacturer_id')) {
+            data.set('manufacturer_id', this.getAttribute('manufacturer_id').replace(/^[^\d+]/));
+        }
+
+        if (this.hasAttribute('sort')) {
+            data.set('sort', this.getAttribute('sort'));
+        }
+
+        if (this.hasAttribute('order')) {
+            data.set('order', this.getAttribute('order') === 'asc' ? 'asc' : 'desc');
+        }
+
+        if (this.hasAttribute('limit')) {
+            data.set('limit', this.getAttribute('limit'));
+        }
+
+        if (this.hasAttribute('page')) {
+            data.set('page', this.getAttribute('page'));
+        }
+
+        data.set('limits', [10, 20, 30, 40, 50]);
 
         // Products
         data.set('products', []);
         data.set('total', 0);
 
-        let products = await loader.storage('category/category-product-' + this.getAttribute('category_id'));
+        let products = await loader.storage('category/category-product-' + data.get('path'));
+
+        let product_total = products.length;
 
         if (products instanceof Array) {
-            data.set('products', products);
-            data.set('total', products.length);
+            if (data.get('sort') == 'asc') {
+                data.set('products', products);
+            } else {
+                data.set('products', products.reverse());
+            }
+
+            data.set('total', product_total);
         }
 
         return loader.template('catalog/product_list', [ data, language, config ]);
     }
 
-    onChange(e) {
+    onFilter(e) {
+        this.getAttribute('filter', e.target.value);
+    }
+
+    onManufacturerId(e) {
+        this.getAttribute('manufacturer_id', e.target.value);
+    }
+
+    onSort(e) {
+        this.getAttribute('sort', e.target.value);
+    }
+
+    onOrder(e) {
+        this.getAttribute('order', e.target.value);
+
         this.update();
+    }
+
+    onLimit(e) {
+        this.getAttribute('limit', e.target.value);
+    }
+
+    onPage(e) {
+        this.getAttribute('page', e.target.value);
     }
 }
 
@@ -66,29 +118,28 @@ customElements.define('product-list', ProductList);
 
 /*
 $(document).ready(function() {
-    // Product List
-    $('#button-list').on('click', function() {
-        var element = this;
+// Product List
+$('#button-list').on('click', function() {
+    var element = this;
 
-        $('#product-list').attr('class', 'row row-cols-1 product-list');
+    $('#product-list').attr('class', 'row row-cols-1 product-list');
 
-        $('#button-grid').removeClass('active');
-        $('#button-list').addClass('active');
+    $('#button-grid').removeClass('active');
+    $('#button-list').addClass('active');
 
-        localStorage.setItem('display', 'list');
-    });
+    localStorage.setItem('display', 'list');
+});
 
-    // Product Grid
-    $('#button-grid').on('click', function() {
-        var element = this;
+// Product Grid
+$('#button-grid').on('click', function() {
+    var element = this;
 
-        // What a shame bootstrap does not take into account dynamically loaded columns
-        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
+    // What a shame bootstrap does not take into account dynamically loaded columns
+    $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
 
-        $('#button-list').removeClass('active');
-        $('#button-grid').addClass('active');
+    $('#button-list').removeClass('active');
+    $('#button-grid').addClass('active');
 
-        localStorage.setItem('display', 'grid');
-    });
-
- */
+    localStorage.setItem('display', 'grid');
+});
+*/

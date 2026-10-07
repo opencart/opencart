@@ -6,6 +6,7 @@ import './component/input/country.js';
 import './component/input/form.js';
 import './component/input/markdown.js';
 import './component/input/switch.js';
+import './component/input/text.js';
 import './component/input/upload.js';
 import './component/input/zone.js';
 

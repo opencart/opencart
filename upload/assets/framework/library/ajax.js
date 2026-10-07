@@ -5,7 +5,7 @@
  * @classdesc This is a description of the MyClass class.
  */
 export default class Ajax {
-    static instance;
+    static instance = null;;
 
     /**
      * This function can prefix/suffix your string.

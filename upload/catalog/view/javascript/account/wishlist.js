@@ -20,6 +20,7 @@ export default class AccountWishlist extends WebComponent {
     add(e) {
         e.preventDefault();
 
+
     }
 
     async remove(e) {
@@ -27,30 +28,28 @@ export default class AccountWishlist extends WebComponent {
 
         let form = new FormData(this.form);
 
-        await ajax.post('index.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
+        await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
             beforeSend: function() {
                 this.submitter.state.add('loading');
             },
             complete: function() {
                 this.submitter.state.remove('loading');
             },
-            success: this.success.bind(this),
+            success: (json) => {
+                console.log(json);
+
+                if (json.has('error')) {
+                    $('#alert').prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                }
+
+                if (json.has('success')) {
+                    $('#alert').prepend('<ui-alert type="alert-success">' + json.get('success') + '</ui-alert>');
+                }
+            },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    }
-
-    success(json) {
-        console.log(json);
-
-        if (json.has('error')) {
-            $('#alert').prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
-        }
-
-        if (json.has('success')) {
-            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
-        }
     }
 }
 

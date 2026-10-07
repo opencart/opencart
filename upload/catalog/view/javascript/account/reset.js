@@ -29,7 +29,11 @@ export default class AccountReset extends WebComponent {
     }
 
     async onConnect() {
-        this.token = await ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
+        let json = await ajax.get('action.php?route=account/reset.token&language=' + local.get('language'));
+
+        if (json.has('token')) {
+            this.token = json.get('token');
+        }
     }
 
     success(json) {

@@ -11,11 +11,7 @@ export default class AccountAccount extends WebComponent {
     async render() {
         //if (!customer.isLogged()) return;
 
-        let data = new Map();
-
-        data.set('affiliate', customer.isAffiliate());
-
-        return loader.template('account/account', [ data, language, config ]);
+        return loader.template('account/account', [ language, config ]);
     }
 }
 

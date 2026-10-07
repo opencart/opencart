@@ -15,11 +15,13 @@ export default class AddressList extends WebComponent {
 
         data.set('addresses', customer.getAddresses());
 
-        return loader.template('account/address_list', [ data, language, config ]);
+        return loader.template('account/address_list', [data, language, config]);
     }
 
     onDelete(e) {
         e.preventDefault();
+
+        //if (!customer.isLogged()) return;
 
         ajax.get('action.php?route=account/address.delete&language=' + local.get('language') + '&customer_token=' + customer.getToken() + '&address_id=' + e.target.value, {
             beforeSend: () => {
@@ -28,23 +30,21 @@ export default class AddressList extends WebComponent {
             complete: () => {
                 this.submitter.state.remove('loading');
             },
-            success: this.success.bind(this),
+            success: (json) => {
+                if (json.has('error')) {
+                    this.alert.append('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                }
+
+                if (json.has('success')) {
+                    this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+
+                    this.update();
+                }
+            },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    }
-
-    success(json) {
-        if (json.has('error')) {
-            this.alert.append('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
-        }
-
-        if (json.has('success')) {
-            this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-
-            this.update();
-        }
     }
 }
 

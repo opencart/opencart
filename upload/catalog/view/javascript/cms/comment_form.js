@@ -38,7 +38,7 @@ customElements.define('cms-comment', class extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('index.php?route=cms/comment', form, {
+        ajax.post('action.php?route=cms/comment', form, {
             beforeSend: function() {
                 //ref.get('button-comment').button('loading');
             },

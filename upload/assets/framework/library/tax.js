@@ -4,7 +4,7 @@ import { loader } from './loader.js';
 const config = await loader.config('default');
 
 export default class Tax {
-    static instance;
+    static instance = null;;
 
     constructor() {
         this.tax_rates = new Map();

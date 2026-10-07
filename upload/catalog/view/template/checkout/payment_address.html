@@ -61,16 +61,16 @@
         </div>
         <div class="col mb-3">
           <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-          <x-country name="country_id" value="{{ country_id }}" id="x-payment-country" postcode="1" target="input-payment-postcode" input-id="input-payment-country" input-class="form-select" required>
+          <input-country name="country_id" value="{{ country_id }}" id="x-payment-country" postcode="1" target="input-payment-postcode" input-id="input-payment-country" input-class="form-select" required>
             <option value="0">{{ text_select }}</option>
-          </x-country>
+          </input-country>
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
           <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
-          <x-zone name="zone_id" value="{{ zone_id }}" target="x-payment-country" input-id="input-payment-zone" input-class="form-select" required>
+          <input-zone name="zone_id" value="{{ zone_id }}" target="x-payment-country" input-id="input-payment-zone" input-class="form-select" required>
             <option value="0">{{ text_select }}</option>
-          </x-zone>
+          </input-zone>
           <div id="error-payment-zone" class="invalid-feedback"></div>
         </div>
       </div>

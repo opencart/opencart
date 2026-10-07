@@ -1978,149 +1978,6 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'customer_affiliate',
-		'field' => [
-			[
-				'name' => 'customer_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'company',
-				'type' => 'varchar(60)'
-			],
-			[
-				'name' => 'website',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'tracking',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'balance',
-				'type' => 'decimal(15,4)'
-			],
-			[
-				'name'    => 'commission',
-				'type'    => 'decimal(4,2)',
-				'default' => '0.00'
-			],
-			[
-				'name' => 'tax',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'payment_method',
-				'type' => 'varchar(6)'
-			],
-			[
-				'name' => 'cheque',
-				'type' => 'varchar(100)'
-			],
-			[
-				'name' => 'paypal',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'bank_name',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'bank_branch_number',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'bank_swift_code',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'bank_account_name',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'bank_account_number',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'custom_field',
-				'type' => 'text'
-			],
-			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'customer_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'customer_id',
-				'table' => 'customer',
-				'field' => 'customer_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'customer_affiliate_report',
-		'field' => [
-			[
-				'name'           => 'customer_affiliate_report_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'customer_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name'    => 'store_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name' => 'ip',
-				'type' => 'varchar(40)'
-			],
-			[
-				'name' => 'country',
-				'type' => 'varchar(2)'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'customer_affiliate_report_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'customer_id',
-				'table' => 'customer',
-				'field' => 'customer_id'
-			],
-			[
-				'key'   => 'store_id',
-				'table' => 'store',
-				'field' => 'store_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
 		'name'  => 'customer_approval',
 		'field' => [
 			[
@@ -2448,58 +2305,6 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'ip'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'customer_reward',
-		'field' => [
-			[
-				'name'           => 'customer_reward_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name'    => 'customer_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name'    => 'order_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name' => 'description',
-				'type' => 'text'
-			],
-			[
-				'name'    => 'points',
-				'type'    => 'int(8)',
-				'default' => '0'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'customer_reward_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'customer_id',
-				'table' => 'customer',
-				'field' => 'customer_id'
-			],
-			[
-				'key'   => 'order_id',
-				'table' => 'order',
-				'field' => 'order_id'
-			]
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4466,24 +4271,6 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name'    => 'affiliate_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name' => 'commission',
-				'type' => 'decimal(15,4)'
-			],
-			[
-				'name'    => 'marketing_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name' => 'tracking',
-				'type' => 'varchar(64)'
-			],
-			[
 				'name' => 'language_id',
 				'type' => 'int(11)'
 			],
@@ -4572,11 +4359,6 @@ function oc_db_schema() {
 				'key'   => 'order_status_id',
 				'table' => 'order_status',
 				'field' => 'order_status_id'
-			],
-			[
-				'key'   => 'affiliate_id',
-				'table' => 'customer_affiliate',
-				'field' => 'customer_id'
 			],
 			[
 				'key'   => 'marketing_id',
@@ -4774,11 +4556,6 @@ function oc_db_schema() {
 				'name'    => 'tax',
 				'type'    => 'decimal(15,4)',
 				'default' => '0.0000'
-			],
-			[
-				'name'    => 'reward',
-				'type'    => 'int(8)',
-				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -5707,50 +5484,6 @@ function oc_db_schema() {
 				'key'   => 'store_id',
 				'table' => 'store',
 				'field' => 'store_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'product_reward',
-		'field' => [
-			[
-				'name'           => 'product_reward_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name'    => 'product_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name'    => 'customer_group_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name'    => 'points',
-				'type'    => 'int(8)',
-				'default' => '0'
-			]
-		],
-		'primary' => [
-			'product_reward_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
-				'key'   => 'customer_group_id',
-				'table' => 'customer_group',
-				'field' => 'customer_group_id'
 			]
 		],
 		'engine'  => 'InnoDB',

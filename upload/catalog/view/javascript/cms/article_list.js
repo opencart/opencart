@@ -9,7 +9,6 @@ const language = await loader.language('cms/article_list');
 
 export default class ArticleList extends WebComponent {
 
-
     async render() {
         let data = {};
 

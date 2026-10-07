@@ -4,7 +4,7 @@ import { storage } from './storage.js';
 import { template } from './template.js';
 
 export default class Loader {
-    static instance;
+    static instance = null;;
 
     constructor() {
         this.data = new Map();

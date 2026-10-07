@@ -186,56 +186,6 @@ class Activity extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Add Affiliate
-	 *
-	 * Trigger catalog/model/account/affiliate/addAffiliate/after
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
-	 *
-	 * @return void
-	 */
-	public function addAffiliate(string &$route, array &$args, &$output): void {
-		// Activity
-		if ($this->config->get('config_customer_activity')) {
-			$this->load->model('account/activity');
-
-			$activity_data = [
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-			];
-
-			$this->model_account_activity->addActivity('affiliate_add', $activity_data);
-		}
-	}
-
-	/**
-	 * Edit Affiliate
-	 *
-	 * Trigger catalog/model/account/affiliate/editAffiliate/after
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
-	 *
-	 * @return void
-	 */
-	public function editAffiliate(string &$route, array &$args, &$output): void {
-		// Activity
-		if ($this->config->get('config_customer_activity')) {
-			$this->load->model('account/activity');
-
-			$activity_data = [
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-			];
-
-			$this->model_account_activity->addActivity('affiliate_edit', $activity_data);
-		}
-	}
-
-	/**
 	 * Add Address
 	 *
 	 * Trigger catalog/model/account/address/addAddress/after

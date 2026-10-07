@@ -1,5 +1,5 @@
-import {local, WebComponent} from '../index.js';
-import { loader, ajax, cart, customer } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, ajax, cart, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -8,10 +8,6 @@ const config = await loader.config('default');
 const language = await loader.language('checkout/confirm');
 
 customElements.define('checkout-confirm', class extends WebComponent {
-    async onConnect(){
-
-    }
-
     async render(){
         let data = new Map();
 
@@ -21,17 +17,21 @@ customElements.define('checkout-confirm', class extends WebComponent {
         return loader.template('checkout/confirm', [ data, language, config ]);
     }
 
-    onSubmit(e) {
+    async onConnect(){
+
+    }
+
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=checkout/cart.add', form, {
+        await ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-
+                this.submitter.setAttribute('loading');
             },
             onComplete: () => {
-
+                this.submitter.removeAttribute('loading');
             },
             onSuccess: this.succcess.bind(this),
             onError: (e) => {
@@ -39,6 +39,9 @@ customElements.define('checkout-confirm', class extends WebComponent {
             }
         });
     }
+
+
+
 });
 
 

@@ -8,24 +8,25 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/category');
 
+// Validate Category Path
+let regex = new RegExp(/^(\d+(_\d+)*)$/);
+
 export default class CatalogCategory extends WebComponent {
     async render() {
         let data = new Map();
 
-        let category_id = 0;
+        let match = this.getAttribute('path').match(regex);
 
-        let path = this.getAttribute('path');
+        if (!match) return;
 
-        if (path.indexOf('_') !== -1) {
-            category_id = path.split('_').pop();
-        } else {
-            category_id = path;
-        }
+        let [ path ] = match;
 
-        let category = await loader.storage('category/category-' + category_id);
+        let category = await loader.storage('category/category-' + path);
 
         if (category instanceof Map && local.get('language') in category.get('description')) {
             let description = category.get('description')[local.get('language')];
+
+            data.set('path', path);
 
             data.set('categories', []);
 

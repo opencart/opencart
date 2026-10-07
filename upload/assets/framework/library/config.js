@@ -16,9 +16,7 @@ export default class Config {
     }
 
     async fetch(path) {
-        if (this.cache.has(path)) {
-            return this.cache.get(path);
-        }
+        if (this.cache.has(path)) return this.cache.get(path);
 
         let file = this.directory + path + '.json';
         let namespace = '';
@@ -38,17 +36,17 @@ export default class Config {
 
         let response = await fetch(file);
 
-        if (response.status == 200) {
-            let data = await response.json();
+        if (response.status !== 200) {
+            throw new Error('Could not load config file ' + path);
 
-            this.cache.set(path, new Map(Object.entries(data)));
-
-            return this.cache.get(path);
-        } else {
-            console.log('Could not load config file ' + path);
+            return undefined;
         }
 
-        return undefined;
+        let data = await response.json();
+
+        this.cache.set(path, new Map(Object.entries(data)));
+
+        return this.cache.get(path);
     }
 
     static getInstance() {
@@ -104,6 +102,7 @@ config.cache.set('default', new Map(Object.entries({
     config_gdpr_id: 0,
     config_stock_status_id: 4,
     config_affiliate_status: 1,
+    config_captcha: '',
     config_file_max_size: 3000
 })));
 

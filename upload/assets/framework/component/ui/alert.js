@@ -2,6 +2,7 @@ import { WebComponent } from '../../engine.js';
 
 customElements.define('ui-alert', class extends WebComponent {
     static observed = ['type'];
+    timer = null;
 
     render() {
         if (typeof timer != 'undefined') {
@@ -10,11 +11,7 @@ customElements.define('ui-alert', class extends WebComponent {
 
         this.timer = setInterval(this.timeout, 500);
 
-        let type = 'primary';
-
-        if (this.hasAttribute('type')) {
-            type = this.getAttribute('type');
-        }
+        let type = (this.getAttribute('type') || 'primary').replace(/[^a-z-]/gi, '');
 
         let icon = '';
 
@@ -39,10 +36,18 @@ customElements.define('ui-alert', class extends WebComponent {
                 break;
         }
 
-        return '<ui-alert type="success">' + icon + ' ' + this.innerHTML + '</ui-alert>';
+        return '<div class="alert alert-' + type + '">' + icon + ' ' + this.innerHTML + '</div>';
     }
 
-    timeout() {
-        clearInterval(this.timer);
+    onConnect() {
+        let timeout = parseInt(this.getAttribute('timeout'));
+
+        if (timeout > 0) {
+            this.timer = setTimeout(() => this.remove(), timeout);
+        }
+    }
+
+    onDisconnect() {
+        clearTimeout(this.timer);
     }
 });

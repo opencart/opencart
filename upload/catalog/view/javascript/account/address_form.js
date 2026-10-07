@@ -41,14 +41,16 @@ export default class AddressForm extends WebComponent {
     async onSubmit(e) {
         e.preventDefault();
 
+        //if (!customer.isLogged()) return;
+
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.setAttribute('loading');
             },
             onComplete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.removeAttribute('loading');
             },
             onSuccess: (json) => {
                 if (json.has('error')) {

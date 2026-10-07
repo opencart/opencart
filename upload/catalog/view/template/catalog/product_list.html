@@ -2,9 +2,7 @@
 <div class="row">
 
   <div class="col-lg-3">
-    <div class="mb-3">
-      <a href="catalog/compare.js" id="compare-total" class="btn btn-primary d-block"><i class="fa-solid fa-arrow-right-arrow-left"></i> <span class="d-none d-xl-inline">{{ text_compare }}</span></a>
-    </div>
+    <div class="mb-3"><a href="catalog/compare.js" id="compare-total" class="btn btn-primary d-block"><i class="fa-solid fa-arrow-right-arrow-left"></i> <span class="d-none d-xl-inline">{{ text_compare }}</span></a></div>
   </div>
 
   <div class="col-lg-1 d-none d-lg-block">
@@ -17,16 +15,22 @@
   <div class="col-lg-4 offset-lg-1 col-6">
     <div class="input-group mb-3">
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
-      <select id="input-sort" class="form-select" @change="onChange">
+
+
+
+
+      <select id="input-sort" class="form-select" @change="onSort">
         <option value="latest"{% if sort == 'latest' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_latest }}</option>
         <option value="popularity"{% if sort == 'popularity' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_popularity }}</option>
         <option value="price"{% if sort == 'price' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_price }}</option>
         <option value="rating"{% if sort == 'rating' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_rating }}</option>
       </select>
-      <select id="input-order" class="form-select" @change="onChange">
+
+      <select id="input-order" class="form-select" @change="onOrder">
         <option value="asc"{% if order == 'asc' %} selected{% endif %}>{{ text_asc }}</option>
         <option value="desc"{% if order == 'desc' %} selected{% endif %}>{{ text_desc }}</option>
       </select>
+
     </div>
   </div>
 
@@ -34,26 +38,23 @@
     <div class="input-group mb-3">
       <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
       <select id="input-limit" class="form-select" @change="onChange">
-
-
         {% for limits in limits %}
           <option value="{{ limits.href }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
         {% endfor %}
       </select>
-
     </div>
   </div>
 
 </div>
 
-<div id="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4">
+<div id="product-list" @ref="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4">
   {% for product_id in products %}
   <div class="col mb-3"><product-thumb product_id="{{ product_id }}"></product-thumb></div>
   {% endfor %}
 </div>
 
 <div class="row">
-  <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+  <div class="col-sm-6 text-start"><nav-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></nav-pagination></div>
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>
 

@@ -1,5 +1,5 @@
 export default class Storage {
-    static instance;
+    static instance = null;
 
     constructor() {
         this.directory = '';
@@ -16,9 +16,7 @@ export default class Storage {
     }
 
     async fetch(path) {
-        if (this.cache.has(path)) {
-            return this.cache.get(path);
-        }
+        if (this.cache.has(path)) return this.cache.get(path);
 
         let file = this.directory + path + '.json';
         let namespace = '';
@@ -38,21 +36,21 @@ export default class Storage {
 
         let response = await fetch(file);
 
-        if (response.status == 200) {
-            let data = await response.json();
+        if (response.status !== 200) {
+            throw new Error('Could not load storage file ' + path);
 
-            if (!Array.isArray(data)) {
-                this.cache.set(path, new Map(Object.entries(data)));
-            } else {
-                this.cache.set(path, data);
-            }
-
-            return this.cache.get(path);
-        } else {
-            console.log('Could not load storage file ' + path);
+            return undefined;
         }
 
-        return undefined;
+        let data = await response.json();
+
+        if (!Array.isArray(data)) {
+            this.cache.set(path, new Map(Object.entries(data)));
+        } else {
+            this.cache.set(path, data);
+        }
+
+        return this.cache.get(path);
     }
 
     static getInstance() {

@@ -10,14 +10,18 @@ const language = await loader.language('account/returns');
 export default class ReturnForm extends WebComponent {
     token = '';
 
-    render() {
+    async render() {
         //if (!customer.isLogged()) return;
 
         return loader.template('account/return_form', [ language ]);
     }
 
-    onConnect() {
-        this.token = ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
+    async onConnect() {
+        let json = await ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
+
+        if (json.has('token')) {
+            this.token = json.get('token');
+        }
     }
 
     async onSubmit(e) {
@@ -32,48 +36,31 @@ export default class ReturnForm extends WebComponent {
             onComplete: (json) => {
                 this.submitter.state.remove('loading');
             },
-            onSuccess: this.success,
+            onSuccess: (json) => {
+                // Remove past error classes from inputs
+                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+                // Display error messages
+                if (json.has('error')) {
+                    for (let key in json.get('error')) {
+                        let value = key.replaceAll('_', '-');
+
+                        this.form.querySelector('#input-' + value).classList.add('is-invalid');
+                        this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                        this.form.querySelector('#error-' + value).classList.add('d-block');
+                    }
+                }
+
+                // Display success message
+                if (json.has('success')) {
+                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                }
+            },
             onError: (e) => {
                 console.log('onError', e);
             }
         });
-    }
-
-    success(json) {
-        // Remove past error classes from inputs
-        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-        // Display error messages
-        if (json.has('error')) {
-            for (let key in json.get('error')) {
-                let value = key.replaceAll('_', '-');
-
-                let input = target.querySelector('#input-' + value);
-
-                if (input) {
-                    input.classList.add('is-invalid');
-
-                    // If the element has inputs inside.
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                }
-
-                let error = this.form.querySelector('#error-' + value);
-
-                if (error) {
-                    error.classList.add('d-block');
-                }
-            }
-        }
-
-        // Display success message
-        if (json.has('success')) {
-            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-
-            for (let product of json['products']) {
-                cart.add(product);
-            }
-        }
     }
 }
 

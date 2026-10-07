@@ -88,6 +88,7 @@ Global.registerListener('link', (e) => {
 
     let link = e.composedPath().find(element => element.tagName === 'A');
 
+    // If element clicked has no A tag in the DOM path.
     if (!link) return;
 
     let href = link.getAttribute('href');
@@ -97,9 +98,23 @@ Global.registerListener('link', (e) => {
     Global.get('content').src = href;
 });
 
+// Opens a link's page in a modal instead of the content area:
+// <a href="account/register.js" :click="modal">Register</a>
+Global.registerListener('modal', (e) => {
+    e.preventDefault();
+
+    let link = e.composedPath().find(element => element.tagName === 'A');
+
+    if (!link) return;
+
+    let href = link.getAttribute('href');
+
+    if (href == null) return;
+
+    customElements.get('ui-modal').open(href);
+});
+
 // Start the root path
 let promise = import('./common/layout.js');
 
-promise.then(() => {
-    document.getElementById('root').innerHTML = '<common-layout></common-layout>';
-});
+promise.then(() => document.getElementById('root').innerHTML = '<common-layout></common-layout>');

@@ -24,7 +24,6 @@ $_['session_engine']     = 'db'; // db or file
 $_['action_pre_action']  = [
 	'startup/setting',
 	'startup/language',
-	'startup/seo_url',
 	'startup/session',
 	'startup/customer',
 	'startup/currency',
@@ -32,10 +31,8 @@ $_['action_pre_action']  = [
 	'startup/application',
 	'startup/extension',
 	'startup/startup',
-	'startup/marketing',
 	'startup/error',
 	'startup/event',
-	'startup/api',
 	'startup/maintenance',
 	'startup/authorize'
 ];

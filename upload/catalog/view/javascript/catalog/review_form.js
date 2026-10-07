@@ -8,14 +8,20 @@ const config = await loader.config('default');
 const language = await loader.language('catalog/review');
 
 customElements.define('review-form', class extends WebComponent {
+    token = '';
+
     async render(){
         let data = new Map();
 
         return loader.template('catalog/review_form', [ data, language, config ]);
     }
 
-    onConnect() {
-        this.token = ajax.get('action.php?route=account/review.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
+    async onConnect() {
+        let json = await ajax.get('action.php?route=account/review.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
+
+        if (json.has('token')) {
+            this.token = json.get('token');
+        }
     }
 
     onSubmit(e) {

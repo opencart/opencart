@@ -1,8 +1,8 @@
 <div class="dropdown d-grid">
   {% assign amount = total | currency: currency %}
-  <button type="button" @ref="button-cart" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
+  <button type="button" @ref="button"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
 
-  <ul class="dropdown-menu dropdown-menu-end p-2">
+  <ul @ref="dropdown" class="dropdown-menu dropdown-menu-end p-2">
     {% if products %}
     <li>
       <table class="table table-striped mb-2">

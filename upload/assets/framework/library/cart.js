@@ -16,7 +16,7 @@ if (session.has('cart')) {
 }
 
 export default class Cart {
-    static instance;
+    static instance = null;;
 
     constructor() {
         this.data = new Map();

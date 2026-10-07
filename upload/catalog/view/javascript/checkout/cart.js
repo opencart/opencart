@@ -110,7 +110,7 @@ export default class CheckoutCart extends WebComponent {
                 if (json.has('success')) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
 
-                    //$('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
+                    //$('#shopping-cart').load('action.php?route=checkout/cart.list&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -159,8 +159,8 @@ $('#shopping-cart').on('submit', '#output-cart form', function(e) {
             if (json.has('success')) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
 
-                $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}', {}, function() {
-                    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
+                $('#shopping-cart').load('action.php?route=checkout/cart.list&language={{ language }}', {}, function() {
+                    $('#cart').load('action.php?route=common/cart.info&language={{ language }}');
                 });
             }
         },
@@ -175,12 +175,12 @@ $('#shopping-cart').on('click', '.btn-danger', function(e) {
 });
 
 $('#shopping-cart').observe(function(e) {
-    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
+    $('#cart').load('action.php?route=common/cart.info&language={{ language }}');
 });
 
 $('#cart').on('submit', 'form', function(e) {
     window.setTimeout(function() {
-        $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
+        $('#shopping-cart').load('action.php?route=checkout/cart.list&language={{ language }}');
     }, 3000);
 });
 */

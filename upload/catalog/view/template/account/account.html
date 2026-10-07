@@ -11,23 +11,9 @@
   <li><x-a href="account/order.js" :click="link">{{ text_order }}</x-a></li>
   <li><a href="account/subscription.js" :click="link">{{ text_subscription }}</a></li>
   <li><a href="account/download.js" :click="link">{{ text_download }}</a></li>
-  {% if config_review_status %}
-  <li><a href="account/reward.js" :click="link">{{ text_reward }}</a></li>
-  {% endif %}
   <li><a href="account/return.js" :click="link">{{ text_return }}</a></li>
   <li><a href="account/transaction.js" :click="link">{{ text_transaction }}</a></li>
 </ul>
-{% if config_affiliate_status %}
-<h2>{{ text_my_affiliate }}</h2>
-<ul class="list-unstyled">
-  {% if not affiliate %}
-  <li><a href="account/affiliate.js" :click="link">{{ text_affiliate_add }}</a></li>
-  {% else %}
-  <li><a href="account/affiliate.js" :click="link">{{ text_affiliate_edit }}</a></li>
-  <li><a href="account/tracking.js" :click="link">{{ text_tracking }}</a></li>
-  {% endif %}
-</ul>
-{% endif %}
 <h2>{{ text_my_newsletter }}</h2>
 <ul class="list-unstyled">
   <li><a href="account/newsletter.js" :click="link">{{ text_newsletter }}</a></li>

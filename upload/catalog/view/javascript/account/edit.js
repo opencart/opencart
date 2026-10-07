@@ -8,8 +8,6 @@ const config = await loader.config('default');
 const language = await loader.language('account/edit');
 
 export default class AccountEdit extends WebComponent {
-    token = '';
-
     async render() {
         //if (!customer.isLogged()) return;
 
@@ -25,14 +23,10 @@ export default class AccountEdit extends WebComponent {
         return loader.template('account/edit', [ data, language, config ]);
     }
 
-    async onConnect() {
-        //if (!customer.isLogged()) return;
-
-        this.token = await ajax.get('action.php?route=account/edit.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
-    }
-
     async onSubmit(e) {
         e.preventDefault();
+
+        //if (!customer.isLogged()) return;
 
         let form = new FormData(this.form);
 
@@ -43,33 +37,31 @@ export default class AccountEdit extends WebComponent {
             onComplete: (json) => {
                 this.submitter.state.remove('loading');
             },
-            onSuccess: this.success.bind(this),
+            onSuccess: (json) => {
+                // Remove past error classes from inputs
+                this.form.querySelectorAll('.is-invalid').forEach(element => element.removeClass('is-invalid'));
+                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+                // Display error messages
+                if (json.has('error')) {
+                    for (let key in json.get('error')) {
+                        let value = key.replaceAll('_', '-');
+
+                        this.form.querySelector('#input-' + value).classList.add('is-invalid');
+                        this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                        this.form.querySelector('#error-' + value).classList.add('d-block');
+                    }
+                }
+
+                // Display success message
+                if (json.has('success')) {
+                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                }
+            },
             onError: (e) => {
                 console.log('onError', e);
             }
         });
-    }
-
-    success(json) {
-        // Remove past error classes from inputs
-        this.form.querySelectorAll(':invalid').forEach(element => element.removeAttribute('invalid'));
-        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-        // Display error messages
-        if (json.has('error')) {
-            for (let key in json.get('error')) {
-                let value = key.replaceAll('_', '-');
-
-                this.form.querySelector('#input-' + value).addAttribute('invalid');
-                this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                this.form.querySelector('#error-' + value).classList.add('d-block');
-            }
-        }
-
-        // Display success message
-        if (json.has('success')) {
-            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-        }
     }
 }
 

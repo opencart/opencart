@@ -92,7 +92,7 @@ customElements.define('payment-address', class extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('index.php?route=checkout/payment_address.save&language=', form, {
+        ajax.post('action.php?route=checkout/payment_address.save&language=', form, {
             beforeSend: function() {
                 this.submitter.state.add('loading');
             },
@@ -134,8 +134,8 @@ customElements.define('payment-address', class extends WebComponent {
 
             var html = '<option value="">{{ text_select }}</option>';
 
-            if (json['addresses']) {
-                for (i in json['addresses']) {
+            if (json.has('addresses')) {
+                for (let i in json.get('addresses')) {
                     html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + (json['addresses'][i]['company'] ? json['addresses'][i]['company'] + ', ' : '') + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
                 }
             }
@@ -166,7 +166,7 @@ customElements.define('payment-address', class extends WebComponent {
             $('#input-shipping-method').val('');
             $('#input-payment-method').val('');
 
-            $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+            $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
         }
     }
 });

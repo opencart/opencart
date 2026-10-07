@@ -9,7 +9,9 @@ const language = await loader.language('account/address');
 
 export default class AuthorizeReset extends WebComponent {
     async render() {
-        return loader.template('account/authorize_reset', language);
+        //if (customer.isLogged()) return;
+
+        return loader.template('account/authorize_reset', [ language ]);
     }
 
     async onSubmit(e) {
@@ -24,25 +26,23 @@ export default class AuthorizeReset extends WebComponent {
             onComplete: (json) => {
                 this.submitter.button('reset');
             },
-            onSuccess: this.success.bind(this),
+            onSuccess: success(json) {
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json.has('error')) {
+                    this.alert.prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                }
+
+                if (json.has('success')) {
+                    this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json.get('success') + '</ui-alert>');
+                }
+            },
             onError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    }
-
-    success(json) {
-        if (json['redirect']) {
-            location = json['redirect'];
-        }
-
-        if (json.has('error')) {
-            this.alert.prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
-        }
-
-        if (json.has('success')) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json.get('success') + '</ui-alert>');
-        }
     }
 }
 

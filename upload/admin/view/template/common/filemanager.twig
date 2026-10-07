@@ -17,6 +17,9 @@
             <span class="input-group-btn">
             <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </span></div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="match_case" value="1"{% if filter_case %} checked="checked"{% endif %} /> {{ entry_match_case }}</label>
+        </div>
         </div>
       </div>
       <hr />
@@ -98,6 +101,8 @@ $('#button-search').on('click', function(e) {
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
+
+	url += '&filter_case=' + ($('input[name=\'match_case\']').prop('checked') ? 1 : 0);
 
 	{% if thumb %}
 	url += '&thumb=' + '{{ thumb|escape('js') }}';

@@ -1,30 +1,4 @@
 <?php
-// Heading
-$_['heading_title']      = 'Adressbuch';
-
-// Text
-$_['text_account']       = 'Konto';
-$_['text_address_book']  = 'Adressbucheinträge';
-$_['text_address_add']   = 'Adresse hinzufügen';
-$_['text_address_edit']  = 'Adresse bearbeiten';
-$_['text_add']           = 'Ihre Adresse wurde erfolgreich hinzugefügt';
-$_['text_edit']          = 'Ihre Adresse wurde erfolgreich aktualisiert';
-$_['text_delete']        = 'Ihre Adresse wurde erfolgreich gelöscht';
-$_['text_no_results']    = 'Sie haben keine Adressen in Ihrem Konto.';
-$_['text_default']       = 'Standard';
-
-// Entry
-$_['entry_firstname']    = 'Vorname';
-$_['entry_lastname']     = 'Nachname';
-$_['entry_company']      = 'Unternehmen';
-$_['entry_address_1']    = 'Adresse 1';
-$_['entry_address_2']    = 'Adresse 2';
-$_['entry_postcode']     = 'Postleitzahl';
-$_['entry_city']         = 'Stadt';
-$_['entry_country']      = 'Land';
-$_['entry_zone']         = 'Region/Staat';
-$_['entry_default']      = 'Standardadresse';
-
 // Error
 $_['error_token']        = 'Achtung: Adress-Token ungültig!';
 $_['error_subscription'] = 'Warnung: Die Adresse wird immer noch von %s aktiven Abonnements verwendet!';

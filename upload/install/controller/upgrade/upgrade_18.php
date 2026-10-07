@@ -538,45 +538,6 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 				$results[] = [
 					'menu_description' => [
 						1 => [
-							'name' => 'Custom Field'
-						]
-					],
-					'code'             => 'custom_field',
-					'type'             => 'link',
-					'route'            => 'customer/custom_field',
-					'parent'           => 'customer',
-					'sort_order'       => 5
-				];
-
-				$results[] = [
-					'menu_description' => [
-						1 => [
-							'name' => 'Affiliate'
-						]
-					],
-					'code'             => 'affiliate',
-					'type'             => 'link',
-					'route'            => 'marketing/affiliate',
-					'parent'           => 'marketing',
-					'sort_order'       => 1
-				];
-
-				$results[] = [
-					'menu_description' => [
-						1 => [
-							'name' => 'Marketing'
-						]
-					],
-					'code'             => 'marketing_2',
-					'type'             => 'link',
-					'route'            => 'marketing/marketing',
-					'parent'           => 'marketing',
-					'sort_order'       => 2
-				];
-
-				$results[] = [
-					'menu_description' => [
-						1 => [
 							'name' => 'Coupons'
 						]
 					],

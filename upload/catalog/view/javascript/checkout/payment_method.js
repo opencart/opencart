@@ -48,7 +48,8 @@ customElements.define('payment-method', class extends WebComponent {
                 if (json['payment_methods']) {
                     $('#modal-payment').remove();
 
-                    html = '<div id="modal-payment" class="modal">';
+                    let html = '<ui-modal-payment>';
+
                     html += '  <div class="modal-dialog modal-dialog-centered">';
                     html += '    <div class="modal-content">';
                     html += '      <div class="modal-header">';

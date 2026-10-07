@@ -87,11 +87,6 @@
                   <div id="error-{{ product_row }}-subscription" class="invalid-feedback mt-0"></div>
                 </li>
               {% endif %}
-              {% if product.reward %}
-                <li>
-                  <small> - {{ text_points }}: {{ product.reward }}</small>
-                </li>
-              {% endif %}
             </ul>
 
             <form id="form-product-{{ product_row }}" @submit="onSubmit">

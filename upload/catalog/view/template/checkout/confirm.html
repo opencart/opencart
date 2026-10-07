@@ -27,11 +27,6 @@
                 </li>
               {% endif %}
 
-              {% if product.reward %}
-                <li>
-                  <small> - {{ text_points }}: {{ product.reward }}</small>
-                </li>
-              {% endif %}
             </ul>
           </td>
           <td class="text-end">{{ product.total | currency: currency_code }}</td>

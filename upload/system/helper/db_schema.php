@@ -3644,94 +3644,6 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'marketing',
-		'field' => [
-			[
-				'name'           => 'marketing_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(32)'
-			],
-			[
-				'name' => 'description',
-				'type' => 'text'
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name'    => 'clicks',
-				'type'    => 'int(5)',
-				'default' => '0'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'marketing_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'marketing_report',
-		'field' => [
-			[
-				'name'           => 'marketing_report_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'marketing_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name'    => 'store_id',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
-				'name' => 'ip',
-				'type' => 'varchar(40)'
-			],
-			[
-				'name' => 'country',
-				'type' => 'varchar(2)'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'marketing_report_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'marketing_id',
-				'table' => 'marketing',
-				'field' => 'marketing_id'
-			],
-			[
-				'key'   => 'store_id',
-				'table' => 'store',
-				'field' => 'store_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
 		'name'  => 'menu',
 		'field' => [
 			[
@@ -4359,11 +4271,6 @@ function oc_db_schema() {
 				'key'   => 'order_status_id',
 				'table' => 'order_status',
 				'field' => 'order_status_id'
-			],
-			[
-				'key'   => 'marketing_id',
-				'table' => 'marketing',
-				'field' => 'marketing_id'
 			],
 			[
 				'key'   => 'language_id',

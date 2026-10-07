@@ -979,20 +979,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			] + $product_image;
 		}
 
-		// Points
-		if (!empty($product_info)) {
-			$data['points'] = $product_info['points'];
-		} else {
-			$data['points'] = '';
-		}
-
-		// Rewards
-		if ($product_id) {
-			$data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
-		} else {
-			$data['product_reward'] = [];
-		}
-
 		// SEO
 		if ($product_id) {
 			$this->load->model('design/seo_url');

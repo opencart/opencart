@@ -8,18 +8,13 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('catalog/category');
 
-// Validate Category Path
-let regex = new RegExp(/^(\d+(_\d+)*)$/);
-
 export default class CatalogCategory extends WebComponent {
     async render() {
         let data = new Map();
 
-        let match = this.getAttribute('path').match(regex);
+        let path = this.getAttribute('path').replace(/^[^0-9_]$/);
 
-        if (!match) return;
-
-        let [ path ] = match;
+        if (!path) return;
 
         let category = await loader.storage('category/category-' + path);
 

@@ -37,7 +37,7 @@ class ProductList extends WebComponent {
         }
 
         if (this.hasAttribute('path')) {
-            data.set('path', this.getAttribute('path').replace(/^(\d+(_\d+)*)$/));
+            data.set('path', this.getAttribute('path').replace(/^[^0-9_]$/));
         }
 
         if (this.hasAttribute('filter')) {
@@ -45,7 +45,7 @@ class ProductList extends WebComponent {
         }
 
         if (this.hasAttribute('manufacturer_id')) {
-            data.set('manufacturer_id', this.getAttribute('manufacturer_id').replace(/^[^\d+]/));
+            data.set('manufacturer_id', parseInt(this.getAttribute('manufacturer_id')));
         }
 
         if (this.hasAttribute('sort')) {
@@ -57,11 +57,11 @@ class ProductList extends WebComponent {
         }
 
         if (this.hasAttribute('limit')) {
-            data.set('limit', this.getAttribute('limit'));
+            data.set('limit', this.getAttribute('limit').replace(/^[^0-9]$/));
         }
 
         if (this.hasAttribute('page')) {
-            data.set('page', this.getAttribute('page'));
+            data.set('page', this.getAttribute('page').replace(/^[^0-9]$/));
         }
 
         data.set('limits', [10, 20, 30, 40, 50]);

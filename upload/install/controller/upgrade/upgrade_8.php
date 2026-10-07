@@ -31,11 +31,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$replace[] = [
-				'code_old' => 'admin_mail_affiliate_deny',
-				'code_new' => 'mail_admin_affiliate_deny'
-			];
-
-			$replace[] = [
 				'code_old' => 'admin_mail_customer_approve',
 				'code_new' => 'mail_admin_customer_approve'
 			];
@@ -168,18 +163,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'activity_affiliate_add',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'event/activity.addAffiliate'
-			];
-
-			$events[] = [
-				'code'    => 'activity_affiliate_edit',
-				'trigger' => 'catalog/model/account/customer.editAffiliate/after',
-				'action'  => 'event/activity.editAffiliate'
-			];
-
-			$events[] = [
 				'code'    => 'activity_order_add',
 				'trigger' => 'catalog/model/checkout/order.addHistory/before',
 				'action'  => 'event/activity.addHistory'
@@ -223,18 +206,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'mail_affiliate_add',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'mail/affiliate'
-			];
-
-			$events[] = [
-				'code'    => 'mail_affiliate_alert',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'mail/affiliate.alert'
-			];
-
-			$events[] = [
 				'code'    => 'mail_order',
 				'trigger' => 'catalog/model/checkout/order.addHistory/before',
 				'action'  => 'mail/order'
@@ -244,18 +215,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'code'    => 'mail_order_alert',
 				'trigger' => 'catalog/model/checkout/order.addHistory/before',
 				'action'  => 'mail/order.alert'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_affiliate_approve',
-				'trigger' => 'admin/model/customer/customer_approval.approveAffiliate/after',
-				'action'  => 'mail/affiliate.approve'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_affiliate_deny',
-				'trigger' => 'admin/model/customer/customer_approval.denyAffiliate/after',
-				'action'  => 'mail/affiliate.deny'
 			];
 
 			$events[] = [

@@ -16,7 +16,7 @@ export default class ProductInfo extends WebComponent {
     async render(){
         let data = new Map();
 
-        let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
+        let product = await loader.storage('product/product-' + parseInt(this.getAttribute('product_id')));
 
         if (product instanceof Map && local.get('language') in product.get('description')) {
             let description = product.get('description')[local.get('language')];
@@ -32,32 +32,21 @@ export default class ProductInfo extends WebComponent {
 
             if (discount) {
                 if (discount.type == 'F') {
-                    data.set('special', Number(discount.price));
+                    data.set('special', parseFloat(discount.price));
                 } else if (discount.type == 'P') {
-                    data.set('special', product.get('price') - Number(product.get('price') * (discount.price / 100)));
+                    data.set('special', parseFloat(product.get('price') - Number(product.get('price') * (discount.price / 100))));
                 } else if (discount.type == 'S') {
-                    data.set('special', product.get('price') - Number(discount.price));
+                    data.set('special', parseFloat(product.get('price') - Number(discount.price)));
                 }
             }
 
             // Discounts
-            let discounts = product.get('discounts').filter(discount => discount.customer_group_id == customer.getGroupId() && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now()));
-
-            //data.discounts.sort(discounts => discount.quantity);
+            data.set('discounts', product.get('discounts').filter(discount => discount.customer_group_id == customer.getGroupId() && (discount.date_start == '0000-00-00' || Date(discount.date_start).getTime() >= Date.now()) && (discount.date_end == '0000-00-00' || Date(discount.date_end).getTime() <= Date.now())));
 
             data.set('tax', '');
 
             if (config.get('config_tax')) {
-                data.set('tax', tax.getTax(data.get('special') ? data.get('special') : product.get('price'), product.get('tax_class_id')));
-            }
-
-            // Rewards
-            data.set('reward', 0);
-
-            let reward = product.get('rewards').find(reward => reward.customer_group_id == customer.getGroupId());
-
-            if (reward) {
-                data.set('reward', reward.points);
+                data.set('tax', parseFloat(tax.getTax(data.get('special') ? data.get('special') : product.get('price'), product.get('tax_class_id'))));
             }
 
             // Stock Status

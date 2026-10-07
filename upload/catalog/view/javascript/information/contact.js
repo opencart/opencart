@@ -57,6 +57,8 @@ export default class InformationContact extends WebComponent {
                 // Display error messages
                 if (json.has('error')) {
                     for (let key in json.get('error')) {
+                        this.ref(key).setFormValue();
+
                         let value = key.replaceAll('_', '-');
 
                         this.form.querySelector('#input-' + value).classList.add('is-invalid');

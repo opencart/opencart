@@ -399,18 +399,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Reward Points
-		$reward_data = [];
-
-		$rewards = $this->model_catalog_product->getRewards($product_info['product_id']);
-
-		foreach ($rewards as $reward) {
-			$reward_data[] = [
-				'customer_group_id' => $reward['customer_group_id'],
-				'points'            => $reward['points']
-			];
-		}
-
 		$tag_data = [];
 
 		$this->load->model('catalog/tag');
@@ -453,8 +441,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			'price'              => $product_info['price'],
 			'tax_class_id'       => $product_info['tax_class_id'],
 			'discounts'          => $discount_data,
-			'points'             => $product_info['points'],
-			'rewards'            => $reward_data,
 			'date_available'     => $product_info['date_available'],
 			'shipping'           => $product_info['shipping'],
 			'weight'             => $product_info['weight'],

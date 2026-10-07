@@ -30,10 +30,6 @@
       <li>{{ product_code.code }}: <strong>{{ product_code.value }}</strong></li>
       {% endfor %}
 
-      {% if reward %}
-      <li>{{ text_reward }}: <strong>{{ reward }}</strong></li>
-      {% endif %}
-
       <li>{{ text_stock }}: <strong><span class="text-{% if stock %}success{% else %}danger{% endif %}">{{ stock_status }}</span></strong></li>
     </ul>
 

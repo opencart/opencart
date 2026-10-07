@@ -116,7 +116,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['store'] = $store_name;
 		$data['store_url'] = $this->config->get('config_url');
 
-		// Send to additional alert emails if new affiliate email is enabled
+		// Send additional alert emails
 		$emails = [];
 
 		$emails[] = $this->config->get('config_email');

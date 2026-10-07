@@ -44,9 +44,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *     'cycle'                => 5,
 	 *     'duration'             => 1,
 	 *     'comment'              => '',
-	 *     'affiliate_id'         => 1,
-	 *     'marketing_id'         => 1,
-	 *     'tracking'             => '',
 	 *     'language_id'          => 1,
 	 *     'currency_id'          => 1
 	 * ];
@@ -121,9 +118,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *     'cycle'                => 5,
 	 *     'duration'             => 1,
 	 *     'comment'              => '',
-	 *     'affiliate_id'         => 1,
-	 *     'marketing_id'         => 1,
-	 *     'tracking'             => '',
 	 *     'language_id'          => 1,
 	 *     'currency_id'          => 1
 	 * ];

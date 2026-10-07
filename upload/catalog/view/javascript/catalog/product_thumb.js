@@ -11,7 +11,7 @@ customElements.define('product-thumb', class extends WebComponent {
     async render() {
         let data = new Map();
 
-        let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
+        let product = await loader.storage('product/product-' + parseInt(this.getAttribute('product_id')));
 
         if (product instanceof Map && local.get('language') in product.get('description')) {
             let description = product.get('description')[local.get('language')];
@@ -90,7 +90,7 @@ customElements.define('product-thumb', class extends WebComponent {
 
                 // Display success message
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                     let item = [];
 

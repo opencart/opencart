@@ -157,20 +157,10 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->model_account_address->deleteAddresses($customer_id);
 
-		// Affiliate
-		$this->load->model('account/affiliate');
-
-		$this->model_account_affiliate->deleteAffiliate($customer_id);
-
 		// Customer Approvals
 		$this->load->model('account/approval');
 
 		$this->model_account_approval->deleteApprovals($customer_id);
-
-		// Rewards
-		$this->load->model('account/reward');
-
-		$this->model_account_reward->deleteRewards($customer_id);
 
 		// Transactions
 		$this->load->model('account/transaction');

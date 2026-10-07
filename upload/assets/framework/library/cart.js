@@ -232,15 +232,6 @@ export default class Cart {
                     minimum = false;
                 }
 
-                // Reward Points
-                let reward = 0;
-
-                let reward_info = product_info.rewards.find(reward => reward.customer_group_id == config.config_customer_group_id);
-
-                if (reward_info) {
-                    reward = Number(reward_info.points);
-                }
-
                 product_data.push({
                     //key: item.key,
                     product_id: product_info.product_id,
@@ -260,8 +251,6 @@ export default class Cart {
                     tax_class_id: Number(product_info.tax_class_id),
                     price: Number(price),
                     total: Number(price * item.quantity),
-                    reward: Number(reward * item.quantity),
-                    points: Number(product_info.points ? (product_info.points + option_points) * item.quantity : 0),
                     weight: Number((product_info.weight + option_weight) * item.quantity),
                     weight_class_id: Number(product_info.weight_class_id),
                     length: Number(product_info.length),

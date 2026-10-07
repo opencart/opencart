@@ -345,51 +345,6 @@ $('#button-transaction').on('click', function(e) {
     });
 });
 
-$('#reward').on('click', '.pagination a', function(e) {
-    e.preventDefault();
-
-    $('#reward').load(this.href);
-});
-
-$('#button-reward').on('click', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=customer/customer.addReward&user_token=' + url.get('user_token') + '&customer_id=' + $('#input-customer-id').val(),
-        type: 'post',
-        data: 'description=' + encodeURIComponent($('#input-reward').val()) + '&points=' + $('#input-points').val(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function() {
-            $('#button-reward').button('loading');
-        },
-        complete: function() {
-            $('#button-reward').button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#reward').load('index.php?route=customer/customer.reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
-
-                $('#input-reward').val('');
-                $('#input-points').val('');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
 $('#ip').on('click', '.pagination a', function(e) {
     e.preventDefault();
 

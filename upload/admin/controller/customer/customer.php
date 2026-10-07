@@ -520,7 +520,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['address'] = $this->load->controller('customer/address.getAddress');
 		$data['history'] = $this->getHistory();
 		$data['transaction'] = $this->getTransaction();
-		$data['reward'] = $this->getReward();
 		$data['ip'] = $this->getIp();
 		$data['authorize'] = $this->getAuthorize();
 
@@ -1151,113 +1150,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->addTransaction($customer_id, (string)$post_info['description'], (float)$post_info['amount']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Reward
-	 *
-	 * @return void
-	 */
-	public function reward(): void {
-		$this->load->language('customer/customer');
-
-		$this->response->setOutput($this->getReward());
-	}
-
-	/**
-	 * Get Reward
-	 *
-	 * @return string
-	 */
-	public function getReward(): string {
-		if (isset($this->request->get['customer_id'])) {
-			$customer_id = (int)$this->request->get['customer_id'];
-		} else {
-			$customer_id = 0;
-		}
-
-		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.reward') {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$limit = 10;
-
-		// Rewards
-		$data['rewards'] = [];
-
-		$this->load->model('customer/customer');
-
-		$results = $this->model_customer_customer->getRewards($customer_id, ($page - 1) * $limit, $limit);
-
-		foreach ($results as $result) {
-			$data['rewards'][] = ['date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))] + $result;
-		}
-
-		$data['balance'] = $this->model_customer_customer->getRewardTotal($customer_id);
-
-		// Total Rewards
-		$reward_total = $this->model_customer_customer->getTotalRewards($customer_id);
-
-		// Pagination
-		$data['total'] = $reward_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('customer/customer.reward', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}');
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($reward_total - $limit)) ? $reward_total : ((($page - 1) * $limit) + $limit), $reward_total, ceil($reward_total / $limit));
-
-		return $this->load->view('customer/customer_reward', $data);
-	}
-
-	/**
-	 * Add Reward
-	 *
-	 * @return void
-	 */
-	public function addReward(): void {
-		$this->load->language('customer/customer');
-
-		$json = [];
-
-		if (isset($this->request->get['customer_id'])) {
-			$customer_id = (int)$this->request->get['customer_id'];
-		} else {
-			$customer_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$required = [
-			'description' => '',
-			'points'      => 0,
-		];
-
-		$post_info = $this->request->post + $required;
-
-		// Customer
-		$this->load->model('customer/customer');
-
-		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
-
-		if (!$customer_info) {
-			$json['error'] = $this->language->get('error_customer');
-		}
-
-		if (!$json) {
-			// Customer
-			$this->load->model('customer/customer');
-
-			$this->model_customer_customer->addReward($customer_id, (string)$post_info['description'], (int)$post_info['points']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

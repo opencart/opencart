@@ -282,7 +282,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Log errors
 		$store->model_checkout_subscription->addLog($subscription_info['subscription_id'], $key, $value);
 
-
 		// 7. Clean up data by clearing cart.
 		$store->cart->clear();
 
@@ -413,11 +412,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Comment
 		$order_data['comment'] = $subscription_info['comment'];
-
-		$order_data['affiliate_id'] = 0;
-		$order_data['commission'] = 0;
-		$order_data['marketing_id'] = 0;
-		$order_data['tracking'] = '';
 
 		// Language
 		$order_data['language_id'] = $language_info['language_id'];

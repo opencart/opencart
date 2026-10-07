@@ -92,25 +92,6 @@ class Order extends \Opencart\System\Engine\Model {
 				$shipping_zone_code = '';
 			}
 
-			$reward = 0;
-
-			$products = $this->getProducts($order_id);
-
-			foreach ($products as $product) {
-				$reward += $product['reward'];
-			}
-
-			// Customer
-			$this->load->model('customer/customer');
-
-			$affiliate_info = $this->model_customer_customer->getCustomer($order_query->row['affiliate_id']);
-
-			if ($affiliate_info) {
-				$affiliate = $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname'];
-			} else {
-				$affiliate = '';
-			}
-
 			// Language
 			$this->load->model('localisation/language');
 
@@ -123,21 +104,16 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			return [
-				'products'              => $this->getProducts($order_id),
-				'custom_field'          => $order_query->row['custom_field'] ? json_decode($order_query->row['custom_field'], true) : [],
-				'payment_zone_code'     => $payment_zone_code,
-				'payment_iso_code_2'    => $payment_iso_code_2,
-				'payment_iso_code_3'    => $payment_iso_code_3,
-				'payment_custom_field'  => $order_query->row['payment_custom_field'] ? json_decode($order_query->row['payment_custom_field'], true) : [],
-				'payment_method'        => $order_query->row['payment_method'] ? json_decode($order_query->row['payment_method'], true) : [],
-				'shipping_zone_code'    => $shipping_zone_code,
-				'shipping_iso_code_2'   => $shipping_iso_code_2,
-				'shipping_iso_code_3'   => $shipping_iso_code_3,
-				'shipping_custom_field' => $order_query->row['shipping_custom_field'] ? json_decode($order_query->row['shipping_custom_field'], true) : [],
-				'shipping_method'       => $order_query->row['shipping_method'] ? json_decode($order_query->row['shipping_method'], true) : [],
-				'reward'                => $reward,
-				'affiliate'             => $affiliate,
-				'language_code'         => $language_code
+				'products'            => $this->getProducts($order_id),
+				'payment_zone_code'   => $payment_zone_code,
+				'payment_iso_code_2'  => $payment_iso_code_2,
+				'payment_iso_code_3'  => $payment_iso_code_3,
+				'payment_method'      => $order_query->row['payment_method'] ? json_decode($order_query->row['payment_method'], true) : [],
+				'shipping_zone_code'  => $shipping_zone_code,
+				'shipping_iso_code_2' => $shipping_iso_code_2,
+				'shipping_iso_code_3' => $shipping_iso_code_3,
+				'shipping_method'     => $order_query->row['shipping_method'] ? json_decode($order_query->row['shipping_method'], true) : [],
+				'language_code'       => $language_code
 			] + $order_query->row;
 		} else {
 			return [];
@@ -923,25 +899,6 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Get Reward Total
-	 *
-	 * @param int $order_id primary key of the order record
-	 *
-	 * @return int reward records that have order ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('sale/order');
-	 *
-	 * $points = $this->model_sale_order->getRewardTotal($order_id);
-	 */
-	public function getRewardTotal(int $order_id): int {
-		$query = $this->db->query("SELECT SUM(`reward`) AS `total` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
-
-		return (int)$query->row['total'];
 	}
 
 	/**

@@ -30,7 +30,6 @@
             <li class="nav-item"><a href="#tab-subscription" data-bs-toggle="tab" class="nav-link">{{ tab_subscription }}</a></li>
             <li class="nav-item"><a href="#tab-discount" data-bs-toggle="tab" class="nav-link">{{ tab_discount }}</a></li>
             <li class="nav-item"><a href="#tab-image" data-bs-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
-            <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
             <li class="nav-item"><a href="#tab-seo" data-bs-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
             <li class="nav-item"><a href="#tab-design" data-bs-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
             <li class="nav-item"><a href="#tab-report" data-bs-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
@@ -1076,48 +1075,6 @@
                         <td class="text-end"><button type="button" id="button-image" title="{{ button_image_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                       </tr>
                     </tfoot>
-                  </table>
-                </div>
-              </fieldset>
-            </div>
-
-            <div id="tab-reward" class="tab-pane">
-              <fieldset>
-                <legend>{{ text_reward }}</legend>
-                <div class="row mb-3">
-                  <label for="input-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="points" value="{{ points }}" placeholder="{{ entry_points }}" id="input-points" class="form-control"/>
-                      {% if master_id %}
-                        <div class="input-group-text">
-                          <x-switch name="override[points]" value="1" checked="{{ override.points }}" input-class="form-switch" data-oc-target="#input-points"></x-switch>
-                        </div>
-                      {% endif %}
-                    </div>
-                    <div class="form-text">{{ help_points }}</div>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend>{{ text_points }}</legend>
-                <div class="table-responsive">
-                  <table id="product-reward" class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>{{ entry_customer_group }}</th>
-                        <th class="text-end">{{ entry_reward }}&nbsp;&nbsp;{% if master_id %}
-                          <x-switch name="override[product_reward]" value="1" checked="{{ override.product_reward }}" input-class="form-switch float-end" data-oc-target="#product-reward"></x-switch>{% endif %}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for customer_group in customer_groups %}
-                        <tr>
-                          <td>{{ customer_group.name }}</td>
-                          <td class="text-end"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/></td>
-                        </tr>
-                      {% endfor %}
-                    </tbody>
                   </table>
                 </div>
               </fieldset>

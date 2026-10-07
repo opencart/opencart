@@ -164,15 +164,6 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Reward
-		if (isset($data['product_reward'])) {
-			foreach ($data['product_reward'] as $customer_group_id => $product_reward) {
-				if ((int)$product_reward['points'] > 0) {
-					$this->model_catalog_product->addReward($product_id, $customer_group_id, $product_reward);
-				}
-			}
-		}
-
 		// SEO
 		if (isset($data['product_seo_url'])) {
 			$this->load->model('design/seo_url');
@@ -373,17 +364,6 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Rewards
-		$this->model_catalog_product->deleteRewards($product_id);
-
-		if (isset($data['product_reward'])) {
-			foreach ($data['product_reward'] as $customer_group_id => $value) {
-				if ((int)$value['points'] > 0) {
-					$this->model_catalog_product->addReward($product_id, $customer_group_id, $value);
-				}
-			}
-		}
-
 		// SEO
 		$this->load->model('design/seo_url');
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
@@ -449,7 +429,6 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_option'] = $this->model_catalog_product->getOptions($product_id);
 			$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($product_id);
 			$product_data['product_related'] = $this->model_catalog_product->getRelated($product_id);
-			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 			$product_data['product_store'] = $this->model_catalog_product->getStores($product_id);
 
 			foreach ($product_data['product_option'] as $po => $product_option) {
@@ -498,7 +477,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteOptions($product_id);
 		$this->model_catalog_product->deleteRelated($product_id);
 		$this->model_catalog_product->deleteReports($product_id);
-		$this->model_catalog_product->deleteRewards($product_id);
 		$this->model_catalog_product->deleteStores($product_id);
 		$this->model_catalog_product->deleteSubscriptions($product_id);
 		$this->model_catalog_product->deleteTags($product_id);
@@ -624,11 +602,6 @@ class Product extends \Opencart\System\Engine\Model {
 			// Related
 			if (!isset($override['product_related'])) {
 				$product_data['product_related'] = $this->model_catalog_product->getRelated($master_id);
-			}
-
-			// Rewards
-			if (!isset($override['product_reward'])) {
-				$product_data['product_reward'] = $this->model_catalog_product->getRewards($master_id);
 			}
 
 			// SEO
@@ -765,11 +738,6 @@ class Product extends \Opencart\System\Engine\Model {
 			// Related
 			if (!isset($override['product_related'])) {
 				$product_data['product_related'] = $this->model_catalog_product->getRelated($master_id);
-			}
-
-			// Rewards
-			if (!isset($override['product_reward'])) {
-				$product_data['product_reward'] = $this->model_catalog_product->getRewards($master_id);
 			}
 
 			// SEO
@@ -912,11 +880,6 @@ class Product extends \Opencart\System\Engine\Model {
 			// Related
 			if (isset($override['product_related'])) {
 				$product_data['product_related'] = $this->model_catalog_product->getRelated($product['product_id']);
-			}
-
-			// Rewards
-			if (isset($override['product_reward'])) {
-				$product_data['product_reward'] = $this->model_catalog_product->getRewards($product['product_id']);
 			}
 
 			// SEO
@@ -2527,96 +2490,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `quantity`, `priority`, `price`");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Add Reward
-	 *
-	 * Create a new reward record in the database.
-	 *
-	 * @param int                  $product_id        primary key of the product record
-	 * @param int                  $customer_group_id primary key of the customer group record
-	 * @param array<string, mixed> $data              array of data
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $product_data['product_reward'] = [
-	 *     'points' => 0
-	 * ];
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->addReward($product_id, $customer_group_id, $product_data);
-	 */
-	public function addReward(int $product_id, int $customer_group_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_reward` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$customer_group_id . "', `points` = '" . (int)$data['points'] . "'");
-	}
-
-	/**
-	 * Delete Rewards
-	 *
-	 * Delete product reward records in the database.
-	 *
-	 * @param int $product_id primary key of the product record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->deleteRewards($product_id);
-	 */
-	public function deleteRewards(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
-	}
-
-	/**
-	 * Delete Rewards By Customer Group ID
-	 *
-	 * Delete rewards by customer group records in the database.
-	 *
-	 * @param int $customer_group_id primary key of the customer group record to be deleted
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->deleteRewardsByCustomerGroupId($customer_group_id);
-	 */
-	public function deleteRewardsByCustomerGroupId(int $customer_group_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
-	}
-
-	/**
-	 * Get Rewards
-	 *
-	 * Get the record of the reward records in the database.
-	 *
-	 * @param int $product_id primary key of the product record
-	 *
-	 * @return array<int, array<string, mixed>> reward records that have product ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $product_reward = $this->model_catalog_product->getRewards($product_id);
-	 */
-	public function getRewards(int $product_id): array {
-		$product_reward_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
-
-		foreach ($query->rows as $result) {
-			$product_reward_data[$result['customer_group_id']] = $result;
-		}
-
-		return $product_reward_data;
 	}
 
 	/**

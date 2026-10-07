@@ -11,7 +11,7 @@ export default class InformationInformation extends WebComponent {
     async render(){
         let data = new Map();
 
-        let information = await loader.storage('information/information-' + this.getAttribute('information_id'));
+        let information = await loader.storage('information/information-' + parseInt(this.getAttribute('information_id')));
 
         if (information instanceof Map && local.get('language') in information.get('description')) {
             let description = information.get('description')[local.get('language')];

@@ -31,7 +31,6 @@ class Order extends \Opencart\System\Engine\Model {
 	 *     'lastname'               => 'Doe',
 	 *     'email'                  => 'demo@opencart.com',
 	 *     'telephone'              => '1234567890',
-	 *     'custom_field'           => [],
 	 *     'payment_address_id'     => 1,
 	 *     'payment_firstname'      => 'John',
 	 *     'payment_lastname'       => 'Doe',
@@ -309,11 +308,6 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactionsByOrderId($order_id);
-
-		// Rewards
-		$this->load->model('account/reward');
-
-		$this->model_account_reward->deleteRewardsByOrderId($order_id);
 	}
 
 	/**

@@ -26,7 +26,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$order_totals = $this->model_sale_order->getTotalsByCode($order_id, 'coupon');
 
 			foreach ($order_totals as $order_total) {
-				// If coupon or reward points
+				// If coupon
 				$start = strpos($order_total['title'], '(');
 				$end = strrpos($order_total['title'], ')');
 

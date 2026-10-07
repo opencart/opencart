@@ -34,8 +34,6 @@ $_['text_subtract']              = 'Subtrahieren';
 $_['text_percentage']            = 'Prozentsatz';
 $_['text_image']                 = 'Bild';
 $_['text_image_additional']      = 'Weitere Bilder';
-$_['text_reward']                = 'Punkte kaufen';
-$_['text_points']                = 'Belohnungspunkte';
 $_['text_from']                  = 'Aus';
 $_['text_to']                    = 'Zu';
 $_['text_subscription_trial']    = '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) for %d payment(s) then ';
@@ -111,7 +109,6 @@ $_['entry_filter']               = 'Filter';
 $_['entry_download']             = 'Downloads';
 $_['entry_related']              = 'Verwandte Produkte';
 $_['entry_tag']                  = 'Produkt Tags';
-$_['entry_reward']               = 'Belohnungspunkte';
 $_['entry_layout']               = 'Layout überschreiben';
 $_['entry_subscription']         = 'Abonnementplan';
 

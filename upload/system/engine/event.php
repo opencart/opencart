@@ -19,7 +19,9 @@ class Event {
 	protected $data = array();
 	protected $processed = array();
 	protected $refresh = false;
-	
+	protected $exact = array();
+	protected $wild = array();
+
 	/**
 	 * Constructor
 	 *
@@ -58,21 +60,43 @@ class Event {
 				array_column($this->data, 'priority'), SORT_ASC,
 				$this->data
 			);
+
+			// Index the sorted events once: exact triggers by name, wildcards with a pre-compiled pattern.
+			$this->exact = array();
+			$this->wild = array();
+
+			foreach ($this->data as $index => $value) {
+				if (!$value['wildcard']) {
+					$this->exact[$value['trigger']][] = $index;
+				} else {
+					$this->wild[] = array(
+						'index'   => $index,
+						'pattern' => '/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/'
+					);
+				}
+			}
+
 			$this->processed = array();
 			$this->refresh = false;
 		}
-		
+
 		if (!isset($this->processed[$event])) {
-			$this->processed[$event] = array();
-			foreach ($this->data as $value) {
-				if (!$value['wildcard'] && ($value['trigger'] == $event)) {
-					// not a wildcard and exactly matches
-					$this->processed[$event][] = $value;
-				} elseif ($value['wildcard']) {
-					if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
-						$this->processed[$event][] = $value;
-					}
+			// Exact triggers are a direct lookup, only the wildcards are scanned.
+			$indexes = isset($this->exact[$event]) ? $this->exact[$event] : array();
+
+			foreach ($this->wild as $value) {
+				if (preg_match($value['pattern'], $event)) {
+					$indexes[] = $value['index'];
 				}
+			}
+
+			// Keep the original sorted order (by index into $this->data).
+			sort($indexes);
+
+			$this->processed[$event] = array();
+
+			foreach ($indexes as $index) {
+				$this->processed[$event][] = $this->data[$index];
 			}
 		}
 		

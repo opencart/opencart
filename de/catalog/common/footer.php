@@ -9,7 +9,6 @@ $_['text_return']       = 'Rückgaben';
 $_['text_sitemap']      = 'Sitemap';
 $_['text_gdpr']         = 'DSGVO';
 $_['text_manufacturer'] = 'Marken';
-$_['text_affiliate']    = 'Partnerprogramm';
 $_['text_special']      = 'Besonderheiten';
 $_['text_account']      = 'Mein Konto';
 $_['text_order']        = 'Bestellverlauf';

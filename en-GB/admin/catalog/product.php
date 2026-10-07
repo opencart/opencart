@@ -34,8 +34,6 @@ $_['text_subtract']              = 'Subtract';
 $_['text_percentage']            = 'Percentage';
 $_['text_image']                 = 'Image';
 $_['text_image_additional']      = 'Additional Images';
-$_['text_reward']                = 'Buy Points';
-$_['text_points']                = 'Reward Points';
 $_['text_from']                  = 'From';
 $_['text_to']                    = 'To';
 $_['text_subscription_trial']    = '';
@@ -111,7 +109,6 @@ $_['entry_filter']               = 'Filters';
 $_['entry_download']             = 'Downloads';
 $_['entry_related']              = 'Related Products';
 $_['entry_tag']                  = 'Product Tags';
-$_['entry_reward']               = 'Reward Points';
 $_['entry_layout']               = 'Layout Override';
 $_['entry_subscription']         = 'Subscription Plan';
 

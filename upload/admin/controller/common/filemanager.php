@@ -11,10 +11,12 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = rtrim(str_replace(array('*', '/', '\\'), '', $this->request->get['filter_name']), '/');
+			$filter_name = str_replace(array('/', '\\'), '', $this->request->get['filter_name']);
 		} else {
 			$filter_name = '';
 		}
+
+		$filter_case = isset($this->request->get['filter_case']) ? (bool)$this->request->get['filter_case'] : true;
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
@@ -38,17 +40,30 @@ class ControllerCommonFileManager extends Controller {
 
 		if (substr(str_replace('\\', '/', realpath($directory) . '/' . $filter_name), 0, strlen(DIR_IMAGE . 'catalog')) == str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
 			// Get directories
-			$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
+			$directories = glob($directory . '/*', GLOB_ONLYDIR);
 
 			if (!$directories) {
 				$directories = array();
 			}
 
 			// Get files
-			$files = safe_glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}', GLOB_BRACE);
+			$files = safe_glob($directory . '/*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}', GLOB_BRACE);
 
 			if (!$files) {
 				$files = array();
+			}
+
+			// Filter by name: case-insensitive, with * and ? wildcards
+			if ($filter_name) {
+				$pattern = '~' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($filter_name, '~')) . '~' . ($filter_case ? '' : 'i');
+
+				$directories = array_values(array_filter($directories, function($directory) use ($pattern) {
+					return preg_match($pattern, basename($directory));
+				}));
+
+				$files = array_values(array_filter($files, function($file) use ($pattern) {
+					return preg_match($pattern, basename($file));
+				}));
 			}
 		}
 
@@ -106,6 +121,8 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$data['filter_name'] = '';
 		}
+
+		$data['filter_case'] = $filter_case;
 
 		// Return the target ID for the file manager to set the value
 		if (isset($this->request->get['target'])) {
@@ -168,6 +185,8 @@ class ControllerCommonFileManager extends Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
+
+		$url .= '&filter_case=' . (int)$filter_case;
 
 		if (isset($this->request->get['target'])) {
 			$url .= '&target=' . $this->request->get['target'];

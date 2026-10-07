@@ -29,5 +29,4 @@ $_['error_city']            = 'Die Stadt muss zwischen 2 und 128 Zeichen lang se
 $_['error_postcode']        = 'Die Postleitzahl muss zwischen 2 und 10 Zeichen lang sein!';
 $_['error_country']         = 'Bitte wählen Sie ein Land!';
 $_['error_zone']            = 'Bitte wählen Sie eine Region / ein Bundesland!';
-$_['error_custom_field']    = '%s erforderlich!';
 $_['error_regex']           = '%s ist keine gültige Eingabe!';

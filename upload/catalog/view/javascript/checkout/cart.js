@@ -30,10 +30,10 @@ export default class CheckoutCart extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: (json) => {
                 // Remove past error classes from inputs
@@ -91,10 +91,10 @@ export default class CheckoutCart extends WebComponent {
 
         ajax.post('', {
             beforeSend: function() {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             complete: function() {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             success: function(json) {
                 console.log(json);

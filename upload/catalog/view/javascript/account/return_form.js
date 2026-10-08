@@ -35,10 +35,10 @@ export default class ReturnForm extends WebComponent {
 
         await ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: (json) => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: (json) => {
                 // Remove past error classes from inputs

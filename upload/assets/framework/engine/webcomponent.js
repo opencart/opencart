@@ -1,6 +1,6 @@
 import { Binder } from './binder.js';
 import { State } from './state.js';
-import { stylesheet } from './stylesheet.js';
+import { stylesheet } from './style.js';
 
 /**
  * WebComponent
@@ -44,16 +44,8 @@ import { stylesheet } from './stylesheet.js';
  *   BaseComponent.define('my-counter', MyCounter);
  */
 export class WebComponent extends HTMLElement {
-    static observed = [];
-    static is_form = false;
-
-    static get observedAttributes() {
-        return this.observed;
-    }
-
-    static get formAssociated() {
-        return this.is_form;
-    }
+    static observedAttributes = [];
+    static formAssociated = false;
 
     constructor() {
         super();

@@ -8,6 +8,7 @@ customElements.define('input-upload', class extends WebComponent {
         'required',
         'readonly'
     ];
+    static formAssociated = true;
 
     get name() {
         return this.getAttribute('name');

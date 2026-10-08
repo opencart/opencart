@@ -35,10 +35,10 @@ customElements.define('review-form', class extends WebComponent {
 
         ajax.post('action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.token + '&product_id=' + this.getAttribute('product_id'), form, {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             complete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             success: this.success,
             error: (xhr, ajaxOptions, thrownError) => {

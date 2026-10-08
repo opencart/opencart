@@ -30,10 +30,10 @@ export default class AccountWishlist extends WebComponent {
 
         await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
             beforeSend: function() {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             complete: function() {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             success: (json) => {
                 console.log(json);

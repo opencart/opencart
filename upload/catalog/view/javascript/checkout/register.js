@@ -62,10 +62,10 @@ customElements.define('checkout-register', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: this.success.bind(this),
             onError: (e) => {

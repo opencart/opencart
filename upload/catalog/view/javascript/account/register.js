@@ -34,6 +34,10 @@ export default class AccountRegister extends WebComponent {
         }
     }
 
+    test(e) {
+        console.log(e);
+    }
+
     async onSubmit(e) {
         e.preventDefault();
 
@@ -54,18 +58,15 @@ export default class AccountRegister extends WebComponent {
                 // Display error messages
                 if (json.has('error')) {
                     for (let key in json.get('error')) {
-                        let value = key.replaceAll('_', '-');
-
-                        console.log('#input-' + value);
-
-                        let input = this.form.querySelector('#input-' + value);
+                        let input = this.binder.ref(key);
 
                         console.log(input);
 
                         if (input) {
                             console.log('works');
 
-                            input.internal.validationMessage("Please fill out this field—it is required!");
+
+                            //input.internal.validationMessage("Please fill out this field—it is required!");
 
                             input.internal.setCustomValidity("Please fill out this field—it is required!");
                         }

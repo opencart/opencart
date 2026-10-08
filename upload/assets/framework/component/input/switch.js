@@ -1,8 +1,8 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('input-switch', class extends WebComponent {
-    observed = [];
-    formAssociated = true;
+    static observedAttributes = [];
+    static formAssociated = true;
 
     get checked() {
         return this.hasAttribute('checked');

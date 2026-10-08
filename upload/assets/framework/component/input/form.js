@@ -2,7 +2,7 @@ import { WebComponent } from '../../engine.js';
 import { ajax } from '../../library.js';
 
 customElements.define('form-input', class extends WebComponent {
-    static observed = [
+    static observedAttributes = [
         'action',
         'method'
     ];
@@ -26,10 +26,10 @@ customElements.define('form-input', class extends WebComponent {
 
         let handler = {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: this.success,
             onError: (e) => {

@@ -48,10 +48,10 @@ export default class InformationContact extends WebComponent {
 
         ajax.post('action.php?route=information/contact.send&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: (request) => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: (json)=> {
                 // Remove past error classes from inputs

@@ -9,7 +9,7 @@ const config = await loader.config('default');
 const language = await loader.language('catalog/product_list');
 
 class ProductList extends WebComponent {
-    static observed = [
+    static observedAttributes = [
         'search',
         'path',
         'filter',

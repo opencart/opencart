@@ -18,7 +18,7 @@ function escapeAttribute(value) {
 }
 
 customElements.define('nav-include', class Include extends WebComponent {
-    static observed = ['src'];
+    static observedAttributes = ['src'];
 
     constructor() {
         super();

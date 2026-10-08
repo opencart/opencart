@@ -1,38 +1,36 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_account_already | safe }}</p>
-<form @ref="form" @submit="onSubmit">
-  <fieldset id="account">
+<form-input @ref="form" @submit="onSubmit">
+  <fieldset>
     <legend>{{ text_your_details }}</legend>
 
-    <div class="row mb-3">
-      <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
-        <div id="error-firstname" class="invalid-feedback"></div>
-      </div>
-    </div>
+    <form-group @ref="input-firstname" required>
+      <label slot="label">{{ entry_firstname }}</label>
+      <input-text slot="input" name="firstname" value="test123"/>
+    </form-group>
+
 
     <div class="row mb-3">
-      <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
+      <label slot="label">{{ entry_lastname }}</label>
+      <slot name="lastname"></slot>
+
+
       <div class="col-sm-10">
-        <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
+        <input-text type="text" name="lastname" value="test123" placeholder="{{ entry_lastname }}" id="input-lastname" required/>
         <div id="error-lastname" class="invalid-feedback"></div>
       </div>
     </div>
 
     <div class="row mb-3">
-      <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
-      <div class="col-sm-10">
-        <input type="email" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
-        <div id="error-email" class="invalid-feedback"></div>
-      </div>
+      <label for="input-email" class="form-label">{{ entry_email }}</label>
+      <input-email label="{{ entry_email }}" name="email" value="test123@test123.com" required/>
     </div>
 
     {% if config_telephone_status %}
     <div class="row mb-3">
       <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
       <div class="col-sm-10">
-        <input type="tel" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" {% if config_telephone_required %} required{% endif %}/>
+        <input-tel name="telephone" value="0123456789" placeholder="{{ entry_telephone }}" id="input-telephone" {% if config_telephone_required %} required{% endif %}/>
         <div id="error-telephone" class="invalid-feedback"></div>
       </div>
     </div>
@@ -43,11 +41,9 @@
   <fieldset>
     <legend>{{ text_your_password }}</legend>
     <div class="row mb-3">
-      <label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
-      <div class="col-sm-10">
-        <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" required/>
-        <div id="error-password" class="invalid-feedback"></div>
-      </div>
+      <label slot="label">{{ entry_password }}</label>
+      <input-password label="{{ entry_password }}" name="password" value="1234567890" required/>
+      <div id="error-password" class="invalid-feedback"></div>
     </div>
   </fieldset>
 
@@ -76,4 +72,4 @@
     <button-submit @ref="submitter">{{ button_continue }}</button-submit>
 
   </div>
-</form>
+</form-input>

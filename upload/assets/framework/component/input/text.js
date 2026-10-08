@@ -64,15 +64,16 @@ customElements.define('input-text', class extends WebComponent {
         let label = [ ...(this.internal.labels ?? []) ].map(element => element.textContent.trim()).join(' ');
 
         let html = '<style>';
+
         html += ':host { display: block; }';
         html += ':host(:state(invalid)) .form-control { border-color: var(--bs-form-invalid-border-color, #dc3545); }';
         html += ':host(:state(invalid)) .form-control:focus { box-shadow: 0 0 0 .25rem rgb(220 53 69 / .25); }';
+
         html += '</style>';
 
-        html += '<input type="' + escapeAttribute(this.getAttribute('type') || 'text') + '"';
-        html += ' value="' + escapeAttribute(this.getAttribute('value') ?? '') + '"';
-        html += ' class="form-control' + (this.hasAttribute('input-class') ? ' ' + escapeAttribute(this.getAttribute('input-class')) : '') + '"';
-        html += ' @ref="input" @input="onInput" @change="onChange"';
+        let type = escapeAttribute(this.getAttribute('type') || 'text');
+
+        html += '<input type="' + type + '" value="' + escapeAttribute(this.getAttribute('value') ?? '') + '" class="form-control" @ref="input" @input="onInput" @change="onChange"';
 
         if (this.hasAttribute('placeholder')) html += ' placeholder="' + escapeAttribute(this.getAttribute('placeholder')) + '"';
 
@@ -107,6 +108,8 @@ customElements.define('input-text', class extends WebComponent {
     }
 
     onInput(e) {
+        console.log(e);
+
         this.states.delete('invalid');
 
         this.sync();
@@ -133,3 +136,14 @@ customElements.define('input-text', class extends WebComponent {
         this.value = state;
     }
 });
+
+
+
+
+
+
+
+
+
+
+

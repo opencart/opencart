@@ -1,7 +1,7 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('nav-pagination', class extends WebComponent {
-    static observed = [
+    static observedAttributes = [
         'href',
         'target',
         'limit',

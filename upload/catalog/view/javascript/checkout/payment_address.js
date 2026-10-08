@@ -94,10 +94,10 @@ customElements.define('payment-address', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/payment_address.save&language=', form, {
             beforeSend: function() {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             complete: function() {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             success: this.success.bind(this),
             error: function(xhr, ajaxOptions, thrownError) {

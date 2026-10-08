@@ -91,10 +91,10 @@ customElements.define('shipping-address', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/shipping_address.save&language=' + local.get('language'), form, {
             beforeSend: function() {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: function() {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onsuccess: this.success,
             error: function(xhr, ajaxOptions, thrownError) {

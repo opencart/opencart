@@ -23,10 +23,10 @@ export default class AuthorizeUnlock extends WebComponent {
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: (json) => {
                 if (json.has('redirect')) {

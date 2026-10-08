@@ -1,7 +1,7 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('button-submit', class extends WebComponent {
-    static observed = [
+    static observedAttributes = [
         'loading',
         'disabled'
     ];

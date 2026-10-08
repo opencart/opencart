@@ -135,10 +135,10 @@ export default class ProductInfo extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-                this.submitter.state.add('loading');
+                this.submitter.toggleAttribute('loading', true);
             },
             onComplete: () => {
-                this.submitter.state.remove('loading');
+                this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: async (json) => {
                 console.log('onSuccess', json);

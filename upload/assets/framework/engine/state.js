@@ -142,9 +142,10 @@ export class State {
         try {
             fn(this);
         } finally {
-            this._batchDepth--;
-            if (this._batchDepth === 0 && this._dirty.size) {
-                this._schedule();
+            this.batchDepth--;
+
+            if (this.batchDepth === 0 && this.dirty.size) {
+                this.schedule();
             }
         }
     }
@@ -162,7 +163,7 @@ export class State {
     }
 
     set(key, value) {
-        this._data[key] = value;
+        this.data[key] = value;
     }
 
     /** Merge multiple values in as a single batched update. */

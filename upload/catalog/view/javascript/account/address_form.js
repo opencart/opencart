@@ -8,7 +8,9 @@ const config = await loader.config('default');
 const language = await loader.language('account/address');
 
 export default class AddressForm extends WebComponent {
-    render() {
+
+
+    async render() {
         //if (!customer.isLogged()) return;
 
         let data = new Map();

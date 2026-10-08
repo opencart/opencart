@@ -61,9 +61,7 @@ export class Global {
     /** Clears a ref only if it still points at `el` — avoids one binder's
      *  teardown clobbering a ref another binder has since re-registered. */
     static delete(name, element) {
-        if (this.refs.get(name) === element) {
-            this.refs.delete(name);
-        }
+        if (this.refs.get(name) === element) this.refs.delete(name);
     }
 
     /** Clears all refs and listeners. Mainly useful for tests/hot-reload. */

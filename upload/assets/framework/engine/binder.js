@@ -178,17 +178,13 @@ export class Binder {
 
     /** Remove all attached event listeners (call in disconnectedCallback). */
     destroy() {
-        this.listeners.forEach(({ element, event, listener }) => {
-            element.removeEventListener(event, listener);
-        });
+        this.listeners.forEach(({ element, event, listener }) => element.removeEventListener(event, listener));
 
         this.listeners = [];
 
         // Only clear a global ref if it still points at the element *this*
         // instance set — avoids wiping out a ref another instance re-registered.
-        this.bindings.forEach(({ name, element }) => {
-            Global.delete(name, element);
-        });
+        this.bindings.forEach(({ name, element }) => Global.delete(name, element));
 
         this.bindings = [];
     }

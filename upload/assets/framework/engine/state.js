@@ -138,7 +138,7 @@ export class State {
 
     /** Group multiple writes into a single notification. */
     batch(fn) {
-        this._batchDepth++;
+        this.batchDepth++;
         try {
             fn(this);
         } finally {

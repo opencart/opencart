@@ -19,6 +19,7 @@ export default class AccountRegister extends WebComponent {
 
         let data = new Map();
 
+        data.set('language', local.get('language'));
         data.set('token', this.token);
 
         return loader.template('account/register', [ data, language, config ]);
@@ -34,60 +35,19 @@ export default class AccountRegister extends WebComponent {
         }
     }
 
-    test(e) {
-        console.log(e);
-    }
+    onSuccess() {
 
-    async onSubmit(e) {
-        e.preventDefault();
-
-        if (customer.isLogged()) return;
-
-        let form = new FormData(this.form);
-
-        await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
-            beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
-            },
-            onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
-            },
-            onSuccess: (json) => {
-                console.log(json);
-
-                // Display error messages
-                if (json.has('error')) {
-                    for (let key in json.get('error')) {
-                        let input = this.binder.ref(key);
-
-                        console.log(input);
-
-                        if (input) {
-                            console.log('works');
-
-
-                            //input.internal.validationMessage("Please fill out this field—it is required!");
-
-                            input.internal.setCustomValidity("Please fill out this field—it is required!");
-                        }
-                    }
-                }
-
-                // Display success message
-                if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-                }
-            },
-            onError: (e) => {
-                console.log('onError', e);
-            }
-        });
     }
 
     onAgree(e) {
         console.log(e);
 
-        //this.ref('agree');
+        this.bind.get('agree').checked;
+
+        e.target.value
+
+        this.bind.get('submitter').toggleAttribute('disabled', true);
+
     }
 }
 

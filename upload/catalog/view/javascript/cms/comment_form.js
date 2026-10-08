@@ -3,7 +3,7 @@ import { loader, ajax, customer } from '../index.js';
 
 customElements.define('cms-comment', class extends WebComponent {
     async render() {
-
+        return loader.template('cms/comment_form', [ language ]);
     }
 
     refresh() {

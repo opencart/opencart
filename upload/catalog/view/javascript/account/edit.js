@@ -8,6 +8,9 @@ const config = await loader.config('default');
 const language = await loader.language('account/edit');
 
 export default class AccountEdit extends WebComponent {
+
+
+
     async render() {
         //if (!customer.isLogged()) return;
 

@@ -10,13 +10,17 @@ customElements.define('form-input', class extends WebComponent {
     initialState() {
         return {
             submitting: false,
-            error: '',
-            success: ''
+            success: '',
+            error: ''
         };
     }
 
+    setState(state) {
+        this.state.add('submitting');
+    }
+
     render() {
-        return `<form @ref="form" @submit="onSubmit" ${this.state.submitting ? ' disabled' : ''}></form>`;
+        return `<form @ref="form" @submit="onSubmit" ${this.state.submitting ? ' disabled' : ''}>' + this.innerHTML + '</form>`;
     }
 
     async onSubmit(e) {
@@ -31,7 +35,7 @@ customElements.define('form-input', class extends WebComponent {
             onComplete: () => {
                 this.submitter.toggleAttribute('loading', false);
             },
-            onSuccess: this.success,
+            onSuccess: (json) => this.onSuccess.bind(this),
             onError: (e) => {
                 console.log('onError', e);
             }
@@ -39,43 +43,40 @@ customElements.define('form-input', class extends WebComponent {
 
         let method = 'GET';
 
-       // (options.method || 'GET').toUpperCase()
+        // (options.method || 'GET').toUpperCase()
 
-        if (this.hasAttribute('method') === 'get') {
-            await ajax.get(this.getAttribute('action'), form, handler);
-        } else {
-            await ajax.post(this.getAttribute('action'), form, handler);
-        }
+        await ajax.post(this.getAttribute('action'), form, handler);
 
-        if (method) {
-            await ajax.get(this.getAttribute('action'), form, handler);
-        }
-
-        //if (this.form.has('button')) {
-            //binder.get('button-submitter').button('loading');
-        //}
+        //await ajax.get(this.getAttribute('action'), form, handler);
     }
 
-    success(json) {
-        // Remove past error classes from inputs
-        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+    setSuccess(fn) {
+        this.success = fn;
+    }
 
+    onSuccess(json) {
         // Display error messages
         if (json.has('error')) {
-            for (let key in json.get('error')) {
-                let value = key.replaceAll('_', '-');
+            for (let [ key, value ] of json.get('error')) {
+                if (key == 'warning') {
+                    this.global.get('alert').prepend('<ui-alert type="danger">' + value + '</ui-alert>');
 
-                // If the element has inputs inside.
-                this.form.querySelector('#input-' + value).classList.add('is-invalid');
-                this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                this.form.querySelector('#error-' + value).classList.add('d-block');
+                    continue;
+                }
+
+                let input = this.bind.get('input-' + key);
+
+                this.binder.get('input-' + key)?.setInvalid(value);
+
+                console.log('works');
             }
         }
 
         // Display success message
         if (json.has('success')) {
-            this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+
+
+            this.global.get('alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
         }
     }
 });

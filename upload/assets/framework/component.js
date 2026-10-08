@@ -7,6 +7,7 @@ import './component/input/date.js';
 import './component/input/datetime.js';
 import './component/input/email.js';
 import './component/input/form.js';
+import './component/input/form_group.js';
 import './component/input/markdown.js';
 import './component/input/number.js';
 import './component/input/password.js';

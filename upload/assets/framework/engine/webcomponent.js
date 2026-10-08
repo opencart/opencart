@@ -1,6 +1,7 @@
 import { Binder } from './binder.js';
+import { Global } from './global.js';
 import { State } from './state.js';
-import { stylesheet } from './style.js';
+import { Style } from './style.js';
 
 /**
  * WebComponent
@@ -59,6 +60,9 @@ export class WebComponent extends HTMLElement {
         // Binder
         this.binder = null;
 
+        // Global
+        this.global = Global;
+
         // State
         this.state = new State(this.initialState(), {
             onChange: this.handleState.bind(this)
@@ -71,6 +75,24 @@ export class WebComponent extends HTMLElement {
         for (let attribute of this.attributes) {
             this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
         }
+    }
+
+    /** Override: list of external CSS file URLs to adopt into this component. */
+    stylesheets() {
+        return [
+            'stylesheet.css',
+            'fontawesome/css/all.css'
+        ];
+    }
+
+    /** Override: return a CSS string scoped to this component's shadow root. */
+    styles() {
+        return '';
+    }
+
+    /** Override: return the HTML string for the component's shadow DOM. */
+    template() {
+        return '';
     }
 
     /** Override: return the initial values for `this.state`. */
@@ -98,24 +120,6 @@ export class WebComponent extends HTMLElement {
         this.connected = true;
     }
 
-    /** Override: list of external CSS file URLs to adopt into this component. */
-    stylesheets() {
-        return [
-            'stylesheet.css',
-            'fontawesome/css/all.css'
-        ];
-    }
-
-    /** Override: return a CSS string scoped to this component's shadow root. */
-    styles() {
-        return '';
-    }
-
-    /** Override: return the HTML string for the component's shadow DOM. */
-    template() {
-        return '';
-    }
-
     async update() {
         let output = await this.render();
 
@@ -135,7 +139,7 @@ export class WebComponent extends HTMLElement {
         if (hrefs && hrefs.length) {
             // Adopts asynchronously; inline `styles()` above still applies
             // immediately so there's no unstyled flash for critical CSS.
-            stylesheet.adopt(this.shadow, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
+            Style.adopt(this.shadow, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
         }
     }
 

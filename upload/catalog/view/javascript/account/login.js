@@ -17,6 +17,7 @@ export default class AccountLogin extends WebComponent {
         let data = new Map();
 
         data.set('redirect', '');
+        data.set('language', local.get('language'));
         data.set('token', this.token);
 
         return loader.template('account/login', [ data, language ]);
@@ -49,9 +50,6 @@ export default class AccountLogin extends WebComponent {
             onSuccess: (json) => {
                 if (json.has('error')) {
                     for (let [ key, value ] of json.get('error')) {
-
-
-
                         input.setCustomValidity("You gotta fill this out, yo!");
 
                         let value = key.replaceAll('_', '-');

@@ -1,9 +1,5 @@
 import { WebComponent } from '../../engine.js';
 
-function escapeAttribute(value) {
-    return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
 /**
  * <input-text type="email" name="email" id="input-email" placeholder="E-Mail" required></input-text>
  *
@@ -21,6 +17,14 @@ function escapeAttribute(value) {
  * <label for="..."> points at it.
  */
 customElements.define('input-text', class extends WebComponent {
+    static observedAttributes = [
+        'invalid',
+        'error',
+        'disabled',
+        'readonly',
+        'required'
+    ];
+
     static formAssociated = true;
 
     constructor() {
@@ -48,7 +52,29 @@ customElements.define('input-text', class extends WebComponent {
         this.sync();
     }
 
-    get validity() {
+    setPhase(phase) {
+        const { states } = this.internals;
+
+        for (const name of ['loading', 'ready', 'error']) {
+            if (name !== phase) states.delete(name);
+
+        }
+
+        states.add(phase);
+
+        // States are a STYLING channel; script needs an event as well.
+        this.dispatchEvent(new CustomEvent('phase-change', {
+            detail: { phase },
+            bubbles: true,
+            composed: true
+        }));
+    }
+
+    setInvalid(message) {
+        this.internals.setValidity({ tooShort: true }, 'Minimum 3 characters');
+    }
+
+    validity() {
         return this.internal.validity;
     }
 
@@ -61,31 +87,28 @@ customElements.define('input-text', class extends WebComponent {
     }
 
     render() {
-        let label = [ ...(this.internal.labels ?? []) ].map(element => element.textContent.trim()).join(' ');
+        let label = [...(this.internal.labels ?? [])].map(element => element.textContent.trim()).join(' ');
 
-        let html = '<style>';
+        let input = document.createElement('input');
 
-        html += ':host { display: block; }';
-        html += ':host(:state(invalid)) .form-control { border-color: var(--bs-form-invalid-border-color, #dc3545); }';
-        html += ':host(:state(invalid)) .form-control:focus { box-shadow: 0 0 0 .25rem rgb(220 53 69 / .25); }';
+        Object.assign(input, {
+            name: 'name',
+            type: 'text',
+            value: this.value,
+            className: 'form-control'
+        });
 
-        html += '</style>';
+        console.log(input);
 
-        let type = escapeAttribute(this.getAttribute('type') || 'text');
+        //input.setAttribute('placeholder', this.hasAttribute('placeholder'));
 
-        html += '<input type="' + type + '" value="' + escapeAttribute(this.getAttribute('value') ?? '') + '" class="form-control" @ref="input" @input="onInput" @change="onChange"';
+        //html += '<@ref="input" @input="onInput" @change="onChange"';
 
-        if (this.hasAttribute('placeholder')) html += ' placeholder="' + escapeAttribute(this.getAttribute('placeholder')) + '"';
+        if (this.hasAttribute('required')) input.toggleAttribute('required', true);
+        if (this.hasAttribute('disabled')) input.toggleAttribute('disabled', true);
+        if (this.hasAttribute('readonly')) input.toggleAttribute('readonly', true);
 
-        if (this.hasAttribute('autocomplete')) html += ' autocomplete="' + escapeAttribute(this.getAttribute('autocomplete')) + '"';
-
-        if (label) html += ' aria-label="' + escapeAttribute(label) + '"';
-
-        if (this.hasAttribute('required')) html += ' required';
-
-        if (this.hasAttribute('disabled')) html += ' disabled';
-
-        return html + '/>';
+        return input;
     }
 
     async update() {
@@ -120,7 +143,7 @@ customElements.define('input-text', class extends WebComponent {
         this.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
-    formResetCallback() {
+    onReset() {
         this.input.value = this.getAttribute('value') ?? '';
 
         this.states.delete('invalid');
@@ -128,7 +151,7 @@ customElements.define('input-text', class extends WebComponent {
         this.sync();
     }
 
-    formDisabledCallback(disabled) {
+    onDisabled(disabled) {
         if (this.input) this.input.disabled = disabled;
     }
 
@@ -136,14 +159,3 @@ customElements.define('input-text', class extends WebComponent {
         this.value = state;
     }
 });
-
-
-
-
-
-
-
-
-
-
-

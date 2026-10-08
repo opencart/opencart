@@ -32,8 +32,9 @@
  *   await StylesheetImporter.adopt(shadowRoot, ['/styles/base.css']);
  *   await Stylesheet.adoptText(shadowRoot, ['.x { color: red; }']);
  */
-class Style {
+export class Style {
     static instance = null;
+    static cache = new Map();
 
     // href -> Promise<CSSStyleSheet>  (or Promise<string> css text on fallback)
     constructor() {

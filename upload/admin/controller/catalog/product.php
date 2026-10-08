@@ -893,8 +893,15 @@ class Product extends \Opencart\System\Engine\Controller {
 					$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
 
 					if ($option_value_info) {
+						if ($option_value_info['image'] && is_file(DIR_IMAGE . html_entity_decode($option_value_info['image'], ENT_QUOTES, 'UTF-8'))) {
+							$image = $option_value_info['image'];
+						} else {
+							$image = 'no_image.png';
+						}
+
 						$product_option_value_data[] = [
 							'name'  => $option_value_info['name'],
+							'image' => $this->model_tool_image->resize($image, 50, 50),
 							'price' => (float)$product_option_value['price'] ? $product_option_value['price'] : false,
 						] + $product_option_value;
 					}

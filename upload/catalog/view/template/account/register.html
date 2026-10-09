@@ -20,10 +20,10 @@
     </form-group>
 
     {% if config_telephone_status %}
-    <div class="row mb-3">
+    <form-group @ref="telephone">
       <label slot="label">{{ entry_telephone }}</label>
-      <input-tel name="telephone" value="0123456789" {% if config_telephone_required %} required{% endif %}/>
-    </div>
+      <input-tel name="telephone" value="0123456789"{% if config_telephone_required %} required{% endif %}/>
+    </form-group>
     {% endif %}
 
   </fieldset>
@@ -39,7 +39,7 @@
   <fieldset>
     <legend>{{ text_newsletter }}</legend>
     <div class="row mb-3">
-      <label>{{ entry_newsletter }}</label>
+      <label slot="label">{{ entry_newsletter }}</label>
       <input-switch name="newsletter" value="1" input-id="input-newsletter"></input-switch>
     </div>
   </fieldset>

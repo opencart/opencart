@@ -29,15 +29,49 @@
  * synchronous writes in the same tick collapse into a single update.
  */
 export class State {
-    /**
-     * @param {object} initial - initial state values
-     * @param {object} [options]
-     * @param {(changedKeys: string[], data: object) => void} [options.onChange]
-     *        single callback fired on every batched update (e.g. a host's
-     *        re-render trigger). Additional listeners can be added via
-     *        `subscribe()`.
-     */
+	constructor(callback) {
+		this.callback = new Map();
+		this.data = new Map();
+	}
+
+	get(key) {
+		this.data.get(key);
+	}
+
+	set(key, value) {
+		this.data.set(key, value);
+
+		this.callback([key]);
+	}
+
+	has(key) {
+		this.data.has(key);
+	}
+
+	delete(key) {
+		this.data.delete(key);
+
+		this.callback([key]);
+	}
+
+	clear() {
+		this.callback(this.data.keys());
+
+		this.data.clear(key);
+	}
+
+	destroy;
+}
+
+/*
+export class State {
+
     constructor(initial = {}, options = {}) {
+
+
+
+
+
         this.listeners = new Set();
         this.onChange = typeof options.onChange === 'function' ? options.onChange : null;
         this.dirty = new Set();
@@ -136,7 +170,7 @@ export class State {
         });
     }
 
-    /** Group multiple writes into a single notification. */
+
     batch(fn) {
         this.batchDepth++;
         try {
@@ -150,14 +184,14 @@ export class State {
         }
     }
 
-    /** Subscribe to state changes. Returns an unsubscribe function. */
+
     subscribe(fn) {
         this.listeners.add(fn);
 
         return () => this.listeners.delete(fn);
     }
 
-    /** Explicit get/set, equivalent to `state.key` / `state.key = value`. */
+
     get(key) {
         return this.data[key];
     }
@@ -166,7 +200,7 @@ export class State {
         this.data[key] = value;
     }
 
-    /** Merge multiple values in as a single batched update. */
+
     assign(partial) {
         this.batch((s) => {
             Object.entries(partial).forEach(([key, value]) => {
@@ -175,14 +209,14 @@ export class State {
         });
     }
 
-    /** Plain-object snapshot of current state. */
+
     toObject() {
         return { ...this.data };
     }
 
-    /** Remove all subscribers (does not clear state values). */
     destroy() {
         this.listeners.clear();
         this.onChange = null;
     }
 }
+*/

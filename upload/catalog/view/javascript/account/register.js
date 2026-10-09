@@ -17,10 +17,11 @@ export default class AccountRegister extends WebComponent {
     async render() {
         //if (!customer.isLogged()) return;
 
-        let data = new Map();
+        if (this.state.has('success')) {
+            return `<div class="success">${this.state.get('success')}</div>`;
+        }
 
-        data.set('language', local.get('language'));
-        data.set('token', this.token);
+        let data = new Map();
 
         return loader.template('account/register', [ data, language, config ]);
     }
@@ -33,21 +34,47 @@ export default class AccountRegister extends WebComponent {
         if (json.has('token')) {
             this.token = json.get('token');
         }
+
+        this.state.addListener('error', );
     }
 
-    onSuccess() {
+    async onSubmit(e) {
+        e.preventDefault();
 
+        //if (customer.isLogged()) return;
+
+        let form = new FormData(this.form);
+
+        await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
+            beforeSend: () => {
+                this.submitter.toggleAttribute('loading', true);
+            },
+            onComplete: () => {
+                this.submitter.toggleAttribute('loading', false);
+            },
+            onSuccess: (json) => {
+                this.form.state.clear();
+
+                // Display error messages
+                if (json.has('error')) {
+                    this.form.state.set('error', json.get('error'));
+                }
+
+                // Display success message
+                if (json.has('success')) {
+                    this.state.set('success', json.get('success'));
+
+                    this.update();
+                }
+            },
+            onError: (e) => {
+                console.log('onError', e);
+            }
+        });
     }
 
     onAgree(e) {
-        console.log(e);
-
-        this.bind.get('agree').checked;
-
-        e.target.value
-
-        this.bind.get('submitter').toggleAttribute('disabled', true);
-
+        this.submitter.toggleAttribute('disabled', !e.target.hasAttribute('checked'));
     }
 }
 

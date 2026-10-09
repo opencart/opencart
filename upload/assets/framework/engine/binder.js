@@ -108,43 +108,43 @@ export class Binder {
             if (key === 'ref') {
                 this.ref(element, value, is_global);
             } else {
-                this.event(element, key, value, is_global);
+                this.on(element, key, value, is_global);
             }
 
             element.removeAttribute(name);
         });
     }
 
-    ref(element, name, is_global) {
-        if (!name) return;
+    ref(element, key, is_global) {
+        if (!key) return;
 
         if (is_global) {
-            Global.set(name, element);
+            Global.set(key, element);
 
-            this.bindings.push({ name, element });
+            this.bindings.push({ key, element });
 
             return;
         }
 
-        this.refs.set(name, element);
+        this.refs.set(key, element);
 
         // Attach the getter property to the web component
-        if (this.host && !(name in this.host)) {
-            Object.defineProperty(this.host, name, {
-                get: () => this.refs.get(name),
+        if (this.host && !(key in this.host)) {
+            Object.defineProperty(this.host, key, {
+                get: () => this.refs.get(key),
                 configurable: true
             });
         }
     }
 
-    event(element, event, method, is_global) {
+    on(element, event, method, is_global) {
         let handler = is_global ? Global.getListener(method) : this.host[method];
 
         if (typeof handler !== 'function') {
             let scope = is_global ? 'Global' : 'Host';
             let prefix = is_global ? ':' : '@';
 
-            console.warn(`Binder: no method "${method}" found in ${scope} for event "${prefix}${event}"`);
+            throw new Error(`Binder: no method "${method}" found in ${scope} for event "${prefix}${event}"`);
 
             return;
         }
@@ -159,8 +159,8 @@ export class Binder {
     }
 
     /** Get a bound element by its data-ref name. */
-    get(name) {
-        return this.refs.get(name);
+    get(key) {
+        return this.refs.get(key);
     }
 
     has(key) {
@@ -184,7 +184,7 @@ export class Binder {
 
         // Only clear a global ref if it still points at the element *this*
         // instance set — avoids wiping out a ref another instance re-registered.
-        this.bindings.forEach(({ name, element }) => Global.delete(name, element));
+        this.bindings.forEach(({ key, element }) => Global.delete(key, element));
 
         this.bindings = [];
     }

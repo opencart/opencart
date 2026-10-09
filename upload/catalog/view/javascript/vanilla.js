@@ -83,7 +83,7 @@ const length = await loader.library('length');
 template.addFilter('length', length.format.bind(length));
 
 // Register Global Events
-Global.registerListener('link', (e) => {
+Global.addListener('link', (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');
@@ -100,7 +100,7 @@ Global.registerListener('link', (e) => {
 
 // Opens a link's page in a modal instead of the content area:
 // <a href="account/register.js" :click="modal">Register</a>
-Global.registerListener('modal', (e) => {
+Global.addListener('modal', (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');

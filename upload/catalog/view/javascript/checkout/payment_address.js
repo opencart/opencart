@@ -50,11 +50,11 @@ customElements.define('payment-address', class extends WebComponent {
         var element = this;
 
         ajax.post('action.php?route=checkout/payment_address.address&language=' + local.get('language') + '&customer_token' + customer.getToken() + '&address_id=' + this.address.value, {
-            beforeSend: function() {
-                $(element).prop('disabled', true);
+            beforeSend: () => {
+                this.submitter.toggleAttribute('loading', true);
             },
-            complete: function() {
-                $(element).prop('disabled', false);
+            onComplete: () => {
+                this.submitter.toggleAttribute('loading', false);
             },
             success: function(json) {
                 console.log(json);
@@ -62,8 +62,8 @@ customElements.define('payment-address', class extends WebComponent {
                 $('#input-payment-address').removeClass('is-invalid');
                 $('#error-payment-address').removeClass('d-block');
 
-                if (json['redirect']) {
-                    location = json['redirect'];
+                if (json.has('redirect')) {
+                    location = json.get('redirect');
                 }
 
                 if (json['error']) {

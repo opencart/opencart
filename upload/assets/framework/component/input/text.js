@@ -18,13 +18,18 @@ import { WebComponent } from '../../engine.js';
  */
 customElements.define('input-text', class extends WebComponent {
     static observedAttributes = [
+        'name',
+        'value',
+        'label',
+        'placeholder',
+        'required',
+        'disabled',
         'invalid',
         'error',
         'disabled',
         'readonly',
         'required'
     ];
-
     static formAssociated = true;
 
     constructor() {
@@ -32,6 +37,46 @@ customElements.define('input-text', class extends WebComponent {
 
         // Clicking a <label for="..."> lands on this element, not on the input inside it.
         this.addEventListener('click', () => this.input?.focus());
+    }
+
+    styles() {
+        return `
+      :host {
+        display: block;
+        font-family: system-ui, sans-serif;
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.5rem 0.625rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+      input:focus {
+        outline: 2px solid #4a90d9;
+        outline-offset: 1px;
+      }
+      :host([data-invalid]) input {
+        border-color: #d33;
+      }
+      .error {
+        display: block;
+        color: #d33;
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+      }
+      .error[hidden] {
+        display: none;
+      }
+    `;
     }
 
     get states() {
@@ -87,7 +132,10 @@ customElements.define('input-text', class extends WebComponent {
     }
 
     render() {
-        let label = [...(this.internal.labels ?? [])].map(element => element.textContent.trim()).join(' ');
+        const label = this.getAttribute('label') || '';
+        const placeholder = this.getAttribute('placeholder') || '';
+        const type = this.getAttribute('type') || 'text';
+
 
         let input = document.createElement('input');
 

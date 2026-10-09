@@ -50,10 +50,10 @@ customElements.define('product-thumb', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-                this.bind.get('button').addAtt('loading');
+                this.bind.get('button').setAttribute('loading');
             },
             onComplete: () => {
-                this.bind.get('button').remove('loading');
+                this.bind.get('button').removeAttribute('loading');
             },
             onSuccess: (json) => {
                 console.log('onSuccess', json);
@@ -62,8 +62,8 @@ customElements.define('product-thumb', class extends WebComponent {
                 this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
                 this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
 
-                if ('redirect' in json) {
-                    location = json['redirect'];
+                if (json.has('redirect')) {
+                    location = json.get('redirect');
                 }
 
                 // Display error messages

@@ -1,5 +1,5 @@
 /**
- * GlobalBindings
+ * Global
  * --------------
  * A small static registry shared across every Binder instance (and
  * therefore every component). Holds:
@@ -25,7 +25,7 @@
  */
 export class Global {
     static refs = new Map();
-    static listeners = {};
+    static listeners = new Map();
 
     /**
      * Register one or more global listeners, callable from any component's
@@ -33,35 +33,33 @@ export class Global {
      * @param {string|object} name_or_map - a listener name, or `{ name: fn, ... }`
      * @param {Function} [fn] - the function, when `name_or_map` is a string
      */
-    static registerListener(name_or_map, fn) {
-        if (typeof name_or_map === 'object' && name_or_map !== null) {
-            Object.assign(this.listeners, name_or_map);
-        } else {
-            this.listeners[name_or_map] = fn;
-        }
+    static addListener(key, fn) {
+        if (key == null) return;
+
+        this.listeners.set(key, fn);
     }
 
-    static unregisterListener(name) {
-        delete this.listeners[name];
+    static deleteListener(key) {
+        this.listeners.delete(key);
     }
 
-    static getListener(name) {
-        return this.listeners[name];
+    static getListener(key) {
+        return this.listeners.get(key);
     }
 
     /** Read a ref bound anywhere with `:ref="name"`. */
-    static get(name) {
-        return this.refs.get(name);
+    static get(key) {
+        return this.refs.get(key);
     }
 
-    static set(name, element) {
-        this.refs.set(name, element);
+    static set(key, element) {
+        this.refs.set(key, element);
     }
 
     /** Clears a ref only if it still points at `el` — avoids one binder's
      *  teardown clobbering a ref another binder has since re-registered. */
-    static delete(name, element) {
-        if (this.refs.get(name) === element) this.refs.delete(name);
+    static delete(key, element) {
+        if (this.refs.get(key) === element) this.refs.delete(key);
     }
 
     /** Clears all refs and listeners. Mainly useful for tests/hot-reload. */
@@ -70,4 +68,3 @@ export class Global {
         this.listeners = {};
     }
 }
-// If not using ES modules: module.exports = GlobalBindings;

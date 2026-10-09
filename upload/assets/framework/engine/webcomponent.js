@@ -1,6 +1,6 @@
 import { Binder } from './binder.js';
-import { Global } from './global.js';
 import { State } from './state.js';
+import { Global } from './global.js';
 import { Style } from './style.js';
 
 /**
@@ -9,7 +9,7 @@ import { Style } from './style.js';
  * A minimal base class for building web components with:
  *   - Automatic shadow DOM setup
  *   - Template + styles rendering
- *   - Automatic ref/event binding via ElementBinder (data-ref / data-on)
+ *   - Automatic ref/event binding via Binder (@ref / @click / @submit, etc...)
  *   - Clean lifecycle hooks (onConnect, onDisconnect, onAttributeChange)
  *
  * Usage:
@@ -25,7 +25,7 @@ import { Style } from './style.js';
  *     }
  *
  *     template() {
- *       return `<button data-ref="btn" data-on="click:increment">+1</button><span data-ref="display">0</span>`;
+ *       return `<button @ref="btn" @click="increment">+1</button><span data-ref="display">0</span>`;
  *     }
  *
  *     onConnect() {
@@ -64,9 +64,7 @@ export class WebComponent extends HTMLElement {
         this.global = Global;
 
         // State
-        this.state = new State(this.initialState(), {
-            onChange: this.handleState.bind(this)
-        });
+        this.state = new State(this.handleState.bind(this));
 
         // Make sure reactive attributes don't work until after render has been called.
         this.connected = false;
@@ -77,12 +75,17 @@ export class WebComponent extends HTMLElement {
         }
     }
 
+    updateState(keys) {
+        if (typeof this.handleState === 'function') {
+            this.handleState(keys, this.state);
+        } else {
+            this.update();
+        }
+    }
+
     /** Override: list of external CSS file URLs to adopt into this component. */
     stylesheets() {
-        return [
-            'stylesheet.css',
-            'fontawesome/css/all.css'
-        ];
+        return [];
     }
 
     /** Override: return a CSS string scoped to this component's shadow root. */
@@ -93,19 +96,6 @@ export class WebComponent extends HTMLElement {
     /** Override: return the HTML string for the component's shadow DOM. */
     template() {
         return '';
-    }
-
-    /** Override: return the initial values for `this.state`. */
-    initialState() {
-        return {};
-    }
-
-    handleState(keys) {
-        if (typeof this.handleEvent === 'function') {
-            this.handleEvent(keys, this.state);
-        } else {
-            this.update();
-        }
     }
 
     async connectedCallback() {
@@ -121,16 +111,12 @@ export class WebComponent extends HTMLElement {
     }
 
     async update() {
-        let output = await this.render();
+        this.shadow.innerHTML = await this.render();
 
-        if (output) {
-            this.shadow.innerHTML = output;
-
-            if (this.binder) {
-                this.binder.refresh();
-            } else {
-                this.binder = new Binder(this.shadow, this);
-            }
+        if (this.binder) {
+            this.binder.refresh();
+        } else {
+            this.binder = new Binder(this.shadow, this);
         }
 
         // Stylesheet

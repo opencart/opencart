@@ -1,14 +1,8 @@
-services:
-    -
-        class: \Tools\PHPStan\RegistryPropertyReflectionExtension
-        tags:
-            - phpstan.broker.propertiesClassReflectionExtension
 parameters:
     level: 6
     paths:
         - ./upload/
     excludePaths:
-        - ./tools/phpstan/
         - ./upload/system/storage/vendor/
         - ./upload/system/storage/cache/
     tmpDir: .cache

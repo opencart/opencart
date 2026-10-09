@@ -8,8 +8,6 @@ const config = await loader.config('default');
 const language = await loader.language('account/address');
 
 export default class AddressForm extends WebComponent {
-
-
     async render() {
         //if (!customer.isLogged()) return;
 
@@ -55,12 +53,16 @@ export default class AddressForm extends WebComponent {
                 this.submitter.removeAttribute('loading');
             },
             onSuccess: (json) => {
+                this.form.state.clear();
+
                 if (json.has('error')) {
-                    this.alert.append('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {
-                    this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
+
+                    this.update();
                 }
             },
             onError: (e) => {

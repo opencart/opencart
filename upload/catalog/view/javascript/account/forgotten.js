@@ -37,30 +37,21 @@ export default class AccountForgotten extends WebComponent {
 
         await ajax.post('action.php?route=account/forgotten.confirm&language=' + local.get('language') + '&token=' + this.token, form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.submitter.state.set('loading', true);
             },
             onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
+                this.submitter.state.set('loading', false);
             },
             onSuccess: (json) => {
-                // Remove past error classes from inputs
-                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+                this.form.state.clear();
 
-                // Display error messages
                 if (json.has('error')) {
-                    for (let key in json.get('error')) {
-                        let value = key.replaceAll('_', '-');
-
-                        this.form.querySelector('#input-' + value).classList.add('is-invalid');
-                        this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        this.form.querySelector('#error-' + value).classList.add('d-block');
-                    }
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
                 }
             },
             onError: (e) => {

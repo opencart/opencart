@@ -9,6 +9,14 @@ export default class AccountReset extends WebComponent {
         return loader.template('account/reset', [ language ]);
     }
 
+    async onConnect() {
+        let json = await ajax.get('action.php?route=account/reset.token&language=' + local.get('language'));
+
+        if (json.has('token')) {
+            this.token = json.get('token');
+        }
+    }
+
     async onSubmit(e) {
         e.preventDefault();
 
@@ -22,38 +30,22 @@ export default class AccountReset extends WebComponent {
                 this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: (json) => {
-                // Remove past error classes from inputs
-                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+                this.form.state.clear();
 
                 // Display error messages
                 if (json.has('error')) {
-                    for (let key in json.get('error')) {
-                        let value = key.replaceAll('_', '-');
-
-                        this.form.querySelector('#input-' + value).classList.add('is-invalid');
-                        this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        this.form.querySelector('#error-' + value).classList.add('d-block');
-                    }
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
                 }
             },
             onError: (e) => {
                 console.log('onError', e);
             }
         });
-    }
-
-    async onConnect() {
-        let json = await ajax.get('action.php?route=account/reset.token&language=' + local.get('language'));
-
-        if (json.has('token')) {
-            this.token = json.get('token');
-        }
     }
 }
 

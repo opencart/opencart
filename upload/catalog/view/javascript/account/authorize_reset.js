@@ -29,16 +29,20 @@ export default class AuthorizeReset extends WebComponent {
                 this.submitter.button('reset');
             },
             onSuccess: (json) => {
+                this.form.state.clear();
+
                 if (json.has('redirect')) {
-                    location = json['redirect'];
+                    location = json.get('redirect');
                 }
 
                 if (json.has('error')) {
-                    this.alert.prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
+
+                    this.update();
                 }
             },
             onError: (xhr, ajaxOptions, thrownError) => {

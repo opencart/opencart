@@ -125,30 +125,8 @@ customElements.define('payment-method', class extends WebComponent {
             onSuccess: (json) => {
                 console.log('onSuccess', json);
 
-                // Remove past error classes from inputs
-                target.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                target.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-                // Display error messages
                 if (json.has('error')) {
-                    for (let key in json['error']) {
-                        let value = key.replaceAll('_', '-');
-
-                        let input = target.querySelector('#input-' + value);
-
-                        if (input) {
-                            input.classList.add('is-invalid');
-
-                            // If the element has inputs inside.
-                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        }
-
-                        let error = target.querySelector('#error-' + value);
-
-                        if (error) {
-                            error.classList.add('d-block');
-                        }
-                    }
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message

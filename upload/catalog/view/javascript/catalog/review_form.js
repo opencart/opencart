@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import {WebComponent} from '../index.js';
 import { loader, ajax, customer, local } from '../index.js';
 
 // Config
@@ -14,10 +14,10 @@ customElements.define('review-form', class extends WebComponent {
         this.token = '';
     }
 
-    async render(){
+    async render() {
         let data = new Map();
 
-        return loader.template('catalog/review_form', [ data, language, config ]);
+        return loader.template('catalog/review_form', [data, language, config]);
     }
 
     async onConnect() {
@@ -40,36 +40,22 @@ customElements.define('review-form', class extends WebComponent {
             complete: () => {
                 this.submitter.toggleAttribute('loading', false);
             },
-            success: this.success,
+            success: (json) => {
+                this.form.state.clear();
+
+                if (json.has('error')) {
+                    this.form.state.set('error', json.get('error'));
+                }
+
+                if (json.has('success')) {
+                    this.form.state.set('success', json.get('success'));
+
+                    this.update();
+                }
+            },
             error: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    }
-
-    success(json) {
-        $('.alert-dismissible').remove();
-
-        // Remove past error classes from inputs
-        this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-        if (json['error']) {
-            if (json['error']['warning']) {
-                this.alert.prepend('<ui-alert type="danger">' + json['error']['warning'] + '</ui-alert>');
-            }
-
-            for (let key in json['error']) {
-                $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-            }
-        }
-
-        if (json.has('success')) {
-            this.alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
-
-            this.form.querySelector('#input-text').value = '';
-            this.form.querySelector('#input-rating input[type=\'radio\']').checked = false;
-        }
     }
 });

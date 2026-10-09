@@ -16,8 +16,6 @@ export default class AccountLogin extends WebComponent {
 
         let data = new Map();
 
-        data.set('redirect', '');
-        data.set('language', local.get('language'));
         data.set('token', this.token);
 
         return loader.template('account/login', [ data, language ]);
@@ -48,21 +46,17 @@ export default class AccountLogin extends WebComponent {
                 this.submitter.removeAttribute('loading');
             },
             onSuccess: (json) => {
+                this.form.state.clear();
+
                 if (json.has('error')) {
-                    for (let [ key, value ] of json.get('error')) {
-                        input.setCustomValidity("You gotta fill this out, yo!");
-
-                        let value = key.replaceAll('_', '-');
-
-                        this.form.querySelector('#input-' + value).classList.add('is-invalid');
-                        this.form.querySelector('#input-' + value).querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        this.form.querySelector('#error-' + value).classList.add('d-block');
-                    }
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
+
+                    this.update();
                 }
             },
             onError: (e) => {

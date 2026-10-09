@@ -21,9 +21,7 @@ export default class AccountRegister extends WebComponent {
             return `<div class="success">${this.state.get('success')}</div>`;
         }
 
-        let data = new Map();
-
-        return loader.template('account/register', [ data, language, config ]);
+        return loader.template('account/register', [ language, config ]);
     }
 
     async onConnect() {
@@ -34,8 +32,6 @@ export default class AccountRegister extends WebComponent {
         if (json.has('token')) {
             this.token = json.get('token');
         }
-
-        this.state.addListener('error', );
     }
 
     async onSubmit(e) {

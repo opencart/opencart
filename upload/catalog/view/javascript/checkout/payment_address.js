@@ -59,20 +59,18 @@ customElements.define('payment-address', class extends WebComponent {
             success: function(json) {
                 console.log(json);
 
-                $('#input-payment-address').removeClass('is-invalid');
-                $('#error-payment-address').removeClass('d-block');
+                this.form.state.clear();
 
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }
 
-                if (json['error']) {
-                    $('#input-payment-address').addClass('is-invalid');
-                    $('#error-payment-address').html(json['error']).addClass('d-block');
+                if (json.has('error')) {
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {
-                    $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
 
                     $('#input-shipping-method').val('');
                     $('#input-payment-method').val('');

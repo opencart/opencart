@@ -1,7 +1,6 @@
 import { WebComponent } from '../index.js';
 import { loader, ajax, cart, customer, local, tax } from '../index.js';
-import './review_form.js';
-import './review_list.js';
+import './review.js';
 
 // Config
 const config = await loader.config('default');
@@ -133,7 +132,7 @@ export default class ProductInfo extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=checkout/cart.add', form, {
+        await ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
                 this.submitter.toggleAttribute('loading', true);
             },
@@ -141,41 +140,16 @@ export default class ProductInfo extends WebComponent {
                 this.submitter.toggleAttribute('loading', false);
             },
             onSuccess: async (json) => {
-                console.log('onSuccess', json);
-
-                // Remove past error classes from inputs
-                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+                this.form.state.clear();
 
                 // Display error messages
                 if (json.has('error')) {
-                    for (let key in json['error']) {
-                        let value = key.replaceAll('_', '-');
-
-                        let input = this.form.querySelector('#input-' + value);
-
-                        if (input) {
-                            input.classList.add('is-invalid');
-
-                            // If the element has inputs inside.
-                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        }
-
-                        let error = this.form.querySelector('#error-' + value);
-
-                        if (error) {
-                            error.classList.add('d-block');
-                        }
-                    }
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    let alert = this.form.querySelector('#alert');
-
-                    if (alert) {
-                        alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-                    }
+                    this.state.set('success', json.get('success'));
 
                     // Code to use [] with js
                     let option = new Map();
@@ -195,8 +169,6 @@ export default class ProductInfo extends WebComponent {
                     }
 
                     await cart.add(form.get('product_id'), form.get('quantity'), option, form.get('subscription_plan_id'));
-
-                    console.log('getProducts', cart.getProducts());
                 }
             },
             onError: (e) => {

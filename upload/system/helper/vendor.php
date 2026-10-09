@@ -56,16 +56,27 @@ function oc_generate_vendor(): void {
 						$next = array_shift($directories);
 
 						if (is_dir($next)) {
-							foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-								if (is_dir($file)) {
-									$directories[] = $file . '/';
-								}
+							// Fix for Alpine Linux: Replace glob with GLOB_BRACE using scandir
+							$scanned_files = scandir($next);
 
-								if (is_file($file)) {
-									$namespace = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
+							if ($scanned_files !== false) {
+								foreach ($scanned_files as $filename) {
+									if ($filename == '.' || $filename == '..') {
+										continue;
+									}
 
-									if ($namespace) {
-										$autoload[$namespace] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+									$child_file = rtrim($next, '/') . '/' . $filename;
+
+									if (is_dir($child_file)) {
+										$directories[] = $child_file . '/';
+									}
+
+									if (is_file($child_file)) {
+										$namespace = substr(dirname($child_file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
+
+										if ($namespace) {
+											$autoload[$namespace] = substr(dirname($child_file), strlen(DIR_STORAGE . 'vendor/'));
+										}
 									}
 								}
 							}

@@ -131,7 +131,7 @@ customElements.define('nav-pagination', class extends WebComponent {
         return html;
     }
 
-    async onClick(e) {
+    async handleClick(e) {
         e.preventDefault();
 
         let target = document.getElementById(this.target);

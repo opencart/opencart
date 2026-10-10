@@ -1,16 +1,10 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('form-input', class extends WebComponent {
-    properties = {
-
-    }
-
-    states() {
-        return {
-            submitting: false,
-            success: '',
-            error: ''
-        }
+    states = {
+        submitting: false,
+        success: '',
+        error: ''
     }
 
     styles() {
@@ -40,7 +34,7 @@ customElements.define('form-input', class extends WebComponent {
         return `<form @ref="form" @submit="onSubmit"><slot></slot></form>`;
     }
 
-    onConnect() {
+    handleConnect() {
         this.state.addListener('submit', this.handleSubmit);
 
         this.state.addListener('error', this.stateError);
@@ -50,7 +44,7 @@ customElements.define('form-input', class extends WebComponent {
         //this.state.addListener('disabled', this.handleDisabled);
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         const skip = this.hasAttribute('novalidate');
@@ -70,7 +64,7 @@ customElements.define('form-input', class extends WebComponent {
         }
     }
 
-    stateError() {
+    handleError() {
         this.state.set('submitting', false);
 
         let errors = this.state.get('error');

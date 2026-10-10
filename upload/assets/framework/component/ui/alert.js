@@ -39,7 +39,7 @@ customElements.define('ui-alert', class extends WebComponent {
         return '<div class="alert alert-' + type + '">' + icon + ' ' + this.innerHTML + '</div>';
     }
 
-    onConnect() {
+    handleConnect() {
         let timeout = parseInt(this.getAttribute('timeout'));
 
         if (timeout > 0) {
@@ -47,7 +47,7 @@ customElements.define('ui-alert', class extends WebComponent {
         }
     }
 
-    onDisconnect() {
+    handleDisconnect() {
         clearTimeout(this.timer);
     }
 });

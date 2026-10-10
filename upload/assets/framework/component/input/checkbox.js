@@ -7,7 +7,7 @@ customElements.define('input-checkbox', class extends WebComponent {
         return '<input type="checkbox" class="form-check-input" data-on="change:onChange" data-target="' + this.getAttribute('target') + '"/>';
     }
 
-    onChange(e) {
+    handleChange(e) {
         let stack = [];
 
         let elements = document.querySelectorAll(e.target.getAttribute('data-target'));

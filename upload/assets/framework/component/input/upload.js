@@ -70,7 +70,7 @@ customElements.define('input-upload', class extends WebComponent {
         return html;
     }
 
-    onClick(e) {
+    handleClick(e) {
         if (!this.disabled) {
             let form = document.getElementById('#form-upload');
 
@@ -90,11 +90,11 @@ customElements.define('input-upload', class extends WebComponent {
         }
     }
 
-    onchange(e) {
+    handleChange(e) {
         this.checked = e.target.checked ? 1 : 0;
     }
 
-    onchecked(e) {
+    handleChecked(e) {
         this.element.checked = e.detail.value_new == 1 ? true : false;
     }
 
@@ -130,7 +130,7 @@ customElements.define('input-upload', class extends WebComponent {
 
 
 
-    onClick() {
+    handleClick() {
         if (typeof timer != 'undefined') {
             clearInterval(timer);
         }

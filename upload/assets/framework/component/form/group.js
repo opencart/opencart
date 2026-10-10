@@ -75,12 +75,12 @@ customElements.define('form-group', class extends WebComponent {
         return '<div class="form-group">' + this.innerHTML + '</div>';
     }
 
-    onConnected() {
+    handleConnect() {
 
     }
 
     // would have given it.
-    onInvalid(e) {
+    handleInvalid(e) {
         if (!this.hasAttribute('inline')) return;
 
         e.preventDefault();

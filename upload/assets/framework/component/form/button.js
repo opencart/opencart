@@ -30,12 +30,12 @@ customElements.define('button-submit', class extends WebComponent {
         `;
     }
 
-    onConnect() {
+    handleConnect() {
         this.html = this.innerHTML;
         this.width = this.offsetWidth;
     }
 
-    onClick(event) {
+    handleClick(event) {
         this.handleState(['loading'])
 
         this.internal.form.requestSubmit();

@@ -93,7 +93,7 @@ customElements.define('input-text', class extends WebComponent {
         this.sync();
     }
 
-    onError(message) {
+    handleError(message) {
         this.internals.setValidity({
             tooShort: true
         }, 'Minimum 3 characters');
@@ -158,7 +158,7 @@ customElements.define('input-text', class extends WebComponent {
         }
     }
 
-    onInput(e) {
+    handleInput(e) {
         console.log(e);
 
         this.states.delete('invalid');
@@ -167,11 +167,11 @@ customElements.define('input-text', class extends WebComponent {
     }
 
     // A native change event does not leave the shadow root, so send it on.
-    onChange(e) {
+    handleChange(e) {
         this.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
-    onReset() {
+    handleReset() {
         this.input.value = this.getAttribute('value') ?? '';
 
         this.states.delete('invalid');
@@ -179,7 +179,7 @@ customElements.define('input-text', class extends WebComponent {
         this.sync();
     }
 
-    onDisabled(disabled) {
+    handleDisabled(disabled) {
         if (this.input) this.input.disabled = disabled;
     }
 

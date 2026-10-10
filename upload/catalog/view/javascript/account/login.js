@@ -12,7 +12,7 @@ export default class AccountLogin extends WebComponent {
     }
 
     async render() {
-        //if (customer.isLogged()) return;
+        if (customer.isLogged()) return;
 
         let data = new Map();
 
@@ -56,12 +56,13 @@ export default class AccountLogin extends WebComponent {
                 if (json.has('success')) {
                     this.state.set('success', json.get('success'));
 
+                    customer.login(json.get('customer'));
+
+                    if (json.has('products')) {
+
+                    }
+
                     this.update();
-                }
-
-                if (json.has('products')) {
-
-
                 }
             },
             onError: (e) => {

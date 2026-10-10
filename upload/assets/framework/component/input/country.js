@@ -80,7 +80,7 @@ customElements.define('input-country', class extends WebComponent {
         return html;
     }
 
-    async onConnect() {
+    async handleConnect() {
         this.default = this.innerHTML;
         this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
         this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';

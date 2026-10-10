@@ -41,7 +41,7 @@ customElements.define('input-switch', class extends WebComponent {
         return html;
     }
 
-    onChange(e) {
+    handleChange(e) {
         this.checked = e.target.checked;
     }
 });

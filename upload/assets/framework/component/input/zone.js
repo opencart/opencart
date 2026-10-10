@@ -69,11 +69,11 @@ customElements.define('input-zone', class extends WebComponent {
         return html;
     }
 
-    async onConnect() {
+    async handleConnect() {
         this.default = this.innerHTML;
     }
 
-    onChange(e) {
+    handleChange(e) {
         this.value = e.target.value;
     }
 });

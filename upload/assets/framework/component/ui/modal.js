@@ -106,12 +106,12 @@ customElements.define('ui-modal', class extends WebComponent {
 
     // The content fills the dialog box, so a click that lands on the <dialog> itself
     // can only be on the backdrop. Browsers that support closedby="any" do this already.
-    onClick(e) {
+    handleClick(e) {
         if (e.target === this.dialog) this.close();
     }
 
     // The native close event stays inside the shadow root, so send it on.
-    onClose() {
+    handleClose() {
         this.dispatchEvent(new Event('close'));
     }
 });

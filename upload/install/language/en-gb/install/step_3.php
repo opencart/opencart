@@ -41,4 +41,5 @@ $_['error_db_connect']       = 'Error: Could not connect to the database please 
 $_['error_username']         = 'Username required!';
 $_['error_password']         = 'Password required!';
 $_['error_email']            = 'E-Mail Address does not appear to be valid!';
+$_['error_installed']        = 'Error: OpenCart is already installed! Delete the config.php and admin/config.php files to reinstall.';
 $_['error_config']           = 'Error: Could not write to config.php please check you have set the correct permissions on: ';

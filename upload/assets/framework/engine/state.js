@@ -29,10 +29,39 @@
  * synchronous writes in the same tick collapse into a single update.
  */
 export class State {
-	constructor(callback) {
-		this.callback = new Map();
-		this.data = new Map();
+	constructor(states, fn) {
+		this.fn = fn;
+		this.data = new Map({ ...states });
+        this.listeners = new Map();
 	}
+
+    /**
+     * Register one or more global listeners, callable from any component's
+     * template via `:event="name"`.
+     * @param {string|object} name_or_map - a listener name, or `{ name: fn, ... }`
+     * @param {Function} [fn] - the function, when `name_or_map` is a string
+     */
+    addListener(key, fn) {
+        if (key == null) return;
+
+        if (!this.listeners.has(key)) {
+            this.listeners.set(key, []);
+        }
+
+        this.listeners.get(key).push(fn);
+    }
+
+    deleteListener(key) {
+        this.listeners.delete(key);
+    }
+
+    getListener(key) {
+        return this.listeners.get(key);
+    }
+
+    hasListener(key) {
+
+    }
 
 	get(key) {
 		this.data.get(key);
@@ -41,7 +70,7 @@ export class State {
 	set(key, value) {
 		this.data.set(key, value);
 
-		this.callback([key]);
+		this.fn(key, value);
 	}
 
 	has(key) {
@@ -54,13 +83,10 @@ export class State {
 		this.callback([key]);
 	}
 
-	clear() {
-		this.callback(this.data.keys());
-
-		this.data.clear(key);
-	}
-
-	destroy;
+    destroy() {
+        this.listeners = [];
+        this.onChange = null;
+    }
 }
 
 /*

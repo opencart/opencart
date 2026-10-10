@@ -1,6 +1,6 @@
 import { Binder } from './binder.js';
-import { State } from './state.js';
 import { Global } from './global.js';
+import { State } from './state.js';
 import { Style } from './style.js';
 
 /**
@@ -47,6 +47,7 @@ import { Style } from './style.js';
 export class WebComponent extends HTMLElement {
     static observedAttributes = [];
     static formAssociated = false;
+    states = {};
 
     constructor() {
         super();
@@ -64,53 +65,52 @@ export class WebComponent extends HTMLElement {
         this.global = Global;
 
         // State
-        this.state = new State(this.handleState.bind(this));
+        this.state = new State(this.states, this.onStateChange.bind(this));
 
         // Make sure reactive attributes don't work until after render has been called.
-        this.connected = false;
-
-        // Adds reactive component event changes to the attributes of the element to re-render the contents.
-        for (let attribute of this.attributes) {
-            this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
-        }
-    }
-
-    updateState(keys) {
-        if (typeof this.handleState === 'function') {
-            this.handleState(keys, this.state);
-        } else {
-            this.update();
-        }
-    }
-
-    /** Override: list of external CSS file URLs to adopt into this component. */
-    stylesheets() {
-        return [];
-    }
-
-    /** Override: return a CSS string scoped to this component's shadow root. */
-    styles() {
-        return '';
-    }
-
-    /** Override: return the HTML string for the component's shadow DOM. */
-    template() {
-        return '';
+        this.rendered = false;
     }
 
     async connectedCallback() {
-        if (typeof this.onConnect === 'function') {
-            await this.onConnect();
+        if (typeof this.handleConnect === 'function') {
+            await this.handleConnect();
         }
 
+        await this.update();
+
+        this.rendered = true;
+    }
+
+    async disconnectedCallback() {
+        if (this.binder) {
+            this.binder.destroy();
+        }
+
+        if (this.state) {
+            this.state.destroy();
+        }
+
+        if (typeof this.handleDisconnect === 'function') {
+            await this.handleDisconnect();
+        }
+    }
+
+    async adoptedCallback() {
         if (typeof this.render === 'function') {
             await this.update();
         }
+    }
 
-        this.connected = true;
+    attributeChangedCallback(name, value_old, value_new) {
+        if (!this.rendered || value_old === value_new) return;
+
+        //console.log(`${name} changed from ${value_old} to ${value_new}`);
+        this.onAttributeChange(name, value_old, value_new);
     }
 
     async update() {
+        if (typeof this.render !== 'function') return;
+
         this.shadow.innerHTML = await this.render();
 
         if (this.binder) {
@@ -129,39 +129,38 @@ export class WebComponent extends HTMLElement {
         }
     }
 
-    async disconnectedCallback() {
-        if (this.binder) {
-            this.binder.destroy();
-        }
+    async onAttributeChange(key, value_new, value_old) {
+        let name= 'handle' + key.split('-').map(value => value.charAt(0).toUpperCase() + value.slice(1)).join('');
 
-        if (this.state) {
-            this.state.destroy();
-        }
-
-        if (typeof this.onDisconnect === 'function') {
-            await this.onDisconnect();
+        if (typeof this[name] === 'function') {
+            await this[name](key, value_new, value_old);
+        } else {
+            this.update();
         }
     }
 
-    async adoptedCallback() {
-        if (typeof this.render === 'function') {
-            await this.update();
+    async onStateChange(key, value_new, value_old) {
+        let name= 'handle' + key.split('-').map(value => value.charAt(0).toUpperCase() + value.slice(1)).join('');
+
+        if (typeof this[name] === 'function') {
+            await this[name](key, value_new, value_old);
+        } else {
+            this.update();
         }
     }
 
-    attributeChangedCallback(name, value_old, value_new) {
-        if (!this.connected || value_old === value_new) return;
+    /** Override: list of external CSS file URLs to adopt into this component. */
+    stylesheets() {
+        return [];
+    }
 
-        //console.log(`${name} changed from ${value_old} to ${value_new}`);
+    /** Override: return a CSS string scoped to this component's shadow root. */
+    styles() {
+        return '';
+    }
 
-        // Dispatch the event
-        this.dispatchEvent(new CustomEvent('[' + name + ']', {
-            bubbles: false,
-            cancelable: true,
-            detail: {
-                value_old: value_old,
-                value_new: value_new
-            }
-        }));
+    /** Override: return the HTML string for the component's shadow DOM. */
+    template() {
+        return '';
     }
 }

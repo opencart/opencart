@@ -1,4 +1,5 @@
-import { Global } from './global.js';
+import {Global} from "./global.js";
+
 /**
  * Binder
  * -------------
@@ -85,7 +86,7 @@ export class Binder {
 
     walk(root) {
         const walker = document.createTreeWalker(this.root, NodeFilter.SHOW_ELEMENT, {
-            acceptNode: node => node.getAttributeNames().some(name => name.startsWith('@') || name.startsWith(':')) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
+            acceptNode: (node) => node.getAttributeNames().some((name) => name.startsWith("@") || name.startsWith(":")) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
         });
 
         let node = walker.nextNode();
@@ -98,10 +99,10 @@ export class Binder {
     }
 
     bind(element) {
-        let names = element.getAttributeNames().filter(name => name.startsWith('@') || name.startsWith(':'));
+        let names = element.getAttributeNames().filter((name) => name.startsWith('@') || name.startsWith(':'));
 
-        names.forEach(name => {
-            let is_global = name.startsWith(':');
+        names.forEach((name) => {
+            let is_global = name.startsWith(":");
             let key = name.slice(1);
             let value = element.getAttribute(name);
 
@@ -132,7 +133,7 @@ export class Binder {
         if (this.host && !(key in this.host)) {
             Object.defineProperty(this.host, key, {
                 get: () => this.refs.get(key),
-                configurable: true
+                configurable: true,
             });
         }
     }
@@ -178,7 +179,9 @@ export class Binder {
 
     /** Remove all attached event listeners (call in disconnectedCallback). */
     destroy() {
-        this.listeners.forEach(({ element, event, listener }) => element.removeEventListener(event, listener));
+        this.listeners.forEach(({element, event, listener}) =>
+            element.removeEventListener(event, listener)
+        );
 
         this.listeners = [];
 

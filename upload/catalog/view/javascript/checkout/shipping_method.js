@@ -31,20 +31,16 @@ customElements.define('shipping-method', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/shipping_method.quote&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
-                console.log(json);
+                this.form.state.clear();
 
-                $('#input-shipping-method').removeClass('is-invalid');
-                $('#error-shipping-method').removeClass('d-block');
-
-                if (json['error']) {
-                    $('#input-shipping-method').addClass('is-invalid');
-                    $('#error-shipping-method').html(json['error']).addClass('d-block');
+                if (json.has('error')) {
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json['shipping_methods']) {
@@ -100,7 +96,7 @@ customElements.define('shipping-method', class extends WebComponent {
                     $('#modal-shipping').modal('show');
                 }
             },
-            onError: function(xhr, ajaxOptions, thrownError) {
+            onError: (xhr, ajaxOptions, thrownError)=> {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -113,12 +109,12 @@ customElements.define('shipping-method', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/shipping_method.save&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            onSuccess: async (json) => {
                 console.log(json);
 
                 if (json['redirect']) {
@@ -132,18 +128,18 @@ customElements.define('shipping-method', class extends WebComponent {
                 if (json.has('success')) {
                     $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
-                    $('#modal-shipping').modal('hide');
+                    //$('#modal-shipping').modal('hide');
 
-                    $('#input-shipping-method').val($('input[name=\'shipping_method\']:checked').parent().find('label').text());
-                    $('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
+                    //$('#input-shipping-method').val($('input[name=\'shipping_method\']:checked').parent().find('label').text());
+                    //$('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
 
-                    $('#input-payment-method').val('');
+                    //$('#input-payment-method').val('');
 
-                    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
-                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+                    //$('#cart').load('index.php?route=common/cart.info&language={{ language }}');
+                    //$('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
-            onError: function(xhr, ajaxOptions, thrownError) {
+            onError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

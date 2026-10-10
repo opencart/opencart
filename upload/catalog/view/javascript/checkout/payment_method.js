@@ -17,7 +17,6 @@ customElements.define('payment-method', class extends WebComponent {
     async render(){
         let data = new Map();
 
-        //this.payment
 
         return loader.template('checkout/payment_method', [ data, language ]);
     }
@@ -29,26 +28,22 @@ customElements.define('payment-method', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/payment_method.getMethods&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
-                console.log('onSuccess', json);
-
-                $('#input-payment-method').removeClass('is-invalid');
-                $('#error-payment-method').removeClass('d-block');
+                this.form.state.clear();
 
                 if (json.has('error')) {
-                    $('#input-payment-method').addClass('is-invalid');
-                    $('#error-payment-method').html(json['error']).addClass('d-block');
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json['payment_methods']) {
                     $('#modal-payment').remove();
 
-                    let html = '<ui-modal-payment>';
+                    let html = '<ui-modal>';
 
                     html += '  <div class="modal-dialog modal-dialog-centered">';
                     html += '    <div class="modal-content">';
@@ -117,13 +112,13 @@ customElements.define('payment-method', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/payment_method&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
-                console.log('onSuccess', json);
+                this.form.state.clear();
 
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
@@ -131,26 +126,24 @@ customElements.define('payment-method', class extends WebComponent {
 
                 // Display success message
                 if (json.has('success')) {
-                    let alert = target.querySelector('#alert');
+                    this.state.set('success', json.get('success'));
 
-                    if (alert) {
-                        alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-                    }
+
+                    $('#modal-payment').modal('hide');
+
+                    $('#input-payment-method').val($('input[name=\'payment_method\']:checked').parent().find('label').text());
+                    $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
+
+                    $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
-
-                $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-
-                $('#modal-payment').modal('hide');
-
-                $('#input-payment-method').val($('input[name=\'payment_method\']:checked').parent().find('label').text());
-                $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
-
-                $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
             },
             onError: (e) => {
                 console.log('onError', e);
             }
         });
+    }
+
+    addComment(e) {
 
     }
 });

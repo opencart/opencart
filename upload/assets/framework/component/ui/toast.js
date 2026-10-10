@@ -10,7 +10,7 @@ import { WebComponent } from '../../engine.js';
  */
 customElements.define('ui-toast', class extends WebComponent {
     async render() {
-        return;
+        return ``;
     }
 
     show(message, type = 'success') {

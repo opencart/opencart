@@ -32,10 +32,10 @@ export default class AccountEdit extends WebComponent {
 
         await ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
-            onComplete: (json) => {
-                this.submitter.toggleAttribute('loading', false);
+            onComplete: () => {
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
                 this.form.state.clear();

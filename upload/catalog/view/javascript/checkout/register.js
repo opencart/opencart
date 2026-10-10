@@ -62,46 +62,44 @@ customElements.define('checkout-register', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
+                this.form.state.set('submitting', false);
             },
-            onSuccess: this.success.bind(this),
-            onError: (e) => {
-                console.log('onError', e);
-            }
-        });
-    }
+            onSuccess: (json) => {
+                this.form.state.clear();
 
-    success(json) {
-        this.form.state.clear();
+                if (json.has('redirect')) {
+                    location = json.get('redirect');
+                }
 
-        if (json.has('redirect')) {
-            location = json.get('redirect');
-        }
+                if (json.has('error')) {
+                    this.form.state.set('error', json.get('error'));
+                }
 
-        if (json.has('error')) {
-            this.form.state.set('error', json.get('error'));
-        }
+                // Display success message
+                if (json.has('success')) {
+                    this.form.state.set('success', json.get('success'));
+                    this.form.state.set('disabled', true);
 
-        // Display success message
-        if (json.has('success')) {
-            this.form.state.set('success', json.get('success'));
-            this.form.state.set('disabled', true);
+                    if ($('#input-register').prop('checked')) {
+                        $('input[name=\'account\']').prop('disabled', true);
+                        $('#input-customer-group').prop('disabled', true);
+                        $('#input-password').prop('disabled', true);
+                        $('#input-captcha').prop('disabled', true);
+                        $('#input-register-agree').prop('disabled', true);
+                    }
 
-            if ($('#input-register').prop('checked')) {
-                $('input[name=\'account\']').prop('disabled', true);
-                $('#input-customer-group').prop('disabled', true);
-                $('#input-password').prop('disabled', true);
-                $('#input-captcha').prop('disabled', true);
-                $('#input-register-agree').prop('disabled', true);
-            }
+                    $('#input-shipping-method').val('');
+                    $('#input-payment-method').val('');
 
-            $('#input-shipping-method').val('');
-            $('#input-payment-method').val('');
-
-            //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
+                    //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
+                },
+                onError: (e) => {
+                    console.log('onError', e);
+                }
+            });
         }
     }
 });

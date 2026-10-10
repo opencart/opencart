@@ -79,10 +79,6 @@ customElements.define('input-text', class extends WebComponent {
     `;
     }
 
-    get states() {
-        return this.internal.states;
-    }
-
     get value() {
         return this.input ? this.input.value : (this.getAttribute('value') ?? '');
     }
@@ -97,26 +93,10 @@ customElements.define('input-text', class extends WebComponent {
         this.sync();
     }
 
-    setPhase(phase) {
-        const { states } = this.internals;
-
-        for (const name of ['loading', 'ready', 'error']) {
-            if (name !== phase) states.delete(name);
-
-        }
-
-        states.add(phase);
-
-        // States are a STYLING channel; script needs an event as well.
-        this.dispatchEvent(new CustomEvent('phase-change', {
-            detail: { phase },
-            bubbles: true,
-            composed: true
-        }));
-    }
-
-    setInvalid(message) {
-        this.internals.setValidity({ tooShort: true }, 'Minimum 3 characters');
+    onError(message) {
+        this.internals.setValidity({
+            tooShort: true
+        }, 'Minimum 3 characters');
     }
 
     validity() {

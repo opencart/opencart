@@ -29,11 +29,11 @@ export default class AccountWishlist extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
-            beforeSend: function() {
-                this.submitter.toggleAttribute('loading', true);
+            beforeSend: () => {
+                this.form.state.set('submitting', true);
             },
-            complete: function() {
-                this.submitter.toggleAttribute('loading', false);
+            onComplete: () => {
+                this.form.state.set('submitting', false);
             },
             success: (json) => {
                 console.log(json);

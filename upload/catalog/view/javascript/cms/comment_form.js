@@ -1,7 +1,7 @@
 import { WebComponent } from '../index.js';
 import { loader, ajax, customer } from '../index.js';
 
-customElements.define('cms-comment', class extends WebComponent {
+customElements.define('comment-form', class extends WebComponent {
     async render() {
         return loader.template('cms/comment_form', [ language ]);
     }
@@ -30,20 +30,19 @@ customElements.define('cms-comment', class extends WebComponent {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-
     }
 
-    submit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=cms/comment', form, {
-            beforeSend: function() {
-                //ref.get('button-comment').button('loading');
+        await ajax.post('action.php?route=cms/comment', form, {
+            beforeSend: () => {
+                this.form.state.set('submitting', true);
             },
-            complete: function() {
-                //ref.get('button-comment').button('reset');
+            onComplete: () => {
+                this.form.state.set('submitting', false);
             },
             success: function(json) {
                 console.log(json);

@@ -50,10 +50,10 @@ customElements.define('product-thumb', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
                 this.form.state.clear();

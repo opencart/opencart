@@ -47,10 +47,10 @@ export default class AddressForm extends WebComponent {
 
         await ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
                 this.form.state.clear();

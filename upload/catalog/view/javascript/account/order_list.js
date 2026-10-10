@@ -37,7 +37,7 @@ $('form').on('submit', function(e) {
         cache: false,
         processData: false,
         beforeSend: function() {
-            this.submitter.toggleAttribute('loading', true);
+            this.submitter.state.set('loading', true);
         },
         complete: function() {
             $(button).button('reset');

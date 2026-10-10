@@ -11,7 +11,7 @@ export default class AuthorizeUnlock extends WebComponent {
     async render() {
         //if (customer.isLogged()) return;
 
-        return loader.template('account/authorize_reset', language);
+        return loader.template('account/authorize_reset', [ language ]);
     }
 
     async onSubmit(e) {
@@ -23,10 +23,10 @@ export default class AuthorizeUnlock extends WebComponent {
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
                 if (json.has('redirect')) {
@@ -34,11 +34,13 @@ export default class AuthorizeUnlock extends WebComponent {
                 }
 
                 if (json.has('error')) {
-                    this.alert.prepend('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
+
+                    this.update();
                 }
             },
             onError: (xhr, ajaxOptions, thrownError) => {

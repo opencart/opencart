@@ -46,12 +46,12 @@ export default class InformationContact extends WebComponent {
 
         let form = new FormData(this.form);
 
-        ajax.post('action.php?route=information/contact.send&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
-            beforeSend: (request) => {
-                this.submitter.toggleAttribute('loading', true);
+        await ajax.post('action.php?route=information/contact.send&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+            beforeSend: () => {
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json)=> {
                 this.form.state.clear();

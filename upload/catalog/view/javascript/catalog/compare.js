@@ -23,38 +23,16 @@ export default class CatalogCompare extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
+                this.form.state.set('submitting', false);
             },
             onSuccess: async (json) => {
-                console.log('onSuccess', json);
+                this.form.state.clear();
 
-                // Remove past error classes from inputs
-                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-                // Display error messages
                 if (json.has('error')) {
-                    for (let key in json['error']) {
-                        let value = key.replaceAll('_', '-');
-
-                        let input = this.form.querySelector('#input-' + value);
-
-                        if (input) {
-                            input.classList.add('is-invalid');
-
-                            // If the element has inputs inside.
-                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        }
-
-                        let error = this.form.querySelector('#error-' + value);
-
-                        if (error) {
-                            error.classList.add('d-block');
-                        }
-                    }
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message

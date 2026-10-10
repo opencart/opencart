@@ -15,7 +15,7 @@ export default class AddressList extends WebComponent {
 
         data.set('addresses', customer.getAddresses());
 
-        return loader.template('account/address_list', [data, language, config]);
+        return loader.template('account/address_list', [ data, language, config ]);
     }
 
     onDelete(e) {
@@ -25,14 +25,14 @@ export default class AddressList extends WebComponent {
 
         ajax.get('action.php?route=account/address.delete&language=' + local.get('language') + '&customer_token=' + customer.getToken() + '&address_id=' + e.target.value, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
-            complete: () => {
-                this.submitter.toggleAttribute('loading', false);
+            onComplete: () => {
+                this.form.state.set('submitting', false);
             },
             success: (json) => {
                 if (json.has('error')) {
-                    this.alert.append('<ui-alert type="danger">' + json.get('error') + '</ui-alert>');
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {

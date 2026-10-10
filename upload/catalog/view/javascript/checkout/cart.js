@@ -30,45 +30,19 @@ export default class CheckoutCart extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
-                // Remove past error classes from inputs
-                this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-                if (json.has('redirect')) {
-                    location = json.get('redirect');
-                }
-
-                // Display error messages
                 if (json.has('error')) {
-                    for (let key in json['error']) {
-                        let value = key.replaceAll('_', '-');
-
-                        let input = target.querySelector('#input-' + value);
-
-                        if (input) {
-                            input.classList.add('is-invalid');
-
-                            // If the element has inputs inside.
-                            input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                        }
-
-                        let error = target.querySelector('#error-' + value);
-
-                        if (error) {
-                            error.classList.add('d-block');
-                        }
-                    }
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
 
                     //console.log(Object.fromEntries(form));
                     for (let product of json['products']) {
@@ -90,11 +64,11 @@ export default class CheckoutCart extends WebComponent {
         var element = this;
 
         ajax.post('', {
-            beforeSend: function() {
-                this.submitter.toggleAttribute('loading', true);
+            beforeSend: () => {
+                this.form.state.set('submitting', true);
             },
-            complete: function() {
-                this.submitter.toggleAttribute('loading', false);
+            onComplete: () => {
+                this.form.state.set('submitting', false);
             },
             success: function(json) {
                 console.log(json);

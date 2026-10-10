@@ -18,6 +18,8 @@ export default class AccountRegister extends WebComponent {
         //if (!customer.isLogged()) return;
 
         if (this.state.has('success')) {
+            `<ui-toast></ui-toast>`;
+
             return `<div class="success">${this.state.get('success')}</div>`;
         }
 
@@ -43,10 +45,10 @@ export default class AccountRegister extends WebComponent {
 
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.toggleAttribute('loading', false);
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
                 this.form.state.clear();

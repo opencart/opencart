@@ -40,10 +40,10 @@ export default class AccountLogin extends WebComponent {
 
         await ajax.post('action.php?route=account/login.login&language=' + local.get('language') + '&login_token=' + this.token, form, {
             beforeSend: () => {
-                this.submitter.setAttribute('loading');
+                this.form.state.set('submitting', true);
             },
             onComplete: () => {
-                this.submitter.removeAttribute('loading');
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
                 this.form.state.clear();
@@ -57,6 +57,11 @@ export default class AccountLogin extends WebComponent {
                     this.state.set('success', json.get('success'));
 
                     this.update();
+                }
+
+                if (json.has('products')) {
+
+
                 }
             },
             onError: (e) => {

@@ -1,6 +1,18 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('form-input', class extends WebComponent {
+    properties = {
+
+    }
+
+    states() {
+        return {
+            submitting: false,
+            success: '',
+            error: ''
+        }
+    }
+
     styles() {
         return `
         :host {
@@ -24,12 +36,18 @@ customElements.define('form-input', class extends WebComponent {
         }`;
     }
 
-    initialState() {
-        return { submitting: false };
-    }
-
     render() {
         return `<form @ref="form" @submit="onSubmit"><slot></slot></form>`;
+    }
+
+    onConnect() {
+        this.state.addListener('submit', this.handleSubmit);
+
+        this.state.addListener('error', this.stateError);
+        ///this.state.addListener('disabled', this.stateDisabled);
+
+
+        //this.state.addListener('disabled', this.handleDisabled);
     }
 
     async onSubmit(e) {
@@ -39,15 +57,7 @@ customElements.define('form-input', class extends WebComponent {
 
         if (!skip && !this.form.reportValidity()) return; // browser already focused/flagged the first invalid field
 
-        this.state.set('submitting', true);
-
-        const form = new FormData(this.form);
-
-        const values = Object.fromEntries(form.entries());
-
-        //this.emit('my-form-submit', { values, form_data });
-
-        this.state.set('submitting', false);
+        this.submitter.state.set('loading', true);
     }
 
     handleState(keys) {
@@ -60,27 +70,23 @@ customElements.define('form-input', class extends WebComponent {
         }
     }
 
-    handleError() {
+    stateError() {
+        this.state.set('submitting', false);
+
         let errors = this.state.get('error');
 
-        for (let [ key, error ] of errors) {
-            this.form.get(key).state.set('error', error);
+        for (let [ key, value ] of errors) {
+
+            //this.form.get(key).state.set('error', value);
+
+
+            // Remove past error classes from inputs
+            this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+            this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
         }
     }
 
-    reset() {
-        this.form.reset();
-    }
 
-    checkValidity() {
-        return this.form.checkValidity();
-    }
 
-    reportValidity() {
-        return this.form.reportValidity();
-    }
-
-    get elements() {
-        return this.form.elements;
-    }
 });

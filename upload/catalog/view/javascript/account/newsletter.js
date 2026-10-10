@@ -24,20 +24,24 @@ export default class AccountNewsletter extends WebComponent {
 
         await ajax.post('action.php?route=account/newsletter.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             beforeSend: () => {
-                this.submitter.toggleAttribute('loading', true);
+                this.form.state.set('submitting', true);
             },
-            onComplete: (json) => {
-                this.submitter.toggleAttribute('loading', false);
+            onComplete: () => {
+                this.form.state.set('submitting', false);
             },
             onSuccess: (json) => {
+                this.form.state.clear();
+
                 // Display error messages
                 if (json.has('error')) {
-                    this.alert.prepend('<ui-alert type="warning">' + json.get('error') + '</ui-alert>');
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.alert.prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
+                    this.state.set('success', json.get('success'));
+
+                    this.update();
                 }
             },
             onError: (e) => {

@@ -1,5 +1,5 @@
 export default class Session {
-    static instance = null;;
+    static instance = null;
 
     async get(key) {
         return await JSON.parse(sessionStorage.getItem(key));

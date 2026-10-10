@@ -9,17 +9,7 @@ customElements.define('button-submit', class extends WebComponent {
     html = '';
     width;
 
-    get states() {
-        return this.internal.states;
-    }
 
-    HandleDisabled() {
-
-    }
-
-    handleLoading() {
-
-    }
 
     render() {
         let disabled = (this.hasAttribute('disabled') || this.matches(':disabled')) ? ' disabled' : '';
@@ -71,5 +61,13 @@ customElements.define('button-submit', class extends WebComponent {
             this.button.removeAttribute('disabled');
         }
     }
-     */
+    */
+
+    HandleDisabled() {
+
+    }
+
+    handleLoading() {
+
+    }
 });

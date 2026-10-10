@@ -1,7 +1,7 @@
 <div class="dropdown"><a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><img src="catalog/view/language/{{ code }}/{{ code }}.png" alt="{{ name }}" title="{{ name }}"> <span class="d-none d-md-inline">{{ text_language }}</span> <i class="fa-solid fa-caret-down"></i></a>
   <ul class="dropdown-menu">
     {% for language in languages %}
-    <li><a href="{{ language.code }}" @click="onClick" class="dropdown-item"><img src="catalog/view/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+    <li><a href="{{ language.code }}" @click="handleClick" class="dropdown-item"><img src="catalog/view/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
     {% endfor %}
   </ul>
 </div>

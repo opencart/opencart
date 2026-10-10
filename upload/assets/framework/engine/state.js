@@ -30,8 +30,10 @@
  */
 export class State {
 	constructor(states, fn) {
+        console.log(states);
+
 		this.fn = fn;
-		this.data = new Map([ ...states ]);
+		this.data = new Map(Object.entries(states));
         this.listeners = new Map();
 	}
 

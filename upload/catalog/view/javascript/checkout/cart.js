@@ -29,13 +29,13 @@ export default class CheckoutCart extends WebComponent {
         let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
@@ -52,7 +52,7 @@ export default class CheckoutCart extends WebComponent {
                     this.cart.update();
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });
@@ -64,13 +64,13 @@ export default class CheckoutCart extends WebComponent {
         var element = this;
 
         ajax.post('', {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            success: function(json) {
+            handleSuccess: (json) => {
                 console.log(json);
 
                 if (json['redirect']) {
@@ -87,7 +87,7 @@ export default class CheckoutCart extends WebComponent {
                     //$('#shopping-cart').load('action.php?route=checkout/cart.list&language={{ language }}');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

@@ -24,13 +24,13 @@ export default class AddressList extends WebComponent {
         //if (!customer.isLogged()) return;
 
         ajax.get('action.php?route=account/address.delete&language=' + local.get('language') + '&customer_token=' + customer.getToken() + '&address_id=' + e.target.value, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            success: (json) => {
+            handleSuccess: (json) => {
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
@@ -41,7 +41,7 @@ export default class AddressList extends WebComponent {
                     this.update();
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            handleError: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

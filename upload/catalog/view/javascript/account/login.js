@@ -39,13 +39,13 @@ export default class AccountLogin extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/login.login&language=' + local.get('language') + '&login_token=' + this.token, form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('error')) {
@@ -65,7 +65,7 @@ export default class AccountLogin extends WebComponent {
                     this.update();
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

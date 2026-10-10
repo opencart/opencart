@@ -31,7 +31,7 @@
 export class State {
 	constructor(states, fn) {
 		this.fn = fn;
-		this.data = new Map({ ...states });
+		this.data = new Map([ ...states ]);
         this.listeners = new Map();
 	}
 

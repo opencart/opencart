@@ -25,13 +25,13 @@ export default class InformationGdpr extends WebComponent {
         let form = new FormData(this.form);
 
         ajax.post('action.php?route=information/gdpr.action&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json)=> {
+            handleSuccess: (json)=> {
                 this.form.state.clear();
 
                 if (json.has('error')) {
@@ -45,7 +45,7 @@ export default class InformationGdpr extends WebComponent {
                     this.update();
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

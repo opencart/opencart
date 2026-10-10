@@ -22,13 +22,13 @@ export default class AuthorizeReset extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('redirect')) {
@@ -45,7 +45,7 @@ export default class AuthorizeReset extends WebComponent {
                     this.update();
                 }
             },
-            onError: (xhr, ajaxOptions, thrownError) => {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

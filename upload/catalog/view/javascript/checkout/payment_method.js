@@ -27,13 +27,13 @@ customElements.define('payment-method', class extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=checkout/payment_method.getMethods&language=' + local.get('language'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('error')) {
@@ -111,13 +111,13 @@ customElements.define('payment-method', class extends WebComponent {
         let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/payment_method&language=' + local.get('language'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('error')) {

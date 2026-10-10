@@ -34,13 +34,13 @@ export default class ReturnForm extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 // Display error messages
@@ -53,7 +53,7 @@ export default class ReturnForm extends WebComponent {
                     this.state.set('success', json.get('success'));
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

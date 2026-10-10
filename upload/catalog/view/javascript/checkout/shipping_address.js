@@ -60,13 +60,13 @@ customElements.define('shipping-address', class extends WebComponent {
         e.preventDefault();
 
         await ajax.post('action.php?route=checkout/shipping_address.address&language=' + local.get('language') + '&address_id=' + element.value, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            success: (json)=> {
+            handleSuccess: (json)=> {
                 this.form.state.clear();
 
                 if (json.has('redirect')) {
@@ -86,7 +86,7 @@ customElements.define('shipping-address', class extends WebComponent {
                     //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -98,13 +98,13 @@ customElements.define('shipping-address', class extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=checkout/shipping_address.save&language=' + local.get('language'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onsuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('redirect')) {
@@ -156,7 +156,7 @@ customElements.define('shipping-address', class extends WebComponent {
                     $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
-            error: (xhr, ajaxOptions, thrownError) => {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

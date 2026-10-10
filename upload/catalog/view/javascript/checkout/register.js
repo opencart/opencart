@@ -61,13 +61,13 @@ customElements.define('checkout-register', class extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('redirect')) {
@@ -96,7 +96,7 @@ customElements.define('checkout-register', class extends WebComponent {
 
                     //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
                 },
-                onError: (e) => {
+                handleError: (e) => {
                     console.log('onError', e);
                 }
             });

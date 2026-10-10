@@ -42,7 +42,7 @@ export default class Ajax {
             ...options
         };
 
-        if (typeof options.beforeSend === 'function') options.beforeSend(config); // you can modify config here
+        if (typeof options.handleSend === 'function') options.handleSend(config); // you can modify config here
 
         // Try to parse JSON (even on error responses)
         let result;
@@ -74,15 +74,15 @@ export default class Ajax {
             }
 
             // ----- onSuccess -----
-            if (typeof options.onSuccess === 'function') options.onSuccess(result, response);
+            if (typeof options.handleSuccess === 'function') options.handleSuccess(result, response);
         } catch (e) {
             // ----- onError -----
-            if (typeof options.onError === 'function') options.onError(e);
+            if (typeof options.handleError === 'function') options.handleError(e);
 
             throw e;
         } finally {
             // ----- onComplete -----
-            if (typeof options.onComplete === 'function') options.onComplete();
+            if (typeof options.handleComplete === 'function') options.handleComplete();
         }
 
         return result;

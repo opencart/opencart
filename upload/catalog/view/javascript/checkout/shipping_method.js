@@ -30,13 +30,13 @@ customElements.define('shipping-method', class extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=checkout/shipping_method.quote&language=' + local.get('language'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('error')) {
@@ -96,7 +96,7 @@ customElements.define('shipping-method', class extends WebComponent {
                     $('#modal-shipping').modal('show');
                 }
             },
-            onError: (xhr, ajaxOptions, thrownError)=> {
+            handleError: (xhr, ajaxOptions, thrownError)=> {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -108,13 +108,13 @@ customElements.define('shipping-method', class extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=checkout/shipping_method.save&language=' + local.get('language'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: async (json) => {
+            handleSuccess: async (json) => {
                 console.log(json);
 
                 if (json['redirect']) {
@@ -139,7 +139,7 @@ customElements.define('shipping-method', class extends WebComponent {
                     //$('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
-            onError: (xhr, ajaxOptions, thrownError) => {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

@@ -29,13 +29,13 @@ export default class AccountWishlist extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            success: (json) => {
+            handleSuccess: (json) => {
                 console.log(json);
 
                 if (json.has('error')) {
@@ -46,7 +46,7 @@ export default class AccountWishlist extends WebComponent {
                     $('#alert').prepend('<ui-alert type="alert-success">' + json.get('success') + '</ui-alert>');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

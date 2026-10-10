@@ -25,10 +25,10 @@ export default class CatalogCompare extends WebComponent {
             beforeSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: async (json) => {
+            handleSuccess: async (json) => {
                 this.form.state.clear();
 
                 if (json.has('error')) {
@@ -65,7 +65,7 @@ export default class CatalogCompare extends WebComponent {
                     console.log('getProducts', cart.getProducts());
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

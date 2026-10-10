@@ -87,29 +87,29 @@ class ProductList extends WebComponent {
         return loader.template('catalog/product_list', [ data, language, config ]);
     }
 
-    onFilter(e) {
+    handleFilter(e) {
         this.getAttribute('filter', e.target.value);
     }
 
-    onManufacturerId(e) {
+    handleManufacturerId(e) {
         this.getAttribute('manufacturer_id', e.target.value);
     }
 
-    onSort(e) {
+    handleSort(e) {
         this.getAttribute('sort', e.target.value);
     }
 
-    onOrder(e) {
+    handleOrder(e) {
         this.getAttribute('order', e.target.value);
 
         this.update();
     }
 
-    onLimit(e) {
+    handleLimit(e) {
         this.getAttribute('limit', e.target.value);
     }
 
-    onPage(e) {
+    handlePage(e) {
         this.getAttribute('page', e.target.value);
     }
 }

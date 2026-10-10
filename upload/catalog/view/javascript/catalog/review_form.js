@@ -34,13 +34,13 @@ customElements.define('review-form', class extends WebComponent {
         let form = new FormData(this.form);
 
         ajax.post('action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.token + '&product_id=' + this.getAttribute('product_id'), form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            success: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('error')) {
@@ -53,7 +53,7 @@ customElements.define('review-form', class extends WebComponent {
                     this.update();
                 }
             },
-            error: (xhr, ajaxOptions, thrownError) => {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

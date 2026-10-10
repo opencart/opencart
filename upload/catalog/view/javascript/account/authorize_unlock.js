@@ -25,10 +25,10 @@ export default class AuthorizeUnlock extends WebComponent {
             beforeSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }
@@ -43,7 +43,7 @@ export default class AuthorizeUnlock extends WebComponent {
                     this.update();
                 }
             },
-            onError: (xhr, ajaxOptions, thrownError) => {
+            handleError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

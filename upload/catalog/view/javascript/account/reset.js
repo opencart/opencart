@@ -5,6 +5,8 @@ import { loader, ajax, customer, local } from '../index.js';
 const language = await loader.language('account/reset');
 
 export default class AccountReset extends WebComponent {
+    token = '';
+
     render() {
         return loader.template('account/reset', [ language ]);
     }
@@ -23,13 +25,13 @@ export default class AccountReset extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=account/reset&language=' + local.get('language') + '&reset_token=' + this.token, form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 // Display error messages
@@ -42,7 +44,7 @@ export default class AccountReset extends WebComponent {
                     this.state.set('success', json.get('success'));
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

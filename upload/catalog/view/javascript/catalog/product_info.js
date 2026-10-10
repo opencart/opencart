@@ -133,13 +133,13 @@ export default class ProductInfo extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=checkout/cart.add', form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: async (json) => {
+            handleSuccess: async (json) => {
                 this.form.state.clear();
 
                 // Display error messages
@@ -171,8 +171,8 @@ export default class ProductInfo extends WebComponent {
                     await cart.add(form.get('product_id'), form.get('quantity'), option, form.get('subscription_plan_id'));
                 }
             },
-            onError: (e) => {
-                console.log('onError', e);
+            handleError: (e) => {
+                console.log('onError', e);1`
             }
         });
     }

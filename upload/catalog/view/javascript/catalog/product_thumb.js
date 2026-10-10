@@ -49,13 +49,13 @@ customElements.define('product-thumb', class extends WebComponent {
         let form = new FormData(this.form);
 
         ajax.post('action.php?route=checkout/cart.add', form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: (json) => {
+            handleSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('redirect')) {
@@ -75,7 +75,7 @@ customElements.define('product-thumb', class extends WebComponent {
 
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

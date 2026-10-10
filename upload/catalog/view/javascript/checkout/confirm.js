@@ -27,14 +27,14 @@ customElements.define('checkout-confirm', class extends WebComponent {
         let form = new FormData(this.form);
 
         await ajax.post('action.php?route=checkout/cart.add', form, {
-            beforeSend: () => {
+            handleSend: () => {
                 this.form.state.set('submitting', true);
             },
-            onComplete: () => {
+            handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            onSuccess: this.succcess.bind(this),
-            onError: (e) => {
+            handleSuccess: this.succcess.bind(this),
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

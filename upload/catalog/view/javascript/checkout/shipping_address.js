@@ -44,7 +44,7 @@ customElements.define('shipping-address', class extends WebComponent {
         return loader.template('checkout/shipping_address', [ data,  language,  config ]);
     }
 
-    onChange(e) {
+    handleChange(e) {
         e.target
 
         if ($(this).val() == 1) {
@@ -92,7 +92,7 @@ customElements.define('shipping-address', class extends WebComponent {
         });
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

@@ -38,7 +38,7 @@ export default class AddressForm extends WebComponent {
         return loader.template('account/address', [ data, language, config ]);
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         //if (!customer.isLogged()) return;

@@ -6,7 +6,7 @@ export default class CatalogSearch extends WebComponent {
 
     }
 
-    onSubmit (e)  {
+    handleSubmit (e)  {
         e.preventDefault();
 
     }

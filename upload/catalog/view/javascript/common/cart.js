@@ -19,9 +19,4 @@ customElements.define('common-cart', class extends WebComponent {
 
         return loader.template('common/cart', [ data, language, config ]);
     }
-
-    onClick() {
-
-
-    }
 });

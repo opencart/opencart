@@ -18,7 +18,7 @@ export default class AddressList extends WebComponent {
         return loader.template('account/address_list', [ data, language, config ]);
     }
 
-    onDelete(e) {
+    handleDelete(e) {
         e.preventDefault();
 
         //if (!customer.isLogged()) return;

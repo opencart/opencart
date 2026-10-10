@@ -23,7 +23,7 @@ export default class AccountEdit extends WebComponent {
         return loader.template('account/edit', [ data, language, config ]);
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         //if (!customer.isLogged()) return;

@@ -44,7 +44,7 @@ customElements.define('payment-address', class extends WebComponent {
         return loader.template('checkout/payment_address', [ data, language ]);
     }
 
-    onChange(e) {
+    handleChange(e) {
         e.target
 
         if ($(this).val() == 1) {
@@ -93,7 +93,7 @@ customElements.define('payment-address', class extends WebComponent {
     }
 
     // New Payment Address
-    onSubmit(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);
@@ -105,7 +105,7 @@ customElements.define('payment-address', class extends WebComponent {
             onComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            success: (json) => {
+            onSuccess: (json) => {
                 this.form.state.clear();
 
                 if (json.has('redirect')) {
@@ -164,7 +164,7 @@ customElements.define('payment-address', class extends WebComponent {
                     $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
-            error: (xhr, ajaxOptions, thrownError) => {
+            onError: (xhr, ajaxOptions, thrownError) => {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

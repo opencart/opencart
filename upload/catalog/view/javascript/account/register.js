@@ -26,7 +26,7 @@ export default class AccountRegister extends WebComponent {
         return loader.template('account/register', [ language, config ]);
     }
 
-    async onConnect() {
+    async handleConnect() {
         //if (customer.isLogged()) return;
 
         let json = await ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
@@ -36,7 +36,7 @@ export default class AccountRegister extends WebComponent {
         }
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         //if (customer.isLogged()) return;
@@ -71,7 +71,7 @@ export default class AccountRegister extends WebComponent {
         });
     }
 
-    onAgree(e) {
+    handleAgree(e) {
         this.submitter.toggleAttribute('disabled', !e.target.hasAttribute('checked'));
     }
 }

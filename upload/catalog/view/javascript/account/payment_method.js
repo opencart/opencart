@@ -11,7 +11,7 @@ export default class AccountPayment extends WebComponent {
         return loader.template('account/payment_method', [ data, language ]);
     }
 
-    onSubmit(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
     }

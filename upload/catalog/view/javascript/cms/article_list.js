@@ -67,7 +67,7 @@ export default class ArticleList extends WebComponent {
         return loader.template('cms/article_list', [ data, language, config ]);
     }
 
-    onChange(e) {
+    handleChange(e) {
         this.getAttribute('sort');
     }
 }

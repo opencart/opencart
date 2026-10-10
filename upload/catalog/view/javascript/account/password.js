@@ -11,7 +11,7 @@ export default class AccountPassword extends WebComponent {
         return loader.template('account/password', [ language ]);
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         //if (!customer.isLogged()) return;

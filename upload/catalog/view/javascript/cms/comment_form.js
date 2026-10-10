@@ -32,7 +32,7 @@ customElements.define('comment-form', class extends WebComponent {
         });
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

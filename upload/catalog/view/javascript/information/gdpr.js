@@ -11,7 +11,7 @@ export default class InformationGdpr extends WebComponent {
         return loader.template('information/gdpr', [ language ]);
     }
 
-    onChange() {
+    handleChange() {
         if (this.value == 'remove') {
             $('#collapse-remove').slideDown();
         } else {
@@ -19,7 +19,7 @@ export default class InformationGdpr extends WebComponent {
         }
     }
 
-    onSubmit() {
+    handleSubmit() {
         e.preventDefault();
 
         let form = new FormData(this.form);

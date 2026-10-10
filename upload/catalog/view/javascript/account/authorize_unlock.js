@@ -14,7 +14,7 @@ export default class AuthorizeUnlock extends WebComponent {
         return loader.template('account/authorize_reset', [ language ]);
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         //if (customer.isLogged()) return;

@@ -191,14 +191,14 @@ export default class ProductInfo extends WebComponent {
         console.log(e);
     }
 
-    onClick(e) {
+    handleClick(e) {
         e.preventDefault();
 
         console.log('onClick');
         console.log(e);
     }
 
-    onChange(e) {
+    handleChange(e) {
         let subscription = e.currentTarget.value;
 
         subscription.classList.add('d-none');

@@ -17,11 +17,11 @@ customElements.define('checkout-confirm', class extends WebComponent {
         return loader.template('checkout/confirm', [ data, language, config ]);
     }
 
-    async onConnect(){
+    async handleConnect(){
 
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

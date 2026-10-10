@@ -50,7 +50,7 @@ export default class CmsTopic extends WebComponent {
         return loader.template('cms/topic', [ data, language ]);
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         let url = 'action.php?route=cms/topic&language=' + local.get('language');

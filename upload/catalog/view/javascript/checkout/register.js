@@ -25,7 +25,7 @@ customElements.define('checkout-register', class extends WebComponent {
         return loader.template('checkout/register', [ data,  language, config ]);
     }
 
-    async onConnect() {
+    async handleConnect() {
         //if (customer.isLogged()) return;
 
         let json = await ajax.get('action.php?route=checkout/register.token');
@@ -35,7 +35,7 @@ customElements.define('checkout-register', class extends WebComponent {
         }
     }
 
-    onChange() {
+    handleChange() {
         $('input[name=\'account\']').on('click', function() {
             if ($(this).val() == 1) {
                 $('#password').removeClass('d-none');
@@ -55,7 +55,7 @@ customElements.define('checkout-register', class extends WebComponent {
         $('input[name=\'account\']:checked').trigger('click');
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

@@ -25,7 +25,7 @@ customElements.define('common-language', class extends WebComponent {
         return loader.template('common/language', [ data, language ]);
     }
 
-    onClick(e) {
+    handleClick(e) {
         e.preventDefault();
 
         let code = e.currentTarget.getAttribute('href');

@@ -9,7 +9,7 @@ export default class AccountReset extends WebComponent {
         return loader.template('account/reset', [ language ]);
     }
 
-    async onConnect() {
+    async handleConnect() {
         let json = await ajax.get('action.php?route=account/reset.token&language=' + local.get('language'));
 
         if (json.has('token')) {
@@ -17,7 +17,7 @@ export default class AccountReset extends WebComponent {
         }
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

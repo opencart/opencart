@@ -15,7 +15,7 @@ export default class AccountNewsletter extends WebComponent {
         return loader.template('account/newsletter', [ data, language ]);
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         //if (!customer.isLogged()) return;

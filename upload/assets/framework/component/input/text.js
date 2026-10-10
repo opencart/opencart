@@ -168,7 +168,9 @@ customElements.define('input-text', class extends WebComponent {
 
     // A native change event does not leave the shadow root, so send it on.
     handleChange(e) {
-        this.dispatchEvent(new Event('change', { bubbles: true }));
+        this.dispatchEvent(new Event('change', {
+            bubbles: true
+        }));
     }
 
     handleReset() {
@@ -181,9 +183,5 @@ customElements.define('input-text', class extends WebComponent {
 
     handleDisabled(disabled) {
         if (this.input) this.input.disabled = disabled;
-    }
-
-    formStateRestoreCallback(state) {
-        this.value = state;
     }
 });

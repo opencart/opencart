@@ -21,7 +21,7 @@ export default class AccountLogin extends WebComponent {
         return loader.template('account/login', [ data, language ]);
     }
 
-    async onConnect() {
+    async handleConnect() {
         //if (customer.isLogged()) return;
 
         let json = await ajax.get('action.php?route=account/login.token&language=' + local.get('language'));
@@ -33,7 +33,7 @@ export default class AccountLogin extends WebComponent {
         }
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

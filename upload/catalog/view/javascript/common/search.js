@@ -18,13 +18,13 @@ customElements.define('common-search', class extends WebComponent {
         return loader.template('common/search', [ data, language ]);
     }
 
-    onSubmit(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
 
     }
 
-    onInput(e) {
+    handleInput(e) {
 
 
     }

@@ -25,7 +25,7 @@ customElements.define('common-currency', class extends WebComponent {
         return loader.template('common/currency', [ data, language, config ]);
     }
 
-    onClick(e) {
+    handleClick(e) {
         e.preventDefault();
 
         let code = e.currentTarget.getAttribute('href');

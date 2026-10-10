@@ -20,7 +20,7 @@ export default class AccountForgotten extends WebComponent {
         return loader.template('account/forgotten', [ language ]);
     }
 
-    async onConnect() {
+    async handleConnect() {
         let json = await ajax.get('action.php?route=account/forgotten.token&language=' + local.get('language'));
 
         if (json.has('token')) {
@@ -28,7 +28,7 @@ export default class AccountForgotten extends WebComponent {
         }
     }
 
-    async onSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         //if (customer.isLogged()) return;

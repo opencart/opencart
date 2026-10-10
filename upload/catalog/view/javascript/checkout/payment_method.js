@@ -105,7 +105,7 @@ customElements.define('payment-method', class extends WebComponent {
         });
     }
 
-    onSubmit(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

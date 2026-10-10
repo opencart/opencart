@@ -20,7 +20,7 @@ customElements.define('review-form', class extends WebComponent {
         return loader.template('catalog/review_form', [data, language, config]);
     }
 
-    async onConnect() {
+    async handleConnect() {
         let json = await ajax.get('action.php?route=account/review.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
 
         if (json.has('token')) {
@@ -28,7 +28,7 @@ customElements.define('review-form', class extends WebComponent {
         }
     }
 
-    onSubmit(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
         let form = new FormData(this.form);

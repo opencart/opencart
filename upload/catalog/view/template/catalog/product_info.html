@@ -195,7 +195,7 @@
         <hr/>
         <h3>{{ text_subscription }}</h3>
         <div class="mb-3">
-          <select name="subscription_plan_id" id="input-subscription" @change="onChange" class="form-select" required>
+          <select name="subscription_plan_id" id="input-subscription" @change="handleChange" class="form-select" required>
             <option value="">{{ text_select }}</option>
 
             {% for subscription_plan in subscription_plans %}

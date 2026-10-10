@@ -37,7 +37,7 @@
   <div class="col-lg-3 col-6">
     <div class="input-group mb-3">
       <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
-      <select id="input-limit" class="form-select" @change="onChange">
+      <select id="input-limit" class="form-select" @change="handleChange">
         {% for limits in limits %}
           <option value="{{ limits.href }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
         {% endfor %}

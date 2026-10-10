@@ -521,7 +521,8 @@ class User extends \Opencart\System\Engine\Model {
 	 * $user_authorize_data = [
 	 *     'token'      => '',
 	 *     'ip'         => '',
-	 *     'user_agent' => ''
+	 *     'user_agent' => '',
+	 *     'expire'     => 90
 	 * ];
 	 *
 	 * $this->load->model('user/user');
@@ -529,7 +530,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * $this->model_user_user->addAuthorize($user_id, $user_authorize_data);
 	 */
 	public function addAuthorize(int $user_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_authorize` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW(), `date_expire` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_authorize` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW(), `date_expire` = DATE_ADD(NOW(), INTERVAL " . (int)$data['expire'] . " DAY)");
 	}
 
 	/**
@@ -654,7 +655,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * $authorize_info = $this->model_user_user->getAuthorizeByToken($user_id, $token);
 	 */
 	public function getAuthorizeByToken(int $user_id, string $token): array {
-		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
+		$query = $this->db->query("SELECT *, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `date_expire` > NOW()) AS `attempts` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "' AND `date_expire` > NOW()");
 
 		return $query->row;
 	}

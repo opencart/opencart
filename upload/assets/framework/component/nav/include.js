@@ -24,7 +24,6 @@ customElements.define('nav-include', class Include extends WebComponent {
         super();
 
         this.data = new Map();
-        this.request = 0;
     }
 
     get src() {
@@ -39,7 +38,7 @@ customElements.define('nav-include', class Include extends WebComponent {
         // Get the source HTML to load
         if (!this.src) return;
 
-        let request = ++this.request;
+
 
         let [ path, query] = this.src.split('?');
 
@@ -60,7 +59,7 @@ customElements.define('nav-include', class Include extends WebComponent {
                 this.data.set(path, tag);
             }
 
-            if (request !== this.request) return;
+            //if (request !== this.request) return;
 
             let name = this.data.get(path);
 
@@ -72,13 +71,17 @@ customElements.define('nav-include', class Include extends WebComponent {
                 html += ' ' + key + '="' + escapeAttribute(value) + '"';
             }
 
-            return html + '></' + name + '>';
+            let test = html + '></' + name + '>';
+
+            return test;
         } catch (error) {
             console.error('nav-include: could not load "' + this.src + '"', error);
 
-            if (request !== this.request) return;
-
             return '<div class="alert alert-danger">The page could not be loaded.</div>';
         }
+    }
+
+    HandleLoading(key, value) {
+        this.toggleAttribute('loading', this.hasAttribute('loading'));
     }
 });

@@ -9,8 +9,6 @@ customElements.define('button-submit', class extends WebComponent {
     html = '';
     width;
 
-
-
     render() {
         let disabled = (this.hasAttribute('disabled') || this.matches(':disabled')) ? ' disabled' : '';
 
@@ -23,7 +21,7 @@ customElements.define('button-submit', class extends WebComponent {
                 :host(:state(loading)) .label { visibility: hidden; }
                 :host(:state(loading)) .spinner { display: inline-block; }
             </style>
-            <button type="button" @ref="button" @click="onClick" class="btn btn-primary"${disabled}>
+            <button type="submit" @ref="button" @click="handleClick" class="btn btn-primary"${disabled}>
                 <span class="label"><slot></slot></span>
                 <i class="spinner fa-solid fa-circle-notch fa-spin text-light"></i>
             </button>
@@ -35,10 +33,12 @@ customElements.define('button-submit', class extends WebComponent {
         this.width = this.offsetWidth;
     }
 
-    handleClick(event) {
-        this.handleState(['loading'])
+    handleClick(e) {
+        console.log(this.button.click());
 
-        this.internal.form.requestSubmit();
+        //this.handleState(['loading'])
+
+        //this.internal.form.requestSubmit();
     }
 
     // Called by the browser when the disabled attribute or a disabled

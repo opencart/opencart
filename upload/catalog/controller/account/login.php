@@ -8,11 +8,6 @@ namespace Opencart\Catalog\Controller\Account;
  * @package Opencart\Catalog\Controller\Account
  */
 class Login extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
 	public function token(): void {
 		$json = [];
 

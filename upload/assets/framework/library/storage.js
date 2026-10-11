@@ -36,21 +36,21 @@ export default class Storage {
 
         let response = await fetch(file);
 
-        if (response.status !== 200) {
-            throw new Error('Could not load storage file ' + path);
+        if (response.status == 200) {
+            let data = await response.json();
 
-            return undefined;
-        }
+            if (!Array.isArray(data)) {
+                this.cache.set(path, new Map(Object.entries(data)));
+            } else {
+                this.cache.set(path, data);
+            }
 
-        let data = await response.json();
-
-        if (!Array.isArray(data)) {
-            this.cache.set(path, new Map(Object.entries(data)));
+            return this.cache.get(path);
         } else {
-            this.cache.set(path, data);
+            throw new Error(`[Storage] Could not load storage file ${path}!`);
         }
 
-        return this.cache.get(path);
+        return undefined;
     }
 
     static getInstance() {

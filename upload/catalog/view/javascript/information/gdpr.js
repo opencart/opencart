@@ -5,6 +5,12 @@ import { loader, ajax, local, customer } from '../index.js';
 const language = await loader.language('information/gdpr');
 
 export default class InformationGdpr extends WebComponent {
+    constructor() {
+        super();
+
+        this.token = '';
+    }
+
     async render() {
 
 

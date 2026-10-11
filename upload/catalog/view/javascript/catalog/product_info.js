@@ -172,7 +172,7 @@ export default class ProductInfo extends WebComponent {
                 }
             },
             handleError: (e) => {
-                console.log('onError', e);1`
+                console.log('onError', e);
             }
         });
     }

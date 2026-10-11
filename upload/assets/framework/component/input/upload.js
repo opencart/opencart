@@ -61,7 +61,7 @@ customElements.define('input-upload', class extends WebComponent {
         let html = '';
 
         html += '<div class="input-group">';
-        html += '  <button type="button" class="btn btn-primary" @click="onClick"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>';
+        html += '  <button type="button" class="btn btn-primary" @click="handleClick"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>';
         html += '  <input type="text" name="' + this.name + '" value="' + this.value + '" id="' + this.getAttribute('input-id') + '" class="form-control" data-on="click:onClick"/>';
         html += '  <button type="button" class="btn btn-outline-secondary" @click="download" disabled><i class="fa-solid fa-download"></i></button>';
         html += '  <button type="button" class="btn btn-outline-danger" @click="cancel" disabled><i class="fa-solid fa-eraser"></i></button>';

@@ -39,7 +39,7 @@ customElements.define('input-country', class extends WebComponent {
 
         }
 
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" @change="onChange" class="form-select"';
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" @change="handleChange" class="form-select"';
 
         if (this.hasAttribute('required')) {
             html += ' required';

@@ -525,6 +525,8 @@ export class CurlyTag {
     }
 
     async fetch(path) {
+        if (this.cache.has(path)) return this.cache.get(path);
+
         let file = this.directory + path + '.html';
         let namespace = '';
         let parts = path.replace(/\/+$/, '').split('/');
@@ -544,9 +546,13 @@ export class CurlyTag {
         let response = await fetch(file);
 
         if (response.status == 200) {
-            return await response.text();
+            let code = await response.text();
+
+            this.cache.set(path, code);
+
+            return this.cache.get(path);
         } else {
-            console.log(`[Template] Could not load template file ${path}!`);
+            throw new Error(`[Template] Could not load template file ${path}!`);
         }
 
         return '';
@@ -561,11 +567,9 @@ export class CurlyTag {
      * @returns {string} - Rendered template string
      */
     async render(path, data = {}) {
-        if (this.cache.has(path)) return this.process(this.cache.get(path));
+        let code = await this.fetch(path);
 
-        this.cache.set(path, this.tokenize(await this.fetch(path)));
-
-        return this.process(this.cache.get(path), data);
+        return this.parse(code, data);
     }
 
     // ─── Main render ────────────────────────────────────────────────────────
@@ -574,16 +578,6 @@ export class CurlyTag {
         let index = 0;
         let stack = [];
         let output = '';
-
-        // Handlers only receive the current token, not the full array — macro
-        // definitions need the latter to capture their own body as a token
-        // slice (see handleMacro), so stash it for the duration of this pass.
-        // Saved/restored (rather than just set) because calling a macro
-        // recurses into process() with the macro's own body tokens.
-
-        let previous_tokens = this._tokens;
-
-        this._tokens = tokens;
 
         while (index < tokens.length) {
             let token = tokens[index];
@@ -655,8 +649,6 @@ export class CurlyTag {
         if (pending?.type === 'output' && pending.output != null) {
             output += pending.output;
         }
-
-        this._tokens = previous_tokens;
 
         return output;
     }

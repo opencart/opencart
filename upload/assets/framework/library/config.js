@@ -36,17 +36,17 @@ export default class Config {
 
         let response = await fetch(file);
 
-        if (response.status !== 200) {
-            throw new Error('Could not load config file ' + path);
+        if (response.status == 200) {
+            let data = await response.json();
 
-            return undefined;
+            this.cache.set(path, new Map(Object.entries(data)));
+
+            return this.cache.get(path);
+        } else {
+            throw new Error(`[Config] Could not load config file ${path}!`);
         }
 
-        let data = await response.json();
-
-        this.cache.set(path, new Map(Object.entries(data)));
-
-        return this.cache.get(path);
+        return undefined;
     }
 
     static getInstance() {

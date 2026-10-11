@@ -60,6 +60,8 @@ export default class Loader {
             }
         }
 
+        console.log(values);
+
         return await template.render(path, values);
     }
 

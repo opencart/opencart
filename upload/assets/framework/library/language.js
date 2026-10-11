@@ -38,17 +38,17 @@ export default class Language {
 
         let response = await fetch(file);
 
-        if (response.status !== 200) {
-            throw new Error('Could not load language file ' + path);
+        if (response.status == 200) {
+            let data = load(await response.text());
 
-            return undefined;
+            this.cache.set(path, new Map(Object.entries(data)));
+
+            return this.cache.get(path);
+        } else {
+            throw new Error(`[Language] Could not load language file ${path}!`);
         }
 
-        let data = load(await response.text());
-
-        this.cache.set(path, new Map(Object.entries(data)));
-
-        return this.cache.get(path);
+        return undefined;
     }
 
     static getInstance() {

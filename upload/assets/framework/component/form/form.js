@@ -31,7 +31,7 @@ customElements.define('form-input', class extends WebComponent {
     }
 
     render() {
-        return `<form @ref="form" @submit="onSubmit"><slot></slot></form>`;
+        return `<form @ref="form" @submit="handleSubmit"><slot></slot></form>`;
     }
 
     handleConnect() {

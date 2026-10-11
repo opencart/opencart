@@ -82,12 +82,14 @@ export class WebComponent extends HTMLElement {
     }
 
     async disconnectedCallback() {
+        console.log('disconnectedCallback');
+
         if (this.binder) {
-            this.binder.destroy();
+            //this.binder.destroy();
         }
 
         if (this.state) {
-            this.state.destroy();
+            //this.state.destroy();
         }
 
         if (typeof this.handleDisconnect === 'function') {
@@ -130,6 +132,8 @@ export class WebComponent extends HTMLElement {
     }
 
     async onAttributeChange(key, value_new, value_old) {
+        console.log('onAttributeChange', `${key} changed from ${value_old} to ${value_new}`);
+
         let name= 'handle' + key.split('-').map(value => value.charAt(0).toUpperCase() + value.slice(1)).join('');
 
         if (typeof this[name] === 'function') {
@@ -140,6 +144,8 @@ export class WebComponent extends HTMLElement {
     }
 
     async onStateChange(key, value_new, value_old) {
+        console.log('onStateChange', `${key} changed from ${value_old} to ${value_new}`);
+
         let name= 'handle' + key.split('-').map(value => value.charAt(0).toUpperCase() + value.slice(1)).join('');
 
         if (typeof this[name] === 'function') {

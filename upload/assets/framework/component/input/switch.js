@@ -21,7 +21,7 @@ customElements.define('input-switch', class extends WebComponent {
             html += ' id="' + this.getAttribute('input-id') + '"';
         }
 
-        html += ' @change="onChange" class="form-check-input"';
+        html += ' @change="handleChange" class="form-check-input"';
 
         if (this.checked) {
             html += ' checked';

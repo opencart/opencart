@@ -78,7 +78,7 @@ customElements.define('ui-modal', class extends WebComponent {
                 .close:hover, .close:focus-visible { opacity: 1; }
                 .body { padding: 0 1rem 1rem; }
             </style>
-            <dialog @ref="dialog" @click="onClick" @close="onClose" closedby="any" ${name}>
+            <dialog @ref="dialog" @click="handleClick" @close="handleClose" closedby="any" ${name}>
                 <div class="header">
                     ${heading ? `<h2 class="title" id="heading">${escapeHtml(heading)}</h2>` : ''}
                     <button type="button" class="close" aria-label="${escapeHtml(this.getAttribute('close-label') ?? 'Close')}" @click="close">&times;</button>

@@ -75,8 +75,7 @@ customElements.define('input-text', class extends WebComponent {
       }
       .error[hidden] {
         display: none;
-      }
-    `;
+      }`;
     }
 
     get value() {
@@ -130,7 +129,7 @@ customElements.define('input-text', class extends WebComponent {
 
         //input.setAttribute('placeholder', this.hasAttribute('placeholder'));
 
-        //html += '<@ref="input" @input="onInput" @change="onChange"';
+        //html += '<@ref="input" @input="handleInput" @change="onChange"';
 
         if (this.hasAttribute('required')) input.toggleAttribute('required', true);
         if (this.hasAttribute('disabled')) input.toggleAttribute('disabled', true);

@@ -6,6 +6,21 @@ namespace Opencart\Catalog\Controller\Information;
  * @package Opencart\Catalog\Controller\Information
  */
 class Contact extends \Opencart\System\Engine\Controller {
+	public function token(): void {
+		$json = [];
+
+		if ($this->customer->isLogged()) {
+
+		}
+
+		// Create form token
+		$this->session->data['register_token'] = oc_token(26);
+
+		$json['token'] = $this->session->data['register_token'];
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 	/**
 	 * Index
 	 *

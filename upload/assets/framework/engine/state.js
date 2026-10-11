@@ -87,7 +87,7 @@ export class State {
 
     destroy() {
         this.listeners = [];
-        this.onChange = null;
+        this.fn = null;
     }
 }
 

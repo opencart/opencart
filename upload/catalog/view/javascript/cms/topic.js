@@ -15,19 +15,24 @@ export default class CmsTopic extends WebComponent {
     async render() {
         let data = new Map();
 
-        data.set('topic_id', 0);
+        let topic_id = 0;
+
+        if (this.hasAttribute('topic_id')) {
+            let topic_id = this.getAttribute('topic_id');
+        }
+
+        data.set('topic_id', topic_id);
         data.set('heading_title', language.get('heading_title'));
         data.set('description', '');
         data.set('image', '');
 
         // If Topic ID is set
-        let topic = await loader.storage('topic/topic-' + this.getAttribute('topic_id'));
+        let topic = await loader.storage('topic/topic-' + data.get('topic_id'));
 
         if (topic instanceof Map && local.get('language') in topic.get('description')) {
             let description = topic.get('description')[local.get('language')];
 
-            data.set('topic_id', topic.get('topic_id'));
-            data.set('name', description.name);
+            data.set('heading_title', description.name);
             data.set('description', description.description);
             data.set('image', topic.image);
         }

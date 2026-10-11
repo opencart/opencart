@@ -145,7 +145,7 @@ export class Binder {
             let scope = is_global ? 'Global' : 'Host';
             let prefix = is_global ? ':' : '@';
 
-            throw new Error(`Binder: no method "${method}" found in ${scope} for event "${prefix}${event}"`);
+            throw new Error(`Binder: no method "${method}" found in ${scope} for ${element.tagName} event "${prefix}${event}"`);
 
             return;
         }

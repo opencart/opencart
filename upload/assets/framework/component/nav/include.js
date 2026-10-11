@@ -38,8 +38,6 @@ customElements.define('nav-include', class Include extends WebComponent {
         // Get the source HTML to load
         if (!this.src) return;
 
-
-
         let [ path, query] = this.src.split('?');
 
         try {
@@ -81,7 +79,11 @@ customElements.define('nav-include', class Include extends WebComponent {
         }
     }
 
+    handleAttribute() {
+        this.update();
+    };
+
     HandleLoading(key, value) {
-        this.toggleAttribute('loading', this.hasAttribute('loading'));
+        //this.toggleAttribute('loading', this.hasAttribute('loading'));
     }
 });

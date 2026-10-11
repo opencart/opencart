@@ -42,6 +42,10 @@ customElements.define('input-zone', class extends WebComponent {
 
         html += '>' + this.default;
 
+        //if () {
+
+        //}
+
         let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
 
         console.log(country);

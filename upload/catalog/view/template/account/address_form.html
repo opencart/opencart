@@ -1,5 +1,5 @@
 <h1>{{ heading_title }}</h1>
-<form id="form-address" @submit="handleSubmit">
+<form-submit @ref="form">
   <fieldset>
 
     <div class="row mb-3">
@@ -93,13 +93,13 @@
   </fieldset>
   <div class="row">
     <div class="col">
-      <a href="account/address.js" :click="link" class="btn btn-light">{{ button_back }}</a>
+      <a href="account/address_list.js" :click="link" class="btn btn-light">{{ button_back }}</a>
     </div>
     <div class="col text-end">
       <button-submit @ref="button" class="btn btn-primary">{{ button_continue }}</button-submit>
     </div>
   </div>
-</form>
+</form-submit>
 
 
 

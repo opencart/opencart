@@ -30,11 +30,10 @@
  */
 export class State {
 	constructor(states, fn) {
-        console.log(states);
-
 		this.fn = fn;
 		this.data = new Map(Object.entries(states));
-        this.listeners = new Map();
+        this.old = new Map();
+        this.listeners = new Set();
 	}
 
     /**
@@ -62,7 +61,7 @@ export class State {
     }
 
     hasListener(key) {
-
+        return this.listeners.has(key);
     }
 
 	get(key) {
@@ -70,7 +69,11 @@ export class State {
 	}
 
 	set(key, value) {
+        this.listeners.get(key).forEach(handler => handler(key, value));
+
 		this.data.set(key, value);
+
+        this.markDirty(key, value, value_old);
 
 		this.fn(key, value);
 	}
@@ -81,6 +84,8 @@ export class State {
 
 	delete(key) {
 		this.data.delete(key);
+
+        this.markDirty(key, undefined, value_old);
 
 		this.callback([key]);
 	}
@@ -95,11 +100,6 @@ export class State {
 export class State {
 
     constructor(initial = {}, options = {}) {
-
-
-
-
-
         this.listeners = new Set();
         this.onChange = typeof options.onChange === 'function' ? options.onChange : null;
         this.dirty = new Set();

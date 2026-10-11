@@ -67,6 +67,18 @@ customElements.define('ui-modal', class extends WebComponent {
         // aria-labelledby points at the title; without one the dialog needs a name of its own.
         let name = heading ? 'aria-labelledby="heading"' : `aria-label="${escapeHtml(this.getAttribute('label') ?? 'Dialog')}"`;
 
+        let html  = '<div class="modal-dialog modal-dialog-centered">';
+
+        html += '    <div class="modal-content">';
+        html += '      <div class="modal-header">';
+        html += '        <slot name="title"></slot>';
+        html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+        html += '      </div>';
+        html += '      <div class="modal-body"><slot name="body"></slot></div>';
+        html += '    </div>';
+        html += '  </div>';
+        html += '</div>';
+
         return `
             <style>
                 :host { display: contents; }

@@ -35,7 +35,7 @@ export default class AddressForm extends WebComponent {
             data.set('zone_id', address.zone_id);
         }
 
-        return loader.template('account/address', [ data, language, config ]);
+        return loader.template('account/address_form', [ data, language, config ]);
     }
 
     async handleSubmit(e) {

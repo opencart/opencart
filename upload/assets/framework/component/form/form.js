@@ -1,67 +1,60 @@
 import { WebComponent } from '../../engine.js';
 
-customElements.define('form-input', class extends WebComponent {
-    states = {
-        submitting: false,
-        success: '',
-        error: ''
+customElements.define('form-submit', class extends WebComponent {
+    /* Will only manage states listed here */
+    states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        }
     }
 
-    styles() {
-        return `
-        :host {
-            display: block;
-        }
-        
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        
-        ::slotted(button[type='submit']) {
-            align-self: flex-start;
-            margin-top: 0.5rem;
-        }
-        
-        :host([data-submitting]) ::slotted(button[type='submit']) {
-            opacity: 0.6;
-            pointer-events: none;
-        }`;
+    styles = `
+    :host {
+        display: block;
     }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    ::slotted(button[type='submit']) {
+        align-self: flex-start;
+        margin-top: 0.5rem;
+    }
+    
+    :host([data-submitting]) ::slotted(button[type='submit']) {
+        opacity: 0.6;
+        pointer-events: none;
+    }`;
 
     render() {
         return `<form @ref="form" @submit="handleSubmit"><slot></slot></form>`;
     }
 
     handleConnect() {
-        this.state.addListener('submit', this.handleSubmit);
+        console.log('handleConnect', this);
+    }
 
-        this.state.addListener('error', this.stateError);
-        ///this.state.addListener('disabled', this.stateDisabled);
-
-
-        //this.state.addListener('disabled', this.handleDisabled);
+    handleDisconnect() {
+        console.log('handleDisconnect', this);
     }
 
     async handleSubmit(e) {
         e.preventDefault();
 
-        const skip = this.hasAttribute('novalidate');
+        //slot.assignedElements({ flatten: true })
 
-        if (!skip && !this.form.reportValidity()) return; // browser already focused/flagged the first invalid field
+        //console.log('this.form.elements', this.form.elements);
 
         this.submitter.state.set('loading', true);
-    }
 
-    handleState(keys) {
-        if (keys.includes('submitting')) {
-            this.toggleAttribute('submitting', this.state.get('submitting'));
-        }
+        const form = new FormData(this.form);
 
-        if (keys.includes('error')) {
-            this.handleError();
-        }
+        console.log(form);
     }
 
     handleError() {
@@ -70,17 +63,19 @@ customElements.define('form-input', class extends WebComponent {
         let errors = this.state.get('error');
 
         for (let [ key, value ] of errors) {
+            if (key === 'warning') {
 
-            //this.form.get(key).state.set('error', value);
+            }
 
-
-            // Remove past error classes from inputs
-            this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-            this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
+            this.form.get(key).state.set('error', value);
         }
     }
 
+    handleDisabled() {
 
+    }
 
+    handleReadOnly() {
+
+    }
 });

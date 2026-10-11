@@ -20,24 +20,12 @@ customElements.define('input-text', class extends WebComponent {
     static observedAttributes = [
         'name',
         'value',
-        'label',
-        'placeholder',
         'required',
         'disabled',
-        'invalid',
-        'error',
-        'disabled',
-        'readonly',
-        'required'
+        'readonly'
     ];
     static formAssociated = true;
-
-    constructor() {
-        super();
-
-        // Clicking a <label for="..."> lands on this element, not on the input inside it.
-        this.addEventListener('click', () => this.input?.focus());
-    }
+    states = { error: '' };
 
     styles() {
         return `
@@ -64,7 +52,7 @@ customElements.define('input-text', class extends WebComponent {
         outline: 2px solid #4a90d9;
         outline-offset: 1px;
       }
-      :host([data-invalid]) input {
+      input:invalid {
         border-color: #d33;
       }
       .error {
@@ -83,104 +71,71 @@ customElements.define('input-text', class extends WebComponent {
     }
 
     set value(value) {
-        if (this.input) {
-            this.input.value = value;
-        } else {
-            this.setAttribute('value', value);
-        }
 
-        this.sync();
-    }
-
-    handleError(message) {
-        this.internals.setValidity({
-            tooShort: true
-        }, 'Minimum 3 characters');
-    }
-
-    validity() {
-        return this.internal.validity;
-    }
-
-    checkValidity() {
-        return this.internal.checkValidity();
-    }
-
-    reportValidity() {
-        return this.internal.reportValidity();
     }
 
     render() {
         const label = this.getAttribute('label') || '';
         const placeholder = this.getAttribute('placeholder') || '';
-        const type = this.getAttribute('type') || 'text';
 
-
-        let input = document.createElement('input');
-
-        Object.assign(input, {
-            name: 'name',
-            type: 'text',
-            value: this.value,
-            className: 'form-control'
-        });
-
-        console.log(input);
+        let html = '<input type="text" name="' + + '" @ref="input" @input="handleInput" @change="handleChange" class="form-control"';
 
         //input.setAttribute('placeholder', this.hasAttribute('placeholder'));
 
-        //html += '<@ref="input" @input="handleInput" @change="onChange"';
-
-        if (this.hasAttribute('required')) input.toggleAttribute('required', true);
-        if (this.hasAttribute('disabled')) input.toggleAttribute('disabled', true);
-        if (this.hasAttribute('readonly')) input.toggleAttribute('readonly', true);
-
-        return input;
-    }
-
-    async update() {
-        await super.update();
-
-        this.sync();
-    }
-
-    // Hands the current value and validity to the form.
-    sync() {
-        this.internal.setFormValue(this.value);
-
-        if (!this.input) return;
-
-        if (this.input.validity.valid) {
-            this.internal.setValidity({});
-        } else {
-            this.internal.setValidity(this.input.validity, this.input.validationMessage, this.input);
+        if (this.hasAttribute('required')) {
+            html += ' required';
         }
+
+        if (this.hasAttribute('disabled')) {
+            html += ' disabled';
+        }
+
+        if (this.hasAttribute('readonly')) {
+            html += ' readonly';
+        }
+
+        // Remove past error classes from inputs
+        // this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        // this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+        // this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+        html += '/>';
+
+        if (this.state.has('error')) {
+            html += '<div class="invalid-feedback">' + this.state.get('error') + '</div>';
+        }
+
+        return html;
+    }
+
+    handleError(e) {
+        console.log(e);
+
     }
 
     handleInput(e) {
         console.log(e);
 
-        this.states.delete('invalid');
-
-        this.sync();
+        //this.state.delete('error');
     }
 
     // A native change event does not leave the shadow root, so send it on.
     handleChange(e) {
-        this.dispatchEvent(new Event('change', {
-            bubbles: true
-        }));
+
     }
 
     handleReset() {
         this.input.value = this.getAttribute('value') ?? '';
 
-        this.states.delete('invalid');
-
-        this.sync();
+        this.states.set('success', '');
+        this.states.set('error', []);
     }
 
-    handleDisabled(disabled) {
-        if (this.input) this.input.disabled = disabled;
+    handleDisabled() {
+        this.update();
+    }
+
+    handleReadonly() {
+        this.update();
     }
 });

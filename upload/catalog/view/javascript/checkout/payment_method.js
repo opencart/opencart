@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, cart, customer } from '../index.js';
+import { loader, ajax, cart, customer, session } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -17,92 +17,58 @@ customElements.define('payment-method', class extends WebComponent {
     async render(){
         let data = new Map();
 
+        session.get('payment');
 
-        return loader.template('checkout/payment_method', [ data, language ]);
-    }
+        let html = '<ui-modal>';
 
-    async getMethods() {
-        e.preventDefault();
+        html += '<h5 slot="title" class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method | escape }}</h5>';
+        html += '<form slot="body" id="form-payment-method">';
+        html += '  <p>{{ text_payment | escape }}</p>';
 
-        let form = new FormData(this.form);
+        var first = true;
 
-        await ajax.post('action.php?route=checkout/payment_method.getMethods&language=' + local.get('language'), form, {
-            handleSend: () => {
-                this.form.state.set('submitting', true);
-            },
-            handleComplete: () => {
-                this.form.state.set('submitting', false);
-            },
-            handleSuccess: (json) => {
-                this.form.state.clear();
+        for (let [ key_1, value ] of json.get('payment_methods')) {
+            html += '<p><strong>' + value['name'] + '</strong></p>';
 
-                if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
-                }
+            if (!value['error']) {
+                for (let [ key_2, option ] of value.option) {
+                    html += '<div class="form-check">';
 
-                if (json['payment_methods']) {
-                    $('#modal-payment').remove();
+                    var code = key + '-' + j.replaceAll('_', '-');
 
-                    let html = '<ui-modal>';
+                    html += '<input type="radio" name="payment_method" value="' + option['code'] + '" id="input-payment-method-' + code + '"';
 
-                    html += '  <div class="modal-dialog modal-dialog-centered">';
-                    html += '    <div class="modal-content">';
-                    html += '      <div class="modal-header">';
-                    html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method | escape }}</h5>';
-                    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-                    html += '      </div>';
-                    html += '      <div class="modal-body">';
-                    html += '        <form id="form-payment-method">';
-                    html += '          <p>{{ text_payment | escape }}</p>';
+                    var method = $('#input-payment-code').val();
 
-                    var first = true;
+                    if ((json['payment_methods'][i]['option'][j]['code'] == method) || (!method && first)) {
+                        html += ' checked';
 
-                    for (i in json['payment_methods']) {
-                        html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
-
-                        if (!json['payment_methods'][i]['error']) {
-                            for (j in json['payment_methods'][i]['option']) {
-                                html += '<div class="form-check">';
-
-                                var code = i + '-' + j.replaceAll('_', '-');
-
-                                html += '<input type="radio" name="payment_method" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + code + '"';
-
-                                var method = $('#input-payment-code').val();
-
-                                if ((json['payment_methods'][i]['option'][j]['code'] == method) || (!method && first)) {
-                                    html += ' checked';
-
-                                    first = false;
-                                }
-
-                                html += '/>';
-                                html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
-                                html += '</div>';
-                            }
-                        } else {
-                            html += '<div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div>';
-                        }
+                        first = false;
                     }
 
-                    html += '          <div class="text-end">';
-                    html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
-                    html += '          </div>';
-                    html += '        </form>';
-                    html += '      </div>';
-                    html += '    </div>';
-                    html += '  </div>';
+                    html += '/>';
+                    html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
                     html += '</div>';
-
-                    $('body').append(html);
-
-                    $('#modal-payment').modal('show');
                 }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            } else {
+                html += '<div class="alert alert-danger">' + value['error'] + '</div>';
             }
-        });
+        }
+
+        html += '  <div class="text-end">';
+        html += '    <button type="submit" @ref="submitter" class="btn btn-primary">{{ button_continue }}</button>';
+        html += '  </div>';
+        html += '</form>';
+
+        return loader.template(html, [ data, language ]);
+    }
+
+    handleConnect() {
+
+    }
+
+    handleDisconnect() {
+
     }
 
     handleSubmit(e) {
@@ -143,65 +109,12 @@ customElements.define('payment-method', class extends WebComponent {
         });
     }
 
-    addComment(e) {
+    onAgree() {
 
     }
 });
 
 /*
-// Comment
-var timer = '';
-
-$('#input-comment').on('keydown', function() {
-    $('#button-confirm').prop('disabled', true);
-
-    // Request
-    clearTimeout(timer);
-
-    timer = setTimeout(function(object) {
-        $.ajax({
-            url: 'action.php?route=checkout/payment_method.comment&language={{ language }}',
-            type: 'post',
-            data: $('#input-comment').serialize(),
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            success: function(json) {
-                console.log(json);
-
-                $('.alert-dismissible').remove();
-
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
-
-                if (json['error']) {
-                    $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
-
-                    $('#button-confirm').prop('disabled', false);
-                }
-
-                if (json.has('success')) {
-                    $('#alert').prepend('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
-
-                    $('#button-confirm').prop('disabled', false);
-                }
-
-                window.setTimeout(function() {
-                    $('.alert-dismissible').fadeTo(1000, 0, function() {
-                        $(this).remove();
-                    });
-                }, 3000);
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                $('#button-confirm').prop('disabled', false);
-
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }, 1000, this);
-});
-
-
 $(document).on('change', '#input-checkout-agree', function() {
     var element = this;
 

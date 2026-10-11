@@ -15,7 +15,7 @@ import { Style } from './style.js';
  * Usage:
  *
  *   class MyCounter extends BaseComponent {
- *     static get observed { return ['count']; }
+ *     observed ['count'];
  *
  *     styles() {
  *       return `
@@ -47,7 +47,6 @@ import { Style } from './style.js';
 export class WebComponent extends HTMLElement {
     static observedAttributes = [];
     static formAssociated = false;
-    states = {};
 
     constructor() {
         super();
@@ -65,7 +64,7 @@ export class WebComponent extends HTMLElement {
         this.global = Global;
 
         // State
-        this.state = new State(this.states, this.onStateChange.bind(this));
+        this.state = new State(this.states(), this.stateChangedCallback.bind(this));
 
         // Make sure reactive attributes don't work until after render has been called.
         this.rendered = false;
@@ -85,11 +84,11 @@ export class WebComponent extends HTMLElement {
         console.log('disconnectedCallback');
 
         if (this.binder) {
-            //this.binder.destroy();
+            this.binder.destroy();
         }
 
         if (this.state) {
-            //this.state.destroy();
+            this.state.destroy();
         }
 
         if (typeof this.handleDisconnect === 'function') {
@@ -103,11 +102,21 @@ export class WebComponent extends HTMLElement {
         }
     }
 
-    attributeChangedCallback(name, value_old, value_new) {
+    async attributeChangedCallback(name, value_old, value_new) {
         if (!this.rendered || value_old === value_new) return;
 
         //console.log(`${name} changed from ${value_old} to ${value_new}`);
-        this.onAttributeChange(name, value_old, value_new);
+        if (typeof this.handleAttribute == 'function') {
+            await this.handleAttribute(name, value_new, value_old);
+        }
+    }
+
+    async stateChangedCallback(keys) {
+        console.log('onStateChange', `${key} changed from ${value_old} to ${value_new}`);
+
+        if (typeof this.handleState == 'function') {
+            await this.handleState(keys);
+        }
     }
 
     async update() {
@@ -131,28 +140,8 @@ export class WebComponent extends HTMLElement {
         }
     }
 
-    async onAttributeChange(key, value_new, value_old) {
-        console.log('onAttributeChange', `${key} changed from ${value_old} to ${value_new}`);
-
-        let name= 'handle' + key.split('-').map(value => value.charAt(0).toUpperCase() + value.slice(1)).join('');
-
-        if (typeof this[name] === 'function') {
-            await this[name](key, value_new, value_old);
-        } else {
-            this.update();
-        }
-    }
-
-    async onStateChange(key, value_new, value_old) {
-        console.log('onStateChange', `${key} changed from ${value_old} to ${value_new}`);
-
-        let name= 'handle' + key.split('-').map(value => value.charAt(0).toUpperCase() + value.slice(1)).join('');
-
-        if (typeof this[name] === 'function') {
-            await this[name](key, value_new, value_old);
-        } else {
-            this.update();
-        }
+    states() {
+        return {};
     }
 
     /** Override: list of external CSS file URLs to adopt into this component. */

@@ -45,7 +45,7 @@
             </td>
             <td>
 
-              <form @submit="onSubmit">
+              <form @submit="handleSubmit">
                 <div class="input-group">
                   <input type="number" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/>
                   <input type="hidden" name="key" value="{{ product.cart_id }}"/>

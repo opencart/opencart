@@ -18,8 +18,6 @@ export default class AccountEdit extends WebComponent {
         data.set('email', customer.getEmail());
         data.set('telephone', customer.getTelephone());
 
-        data.set('token', customer.getToken());
-
         return loader.template('account/edit', [ data, language, config ]);
     }
 

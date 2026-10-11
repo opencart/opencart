@@ -20,7 +20,7 @@
           <td class="text-center">{% if product.thumb %}<a href="catalog/product.js?product_id={{ product.product_id }}" :click="link"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
           <td><a href="catalog/product.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>
 
-            <form id="form-product-{{ product_row }}" @submit="onSubmit">
+            <form id="form-product-{{ product_row }}" @submit="handleSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
               <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
             </form>

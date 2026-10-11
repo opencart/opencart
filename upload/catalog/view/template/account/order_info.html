@@ -89,7 +89,7 @@
               {% endif %}
             </ul>
 
-            <form id="form-product-{{ product_row }}" @submit="onSubmit">
+            <form id="form-product-{{ product_row }}" @submit="handleSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
               <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
 

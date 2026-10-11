@@ -7,7 +7,7 @@
 {% endif %}
 <hr/>
 <h3>{{ text_refine }}</h3>
-<form @submit="onSubmit">
+<form @submit="handleSubmit">
   <div class="input-group dropdown mb-3">
     <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
     {% if topics %}

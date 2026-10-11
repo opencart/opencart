@@ -755,7 +755,7 @@ class ModelExtensionPaymentPayPal extends Model {
 	public function getAgreeStatus() {
 		$agree_status = true;
 		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE status = '1' AND (iso_code_2 = 'CU' OR iso_code_2 = 'IR' OR iso_code_2 = 'SY' OR iso_code_2 = 'KP')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE status = '1' AND (iso_code_2 = 'CU' OR iso_code_2 = 'IR' OR iso_code_2 = 'KP')");
 		
 		if ($query->rows) {
 			$agree_status = false;

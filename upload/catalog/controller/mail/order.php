@@ -624,8 +624,10 @@ class Order extends \Opencart\System\Engine\Controller {
 				$emails = explode(',', (string)$this->config->get('config_mail_alert_email'));
 
 				foreach ($emails as $email) {
+					$email = trim($email);
+
 					if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-						$mail->setTo(trim($email));
+						$mail->setTo($email);
 						$mail->send();
 					}
 				}

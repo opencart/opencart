@@ -805,7 +805,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$sort_data = [
 			'name'        => 'pd.name',
 			'model'       => 'p.model',
-			'sort_order'  => 'p.price',
+			'price'       => 'p.price',
 			'rating'      => 'rating',
 			'sort_order'  => 'p.sort_order',
 		];

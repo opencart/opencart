@@ -31,6 +31,8 @@ $('#modal-image').on('click', '#button-search', function(e) {
         url += '&filter_name=' + encodeURIComponent(filter_name);
     }
 
+    url += '&filter_case=' + ($('#input-match-case').prop('checked') ? 1 : 0);
+
     {% if thumb %}
     url += '&thumb={{ thumb|escape('js') }}';
     {% endif %}

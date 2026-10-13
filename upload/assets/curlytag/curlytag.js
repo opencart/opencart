@@ -573,7 +573,7 @@ export class CurlyTag {
     }
 
     // ─── Main render ────────────────────────────────────────────────────────
-    process(tokens, data = {}) {
+    async process(tokens, data = {}) {
         let ctx = data;
         let index = 0;
         let stack = [];
@@ -630,7 +630,7 @@ export class CurlyTag {
 
                 if (handle !== undefined) {
                     // Unified handler map — all handlers get the same 4 arguments
-                    let jump = handle(token, stack, ctx, index);
+                    let jump = await handle(token, stack, ctx, index);
 
                     if (typeof jump === 'number' && jump >= 0) {
                         index = jump;
@@ -692,6 +692,23 @@ export class CurlyTag {
 
                 // Handle Close Tags
                 let top = stack[stack.length - 1];
+
+                // Inside raw / comment blocks everything is literal text, so ignore
+                // any tag except the block's own closing tag.
+                if ((top?.type == 'raw' || top?.type == 'comment') && !this.openclose[top.type].includes(command)) {
+                    token.push({
+                        type: 'tag',
+                        tag: '',
+                        value: tag,
+                        raw: raw,
+                        line: line,
+                        column: index,
+                    });
+
+                    index = regex.lastIndex;
+
+                    continue;
+                }
 
                 if (top && this.openclose[top.type].includes(command)) {
                     token[top.index].end = token.length;
@@ -779,20 +796,17 @@ export class CurlyTag {
 
     parseOperator(code) {
         let operators = {
-            '(^not )': '!',
-            '( not )': ' !',
-            '( and )': ' && ',
-            '( or )': ' || '
+            and: '&&',
+            or: '||',
+            not: '!'
         };
 
-        for (let [operator, replace] of Object.entries(operators)) {
-            // Make sure the replacement words are not in 3 different types of quotes.
-            let regex = new RegExp(`("[^"]*"|'[^']*'|\`[^\`]*\`)?${operator}`, 'g');
+        // Quoted strings are matched first and returned unchanged, so words inside
+        // them are never replaced. Lookarounds skip property names (item.not) and
+        // identifiers that only contain the word (not_found, order, $and).
+        let regex = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(?<![\w$.])(and|or|not)(?![\w$])/g;
 
-            code = code.replaceAll(regex, replace);
-        }
-
-        return code;
+        return code.replace(regex, (match, quoted, word) => quoted ?? operators[word]);
     }
 
     /**
@@ -1130,7 +1144,7 @@ export class CurlyTag {
 
         if (items instanceof Map) {
             // `for key, value in someMap` iterates [key, value] entry pairs.
-            items = [ ...items.entries() ];
+            items = [...items.entries()];
         } else if (items !== null && typeof items === 'object' && !Array.isArray(items)) {
             // `for key, value in someObject` iterates [key, value] entry pairs.
             items = Object.entries(items);

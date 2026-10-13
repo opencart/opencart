@@ -90,6 +90,12 @@ class Url {
 	 * @return string
 	 */
 	public function link(string $route, $args = '', bool $js = false): string {
+		if (strpos('http', $route) !== false) {
+			return $route;
+		}
+
+		$route = str_replace('index.php?route=', '', $route);
+		
 		$url = $this->url . 'index.php?route=' . $route;
 
 		if ($args) {

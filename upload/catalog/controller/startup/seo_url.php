@@ -62,6 +62,41 @@ class ControllerStartupSeoUrl extends Controller {
 					$this->request->get['route'] = 'information/information';
 				}
 			}
+		} elseif (in_array($this->request->server['REQUEST_METHOD'], array('GET', 'HEAD'))) {
+			$this->redirectQueryUrl();
+		}
+	}
+
+	private function redirectQueryUrl() {
+		if (!isset($this->request->get['route'])) {
+			return;
+		}
+
+		$route = $this->request->get['route'];
+		$seo_routes = array(
+			'product/product'           => 'product_id',
+			'product/category'          => 'path',
+			'product/manufacturer/info' => 'manufacturer_id',
+			'information/information'   => 'information_id'
+		);
+
+		if (!isset($seo_routes[$route]) || !isset($this->request->get[$seo_routes[$route]])) {
+			return;
+		}
+
+		$url_data = $this->request->get;
+
+		unset($url_data['_route_'], $url_data['route'], $url_data['tracking']);
+
+		if ($route == 'product/product') {
+			$url_data = array('product_id' => (int)$this->request->get['product_id']);
+		}
+
+		$url = $this->url->link($route, $url_data, $this->request->server['HTTPS']);
+		$path = parse_url(str_replace('&amp;', '&', $url), PHP_URL_PATH);
+
+		if ($path && substr($path, -10) != '/index.php') {
+			$this->response->redirect($url, 301);
 		}
 	}
 

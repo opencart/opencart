@@ -91,6 +91,27 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Language
+	 *
+	 * @param string $route
+	 * @param string $prefix
+	 * @param string $code
+	 *
+	 * @return void
+	 */
+	public function language(string &$route, string &$prefix, string &$code): void {
+		if (str_starts_with($route, 'extension/')) {
+			return;
+		}
+
+		$language_code = $code ?: $this->config->get('config_language');
+
+		if (is_file(DIR_EXTENSION . 'ocmod/catalog/language/' . $language_code . '/' . $route . '.php')) {
+			$route = 'extension/ocmod/' . $route;
+		}
+	}
+
 	protected function prepareClassName(string $route, string $classPrefix): string {
 		$pos = strrpos($route, '.');
 		$route = $pos ? substr($route, 0, $pos) : $route;

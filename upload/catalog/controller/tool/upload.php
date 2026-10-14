@@ -41,6 +41,13 @@ class Upload extends \Opencart\System\Engine\Controller {
 					$json['error'] = $this->language->get('error_file_type');
 				}
 
+				// Validate the file size
+				$max_size = (int)$this->config->get('upload_max_size') * 1048576;
+
+				if ($max_size && ((int)$this->request->files['file']['size'] > $max_size)) {
+					$json['error'] = $this->language->get('error_file_size');
+				}
+
 				// Return any upload error
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);

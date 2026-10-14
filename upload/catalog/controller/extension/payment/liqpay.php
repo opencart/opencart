@@ -41,7 +41,7 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 
 		$order_id = substr($xml, $posleft + 9, $posright - $posleft - 10);
 
-		if ($signature == $this->request->post['signature']) {
+		if (hash_equals((string)$signature, (string)$this->request->post['signature'])) {
 			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));

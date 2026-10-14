@@ -160,7 +160,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 				$string = $g2apay_order['g2apay_transaction_id'] . $g2apay_order['order_id'] . round($g2apay_order['total'], 2) . html_entity_decode($this->config->get('payment_g2apay_secret'));
 				$hash = hash('sha256', $string);
-				if($hash != $this->request->post['hash']){
+				if (!hash_equals((string)$hash, (string)$this->request->post['hash'])) {
 					$this->model_extension_payment_g2apay->logger('Hashes do not match, possible tampering!');
 					return;
 				}

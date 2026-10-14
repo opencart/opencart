@@ -145,7 +145,7 @@
               <div class="row mb-3 required">
                 <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                  <input type="email" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                   <div id="error-email" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -1379,7 +1379,7 @@
                 <div class="row mb-3">
                   <label for="input-mail-alert-email" class="col-sm-2 col-form-label">{{ entry_mail_alert_email }}</label>
                   <div class="col-sm-10">
-                    <textarea name="config_mail_alert_email" rows="5" placeholder="{{ entry_mail_alert_email }}" id="input-mail-alert-email" class="form-control">{{ config_mail_alert_email }}</textarea>
+                    <input type="email" name="config_mail_alert_email" value="{{ config_mail_alert_email }}" placeholder="{{ entry_mail_alert_email }}" id="input-mail-alert-email" class="form-control" multiple>
                     <div class="form-text">{{ help_mail_alert_email }}</div>
                   </div>
                 </div>

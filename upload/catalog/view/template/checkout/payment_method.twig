@@ -41,6 +41,16 @@ $('#button-payment-methods').on('click', function() {
                 }
 
                 if (json['payment_methods']) {
+                    var element = document.getElementById('modal-payment');
+
+                    if (element) {
+                        var modal = bootstrap.Modal.getInstance(element);
+
+                        if (modal) {
+                            modal.dispose();
+                        }
+                    }
+
                     $('#modal-payment').remove();
 
                     html = '<div id="modal-payment" class="modal">';

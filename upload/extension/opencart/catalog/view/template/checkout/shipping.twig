@@ -70,6 +70,16 @@
               }
 
               if (json['shipping_methods']) {
+                  var element = document.getElementById('modal-shipping');
+
+                  if (element) {
+                      var modal = bootstrap.Modal.getInstance(element);
+
+                      if (modal) {
+                          modal.dispose();
+                      }
+                  }
+
                   $('#modal-shipping').remove();
 
                   html = '<div id="modal-shipping" class="modal">';

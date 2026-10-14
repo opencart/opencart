@@ -455,7 +455,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				// Zone
 				$this->load->model('localisation/zone');
 
-				$zone_info = $this->model_localisation_zone->getZone($post_info['payment_zone_id']);
+				$zone_info = $this->model_localisation_zone->getZone((int)$post_info['payment_zone_id']);
 
 				if ($zone_info) {
 					$zone = $zone_info['name'];
@@ -545,7 +545,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					// Zone
 					$this->load->model('localisation/zone');
 
-					$zone_info = $this->model_localisation_zone->getZone($post_info['shipping_zone_id']);
+					$zone_info = $this->model_localisation_zone->getZone((int)$post_info['shipping_zone_id']);
 
 					if ($zone_info) {
 						$zone = $zone_info['name'];

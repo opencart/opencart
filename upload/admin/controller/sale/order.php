@@ -1278,7 +1278,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'shipping_address' => $shipping_address,
 					'shipping_method'  => ($order_info['shipping_method'] ? $order_info['shipping_method']['name'] : ''),
 					'payment_address'  => $payment_address,
-					'payment_method'   => $order_info['payment_method']['name'],
+					'payment_method'   => ($order_info['payment_method'] ? $order_info['payment_method']['name'] : ''),
 					'product'          => $product_data,
 					'total'            => $this->model_sale_order->getTotals($order_id),
 					'comment'          => nl2br($order_info['comment'])

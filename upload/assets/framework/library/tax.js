@@ -4,11 +4,8 @@ import { loader } from './loader.js';
 const config = await loader.config('default');
 
 export default class Tax {
-    static instance = null;
-
-    constructor() {
-        this.tax_rates = new Map();
-    }
+    static #instance = null;
+    #tax_rates = new Map();
 
     async setGeozone(country_id, zone_id) {
         let country = await loader.storage('localisation/country-' + country_id);
@@ -23,7 +20,7 @@ export default class Tax {
 
         if (tax_rates == undefined) return;
 
-        this.tax_rates = tax_rates;
+        this.#tax_rates = tax_rates;
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {
@@ -63,7 +60,7 @@ export default class Tax {
 
         let tax_rates = new Map();
 
-        let tax_classes = this.tax_rates.filter(tax_rate => tax_rate.customer_group_id == config.get('config_customer_group_id') && tax_rate.tax_class_id == tax_class_id);
+        let tax_classes = Array.from(this.#tax_rates.values()).filter(tax_rate => tax_rate.customer_group_id == config.get('config_customer_group_id') && tax_rate.tax_class_id == tax_class_id);
 
         for (let tax_rate of tax_classes) {
             let amount = 0;
@@ -91,15 +88,15 @@ export default class Tax {
     }
 
     clear() {
-        this.tax_rates = [];
+        this.#tax_rates = new Map();
     }
 
     static getInstance() {
-        if (!Tax.instance) {
-            Tax.instance = new Tax();
+        if (!Tax.#instance) {
+            Tax.#instance = new Tax();
         }
 
-        return Tax.instance;
+        return Tax.#instance;
     }
 }
 

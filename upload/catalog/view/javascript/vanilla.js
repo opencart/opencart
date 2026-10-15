@@ -32,7 +32,7 @@ const base = new URL(document.querySelector('base').href);
 
 // Config Path
 //config.addPath('catalog/view/' + base.host + '/config/');
-config.addPath('shop/' + base.host + '/config/');
+//config.addPath('shop/' + base.host + '/config/');
 
 // ─── Settings ──────────────────────────────────────────────────────────────
 const setting = await loader.config('default');

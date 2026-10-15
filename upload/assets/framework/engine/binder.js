@@ -1,4 +1,4 @@
-import {Global} from "./global.js";
+import { Global } from './global.js';
 
 /**
  * Binder
@@ -48,14 +48,14 @@ import {Global} from "./global.js";
  *
  * Usage inside a custom element:
  *
- *   class MyWidget extends HTMLElement {
+ * class MyWidget extends HTMLElement {
  *     constructor() {
- *       super();
- *       this.attachShadow({ mode: 'open' });
- *       this.shadowRoot.innerHTML = `
- *         <button @ref="btn" @click="handleClick">Click me</button>
- *         <span @ref="label"></span>
- *       `;
+ *         super();
+ *         this.attachShadow({ mode: 'open' });
+ *         this.shadowRoot.innerHTML = `
+ *           <button @ref="btn" @click="handleClick">Click me</button>
+ *           <span @ref="label"></span>
+ *         `;
  *     }
  *
  *     connectedCallback() {
@@ -70,76 +70,81 @@ import {Global} from "./global.js";
  *     disconnectedCallback() {
  *       this.binder.destroy();
  *     }
- *   }
+ * }
  */
 export class Binder {
+    #root;
+    #host;
+    #refs = new Map();
+    #listeners = []; // track for clean teardown
+    #bindings = []; // { name, el } set by this instance, for cleanup
+
     constructor(root, host) {
-        this.root = root;
-        this.host = host || root.host || root;
-        this.refs = new Map();
-        this.listeners = []; // track for clean teardown
-        this.bindings = []; // { name, el } set by this instance, for cleanup
+        this.#root = root;
+        this.#host = host || root.host || root;
 
         // Attach events based on elements that have data-bind attributes
-        this.walk(this.root);
+        this.#walk(this.#root);
     }
 
-    walk(root) {
-        const walker = document.createTreeWalker(this.root, NodeFilter.SHOW_ELEMENT, {
-            acceptNode: (node) => node.getAttributeNames().some((name) => name.startsWith("@") || name.startsWith(":")) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
+    #walk(root) {
+        let accept = (node) => node.getAttributeNames().some((name) => name.startsWith('@') || name.startsWith(':')) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+
+        const walker = document.createTreeWalker(this.#root, NodeFilter.SHOW_ELEMENT, {
+            acceptNode: accept // skip this node, still walk its children
         });
 
         let node = walker.nextNode();
 
         while (node) {
-            this.bind(node);
+            this.#bind(node);
 
             node = walker.nextNode();
         }
     }
 
-    bind(element) {
+    #bind(element) {
         let names = element.getAttributeNames().filter((name) => name.startsWith('@') || name.startsWith(':'));
 
         names.forEach((name) => {
-            let is_global = name.startsWith(":");
+            let is_global = name.startsWith(':');
             let key = name.slice(1);
             let value = element.getAttribute(name);
 
             if (key === 'ref') {
-                this.ref(element, value, is_global);
+                this.#ref(element, value, is_global);
             } else {
-                this.on(element, key, value, is_global);
+                this.#event(element, key, value, is_global);
             }
 
             element.removeAttribute(name);
         });
     }
 
-    ref(element, key, is_global) {
+    #ref(element, key, is_global) {
         if (!key) return;
 
         if (is_global) {
             Global.set(key, element);
 
-            this.bindings.push({ key, element });
+            this.#bindings.push({ key, element });
 
             return;
         }
 
-        this.refs.set(key, element);
+        this.#refs.set(key, element);
 
         // Attach the getter property to the web component
-        if (this.host && !(key in this.host)) {
-            Object.defineProperty(this.host, key, {
-                get: () => this.refs.get(key),
+        if (this.#host && !(key in this.#host)) {
+            Object.defineProperty(this.#host, key, {
+                get: () => this.#refs.get(key),
                 configurable: true,
             });
         }
     }
 
-    on(element, event, method, is_global) {
-        let handler = is_global ? Global.getListener(method) : this.host[method];
+    #event(element, event, method, is_global) {
+        let handler = is_global ? Global.getListener(method) : this.#host[method];
 
         if (typeof handler !== 'function') {
             let scope = is_global ? 'Global' : 'Host';
@@ -152,43 +157,39 @@ export class Binder {
 
         // Global handlers run as plain functions (no implicit `this`);
         // host handlers are bound to the component instance as before.
-        let listener = is_global ? handler : handler.bind(this.host);
+        let listener = is_global ? handler : handler.bind(this.#host);
 
         element.addEventListener(event, listener);
 
-        this.listeners.push({ element, event, listener });
+        this.#listeners.push({ element, event, listener });
     }
 
     /** Get a bound element by its data-ref name. */
     get(key) {
-        return this.refs.get(key);
+        return this.#refs.get(key);
     }
 
     has(key) {
-        return this.refs.has(key);
+        return this.#refs.has(key);
     }
 
     refresh() {
         this.destroy();
-        this.refs = new Map();
-        this.listeners = [];
-        this.bindings = [];
+        this.#refs = new Map();
+        this.#listeners = [];
+        this.#bindings = [];
 
-        this.walk(this.root);
+        this.#walk(this.#root);
     }
 
     /** Remove all attached event listeners (call in disconnectedCallback). */
     destroy() {
-        this.listeners.forEach(({element, event, listener}) =>
-            element.removeEventListener(event, listener)
-        );
-
-        this.listeners = [];
+        this.#listeners.forEach(({ element, event, listener }) => element.removeEventListener(event, listener));
+        this.#listeners = [];
 
         // Only clear a global ref if it still points at the element *this*
         // instance set — avoids wiping out a ref another instance re-registered.
-        this.bindings.forEach(({ key, element }) => Global.delete(key, element));
-
-        this.bindings = [];
+        this.#bindings.forEach(({ key, element }) => Global.delete(key, element));
+        this.#bindings = [];
     }
 }

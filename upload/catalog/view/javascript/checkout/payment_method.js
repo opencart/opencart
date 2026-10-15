@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, cart, customer, session } from '../index.js';
+import { loader, ajax, cart, customer, session, template } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -27,31 +27,31 @@ customElements.define('payment-method', class extends WebComponent {
 
         var first = true;
 
-        for (let [ key_1, value ] of json.get('payment_methods')) {
-            html += '<p><strong>' + value['name'] + '</strong></p>';
+        for (let [ payment_method ] of json.get('payment_methods')) {
+            html += '<p><strong>' + payment_method.name + '</strong></p>';
 
-            if (!value['error']) {
-                for (let [ key_2, option ] of value.option) {
+            if (!payment_method.error) {
+                for (let option of payment_method.option) {
                     html += '<div class="form-check">';
 
-                    var code = key + '-' + j.replaceAll('_', '-');
+                    let code = payment_method.code + '-' + option.code.replaceAll('_', '-');
 
-                    html += '<input type="radio" name="payment_method" value="' + option['code'] + '" id="input-payment-method-' + code + '"';
+                    html += '<input type="radio" name="payment_method" value="' + option.code + '" id="input-payment-method-' + code + '"';
 
                     var method = $('#input-payment-code').val();
 
-                    if ((json['payment_methods'][i]['option'][j]['code'] == method) || (!method && first)) {
+                    if ((option.code == method) || (!method && first)) {
                         html += ' checked';
 
                         first = false;
                     }
 
                     html += '/>';
-                    html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
+                    html += '  <label for="input-payment-method-' + code + '">' + option['name'] + '</label>';
                     html += '</div>';
                 }
             } else {
-                html += '<div class="alert alert-danger">' + value['error'] + '</div>';
+                html += '<div class="alert alert-danger">' + payment_method.error + '</div>';
             }
         }
 
@@ -60,7 +60,7 @@ customElements.define('payment-method', class extends WebComponent {
         html += '  </div>';
         html += '</form>';
 
-        return loader.template(html, [ data, language ]);
+        return template.parse(html, [ data, language ]);
     }
 
     handleConnect() {

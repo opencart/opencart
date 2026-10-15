@@ -3,7 +3,7 @@ import { loader } from './loader.js';
 const weight_classes = await loader.storage('localisation/weight_class');
 
 export default class Weight {
-    static instance = null;
+    static #instance = null;
 
     convert(value, from, to) {
         let weight_class_from = weight_classes.find(weight_class => weight_class.weight_class_id === from);
@@ -50,11 +50,11 @@ export default class Weight {
     }
 
     static getInstance() {
-        if (!Weight.instance) {
-            Weight.instance = new Weight();
+        if (!Weight.#instance) {
+            Weight.#instance = new Weight();
         }
 
-        return Weight.instance;
+        return Weight.#instance;
     }
 }
 

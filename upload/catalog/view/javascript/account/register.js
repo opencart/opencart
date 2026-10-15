@@ -8,6 +8,14 @@ const config = await loader.config('default');
 const language = await loader.language('account/register');
 
 export default class AccountRegister extends WebComponent {
+    static states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        }
+    }
+
     constructor() {
         super();
 
@@ -15,13 +23,11 @@ export default class AccountRegister extends WebComponent {
     }
 
     async render() {
-        //if (!customer.isLogged()) return;
-
-        if (this.state.has('success')) {
+        if (this.state.get('success')) {
             return `<ui-toast>${this.state.get('success')}</ui-toast>`;
         }
 
-        return loader.template('account/register', [ language, config ]);
+        return loader.template('account/register', [language, config]);
     }
 
     async handleConnect() {
@@ -34,6 +40,12 @@ export default class AccountRegister extends WebComponent {
         }
     }
 
+    handleState(changed, state) {
+        console.log('account-register handleState', changed, state);
+
+        console.dir(this.submitter);
+    }
+
     async handleSubmit(e) {
         e.preventDefault();
 
@@ -41,19 +53,37 @@ export default class AccountRegister extends WebComponent {
 
         let form = new FormData(this.form);
 
+        console.log(Object.fromEntries(form));
+
+        console.dir(this);
+
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {
-                this.bind('form').set('submitting', true);
+                this.submitter.state.set('loading', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.submitter.state.set('loading', false);
             },
-            handleSuccess: (json) => {
-                this.form.state.clear();
-
+            handleSuccess: async (json) => {
                 // Display error messages
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    let errors = Object.entries(json.get('error'));
+
+                    console.log(errors);
+
+                    for (let [key, value] of errors) {
+                        if (key === 'warning') {
+                            this.state.set('error', 'warning');
+                        }
+
+                        if (this[key]) {
+                            console.log('Setting error for', key, value);
+                            console.dir(this[key]);
+                            console.dir(this[key].state);
+
+                            this[key].state.set('error', value);
+                        }
+                    }
                 }
 
                 // Display success message
@@ -70,7 +100,7 @@ export default class AccountRegister extends WebComponent {
     }
 
     handleAgree(e) {
-        this.submitter.toggleAttribute('disabled', !e.target.hasAttribute('checked'));
+        this.submitter.state.set('disabled', !e.target.hasAttribute('checked'));
     }
 }
 

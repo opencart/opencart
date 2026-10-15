@@ -16,71 +16,70 @@ if (session.has('cart')) {
 }
 
 export default class Cart {
-    static instance = null;
+    static #instance = null;
+    #data = new Map();
+    #items = new Map();
 
     constructor() {
-        this.data = new Map();
-        this.items = new Map();
-
         for (let item of items) {
-            this.add(item.product_id, item.quantity, [ ...item.option ], item.subscription_plan_id);
+            this.add(item.product_id, item.quantity, [...item.option], item.subscription_plan_id);
         }
     }
 
     async add(product_id, quantity, option, subscription_plan_id) {
         // Load product data information
-        if (!this.data.has(product_id)) {
+        if (!this.#data.has(product_id)) {
             let product = await loader.storage('product/product-' + product_id);
 
             if (!product) return;
 
-            this.data.set(product_id, product);
+            this.#data.set(product_id, product);
         }
 
         // Create a key from item data
         let key = JSON.stringify({ product_id, option, subscription_plan_id });
 
         // If item exists just increase quantity
-        if (this.items.has(key)) quantity = Number(this.items.get(key).quantity) + Number(quantity);
+        if (this.#items.has(key)) quantity = Number(this.#items.get(key).quantity) + Number(quantity);
 
         // Assign to quantity to item
         let item = {
             product_id: product_id,
             quantity: quantity,
-            option: option ? [ ...option ] : [],
+            option: option ? [...option] : [],
             subscription_plan_id: subscription_plan_id
         };
 
-        this.items.set(key, item);
+        this.#items.set(key, item);
 
         // Update the session
-        session.set('cart', [ ...this.items.values() ]);
+        session.set('cart', [...this.#items.values()]);
     }
 
     update(key, quantity) {
-        if (this.items.has(key)) {
+        if (this.#items.has(key)) {
             // If item exists just increase quantity
-            this.items.set(key, Object.assign(this.items.get(key), { quantity: quantity }));
+            this.#items.set(key, Object.assign(this.#items.get(key), { quantity: quantity }));
 
             // Update the session
-            session.set('cart', [ ...this.items.values() ]);
+            session.set('cart', [...this.#items.values()]);
         }
     }
 
     remove(key) {
-        this.items.delete(key);
+        this.#items.delete(key);
 
         // Update the session
-        session.set('cart', [ ...this.items.values() ]);
+        session.set('cart', [...this.#items.values()]);
     }
 
     getProducts() {
         let product_data = [];
 
-        for (let item of [ ...this.items.values() ]) {
+        for (let item of [...this.#items.values()]) {
             let stock_status = true;
 
-            let product_info = this.data.get(item.product_id);
+            let product_info = this.#data.get(item.product_id);
 
             if (product_info !== undefined && item.quantity > 0) {
                 let stock = product_info.quantity;
@@ -91,7 +90,7 @@ export default class Cart {
 
                 let option_data = [];
 
-                for (let [key, value] of [ ...item.option ]) {
+                for (let [key, value] of [...item.option]) {
                     // Get option info
                     let option_info = product_info.options.find(option => option.product_option_id == key);
 
@@ -495,11 +494,11 @@ export default class Cart {
     }
 
     static getInstance() {
-        if (!Cart.instance) {
-            Cart.instance = new Cart();
+        if (!Cart.#instance) {
+            Cart.#instance = new Cart();
         }
 
-        return Cart.instance;
+        return Cart.#instance;
     }
 }
 

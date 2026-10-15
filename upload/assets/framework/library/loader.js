@@ -4,11 +4,8 @@ import { storage } from './storage.js';
 import { template } from './template.js';
 
 export default class Loader {
-    static instance = null;
-
-    constructor() {
-        this.data = new Map();
-    }
+    static #instance = null;
+    #data = new Map();
 
     async config(path) {
         return await config.fetch(path);
@@ -20,17 +17,17 @@ export default class Loader {
         // Load Default Language
         let defaults = await language.fetch('default');
 
-        return new Map([ ...output, ...defaults ]);
+        return new Map([...output, ...defaults]);
     }
 
     async library(path) {
-        if (this.data.has(path)) return this.data.get(path);
+        if (this.#data.has(path)) return this.#data.get(path);
 
         let object = await import('../library/' + path + '.js');
 
-        this.data.set(path, object.default.getInstance());
+        this.#data.set(path, object.default.getInstance());
 
-        return this.data.get(path);
+        return this.#data.get(path);
     }
 
     async storage(path) {
@@ -64,11 +61,11 @@ export default class Loader {
     }
 
     static getInstance() {
-        if (!Loader.instance) {
-            Loader.instance = new Loader();
+        if (!Loader.#instance) {
+            Loader.#instance = new Loader();
         }
 
-        return Loader.instance;
+        return Loader.#instance;
     }
 }
 

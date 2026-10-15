@@ -29,222 +29,119 @@
  * synchronous writes in the same tick collapse into a single update.
  */
 export class State {
-	constructor(states, fn) {
-		this.fn = fn;
-		this.data = new Map(Object.entries(states));
-        this.old = new Map();
-        this.listeners = new Set();
-	}
+    #data;
+    #listeners = new Set();
+    #onchange;
+    #changed = new Set();
+    #scheduled = false;
+    #depth = 0;
+
+    constructor(states, onchange) {
+        this.#data = new Map(Object.entries(states));
+        this.#onchange = onchange;
+
+        Object.freeze(this);
+    }
+
+    get(key) {
+        return this.#data.get(key);
+    }
 
     /**
-     * Register one or more global listeners, callable from any component's
-     * template via `:event="name"`.
-     * @param {string|object} name_or_map - a listener name, or `{ name: fn, ... }`
-     * @param {Function} [fn] - the function, when `name_or_map` is a string
+     * set('count', 1)                    writes one value
+     * set({ count: 1, label: 'bye' })    writes several, as one change
+     * (An object cannot be used as a key.)
      */
-    addListener(key, fn) {
-        if (key == null) return;
+    set(key, value) {
+        if (typeof key === 'object') {
+            if (value !== undefined) {
+                throw new TypeError('State: set(object) takes only the object');
+            }
 
-        if (!this.listeners.has(key)) {
-            this.listeners.set(key, []);
+            this.#batch(() => {
+                Object.entries(key).forEach(([k, v]) => this.set(k, v));
+            });
+
+            return;
         }
 
-        this.listeners.get(key).push(fn);
+        // Check to see if the value is different. 
+        if (this.#data.has(key) && Object.is(this.#data.get(key), value)) return;
+
+        this.#data.set(key, value);
+
+        // Mark as changed
+        this.#mark(key);
     }
 
-    deleteListener(key) {
-        this.listeners.delete(key);
+    all() {
+        return Object.fromEntries(this.#data);
     }
 
-    getListener(key) {
-        return this.listeners.get(key);
+    delete(key) {
+        if (!this.#data.has(key)) return false;
+
+        this.#data.delete(key);
+
+        this.#mark(key);
+
+        return true;
     }
 
-    hasListener(key) {
-        return this.listeners.has(key);
+    #mark(key) {
+        this.#changed.add(key);
+
+        if (this.#depth > 0) return;
+
+        this.#schedule();
     }
 
-	get(key) {
-		this.data.get(key);
-	}
+    #schedule() {
+        if (this.#scheduled) return;
 
-	set(key, value) {
-        this.listeners.get(key).forEach(handler => handler(key, value));
-
-		this.data.set(key, value);
-
-        this.markDirty(key, value, value_old);
-
-		this.fn(key, value);
-	}
-
-	has(key) {
-		this.data.has(key);
-	}
-
-	delete(key) {
-		this.data.delete(key);
-
-        this.markDirty(key, undefined, value_old);
-
-		this.callback([key]);
-	}
-
-    destroy() {
-        this.listeners = [];
-        this.fn = null;
-    }
-}
-
-/*
-export class State {
-
-    constructor(initial = {}, options = {}) {
-        this.listeners = new Set();
-        this.onChange = typeof options.onChange === 'function' ? options.onChange : null;
-        this.dirty = new Set();
-        this.scheduled = false;
-        this.batchDepth = 0;
-
-        this.data = new Proxy({ ...initial }, {
-            set: (target, key, value) => {
-                if (target[key] === value) return true;
-
-                const value_old = target[key];
-
-                target[key] = value;
-
-                this.markDirty(key, value, value_old);
-
-                return true;
-            },
-            deleteProperty: (target, key) => {
-                if (!key in target) return true;
-
-                const value_old = target[key];
-
-                delete target[key];
-
-                this.markDirty(key, undefined, value_old);
-
-                return true;
-            }
-        });
-
-        // Wrap `this` so `state.foo` / `state.foo = x` read/write `_data`
-        // directly, while methods defined below (subscribe, batch, get, set,
-        // toObject) still resolve to the class's own implementations.
-        return new Proxy(this, {
-            get: (target, prop, receiver) => {
-                if (prop in target || typeof prop === 'symbol') {
-                    return Reflect.get(target, prop, receiver);
-                }
-
-                return target.data[prop];
-            },
-            set: (target, prop, value) => {
-                if (prop in target) {
-                    target[prop] = value;
-
-                    return true;
-                }
-
-                target.data[prop] = value; // routes through the proxy trap above
-
-                return true;
-            },
-            has: (target, prop) => prop in target.data || prop in target,
-            deleteProperty: (target, prop) => {
-                if (prop in target.data) {
-                    delete target.data[prop];
-
-                    return true;
-                }
-
-                delete target[prop];
-
-                return true;
-            },
-        });
-    }
-
-    markDirty(key, value_new, value_old) {
-        this.dirty.add(key);
-
-        if (this.batchDepth > 0) return;
-
-        this.schedule();
-    }
-
-    schedule() {
-        if (this.scheduled) return;
-
-        this.scheduled = true;
+        this.#scheduled = true;
 
         queueMicrotask(() => {
-            this.scheduled = false;
+            this.#scheduled = false;
 
-            if (!this._dirty.size) return;
+            if (!this.#changed.size) return;
 
-            const changedKeys = [...this.dirty];
+            const changed = [...this.#changed];
 
-            this.dirty.clear();
+            this.#changed.clear();
 
-            const snapshot = this.toObject();
+            const snapshot = this.all();
 
-            this.listeners.forEach((fn) => fn(changedKeys, snapshot));
+            this.#listeners.forEach(fn => fn(changed, snapshot));
 
-            if (this.onChange) this.onChange(changedKeys, snapshot);
+            if (this.#onchange) this.#onchange(changed, snapshot);
         });
     }
 
+    /** Group multiple writes into a single notification. */
+    #batch(fn) {
+        this.#depth++;
 
-    batch(fn) {
-        this.batchDepth++;
         try {
             fn(this);
         } finally {
-            this.batchDepth--;
+            this.#depth--;
 
-            if (this.batchDepth === 0 && this.dirty.size) {
-                this.schedule();
+            if (this.#depth === 0 && this.#changed.size) {
+                this.#schedule();
             }
         }
     }
 
+    /** Subscribe to state changes. Returns an unsubscribe function. */
+    subscribe(handle) {
+        this.#listeners.add(handle);
 
-    subscribe(fn) {
-        this.listeners.add(fn);
-
-        return () => this.listeners.delete(fn);
-    }
-
-
-    get(key) {
-        return this.data[key];
-    }
-
-    set(key, value) {
-        this.data[key] = value;
-    }
-
-
-    assign(partial) {
-        this.batch((s) => {
-            Object.entries(partial).forEach(([key, value]) => {
-                s.data[key] = value;
-            });
-        });
-    }
-
-
-    toObject() {
-        return { ...this.data };
+        return () => this.#listeners.delete(handle);
     }
 
     destroy() {
-        this.listeners.clear();
-        this.onChange = null;
+        this.#listeners.clear();
+        this.#changed.clear();
     }
 }
-*/

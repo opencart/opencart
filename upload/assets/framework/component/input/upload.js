@@ -47,11 +47,11 @@ customElements.define('input-upload', class extends WebComponent {
     }
 
     set readonly(value) {
-       value ? this.setAttribute('readonly', '') : this.removeAttribute('readonly');
+        value ? this.setAttribute('readonly', '') : this.removeAttribute('readonly');
     }
 
     render() {
-        return '<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>';
+        return '<form enctype="multipart/form-data" @submit="handleSubmit" style="display: none;"><input type="file" name="file" value=""/></form>';
         // data-oc-toggle="upload"
         // data-oc-url="{{ upload }}"
         // data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"
@@ -128,8 +128,6 @@ customElements.define('input-upload', class extends WebComponent {
         $($(this).attr('data-oc-target')).val('');
     }
 
-
-
     handleClick() {
         if (typeof timer != 'undefined') {
             clearInterval(timer);
@@ -138,6 +136,58 @@ customElements.define('input-upload', class extends WebComponent {
         let timer = setInterval(this.timeout, 500);
 
 
+    }
+
+    async handleSubmit(e) {
+        e.preventDefault();
+
+        console.log('works');
+
+        //if (customer.isLogged()) return;
+
+        let form = new FormData(this.form);
+
+        console.log(Object.fromEntries(form));
+
+        await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
+            handleSend: () => {
+                this.submitter.state.set('loading', true);
+            },
+            handleComplete: () => {
+                this.submitter.state.set('loading', false);
+            },
+            handleSuccess: async (json) => {
+                console.log(json);
+                console.log(json.get('error'));
+
+                // Display error messages
+                if (json.has('error')) {
+                    let errors = Object.entries(json.get('error'));
+
+                    console.log(errors);
+
+                    for (let [key, value] of errors) {
+                        if (key === 'warning') {
+                            this.state.set('error', 'warning');
+                        }
+
+                        if (this[key]) {
+                            this[key].state.set('error', value);
+                        }
+                    }
+                }
+
+                // Display success message
+                if (json.has('success')) {
+                    this.state.set('success', json.get('success'));
+
+                    this.update();
+                }
+            },
+            handleError: (e) => {
+                console.log('onError', e);
+            }
+        });
     }
 
     timeout() {

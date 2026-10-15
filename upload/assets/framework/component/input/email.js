@@ -1,32 +1,84 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('input-email', class extends WebComponent {
-    static observedAttributes = [
-        'invalid',
-        'error',
-        'disabled',
-        'readonly',
-        'required'
-    ];
     static formAssociated = true;
+    static observedAttributes = [
+        'name',
+        'value',
+        'required',
+        'disabled',
+        'readonly'
+    ];
+
+    static states() {
+        return {
+            value: '',
+            error: ''
+        };
+    }
+
+    styles() {
+        return ``;
+    }
+
+    get value() {
+        return this.state.get('value');
+    }
+
+    set value(value) {
+        this.state.set('value', value);
+    }
 
     render() {
-        let label = [ ...(this.internal.labels ?? []) ].map(element => element.textContent.trim()).join(' ');
+        let html = '<slot name="label"></slot>';
 
-       // html += '<input type="email" value="' + escapeAttribute(this.getAttribute('value') ?? '') + '" class="form-control" @ref="input" @input="onInput" @change="onChange"';
+        html += '<input type="email" value="' + this.getAttribute('value') + '"';
 
-        if (this.hasAttribute('placeholder')) html += ' placeholder="' + escapeAttribute(this.getAttribute('placeholder')) + '"';
-
-        if (this.hasAttribute('autocomplete')) html += ' autocomplete="' + escapeAttribute(this.getAttribute('autocomplete')) + '"';
-
-        if (label) html += ' aria-label="' + escapeAttribute(label) + '"';
-
-        if (this.hasAttribute('required')) {
-        //    html += ' required';
+        if (this.hasAttribute('placeholder')) {
+            html += ' placeholder="' + this.getAttribute('placeholder') + '"';
         }
 
-        if (this.hasAttribute('disabled')) html += ' disabled';
+        let error = this.state.get('error');
 
-        //return html + '/>';
+        html += ' class="form-control ' + (error ? 'is-invalid' : '') + '"';
+
+        if (this.hasAttribute('disabled')) {
+            html += ' disabled';
+        }
+
+        if (this.hasAttribute('readonly')) {
+            html += ' readonly';
+        }
+
+        if (this.hasAttribute('required')) {
+            html += ' required';
+        }
+
+        html += ' class="form-control" @ref="input" @input="handleInput" @change="handleChange"/>';
+
+        if (error) {
+            html += '<div class="invalid-feedback">' + error + '</div>';
+        }
+
+        return html;
+    }
+
+    handleState(keys, state) {
+        this.state.set(keys);
+    }
+
+    handleInput(e) {
+        console.log(e);
+
+        this.state.set('value', e.target.value);
+    }
+
+    // A native change event does not leave the shadow root, so send it on.
+    handleChange(e) {
+        this.state.set('value', e.target.value);
+    }
+
+    handleError(e) {
+        this.update();
     }
 });

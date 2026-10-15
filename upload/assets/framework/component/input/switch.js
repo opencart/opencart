@@ -14,6 +14,7 @@ customElements.define('input-switch', class extends WebComponent {
 
     render() {
         let html = '<div class="form-switch form-switch-lg">';
+
         html += '  <input type="hidden" name="' + this.getAttribute('name') + '" value=""/>';
         html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
 

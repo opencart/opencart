@@ -1,81 +1,95 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('form-submit', class extends WebComponent {
+    static formAssociated = true;
+    #inputs = [];
+
     /* Will only manage states listed here */
-    states() {
+    static states() {
         return {
             submitting: false,
             success: '',
-            error: []
+            error: [],
+            inputs: []
         }
     }
 
-    styles = `
-    :host {
-        display: block;
+    styles() {
+        return ``;
     }
-    
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+
+    addInputs(input) {
+        this.#inputs.push(input);
     }
-    
-    ::slotted(button[type='submit']) {
-        align-self: flex-start;
-        margin-top: 0.5rem;
+
+    getInputs() {
+        return this.#inputs;
     }
-    
-    :host([data-submitting]) ::slotted(button[type='submit']) {
-        opacity: 0.6;
-        pointer-events: none;
-    }`;
+
+    submit() {
+        this.form.requestSubmit();
+    }
 
     render() {
-        return `<form @ref="form" @submit="handleSubmit"><slot></slot></form>`;
+        return '<form @ref="form" @submit="handleSubmit"><slot></slot></form>';
     }
 
     handleConnect() {
-        console.log('handleConnect', this);
+        //console.log(this.binder.refs);
+        //console.log(this.binder.listeners);
     }
 
-    handleDisconnect() {
-        console.log('handleDisconnect', this);
+    handleState(changed, state) {
+        console.log('form-submit handleState', changed, state);
     }
 
-    async handleSubmit(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
-        //slot.assignedElements({ flatten: true })
+        console.log('handleSubmit');
 
-        //console.log('this.form.elements', this.form.elements);
+        this.state.set('submitting', true);
 
-        this.submitter.state.set('loading', true);
-
-        const form = new FormData(this.form);
-
-        console.log(form);
-    }
-
-    handleError() {
-        this.state.set('submitting', false);
-
+        let inputs = this.getInputs();
         let errors = this.state.get('error');
 
-        for (let [ key, value ] of errors) {
+        console.log('inputs', inputs);
+        console.log('inputs', errors);
+
+        for (let input of inputs) {
+            input.state.set('error', errors[input.name] || '');
+        }
+
+
+    }
+
+    test() {
+        //console.log('form-submit');
+        //console.dir(this.form);
+        //console.log(this.form.elements);
+    }
+
+    async handleSubmitting(e) {
+        e.preventDefault();
+    }
+
+    handleError(e) {
+        console.log('handleError', e);
+
+        this.state.set('submitting', false);
+
+        let errors = this.state.get('errors');
+
+        for (let [key, value] of errors) {
             if (key === 'warning') {
 
             }
 
-            this.form.get(key).state.set('error', value);
+            value.state.set('error', value);
         }
     }
 
-    handleDisabled() {
-
-    }
-
-    handleReadOnly() {
-
+    handleAgree(e) {
+        this.submitter.toggleAttribute('disabled', !e.target.hasAttribute('checked'));
     }
 });

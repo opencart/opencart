@@ -19,55 +19,78 @@ import { Style } from './style.js';
  *
  *     styles() {
  *       return `
- *         button { font-size: 1rem; }
- *         span { font-weight: bold; margin-left: 0.5rem; }
+ *          button { font-size: 1rem; }
+ *          span { font-weight: bold; margin-left: 0.5rem; }
  *       `;
  *     }
  *
  *     template() {
- *       return `<button @ref="btn" @click="increment">+1</button><span data-ref="display">0</span>`;
+ *          return `<button @ref="btn" @click="increment">+1</button><span data-ref="display">0</span>`;
  *     }
  *
  *     onConnect() {
- *       this.count = Number(this.getAttribute('count')) || 0;
+ *          this.count = Number(this.getAttribute('count')) || 0;
  *     }
  *
  *     increment() {
- *       this.count++;
- *       this.setAttribute('count', this.count);
+ *          this.count++;
+ *          this.setAttribute('count', this.count);
  *     }
- *`
- *     onAttributeChange(name, value_old, val_new) {
- *       if (name === 'count') this.display.textContent = new_val;
- *     }
- *   }
  *
- *   BaseComponent.define('my-counter', MyCounter);
+ *     onAttributeChange(name, value_old, val_new) {
+ *          if (name === 'count') this.display.textContent = new_val;
+ *      }
+ *  }
+ *
+ *   customElements.define('my-counter', MyCounter);
  */
 export class WebComponent extends HTMLElement {
-    static observedAttributes = [];
     static formAssociated = false;
+    static shadow = true;
+    #root = null;
+    #internal = null;
+    #binder = null;
+    #global = null;
+    // Make sure reactive attributes don't work until after render has been called.
+    #rendered = false;
+
+    static get observedAttributes() {
+        return [];
+    }
+
+    static states() {
+        return {};
+    }
 
     constructor() {
         super();
 
-        // Attach Shadow
-        this.shadow = this.attachShadow({ mode: 'open' });
+        // Attach Shadow or use light DOM based on the static property
+        this.#root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
 
         // Attach Internals
-        this.internal = this.attachInternals();
-
-        // Binder
-        this.binder = null;
+        this.#internal = this.attachInternals();
 
         // Global
-        this.global = Global;
+        this.#global = Global;
 
         // State
-        this.state = new State(this.states(), this.stateChangedCallback.bind(this));
+        this.state = new State(this.constructor.states(), this.stateChangedCallback.bind(this));
+    }
 
-        // Make sure reactive attributes don't work until after render has been called.
-        this.rendered = false;
+    /** Override: list of external CSS file URLs to adopt into this component. */
+    stylesheets() {
+        return [];
+    }
+
+    /** Override: return a CSS string scoped to this component's shadow root. */
+    styles() {
+        return '';
+    }
+
+    /** Override: return the HTML string for the component's shadow DOM. */
+    template() {
+        return '';
     }
 
     async connectedCallback() {
@@ -77,7 +100,9 @@ export class WebComponent extends HTMLElement {
 
         await this.update();
 
-        this.rendered = true;
+        if (typeof this.test === 'function') this.test();
+
+        this.#rendered = true;
     }
 
     async disconnectedCallback() {
@@ -103,31 +128,53 @@ export class WebComponent extends HTMLElement {
     }
 
     async attributeChangedCallback(name, value_old, value_new) {
-        if (!this.rendered || value_old === value_new) return;
+        if (!this.#rendered || value_old === value_new) return;
 
-        //console.log(`${name} changed from ${value_old} to ${value_new}`);
+        console.log(`${name} changed from ${value_old} to ${value_new}`);
+
+        // Default handler for attribute changes
         if (typeof this.handleAttribute == 'function') {
             await this.handleAttribute(name, value_new, value_old);
         }
+
+        // Call the specific handler for this attribute change, if it exists.
+        let handler = `handle${name.charAt(0).toUpperCase() + name.slice(1)}`;
+
+        if (typeof this[handler] === 'function') {
+            //await this[handler](value_new, value_old);
+        }
     }
 
-    async stateChangedCallback(keys) {
-        console.log('onStateChange', `${key} changed from ${value_old} to ${value_new}`);
+    async stateChangedCallback(changed, state) {
+        if (!changed.size) return;
 
+        console.log('stateChangedCallback', changed);
+
+        // Default handler for state changes
         if (typeof this.handleState == 'function') {
-            await this.handleState(keys);
+            await this.handleState(changed, state);
+        }
+
+        for (let key of changed) {
+            let handler = `handle${key.charAt(0).toUpperCase() + key.slice(1)}`;
+
+            if (typeof this[handler] === 'function') {
+                //await this[handler](state);
+            }
         }
     }
 
     async update() {
         if (typeof this.render !== 'function') return;
 
-        this.shadow.innerHTML = await this.render();
+        let output = await this.render();
 
-        if (this.binder) {
-            this.binder.refresh();
+        this.#root.innerHTML = output;
+
+        if (!this.#binder) {
+            this.#binder = new Binder(this.#root, this);
         } else {
-            this.binder = new Binder(this.shadow, this);
+            this.#binder.refresh();
         }
 
         // Stylesheet
@@ -136,26 +183,7 @@ export class WebComponent extends HTMLElement {
         if (hrefs && hrefs.length) {
             // Adopts asynchronously; inline `styles()` above still applies
             // immediately so there's no unstyled flash for critical CSS.
-            Style.adopt(this.shadow, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
+            Style.adopt(this.#root, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
         }
-    }
-
-    states() {
-        return {};
-    }
-
-    /** Override: list of external CSS file URLs to adopt into this component. */
-    stylesheets() {
-        return [];
-    }
-
-    /** Override: return a CSS string scoped to this component's shadow root. */
-    styles() {
-        return '';
-    }
-
-    /** Override: return the HTML string for the component's shadow DOM. */
-    template() {
-        return '';
     }
 }

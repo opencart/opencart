@@ -1,46 +1,45 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_account_already | safe }}</p>
-<form-submit @ref="form" @slotchange="test">
+<form @ref="form" @submit="handleSubmit">
   <fieldset>
     <legend>{{ text_your_details }}</legend>
-
-    <form-group @ref="firstname" required>
-      <form-label>{{ entry_firstname }}</form-label>
-      <input-text name="firstname" value="test123"></input-text>
-    </form-group>
-
-    <form-group @ref="lastname" required>
-      <label>{{ entry_lastname }}</label>
-      <input-text name="lastname" value="test123"></input-text>
-    </form-group>
-
-    <form-group @ref="email" required>
-      <label>{{ entry_email }}</label>
-      <input-email name="email" value="test123@test123.com"></input-email>
-    </form-group>
-
+    <div class="mb-3">
+      <input-text @ref="firstname" name="firstname" value="test123">
+        <label slot="label">{{ entry_firstname }}</label>
+      </input-text>
+    </div>
+    <div class="mb-3">
+      <input-text @ref="lastname" name="lastname" value="test123">
+         <label slot="label">{{ entry_lastname }}</label>
+      </input-text>
+    </div>
+    <div class="mb-3">
+      <input-email @ref="email" name="email" value="test123@test123.com">
+        <label slot="label">{{ entry_email }}</label>
+      </input-email>
+    </div>
     {% if config_telephone_status %}
-    <form-group @ref="telephone">
-      <label>{{ entry_telephone }}</label>
-      <input-tel name="telephone" value="0123456789"{% if config_telephone_required %} required{% endif %}/>
-    </form-group>
+    <div class="mb-3">
+      <input-tel @ref="telephone" name="telephone" value="0123456789"{% if config_telephone_required %} required{% endif %}>
+        <label slot="label">{{ entry_telephone }}</label>
+      </input-tel>
+    </div>
     {% endif %}
-
   </fieldset>
-
   <fieldset>
     <legend>{{ text_your_password }}</legend>
-    <form-group>
-      <label for="input-password">{{ entry_password }}</label>
-      <input-password name="password" value="1234567890" id="input-password" required></input-password>
-    </form-group>
+    <div class="mb-3">
+      <input-password @ref="password" name="password" value="1234567890" required>
+        <label slot="label">{{ entry_password }}</label>
+      </input-password>
+    </div>
   </fieldset>
-
   <fieldset>
     <legend>{{ text_newsletter }}</legend>
     <div class="row mb-3">
-      <label>{{ entry_newsletter }}</label>
-      <input-switch name="newsletter" value="1"></input-switch>
+      <input-switch @ref="newsletter" name="newsletter" value="1">
+        <label slot="label">{{ entry_newsletter }}</label>
+      </input-switch>
     </div>
   </fieldset>
 
@@ -51,12 +50,12 @@
   <div class="text-end">
     {% if config_account_id %}
 
-    <label>{{ text_agree }}</label>
-    <input-switch name="agree" value="1" @ref="agree"></input-switch>
+    <input-switch name="agree" value="1" @ref="agree">
+        <label slot="label">{{ text_agree }}</label>
+    </input-switch>
 
     {% endif %}
 
     <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-
   </div>
-</form-submit>
+</form>

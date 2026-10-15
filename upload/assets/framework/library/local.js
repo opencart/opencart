@@ -1,5 +1,5 @@
 export default class Local {
-    static instance = null;
+    static #instance = null;
 
     get(key) {
         return localStorage.getItem(key);
@@ -22,11 +22,11 @@ export default class Local {
     }
 
     static getInstance() {
-        if (!Local.instance) {
-            Local.instance = new Local();
+        if (!Local.#instance) {
+            Local.#instance = new Local();
         }
 
-        return Local.instance;
+        return Local.#instance;
     }
 }
 

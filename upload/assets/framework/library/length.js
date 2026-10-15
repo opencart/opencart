@@ -3,7 +3,7 @@ import { loader } from './loader.js';
 const length_classes = await loader.storage('localisation/length_class');
 
 export default class Length {
-    static instance = null;
+    static #instance = null;
 
     convert(value, from, to) {
         let length_class_from = length_classes.find(length_class => length_class.length_class_id === from);
@@ -43,18 +43,18 @@ export default class Length {
         let length_class = length_classes.find(length_class => length_class.length_class_id === length_class_id);
 
         if (length_class) {
-             return length_class.unit;
+            return length_class.unit;
         } else {
-             return '';
+            return '';
         }
     }
 
     static getInstance() {
-        if (!Length.instance) {
-            Length.instance = new Length();
+        if (!Length.#instance) {
+            Length.#instance = new Length();
         }
 
-        return Length.instance;
+        return Length.#instance;
     }
 }
 

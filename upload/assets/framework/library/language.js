@@ -1,26 +1,23 @@
 import { load } from '../../yaml/js-yaml.js';
 
 export default class Language {
-    static instance = null;
-
-    constructor() {
-        this.directory = '';
-        this.path = new Map();
-        this.cache = new Map();
-    }
+    static #instance = null;
+    #directory = '';
+    #path = new Map();
+    #cache = new Map();
 
     addPath(namespace, path = '') {
         if (!path) {
-            this.directory = namespace;
+            this.#directory = namespace;
         } else {
-            this.path.set(namespace, path);
+            this.#path.set(namespace, path);
         }
     }
 
     async fetch(path) {
-        if (this.cache.has(path)) return this.cache.get(path);
+        if (this.#cache.has(path)) return this.#cache.get(path);
 
-        let file = this.directory + path + '.yaml';
+        let file = this.#directory + path + '.yaml';
         let namespace = '';
         let parts = path.replace(/\/+$/, '').split('/');
 
@@ -31,8 +28,8 @@ export default class Language {
                 namespace += '/' + part;
             }
 
-            if (this.path.has(namespace + '/')) {
-                file = this.path.get(namespace + '/') + path.substr(namespace.length) + '.yaml';
+            if (this.#path.has(namespace + '/')) {
+                file = this.#path.get(namespace + '/') + path.substr(namespace.length) + '.yaml';
             }
         }
 
@@ -41,9 +38,9 @@ export default class Language {
         if (response.status == 200) {
             let data = load(await response.text());
 
-            this.cache.set(path, new Map(Object.entries(data)));
+            this.#cache.set(path, new Map(Object.entries(data)));
 
-            return this.cache.get(path);
+            return this.#cache.get(path);
         } else {
             throw new Error(`[Language] Could not load language file ${path}!`);
         }
@@ -52,11 +49,11 @@ export default class Language {
     }
 
     static getInstance() {
-        if (!Language.instance) {
-            Language.instance = new Language();
+        if (!Language.#instance) {
+            Language.#instance = new Language();
         }
 
-        return Language.instance;
+        return Language.#instance;
     }
 }
 

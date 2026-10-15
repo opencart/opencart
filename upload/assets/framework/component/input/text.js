@@ -17,6 +17,7 @@ import { WebComponent } from '../../engine.js';
  * <label for="..."> points at it.
  */
 customElements.define('input-text', class extends WebComponent {
+    static formAssociated = true;
     static observedAttributes = [
         'name',
         'value',
@@ -24,67 +25,32 @@ customElements.define('input-text', class extends WebComponent {
         'disabled',
         'readonly'
     ];
-    static formAssociated = true;
-    states = { error: '' };
+
+    static states() {
+        return {
+            value: '',
+            error: ''
+        };
+    }
 
     styles() {
-        return `
-      :host {
-        display: block;
-        font-family: system-ui, sans-serif;
-        margin-bottom: 1rem;
-      }
-      label {
-        display: block;
-        font-size: 0.875rem;
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-      }
-      input {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 0.5rem 0.625rem;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-      }
-      input:focus {
-        outline: 2px solid #4a90d9;
-        outline-offset: 1px;
-      }
-      input:invalid {
-        border-color: #d33;
-      }
-      .error {
-        display: block;
-        color: #d33;
-        font-size: 0.8rem;
-        margin-top: 0.25rem;
-      }
-      .error[hidden] {
-        display: none;
-      }`;
-    }
-
-    get value() {
-        return this.input ? this.input.value : (this.getAttribute('value') ?? '');
-    }
-
-    set value(value) {
-
+        return ``;
     }
 
     render() {
-        const label = this.getAttribute('label') || '';
-        const placeholder = this.getAttribute('placeholder') || '';
+        console.dir(this);
 
-        let html = '<input type="text" name="' + + '" @ref="input" @input="handleInput" @change="handleChange" class="form-control"';
+        let html = '<slot name="label"></slot>';
 
-        //input.setAttribute('placeholder', this.hasAttribute('placeholder'));
+        html += '<input type="text" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
 
-        if (this.hasAttribute('required')) {
-            html += ' required';
+        if (this.hasAttribute('placeholder')) {
+            html += ' placeholder="' + this.getAttribute('placeholder') + '"';
         }
+
+        let error = this.state.get('error');
+
+        html += ' class="form-control ' + (error ? 'is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
 
         if (this.hasAttribute('disabled')) {
             html += ' disabled';
@@ -94,41 +60,56 @@ customElements.define('input-text', class extends WebComponent {
             html += ' readonly';
         }
 
-        // Remove past error classes from inputs
-        // this.form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        // this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-        // this.form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+        if (this.hasAttribute('required')) {
+            html += ' required';
+        }
 
         html += '/>';
 
-        if (this.state.has('error')) {
-            html += '<div class="invalid-feedback">' + this.state.get('error') + '</div>';
+        if (error) {
+            html += '<div class="invalid-feedback">' + error + '</div>';
         }
 
         return html;
     }
 
-    handleError(e) {
-        console.log(e);
+    handleState(keys, state) {
+        console.log('input-text handleState', keys, state);
 
+        if (keys.includes('error')) {
+
+
+            this.handleError();
+        }
+
+        if (keys.includes('success')) {
+            this.handleSuccess();
+        }
+
+        if (keys.includes('input')) {
+            this.handleInput();
+        }
+    }
+
+    handleError(e) {
+        this.update();
     }
 
     handleInput(e) {
-        console.log(e);
-
-        //this.state.delete('error');
+        this.state.set('value', e.target.value);
     }
 
     // A native change event does not leave the shadow root, so send it on.
     handleChange(e) {
-
+        this.state.set('value', e.target.value);
     }
 
     handleReset() {
-        this.input.value = this.getAttribute('value') ?? '';
+        //this.input.value = this.getAttribute('value') ?? '';
+    }
 
-        this.states.set('success', '');
-        this.states.set('error', []);
+    handleRequired() {
+        this.update();
     }
 
     handleDisabled() {

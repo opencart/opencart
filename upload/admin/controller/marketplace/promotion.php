@@ -39,8 +39,8 @@ class Promotion extends \Opencart\System\Engine\Controller {
 			curl_setopt($curl, CURLOPT_URL, OPENCART_SERVER . 'index.php?route=api/recommended&type=' . $type . '&version=' . VERSION);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_HEADER, false);
-			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 
 			$response = curl_exec($curl);
 
@@ -52,7 +52,17 @@ class Promotion extends \Opencart\System\Engine\Controller {
 				$promotion = [];
 			}
 
-			$this->cache->set('promotion.' . $type, $promotion, 3600 * 24);
+			if ($promotion && is_array($promotion)) {
+				$this->cache->set('promotion.' . $type, $promotion, 3600 * 24);
+			} else {
+				// An empty cache entry is read back as a miss, so store a placeholder to avoid requesting opencart.com again on every page load
+				$promotion = [
+					'banner'     => '',
+					'extensions' => []
+				];
+
+				$this->cache->set('promotion.' . $type, $promotion, 3600);
+			}
 		}
 
 		if (isset($promotion['banner'])) {

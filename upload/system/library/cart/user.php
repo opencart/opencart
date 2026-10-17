@@ -103,9 +103,9 @@ class User {
 		if ($user_query->num_rows) {
 			if (password_verify($password, $user_query->row['password'])) {
 				$rehash = password_needs_rehash($user_query->row['password'], PASSWORD_DEFAULT);
-			} elseif (isset($user_query->row['salt']) && $user_query->row['password'] == sha1($user_query->row['salt'] . sha1($user_query->row['salt'] . sha1($password)))) {
+			} elseif (isset($user_query->row['salt']) && hash_equals((string)$user_query->row['password'], sha1($user_query->row['salt'] . sha1($user_query->row['salt'] . sha1($password))))) {
 				$rehash = true;
-			} elseif ($user_query->row['password'] == md5($password)) {
+			} elseif (hash_equals((string)$user_query->row['password'], md5($password))) {
 				$rehash = true;
 			} else {
 				return false;

@@ -51,6 +51,10 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * $records = $this->model_tool_backup->getRecords($table, $start, $limit);
 	 */
 	public function getRecords(string $table, int $start = 0, int $limit = 100): array {
+		if (!in_array($table, $this->getTables())) {
+			return [];
+		}
+
 		$primary_data = [];
 
 		$query = $this->db->query("SELECT COLUMN_NAME AS `name` FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . $table . "' AND COLUMN_KEY = 'PRI'");
@@ -98,6 +102,10 @@ class Backup extends \Opencart\System\Engine\Model {
 	 * $record_total = $this->model_tool_backup->getTotalRecords($table);
 	 */
 	public function getTotalRecords(string $table): int {
+		if (!in_array($table, $this->getTables())) {
+			return 0;
+		}
+
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . $table . "`");
 
 		if ($query->num_rows) {

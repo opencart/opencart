@@ -180,7 +180,6 @@ export class Binder {
     }
 
     refresh() {
-        this.destroy();
         this.#refs = new Map();
         this.#listeners = [];
         this.#bindings = [];

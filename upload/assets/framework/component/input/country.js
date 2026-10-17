@@ -19,8 +19,14 @@ const countries = await loader.storage('localisation/country');
  * optional required disabled
  */
 customElements.define('input-country', class extends WebComponent {
-    static observedAttributes = ['value'];
     static formAssociated = true;
+    static observedAttributes = [
+        'name',
+        'value',
+        'required',
+        'disabled',
+        'readonly'
+    ];
 
     default = '';
     countries = [];

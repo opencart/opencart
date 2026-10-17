@@ -1,40 +1,10 @@
-import { WebComponent } from '../../engine.js';
+import { InputText } from './text.js';
 
-customElements.define('input-time', class extends WebComponent {
-    static formAssociated = true;
-    static observedAttributes = [
-        'name',
-        'value',
-        'required',
-        'disabled',
-        'readonly'
-    ];
-
-    static states() {
-        return {
-            value: '',
-            error: ''
-        };
-    }
-
-    styles() {
-        return ``;
-    }
-
-    get value() {
-        return this.state.get('value');
-    }
-
-    set value(value) {
-        this.state.set('value', value);
-    }
-
+class InputTime extends InputText {
     render() {
-        console.dir(this);
-
         let html = '<slot name="label"></slot>';
 
-        html += '<input type="time" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" class="form-control"';
+        html += '<input type="time" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
 
         if (this.hasAttribute('placeholder')) {
             html += ' placeholder="' + this.getAttribute('placeholder') + '"';
@@ -42,7 +12,7 @@ customElements.define('input-time', class extends WebComponent {
 
         let error = this.state.get('error');
 
-        html += ' class="form-control ' + (error ? 'is-invalid' : '') + '"';
+        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
 
         if (this.hasAttribute('disabled')) {
             html += ' disabled';
@@ -56,45 +26,14 @@ customElements.define('input-time', class extends WebComponent {
             html += ' required';
         }
 
-        html += ' @ref="input" @input="handleInput" @change="handleChange"/>';
+        html += '/>';
 
         if (error) {
-            html += '<div class="invalid-feedback">' + error + '</div>';
+            html += '<div @ref="feedback" class="invalid-feedback">' + error + '</div>';
         }
 
         return html;
     }
+}
 
-    handleState(keys, state) {
-        if (keys.includes('error')) {
-            this.handleError();
-        }
-
-        if (keys.includes('success')) {
-            this.handleSuccess();
-        }
-
-        if (keys.includes('input')) {
-            this.handleInput();
-        }
-    }
-
-    handleInput(e) {
-        console.log(e);
-
-        this.state.set('value', e.target.value);
-    }
-
-    // A native change event does not leave the shadow root, so send it on.
-    handleChange(e) {
-        this.state.set('value', e.target.value);
-    }
-
-    handleError(e) {
-        this.update();
-    }
-
-    handleAttribute() {
-
-    }
-});
+customElements.define('input-time', InputTime);

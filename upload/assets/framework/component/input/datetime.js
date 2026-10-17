@@ -1,6 +1,39 @@
-import { WebComponent } from '../../engine.js';
+import { InputText } from './text.js';
 
-customElements.define('input-datetime', class extends WebComponent {
-    static formAssociated = true;
+class InputDateTime extends InputText {
+    render() {
+        let html = '<slot name="label"></slot>';
 
-});
+        html += '<input type="datetime-local" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
+
+        if (this.hasAttribute('placeholder')) {
+            html += ' placeholder="' + this.getAttribute('placeholder') + '"';
+        }
+
+        let error = this.state.get('error');
+
+        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
+
+        if (this.hasAttribute('disabled')) {
+            html += ' disabled';
+        }
+
+        if (this.hasAttribute('readonly')) {
+            html += ' readonly';
+        }
+
+        if (this.hasAttribute('required')) {
+            html += ' required';
+        }
+
+        html += '/>';
+
+        if (error) {
+            html += '<div @ref="feedback" class="invalid-feedback">' + error + '</div>';
+        }
+
+        return html;
+    }
+}
+
+customElements.define('input-datetime', InputDateTime);

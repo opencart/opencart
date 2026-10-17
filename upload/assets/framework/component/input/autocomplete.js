@@ -1,29 +1,37 @@
-import { WebComponent } from '../../engine.js';
+import { InputText } from './text.js';
 
-customElements.define('input-autocomplete', class extends WebComponent {
-    static formAssociated = true;
-    static observedAttributes = [
-        'name',
-        'value',
-        'required',
-        'disabled',
-        'readonly'
-    ];
-
-    static states() {
-        return {
-            value: '',
-            error: ''
-        };
-    }
-
+class InputAutocomplete extends InputText {
     async render() {
         let html = '<slot name="label"></slot>';
 
-        html += '<input type="text" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" placeholder="{{ entry_name }}" id="input-name" class="form-control" autocomplete="off"/>';
+        html += '<input type="text" `name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" placeholder="{{ entry_name }}" autocomplete="off"/>';
 
+        if (this.hasAttribute('placeholder')) {
+            html += ' placeholder="' + this.getAttribute('placeholder') + '"';
+        }
 
+        let error = this.state.get('error');
+
+        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
+
+        if (this.hasAttribute('disabled')) {
+            html += ' disabled';
+        }
+
+        if (this.hasAttribute('readonly')) {
+            html += ' readonly';
+        }
+
+        if (this.hasAttribute('required')) {
+            html += ' required';
+        }
+
+        html += '/>';
         html += '<ul class="dropdown-menu" @ref="dropdown"></ul>';
+
+        if (error) {
+            html += '<div @ref="feedback" class="invalid-feedback">' + error + '</div>';
+        }
 
         return html;
     }
@@ -109,4 +117,6 @@ customElements.define('input-autocomplete', class extends WebComponent {
 
         $dropdown.html(html);
     }
-});
+}
+
+customElements.define('input-autocomplete', InputAutocomplete);

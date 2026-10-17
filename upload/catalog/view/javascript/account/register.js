@@ -13,7 +13,7 @@ export default class AccountRegister extends WebComponent {
             submitting: false,
             success: '',
             error: []
-        }
+        };
     }
 
     constructor() {
@@ -40,12 +40,6 @@ export default class AccountRegister extends WebComponent {
         }
     }
 
-    handleState(changed, state) {
-        console.log('account-register handleState', changed, state);
-
-        console.dir(this.submitter);
-    }
-
     async handleSubmit(e) {
         e.preventDefault();
 
@@ -53,37 +47,17 @@ export default class AccountRegister extends WebComponent {
 
         let form = new FormData(this.form);
 
-        console.log(Object.fromEntries(form));
-
-        console.dir(this);
-
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {
-                this.submitter.state.set('loading', true);
+                this.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.submitter.state.set('loading', false);
+                this.state.set('submitting', false);
             },
             handleSuccess: async (json) => {
                 // Display error messages
                 if (json.has('error')) {
-                    let errors = Object.entries(json.get('error'));
-
-                    console.log(errors);
-
-                    for (let [key, value] of errors) {
-                        if (key === 'warning') {
-                            this.state.set('error', 'warning');
-                        }
-
-                        if (this[key]) {
-                            console.log('Setting error for', key, value);
-                            console.dir(this[key]);
-                            console.dir(this[key].state);
-
-                            this[key].state.set('error', value);
-                        }
-                    }
+                    this.state.set('error', json.get('error'));
                 }
 
                 // Display success message
@@ -97,6 +71,22 @@ export default class AccountRegister extends WebComponent {
                 console.log('onError', e);
             }
         });
+    }
+
+    handleSubmitting(state) {
+        this.submitter.state.set('submitting', state.submitting);
+    }
+
+    handleError(state) {
+        let errors = Object.entries(state.error);
+
+        if (errors.length === 0) return;
+
+        for (let [key, value] of errors) {
+            if (key === 'warning') continue;
+
+            if (this[key]) this[key].state.set('error', value);
+        }
     }
 
     handleAgree(e) {

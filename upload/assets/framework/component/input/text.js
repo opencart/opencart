@@ -1,6 +1,5 @@
 import { WebComponent } from '../../engine.js';
-
-/**
+/*
  * <input-text type="email" name="email" id="input-email" placeholder="E-Mail" required></input-text>
  *
  * A text-like input (text, email, tel, password...) for forms.
@@ -16,7 +15,7 @@ import { WebComponent } from '../../engine.js';
  * required, disabled. Put `id` on this element (not an input-id), so that
  * <label for="..."> points at it.
  */
-customElements.define('input-text', class extends WebComponent {
+export class InputText extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
         'name',
@@ -29,17 +28,26 @@ customElements.define('input-text', class extends WebComponent {
     static states() {
         return {
             value: '',
-            error: ''
+            error: '',
+            required: false,
+            disabled: false,
+            readonly: false
         };
     }
 
     styles() {
-        return ``;
+        return `               
+            :host { display: block; }
+            :host([invalid]) .form-control, :host([error]:not([error=""])) .form-control { border-color: var(--bs-form-invalid-border-color, #dc3545); }
+            :host([invalid]) .form-control:focus, :host([error]:not([error=""])) .form-control:focus { box-shadow: 0 0 0 .25rem rgb(220 53 69 / .25); }
+            :host(:state(invalid)) .form-control { border-color: var(--bs-form-invalid-border-color, #dc3545); }
+            :host(:state(invalid)) .form-control:focus { box-shadow: 0 0 0 .25rem rgb(220 53 69 / .25); }
+            .invalid-feedback { display: none; margin-top: .25rem; font-size: .875em; color: var(--bs-form-invalid-color, #dc3545); }
+            .invalid-feedback:not(:empty) { display: block; }
+        `;
     }
 
     render() {
-        console.dir(this);
-
         let html = '<slot name="label"></slot>';
 
         html += '<input type="text" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
@@ -50,7 +58,7 @@ customElements.define('input-text', class extends WebComponent {
 
         let error = this.state.get('error');
 
-        html += ' class="form-control ' + (error ? 'is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
+        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
 
         if (this.hasAttribute('disabled')) {
             html += ' disabled';
@@ -67,32 +75,14 @@ customElements.define('input-text', class extends WebComponent {
         html += '/>';
 
         if (error) {
-            html += '<div class="invalid-feedback">' + error + '</div>';
+            html += '<div @ref="feedback" class="invalid-feedback">' + error + '</div>';
         }
 
         return html;
     }
 
-    handleState(keys, state) {
-        console.log('input-text handleState', keys, state);
+    handleConnect() {
 
-        if (keys.includes('error')) {
-
-
-            this.handleError();
-        }
-
-        if (keys.includes('success')) {
-            this.handleSuccess();
-        }
-
-        if (keys.includes('input')) {
-            this.handleInput();
-        }
-    }
-
-    handleError(e) {
-        this.update();
     }
 
     handleInput(e) {
@@ -102,6 +92,12 @@ customElements.define('input-text', class extends WebComponent {
     // A native change event does not leave the shadow root, so send it on.
     handleChange(e) {
         this.state.set('value', e.target.value);
+    }
+
+    handleError(state) {
+        console.log('input-text handleError', state);
+
+        this.update();
     }
 
     handleReset() {
@@ -119,4 +115,6 @@ customElements.define('input-text', class extends WebComponent {
     handleReadonly() {
         this.update();
     }
-});
+}
+
+customElements.define('input-text', InputText);

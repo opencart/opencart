@@ -1,14 +1,24 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('input-upload', class extends WebComponent {
-    static observed = [
+    static formAssociated = true;
+    static observedAttributes = [
         'name',
         'value',
         'disabled',
         'required',
         'readonly'
     ];
-    static formAssociated = true;
+
+    static states() {
+        return {
+            value: '',
+            error: '',
+            required: false,
+            disabled: false,
+            readonly: false
+        };
+    }
 
     get name() {
         return this.getAttribute('name');
@@ -52,11 +62,6 @@ customElements.define('input-upload', class extends WebComponent {
 
     render() {
         return '<form enctype="multipart/form-data" @submit="handleSubmit" style="display: none;"><input type="file" name="file" value=""/></form>';
-        // data-oc-toggle="upload"
-        // data-oc-url="{{ upload }}"
-        // data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"
-        // data-oc-size-max="{{ config_file_max_size }}"
-        // data-oc-size-error="{{ error_upload_size }}"
 
         let html = '';
 

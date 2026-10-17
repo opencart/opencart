@@ -1,7 +1,7 @@
 import { Binder } from './binder.js';
 import { Global } from './global.js';
 import { State } from './state.js';
-import { Style } from './style.js';
+import { stylesheet } from './stylesheet.js';
 
 /**
  * WebComponent
@@ -48,7 +48,6 @@ export class WebComponent extends HTMLElement {
     static formAssociated = false;
     static shadow = true;
     #root = null;
-    #internal = null;
     #binder = null;
     #global = null;
     // Make sure reactive attributes don't work until after render has been called.
@@ -68,19 +67,22 @@ export class WebComponent extends HTMLElement {
         // Attach Shadow or use light DOM based on the static property
         this.#root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
 
-        // Attach Internals
-        this.#internal = this.attachInternals();
-
         // Global
         this.#global = Global;
 
         // State
         this.state = new State(this.constructor.states(), this.stateChangedCallback.bind(this));
+
+        // Attach Internals
+        this.internal = this.attachInternals();
     }
 
     /** Override: list of external CSS file URLs to adopt into this component. */
     stylesheets() {
-        return [];
+        return [
+            'stylesheet.css',
+            'fontawesome/css/all.css'
+        ];
     }
 
     /** Override: return a CSS string scoped to this component's shadow root. */
@@ -141,14 +143,12 @@ export class WebComponent extends HTMLElement {
         let handler = `handle${name.charAt(0).toUpperCase() + name.slice(1)}`;
 
         if (typeof this[handler] === 'function') {
-            //await this[handler](value_new, value_old);
+            await this[handler](value_new, value_old);
         }
     }
 
     async stateChangedCallback(changed, state) {
-        if (!changed.size) return;
-
-        console.log('stateChangedCallback', changed);
+        if (!this.#rendered || !changed.length) return;
 
         // Default handler for state changes
         if (typeof this.handleState == 'function') {
@@ -159,7 +159,7 @@ export class WebComponent extends HTMLElement {
             let handler = `handle${key.charAt(0).toUpperCase() + key.slice(1)}`;
 
             if (typeof this[handler] === 'function') {
-                //await this[handler](state);
+                await this[handler](state);
             }
         }
     }
@@ -167,9 +167,7 @@ export class WebComponent extends HTMLElement {
     async update() {
         if (typeof this.render !== 'function') return;
 
-        let output = await this.render();
-
-        this.#root.innerHTML = output;
+        this.#root.innerHTML = await this.render();
 
         if (!this.#binder) {
             this.#binder = new Binder(this.#root, this);
@@ -183,7 +181,7 @@ export class WebComponent extends HTMLElement {
         if (hrefs && hrefs.length) {
             // Adopts asynchronously; inline `styles()` above still applies
             // immediately so there's no unstyled flash for critical CSS.
-            Style.adopt(this.#root, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
+            stylesheet.adopt(this.#root, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
         }
     }
 }

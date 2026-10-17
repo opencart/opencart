@@ -1,7 +1,6 @@
 // Form
 import './component/form/button.js';
 import './component/form/form.js';
-import './component/form/group.js';
 
 // Input
 import './component/input/autocomplete.js';

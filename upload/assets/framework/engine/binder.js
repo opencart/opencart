@@ -88,33 +88,35 @@ export class Binder {
     }
 
     #walk(root) {
-        let accept = (node) => node.getAttributeNames().some((name) => name.startsWith('@') || name.startsWith(':')) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+        let carries = (node) => node.getAttributeNames().some((name) => name.startsWith('@') || name.startsWith(':'));
 
-        const walker = document.createTreeWalker(this.#root, NodeFilter.SHOW_ELEMENT, {
-            acceptNode: accept // skip this node, still walk its children
+        if (root.nodeType === 1 && carries(root)) this.bind(root);
+
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
+            acceptNode: (node) => carries(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
         });
 
         let node = walker.nextNode();
 
         while (node) {
-            this.#bind(node);
+            this.bind(node);
 
             node = walker.nextNode();
         }
     }
 
-    #bind(element) {
+    bind(element) {
         let names = element.getAttributeNames().filter((name) => name.startsWith('@') || name.startsWith(':'));
 
         names.forEach((name) => {
             let is_global = name.startsWith(':');
-            let key = name.slice(1);
+            let [key, ...options] = name.slice(1).split('.');
             let value = element.getAttribute(name);
 
             if (key === 'ref') {
                 this.#ref(element, value, is_global);
             } else {
-                this.#event(element, key, value, is_global);
+                this.#event(element, key, value, options, is_global);
             }
 
             element.removeAttribute(name);
@@ -132,6 +134,10 @@ export class Binder {
             return;
         }
 
+        if (key in HTMLElement.prototype) {
+            throw new Error(`Binder: ref "${key}" on ${element.tagName} is the name of a native HTMLElement property, so this.${key} would not be the element; use another name`);
+        }
+
         this.#refs.set(key, element);
 
         // Attach the getter property to the web component
@@ -143,25 +149,25 @@ export class Binder {
         }
     }
 
-    #event(element, event, method, is_global) {
+    #event(element, event, method, options, is_global) {
         let handler = is_global ? Global.getListener(method) : this.#host[method];
 
         if (typeof handler !== 'function') {
-            let scope = is_global ? 'Global' : 'Host';
-            let prefix = is_global ? ':' : '@';
-
-            throw new Error(`Binder: no method "${method}" found in ${scope} for ${element.tagName} event "${prefix}${event}"`);
-
-            return;
+            throw new Error(`Binder: no method "${method}" found in ${is_global ? 'Global' : 'Host'} for ${element.tagName} event "${event}"`);
         }
 
-        // Global handlers run as plain functions (no implicit `this`);
-        // host handlers are bound to the component instance as before.
+        let option = {};
+
+        let keys = options.filter(value => ['capture', 'once', 'passive'].includes(value));
+
+        for (let key of keys) option[key] = true;
+
+        // Bind the handler to the host if it's not global
         let listener = is_global ? handler : handler.bind(this.#host);
 
-        element.addEventListener(event, listener);
+        element.addEventListener(event, listener, option);
 
-        this.#listeners.push({ element, event, listener });
+        this.#listeners.push({ element, event, listener, capture: !!option.capture });
     }
 
     /** Get a bound element by its data-ref name. */
@@ -184,7 +190,7 @@ export class Binder {
 
     /** Remove all attached event listeners (call in disconnectedCallback). */
     destroy() {
-        this.#listeners.forEach(({ element, event, listener }) => element.removeEventListener(event, listener));
+        this.#listeners.forEach(({ element, event, listener, capture }) => element.removeEventListener(event, listener, capture));
         this.#listeners = [];
 
         // Only clear a global ref if it still points at the element *this*

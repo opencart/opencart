@@ -48,12 +48,15 @@ customElements.define('ui-modal', class extends WebComponent {
         return modal;
     }
 
+    // Settles after the first render, which is when the <dialog> exists.
+    #ready;
+    #resolve_ready;
+
     constructor() {
         super();
 
-        // Settles after the first render, which is when the <dialog> exists.
-        this.ready = new Promise(resolve => {
-            this.resolve_ready = resolve;
+        this.#ready = new Promise(resolve => {
+            this.#resolve_ready = resolve;
         });
     }
 
@@ -67,18 +70,6 @@ customElements.define('ui-modal', class extends WebComponent {
         // aria-labelledby points at the title; without one the dialog needs a name of its own.
         let name = heading ? 'aria-labelledby="heading"' : `aria-label="${escapeHtml(this.getAttribute('label') ?? 'Dialog')}"`;
 
-        let html  = '<div class="modal-dialog modal-dialog-centered">';
-
-        html += '    <div class="modal-content">';
-        html += '      <div class="modal-header">';
-        html += '        <slot name="title"></slot>';
-        html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-        html += '      </div>';
-        html += '      <div class="modal-body"><slot name="body"></slot></div>';
-        html += '    </div>';
-        html += '  </div>';
-        html += '</div>';
-
         return `
             <style>
                 :host { display: contents; }
@@ -90,7 +81,7 @@ customElements.define('ui-modal', class extends WebComponent {
                 .close:hover, .close:focus-visible { opacity: 1; }
                 .body { padding: 0 1rem 1rem; }
             </style>
-            <dialog @ref="dialog" @click="handleClick" @close="handleClose" closedby="any" ${name}>
+            <dialog @ref="dialog" @click="onClick" @close="onClose" closedby="any" ${name}>
                 <div class="header">
                     ${heading ? `<h2 class="title" id="heading">${escapeHtml(heading)}</h2>` : ''}
                     <button type="button" class="close" aria-label="${escapeHtml(this.getAttribute('close-label') ?? 'Close')}" @click="close">&times;</button>
@@ -103,11 +94,11 @@ customElements.define('ui-modal', class extends WebComponent {
     async update() {
         await super.update();
 
-        this.resolve_ready();
+        this.#resolve_ready();
     }
 
     async show() {
-        await this.ready;
+        await this.#ready;
 
         if (!this.dialog.open) this.dialog.showModal();
     }
@@ -118,12 +109,12 @@ customElements.define('ui-modal', class extends WebComponent {
 
     // The content fills the dialog box, so a click that lands on the <dialog> itself
     // can only be on the backdrop. Browsers that support closedby="any" do this already.
-    handleClick(e) {
+    onClick(e) {
         if (e.target === this.dialog) this.close();
     }
 
     // The native close event stays inside the shadow root, so send it on.
-    handleClose() {
+    onClose() {
         this.dispatchEvent(new Event('close'));
     }
 });

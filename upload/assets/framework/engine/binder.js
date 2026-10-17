@@ -179,10 +179,10 @@ export class Binder {
         return this.#refs.has(key);
     }
 
+    /** Binds a fresh render. The old bindings are removed first, listeners and global refs included. */
     refresh() {
+        this.destroy();
         this.#refs = new Map();
-        this.#listeners = [];
-        this.#bindings = [];
 
         this.#walk(this.#root);
     }

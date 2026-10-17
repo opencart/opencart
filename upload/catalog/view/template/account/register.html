@@ -4,42 +4,36 @@
   <fieldset>
     <legend>{{ text_your_details }}</legend>
     <div class="mb-3">
-      <input-text @ref="firstname" name="firstname" value="">
-        <label slot="label">{{ entry_firstname }}</label>
-      </input-text>
+      <form-label id="label-firstname">{{ entry_firstname }}</form-label>
+      <input-text name="firstname" value="" id="input-firstname"></input-text>
     </div>
     <div class="mb-3">
-      <input-text @ref="lastname" name="lastname" value="">
-         <label slot="label">{{ entry_lastname }}</label>
-      </input-text>
+      <form-label id="label-lastname">{{ entry_lastname }}</form-label>
+      <input-text name="lastname" value="" id="input-lastname"></input-text>
     </div>
     <div class="mb-3">
-      <input-email @ref="email" name="email" value="test123@test123.com">
-        <label slot="label">{{ entry_email }}</label>
-      </input-email>
+      <form-label id="label-email">{{ entry_email }}</form-label>
+      <input-email name="email" value="test123@test123.com" id="input-email"></input-email>
     </div>
     {% if config_telephone_status %}
     <div class="mb-3">
-      <input-tel @ref="telephone" name="telephone" value="0123456789"{% if config_telephone_required %} required{% endif %}>
-        <label slot="label">{{ entry_telephone }}</label>
-      </input-tel>
+      <form-label id="label-telephone">{{ entry_telephone }}</form-label>
+      <input-tel name="telephone" value="0123456789" id="input-telephone"{% if config_telephone_required %} required{% endif %}></input-tel>
     </div>
     {% endif %}
   </fieldset>
   <fieldset>
     <legend>{{ text_your_password }}</legend>
     <div class="mb-3">
-      <input-password @ref="password" name="password" value="1234567890" required>
-        <label slot="label">{{ entry_password }}</label>
-      </input-password>
+      <form-label id="label-password">{{ entry_password }}</form-label>
+      <input-password name="password" value="1234567890" id="input-password" required></input-password>
     </div>
   </fieldset>
   <fieldset>
     <legend>{{ text_newsletter }}</legend>
     <div class="row mb-3">
-      <input-switch @ref="newsletter" name="newsletter" value="1">
-        <label slot="label">{{ entry_newsletter }}</label>
-      </input-switch>
+      <form-label id="label-newsletter">{{ entry_newsletter }}</form-label>
+      <input-switch @ref="newsletter" name="newsletter" value="1" id="input-newsletter"></input-switch>
     </div>
   </fieldset>
 
@@ -49,11 +43,8 @@
 
   <div class="text-end">
     {% if config_account_id %}
-
-    <input-switch name="agree" value="1" @ref="agree">
-        <label slot="label">{{ text_agree }}</label>
-    </input-switch>
-
+    <form-label id="label-agree">{{ text_agree }}</form-label>
+    <input-switch name="agree" value="1" @ref="agree" id="input-agree"></input-switch>
     {% endif %}
 
     <button-submit @ref="submitter">{{ button_continue }}</button-submit>

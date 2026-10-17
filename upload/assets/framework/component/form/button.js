@@ -4,7 +4,7 @@ customElements.define('button-submit', class extends WebComponent {
     static shadow = false;
     static formAssociated = true;
     static observedAttributes = [
-        'loading',
+        'submitting',
         'disabled'
     ];
     /* Will only manage states listed here */
@@ -15,43 +15,32 @@ customElements.define('button-submit', class extends WebComponent {
         };
     }
 
-    #html = '';
-    #width;
-
     render() {
-        let html = '<button type="submit" @ref="button" class="btn btn-primary"';
-
-        if (this.state.get('submitting')) {
-            html += ' style="width: ' + this.#width + 'px;"';
-        }
-
-        if (this.state.get('disabled') || this.state.get('submitting')) {
-            html += ' disabled';
-        }
-
-        html += '>';
-
-        if (this.state.get('submitting')) {
-            html += '<i class="fa-solid fa-circle-notch fa-spin"></i>';
-        } else {
-            html += this.#html;
-        }
-
-        html += '</button>';
-
-        return html;
+        return '<button type="submit" @ref="button" class="btn btn-primary"' + (this.hasAttribute('disabled') ? ' disabled' : '') + '>' + this.html + '</button>';
     }
 
     handleConnect() {
-        this.#html = this.innerHTML;
-        this.#width = this.offsetWidth;
-
+        this.html = this.innerHTML;
         this.state.set('disabled', this.hasAttribute('disabled'));
     }
 
-    handleState(changed, state) {
-        console.log('button-submit handleState', changed, state);
+    stateSubmitting(submitting, state) {
+        console.log('button-submit handleSubmitting', submitting, state);
 
-        this.update();
+        if (submitting) {
+            this.button.style.width = this.offsetWidth + 'px';
+            this.button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+            this.button.toggleAttribute('disabled', true);
+        } else {
+            this.button.style.width = '';
+            this.button.innerHTML = this.html;
+            this.button.toggleAttribute('disabled', false);
+        }
     }
-});
+
+    stateDisabled(disabled, state) {
+        console.log('button-submit stateDisabled', disabled, state);
+
+        this.button.toggleAttribute('disabled', disabled);
+    }
+}); 

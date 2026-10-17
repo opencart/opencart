@@ -29,7 +29,7 @@ import { WebComponent } from '../../engine.js';
  * shadow root could not reach the field. A page that wants its own label can supply
  * one with slot="label" and the group leaves it alone.
  */
-customElements.define('form-group', class extends WebComponent {
+customElements.define('form-label', class extends WebComponent {
     get required() {
 
     }

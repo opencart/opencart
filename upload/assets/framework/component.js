@@ -1,6 +1,6 @@
 // Form
+import './component/form/label.js';
 import './component/form/button.js';
-import './component/form/form.js';
 
 // Input
 import './component/input/autocomplete.js';

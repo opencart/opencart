@@ -8,7 +8,7 @@ const config = await loader.config('default');
 const language = await loader.language('account/register');
 
 export default class AccountRegister extends WebComponent {
-    static states() {
+    states() {
         return {
             submitting: false,
             success: '',
@@ -20,6 +20,10 @@ export default class AccountRegister extends WebComponent {
         super();
 
         this.token = '';
+    }
+
+    template() {
+        return loader.template.fetch('account/register');
     }
 
     async render() {
@@ -45,7 +49,12 @@ export default class AccountRegister extends WebComponent {
 
         //if (customer.isLogged()) return;
 
+        console.log('handleSubmit called');
+        console.dir(this.form.elements);
+
         let form = new FormData(this.form);
+
+        console.dir(form.values());
 
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {
@@ -73,23 +82,32 @@ export default class AccountRegister extends WebComponent {
         });
     }
 
-    handleSubmitting(state) {
-        this.submitter.state.set('submitting', state.submitting);
+    stateSubmitting(submitting) {
+        console.log('handleSubmitting called with state:', submitting);
+        //console.dir(this.submitter);
+
+        this.submitter.state.set('submitting', submitting);
     }
 
-    handleError(state) {
-        let errors = Object.entries(state.error);
+    stateError(error) {
+        console.log('stateError called with error:', error);
+
+        let errors = Object.entries(error);
 
         if (errors.length === 0) return;
 
         for (let [key, value] of errors) {
             if (key === 'warning') continue;
 
-            if (this[key]) this[key].state.set('error', value);
+
+            if (this[key]) {
+                //this[key].state.set('label', value);
+                this[key].state.set('error', value);
+            }
         }
     }
 
-    handleAgree(e) {
+    stateAgree(e) {
         this.submitter.state.set('disabled', !e.target.hasAttribute('checked'));
     }
 }

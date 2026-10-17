@@ -1,6 +1,6 @@
-import { WebComponent } from '../../engine.js';
+import { InputText } from './text.js';
 
-class InputPassword extends WebComponent {
+class InputPassword extends InputText {
     render() {
         let html = '<slot name="label"></slot>';
 

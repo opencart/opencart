@@ -10,7 +10,7 @@ customElements.define('input-upload', class extends WebComponent {
         'readonly'
     ];
 
-    static states() {
+    states() {
         return {
             value: '',
             error: '',

@@ -14,7 +14,7 @@ const camel = (name) => name.split('-').map(part => part.charAt(0).toUpperCase()
  *   - Lifecycle hooks: handleConnect, handleDisconnect, handleAttribute, handleState
  *
  * Named handlers are called when they exist:
- *   - attribute "count" changes  ->  handleCount(value_new, value_old)
+ *   - attribute "count" changes  ->  attributeCount(name, value_new, value_old)
  *   - state "count" changes      ->  stateCount(value, state)
  *
  * Usage:
@@ -59,7 +59,7 @@ export class WebComponent extends HTMLElement {
     root = null;
     #binder = null;
     #template = document.createElement('template');
-    #styled = false;
+    #renders = 0;
     // Make sure reactive attributes don't work until after render has been called.
     #rendered = false;
 
@@ -150,10 +150,10 @@ export class WebComponent extends HTMLElement {
         return {};
     }
 
-    /** Override: list of external CSS file URLs to adopt into this component's shadow root. */
+    /** Override: CSS files to adopt into the shadow root, as names stylesheet.resolve() knows. */
     stylesheets() {
         return [
-            'stylesheet.css',
+            'catalog/stylesheet.css',
             'fontawesome/css/all.css'
         ];
     }
@@ -163,30 +163,29 @@ export class WebComponent extends HTMLElement {
         return '';
     }
 
-    // Styles go on the shadow root once. A light DOM component uses the page's CSS, since
-    // anything adopted into the document would apply to the whole page.
-    #style() {
-        if (this.#styled || !this.shadowRoot) return;
+    // Styles go on the shadow root once, from the constructor. A light DOM component uses the
+    // page's CSS, since anything adopted into the document would apply to the whole page.
+    // The files go first and styles() after them, so the component's own rules win.
+    async #style() {
+        if (!this.shadowRoot) return;
 
-        this.#styled = true;
+        await stylesheet.adopt(this.root, this.stylesheets());
 
         const css = this.styles();
 
-        if (css) {
-            stylesheet.adoptText(this.root, [css]).catch(error => console.error('WebComponent: failed to adopt styles', error));
-        }
-
-        const hrefs = this.stylesheets();
-
-        if (hrefs && hrefs.length) {
-            stylesheet.adopt(this.root, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
-        }
+        if (css) await stylesheet.adoptText(this.root, [css]);
     }
 
     async update() {
         if (typeof this.render !== 'function') return;
 
-        this.#template.innerHTML = await this.render();
+        const render = ++this.#renders;
+        const html = await this.render();
+
+        // A newer update started while this one was rendering, so this one is out of date.
+        if (render !== this.#renders) return;
+
+        this.#template.innerHTML = html;
 
         // Put the new content in place first, so the binder walks what is now on the page.
         this.root.replaceChildren(this.#template.content);
@@ -196,7 +195,5 @@ export class WebComponent extends HTMLElement {
         } else {
             this.#binder.refresh();
         }
-
-        //this.style();
     }
 }

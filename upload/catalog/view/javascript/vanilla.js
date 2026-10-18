@@ -5,7 +5,7 @@
  *
  *   <html lang="en-gb">
  *   <head>
- *     <base href="https://example.com/">
+ *     <base href="https://www.example.com/">
  *     <script src="startup.js" type="module"></script>
  *   </head>
  *   <body>
@@ -45,16 +45,16 @@ if (!local.has('currency')) local.set('currency', setting.get('config_currency')
 storage.addPath('shop/' + base.host + '/data/');
 
 // Language Path
-//language.addPath('shop/' + base.host + '/language/' + local.get('language') + '/');
+//language.addPath('shop/', 'shop/' + base.host + '/language/' + local.get('language') + '/');
 language.addPath('catalog/view/language/' + local.get('language') + '/');
 
 // Template Path
-//template.addPath('shop/' + base.host + '/template/');
+//template.addPath('shop/', 'shop/' + base.host + '/template/');
 template.addPath('catalog/view/template/');
 
 // Stylesheets
-stylesheet.addPath('shop/' + base.host + '/stylesheet/');
-stylesheet.addPath('catalog/view/stylesheet/');
+stylesheet.addPath('shop/', 'shop/' + base.host + '/stylesheet/');
+stylesheet.addPath('catalog/', 'catalog/view/stylesheet/');
 stylesheet.addPath('fontawesome/css/', 'assets/fontawesome/css/'); // namespace → alternate directory
 
 // ─── Libraries + template filters ──────────────────────────────────────────

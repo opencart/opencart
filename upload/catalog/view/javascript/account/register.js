@@ -8,22 +8,18 @@ const config = await loader.config('default');
 const language = await loader.language('account/register');
 
 export default class AccountRegister extends WebComponent {
-    states() {
-        return {
-            submitting: false,
-            success: '',
-            error: []
-        };
-    }
-
     constructor() {
         super();
 
         this.token = '';
     }
 
-    template() {
-        return loader.template.fetch('account/register');
+    states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        };
     }
 
     async render() {
@@ -50,11 +46,8 @@ export default class AccountRegister extends WebComponent {
         //if (customer.isLogged()) return;
 
         console.log('handleSubmit called');
-        console.dir(this.form.elements);
 
         let form = new FormData(this.form);
-
-        console.dir(form.values());
 
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {
@@ -83,15 +76,10 @@ export default class AccountRegister extends WebComponent {
     }
 
     stateSubmitting(submitting) {
-        console.log('handleSubmitting called with state:', submitting);
-        //console.dir(this.submitter);
-
         this.submitter.state.set('submitting', submitting);
     }
 
     stateError(error) {
-        console.log('stateError called with error:', error);
-
         let errors = Object.entries(error);
 
         if (errors.length === 0) return;
@@ -99,10 +87,16 @@ export default class AccountRegister extends WebComponent {
         for (let [key, value] of errors) {
             if (key === 'warning') continue;
 
+            let label = this.root.getElementById('label-' + key);
 
-            if (this[key]) {
-                //this[key].state.set('label', value);
-                this[key].state.set('error', value);
+            if (label) {
+                label.state.set('error', true);
+            }
+
+            let input = this.root.getElementById('input-' + key);
+
+            if (input) {
+                input.state.set('error', value);
             }
         }
     }

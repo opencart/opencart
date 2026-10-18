@@ -1,36 +1,48 @@
 import { WebComponent } from '../../engine.js';
 
 class InputTextarea extends WebComponent {
-    render() {
-        let html = '<slot name="label"></slot>';
+    static formAssociated = true;
+    static observedAttributes = [
+        'name',
+        'value',
+        'required',
+        'disabled',
+        'readonly'
+    ];
 
-        html += '<textarea name="' + this.getAttribute('name') + '" class="form-control"';
+    states() {
+        return {
+            value: this.getAttribute('value') ?? '',
+            error: '',
+            required: this.hasAttribute('required'),
+            disabled: this.hasAttribute('disabled'),
+            readonly: this.hasAttribute('readonly')
+        };
+    }
+
+    render() {
+        let html = '<textarea name="' + this.getAttribute('name') + '" class="form-control"';
 
         if (this.hasAttribute('placeholder')) {
             html += ' placeholder="' + this.getAttribute('placeholder') + '"';
         }
 
-        let error = this.state.get('error');
+        html += ' class="form-control" @ref="input" @input="handleInput" @change="handleChange"';
 
-        html += ' class="form-control' + (error ? ' is-invalid' : '') + '"';
-
-        if (this.hasAttribute('disabled')) {
+        if (this.state.get('disabled')) {
             html += ' disabled';
         }
 
-        if (this.hasAttribute('readonly')) {
+        if (this.state.get('readonly')) {
             html += ' readonly';
         }
 
-        if (this.hasAttribute('required')) {
+        if (this.state.get('required')) {
             html += ' required';
         }
 
-        html += ' @ref="input" @input="handleInput" @change="handleChange">' + this.getAttribute('value') + '</textarea>';
-
-        if (error) {
-            html += '<div class="invalid-feedback">' + error + '</div>';
-        }
+        html += '>' + this.getAttribute('value') + '</textarea>';
+        html += '<div @ref="error" class="invalid-feedback"></div>';
 
         return html;
     }

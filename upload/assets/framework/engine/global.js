@@ -33,10 +33,10 @@ export class Global {
      * @param {string|object} name_or_map - a listener name, or `{ name: fn, ... }`
      * @param {Function} [fn] - the function, when `name_or_map` is a string
      */
-    static addListener(key, fn) {
+    static addListener(key, listener) {
         if (key == null) return;
 
-        this.listeners.set(key, fn);
+        this.listeners.set(key, listener);
     }
 
     static deleteListener(key) {
@@ -65,6 +65,6 @@ export class Global {
     /** Clears all refs and listeners. Mainly useful for tests/hot-reload. */
     static reset() {
         this.refs = new Map();
-        this.listeners = {};
+        this.listeners = new Map();
     }
 }

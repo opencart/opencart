@@ -8,7 +8,7 @@ customElements.define('button-submit', class extends WebComponent {
         'disabled'
     ];
     /* Will only manage states listed here */
-    static states() {
+    states() {
         return {
             submitting: false,
             disabled: false
@@ -16,7 +16,7 @@ customElements.define('button-submit', class extends WebComponent {
     }
 
     render() {
-        return '<button type="submit" @ref="button" class="btn btn-primary"' + (this.hasAttribute('disabled') ? ' disabled' : '') + '>' + this.html + '</button>';
+        return '<button type="submit" @ref="button" class="btn btn-primary"' + (this.state.get('disabled') ? ' disabled' : '') + '>' + this.html + '</button>';
     }
 
     handleConnect() {
@@ -24,9 +24,7 @@ customElements.define('button-submit', class extends WebComponent {
         this.state.set('disabled', this.hasAttribute('disabled'));
     }
 
-    stateSubmitting(submitting, state) {
-        console.log('button-submit handleSubmitting', submitting, state);
-
+    stateSubmitting(submitting) {
         if (submitting) {
             this.button.style.width = this.offsetWidth + 'px';
             this.button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
@@ -38,9 +36,7 @@ customElements.define('button-submit', class extends WebComponent {
         }
     }
 
-    stateDisabled(disabled, state) {
-        console.log('button-submit stateDisabled', disabled, state);
-
+    stateDisabled(disabled) {
         this.button.toggleAttribute('disabled', disabled);
     }
 }); 

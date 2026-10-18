@@ -2,35 +2,28 @@ import { InputText } from './text.js';
 
 class InputDate extends InputText {
     render() {
-        let html = '<slot name="label"></slot>';
-
-        html += '<input type="date" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
+        let html = '<input type="date" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
 
         if (this.hasAttribute('placeholder')) {
             html += ' placeholder="' + this.getAttribute('placeholder') + '"';
         }
 
-        let error = this.state.get('error');
+        html += ' class="form-control" @ref="input" @input="handleInput" @change="handleChange"';
 
-        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
-
-        if (this.hasAttribute('disabled')) {
+        if (this.state.get('disabled')) {
             html += ' disabled';
         }
 
-        if (this.hasAttribute('readonly')) {
+        if (this.state.get('readonly')) {
             html += ' readonly';
         }
 
-        if (this.hasAttribute('required')) {
+        if (this.state.get('required')) {
             html += ' required';
         }
 
         html += '/>';
-
-        if (error) {
-            html += '<div @ref="feedback" class="invalid-feedback">' + error + '</div>';
-        }
+        html += '<div @ref="error" class="invalid-feedback"></div>';
 
         return html;
     }

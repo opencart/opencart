@@ -22,7 +22,7 @@ const camel = (name) => name.split('-').map(part => part.charAt(0).toUpperCase()
  *   class MyCounter extends WebComponent {
  *       static observedAttributes = ['count'];
  *
- *       static states() {
+ *       states() {
  *           return { count: 0 };
  *       }
  *
@@ -56,7 +56,7 @@ export class WebComponent extends HTMLElement {
     static formAssociated = false;
     static shadow = true;
 
-    #root = null;
+    root = null;
     #binder = null;
     #template = document.createElement('template');
     #styled = false;
@@ -67,54 +67,19 @@ export class WebComponent extends HTMLElement {
         return [];
     }
 
-    static states() {
-        return {};
-    }
-
     constructor() {
         super();
 
         // Attach Shadow or use light DOM based on the static property
-        this.#root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
+        this.root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
 
         // State
-        this.state = new State(this.constructor.states(), this.stateChangedCallback.bind(this));
+        this.state = new State(this.states(), this.stateChangedCallback.bind(this));
 
         // Attach Internals
         this.internal = this.attachInternals();
-    }
 
-    /** Override: list of external CSS file URLs to adopt into this component's shadow root. */
-    stylesheets() {
-        return [
-            'stylesheet.css',
-            'fontawesome/css/all.css'
-        ];
-    }
-
-    /** Override: return a CSS string scoped to this component's shadow root. */
-    styles() {
-        return '';
-    }
-
-    // Styles go on the shadow root once. A light DOM component uses the page's CSS, since
-    // anything adopted into the document would apply to the whole page.
-    #style() {
-        if (this.#styled || !this.shadow) return;
-
-        this.#styled = true;
-
-        const css = this.styles();
-
-        if (css) {
-            stylesheet.adoptText(this.#root, [css]).catch(error => console.error('WebComponent: failed to adopt styles', error));
-        }
-
-        const hrefs = this.stylesheets();
-
-        if (hrefs && hrefs.length) {
-            stylesheet.adopt(this.#root, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
-        }
+        this.#style();
     }
 
     async connectedCallback() {
@@ -181,20 +146,57 @@ export class WebComponent extends HTMLElement {
         }
     }
 
+    states() {
+        return {};
+    }
+
+    /** Override: list of external CSS file URLs to adopt into this component's shadow root. */
+    stylesheets() {
+        return [
+            'stylesheet.css',
+            'fontawesome/css/all.css'
+        ];
+    }
+
+    /** Override: return a CSS string scoped to this component's shadow root. */
+    styles() {
+        return '';
+    }
+
+    // Styles go on the shadow root once. A light DOM component uses the page's CSS, since
+    // anything adopted into the document would apply to the whole page.
+    #style() {
+        if (this.#styled || !this.shadowRoot) return;
+
+        this.#styled = true;
+
+        const css = this.styles();
+
+        if (css) {
+            stylesheet.adoptText(this.root, [css]).catch(error => console.error('WebComponent: failed to adopt styles', error));
+        }
+
+        const hrefs = this.stylesheets();
+
+        if (hrefs && hrefs.length) {
+            stylesheet.adopt(this.root, hrefs).catch(error => console.error('WebComponent: failed to adopt stylesheets', error));
+        }
+    }
+
     async update() {
         if (typeof this.render !== 'function') return;
 
         this.#template.innerHTML = await this.render();
 
         // Put the new content in place first, so the binder walks what is now on the page.
-        this.#root.replaceChildren(this.#template.content);
+        this.root.replaceChildren(this.#template.content);
 
         if (!this.#binder) {
-            this.#binder = new Binder(this.#root, this);
+            this.#binder = new Binder(this.root, this);
         } else {
             this.#binder.refresh();
         }
 
-        this.#style();
+        //this.style();
     }
 }

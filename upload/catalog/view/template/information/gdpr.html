@@ -1,5 +1,5 @@
 <h1>{{ heading_title }}</h1>
-<p>{{ text_gdpr|format(store, gdpr, title) }}</p>
+<p>{{ text_gdpr | format: store, gdpr, title }}</p>
 <form action="{{ action }}" @submit="handleSubmit">
   <fieldset>
     <legend id="account">{{ text_verification }}</legend>
@@ -27,9 +27,9 @@
     <div id="collapse-remove" class="alert alert-warning collapse">
       <p><i class="fa-solid fa-triangle-exclamation"></i> {{ text_warning }}</p>
       <ul>
-        <li>{{ text_access|format(store) }}</li>
+        <li>{{ text_access | format: store }}</li>
         <li>{{ text_history }}</li>
-        <li>{{ text_limit|format(limit) }}</li>
+        <li>{{ text_limit | format: limit }}</li>
       </ul>
     </div>
   </fieldset>

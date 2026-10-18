@@ -1,16 +1,15 @@
 <h1>{{ heading_title }}</h1>
-<form-post @ref="form">
-
+<form-post @ref="form" @submit="handleSubmit">
   <fieldset>
     <legend>{{ text_your_details }}</legend>
     <div class="row mb-3">
       <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
       <div class="col-sm-10">
+        <input-text name="firstname" value="" id="input-firstname" required></input-text>
         <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
         <div id="error-firstname" class="invalid-feedback"></div>
       </div>
     </div>
-
     <div class="row mb-3">
       <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
       <div class="col-sm-10">
@@ -18,7 +17,6 @@
         <div id="error-lastname" class="invalid-feedback"></div>
       </div>
     </div>
-
     <div class="row mb-3">
       <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
       <div class="col-sm-10">
@@ -26,19 +24,14 @@
         <div id="error-email" class="invalid-feedback"></div>
       </div>
     </div>
-
-    {% if config_telephone_status %}
-    <div class="row mb-3">
+    <div class="row mb-3{% if not config_telephone_status %} d-none{% endif %}">
       <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
       <div class="col-sm-10">
         <input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" {% if config_telephone_required %} required{% endif %}/>
         <div id="error-telephone" class="invalid-feedback"></div>
       </div>
     </div>
-    {% endif %}
-
   </fieldset>
-
   <div class="row">
     <div class="col">
       <a href="account/account.js" :click="link" class="btn btn-light">{{ button_back }}</a>
@@ -47,5 +40,4 @@
       <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   </div>
-
 </form-post>

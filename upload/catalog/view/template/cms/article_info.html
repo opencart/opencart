@@ -1,7 +1,5 @@
 <h1>{{ name }}</h1>
-{% if image %}
-  <img src="{{ image }}" alt="{{ name }}" title="{{ name }}" class="img-thumbnail mb-2"/>
-{% endif %}
+<img src="{{ image }}" alt="{{ name }}" title="{{ name }}" class="img-thumbnail mb-2{% if not image %} d-none{% endif %}"/>
 <p>{{ text_by }} <a href="cms/topic.js?author={{ author }}" :click="link">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
 <div>{{ description }}</div>
 {% if tags %}

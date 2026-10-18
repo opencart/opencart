@@ -6,15 +6,15 @@
       #{{ subscription_id }}
     </div>
   </div>
-  {% if order_id %}
-    <div class="col mb-3">
+  
+    <div class="col mb-3 {% if not order_id %} d-none{% endif %}">
       <div class="form-control" style="min-height: 64px;">
         <strong class="lead">{{ text_order_id }}</strong>
         <br/>
         <a href="{{ order_link }}" target="_blank">{{ order_id }}</a>
       </div>
     </div>
-  {% endif %}
+
 </div>
 {% if payment_address or shipping_address %}
   <div class="row">

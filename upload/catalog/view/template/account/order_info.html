@@ -16,24 +16,24 @@
 </div>
 {% if payment_address or shipping_address %}
   <div class="row">
-    {% if payment_address %}
-      <div class="col mb-3">
+   
+      <div class="col mb-3 {% if not payment_address %}d-none{% endif %}">
         <div class="form-control" style="min-height: 128px;">
           <strong class="lead">{{ text_payment_address }}</strong>
           <br/>
           {{ payment_address }}
         </div>
       </div>
-    {% endif %}
-    {% if shipping_address %}
-      <div class="col mb-3">
+
+    
+      <div class="col mb-3{% if not shipping_address %} d-none{% endif %}">
         <div class="form-control" style="min-height: 128px;">
           <strong class="lead">{{ text_shipping_address }}</strong>
           <br/>
           {{ shipping_address }}
         </div>
       </div>
-    {% endif %}
+
   </div>
 {% endif %}
 <div class="row">
@@ -134,13 +134,12 @@
     </tbody>
   </table>
 </div>
-{% if comment %}
-  <div class="form-control mb-3" style="min-height: 64px;">
+  <div class="form-control mb-3{% if comment %} d-block{% endif %}" style="min-height: 64px;">
     <strong class="lead">{{ text_comment }}</strong>
     <br/>
     {{ comment }}
   </div>
-{% endif %}
+
 <h2>{{ text_history }}</h2>
 <div id="history">{{ history }}</div>
 <div class="text-end mt-3"><a href="account/order.js" :click="link-content" class="btn btn-primary">{{ button_continue }}</a></div>

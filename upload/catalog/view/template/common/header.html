@@ -16,18 +16,17 @@
           <li class="list-inline-item"><a href="information/contact.js" :click="link"><i class="fa-solid fa-phone"></i> <span class="d-none d-lg-inline">{{ config_telephone }}</span></a></li>
           <li class="list-inline-item">
             <div class="dropdown">
-              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>
-              <ul class="dropdown-menu dropdown-menu-right">
-                {% if !logged %}
+              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>  
+              <ul class="dropdown-menu dropdown-menu-right{% if logged %} d-none{% endif %}">
                 <li><a href="account/register.js" :click="link" class="dropdown-item">{{ text_register }}</a></li>
                 <li><a href="account/login.js" :click="link" class="dropdown-item">{{ text_login }}</a></li>
-                {% else %}
+              </ul>
+              <ul class="dropdown-menu dropdown-menu-right{% if not logged %} d-none{% endif %}">
                 <li><a href="account/account.js" :click="link" class="dropdown-item">{{ text_account }}</a></li>
                 <li><a href="account/order.js" :click="link" class="dropdown-item">{{ text_order }}</a></li>
                 <li><a href="account/transaction.js" :click="link" class="dropdown-item">{{ text_transaction }}</a></li>
                 <li><a href="account/download.js" :click="link" class="dropdown-item">{{ text_download }}</a></li>
                 <li><a href="account/logout.js" :click="link" class="dropdown-item">{{ text_logout }}</a></li>
-                {% endif %}
               </ul>
             </div>
           </li>

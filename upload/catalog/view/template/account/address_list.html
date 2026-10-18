@@ -5,7 +5,7 @@
     {% for address in addresses %}
     <tr>
       <td>{{ address.address }}</td>
-      <td>{% if address.default %}<strong>{{ text_default }}</strong>{% endif %}</td>
+      <td><strong style="display: {% if address.default %}inline{% else %}none{% endif %};">{{ text_default }}</strong></td>
       <td class="text-end"><a href="account/address.js?address_id={{ address.address.id }}" :click="link" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-regular fa-solid fa-pencil"></i></a> <button type="button" value="{{ address.address_id }}" @click="handleDelete" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
     </tr>
     {% endfor %}

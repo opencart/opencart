@@ -1,25 +1,17 @@
 <h1>{{ heading_title }}</h1>
-{% if image %}
-<img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-3"/>
-{% endif %}
-{% if description %}
-<div class="mb-3">{{ description }}</div>
-{% endif %}
+<img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-3{% if not image %} d-none{% endif %}"/>
+<div class="mb-3{% if not description %} d-none{% endif %}">{{ description }}</div>
 <hr/>
 <h3>{{ text_refine }}</h3>
 <form @submit="handleSubmit">
   <div class="input-group dropdown mb-3">
     <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
-
-    {% if topics %}
-    <select name="topic_id" id="input-topic" class="form-select" @change="handleChange">
+    <select name="topic_id" id="input-topic" class="form-select{% if not topics %} d-none{% endif %}" @change="handleChange">
       <option value="">{{ text_all }}</option>
       {% for topic in topics %}
-      <option value="{{ topic.topic_id }}" {% if topic.topic_id== topic_id %} selected{% endif %}>{{ topic.name }}</option>
+      <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
       {% endfor %}
     </select>
-    {% endif %}
-
     <button type="submit" class="btn btn-primary">{{ button_search }}</button>
   </div>
 </form>

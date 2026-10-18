@@ -54,9 +54,7 @@
                 </div>
               </form>
 
-              {% if product.minimum %}
-              <small class="invalid-feedback d-block">{{ product.minimum }}</small>
-              {% endif %}
+              <small class="invalid-feedback{% if product.minimum %} d-block{% endif %}">{{ product.minimum }}</small>
 
             </td>
             <td class="text-end">{{ product.product | tax: product.tax_class_id, config_tax | currency: currency }}</td>

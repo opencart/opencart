@@ -15,9 +15,7 @@
         <ul class="list-unstyled">
           <li><a href="information/contact.js" :click="link">{{ text_contact }}</a></li>
           <li><a href="account/return_form.js" :click="link">{{ text_return }}</a></li>
-          {% if config_gdpr_id %}
-            <li><a href="information/gdpr.js" :click="link">{{ text_gdpr }}</a></li>
-          {% endif %}
+          <li><a href="information/gdpr.js" :click="link"{% if config_gdpr_id %} class="d-none"{% endif %}>{{ text_gdpr }}</a></li>
           <li><a href="information/sitemap.js" :click="link">{{ text_sitemap }}</a></li>
         </ul>
       </div>
@@ -41,9 +39,9 @@
     <hr>
     <p>{{ text_powered | replace_first: '%s', config_name | replace_first: '%s', year }}</p>
     <!--
-OpenCart is open source software and your free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
-Please donate via PayPal to donate@opencart.com
-//-->
+    OpenCart is open source software and your free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
+    Please donate via PayPal to donate@opencart.com
+    //-->
   </div>
 </footer>
 

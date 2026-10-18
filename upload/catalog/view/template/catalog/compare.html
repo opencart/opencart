@@ -43,15 +43,12 @@
       <td>{{ product.availability }}</td>
       {% endfor %}
     </tr>
-    {% if review_status %}
-    <tr>
+    <tr{% if not review_status %} class="d-none"{% endif %}>
       <td>{{ text_rating }}</td>
       {% for product in products %}
-      <td class="rating">
-        {% for i in 1..5 %} {% if product.rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %} {% endfor %}
+      <td class="rating"><review-rating @ref="rating" rating="{{ rating }}"></review-rating>
         <br/>
-        {{ product.reviews }}
-      </td>
+        {{ product.reviews }}</td>
       {% endfor %}
     </tr>
     {% endif %}

@@ -5,7 +5,7 @@
 *
 * @author Daniel Kerr
 *
-* OpenCart Twig replacement. Based on Django, Nunjucks, Twig template syntax.
+* OpenCart Twig replacement. A simple clean implementation of a template engine. Based on Django, Nunjucks, Twig template syntax.
 */
 export class CurlyTag {
     static instance;

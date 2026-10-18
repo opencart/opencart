@@ -180,7 +180,7 @@ export class WebComponent extends HTMLElement {
         if (typeof this.render !== 'function') return;
 
         const render = ++this.#renders;
-        const html = await this.render();
+        const html = String(await this.render());
 
         // A newer update started while this one was rendering, so this one is out of date.
         if (render !== this.#renders) return;

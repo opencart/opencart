@@ -33,11 +33,10 @@
       <li>{{ text_stock }}: <strong><span class="text-{% if stock %}success{% else %}danger{% endif %}">{{ stock_status }}</span></strong></li>
     </ul>
 
-    {% if config_review_status %}
-    <div class="rating">
-      {% for i in (1..5) %} {% if rating < i %} <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span> {% else %} <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span> {% endif %} {% endfor %}
-    </div>
-    {% endif %}
+    {% if config_review_status && rating %}
+      <review-rating @ref="rating" rating="{{ rating }}"></review-rating>
+      {% endif %}
+
 
     {% if price %}
     <ul class="list-unstyled">

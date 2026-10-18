@@ -51,6 +51,10 @@ export default class Customer {
         return this.#data.get('telephone');
     }
 
+    getNewsletter() {
+        return this.#data.get('newsletter');
+    }
+
     getAddressId() {
         return this.#data.get('address').find(address => address.default == 1);
     }

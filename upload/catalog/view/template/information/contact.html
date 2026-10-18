@@ -3,22 +3,20 @@
 <div class="card mb-3">
   <div class="card-body">
     <div class="row">
-      {% if config_image %}
-        <div class="col-sm-3"><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px"/></div>
-      {% endif %}
+      <div class="col-sm-3{% if not config_image %} d-none{% endif %}"><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px"/></div>
       <div class="col-sm-3"><strong>{{ config_name }}</strong>
         <br/>
         <address>{{ config_address }}</address>
         <a href="" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
       </div>
-      {% if config_telephone %}
-        <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
-          <br/>
-          {{ config_telephone }}
-          <br/>
-          <br/>
+      
+        <div class="col-sm-3{% if not config_telephone %} d-none{% endif %}"><strong>{{ text_telephone }}</strong>
+            <br/>
+            {{ config_telephone }}
+            <br/>
+            <br/>
         </div>
-      {% endif %}
+
       <div class="col-sm-3">
         {% if config_open %}
           <strong>{{ text_open }}</strong>
@@ -36,7 +34,8 @@
     </div>
   </div>
 </div>
-{% if locations %}
+
+<div class="{% if not locations %}d-none{% endif %}">
   <h3>{{ text_store }}</h3>
   <div id="accordion" class="accordion mb-3">
     {% for location in locations %}
@@ -45,9 +44,7 @@
         <div id="collapse-location-{{ location.location_id }}" class="accordion-collapse collapse" data-bs-parent="#accordion">
           <div class="accordion-body">
             <div class="row">
-              {% if location.image %}
-                <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" style="width: 268px"/></div>
-              {% endif %}
+              <div class="col-sm-3{% if not location.image %} d-none{% endif %}"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" style="width: 268px"/></div>
               <div class="col-sm-3"><strong>{{ location.name }}</strong>
                 <br/>
                 <address>
@@ -78,7 +75,8 @@
       </div>
     {% endfor %}
   </div>
-{% endif %}
+</div>
+
 <form id="form-contact" @submit="handleSubmit">
   <fieldset>
     <legend>{{ text_contact }}</legend>

@@ -18,19 +18,20 @@ const escape = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAl
 export class InputText extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
+        'name',
         'value',
         'required',
         'disabled',
         'readonly'
     ];
 
-    static states() {
+    states() {
         return {
-            value: '',
+            value: this.getAttribute('value') ?? '',
             error: '',
-            required: false,
-            disabled: false,
-            readonly: false
+            required: this.hasAttribute('required'),
+            disabled: this.hasAttribute('disabled'),
+            readonly: this.hasAttribute('readonly')
         };
     }
 
@@ -45,67 +46,45 @@ export class InputText extends WebComponent {
     }
 
     render() {
-        let error = this.state.get('error');
-
-        let html = '<input type="text" name="' + escape(this.getAttribute('name')) + '" value="' + escape(this.state.get('value')) + '"';
+        let html = '<input type="text" name="' + this.getAttribute('name') + '" value="' + this.state.get('value') + '"';
 
         if (this.hasAttribute('placeholder')) {
-            html += ' placeholder="' + escape(this.getAttribute('placeholder')) + '"';
+            html += ' placeholder="' + this.getAttribute('placeholder') + '"';
         }
 
-        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="onInput" @change="onChange"';
+        html += ' class="form-control" @ref="input" @input="onInput" @change="onChange"';
 
-        if (this.hasAttribute('disabled')) {
+        if (this.state.get('disabled')) {
             html += ' disabled';
         }
 
-        if (this.hasAttribute('readonly')) {
+        if (this.state.get('readonly')) {
             html += ' readonly';
         }
 
-        if (this.hasAttribute('required')) {
+        if (this.state.get('required')) {
             html += ' required';
         }
 
         html += '/>';
-
         // Always there, so an error can be shown without a re-render. Empty is hidden.
-        html += '<div @ref="feedback" class="invalid-feedback">' + escape(error) + '</div>';
+        html += '<div @ref="error" class="invalid-feedback"></div>';
 
         return html;
     }
 
-    constructor() {
-        super();
-
-        this.state.set({
-            value: this.getAttribute('value') ?? '',
-            error: '',
-            required: this.hasAttribute('required'),
-            disabled: this.hasAttribute('disabled'),
-            readonly: this.hasAttribute('readonly')
-        });
-    }
-
-    async update() {
-        await super.update();
-
-        this.#sync();
-    }
-
-    onInput(e) {
-        this.state.set('value', e.target.value);
-    }
-
-    // A native change event does not leave the shadow root, so send it on.
-    onChange(e) {
-        this.state.set('value', e.target.value);
+    handleConnect() {
+        this.internal.setFormValue(this.getAttribute('value'));
     }
 
     stateValue(value) {
-        this.input.value = value;
+        value = value ?? '';
+
+        this.internal.setFormValue(value);
 
         this.setAttribute('value', value);
+
+        if (this.input) this.input.setAttribute('value', value);
 
         if (this.input.validity.valid) {
             this.internal.setValidity({});
@@ -114,19 +93,13 @@ export class InputText extends WebComponent {
         }
     }
 
-    attributeValue(name, value) {
-        this.state.set('value', value ?? '');
-
-        if (this.input) this.input.value = value ?? '';
-    }
-
     // Updates the field in place, so nothing the user typed (or focus) is lost.
     stateError(error) {
         if (!this.input) return;
 
         this.input.classList.toggle('is-invalid', !!error);
 
-        this.feedback.textContent = error ?? '';
+        this.error.textContent = error ?? '';
 
         try {
             if (error) {
@@ -139,48 +112,58 @@ export class InputText extends WebComponent {
         }
     }
 
-    attributeRequired(name, value) {
-        if (this.input) this.input.required = value !== null;
+    stateRequired(value) {
+        value = value ?? false;
 
-        this.#sync();
+        this.toggleAttribute('required', value);
+
+        if (this.input) this.input.toggleAttribute('required', value);
+    }
+
+    stateDisabled(value) {
+        value = value ?? false;
+
+        this.toggleAttribute('disabled', value);
+
+        if (this.input) this.input.toggleAttribute('disabled', value);
+    }
+
+    stateReadonly(value) {
+        value = value ?? false;
+
+        this.toggleAttribute('readonly', value);
+
+        if (this.input) this.input.toggleAttribute('readonly', value);
+    }
+
+    // Handles the input event and updates the component state with the new value.
+    onInput(e) {
+        this.state.set('value', e.target.value);
+    }
+
+    // A native change event does not leave the shadow root, so send it on.
+    onChange(e) {
+        this.state.set('value', e.target.value);
+    }
+
+    attributeName(name, value) {
+        this.update();
+    }
+
+    attributeValue(name, value) {
+        this.state.set('value', value ?? '');
+    }
+
+    attributeRequired(name, value) {
+        this.state.set('required', value !== null);
     }
 
     attributeDisabled(name, value) {
-        if (this.input) this.input.disabled = value !== null;
-
-        this.#sync();
+        this.state.set('disabled', value !== null);
     }
 
     attributeReadonly(name, value) {
-        if (this.input) this.input.readOnly = value !== null;
-
-        this.#sync();
-    }
-
-
-
-
-
-
-    // Called by the form on reset.
-    formResetCallback() {
-        let value = this.getAttribute('value') ?? '';
-
-        this.state.set({ value: value, error: '' });
-
-        if (this.input) this.input.value = value;
-    }
-
-    // Called by the form when a parent <fieldset> is disabled or enabled.
-    formDisabledCallback(disabled) {
-        if (this.input) this.input.disabled = disabled || this.hasAttribute('disabled');
-    }
-
-    // Called on back/forward navigation and autofill.
-    formStateRestoreCallback(value) {
-        this.state.set('value', value ?? '');
-
-        if (this.input) this.input.value = value ?? '';
+        this.state.set('readonly', value !== null);
     }
 }
 

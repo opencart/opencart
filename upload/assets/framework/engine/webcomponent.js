@@ -10,7 +10,7 @@ const camel = (name) => name.split('-').map(part => part.charAt(0).toUpperCase()
  *   - Shadow DOM, or light DOM with `static shadow = false`
  *   - render() + styles() + stylesheets()
  *   - Automatic ref/event binding via Binder (@ref / @click / @submit, etc...)
- *   - Reactive state via `static states()` and this.state
+ *   - Reactive state via `states()` and this.state
  *   - Lifecycle hooks: handleConnect, handleDisconnect, handleAttribute, handleState
  *
  * Named handlers are called when they exist:

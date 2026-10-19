@@ -1,5 +1,5 @@
-import { WebComponent} from '../index.js';
-import { loader, ajax, customer } from '../index.js';
+import { WebComponent } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Language
 const language = await loader.language('account/newsletter');
@@ -12,7 +12,7 @@ export default class AccountNewsletter extends WebComponent {
 
         data.set('newsletter', customer.getNewsletter());
 
-        return loader.template('account/newsletter', [ data, language ]);
+        return loader.template('account/newsletter', [data, language]);
     }
 
     async handleSubmit(e) {

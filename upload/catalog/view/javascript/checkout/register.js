@@ -17,12 +17,12 @@ customElements.define('checkout-register', class extends WebComponent {
         this.token = '';
     }
 
-    async render(){
+    async render() {
         let data = new Map();
 
         data.set('token', this.token);
 
-        return loader.template('checkout/register', [ data,  language, config ]);
+        return loader.template('checkout/register', [data, language, config]);
     }
 
     async handleConnect() {
@@ -93,13 +93,12 @@ customElements.define('checkout-register', class extends WebComponent {
 
                     $('#input-shipping-method').val('');
                     $('#input-payment-method').val('');
-
-                    //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
-                },
-                handleError: (e) => {
-                    console.log('onError', e);
                 }
-            });
-        }
+                //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
+            },
+            handleError: (e) => {
+                console.log('onError', e);
+            }
+        });
     }
 });

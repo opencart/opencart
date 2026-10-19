@@ -1,16 +1,17 @@
 /*
-* CurlyTwig
-*
-* @description Template engine
-*
-* @author Daniel Kerr
-*
-* OpenCart Twig replacement. A simple clean implementation of a template engine. Based on Django, Nunjucks, Twig template syntax.
-*/
+ * CurlyTwig
+ *
+ * @description Template engine
+ *
+ * @author Daniel Kerr
+ *
+ * OpenCart Twig replacement. A simple clean implementation of a template engine. Based on Django, Nunjucks, Twig template syntax.
+ */
 export class CurlyTag {
     static instance;
 
     constructor() {
+        this.name = '';
         this.directory = '';
         this.path = new Map();
         this.cache = new Map();
@@ -41,7 +42,7 @@ export class CurlyTag {
             raw: this.handleRaw.bind(this),
             endraw: this.handleEndRaw.bind(this),
             comment: this.handleComment.bind(this),
-            endcomment: this.handleEndComment.bind(this)
+            endcomment: this.handleEndComment.bind(this),
         };
 
         this.openclose = {
@@ -85,10 +86,7 @@ export class CurlyTag {
             unless: [
                 'else',
                 'endunless'
-            ],
-            macro: [
-                'endmacro'
-            ],
+            ]
         };
 
         this.filter = {
@@ -119,7 +117,10 @@ export class CurlyTag {
                     "'": '&#39;',
                 };
 
-                return String(value ?? '').replace(/[&<>"']/g, (matched) => (callback)[matched] || matched);
+                return String(value ?? '').replace(
+                    /[&<>"']/g,
+                    (matched) => callback[matched] || matched,
+                );
             },
             unescape: (value) => {
                 let unescaped = {
@@ -148,7 +149,9 @@ export class CurlyTag {
                 return String(value ?? '').replace(/\r\n|\r|\n/g, '');
             },
             normalize_whitespace: (value) => {
-                return String(value ?? '').replace(/\s+/g, ' ').trim();
+                return String(value ?? '')
+                    .replace(/\s+/g, ' ')
+                    .trim();
             },
             striptag: (value) => {
                 // Remove all tags, including <style>, <script>, comments, etc.
@@ -181,7 +184,10 @@ export class CurlyTag {
                     return '';
                 }
 
-                return chars[0].toUpperCase() + chars.slice(1).join('').toLowerCase();
+                return (
+                    chars[0].toUpperCase() +
+                    chars.slice(1).join('').toLowerCase()
+                );
             },
             lower: (value) => {
                 return value.toLowerCase();
@@ -210,7 +216,11 @@ export class CurlyTag {
                     return string;
                 }
 
-                return string.slice(0, index) + replaceString + string.slice(index + searchString.length);
+                return (
+                    string.slice(0, index) +
+                    replaceString +
+                    string.slice(index + searchString.length)
+                );
             },
             replace_last: (value, search, replace = '') => {
                 const string = String(value ?? '');
@@ -222,7 +232,11 @@ export class CurlyTag {
                     return string;
                 }
 
-                return string.slice(0, index) + replaceString + string.slice(index + searchString.length);
+                return (
+                    string.slice(0, index) +
+                    replaceString +
+                    string.slice(index + searchString.length)
+                );
             },
             remove: (value, search) => {
                 const string = String(value ?? '');
@@ -243,7 +257,10 @@ export class CurlyTag {
                     return string;
                 }
 
-                return string.slice(0, index) + string.slice(index + searchString.length);
+                return (
+                    string.slice(0, index) +
+                    string.slice(index + searchString.length)
+                );
             },
             remove_last: (value, search) => {
                 const string = String(value ?? '');
@@ -254,7 +271,10 @@ export class CurlyTag {
                     return string;
                 }
 
-                return string.slice(0, index) + string.slice(index + searchString.length);
+                return (
+                    string.slice(0, index) +
+                    string.slice(index + searchString.length)
+                );
             },
             append: (value, suffix) => {
                 return value + suffix;
@@ -334,11 +354,17 @@ export class CurlyTag {
                     let va = key ? a?.[key] : a;
                     let vb = key ? b?.[key] : b;
 
-                    return (String(va ?? '').toLowerCase().localeCompare(String(vb ?? '').toLowerCase()) * dir);
+                    return (
+                        String(va ?? '')
+                            .toLowerCase()
+                            .localeCompare(String(vb ?? '').toLowerCase()) * dir
+                    );
                 });
             },
             size: (value) => {
-                return Array.isArray(value) || typeof value === 'string' ? value.length : 0;
+                return Array.isArray(value) || typeof value === 'string'
+                    ? value.length
+                    : 0;
             },
             // alias for size (Twig compat)
             length: (value) => {
@@ -351,7 +377,10 @@ export class CurlyTag {
                 return value.slice(0, limit);
             },
             sum: (value, amount = 0) => {
-                return value.reduce((accumulator, currentValue) => accumulator + currentValue, amount);
+                return value.reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    amount,
+                );
             },
             push: (value, item) => {
                 let copy = [...value];
@@ -384,13 +413,19 @@ export class CurlyTag {
             slice: (value, start, end) => {
                 if (typeof value !== 'string' && !Array.isArray(value)) return;
 
-                return end !== undefined ? value.slice(start, end) : value.slice(start);
+                return end !== undefined
+                    ? value.slice(start, end)
+                    : value.slice(start);
             },
             join: (value, seperator = ' ') => {
                 return value.join(seperator);
             },
             array_to_sentence_string: (value, connector = 'and') => {
-                let items = Array.isArray(value) ? value.map((item) => String(item ?? '')).filter((item) => item !== '') : [];
+                let items = Array.isArray(value)
+                    ? value
+                        .map((item) => String(item ?? ''))
+                        .filter((item) => item !== '')
+                    : [];
 
                 let word = String(connector ?? 'and');
 
@@ -495,14 +530,18 @@ export class CurlyTag {
             },
             base64_encode: (value) => {
                 let bytes = new TextEncoder().encode(String(value ?? ''));
-                let binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join('');
+                let binary = Array.from(bytes, (byte) =>
+                    String.fromCharCode(byte),
+                ).join('');
 
                 return btoa(binary);
             },
             base64_decode: (value) => {
                 try {
                     let binary = atob(String(value ?? ''));
-                    let bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+                    let bytes = Uint8Array.from(binary, (char) =>
+                        char.charCodeAt(0),
+                    );
 
                     return new TextDecoder().decode(bytes);
                 } catch {
@@ -539,13 +578,18 @@ export class CurlyTag {
             }
 
             if (this.path.has(namespace + '/')) {
-                file = this.path.get(namespace + '/') + path.substr(namespace.length) + '.html';
+                file =
+                    this.path.get(namespace + '/') +
+                    path.substr(namespace.length) +
+                    '.html';
             }
         }
 
         let response = await fetch(file);
 
         if (response.status == 200) {
+            this.name = path + '.html';
+
             let code = await response.text();
 
             this.cache.set(path, code);
@@ -660,18 +704,21 @@ export class CurlyTag {
 
         let stack = [];
 
-        let regex = /\{\{-?\s([\s\S]*?)\s-?\}\}|\{%-?\s([\s\S]*?)\s-?%}|\{#\s([\s\S]*?)\s#\}/g;
+        let regex =
+            /\{\{-?\s([\s\S]*?)\s-?\}\}|\{%-?\s([\s\S]*?)\s-?%}|\{#\s([\s\S]*?)\s#\}/g;
 
         while ((match = regex.exec(template)) !== null) {
             let [raw, output, tag, comment] = match;
 
-            let line = template.substring(0, match.index).split(/\r\n|\r|\n/).length;
+            let line = template
+                .substring(0, match.index)
+                .split(/\r\n|\r|\n/).length;
 
             // Grabs all the Text before the matched index.
             if (match.index > index) {
                 token.push({
                     type: 'text',
-                    raw: template.slice(index, match.index)
+                    raw: template.slice(index, match.index),
                 });
             }
 
@@ -682,7 +729,7 @@ export class CurlyTag {
                     value: output,
                     raw: raw,
                     line: line,
-                    column: index
+                    column: index,
                 });
             }
 
@@ -720,7 +767,7 @@ export class CurlyTag {
                 if (command in this.openclose) {
                     stack.push({
                         type: command,
-                        index: token.length
+                        index: token.length,
                     });
                 }
 
@@ -758,11 +805,16 @@ export class CurlyTag {
         if (!expression) return undefined;
 
         try {
-            let func = new Function('data', `with(data) return (${expression});`);
+            let func = new Function(
+                'data',
+                `with(data) return (${expression});`,
+            );
 
             return func({ ...ctx });
         } catch (error) {
-            console.log(`[Template] Warning: Evaluate error '${error}' in expression '${expression}'`);
+            console.log(
+                `[Template] Warning: Evaluate error '${error}' in expression '${expression}'`,
+            );
 
             return undefined;
         }
@@ -787,7 +839,10 @@ export class CurlyTag {
 
                 if (Array.isArray(value)) return value.length > 0;
 
-                return Object.keys(value).length > 0 && value.constructor === Object;
+                return (
+                    Object.keys(value).length > 0 &&
+                    value.constructor === Object
+                );
                 break;
         }
 
@@ -798,15 +853,19 @@ export class CurlyTag {
         let operators = {
             and: '&&',
             or: '||',
-            not: '!'
+            not: '!',
         };
 
         // Quoted strings are matched first and returned unchanged, so words inside
         // them are never replaced. Lookarounds skip property names (item.not) and
         // identifiers that only contain the word (not_found, order, $and).
-        let regex = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(?<![\w$.])(and|or|not)(?![\w$])/g;
+        let regex =
+            /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(?<![\w$.])(and|or|not)(?![\w$])/g;
 
-        return code.replace(regex, (match, quoted, word) => quoted ?? operators[word]);
+        return code.replace(
+            regex,
+            (match, quoted, word) => quoted ?? operators[word],
+        );
     }
 
     /**
@@ -890,7 +949,7 @@ export class CurlyTag {
         let match = token.value.match(/([^|]+?)\s*(?:\s*\|\s*(.+))?$/);
 
         if (!match) {
-            console.log(`[Template] Invalid output ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Invalid output ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return '';
         }
@@ -925,10 +984,14 @@ export class CurlyTag {
      * set var = expression | filter1 | filter2
      */
     handleAssign(token, stack, ctx, index) {
-        let match = token.value.match(/^(?:assign|set)\s(\w+)\s=\s([^|]+?)\s*(?:\s*\|\s*(.+))?$/);
+        let match = token.value.match(
+            /^(?:assign|set)\s(\w+)\s=\s([^|]+?)\s*(?:\s*\|\s*(.+))?$/,
+        );
 
         if (!match) {
-            console.log(`[Template] Invalid '${token.tag}' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(
+                `[Template] Invalid '${token.tag}' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`,
+            );
 
             return;
         }
@@ -950,7 +1013,9 @@ export class CurlyTag {
         let match = token.value.match(/^include\s(.+)$/);
 
         if (!match) {
-            console.warn(`[Template] Invalid 'include' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.warn(
+                `[Template] Invalid 'include' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`,
+            );
 
             return;
         }
@@ -967,7 +1032,9 @@ export class CurlyTag {
         let match = token.value.match(/^echo\s([^|]+?)\s*(?:\s*\|\s*(.+))?$/);
 
         if (!match) {
-            console.log(`[Template] Invalid echo ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(
+                `[Template] Invalid echo ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`,
+            );
 
             return;
         }
@@ -996,7 +1063,9 @@ export class CurlyTag {
         let match = token.value.match(/^if\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'if' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(
+                `[Template] Invalid 'if' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`,
+            );
 
             stack.push({
                 type: 'if',
@@ -1031,7 +1100,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'if') {
-            console.log(`[Template] Unexpected 'if' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'if' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1043,7 +1112,7 @@ export class CurlyTag {
         let match = token.value.match(/^elseif\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'elseif' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Invalid 'elseif' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1051,7 +1120,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'if') {
-            console.log(`[Template] Unexpected 'elseif' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'elseif' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1075,7 +1144,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'case' && top.type !== 'for')) {
-            console.log(`[Template] Unexpected 'else' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'else' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1095,7 +1164,7 @@ export class CurlyTag {
         let match = token.value.match(/^unless\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'unless' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Invalid 'unless' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1120,7 +1189,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'unless') {
-            console.log(`[Template] Unexpected 'endunless' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'endunless' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1132,7 +1201,7 @@ export class CurlyTag {
         let match = token.value.match(/^for\s(.*)\sin\s([^|]+?)\s*(?:\s*\|\s*(.+))?$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'for' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Invalid 'for' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1165,7 +1234,7 @@ export class CurlyTag {
             start: index + 1,
             end: token.end,
             active: items.length > 0,
-            parent: { ...ctx }
+            parent: { ...ctx },
         });
 
         return token.end;
@@ -1176,7 +1245,9 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (top == undefined || top.type !== 'for') {
-            console.log(`[Template] Unexpected 'endfor' ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(
+                `[Template] Unexpected 'endfor' ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`,
+            );
 
             return;
         }
@@ -1289,7 +1360,7 @@ export class CurlyTag {
         let match = token.value.match(/^case\s([\w.]+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'case' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Invalid 'case' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1305,7 +1376,7 @@ export class CurlyTag {
         let match = token.value.match(/^when\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'when' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Invalid 'when' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1313,13 +1384,14 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'case') {
-            console.log(`[Template] Unexpected 'when' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'when' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
 
         // Split if more than one item to compare
-        if (!this.evaluate(`[${match[1]}].includes(${top.value})`, ctx)) return token.end;
+        if (!this.evaluate(`[${match[1]}].includes(${top.value})`, ctx))
+            return token.end;
 
         top.active = true;
     }
@@ -1340,7 +1412,7 @@ export class CurlyTag {
         let match = token.value.match(/^capture\s(.+)$/);
 
         if (!match) {
-            console.warn(`[Template] Invalid 'capture' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.warn(`[Template] Invalid 'capture' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1356,7 +1428,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'capture') {
-            console.log(`[Template] Unexpected 'endcapture' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'endcapture' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1377,7 +1449,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'raw') {
-            console.log(`[Template] Unexpected 'raw' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'raw' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1395,7 +1467,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'comment') {
-            console.log(`[Template] Unexpected 'comment' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'comment' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1407,7 +1479,7 @@ export class CurlyTag {
         let match = token.value.match(/^filter\s(\w+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'filter' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Invalid 'filter' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1423,7 +1495,7 @@ export class CurlyTag {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'capture') {
-            console.log(`[Template] Unexpected 'endfilter' tag ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.log(`[Template] Unexpected 'endfilter' tag ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }
@@ -1440,7 +1512,7 @@ export class CurlyTag {
         let match = token.value.match(/^cycle\s(.*)/);
 
         if (!match) {
-            console.warn(`[Template] Invalid 'cycle' syntax ${token.raw ? 'line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
+            console.warn(`[Template] Invalid 'cycle' syntax ${token.raw ? 'File ' + this.name + ' line ' + token.line + ' column ' + token.column + ': ' + token.raw : 'line ' + token.line + ' column ' + token.column}`);
 
             return;
         }

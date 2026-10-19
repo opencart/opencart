@@ -87,13 +87,13 @@ export default class AccountRegister extends WebComponent {
         for (let [key, value] of errors) {
             if (key === 'warning') continue;
 
-            let label = this.root.getElementById('label-' + key);
+            let label = this.root.querySelector('[for="input-' + key + '"]');
 
             if (label) {
                 label.state.set('error', true);
             }
 
-            let input = this.root.getElementById('input-' + key);
+            let input = this.root.querySelector('#input-' + key);
 
             if (input) {
                 input.state.set('error', value);

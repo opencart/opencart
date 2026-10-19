@@ -1,52 +1,34 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_account_already | safe }}</p>
 <form @ref="form" @submit="handleSubmit">
-
   <fieldset>
     <legend>{{ text_your_details }}</legend>
     <div class="mb-3">
-      <form-label for="input-firstname">{{ entry_firstname }}</form-label>
-      <input-text name="firstname" value="" id="input-firstname"></input-text>
+      <input-text label="{{ entry_firstname }}" name="firstname" value=""></input-text>
     </div>
     <div class="mb-3">
-      <form-label for="input-lastname">{{ entry_lastname }}</form-label>
-      <input-text name="lastname" value="" id="input-lastname"></input-text>
+      <input-text label="{{ entry_lastname }}" name="lastname" value=""></input-text>
     </div>
     <div class="mb-3">
-      <form-label for="input-email">{{ entry_email }}</form-label>
-      <input-email name="email" value="test123@test123.com" id="input-email"></input-email>
+      <input-email label="{{ entry_email }}" name="email" value="test123@test123.com"></input-email>
     </div>
-    <div class="mb-3{% if config_telephone_status %} d-none{% endif %}">
-      <form-label for="input-telephone">{{ entry_telephone }}</form-label>
-      <input-tel name="telephone" value="0123456789" id="input-telephone"{% if config_telephone_required %} required{% endif %}></input-tel>
+    <div class="mb-3{% if not config_telephone_status %}d-none{% endif %}">
+      <input-tel label="{{ entry_telephone }}" name="telephone" value="0123456789" {% if config_telephone_required %} required{% endif %}></input-tel>
     </div>
   </fieldset>
-
   <fieldset>
     <legend>{{ text_your_password }}</legend>
     <div class="mb-3">
-      <form-label for="input-password">{{ entry_password }}</form-label>
-      <input-password name="password" value="1234567890" id="input-password" required></input-password>
+      <input-password label="{{ entry_password }}" name="password" value="1234567890" required></input-password>
     </div>
   </fieldset>
-
   <fieldset>
     <legend>{{ text_newsletter }}</legend>
     <div class="row mb-3">
-      <form-label for="input-newsletter">{{ entry_newsletter }}</form-label>
-      <input-switch @ref="newsletter" name="newsletter" value="1" id="input-newsletter"></input-switch>
+      <input-switch label="{{ entry_newsletter }}" @ref="newsletter" name="newsletter" value="1"></input-switch>
     </div>
-  </fieldset>
-
-  {% if config_captcha %}
-  <account-captcha type="{{ config_captcha }}"></account-captcha>
-  {% endif %}
-  
-  <div class="text-end">
-    {% if config_account_id %}
-    <form-label for="input-agree">{{ text_agree }}</form-label>
-    <input-switch name="agree" value="1" @ref="agree" id="input-agree"></input-switch>
-    {% endif %}
+  </fieldset> {% if config_captcha %} <account-captcha type="{{ config_captcha }}"></account-captcha> {% endif %} <div class="text-end">
+    <input-switch label="{{ text_agree }}" name="agree" value="1" @ref="agree" class="{% if not config_account_id %}d-none{% endif %}"></input-switch>
     <button-submit @ref="submitter">{{ button_continue }}</button-submit>
   </div>
 </form>

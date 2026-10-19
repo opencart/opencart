@@ -7,7 +7,7 @@
 
       {% if images %}
       <div>
-        {% for image in images %} <a href="{{ image.popup }}" title="{{ name }}"><img src="{{ image.thumb }}" title="{{ name }}" alt="{{ name }}" class="img-thumbnail" style="width: 74px"/></a> {% endfor %}
+        {% for image in images %} <a href="{{ image.popup }}" title="{{ name }}"><img src="{{ image.thumb }}" title="{{ name }}" alt="{{ name }}" class="img-thumbnail" style="width: 74px"/></a>{% endfor %}
       </div>
       {% endif %}
 
@@ -35,7 +35,7 @@
 
     {% if config_review_status && rating %}
       <review-rating @ref="rating" rating="{{ rating }}"></review-rating>
-      {% endif %}
+    {% endif %}
 
 
     {% if price %}

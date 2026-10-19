@@ -2,11 +2,7 @@ import { Binder } from './binder.js';
 import { State } from './state.js';
 import { stylesheet } from './stylesheet.js';
 
-const camel = (name) =>
-    name
-        .split('-')
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-        .join('');
+const camel = (name) => name.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
 /**
  * WebComponent
  * -------------

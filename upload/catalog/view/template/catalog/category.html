@@ -28,6 +28,7 @@
     </div>
   {% else %}
     <div class="row row-cols-sm-2 row-cols-lg-4">
+        
       {% if total > 20 %}
         {% assign batch = (total / 4) | round %}
       {% else %}

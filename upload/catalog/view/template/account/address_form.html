@@ -59,7 +59,7 @@
     <div class="row mb-3">
       <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
       <div class="col-sm-10">
-        <input-country name="country_id" value="{{ country_id }}" id="input-country" postcode="1" target="input-postcode" input-id="input-country" input-class="form-select" required>
+        <input-country name="country_id" value="{{ country_id }}" id="input-country" postcode="1" target="input-postcode" required>
           <option value="0">{{ text_select }}</option>
         </input-country>
         <div id="error-country" class="invalid-feedback"></div>
@@ -69,7 +69,7 @@
     <div class="row mb-3">
       <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
       <div class="col-sm-10">
-        <input-zone name="zone_id" value="{{ zone_id }}" target="input-country" input-id="input-zone" input-class="form-select" required>
+        <input-zone name="zone_id" value="{{ zone_id }}" target="input-country" required>
           <option value="0">{{ text_select }}</option>
         </input-zone>
         <div id="error-zone" class="invalid-feedback"></div>

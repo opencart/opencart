@@ -10,11 +10,9 @@
 <br/>
 <div class="mb-2">
   <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
-  <textarea name="comment" rows="4" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <input-textarea name="comment" rows="4" id="input-comment" class="form-control">{{ comment }}</input-textarea>
 </div>
-{% if text_agree %}
-<div class="text-end">
-  <label for="input-checkout-agree" class="form-check-label">{{ text_agree }}</label>
-  <x-switch name="agree" value="1" checked="{{ agree }}" input-id="input-checkout-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline me-0"></x-switch>
+<div class="text-end{% if text_agree %} d-block{% endif %}">
+  <label for="input-agree" class="form-check-label">{{ text_agree }}</label>
+  <input-switch name="agree" value="1"></input-switch>
 </div>
-{% endif %}

@@ -18,9 +18,8 @@
 <div class="mb-3">
   <h2><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link">{{ article.name }}</a></h2>
 
-  {% if article.thumb %}
-  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link"><img src="{{ article.thumb }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
-  {% endif %}
+  
+  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link" class="{% if article.thumb %}has-thumb{% endif %}"><img src="{{ article.thumb }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
 
   <ul class="list-inline">
     <li class="list-inline-item">{{ text_by }} <a href="cms/article.js?author={{ article.filter_author }}" :click="link">{{ article.author }}</a></li>

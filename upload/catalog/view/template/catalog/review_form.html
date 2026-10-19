@@ -1,4 +1,4 @@
-<form id="form-review" @submit="handleSubmit">
+<form @submit="handleSubmit">
   <div id="review">{{ list }}</div>
   <h2>{{ text_write }}</h2>
   {% if review_guest %}
@@ -32,7 +32,7 @@
     </div>
     {{ captcha }}
     <div class="text-end">
-      <button type="submit" id="button-review" class="btn btn-primary">{{ button_continue }}</button>
+      <button type="submit" @ref="button-review" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   {% else %}
     {{ text_login }}

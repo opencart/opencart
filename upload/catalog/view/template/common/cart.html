@@ -1,26 +1,22 @@
 <div class="dropdown d-grid">
   {% assign amount = total | currency: currency %}
   <button type="button" @ref="button"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
-
   <ul @ref="dropdown" class="dropdown-menu dropdown-menu-end p-2">
-    {% if products %}
-    <li>
+    <li class="{% if not products %}d-none{% endif %}">
       <table class="table table-striped mb-2">
         {% for product in products %}
         <tr>
-          <td class="text-center w-25">{% if product.thumb %}<a href="catalog/product.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
+          <td class="text-center w-25"><a href="catalog/product.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail{% if not product.thumb %} d-none{% endif %}"/></a></td>
           <td><a href="catalog/product.js?product_id={{ product.product_id }}">{{ product.name }}</a>
             <ul class="list-unstyled mb-0">
               <li>
                 <small> - {{ text_model }}: {{ product.model }}</small>
               </li>
-
               {% for option in product.option %}
               <li>
                 <small> - {{ option.name }}: {{ option.value }}</small>
               </li>
               {% endfor %}
-
               {% if product.subscription %}
               <li>
                 <small> - {{ text_subscription }}: {{ product.subscription }}</small>
@@ -48,12 +44,12 @@
           </tr>
           {% endfor %}
         </table>
-        <p class="text-end"><a href="chechout/cart.js" :click="link"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" :click="link"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
+        <p class="text-end"><a href="checkout/cart.js" :click="link"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" :click="link"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
       </div>
     </li>
-    {% else %}
-    <li class="text-center p-4">{{ text_no_results }}</li>
-    {% endif %}
+
+    <li class="text-center p-4{% if products %} d-none{% endif %}">{{ text_no_results }}</li>
+  
   </ul>
 
 </div>

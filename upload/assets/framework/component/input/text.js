@@ -37,16 +37,29 @@ export class InputText extends WebComponent {
 
     styles() {
         return `
-            :host { display: block; }
-            :host(:state(invalid)) .form-control { border-color: var(--bs-form-invalid-border-color, #dc3545); }
-            :host(:state(invalid)) .form-control:focus { box-shadow: 0 0 0 .25rem rgb(220 53 69 / .25); }
-            .invalid-feedback { display: none; margin-top: .25rem; font-size: .875em; color: var(--bs-form-invalid-color, #dc3545); }
-            .invalid-feedback:not(:empty) { display: block; }
+            :host {
+                display: block;
+            }
+            :host(:state(invalid)) .form-control {
+                border-color: var(--bs-form-invalid-border-color, #dc3545);
+            }
+            :host(:state(invalid)) .form-control:focus {
+                box-shadow: 0 0 0 .25rem rgb(220 53 69 / .25);
+            }
+            .invalid-feedback {
+                display: none;
+                margin-top: .25rem;
+                font-size: .875em;
+                color: var(--bs-form-invalid-color, #dc3545);
+            }
+            .invalid-feedback:not(:empty) {
+                display: block;
+            }
         `;
     }
 
     render() {
-        let html = '<input type="text" name="' + this.getAttribute('name') + '" value="' + this.state.get('value') + '"';
+        let html = '<input type="text" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
 
         if (this.hasAttribute('placeholder')) {
             html += ' placeholder="' + this.getAttribute('placeholder') + '"';

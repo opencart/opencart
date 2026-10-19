@@ -17,7 +17,7 @@
 {% if payment_address or shipping_address %}
   <div class="row">
    
-      <div class="col mb-3 {% if not payment_address %}d-none{% endif %}">
+      <div class="col mb-3{% if not payment_address %} d-none{% endif %}">
         <div class="form-control" style="min-height: 128px;">
           <strong class="lead">{{ text_payment_address }}</strong>
           <br/>
@@ -37,15 +37,15 @@
   </div>
 {% endif %}
 <div class="row">
-  {% if shipping_method %}
-    <div class="col mb-3">
+  
+    <div class="col mb-3{% if not shipping_method %} d-none{% endif %}">
       <div class="form-control" style="min-height: 64px;">
         <strong class="lead">{{ text_shipping_method }}</strong>
         <br/>
         {{ shipping_method }}
       </div>
     </div>
-  {% endif %}
+
   <div class="col mb-3">
     <div class="form-control" style="min-height: 64px;">
       <strong class="lead">{{ text_payment_method }}</strong>

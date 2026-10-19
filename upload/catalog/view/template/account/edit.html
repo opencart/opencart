@@ -3,32 +3,27 @@
   <fieldset>
     <legend>{{ text_your_details }}</legend>
     <div class="row mb-3">
-      <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
+      <form-label for="input-firstname">{{ entry_firstname }}</form-label>
       <div class="col-sm-10">
-        <input-text name="firstname" value="" id="input-firstname" required></input-text>
-        <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
-        <div id="error-firstname" class="invalid-feedback"></div>
+        <input-text name="firstname" value="{{ firstname }}" id="input-firstname" required></input-text>
       </div>
     </div>
     <div class="row mb-3">
-      <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
+      <form-label for="input-lastname">{{ entry_lastname }}</form-label>
       <div class="col-sm-10">
-        <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
-        <div id="error-lastname" class="invalid-feedback"></div>
+        <input-text name="lastname" value="{{ lastname }}" id="input-lastname" required></input-text>
       </div>
     </div>
     <div class="row mb-3">
-      <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+      <form-label for="input-email">{{ entry_email }}</form-label>
       <div class="col-sm-10">
-        <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
-        <div id="error-email" class="invalid-feedback"></div>
+        <input-email name="email" value="{{ email }}" id="input-email" required></input-email>
       </div>
     </div>
     <div class="row mb-3{% if not config_telephone_status %} d-none{% endif %}">
-      <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
+      <form-label for="input-telephone">{{ entry_telephone }}</form-label>
       <div class="col-sm-10">
-        <input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" {% if config_telephone_required %} required{% endif %}/>
-        <div id="error-telephone" class="invalid-feedback"></div>
+        <input-tel name="telephone" value="{{ telephone }}" id="input-telephone"{% if config_telephone_required %} required{% endif %}></input-tel>
       </div>
     </div>
   </fieldset>

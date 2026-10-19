@@ -2,7 +2,11 @@ import { Binder } from './binder.js';
 import { State } from './state.js';
 import { stylesheet } from './stylesheet.js';
 
-const camel = (name) => name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+const camel = (name) =>
+    name
+        .split('-')
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join('');
 /**
  * WebComponent
  * -------------
@@ -71,10 +75,15 @@ export class WebComponent extends HTMLElement {
         super();
 
         // Attach Shadow or use light DOM based on the static property
-        this.root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
+        this.root = this.constructor.shadow
+            ? this.attachShadow({ mode: 'open' })
+            : this;
 
         // State
-        this.state = new State(this.states(), this.stateChangedCallback.bind(this));
+        this.state = new State(
+            this.states(),
+            this.stateChangedCallback.bind(this),
+        );
 
         // Attach Internals
         this.internal = this.attachInternals();
@@ -152,10 +161,7 @@ export class WebComponent extends HTMLElement {
 
     /** Override: CSS files to adopt into the shadow root, as names stylesheet.resolve() knows. */
     stylesheets() {
-        return [
-            'catalog/stylesheet.css',
-            'fontawesome/css/all.css'
-        ];
+        return ['catalog/stylesheet.css', 'fontawesome/css/all.css'];
     }
 
     /** Override: return a CSS string scoped to this component's shadow root. */
@@ -167,7 +173,7 @@ export class WebComponent extends HTMLElement {
     // page's CSS, since anything adopted into the document would apply to the whole page.
     // The files go first and styles() after them, so the component's own rules win.
     async #style() {
-        if (!this.shadowRoot) return;
+        if (!this.shadow) return;
 
         await stylesheet.adopt(this.root, this.stylesheets());
 

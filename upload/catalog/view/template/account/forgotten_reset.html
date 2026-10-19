@@ -3,17 +3,15 @@
   <fieldset>
     <legend>{{ text_password }}</legend>
     <div class="row mb-3">
-      <label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
+      <form-label for="input-password">{{ entry_password }}</form-label>
       <div class="col-sm-10">
-        <input type="password" name="password" value="" id="input-password" class="form-control"/>
-        <div id="error-password" class="invalid-feedback"></div>
+        <input-password name="password" value="" id="input-password"/>
       </div>
     </div>
     <div class="row mb-3">
-      <label for="input-confirm" class="col-sm-2 col-form-label">{{ entry_confirm }}</label>
+      <form-label for="input-confirm">{{ entry_confirm }}</form-label>
       <div class="col-sm-10">
-        <input type="password" name="confirm" value="" id="input-confirm" class="form-control"/>
-        <div id="error-confirm" class="invalid-feedback"></div>
+        <input-password name="confirm" value="" id="input-confirm"/>
       </div>
     </div>
   </fieldset>

@@ -2,8 +2,7 @@
 <form @submit="handleSubmit">
   <fieldset>
     <div class="row mb-3 mb-0">
-      <label class="col-md-3 col-form-label">{{ entry_newsletter }}</label>
-      <div class="col-md-9"><input-switch name="newsletter" value="1" checked="{{ newsletter }}"></input-switch></div>
+      <div class="col-md-9"><input-switch label="{{ entry_newsletter }}" name="newsletter" value="1" {% if newsletter %} checked{% endif %}></input-switch></div>
     </div>
   </fieldset>
   <div class="row">

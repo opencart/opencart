@@ -71,15 +71,10 @@ export class WebComponent extends HTMLElement {
         super();
 
         // Attach Shadow or use light DOM based on the static property
-        this.root = this.constructor.shadow
-            ? this.attachShadow({ mode: 'open' })
-            : this;
+        this.root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
 
         // State
-        this.state = new State(
-            this.states(),
-            this.stateChangedCallback.bind(this),
-        );
+        this.state = new State(this.states(), this.stateChangedCallback.bind(this));
 
         // Attach Internals
         this.internal = this.attachInternals();
@@ -169,7 +164,7 @@ export class WebComponent extends HTMLElement {
     // page's CSS, since anything adopted into the document would apply to the whole page.
     // The files go first and styles() after them, so the component's own rules win.
     async #style() {
-        if (!this.shadow) return;
+        if (this.shadow) return;
 
         await stylesheet.adopt(this.root, this.stylesheets());
 

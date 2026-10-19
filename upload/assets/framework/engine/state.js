@@ -1,5 +1,5 @@
 /**
- * ComponentState
+ * State
  * --------------
  * A small reactive state container built on a Proxy. Reading/writing
  * properties works like a plain object, but writes are tracked, batched

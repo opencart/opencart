@@ -1,5 +1,5 @@
 <h1>{{ heading_title }}</h1>
-{% if orders %}
+<div class="{% if orders %}d-none{% endif %}">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -18,7 +18,7 @@
             <td class="text-end">#{{ order.order_id }}</td>
             <td class="text-end">{{ order.product_total }}</td>
             <td>{{ order.status }}</td>
-            <td class="text-end">{{ order.total | currency: order.currency_code, order.currency_value }}</td>
+            <td class="text-end">{{ order.total|currency: order.currency_code, order.currency_value }}</td>
             <td>{{ order.date_added }}</td>
             <td class="text-end"><a href="account/order_info.js?order_id={{ order.order_id }}" :click="link" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
           </tr>
@@ -30,8 +30,7 @@
     <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
-{% else %}
-  <p>{{ text_no_results }}</p>
-{% endif %}
+</div>
+<p class="{% if not orders %}d-none{% endif %}">{{ text_no_results }}</p>
 <div class="text-end"><a href="account/account.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
 

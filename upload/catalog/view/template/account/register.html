@@ -1,6 +1,7 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_account_already | safe }}</p>
 <form @ref="form" @submit="handleSubmit">
+
   <fieldset>
     <legend>{{ text_your_details }}</legend>
     <div class="mb-3">
@@ -15,13 +16,12 @@
       <form-label for="input-email">{{ entry_email }}</form-label>
       <input-email name="email" value="test123@test123.com" id="input-email"></input-email>
     </div>
-    {% if config_telephone_status %}
-    <div class="mb-3">
+    <div class="mb-3{% if config_telephone_status %} d-none{% endif %}">
       <form-label for="input-telephone">{{ entry_telephone }}</form-label>
       <input-tel name="telephone" value="0123456789" id="input-telephone"{% if config_telephone_required %} required{% endif %}></input-tel>
     </div>
-    {% endif %}
   </fieldset>
+
   <fieldset>
     <legend>{{ text_your_password }}</legend>
     <div class="mb-3">
@@ -29,6 +29,7 @@
       <input-password name="password" value="1234567890" id="input-password" required></input-password>
     </div>
   </fieldset>
+
   <fieldset>
     <legend>{{ text_newsletter }}</legend>
     <div class="row mb-3">
@@ -36,9 +37,11 @@
       <input-switch @ref="newsletter" name="newsletter" value="1" id="input-newsletter"></input-switch>
     </div>
   </fieldset>
+
   {% if config_captcha %}
   <account-captcha type="{{ config_captcha }}"></account-captcha>
   {% endif %}
+  
   <div class="text-end">
     {% if config_account_id %}
     <form-label for="input-agree">{{ text_agree }}</form-label>

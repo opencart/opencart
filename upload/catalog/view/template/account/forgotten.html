@@ -4,11 +4,7 @@
   <fieldset>
     <legend>{{ text_your_email }}</legend>
     <div class="row mb-3">
-      <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
-        <div id="error-email" class="invalid-feedback"></div>
-      </div>
+      <div class="col-sm-10"><input-email label="{{ entry_email }}" name="email" value="" required></input-email></div>
     </div>
   </fieldset>
   <div class="row">
@@ -16,7 +12,7 @@
       <a href="account/login.js" :click="link" class="btn btn-light">{{ button_back }}</a>
     </div>
     <div class="col text-end">
-      <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+      <button-submit>{{ button_continue }}</button-submit>
     </div>
   </div>
 </form>

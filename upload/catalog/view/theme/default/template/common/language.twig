@@ -1,6 +1,6 @@
 {% if languages|length > 1 %}
 <div class="pull-left">
-  <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-language">
+  <div id="form-language">
     <div class="btn-group">
       <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
       {% for language in languages %}
@@ -12,13 +12,11 @@
       <ul class="dropdown-menu">
         {% for language in languages %}
         <li>
-          <button class="btn btn-link btn-block language-select" type="button" name="{{ language.code }}"><img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" /> {{ language.name }}</button>
+          <a class="btn btn-link btn-block language-select" href="{{ language.href }}" hreflang="{{ language.code }}"><img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" /> {{ language.name }}</a>
         </li>
         {% endfor %}
       </ul>
     </div>
-    <input type="hidden" name="code" value="" />
-    <input type="hidden" name="redirect" value="{{ redirect }}" />
-  </form>
+  </div>
 </div>
 {% endif %}

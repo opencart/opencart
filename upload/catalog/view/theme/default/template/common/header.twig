@@ -33,6 +33,9 @@
 {% for link in links %}
 <link href="{{ link.href }}" rel="{{ link.rel }}" />
 {% endfor %}
+{% for link in alternate_links %}
+<link href="{{ link.href }}" rel="alternate" hreflang="{{ link.hreflang }}" />
+{% endfor %}
 {% for analytic in analytics %}
 {{ analytic }}
 {% endfor %}

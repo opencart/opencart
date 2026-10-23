@@ -267,7 +267,7 @@ class Store extends \Opencart\System\Engine\Model {
 		$registry->set('load', $loader);
 
 		// Create a dummy request class, so we can feed the data to the order editor
-		$request = new \stdClass();
+		$request = new \Opencart\System\Library\Request();
 		$request->get = [];
 		$request->post = [];
 		$request->server = $this->request->server;

@@ -18,7 +18,7 @@ class Session extends \Opencart\System\Engine\Controller {
 		$this->registry->set('session', $session);
 
 		// Api
-		if (isset($this->request->get['route']) && substr((string)$this->request->get['route'], 0, 4) == 'api/' && isset($this->request->get['api_token'])) {
+		if (isset($this->request->get['route']) && substr(strtolower((string)$this->request->get['route']), 0, 4) == 'api/' && isset($this->request->get['api_token'])) {
 			$this->load->model('setting/api');
 
 			$this->model_setting_api->cleanSessions();

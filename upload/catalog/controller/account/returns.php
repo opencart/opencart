@@ -508,9 +508,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/returns');
 
-		$subscription_info = $this->model_account_returns->getReturns($return_id);
+		$return_info = $this->model_account_returns->getReturn($return_id);
 
-		if (!$subscription_info) {
+		if (!$return_info) {
 			return '';
 		}
 

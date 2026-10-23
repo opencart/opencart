@@ -2,37 +2,11 @@ import { InputText } from './text.js';
 
 class InputNumber extends InputText {
     render() {
-        let html = '<slot name="label"></slot>';
-
-        html += '<input type="number" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '"';
-
-        if (this.hasAttribute('placeholder')) {
-            html += ' placeholder="' + this.getAttribute('placeholder') + '"';
-        }
-
-        let error = this.state.get('error');
-
-        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
-
-        if (this.hasAttribute('disabled')) {
-            html += ' disabled';
-        }
-
-        if (this.hasAttribute('readonly')) {
-            html += ' readonly';
-        }
-
-        if (this.hasAttribute('required')) {
-            html += ' required';
-        }
-
-        html += '/>';
-
-        if (error) {
-            html += '<div @ref="feedback" class="invalid-feedback">' + error + '</div>';
-        }
-
-        return html;
+        return `
+        <label @ref="label" for="input">${this.label}</label>
+        <input type="number" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ''} id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} class="form-control" @ref="input" @input="onInput" @change="onChange"/>
+        <div @ref="error" class="invalid-feedback"></div>
+        `;
     }
 }
 

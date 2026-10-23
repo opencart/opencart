@@ -83,15 +83,11 @@ export class InputText extends WebComponent {
     }
 
     render() {
-        let key = this.name.replaceAll('_', '-');
-
-        let html = `
-        <label for="input-${key}">${this.label}</label>
-        <input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ''} id="input-${key}"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} class="form-control" @ref="input" @input="onInput" @change="onChange"/>
+        return `
+        <label @ref="label" for="input">${this.label}</label>
+        <input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ''} id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} class="form-control" @ref="input" @input="onInput" @change="onChange"/>
         <div @ref="error" class="invalid-feedback"></div>
         `;
-
-        return html;
     }
 
     handleConnect() {

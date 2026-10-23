@@ -17,7 +17,7 @@ function escapeAttribute(value) {
     return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-customElements.define('nav-include', class Include extends WebComponent {
+customElements.define('nav-include', class extends WebComponent {
     static observedAttributes = ['src'];
 
     constructor() {
@@ -26,19 +26,11 @@ customElements.define('nav-include', class Include extends WebComponent {
         this.data = new Map();
     }
 
-    get src() {
-        return this.getAttribute('src');
-    }
-
-    set src(src) {
-        this.setAttribute('src', src);
-    }
-
     async render() {
         // Get the source HTML to load
-        if (!this.src) return;
+        if (!this.hasAttribute('src') || !this.getAttribute('src')) return;
 
-        let [ path, query] = this.src.split('?');
+        let [ path, query ] = this.getAttribute('src').split('?');
 
         try {
             if (!path_pattern.test(path)) {
@@ -46,9 +38,9 @@ customElements.define('nav-include', class Include extends WebComponent {
             }
 
             if (!this.data.has(path)) {
-                let component = await import(config.get('config_path') + path);
+                let response = await import(config.get('config_path') + path);
 
-                let tag = customElements.getName(component.default);
+                let tag = customElements.getName(response.default);
 
                 if (!tag) {
                     throw new Error('Module does not export a defined component as its default');
@@ -69,9 +61,7 @@ customElements.define('nav-include', class Include extends WebComponent {
                 html += ' ' + key + '="' + escapeAttribute(value) + '"';
             }
 
-            let test = html + '></' + name + '>';
-
-            return test;
+            return html + '></' + name + '>';
         } catch (error) {
             console.error('nav-include: could not load "' + this.src + '"', error);
 

@@ -1,9 +1,6 @@
 import { WebComponent } from '../../engine.js';
 import { loader, local } from '../../library.js';
 
-// Config
-const config = await loader.config('default');
-
 // Storage
 const countries = await loader.storage('localisation/country');
 
@@ -41,22 +38,8 @@ customElements.define('input-country', class extends WebComponent {
     }
 
     async render() {
-        if (config.has('config_contry_id')) {
-
-        }
-
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" @change="handleChange" class="form-select"';
-
-        if (this.hasAttribute('required')) {
-            html += ' required';
-        }
-
-        if (this.hasAttribute('disabled')) {
-            html += ' disabled';
-        }
-
-        html += '>' + this.default;
-
+        let html = '';
+        
         for (let country of countries) {
             html += '<option value="' + country.country_id + '"';
 
@@ -73,8 +56,6 @@ customElements.define('input-country', class extends WebComponent {
             html += '>' + name + '</option>';
         }
 
-        html += '</select>';
-
         if (this.postcode) {
             if (this.value in this.countries[this.value] && this.countries[this.value].postcode_required == 1) {
                 this.postcode.setAttribute('required', '');
@@ -83,7 +64,10 @@ customElements.define('input-country', class extends WebComponent {
             }
         }
 
-        return html;
+        return ` 
+        <label @ref="label" for="input">${this.label}</label>
+        <select name="${this.name}" @ref="input" @change="handleChange" class="form-select" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} class="form-control" @ref="input" @change="onChange">${this.default}</select>
+        <div @ref="error" class="invalid-feedback"></div>`;
     }
 
     async handleConnect() {

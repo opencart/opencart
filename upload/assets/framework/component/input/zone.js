@@ -16,7 +16,12 @@ const config = await loader.config('default');
  * optional required disabled
  */
 customElements.define('input-zone', class extends WebComponent {
-    static observedAttributes = ['country_id'];
+    static observedAttributes = [
+        'country_id',
+        'required',
+        'disabled',
+        'readonly'
+    ];
     static formAssociated = true;
 
     default = HTMLInputElement;

@@ -13,9 +13,11 @@ import './component/input/markdown.js';
 import './component/input/number.js';
 import './component/input/password.js';
 import './component/input/search.js';
+import './component/input/select.js';
 import './component/input/switch.js';
 import './component/input/tel.js';
 import './component/input/text.js';
+import './component/input/textarea.js';
 import './component/input/time.js';
 import './component/input/upload.js';
 import './component/input/url.js';
@@ -29,3 +31,4 @@ import './component/ui/toast.js';
 // Navigation
 import './component/nav/pagination.js';
 import './component/nav/include.js';
+import './component/nav/dialog.js';

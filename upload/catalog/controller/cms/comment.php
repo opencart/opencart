@@ -374,10 +374,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$status = 0;
 			}
 
-			$comment_data = $post_info + [
+			$comment_data = [
 				'parent_id' => $parent_id,
 				'status'    => $status
-			];
+			] + $post_info;
 
 			$this->model_cms_article->addComment($article_id, $comment_data);
 

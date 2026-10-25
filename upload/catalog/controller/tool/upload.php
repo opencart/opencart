@@ -41,6 +41,31 @@ class Upload extends \Opencart\System\Engine\Controller {
 					$json['error'] = $this->language->get('error_file_type');
 				}
 
+				// Check that the file content matches the image type claimed by the file extension
+				$images = [
+					'png'  => "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A",
+					'webp' => "\x52\x49\x46\x46", // RIFF
+					'jpe'  => "\xFF\xD8\xFF",
+					'jpeg' => "\xFF\xD8\xFF",
+					'jpg'  => "\xFF\xD8\xFF",
+					'gif'  => "\x47\x49\x46\x38", // GIF8
+					'bmp'  => "\x42\x4D"          // BM
+				];
+
+				$extension = strtolower(substr(strrchr($filename, '.'), 1));
+
+				if (isset($images[$extension])) {
+					$handle = fopen($this->request->files['file']['tmp_name'], 'r');
+
+					$header = fread($handle, 12);
+
+					fclose($handle);
+
+					if (!str_starts_with($header, $images[$extension]) || ($extension == 'webp' && substr($header, 8, 4) != 'WEBP')) {
+						$json['error'] = $this->language->get('error_file_type');
+					}
+				}
+
 				// Return any upload error
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);

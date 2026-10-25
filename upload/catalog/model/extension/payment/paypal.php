@@ -13,6 +13,9 @@ class ModelExtensionPaymentPayPal extends Model {
 
 			if (($this->config->get('payment_paypal_total') > 0) && ($this->config->get('payment_paypal_total') > $total)) {
 				$status = false;
+			} elseif (isset($address['iso_code_2']) && $address['iso_code_2'] == 'SY') {
+				// PayPal doesn't serve Syria yet, so don't offer it on Syrian addresses
+				$status = false;
 			} elseif (!$this->config->get('payment_paypal_geo_zone_id')) {
 				$status = true;
 			} elseif ($query->num_rows) {

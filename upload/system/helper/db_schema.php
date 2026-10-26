@@ -119,6 +119,11 @@ function oc_db_schema() {
 				'type' => 'varchar(10)'
 			],
 			[
+				'name'    => 'telephone',
+				'type'    => 'varchar(32)',
+				'default' => ''
+			],
+			[
 				'name'    => 'country_id',
 				'type'    => 'int(11)',
 				'default' => '0'
@@ -4462,6 +4467,11 @@ function oc_db_schema() {
 			[
 				'name' => 'shipping_city',
 				'type' => 'varchar(128)'
+			],
+			[
+				'name'    => 'shipping_telephone',
+				'type'    => 'varchar(32)',
+				'default' => ''
 			],
 			[
 				'name' => 'shipping_postcode',

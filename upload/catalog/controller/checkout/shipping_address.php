@@ -89,6 +89,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			'address_2'    => '',
 			'city'         => '',
 			'postcode'     => '',
+			'telephone'    => '',
 			'country_id'   => 0,
 			'zone_id'      => 0,
 			'custom_field' => []
@@ -126,6 +127,10 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			if (!oc_validate_length($post_info['city'], 2, 128)) {
 				$json['error']['city'] = $this->language->get('error_city');
+			}
+
+			if ((string)$post_info['telephone'] !== '' && !oc_validate_regex((string)$post_info['telephone'], '/^\+?[0-9 ()\-]{3,31}$/')) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Country

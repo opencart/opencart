@@ -1,7 +1,5 @@
 import { WebComponent } from '../../engine.js';
 
-const escape = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-
 /*
  * <input-text name="firstname" id="input-firstname" value="" placeholder="First Name" required></input-text>
  *
@@ -15,6 +13,8 @@ const escape = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAl
  *
  * Attributes: name, value, placeholder, required, disabled, readonly.
  */
+const escape = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+
 export class InputText extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
@@ -84,19 +84,51 @@ export class InputText extends WebComponent {
 
     render() {
         return `
-        <label @ref="label" for="input">${this.label}</label>
-        <input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ''} id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} class="form-control" @ref="input" @input="onInput" @change="onChange"/>
-        <div @ref="error" class="invalid-feedback"></div>
-        `;
+			<label @ref="label" for="input">${this.label}</label>
+			<input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ''} id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @input="onInput" @change="onChange" class="form-control"/>
+			<div @ref="error" class="invalid-feedback"></div>
+		`;
     }
 
     handleConnect() {
         this.internal.setFormValue(this.getAttribute('value'));
     }
 
-    stateValue(value) {
-        value = value ?? '';
+    // Handles the input event and updates the component state with the new value.
+    onInput(e) {
+        this.state.set('value', e.target.value);
+    }
 
+    // A native change event does not leave the shadow root, so send it on.
+    onChange(e) {
+        this.state.set('value', e.target.value);
+    }
+	
+	handleState(name, value, state) {
+		if (['required', 'disabled', 'readonly'].includes(name)) {
+			this.toggleAttribute(name, value);
+
+			if (this.input) this.input.toggleAttribute(name, value);
+
+			return;
+		}
+
+		if (name === 'value') this.handleValue(value);	
+		if (name === 'error') this.handleError(value);
+	}
+	
+	handleAttribute(name, value) {
+		if (['required', 'disabled', 'readonly'].includes(name)) {
+			this.state.set(name, value !== null);
+
+			return;
+		}
+
+		if (name === 'name') this.update();
+		if (name === 'value') this.state.set('value', value);
+	}
+
+    handleValue(value) {
         this.internal.setFormValue(value);
 
         this.setAttribute('value', value);
@@ -111,7 +143,7 @@ export class InputText extends WebComponent {
     }
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.
-    stateError(error) {
+    handleError(error) {
         if (!this.input) return;
 
         this.input.classList.toggle('is-invalid', !!error);
@@ -127,60 +159,6 @@ export class InputText extends WebComponent {
         } catch (e) {
             // CustomStateSet not supported; .is-invalid still shows the error.
         }
-    }
-
-    stateRequired(value) {
-        value = value ?? false;
-
-        this.toggleAttribute('required', value);
-
-        if (this.input) this.input.toggleAttribute('required', value);
-    }
-
-    stateDisabled(value) {
-        value = value ?? false;
-
-        this.toggleAttribute('disabled', value);
-
-        if (this.input) this.input.toggleAttribute('disabled', value);
-    }
-
-    stateReadonly(value) {
-        value = value ?? false;
-
-        this.toggleAttribute('readonly', value);
-
-        if (this.input) this.input.toggleAttribute('readonly', value);
-    }
-
-    // Handles the input event and updates the component state with the new value.
-    onInput(e) {
-        this.state.set('value', e.target.value);
-    }
-
-    // A native change event does not leave the shadow root, so send it on.
-    onChange(e) {
-        this.state.set('value', e.target.value);
-    }
-
-    attributeName(name, value) {
-        this.update();
-    }
-
-    attributeValue(name, value) {
-        this.state.set('value', value ?? '');
-    }
-
-    attributeRequired(name, value) {
-        this.state.set('required', value !== null);
-    }
-
-    attributeDisabled(name, value) {
-        this.state.set('disabled', value !== null);
-    }
-
-    attributeReadonly(name, value) {
-        this.state.set('readonly', value !== null);
     }
 }
 

@@ -56,8 +56,6 @@ customElements.define('product-thumb', class extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }
@@ -72,7 +70,6 @@ customElements.define('product-thumb', class extends WebComponent {
                     this.alert.append('<ui-alert type="success">' + json.get('success') + '</ui-alert>');
 
                    // cart.add(cart);
-
                 }
             },
             handleError: (e) => {

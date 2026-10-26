@@ -43,15 +43,13 @@ export default class AccountForgotten extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
                 }
             },
             handleError: (e) => {

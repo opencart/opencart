@@ -68,11 +68,9 @@ customElements.define('checkout-register', class extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('redirect')) {
                     location = json.get('redirect');
-                }
+                }x
 
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));

@@ -8,11 +8,11 @@ export default class AccountWishlist extends WebComponent {
     render() {
         let data = new Map();
 
-        data.set('wishlist', []);
-
-        if (customer.isLogged()) {
-            data.set('wishlist', customer.getWishlist());
-        }
+		if (customer.isLogged()) {
+			data.set('wishlist', []);
+		} else { 
+			data.set('wishlist', customer.getWishlist());
+		}
 
        return loader.template('account/wishlist', [ data, language ]);
     }

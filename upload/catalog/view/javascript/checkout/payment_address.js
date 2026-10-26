@@ -59,16 +59,14 @@ customElements.define('payment-address', class extends WebComponent {
     async setAddress(e) {
         e.preventDefault();
 
-        await ajax.post('action.php?route=checkout/payment_address.address&language=' + local.get('language') + '&customer_token' + customer.getToken() + '&address_id=' + this.address.value, {
+        await ajax.post('action.php?route=checkout/payment_address.address&language=' + local.get('language') + '&customer_token=' + customer.getToken() + '&address_id=' + this.address.value, {
             handleSend: () => {
                 this.form.state.set('submitting', true);
             },
             handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            handleSuccess: function(json) {
-                this.form.state.clear();
-
+            handleSuccess: (json) => {
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }
@@ -78,7 +76,7 @@ customElements.define('payment-address', class extends WebComponent {
                 }
 
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
 
                     //$('#input-shipping-method').val('');
                     //$('#input-payment-method').val('');
@@ -98,7 +96,7 @@ customElements.define('payment-address', class extends WebComponent {
 
         let form = this.form.getData();
 
-        ajax.post('action.php?route=checkout/payment_address.save&language=', form, {
+        ajax.post('action.php?route=checkout/payment_address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
                 this.form.state.set('submitting', true);
             },
@@ -106,8 +104,6 @@ customElements.define('payment-address', class extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }
@@ -117,7 +113,7 @@ customElements.define('payment-address', class extends WebComponent {
                 }
 
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
 
                     this.update();
                 }

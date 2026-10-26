@@ -67,8 +67,6 @@ customElements.define('shipping-address', class extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json)=> {
-                this.form.state.clear();
-
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }
@@ -105,8 +103,6 @@ customElements.define('shipping-address', class extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }

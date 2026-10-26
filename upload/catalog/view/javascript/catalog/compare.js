@@ -29,8 +29,6 @@ export default class CatalogCompare extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: async (json) => {
-                this.form.state.clear();
-
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }

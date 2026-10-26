@@ -5,14 +5,6 @@ import { loader, ajax, local, customer } from '../index.js';
 const language = await loader.language('information/gdpr');
 
 export default class InformationGdpr extends WebComponent {
-    states() {
-        return {
-            submitting: false,
-            success: '',
-            error: []
-        };
-	}
-	
     constructor() {
         super();
 
@@ -20,8 +12,6 @@ export default class InformationGdpr extends WebComponent {
     }
 
     async render() {
-
-
         return loader.template('information/gdpr', [ language ]);
     }
 
@@ -45,18 +35,14 @@ export default class InformationGdpr extends WebComponent {
             handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-            handleSuccess: (json)=> {
-                this.form.state.clear();
-
+            handleSuccess: (json) => {
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
-
-                    this.update();
+                    this.form.state.set('success', json.get('success'));
                 }
             },
             handleError: (e) => {

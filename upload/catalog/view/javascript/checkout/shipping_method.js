@@ -37,55 +37,53 @@ customElements.define('shipping-method', class extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
 
-                if (json['shipping_methods']) {
+                if (json.has('shipping_methods')) {
                     $('#modal-shipping').remove();
 
                     let html = '<ui-modal>';
 
-                    html += '<modal-title><i class="fa fa-truck"></i> {{ text_shipping_method | escape('js') }}</modal-title>';
+                    html += '<modal-title><i class="fa fa-truck"></i> {{ text_shipping_method | escape: 'js' }}</modal-title>';
                     html += '<modal-body>';
                     html += '  <form id="form-shipping-method">';
                     html += '    <p>{{ text_shipping | escape: 'js' }}</p>';
 
                     var first = true;
 
-                    for (let i in json['shipping_methods']) {
-                        html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
+                    for (let i in json.get('shipping_methods')) {
+                        html += '<p><strong>' + json.get('shipping_methods')[i]['name'] + '</strong></p>';
 
-                        if (!json['shipping_methods'][i]['error']) {
-                            for (let j in json['shipping_methods'][i]['quote']) {
+                        if (!json.get('shipping_methods')[i]['error']) {
+                            for (let j in json.get('shipping_methods')[i]['quote']) {
                                 let html;
                                 html += '<div class="form-check">';
 
                                 var code = i + '-' + j.replaceAll('_', '-');
 
-                                html += '<input type="radio" name="shipping_method" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
+                                html += '<input type="radio" name="shipping_method" value="' + json.get('shipping_methods')[i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
 
                                 var method = $('#input-shipping-code').val();
 
-                                if ((json['shipping_methods'][i]['quote'][j]['code'] == method) || (!method && first)) {
+                                if ((json.get('shipping_methods')[i]['quote'][j]['code'] == method) || (!method && first)) {
                                     html += ' checked';
 
                                     first = false;
                                 }
 
                                 html += '/>';
-                                html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - <x-currency code="{{ currency }}" amount="' + json['shipping_methods'][i]['quote'][j]['cost'] + '"></x-currency></label>';
+                                html += '  <label for="input-shipping-method-' + code + '">' + json.get('shipping_methods')[i]['quote'][j]['name'] + ' - <x-currency code="{{ currency }}" amount="' + json.get('shipping_methods')[i]['quote'][j]['cost'] + '"></x-currency></label>';
                                 html += '</div>';
                             }
                         } else {
-                            html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
+                            html += '<div class="alert alert-danger">' + json.get('shipping_methods')[i]['error'] + '</div>';
                         }
                     }
 
                     html += '          <div class="text-end">';
-                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
+                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue | escape: 'js' }}</button>';
                     html += '          </div>';
                     html += '    </form>';
                     html += '  </modal-body>';

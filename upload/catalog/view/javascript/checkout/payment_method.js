@@ -84,8 +84,6 @@ customElements.define('payment-method', class extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
@@ -103,7 +101,7 @@ customElements.define('payment-method', class extends WebComponent {
                     $('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
-            onError: (e) => {
+            handleError: (e) => {
                 console.log('onError', e);
             }
         });

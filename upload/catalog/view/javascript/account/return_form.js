@@ -8,10 +8,18 @@ const config = await loader.config('default');
 const language = await loader.language('account/returns');
 
 export default class ReturnForm extends WebComponent {
-    constructor() {
+    states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        };
+    }
+	
+	constructor() {
         super();
 
-        this.token = '';
+        this.token = ''; 
     }
 
     async render() {
@@ -31,7 +39,7 @@ export default class ReturnForm extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
             handleSend: () => {
@@ -57,6 +65,26 @@ export default class ReturnForm extends WebComponent {
                 console.log('onError', e);
             }
         });
+	}
+	
+	handleSubmitting(value) {
+        this.submitter.state.set('submitting', value);
+	}
+	
+	handleError(error) {
+        let errors = Object.entries(error);
+
+        if (errors.length === 0) return;
+
+		for (let [key, value] of errors) {
+			if (key === 'warning') continue;
+
+			let input = this.root.getElementById('input-' + key);
+
+			if (input) {
+				input.state.set('error', value);
+			}
+        }
     }
 }
 

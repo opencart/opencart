@@ -1,10 +1,10 @@
 <h1>{{ text_my_account }}</h1>
 <ul class="list-unstyled">
-  <li><a href="account/edit.js" :click="link">{{ text_edit }}</a></li>
-  <li><a href="account/password.js" :click="link">{{ text_password }}</a></li>
+  <li><a href="account/edit.js" :click="dialog">{{ text_edit }}</a></li>
+  <li><a href="account/password.js" :click="dialog">{{ text_password }}</a></li>
   <li><a href="account/payment_method.js" :click="link">{{ text_payment_method }}</a></li>
   <li><a href="account/address_list.js" :click="link">{{ text_address }}</a></li>
-  <li><a href="account/wishlist.js" :click="link">{{ text_wishlist }}</a></li>
+  <li><a href="account/wishlist.js" :click="dialog">{{ text_wishlist }}</a></li>
 </ul>
 <h2>{{ text_my_orders }}</h2>
 <ul class="list-unstyled">
@@ -16,5 +16,5 @@
 </ul>
 <h2>{{ text_my_newsletter }}</h2>
 <ul class="list-unstyled">
-  <li><a href="account/newsletter.js" :click="link">{{ text_newsletter }}</a></li>
+  <li><a href="account/newsletter.js" :click="dialog">{{ text_newsletter }}</a></li>
 </ul>

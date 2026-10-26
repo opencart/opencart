@@ -14,20 +14,12 @@ export default class AccountRegister extends WebComponent {
         this.token = '';
     }
 
-    states() {
-        return {
-            submitting: false,
-            success: '',
-            error: []
-        };
-    }
-
     async render() {
         if (this.state.get('success')) {
             return `<ui-toast>${this.state.get('success')}</ui-toast>`;
         }
 
-        return loader.template('account/register', [language, config]);
+		return loader.template('account/register', [ this.state.all(), language, config ]);
     }
 
     async handleConnect() {
@@ -45,21 +37,19 @@ export default class AccountRegister extends WebComponent {
 
         //if (customer.isLogged()) return;
 
-        console.log('handleSubmit called');
-
-        let form = new FormData(this.form);
+		let form = this.form.getData();
 
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {
-                this.state.set('submitting', true);
+                this.form.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.state.set('submitting', false);
+                this.form.state.set('submitting', false);
             },
-            handleSuccess: async (json) => {
+			handleSuccess: async (json) => {
                 // Display error messages
                 if (json.has('error')) {
-                    this.state.set('error', json.get('error'));
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
@@ -75,34 +65,8 @@ export default class AccountRegister extends WebComponent {
         });
     }
 
-    stateSubmitting(submitting) {
-        this.submitter.state.set('submitting', submitting);
-    }
-
-    stateError(error) {
-        let errors = Object.entries(error);
-
-        if (errors.length === 0) return;
-
-        for (let [key, value] of errors) {
-            if (key === 'warning') continue;
-
-            let label = this.root.querySelector('[for="input-' + key + '"]');
-
-            if (label) {
-                label.state.set('error', true);
-            }
-
-            let input = this.root.querySelector('#input-' + key);
-
-            if (input) {
-                input.state.set('error', value);
-            }
-        }
-    }
-
-    stateAgree(e) {
-        this.submitter.state.set('disabled', !e.target.hasAttribute('checked'));
+    handleAgree(e) {
+        this.form.state.set('disabled', !e.target.hasAttribute('checked'));
     }
 }
 

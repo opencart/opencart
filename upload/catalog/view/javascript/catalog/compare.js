@@ -19,7 +19,7 @@ export default class CatalogCompare extends WebComponent {
     addToCompare() {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {

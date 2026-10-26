@@ -8,6 +8,14 @@ const config = await loader.config('default');
 const language = await loader.language('account/address');
 
 export default class AuthorizeReset extends WebComponent {
+    states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        };
+    }
+
     async render() {
         //if (customer.isLogged()) return;
 
@@ -19,7 +27,7 @@ export default class AuthorizeReset extends WebComponent {
 
         //if (customer.isLogged()) return;
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
             handleSend: () => {
@@ -29,8 +37,6 @@ export default class AuthorizeReset extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('redirect')) {
                     location = json.get('redirect');
                 }
@@ -40,7 +46,7 @@ export default class AuthorizeReset extends WebComponent {
                 }
 
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
 
                     this.update();
                 }
@@ -49,7 +55,7 @@ export default class AuthorizeReset extends WebComponent {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    }
+	}
 }
 
 customElements.define('authorize-reset', AuthorizeReset);

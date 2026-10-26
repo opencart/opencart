@@ -5,6 +5,14 @@ import { loader, ajax, local, customer } from '../index.js';
 const language = await loader.language('information/gdpr');
 
 export default class InformationGdpr extends WebComponent {
+    states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        };
+	}
+	
     constructor() {
         super();
 
@@ -28,7 +36,7 @@ export default class InformationGdpr extends WebComponent {
     handleSubmit() {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         ajax.post('action.php?route=information/gdpr.action&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {

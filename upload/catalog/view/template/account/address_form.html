@@ -1,88 +1,52 @@
 <h1>{{ heading_title }}</h1>
-<form-submit @ref="form">
+<form-submit @ref="form" @submit="handleSubmit">
   <fieldset>
-    <div class="row mb-3">
-      <form-label for="input-firstname">{{ entry_firstname }}</label>
-      <div class="col-sm-10">
-        <input-text name="firstname" value="{{ firstname }}" id="input-firstname" required/>
-      </div>
+    <div class="mb-3">
+      <input-text id="input-firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
     </div>
-    <div class="row mb-3 ">
-      <form-label for="input-lastname">{{ entry_lastname }}</label>
-      <div class="col-sm-10">
-        <input-text name="lastname" value="{{ lastname }}" id="input-lastname" required/>
-      </div>
+    <div class="mb-3 ">
+      <input-text id="input-lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
     </div>
-    <div class="row mb-3">
-      <form-label for="input-company">{{ entry_company }}</label>
-      <div class="col-sm-10">
-        <input-text name="company" value="{{ company }}" id="input-company"/>
-      </div>
+    <div class="mb-3">
+      <input-text id="input-company" label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
     </div>
-    <div class="row mb-3">
-      <form-label for="input-address-1">{{ entry_address_1 }}</label>
-      <div class="col-sm-10">
-        <input-text name="address_1" value="{{ address_1 }}" id="input-address-1" required/>
-      </div>
+    <div class="mb-3">
+      <input-text id="input-address-1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
     </div>
-    <div class="row mb-3">
-      <form-label for="input-address-2">{{ entry_address_2 }}</label>
-      <div class="col-sm-10">
-        <input-text name="address_2" value="{{ address_2 }}" id="input-address-2"/>
-      </div>
+    <div class="mb-3">
+      <input-text id="input-address-2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
     </div>
-    <div class="row mb-3">
-      <form-label for="input-city">{{ entry_city }}</label>
-      <div class="col-sm-10">
-        <input-text name="city" value="{{ city }}" id="input-city" required/>
-      </div>
+    <div class="mb-3">
+      <input-text id="input-city" label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
+    </div>
+    <div class="mb-3">
+      <input-text id="input-postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
+    </div>
+    <div class="mb-3">
+      <input-country id="input-country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" postcode="1" target="input-postcode" required>
+        <option value="0">{{ text_select }}</option>
+      </input-country>
+    </div>
+    <div class="mb-3">
+      <input-zone id="input-zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" target="input-country" required>
+        <option value="0">{{ text_select }}</option>
+      </input-zone>
     </div>
     <div class="row mb-3">
-      <form-label for="input-postcode">{{ entry_postcode }}</label>
-      <div class="col-sm-10">
-        <input-text name="postcode" value="{{ postcode }}" id="input-postcode" required/>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <form-label for="input-country">{{ entry_country }}</label>
-      <div class="col-sm-10">
-        <input-country name="country_id" value="{{ country_id }}" id="input-country" postcode="1" target="input-postcode" required>
-          <option value="0">{{ text_select }}</option>
-        </input-country>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <form-label for="input-zone">{{ entry_zone }}</label>
-      <div class="col-sm-10">
-        <input-zone name="zone_id" value="{{ zone_id }}" target="input-country" required>
-          <option value="0">{{ text_select }}</option>
-        </input-zone>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <form-label class="col-sm-2 col-form-label">{{ entry_default }}</form-label>
+      <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
       <div class="col-sm-10">
         <div class="form-check-inline">
-          <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/>
+          <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input" {% if default %} checked{% endif %} />
           <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
         </div>
         <div class="form-check-inline">
-          <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/>
+          <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input" {% if not default %} checked{% endif %} />
           <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
         </div>
       </div>
     </div>
   </fieldset>
-  <div class="row">
-    <div class="col">
-      <a href="account/address_list.js" :click="link" class="btn btn-light">{{ button_back }}</a>
-    </div>
-    <div class="col text-end">
-      <button-submit @ref="button" class="btn btn-primary">{{ button_continue }}</button-submit>
-    </div>
+  <div class="text-end">
+    <button-submit @ref="submitter">{{ button_continue }}</button-submit>
   </div>
 </form-submit>
-
-
-
-

@@ -5,11 +5,11 @@
     <div class="input-group">
       <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
       <select id="input-sort" class="form-select" @change="handleSort">
-      <option value="latest-asc" {% if sort == 'latest-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_date_added }}</option>
-      <option value="latest-desc" {% if sort == 'latest-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-up-short-wide"></i> {{ text_date_added }}</option>
-      <option value="popularity-asc" {% if sort == 'popularity-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i>{{ text_popularity }}</option>
-      <option value="popularity-desc" {% if sort == 'popularity-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-up-short-wide"></i> {{ text_popularity }}</option>
-    </select>
+        <option value="latest-asc" {% if sort == 'latest-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i> {{ text_date_added }}</option>
+        <option value="latest-desc" {% if sort == 'latest-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-up-short-wide"></i> {{ text_date_added }}</option>
+        <option value="popularity-asc" {% if sort == 'popularity-asc' %} selected{% endif %}><i class="fa-solid fa-arrow-down-short-wide"></i>{{ text_popularity }}</option>
+        <option value="popularity-desc" {% if sort == 'popularity-desc' %} selected{% endif %}><i class="fa-solid fa-arrow-up-short-wide"></i> {{ text_popularity }}</option>
+      </select>
     </div>
   </div>
 </div>
@@ -17,9 +17,7 @@
 {% for article in articles %}
 <div class="mb-3">
   <h2><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link">{{ article.name }}</a></h2>
-
-  
-  <div><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link" class="{% if article.thumb %}has-thumb{% endif %}"><img src="{{ article.thumb }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1"/></a></div>
+  <div {% if not article.thumb %}hidden{% endif %}><a href="cms/article_info.js?article_id={{ article.article_id }}" :click="link"><img src="{{ article.thumb }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-thumbnail mb-1" /></a></div>
 
   <ul class="list-inline">
     <li class="list-inline-item">{{ text_by }} <a href="cms/article.js?author={{ article.filter_author }}" :click="link">{{ article.author }}</a></li>

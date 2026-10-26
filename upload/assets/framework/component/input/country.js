@@ -1,9 +1,5 @@
-import { WebComponent } from '../../engine.js';
 import { loader, local } from '../../library.js';
-
-// Storage
-const countries = await loader.storage('localisation/country');
-
+import { InputSelect } from './select.js';
 /**
  * inputCountry
  *
@@ -14,71 +10,51 @@ const countries = await loader.storage('localisation/country');
  * @attr   string   name   name of the form element
  *
  * optional required disabled
- */
-customElements.define('input-country', class extends WebComponent {
-    static formAssociated = true;
-    static observedAttributes = [
-        'name',
-        'value',
-        'required',
-        'disabled',
-        'readonly'
-    ];
+*/
 
-    default = '';
-    countries = [];
+// Storage
+const countries = await loader.storage('localisation/country');
+
+class InputCountry extends InputSelect {
+	#options = [];
     target = '';
 
-    get value() {
-        return this.getAttribute('value');
-    }
-
-    set value(value) {
-        this.setAttribute('value', value);
-    }
-
-    async render() {
-        let html = '';
+	constructor() { 
+		super();
         
+		this.#options = Array.from(this.querySelectorAll('option')).map(option => {
+			return {
+				text: option.outerHTML,
+				value: option.value
+			};
+		});
+
         for (let country of countries) {
-            html += '<option value="' + country.country_id + '"';
+			this.#options.push({
+				text: country.description[local.get('language')] ? country.description[local.get('language')].name : '',
+				value: country.country_id
+			});
+		}
+	}
 
-            if (country.country_id == this.value) {
-                html += ' selected';
-            }
+    async handleConnect() {
+        this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
+        this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
+    }
 
-            let name = '';
+    async handleChange(e) {
+        this.value = e.target.value;
 
-            if (local.get('language') in country.description) {
-                name = country.description[local.get('language')].name;
-            }
-
-            html += '>' + name + '</option>';
-        }
-
+		if (this.target) this.target.setAttribute('country_id', this.value);
+		
         if (this.postcode) {
-            if (this.value in this.countries[this.value] && this.countries[this.value].postcode_required == 1) {
+            if (this.value in countries && countries[this.value].postcode_required == 1) {
                 this.postcode.setAttribute('required', '');
             } else {
                 this.postcode.removeAttribute('required');
             }
         }
+	}
+}
 
-        return ` 
-        <label @ref="label" for="input">${this.label}</label>
-        <select name="${this.name}" @ref="input" @change="handleChange" class="form-select" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} class="form-control" @ref="input" @change="onChange">${this.default}</select>
-        <div @ref="error" class="invalid-feedback"></div>`;
-    }
-
-    async handleConnect() {
-        this.default = this.innerHTML;
-        this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
-        this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
-    }
-
-    handleChange(e) {
-        this.value = e.target.value;
-
-        if (this.target) this.target.setAttribute('country_id', this.value);
-    }
-});
+customElements.define('input-country', InputCountry);

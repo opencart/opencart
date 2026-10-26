@@ -96,7 +96,7 @@ customElements.define('payment-address', class extends WebComponent {
     handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         ajax.post('action.php?route=checkout/payment_address.save&language=', form, {
             handleSend: () => {

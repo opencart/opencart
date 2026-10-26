@@ -40,7 +40,55 @@ export class State {
         this.#data = new Map(Object.entries(states));
         this.#onchange = onchange;
 
-        Object.freeze(this);
+ 		return new Proxy(this, {
+            get: (target, key) => {
+				let bound;
+					
+                if (typeof key === 'symbol' || key in target) {
+                    const value = Reflect.get(target, key, target);
+
+                    if (typeof value !== 'function' || key === 'constructor' || !Object.hasOwn(State.prototype, key)) return value;
+
+                    if (!bound) bound = new Map();
+                    if (!bound.has(key)) bound.set(key, value.bind(target));
+
+                    return bound.get(key);
+                }
+
+                return this.#data.get(key);
+            },
+            set: (target, key, value) => {
+                if (typeof key === 'symbol' || key in target) {
+                    throw new TypeError(`State: "${String(key)}" is the name of a method, so it cannot be set as a property; use state.set('${String(key)}', value)`);
+                }
+
+                target.set(key, value);
+
+                return true;
+            },
+            deleteProperty: (target, key) => {
+                if (typeof key === 'symbol' || key in target) return false;
+
+                target.delete(key);
+
+                return true;
+            },
+            has: (target, key) => key in target || this.#data.has(key),
+            ownKeys: (target) => [...this.#data.keys()].filter((key) => typeof key === 'string'),
+            getOwnPropertyDescriptor: (target, key) => {
+                if (typeof key !== 'string' || key in target || !this.#data.has(key)) return undefined;
+
+				return {
+					value: this.#data.get(key),
+					writable: true,
+					enumerable: true,
+					configurable: true
+				};
+            },
+
+            // Defining a property by hand would bypass the state.
+            defineProperty: () => false
+        });
     }
 
     get(key) {
@@ -119,11 +167,11 @@ export class State {
     }
 
     /** Group multiple writes into a single notification. */
-    #batch(fn) {
+    #batch(handle) {
         this.#depth++;
 
         try {
-            fn(this);
+            handle(this);
         } finally {
             this.#depth--;
 

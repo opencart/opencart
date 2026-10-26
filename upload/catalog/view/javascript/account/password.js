@@ -16,18 +16,16 @@ export default class AccountPassword extends WebComponent {
 
         //if (!customer.isLogged()) return;
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=account/password.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.submitter.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.submitter.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }

@@ -26,9 +26,9 @@ export default class CheckoutCart extends WebComponent {
     editProduct(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
-        ajax.post('action.php?route=checkout/cart.add', form, {
+        ajax.post('action.php?route=checkout/cart.add&language=' + local.get('language'), form, {
             handleSend: () => {
                 this.form.state.set('submitting', true);
             },

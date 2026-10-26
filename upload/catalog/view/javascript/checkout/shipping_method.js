@@ -27,7 +27,7 @@ customElements.define('shipping-method', class extends WebComponent {
     async getMethods(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=checkout/shipping_method.quote&language=' + local.get('language'), form, {
             handleSend: () => {
@@ -105,7 +105,7 @@ customElements.define('shipping-method', class extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=checkout/shipping_method.save&language=' + local.get('language'), form, {
             handleSend: () => {

@@ -1,30 +1,26 @@
-<div id="container">
-  <div :ref="alert"></div>
-  <dialog :ref="dialog" class="position-relative border-0" closedby="any"></dialog>
-  <common-header :ref="common-header"></common-header>
-  <main class="flex-grow-1 mb-4">
-    <div id="content" class="container">
-      <nav-include :ref="content" src="account/register.js"></nav-include>
-
-      <!--
-      <nav-include :ref="content" src="catalog/product_info.js?product_id=42"></nav-include>
-      <nav-include :ref="content" src="catalog/category.js?path=20"></nav-include>
-      <nav-include :ref="content" src="catalog/manufacturer_list.js"></nav-include>
-      <nav-include :ref="content" src="catalog/product_info.js?product_id=28"></nav-include>
-      <nav-include :ref="content" src="catalog/product_info.js?product_id=42"></nav-include>
-      <nav-include :ref="content" src="information/information.js?information_id=1"></nav-include>
-      <nav-include :ref="content" src="information/contact.js"></nav-include>
-      <nav-include :ref="content" src="cms/article_info.js?article_id=1"></nav-include>
-      <nav-include :ref="content" src="cms/topic.js?topic_id=0"></nav-include>
-      <nav-include :ref="content" src="account/account.js"></nav-include>
-      <nav-include :ref="content" src="account/password.js"></nav-include>
-      <nav-include :ref="content" src="account/login.js"></nav-include>
-      <nav-include :ref="content" src="account/register.js"></nav-include>
-      <nav-include :ref="content" src="account/account.js"></nav-include>
-      <nav-include :ref="content" src="checkout/cart.js"></nav-include>
-      <nav-include :ref="content" src="checkout/checkout.js"></nav-include>
+<dialog :ref="dialog" class="position-absolute border-0" closedby="any"></dialog>
+<common-header></common-header>
+<main class="flex-grow-1 mb-4">
+  <div class="container">
+    <nav-include :ref="content" src="account/account.js"></nav-include>
+    <!--
+      catalog/product_info.js?product_id=42
+      catalog/category.js?path=20
+      catalog/manufacturer_list.js
+      catalog/product_info.js?product_id=28
+      catalog/product_info.js?product_id=42
+      information/information.js?information_id=1
+      information/contact.js
+      cms/article_info.js?article_id=1
+      cms/topic.js?topic_id=0
+      account/account.js
+      account/password.js
+      account/login.js
+      account/register.js
+      account/account.js
+      checkout/cart.js
+      checkout/checkout.js
       //-->
-    </div>
-  </main>
-  <common-footer :ref="common-footer"></common-footer>
-</div>
+  </div>
+</main>
+<common-footer></common-footer>

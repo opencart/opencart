@@ -176,7 +176,7 @@ export default class Cart {
                 let subscription_data = [];
 
                 // Get option info
-                let subscription_info = product_info.subscription_plans.find(subscription_plan => subscription_plan.subscription_plan_id == item.subscription_plan_id && subscription_plan.customer_group_id == config.config_customer_group_id);
+                let subscription_info = product_info.subscription_plans.find(subscription_plan => subscription_plan.subscription_plan_id == item.subscription_plan_id && subscription_plan.customer_group_id == customer.getGroupId());
 
                 if (subscription_info) {
                     subscription_data.push({
@@ -205,7 +205,7 @@ export default class Cart {
                 }
 
                 // Product Discounts
-                let discount_info = product_info.discounts.find(discount => discount.customer_group_id == config.config_customer_group_id && discount.quantity <= product_total);
+                let discount_info = product_info.discounts.find(discount => discount.customer_group_id == customer.getGroupId() && discount.quantity <= product_total);
 
                 if (discount_info) {
                     if (discount_info.type == 'F') {

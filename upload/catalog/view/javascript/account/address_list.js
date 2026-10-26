@@ -5,7 +5,7 @@ import { loader, ajax, customer, local } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('account/address');
+const language = await loader.language('account/address_list');
 
 export default class AddressList extends WebComponent {
     render() {

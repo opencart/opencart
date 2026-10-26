@@ -11,7 +11,7 @@
   </div>
   <div class="col mb-3">
     <div class="border rounded p-3 d-flex flex-column h-100">
-      <form @ref="form" @submit="handleSubmit">
+      <form-submit @ref="form" @submit="handleSubmit">
         <h2>{{ text_returning_customer }}</h2>
         <p><strong>{{ text_i_am_returning_customer }}</strong></p>
         <div class="mb-3">
@@ -23,9 +23,9 @@
         </div>
         <input type="hidden" name="redirect" value="{{ redirect }}" />
         <div class="text-end">
-          <button-submit @ref="button">{{ button_login }}</button-submit>
+          <button-submit @ref="submitter">{{ button_login }}</button-submit>
         </div>
-      </form>
+      </form-submit>
     </div>
   </div>
 </div>

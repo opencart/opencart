@@ -1,38 +1,32 @@
-<h1>{{ heading_title }}</h1>
-<form-post @ref="form" @submit="handleSubmit">
-  <fieldset>
-    <legend>{{ text_your_details }}</legend>
-    <div class="row mb-3">
-      <form-label for="input-firstname">{{ entry_firstname }}</form-label>
-      <div class="col-sm-10">
-        <input-text name="firstname" value="{{ firstname }}" id="input-firstname" required></input-text>
+<div class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>{{ heading_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-    </div>
-    <div class="row mb-3">
-      <form-label for="input-lastname">{{ entry_lastname }}</form-label>
-      <div class="col-sm-10">
-        <input-text name="lastname" value="{{ lastname }}" id="input-lastname" required></input-text>
+      <div class="modal-body">
+        <form-submit @ref="form" @submit="handleSubmit">
+          <div @ref="alert"></div>
+          <fieldset>
+            <legend>{{ text_your_details }}</legend>
+            <div class="mb-3">
+              <input-text label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
+            </div>
+            <div class="mb-3">
+              <input-text label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
+            </div>
+            <div class="mb-3">
+              <input-email label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
+            </div>
+            <div class="mb-3" {% if not config_telephone_status %} hidden{% endif %}>
+              <input-tel label="{{ entry_telephone }}" name="telephone" value="{{ telephone }}" {% if config_telephone_required %} required{% endif %}></input-tel>
+            </div>
+          </fieldset>
+          <div class="text-end">
+            <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+          </div>
+        </form-submit>
       </div>
-    </div>
-    <div class="row mb-3">
-      <form-label for="input-email">{{ entry_email }}</form-label>
-      <div class="col-sm-10">
-        <input-email name="email" value="{{ email }}" id="input-email" required></input-email>
-      </div>
-    </div>
-    <div class="row mb-3{% if not config_telephone_status %} d-none{% endif %}">
-      <form-label for="input-telephone">{{ entry_telephone }}</form-label>
-      <div class="col-sm-10">
-        <input-tel name="telephone" value="{{ telephone }}" id="input-telephone"{% if config_telephone_required %} required{% endif %}></input-tel>
-      </div>
-    </div>
-  </fieldset>
-  <div class="row">
-    <div class="col">
-      <a href="account/account.js" :click="link" class="btn btn-light">{{ button_back }}</a>
-    </div>
-    <div class="col text-end">
-      <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   </div>
-</form-post>

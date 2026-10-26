@@ -74,7 +74,7 @@ customElements.define('payment-method', class extends WebComponent {
     handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         ajax.post('action.php?route=checkout/payment_method&language=' + local.get('language'), form, {
             handleSend: () => {

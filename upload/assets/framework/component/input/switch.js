@@ -11,12 +11,13 @@ customElements.define('input-switch', class extends WebComponent {
     ];
 
     states() {
-        return {
+		return {
+			value: this.getAttribute('value'),
             error: '',
-            checked: false,
-            required: false,
-            disabled: false,
-            readonly: false
+            checked: this.hasAttribute('checked'),
+            required: this.hasAttribute('required'),
+            disabled: this.hasAttribute('disabled'),
+            readonly: this.hasAttribute('readonly')
         };
     }
 

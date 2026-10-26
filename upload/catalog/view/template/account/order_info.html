@@ -2,58 +2,54 @@
   <div class="col mb-3">
     <div class="form-control" style="min-height: 64px;">
       <strong class="lead">{{ text_invoice_no }}</strong>
-      <br/>
+      <br />
       {% if invoice_no %}{{ invoice_no }}{% else %}{{ text_tbc }}{% endif %}
     </div>
   </div>
   <div class="col mb-3">
     <div class="form-control" style="min-height: 64px;">
       <strong class="lead">{{ text_order_id }}</strong>
-      <br/>
+      <br />
       {{ order_id }}
     </div>
   </div>
 </div>
-{% if payment_address or shipping_address %}
-  <div class="row">
-   
-      <div class="col mb-3{% if not payment_address %} d-none{% endif %}">
-        <div class="form-control" style="min-height: 128px;">
-          <strong class="lead">{{ text_payment_address }}</strong>
-          <br/>
-          {{ payment_address }}
-        </div>
-      </div>
 
-    
-      <div class="col mb-3{% if not shipping_address %} d-none{% endif %}">
-        <div class="form-control" style="min-height: 128px;">
-          <strong class="lead">{{ text_shipping_address }}</strong>
-          <br/>
-          {{ shipping_address }}
-        </div>
-      </div>
-
-  </div>
-{% endif %}
-<div class="row">
-  
-    <div class="col mb-3{% if not shipping_method %} d-none{% endif %}">
-      <div class="form-control" style="min-height: 64px;">
-        <strong class="lead">{{ text_shipping_method }}</strong>
-        <br/>
-        {{ shipping_method }}
-      </div>
+<div class="row" {% if payment_address or shipping_address %} hidden{% endif %}>
+  <div class="col mb-3" {% if not payment_address %} hidden{% endif %}>
+    <div class="form-control" style="min-height: 128px;">
+      <strong class="lead">{{ text_payment_address }}</strong>
+      <br />
+      {{ payment_address }}
     </div>
+  </div>
+  <div class="col mb-3" {% if not shipping_address %} hidden{% endif %}>
+    <div class="form-control" style="min-height: 128px;">
+      <strong class="lead">{{ text_shipping_address }}</strong>
+      <br />
+      {{ shipping_address }}
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col mb-3" {% if not shipping_method %} hidden{% endif %}>
+    <div class="form-control" style="min-height: 64px;">
+      <strong class="lead">{{ text_shipping_method }}</strong>
+      <br />
+      {{ shipping_method }}
+    </div>
+  </div>
 
   <div class="col mb-3">
     <div class="form-control" style="min-height: 64px;">
       <strong class="lead">{{ text_payment_method }}</strong>
-      <br/>
+      <br />
       {{ payment_method }}
     </div>
   </div>
 </div>
+
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>
@@ -68,78 +64,79 @@
     <tbody>
       {% set product_row = 0 %}
       {% for product in products %}
-        <tr id="product-row-{{ product_row }}">
-          <td><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>
-            <div id="error-{{ product_row }}-product" class="invalid-feedback mt-0"></div>
-            <ul class="list-unstyled mb-0">
-              <li>
-                <small> - {{ text_model }}: {{ product.model }}</small>
-              </li>
-              {% for option in product.option %}
-                <li>
-                  <small> - {{ option.name }}: {{ option.value }}</small>
-                  <div id="error-{{ product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
-                </li>
-              {% endfor %}
-              {% if product.subscription %}
-                <li>
-                  <small> - {{ text_subscription }}: {% if product.subscription %}<a href="account/subscription_info.js?{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
-                  <div id="error-{{ product_row }}-subscription" class="invalid-feedback mt-0"></div>
-                </li>
-              {% endif %}
-            </ul>
+      <tr id="product-row-{{ product_row }}">
+        <td><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>
+          <div id="error-{{ product_row }}-product" class="invalid-feedback mt-0"></div>
+          <ul class="list-unstyled mb-0">
+            <li>
+              <small> - {{ text_model }}: {{ product.model }}</small>
+            </li>
+            {% for option in product.option %}
+            <li>
+              <small> - {{ option.name }}: {{ option.value }}</small>
+              <div id="error-{{ product_row }}-option-{{ option.product_option_id }}" class="invalid-feedback mt-0"></div>
+            </li>
+            {% endfor %}
+            {% if product.subscription %}
+            <li>
+              <small> - {{ text_subscription }}: {% if product.subscription %}<a href="account/subscription_info.js?{{ product.subscription }}" target="_blank">{{ product.subscription_plan }}</a>{% else %}{{ product.subscription_plan }}{% endif %}</small>
+              <div id="error-{{ product_row }}-subscription" class="invalid-feedback mt-0"></div>
+            </li>
+            {% endif %}
+          </ul>
 
-            <form id="form-product-{{ product_row }}" @submit="handleSubmit">
-              <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-              <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
+          <form id="form-product-{{ product_row }}" @submit="handleSubmit">
+            <input type="hidden" name="product_id" value="{{ product.product_id }}" />
+            <input type="hidden" name="quantity" value="{{ product.quantity }}" />
 
-              {% for option in product.option %}
-                {% if option.type == 'select' or option.type == 'radio' %}
-                  <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
-                {% endif %}
-                {% if option.type == 'checkbox' %}
-                  <input type="hidden" name="option[{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
-                {% endif %}
-                {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
-                  <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.value }}"/>
-                {% endif %}
-              {% endfor %}
+            {% for option in product.option %}
+            {% if option.type == 'select' or option.type == 'radio' %}
+            <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" />
+            {% endif %}
+            {% if option.type == 'checkbox' %}
+            <input type="hidden" name="option[{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" />
+            {% endif %}
+            {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+            <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" />
+            {% endif %}
+            {% endfor %}
 
-              <input type="hidden" name="subscription_plan_id" value="{{ product.subscription_plan_id }}"/>
-            </form>
+            <input type="hidden" name="subscription_plan_id" value="{{ product.subscription_plan_id }}" />
+          </form>
 
-          </td>
-          <td class="text-end">{{ product.quantity }}</td>
-          <td class="text-end">{{ product.price | currency: currency_code, currency_value }}</td>
-          <td class="text-end">{{ product.total | currency: currency_code, currency_value }}</td>
-          <td class="text-end text-nowrap" style="width: 1px;">
-            <div class="d-grid">
-              <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_reorder }}</button>
+        </td>
+        <td class="text-end">{{ product.quantity }}</td>
+        <td class="text-end">{{ product.price | currency: currency_code, currency_value }}</td>
+        <td class="text-end">{{ product.total | currency: currency_code, currency_value }}</td>
+        <td class="text-end text-nowrap" style="width: 1px;">
+          <div class="d-grid">
+            <button-submit form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_reorder }}</button>
               <a href="account/return.js?product_id={{ product.product_id }}" :click="link" class="btn btn-danger">{{ button_return }}</a>
-            </div>
-          </td>
-        </tr>
-        {% set product_row = product_row + 1 %}
+          </div>
+        </td>
+      </tr>
+      {% set product_row = product_row + 1 %}
       {% endfor %}
 
       {% for total in totals %}
-        <tr>
-          <td colspan="2"></td>
-          <td class="text-end"><strong>{{ total.title }}</strong></td>
-          <td class="text-end">{{ total.value | config_tax | currency: currency_code, currency_value }}</td>
-          <td></td>
-        </tr>
+      <tr>
+        <td colspan="2"></td>
+        <td class="text-end"><strong>{{ total.title }}</strong></td>
+        <td class="text-end">{{ total.value | config_tax | currency: currency_code, currency_value }}</td>
+        <td></td>
+      </tr>
       {% endfor %}
 
     </tbody>
   </table>
 </div>
-  <div class="form-control mb-3{% if comment %} d-block{% endif %}" style="min-height: 64px;">
-    <strong class="lead">{{ text_comment }}</strong>
-    <br/>
-    {{ comment }}
-  </div>
+
+<div class="form-control mb-3" style="min-height: 64px;" {% if not comment %} hidden{% endif %}>
+  <strong class="lead">{{ text_comment }}</strong>
+  <br />
+  {{ comment }}
+</div>
 
 <h2>{{ text_history }}</h2>
 <div id="history">{{ history }}</div>
-<div class="text-end mt-3"><a href="account/order.js" :click="link-content" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end mt-3"><a href="account/order.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>

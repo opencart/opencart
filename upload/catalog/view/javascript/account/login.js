@@ -12,7 +12,7 @@ export default class AccountLogin extends WebComponent {
     }
 
     async render() {
-        if (customer.isLogged()) return;
+        //if (customer.isLogged()) return;
 
         let data = new Map();
 
@@ -36,7 +36,9 @@ export default class AccountLogin extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+		//if (customer.isLogged()) return;
+
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=account/login.login&language=' + local.get('language') + '&login_token=' + this.token, form, {
             handleSend: () => {
@@ -69,6 +71,26 @@ export default class AccountLogin extends WebComponent {
                 console.log('onError', e);
             }
         });
+	}
+	
+	handleSubmitting(value) {
+        this.submitter.state.set('submitting', value);
+	}
+	
+	handleError(error) {
+        let errors = Object.entries(error);
+
+        if (errors.length === 0) return;
+
+		for (let [key, value] of errors) {
+			if (key === 'warning') continue;
+
+			let input = this.root.getElementById('input-' + key);
+
+			if (input) {
+				input.state.set('error', value);
+			}
+        }
     }
 }
 

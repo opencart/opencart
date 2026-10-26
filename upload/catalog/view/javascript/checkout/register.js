@@ -58,7 +58,7 @@ customElements.define('checkout-register', class extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {

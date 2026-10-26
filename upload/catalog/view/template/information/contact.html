@@ -3,87 +3,88 @@
 <div class="card mb-3">
   <div class="card-body">
     <div class="row">
-      <div class="col-sm-3{% if not config_image %} d-none{% endif %}"><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px" /></div>
+      <div class="col-sm-3{% if not config_image %} hidden{% endif %}"><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px" /></div>
       <div class="col-sm-3"><strong>{{ config_name }}</strong>
-
         <br />
         <address>{{ config_address }}</address>
         <a href="" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
       </div>
-      <div class="col-sm-3{% if not config_telephone %} d-none{% endif %}"><strong>{{ text_telephone }}</strong>
-
-        <br /> {{ config_telephone }}
-
-        <br />
-
+      <div class="col-sm-3" {% if not config_telephone %} hidden{% endif %}><strong>{{ text_telephone }}</strong>
+        <br /> {{ config_telephone }} <br />
         <br />
       </div>
-      <div class="col-sm-3"> {% if config_open %} <strong>{{ text_open }}</strong>
-
-        <br /> {{ config_open }}
-
+      <div class="col-sm-3">{% if config_open %}
+        <strong>{{ text_open }}</strong>
         <br />
-
-        <br /> {% endif %} {% if config_comment %} <strong>{{ text_comment }}</strong>
-
-        <br /> {{ config_comment }} {% endif %}
+        {{ config_open }}<br />
+        <br />
+        {% endif %}
+        {% if config_comment %}
+        <strong>{{ text_comment }}</strong>
+        <br />
+        <br />
+        {{ config_comment }}
+        <br />
+        {% endif %}
       </div>
     </div>
   </div>
 </div>
-<div class="{% if not locations %}d-none{% endif %}">
-  <h3>{{ text_store }}</h3>
-  <div id="accordion" class="accordion mb-3"> {% for location in locations %} <div class="accordion-item">
-      <h2 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse-location-{{ location.location_id }}">{{ location.name }}</button></h2>
-      <div id="collapse-location-{{ location.location_id }}" class="accordion-collapse collapse" data-bs-parent="#accordion">
-        <div class="accordion-body">
-          <div class="row">
-            <div class="col-sm-3{% if not location.image %} d-none{% endif %}"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" style="width: 268px" /></div>
-            <div class="col-sm-3"><strong>{{ location.name }}</strong>
 
-              <br />
-              <address> {{ location.address }} </address>
-              <a href="{{ location.map }}" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
-            </div>
-            <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
-
-              <br /> {{ location.telephone }}
-
-              <br />
-
-              <br />
-            </div>
-            <div class="col-sm-3"> {% if location.open %} <strong>{{ text_open }}</strong>
-
-              <br /> {{ location.open }}
-
-              <br /> {% endif %} {% if location.comment %} {{ location.comment }} {% endif %}
-            </div>
+{% if not locations %}
+<h3>{{ text_store }}</h3>
+<div id="accordion" class="accordion mb-3">
+  {% for location in locations %}
+  <div class="accordion-item">
+    <h2 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse-location-{{ location.location_id }}">{{ location.name }}</button></h2>
+    <div id="collapse-location-{{ location.location_id }}" class="accordion-collapse collapse" data-bs-parent="#accordion">
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" style="width: 268px" {% if not location.image %} hidden{% endif %} /></div>
+          <div class="col-sm-3"><strong>{{ location.name }}</strong>
+            <br />
+            <address>{{ location.address }}</address>
+            <a href="{{ location.map }}" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
+          </div>
+          <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
+            <br /> {{ location.telephone }}
+            <br />
+            <br />
+          </div>
+          <div class="col-sm-3">
+            {% if location.open %} <strong>{{ text_open }}</strong>
+            <br /> {{ location.open }} <br />
+            {% endif %}
+            {% if location.comment %}
+            <strong>{{ text_comment }}</strong>
+            <br />
+            {{ location.comment }}
+            <br />
+            {% endif %}
           </div>
         </div>
       </div>
-    </div> {% endfor %} </div>
+    </div>
+  </div>
+  {% endfor %}
 </div>
-<form @submit="handleSubmit">
+{% endif %}
+
+<form-submit @ref="form" @submit="handleSubmit">
   <fieldset>
     <legend>{{ text_contact }}</legend>
-    <div class="row mb-3">
-      <div class="col-sm-10">
-        <input-text label="{{ entry_name }}" name="name" value="{{ name }}" required></input-text>
-      </div>
+    <div class="mb-3">
+      <input-text label="{{ entry_name }}" name="name" value="{{ name }}" required></input-text>
     </div>
-    <div class="row mb-3">
-      <div class="col-sm-10">
-        <input-email label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
-      </div>
+    <div class="mb-3">
+      <input-email label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
     </div>
-    <div class="row mb-3">
-      <div class="col-sm-10">
-        <input-textarea label="{{ entry_enquiry }}" name="enquiry" rows="10" required></input-textarea>
-      </div>
-    </div> {{ captcha }}
+    <div class="mb-3">
+      <input-textarea label="{{ entry_enquiry }}" name="enquiry" rows="10" required></input-textarea>
+    </div>
+    {{ captcha }}
   </fieldset>
   <div class="text-end">
     <button-submit @ref="submitter">{{ button_submit }}</button-submit>
   </div>
-</form>
+</form-submit>

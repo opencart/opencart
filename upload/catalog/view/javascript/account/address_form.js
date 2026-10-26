@@ -5,7 +5,7 @@ import { loader, ajax, customer, local } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('account/address');
+const language = await loader.language('account/address_form');
 
 export default class AddressForm extends WebComponent {
     async render() {
@@ -13,37 +13,41 @@ export default class AddressForm extends WebComponent {
 
         let data = new Map();
 
-        data.set('firstname', '');
-        data.set('lastname', '');
-        data.set('address_1', '');
-        data.set('address_2', '');
-        data.set('city', '');
-        data.set('postcode', '');
-        data.set('country_id', parseInt(config.get('config_country_id')));
-        data.set('zone_id', '');
+		if (!this.hasAttribute('address_id')) {
+			data.set('firstname', '');
+			data.set('lastname', '');
+			data.set('address_1', '');
+			data.set('address_2', '');
+			data.set('city', '');
+			data.set('postcode', '');
+			data.set('country_id', parseInt(config.get('config_country_id')));
+			data.set('zone_id', '');
+		} else { 
+			let address = customer.getAddress(parseInt(this.getAttribute('address_id')));
 
-        if (this.hasAttribute('address_id')) {
-            let address = customer.getAddress(parseInt(this.getAttribute('address_id')));
-
-            data.set('firstname', address.firstname);
-            data.set('lastname', address.lastname);
-            data.set('address_1', address.address_1);
-            data.set('address_2', address.address_2);
-            data.set('city', address.city);
-            data.set('postcode', address.postcode);
-            data.set('country_id', address.country_id);
-            data.set('zone_id', address.zone_id);
-        }
+			data.set('firstname', address.firstname);
+			data.set('lastname', address.lastname);
+			data.set('address_1', address.address_1);
+			data.set('address_2', address.address_2);
+			data.set('city', address.city);
+			data.set('postcode', address.postcode);
+			data.set('country_id', address.country_id);
+			data.set('zone_id', address.zone_id);
+		}
 
         return loader.template('account/address_form', [ data, language, config ]);
     }
+
+	handleConnect() {
+		this.country.state.subscribe(this.zone.handleState.bind(this.zone));
+	}
 
     async handleSubmit(e) {
         e.preventDefault();
 
         //if (!customer.isLogged()) return;
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
@@ -53,14 +57,12 @@ export default class AddressForm extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
 
                     this.update();
                 }
@@ -69,7 +71,7 @@ export default class AddressForm extends WebComponent {
                 console.log('onError', e);
             }
         });
-    }
+	}
 }
 
 customElements.define('address-form', AddressForm);

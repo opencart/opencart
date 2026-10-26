@@ -2,7 +2,6 @@ import { Binder } from './binder.js';
 import { State } from './state.js';
 import { stylesheet } from './stylesheet.js';
 
-const camel = (name) => name.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
 /**
  * WebComponent
  * -------------
@@ -52,13 +51,13 @@ const camel = (name) => name.split('-').map((part) => part.charAt(0).toUpperCase
  *
  *   customElements.define('my-counter', MyCounter);
  */
+const camel = (name) => name.replace(/^[^a-zA-Z0-9]+/, '').split(/[-_:.\s]+/).filter(Boolean).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
+
 export class WebComponent extends HTMLElement {
     static formAssociated = false;
     static shadow = true;
 
-    root = null;
-    #binder = null;
-    #template = document.createElement('template');
+	#root;
     #renders = 0;
     // Make sure reactive attributes don't work until after render has been called.
     #rendered = false;
@@ -71,37 +70,84 @@ export class WebComponent extends HTMLElement {
         super();
 
         // Attach Shadow or use light DOM based on the static property
-        this.root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
+        this.#root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
 
         // State
         this.state = new State(this.states(), this.stateChangedCallback.bind(this));
-
+		
+		//  Binder
+		this.binder = new Binder(this);
+		
         // Attach Internals
         this.internal = this.attachInternals();
 
         this.#style();
     }
-
-    async connectedCallback() {
-        if (typeof this.handleConnect === 'function') {
-            await this.handleConnect();
-        }
-
-        await this.update();
-
-        this.#rendered = true;
+	
+    states() {
+        return {};
     }
 
+    /** Override: CSS files to adopt into the shadow root, as names stylesheet.resolve() knows. */
+    stylesheets() {
+        return [
+            'catalog/stylesheet.css',
+            'fontawesome/css/all.css'
+        ];
+    }
+
+    /** Override: return a CSS string scoped to this component's shadow root. */
+    styles() {
+        return '';
+    }
+
+    // Styles go on the shadow root once, from the constructor. A light DOM component uses the
+    // page's CSS, since anything adopted into the document would apply to the whole page.
+    // The files go first and styles() after them, so the component's own rules win.
+    async #style() {
+        if (!this.shadow) return;
+
+        await stylesheet.adopt(this.#root, this.stylesheets());
+
+        const css = this.styles();
+
+        if (css) await stylesheet.adoptText(this.#root, [css]);
+	}
+	
+	async connectedCallback() {
+		if (typeof this.render !== 'function') return;
+	
+		if (!this.#rendered) {			
+			this.#root.innerHTML = await this.render();
+
+			this.binder.refresh(this.#root);
+		}
+
+        if (typeof this.handleConnect === 'function') {
+            await this.handleConnect();
+		}
+		
+		this.#rendered = true;
+    }
+
+    async update() {
+        if (typeof this.render !== 'function') return;
+		
+		this.#root.innerHTML = await this.render();
+
+		this.binder.refresh(this.#root);
+	}
+	
     async disconnectedCallback() {
         this.#rendered = false;
-
-        if (this.#binder) {
-            this.#binder.destroy();
-        }
 
         if (this.state) {
             this.state.destroy();
         }
+
+		if (this.binder) { 
+			this.binder.destroy();
+		}
 
         if (typeof this.handleDisconnect === 'function') {
             await this.handleDisconnect();
@@ -116,81 +162,15 @@ export class WebComponent extends HTMLElement {
         if (!this.#rendered || value_old === value_new) return;
 
         // Default handler for attribute changes
-        if (typeof this.handleAttribute == 'function') {
-            await this.handleAttribute(name, value_new, value_old);
-        }
-
-        // Call the specific handler for this attribute change, if it exists.
-        let handler = 'attribute' + camel(name);
-
-        if (typeof this[handler] === 'function') {
-            await this[handler](name, value_new, value_old);
-        }
+        if (typeof this.handleAttribute == 'function') await this.handleAttribute(name, value_new, value_old);
     }
 
     async stateChangedCallback(changed, state) {
         if (!this.#rendered || !changed.length) return;
 
+        if (typeof this.handleStates == 'function') await this.handleStates(changed, state);
+            
         // Default handler for state changes
-        if (typeof this.handleState == 'function') {
-            await this.handleState(changed, state);
-        }
-
-        // Call the specific handler for each changed key, if it exists.
-        for (let key of changed) {
-            let handler = 'state' + camel(key);
-
-            if (typeof this[handler] === 'function') {
-                await this[handler](state[key], state);
-            }
-        }
-    }
-
-    states() {
-        return {};
-    }
-
-    /** Override: CSS files to adopt into the shadow root, as names stylesheet.resolve() knows. */
-    stylesheets() {
-        return ['catalog/stylesheet.css', 'fontawesome/css/all.css'];
-    }
-
-    /** Override: return a CSS string scoped to this component's shadow root. */
-    styles() {
-        return '';
-    }
-
-    // Styles go on the shadow root once, from the constructor. A light DOM component uses the
-    // page's CSS, since anything adopted into the document would apply to the whole page.
-    // The files go first and styles() after them, so the component's own rules win.
-    async #style() {
-        if (this.shadow) return;
-
-        await stylesheet.adopt(this.root, this.stylesheets());
-
-        const css = this.styles();
-
-        if (css) await stylesheet.adoptText(this.root, [css]);
-    }
-
-    async update() {
-        if (typeof this.render !== 'function') return;
-
-        const render = ++this.#renders;
-        const html = String(await this.render());
-
-        // A newer update started while this one was rendering, so this one is out of date.
-        if (render !== this.#renders) return;
-
-        this.#template.innerHTML = html;
-
-        // Put the new content in place first, so the binder walks what is now on the page.
-        this.root.replaceChildren(this.#template.content);
-
-        if (!this.#binder) {
-            this.#binder = new Binder(this.root, this);
-        } else {
-            this.#binder.refresh();
-        }
-    }
+        if (typeof this.handleState == 'function') changed.forEach(async key => await this.handleState(key, state[key], state));
+	}
 }

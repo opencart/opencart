@@ -35,7 +35,7 @@ customElements.define('comment-form', class extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=cms/comment', form, {
             handleSend: () => {

@@ -1,4 +1,4 @@
-<div class="container{% if !categories %} d-none{% endif %}">
+<div class="container" {% if !categories %} hidden{% endif %}>
   <nav id="menu" class="navbar navbar-expand-lg bg-primary">
     <div id="category" class="d-block d-sm-block d-lg-none">{{ text_category }}</div>
     <button type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" class="navbar-toggler d-lg-none"><i class="fa-solid fa-bars"></i></button>
@@ -6,43 +6,43 @@
       <ul class="nav navbar-nav">
         {% for category in categories %}
 
-          {% if category.children %}
-          {% assign total = category.children | length %}
-          
-          {% if total > 20 %}
-          {% assign batch = total | divide: 4 | round %}
-          {% assign column = 4 %}
-          {% else %}
-          {% assign batch = 5 %}
-          {% assign column = total | divide: 5 | round %}
-          {% endif %}
+        {% if category.children %}
+        {% assign total = category.children | length %}
 
-            <li class="nav-item dropdown"><a href="catalog/category.js?path={{ category.path }}" :click="link" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
-              <div class="dropdown-menu dropdown-column-{{ column }}">
-                <div class="dropdown-inner">
-                  {% for children in category.children | batch: batch %}
-                    <ul class="list-unstyled">
-                      {% for child in children %}
-                        <li><a href="catalog/category.js?path={{ child.path }}" :click="link" class="dropdown-item">{{ child.name }}{% if config_product_count %} ({{ child.product_total }}){% endif %}</a></li>
-                      {% endfor %}
-                    </ul>
-                  {% endfor %}
+        {% if total > 20 %}
+        {% assign batch = total | divide: 4 | round %}
+        {% assign column = 4 %}
+        {% else %}
+        {% assign batch = 5 %}
+        {% assign column = total | divide: 5 | round %}
+        {% endif %}
 
-                </div>
+        <li class="nav-item dropdown"><a href="catalog/category.js?path={{ category.path }}" :click="link" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
+          <div class="dropdown-menu dropdown-column-{{ column }}">
+            <div class="dropdown-inner">
+              {% for children in category.children | batch: batch %}
+              <ul class="list-unstyled">
+                {% for child in children %}
+                <li><a href="catalog/category.js?path={{ child.path }}" :click="link" class="dropdown-item">{{ child.name }}{% if config_product_count %} ({{ child.product_total }}){% endif %}</a></li>
+                {% endfor %}
+              </ul>
+              {% endfor %}
 
-                <ul class="list-unstyled">
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a href="catalog/category.js?path={{ category.path }}" :click="link" class="dropdown-item">{{ text_all }} {{ category.name }}</a></li>
-                </ul>
-                
-              </div>
-            </li>
+            </div>
 
-          {% else %}
-            <li class="nav-item"><a href="catalog/category.js?path={{ category.path }}" :click="link" class="dropdown-item">{{ category.name }}</a></li>
-          {% endif %}
+            <ul class="list-unstyled">
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a href="catalog/category.js?path={{ category.path }}" :click="link" class="dropdown-item">{{ text_all }} {{ category.name }}</a></li>
+            </ul>
+
+          </div>
+        </li>
+
+        {% else %}
+        <li class="nav-item"><a href="catalog/category.js?path={{ category.path }}" :click="link" class="dropdown-item">{{ category.name }}</a></li>
+        {% endif %}
 
         {% endfor %}
       </ul>

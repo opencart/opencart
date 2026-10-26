@@ -6,16 +6,16 @@
         <ul class="list-unstyled">
           <li><a href="cms/topic.js" :click="link">{{ text_blog }}</a></li>
           {% for information in informations %}
-            <li><a href="information/information.js?information_id={{ information.information_id }}" :click="link">{{ information.title }}</a></li>
+          <li><a href="information/information.js?information_id={{ information.information_id }}" :click="link">{{ information.title }}</a></li>
           {% endfor %}
         </ul>
       </div>
       <div class="col-sm-3">
         <h5>{{ text_service }}</h5>
         <ul class="list-unstyled">
-          <li><a href="information/contact.js" :click="link">{{ text_contact }}</a></li>
-          <li><a href="account/return_form.js" :click="link">{{ text_return }}</a></li>
-          <li><a href="information/gdpr.js" :click="link"{% if config_gdpr_id %} class="d-none"{% endif %}>{{ text_gdpr }}</a></li>
+          <li><a href="information/contact.js" :click="dialog">{{ text_contact }}</a></li>
+          <li><a href="account/return_form.js" :click="dialog">{{ text_return }}</a></li>
+          <li><a href="information/gdpr.js" :click="dialog" {% if config_gdpr_id %}hidden{% endif %}>{{ text_gdpr }}</a></li>
           <li><a href="information/sitemap.js" :click="link">{{ text_sitemap }}</a></li>
         </ul>
       </div>
@@ -32,7 +32,7 @@
           <li><a href="account/account.js" :click="link">{{ text_account }}</a></li>
           <li><a href="account/order.js" :click="link">{{ text_order }}</a></li>
           <li><a href="account/wishlist.js" :click="link">{{ text_wishlist }}</a></li>
-          <li><a href="account/newsletter.js" :click="link">{{ text_newsletter }}</a></li>
+          <li><a href="account/newsletter.js" :click="dialog">{{ text_newsletter }}</a></li>
         </ul>
       </div>
     </div>
@@ -44,4 +44,3 @@
     //-->
   </div>
 </footer>
-

@@ -95,12 +95,12 @@ Global.addListener('link', (e) => {
 
     if (href == null) return;
 
-    Global.get('content').src = href;
+    Global.get('content').setAttribute('src', href);
 });
 
 // Opens a link's page in a modal instead of the content area:
 // <a href="account/register.js" :click="modal">Register</a>
-Global.addListener('modal', (e) => {
+Global.addListener('dialog', async (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');
@@ -111,7 +111,13 @@ Global.addListener('modal', (e) => {
 
     if (href == null) return;
 
-    customElements.get('ui-modal').open(href);
+	console.log('Opening modal for href:', href);
+
+    let dialog = Global.get('dialog');
+    
+	dialog.innerHTML = '<nav-dialog src="' + href + '"></nav-dialog>';
+	
+	dialog.show();
 });
 
 // Start the root path

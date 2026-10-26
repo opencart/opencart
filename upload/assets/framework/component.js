@@ -1,5 +1,6 @@
 // Form
 import './component/form/label.js';
+import './component/form/form.js';
 import './component/form/button.js';
 
 // Input

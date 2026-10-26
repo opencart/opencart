@@ -8,21 +8,13 @@
       <th class="text-end">{{ column_amount }}</th>
     </tr>
   </thead>
-  <tbody>
-    {% if transactions %}
-    {% for transaction in transactions %}
-    <tr>
+  <tbody> {% if transactions %} {% for transaction in transactions %} <tr>
       <td>{{ transaction.date_added }}</td>
       <td>{{ transaction.description }}</td>
       <td class="text-end">{{ transaction.amount | currency: currency }}</td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
+    </tr> {% endfor %} {% else %} <tr>
       <td class="text-center" colspan="3">{{ text_no_results }}</td>
-    </tr>
-    {% endif %}
-  </tbody>
+    </tr> {% endif %} </tbody>
 </table>
 <div class="row mb-3">
   <div class="col-sm-6 text-start">{{ pagination }}</div>

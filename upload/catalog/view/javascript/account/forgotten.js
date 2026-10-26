@@ -33,7 +33,7 @@ export default class AccountForgotten extends WebComponent {
 
         //if (customer.isLogged()) return;
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=account/forgotten.confirm&language=' + local.get('language') + '&token=' + this.token, form, {
             handleSend: () => {

@@ -1,28 +1,23 @@
 <div class="product-thumb">
-  <div class="image"><a href="catalog/product_info.js?product_id={{ product_id }}" :click="link"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}" class="img-fluid"/></a></div>
+  <div class="image"><a href="catalog/product_info.js?product_id={{ product_id }}" :click="link"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}" class="img-fluid" /></a></div>
   <div class="content">
     <div class="description">
       <h4><a href="catalog/product_info.js?product_id={{ product_id }}" :click="link">{{ name }}</a></h4>
       <p>{{ description | truncate: config_product_description_length, '...' }}</p>
-     
+
       {% if price %}
       <div class="price">
-        
         {% if !special %}
         <span class="price-new">{{ price | tax: tax_class_id, config_tax | currency: currency }}</span>
         {% else %}
-        <span class="price-new">{{ special | tax: tax_class_id, config_tax | currency: currency }}</span> <span class="price-old">{{ price | tax: tax_class_id, config_tax | currency: currency }}</span>
+        <span class="price-new">{{ special | tax: tax_class_id, config_tax | currency: currency }}</span>
+        <span class="price-old">{{ price | tax: tax_class_id, config_tax | currency: currency }}</span>
         {% endif %}
-        
-        <span class="price-tax{% if !tax %} d-none{% endif %}">{{ text_tax }} {{ tax | currency: currency }}</span>
-        
+        <span class="price-tax" {% if !tax %} hidden{% endif %}>{{ text_tax }} {{ tax | currency: currency }}</span>
       </div>
       {% endif %}
 
-      {% if config_review_status && rating %}
-      <review-rating @ref="rating" rating="{{ rating }}"></review-rating>
-      {% endif %}
-
+      <review-rating @ref="rating" rating="{{ rating }}" {% if config_review_status && rating %} hidden{% endif %}></review-rating>
     </div>
     <form @submit="onSubmit">
       <div class="button">
@@ -30,8 +25,8 @@
         <button type="submit" title="{{ button_wishlist }}" @ref="wishlist"><i class="fa-solid fa-heart"></i></button>
         <button type="submit" title="{{ button_compare }}" @ref="compare"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
       </div>
-      <input type="hidden" name="product_id" value="{{ product_id }}"/>
-      <input type="hidden" name="quantity" value="{{ minimum }}"/>
+      <input type="hidden" name="product_id" value="{{ product_id }}" />
+      <input type="hidden" name="quantity" value="{{ minimum }}" />
     </form>
   </div>
 </div>

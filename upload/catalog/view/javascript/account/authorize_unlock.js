@@ -5,13 +5,21 @@ import { ajax, loader, customer, local } from '../index.js';
 const config = await loader.config('default');
 
 // Language
-const language = await loader.language('account/address');
+const language = await loader.language('account/authorize_unlock');
 
 export default class AuthorizeUnlock extends WebComponent {
+    states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        };
+	}
+	
     async render() {
         //if (customer.isLogged()) return;
 
-        return loader.template('account/authorize_reset', [ language ]);
+        return loader.template('account/authorize_unlock', [ language ]);
     }
 
     async handleSubmit(e) {
@@ -19,14 +27,14 @@ export default class AuthorizeUnlock extends WebComponent {
 
         //if (customer.isLogged()) return;
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
-            beforeSend: () => {
-                this.form.state.set('submitting', true);
+            handleSend: () => {
+                this.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.state.set('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('redirect')) {
@@ -34,7 +42,7 @@ export default class AuthorizeUnlock extends WebComponent {
                 }
 
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {
@@ -47,6 +55,26 @@ export default class AuthorizeUnlock extends WebComponent {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
+	}
+	
+	handleSubmitting(value) {
+        this.submitter.state.set('submitting', value);
+	}
+	
+	handleError(error) {
+        let errors = Object.entries(error);
+
+        if (errors.length === 0) return;
+
+		for (let [key, value] of errors) {
+			if (key === 'warning') continue;
+
+			let input = this.root.getElementById('input-' + key);
+
+			if (input) {
+				input.state.set('error', value);
+			}
+        }
     }
 }
 

@@ -16,17 +16,25 @@ export default class InformationContact extends WebComponent {
 
         this.token = '';
     }
-
+    
+	states() {
+        return {
+            submitting: false,
+            success: '',
+            error: []
+        };
+	}
+	
     async render() {
         let data = new Map();
 
-        data.set('name', '');
-        data.set('email', '');
-
-        if (customer.isLogged()) {
-            data.set('name', customer.getFirstName() + ' ' + customer.getLastName());
-            data.set('email', customer.getEmail());
-        }
+		if (customer.isLogged()) {
+			data.set('name', customer.getFirstName() + ' ' + customer.getLastName());
+			data.set('email', customer.getEmail());
+		} else { 
+			data.set('name', '');
+			data.set('email', '');
+		}
 
         data.set('locations', locations);
 
@@ -44,20 +52,20 @@ export default class InformationContact extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = new FormData(this.form);
+        let form = this.form.getData();
 
         await ajax.post('action.php?route=information/contact.send&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.submitter.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.submitter.state.set('submitting', false);
             },
-            handleSuccess: (json)=> {
-                this.form.state.clear();
+            handleSuccess: (json) => {
+                //this.form.state.clear();
 
-                if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+				if (json.has('error')) {
+                    this.state.set('error', json.get('error'));
                 }
 
                 // Display success message

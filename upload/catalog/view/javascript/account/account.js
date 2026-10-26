@@ -8,8 +8,6 @@ export default class AccountAccount extends WebComponent {
     async render() {
         //if (!customer.isLogged()) return;
 
-        console.log(language);
-
         return loader.template('account/account', [ language ]);
     }
 }

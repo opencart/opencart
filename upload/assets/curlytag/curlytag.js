@@ -14,8 +14,9 @@ export class CurlyTag {
         this.name = '';
         this.directory = '';
         this.path = new Map();
-        this.cache = new Map();
-
+		this.cache = new Map();
+		this.compiled = new Map();
+		
         this.handler = {
             assign: this.handleAssign.bind(this),
             set: this.handleAssign.bind(this),
@@ -578,10 +579,7 @@ export class CurlyTag {
             }
 
             if (this.path.has(namespace + '/')) {
-                file =
-                    this.path.get(namespace + '/') +
-                    path.substr(namespace.length) +
-                    '.html';
+                file = this.path.get(namespace + '/') + path.substr(namespace.length) + '.html';
             }
         }
 
@@ -610,10 +608,15 @@ export class CurlyTag {
      * Render the template with the current context
      * @returns {string} - Rendered template string
      */
-    async render(path, data = {}) {
+	async render(path, data = {}) {
+		// No need to recompile if we already have the compiled tokens.
+		if (this.compiled.has(path)) return this.process(this.compiled.get(path), data);
+
         let code = await this.fetch(path);
 
-        return this.parse(code, data);
+		this.compiled.set(path, this.tokenize(code));
+
+        return this.process(this.compiled.get(path), data);
     }
 
     // ─── Main render ────────────────────────────────────────────────────────
@@ -805,16 +808,11 @@ export class CurlyTag {
         if (!expression) return undefined;
 
         try {
-            let func = new Function(
-                'data',
-                `with(data) return (${expression});`,
-            );
+            let func = new Function('data', `with(data) return (${expression});`);
 
             return func({ ...ctx });
         } catch (error) {
-            console.log(
-                `[Template] Warning: Evaluate error '${error}' in expression '${expression}'`,
-            );
+            console.log(`[Template] Warning: Evaluate error '${error}' in expression '${expression}'`);
 
             return undefined;
         }

@@ -13,12 +13,14 @@ const path_pattern = /^[\w\/-]+\.js$/;
 // on - and never on* names, which would be event handlers (onclick, ...).
 const attribute_pattern = /^(?!on)[a-z_][\w-]*$/i;
 
-function escapeAttribute(value) {
-    return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
 customElements.define('nav-include', class extends WebComponent {
     static observedAttributes = ['src'];
+
+	state() { 
+        return {
+            src: ''
+        };
+	}
 
     constructor() {
         super();
@@ -40,40 +42,42 @@ customElements.define('nav-include', class extends WebComponent {
             if (!this.data.has(path)) {
                 let response = await import(config.get('config_path') + path);
 
-                let tag = customElements.getName(response.default);
-
-                if (!tag) {
-                    throw new Error('Module does not export a defined component as its default');
-                }
-
-                this.data.set(path, tag);
+                this.data.set(path, customElements.getName(response.default));
             }
 
             //if (request !== this.request) return;
 
             let name = this.data.get(path);
 
-            let html = '<' + name;
+			let element = document.createElement(name);
 
-            for (let [ key, value] of (new URLSearchParams(query).entries())) {
+			if (query === undefined) query = '';
+			
+			for (let [key, value] of (new URLSearchParams(query).entries())) {
                 if (!attribute_pattern.test(key)) continue;
 
-                html += ' ' + key + '="' + escapeAttribute(value) + '"';
+				element.setAttribute(key, value);
             }
 
-            return html + '></' + name + '>';
+			console.log('Creating element:', name, 'with attributes:', query);
+
+            return element.outerHTML;
         } catch (error) {
-            console.error('nav-include: could not load "' + this.src + '"', error);
+            console.error('nav-include: could not load "' + this.getAttribute('src') + '"', error);
 
             return '<div class="alert alert-danger">The page could not be loaded.</div>';
         }
     }
 
-    handleAttribute() {
-        this.update();
-    };
+	handleState(key) {
+		if (key != 'src') return;
 
-    HandleLoading(key, value) {
-        //this.toggleAttribute('loading', this.hasAttribute('loading'));
-    }
+		this.update();
+	}
+	
+	handleAttribute(key, value) {
+		if (key != 'src') return;
+
+        this.state.set('src', value);
+    };
 });

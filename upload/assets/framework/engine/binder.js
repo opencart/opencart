@@ -15,6 +15,49 @@ import { Global } from './global.js';
  *                  `preventDefault()`/`stopPropagation()` before running
  *                  the handler. `@click.once="handleClick"` removes
  *                  itself after firing once.
+ *   3. Show      — `@show="open"` shows the element while the component's
+ *                  state has a true value for `open`, and hides it (with
+ *                  the hidden attribute) while it does not.
+ *                  `@show="open: true"` is while it is true, `open: false`
+ *                  while it is false, and `@show="tab: home|about"` while
+ *                  `tab` is home or about (| means "or"). Values are
+ *                  compared as text, so `count: 0` works too.
+ *
+ *                  It is worked out when the element is bound, so it is
+ *                  right when the render reaches the page, and after that
+ *                  the Binder follows the state and toggles the element
+ *                  where it is. A component with an onStateChange does not
+ *                  have to render again for it, and what the user has typed
+ *                  or opened inside is kept. So `show` is not an event name
+ *                  for `@`. It takes no options, and no `:`. The hidden
+ *                  attribute does the hiding, so a CSS rule that sets
+ *                  `display` on the element wins over it, unless the
+ *                  stylesheet has `[hidden] { display: none !important }`
+ *                  (Bootstrap's does).
+ *   4. Attributes — `@[open]="onToggle"` calls the method when the element's
+ *                  `open` attribute changes: `<dialog @[open]="onToggle">`.
+ *                  Native elements do not announce attribute changes, so the
+ *                  Binder watches the attributes that were asked for and
+ *                  sends the same `[open]` event that a WebComponent sends
+ *                  for its observed attributes, with the old and new value:
+ *
+ *                    onToggle(e) {
+ *                        e.detail.value_old;   // null if it was not set
+ *                        e.detail.value_new;   // null if it was removed, '' for a bare attribute
+ *                    }
+ *
+ *                  It works for any attribute (`@[hidden]`, `@[class]`,
+ *                  `@[aria-expanded]`), with `:` as well, and a custom
+ *                  element that already sends the event for that attribute
+ *                  (it is in its observedAttributes) is left to do so, so
+ *                  the handler is not called twice. What differs from those
+ *                  events is the timing: a native element is watched with a
+ *                  MutationObserver, so the handler runs at the end of the
+ *                  current task, not at the moment of the change, and
+ *                  several changes made together arrive one after another,
+ *                  each with its own old and new value. A change that sets
+ *                  the value it already had is not reported. Changes made
+ *                  while the render is being bound (by @show, say) are not.
  *
  * Prefixing the attribute name with `:` instead of `@` binds against a
  * static registry on the Binder class itself — shared across
@@ -72,28 +115,44 @@ import { Global } from './global.js';
  *     }
  * }
  */
+// What one render binds: its refs, its listeners (to take them off again), and the global
+// refs it registered, { key, element } (to clear them again), and its @show bindings,
+// { element, key, values } (to toggle them when the state changes), and the attributes it
+// watches for @[name] events: watches are the ones asked for and not watched yet, observed is
+// element -> the names being watched, and observer is the MutationObserver doing it.
+const blank = () => ({
+	refs: new Map(),
+	listeners: [],
+	bindings: [],
+	observed: new Map(),
+	observer: null
+});
+
 export class Binder {
-    #root;
     #host;
     #refs = new Map();
     #listeners = []; // track for clean teardown
     #bindings = []; // { name, el } set by this instance, for cleanup
 
-    constructor(root, host) {
-        this.#root = root;
-        this.#host = host || root.host || root;
-
-        // Attach events based on elements that have data-bind attributes
-        this.#walk(this.#root);
+    constructor(host) {
+        this.#host = host;
     }
 
-    #walk(root) {
+    /** Binds a fresh render. The old bindings are removed first, listeners and global refs included. */
+    refresh(root) {
+        this.destroy();
+        this.#refs = new Map();
+
+        this.#walk(root);
+	}
+	
+	#walk(root) {
+		//console.log(root);
+		
         let carries = (node) => node.getAttributeNames().some((name) => name.startsWith('@') || name.startsWith(':'));
 
-        if (root.nodeType === 1 && carries(root)) this.bind(root);
-
         const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
-            acceptNode: (node) => carries(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
+            acceptNode: node => carries(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children
         });
 
         let node = walker.nextNode();
@@ -113,9 +172,9 @@ export class Binder {
             let [key, ...options] = name.slice(1).split('.');
             let value = element.getAttribute(name);
 
-            if (key === 'ref') {
-                this.#ref(element, value, is_global);
-            } else {
+			if (key === 'ref') {
+				this.#ref(element, value, is_global);
+			} else {
                 this.#event(element, key, value, options, is_global);
             }
 
@@ -169,7 +228,7 @@ export class Binder {
 
         this.#listeners.push({ element, event, listener, capture: !!option.capture });
     }
-
+    
     /** Get a bound element by its data-ref name. */
     get(key) {
         return this.#refs.get(key);
@@ -177,14 +236,6 @@ export class Binder {
 
     has(key) {
         return this.#refs.has(key);
-    }
-
-    /** Binds a fresh render. The old bindings are removed first, listeners and global refs included. */
-    refresh() {
-        this.destroy();
-        this.#refs = new Map();
-
-        this.#walk(this.#root);
     }
 
     /** Remove all attached event listeners (call in disconnectedCallback). */

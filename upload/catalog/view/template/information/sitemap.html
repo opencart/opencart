@@ -3,15 +3,15 @@
   <div class="col-sm-6">
     <ul>
       {% for category in categories %}
-        <li><a href="catalog/category.js?path={{ category.path }}" :click="link">{{ category.name }}</a>
-          {% if category.children %}
-            <ul>
-              {% for children in category.children %}
-                <li><a href="catalog/category.js?path={{ children.path }}" :click="link">{{ children.name }}</a></li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </li>
+      <li><a href="catalog/category.js?path={{ category.path }}" :click="link">{{ category.name }}</a>
+        {% if category.children %}
+        <ul>
+          {% for children in category.children %}
+          <li><a href="catalog/category.js?path={{ children.path }}" :click="link">{{ children.name }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
       {% endfor %}
     </ul>
   </div>
@@ -21,8 +21,8 @@
       <li><a href="catalog/special.js" :click="link">{{ text_special }}</a></li>
       <li><a href="account/account.js" :click="link">{{ text_account }}</a>
         <ul>
-          <li><a href="account/edit.js" :click="link">{{ text_edit }}</a></li>
-          <li><a href="account/password.js" :click="link">{{ text_password }}</a></li>
+          <li><a href="account/edit.js" :click="dialog">{{ text_edit }}</a></li>
+          <li><a href="account/password.js" :click="dialog">{{ text_password }}</a></li>
           <li><a href="account/address.js" :click="link">{{ text_address }}</a></li>
           <li><a href="account/history.js" :click="link">{{ text_history }}</a></li>
           <li><a href="account/download.js" :click="link">{{ text_download }}</a></li>
@@ -33,9 +33,9 @@
       <li>{{ text_information }}
         <ul>
           {% for information in informations %}
-            <li><a href="catalog/information.js?information_id={{ information.information_id }}" :click="link">{{ information.title }}</a></li>
+          <li><a href="catalog/information.js?information_id={{ information.information_id }}" :click="link">{{ information.title }}</a></li>
           {% endfor %}
-          <li><a href="information/contact.js" :click="link">{{ text_contact }}</a></li>
+          <li><a href="information/contact.js" :click="dialog">{{ text_contact }}</a></li>
         </ul>
       </li>
     </ul>

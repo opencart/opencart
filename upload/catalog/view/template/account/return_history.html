@@ -7,24 +7,26 @@
         <th>{{ column_comment }}</th>
       </tr>
     </thead>
-    <tbody class="{% if not histories %}d-none{% endif %}"> {% for history in histories %} <tr>
+    <tbody>
+      {% if histories %}
+      {% for history in histories %}
+      <tr>
         <td>{{ history.date_added }}</td>
         <td>{{ history.status }}</td>
         <td>{{ history.comment }}</td>
-      </tr> {% endfor %} </tbody>
-    <tbody class="{% if histories %}d-none{% endif %}">
+      </tr>
+      {% endfor %}
+      {% else %}
       <tr>
         <td colspan="3" class="text-center">{{ text_no_results }}</td>
       </tr>
+      {% endif %}
     </tbody>
   </table>
 </div>
-
 <div class="row">
-
   <div class="col-sm-6 text-start">
     <nav-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></nav-pagination>
   </div>
-
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

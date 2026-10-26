@@ -17,26 +17,21 @@
         {% set product_row = 0 %}
         {% for product in products %}
         <tr>
-          <td class="text-center"><a href="catalog/product.js?product_id={{ product.product_id }}" :click="link" class="{% if not product.thumb %}d-none{% endif %}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a></td>
+          <td class="text-center"><a href="catalog/product.js?product_id={{ product.product_id }}" :click="link" {% if not product.thumb %} hidden{% endif %}><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px" /></a></td>
           <td><a href="catalog/product.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>
             <form id="form-product-{{ product_row }}" @submit="handleSubmit">
-              <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-              <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
-            </form></td>
+              <input type="hidden" name="product_id" value="{{ product.product_id }}" />
+              <input type="hidden" name="quantity" value="{{ product.minimum }}" />
+            </form>
+          </td>
           <td>{{ product.model }}</td>
           <td class="text-end">{{ product.stock }}</td>
           <td class="text-end text-nowrap">
-
             {% if product.price %}
             <div class="price">
-              {% if not product.special %}
-              {{ product.price | currency: currency }}
-              {% else %}
-              <strong>{{ product.special | currency: currency }}</strong> <s>{{ product.price | currency: currency }}</s>
-              {% endif %}
+              {% if not product.special %} {{ product.price | currency: currency }} {% else %} <strong>{{ product.special | currency: currency }}</strong> <s>{{ product.price | currency: currency }}</s> {% endif %}
             </div>
             {% endif %}
-
           </td>
           <td class="text-end text-nowrap" style="width: 1px;">
             <div class="d-grid">
@@ -53,6 +48,5 @@
   {% else %}
   <p>{{ text_no_results }}</p>
   {% endif %}
-
 </div>
 <div class="text-end"><a href="account/account.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>

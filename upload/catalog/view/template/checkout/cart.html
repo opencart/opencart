@@ -1,14 +1,6 @@
 <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
 <div class="row">
-  <div class="col">
-
-    {% if products %}
-
-    {% if error_stock %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_stock }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
-    {% endif %}
-
-    <div class="table-responsive">
+  <div class="col"> {% if products %} {% if error_stock %} <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_stock }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div> {% endif %} <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -19,84 +11,45 @@
             <th class="text-end">{{ column_total }}</th>
           </tr>
         </thead>
-        <tbody>
-          {% for product in products %}
-
-          <tr>
-            <td class="text-center">{% if product.thumb %}<a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 200px"/></a>{% endif %}</td>
-            <td class="text-start text-wrap"><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
-              <ul class="list-unstyled mb-0">
+        <tbody> {% for product in products %} <tr>
+            <td class="text-center">{% if product.thumb %}<a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 200px" /></a>{% endif %}</td>
+            <td class="text-start text-wrap"><a href="catalog/product_info.js?product_id={{ product.product_id }}" :click="link">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %} <ul class="list-unstyled mb-0">
                 <li>
                   <small> - {{ text_model }}: {{ product.model }}</small>
-                </li>
-
-                {% for option in product.option %}
-                <li>
+                </li> {% for option in product.option %} <li>
                   <small> - {{ option.name }}: {{ option.value }}</small>
-                </li>
-                {% endfor %}
-
-                {% if product.subscription %}
-                <li>
+                </li> {% endfor %} {% if product.subscription %} <li>
                   <small> - {{ text_subscription }}: {{ product.subscription }}</small>
-                </li>
-                {% endif %}
+                </li> {% endif %}
               </ul>
             </td>
             <td>
-
               <form @submit="handleSubmit">
                 <div class="input-group">
-                  <input type="number" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/>
-                  <input type="hidden" name="key" value="{{ product.cart_id }}"/>
+                  <input-number name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}" />
+                  <input type="hidden" name="key" value="{{ product.cart_id }}" />
                   <button type="submit" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
                   <a href="{{ cart_id }}" title="{{ button_remove }}" @click="removeProduct" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
               </form>
-
               <small class="invalid-feedback{% if product.minimum %} d-block{% endif %}">{{ product.minimum }}</small>
-
             </td>
             <td class="text-end">{{ product.product | tax: product.tax_class_id, config_tax | currency: currency }}</td>
             <td class="text-end">{{ product.total | tax: product.tax_class_id, config_tax | currency: currency }}</td>
-          </tr>
-
-          {% endfor %}
-
-        </tbody>
-        <tfoot>
-          {% for total in totals %}
-          <tr>
+          </tr> {% endfor %} </tbody>
+        <tfoot> {% for total in totals %} <tr>
             <td colspan="4" class="text-end"><strong>{{ total.title }}</strong></td>
             <td class="text-end">{{ total.value | currency: currency }}</td>
-          </tr>
-          {% endfor %}
-        </tfoot>
+          </tr> {% endfor %} </tfoot>
       </table>
     </div>
-
-    <br/>
+    <br />
     <div class="row">
       <div class="col"><a href="common/home.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
       <div class="col text-end"><a href="checkout/checkout.js" :click="link" class="btn btn-primary">{{ button_checkout }}</a></div>
-    </div>
-
-    {% else %}
-    <p>{{ text_no_results }}</p>
-    <div class="text-end"><a href="common/home.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
-    {% endif %}
-
-
+    </div> {% else %} <p>{{ text_no_results }}</p>
+    <div class="text-end"><a href="common/home.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div> {% endif %}
   </div>
-</div>
-
-{% if modules %}
-
-<h2>{{ text_next }}</h2>
+</div> {% if modules %} <h2>{{ text_next }}</h2>
 <p>{{ text_next_choice }}</p>
-<div id="accordion" class="accordion">
-  {% for module in modules %}
-  {{ module }}
-  {% endfor %}
-</div>
-{% endif %}
+<div id="accordion" class="accordion"> {% for module in modules %} {{ module }} {% endfor %} </div> {% endif %}

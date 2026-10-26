@@ -2,11 +2,11 @@
   {% assign amount = total | currency: currency %}
   <button type="button" @ref="button"><i class="fa-solid fa-cart-shopping"></i> {{ text_items | replace_first: '%s', quantity | replace_first: '%s', amount }}</button>
   <ul @ref="dropdown" class="dropdown-menu dropdown-menu-end p-2">
-    <li class="{% if not products %}d-none{% endif %}">
+    <li{% if not products %} hidden{% endif %}>
       <table class="table table-striped mb-2">
         {% for product in products %}
         <tr>
-          <td class="text-center w-25"><a href="catalog/product.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail{% if not product.thumb %} d-none{% endif %}"/></a></td>
+          <td class="text-center w-25"><a href="catalog/product.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" {% if not product.thumb %} hidden{% endif %} /></a></td>
           <td><a href="catalog/product.js?product_id={{ product.product_id }}">{{ product.name }}</a>
             <ul class="list-unstyled mb-0">
               <li>
@@ -35,21 +35,17 @@
         </tr>
         {% endfor %}
       </table>
-      <div>
-        <table class="table table-sm table-bordered mb-2">
-          {% for total in totals %}
-          <tr>
-            <td class="text-end"><strong>{{ total.title }}</strong></td>
-            <td class="text-end">{{ total.text }}</td>
-          </tr>
-          {% endfor %}
-        </table>
-        <p class="text-end"><a href="checkout/cart.js" :click="link"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" :click="link"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
-      </div>
-    </li>
 
-    <li class="text-center p-4{% if products %} d-none{% endif %}">{{ text_no_results }}</li>
-  
+      <table class="table table-sm table-bordered mb-2">
+        {% for total in totals %}
+        <tr>
+          <td class="text-end"><strong>{{ total.title }}</strong></td>
+          <td class="text-end">{{ total.text }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      <p class="text-end"><a href="checkout/cart.js" :click="link"><strong><i class="fa-solid fa-cart-shopping"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="checkout/checkout.js" :click="link"><strong><i class="fa-solid fa-share"></i> {{ text_checkout }}</strong></a></p>
+      </li>
+      <li class="text-center p-4" {% if products %} hidden{% endif %}>{{ text_no_results }}</li>
   </ul>
-
 </div>

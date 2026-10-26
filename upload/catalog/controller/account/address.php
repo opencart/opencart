@@ -97,6 +97,12 @@ class Address extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_address->getAddresses($this->customer->getId());
 
 		foreach ($results as $result) {
+			$format = $result['address_format'];
+
+			if (!str_contains($format, '{telephone}')) {
+				$format .= "\n" . '{telephone}';
+			}
+
 			$find = [
 				'{firstname}',
 				'{lastname}',
@@ -105,6 +111,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				'{address_2}',
 				'{city}',
 				'{postcode}',
+				'{telephone}',
 				'{zone}',
 				'{zone_code}',
 				'{country}'
@@ -118,13 +125,14 @@ class Address extends \Opencart\System\Engine\Controller {
 				'address_2' => $result['address_2'],
 				'city'      => $result['city'],
 				'postcode'  => $result['postcode'],
+				'telephone' => $result['telephone'],
 				'zone'      => $result['zone'],
 				'zone_code' => $result['zone_code'],
 				'country'   => $result['country']
 			];
 
 			$data['addresses'][] = [
-				'address' => str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\\s\\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $result['address_format'])))),
+				'address' => str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\\s\\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format)))),
 				'edit'    => $this->url->link('account/address.form', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $result['address_id']),
 				'delete'  => $this->url->link('account/address.delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $result['address_id'])
 			] + $result;
@@ -210,6 +218,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$data['address_2'] = $address_info ? $address_info['address_2'] : '';
 		$data['postcode'] = $address_info ? $address_info['postcode'] : '';
 		$data['city'] = $address_info ? $address_info['city'] : '';
+		$data['telephone'] = $address_info ? $address_info['telephone'] : '';
 
 		// Countries
 		$data['country_id'] = $address_info ? $address_info['country_id'] : (int)$this->config->get('config_country_id');
@@ -273,6 +282,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			'address_2'  => '',
 			'city'       => '',
 			'postcode'   => '',
+			'telephone'  => '',
 			'country_id' => 0,
 			'zone_id'    => 0
 		];
@@ -300,6 +310,10 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			if (!oc_validate_length((string)$post_info['city'], 2, 128)) {
 				$json['error']['city'] = $this->language->get('error_city');
+			}
+
+			if ((string)$post_info['telephone'] !== '' && !oc_validate_regex((string)$post_info['telephone'], '/^\+?[0-9 ()\-]{3,31}$/')) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Country

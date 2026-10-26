@@ -152,6 +152,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_2'] = $this->session->data['shipping_address']['address_2'];
 				$order_data['shipping_city'] = $this->session->data['shipping_address']['city'];
 				$order_data['shipping_postcode'] = $this->session->data['shipping_address']['postcode'];
+				$order_data['shipping_telephone'] = $this->session->data['shipping_address']['telephone'] ?? '';
 				$order_data['shipping_zone'] = $this->session->data['shipping_address']['zone'];
 				$order_data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
 				$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
@@ -169,6 +170,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_2'] = '';
 				$order_data['shipping_city'] = '';
 				$order_data['shipping_postcode'] = '';
+				$order_data['shipping_telephone'] = '';
 				$order_data['shipping_zone'] = '';
 				$order_data['shipping_zone_id'] = 0;
 				$order_data['shipping_country'] = '';

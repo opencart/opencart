@@ -131,6 +131,12 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($address_info)) {
+			$data['telephone'] = $address_info['telephone'];
+		} else {
+			$data['telephone'] = '';
+		}
+
+		if (!empty($address_info)) {
 			$data['city'] = $address_info['city'];
 		} else {
 			$data['city'] = '';
@@ -217,6 +223,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			'address_2'    => '',
 			'city'         => '',
 			'postcode'     => '',
+			'telephone'    => '',
 			'country_id'   => 1,
 			'zone_id'      => 1,
 			'custom_field' => [],
@@ -249,6 +256,10 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			if (!oc_validate_length($post_info['city'], 2, 128)) {
 				$json['error']['address_city'] = $this->language->get('error_city');
+			}
+
+			if ((string)$post_info['telephone'] !== '' && !oc_validate_regex((string)$post_info['telephone'], '/^\+?[0-9 ()\-]{3,31}$/')) {
+				$json['error']['address_telephone'] = $this->language->get('error_address_telephone');
 			}
 
 			// Country

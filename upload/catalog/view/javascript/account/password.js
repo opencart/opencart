@@ -20,10 +20,10 @@ export default class AccountPassword extends WebComponent {
 
         await ajax.post('action.php?route=account/password.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
-                this.submitter.state.set('submitting', true);
+                this.form.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.submitter.state.set('submitting', false);
+                this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('error')) {
@@ -32,7 +32,7 @@ export default class AccountPassword extends WebComponent {
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
 
                     this.update();
                 }

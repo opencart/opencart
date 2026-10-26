@@ -26,8 +26,6 @@ export default class AccountLogin extends WebComponent {
 
         let json = await ajax.get('action.php?route=account/login.token&language=' + local.get('language'));
 
-        console.log(json);
-
         if (json.has('token')) {
             this.token = json.get('token');
         }
@@ -48,23 +46,19 @@ export default class AccountLogin extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                this.form.state.clear();
-
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
 
                     customer.login(json.get('customer'));
 
                     if (json.has('products')) {
 
                     }
-
-                    this.update();
                 }
             },
             handleError: (e) => {
@@ -72,26 +66,6 @@ export default class AccountLogin extends WebComponent {
             }
         });
 	}
-	
-	handleSubmitting(value) {
-        this.submitter.state.set('submitting', value);
-	}
-	
-	handleError(error) {
-        let errors = Object.entries(error);
-
-        if (errors.length === 0) return;
-
-		for (let [key, value] of errors) {
-			if (key === 'warning') continue;
-
-			let input = this.root.getElementById('input-' + key);
-
-			if (input) {
-				input.state.set('error', value);
-			}
-        }
-    }
 }
 
 customElements.define('account-login', AccountLogin);

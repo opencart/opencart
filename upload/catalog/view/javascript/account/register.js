@@ -54,9 +54,7 @@ export default class AccountRegister extends WebComponent {
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
-
-                    this.update();
+                    this.form.state.set('success', json.get('success'));
                 }
             },
             handleError: (e) => {

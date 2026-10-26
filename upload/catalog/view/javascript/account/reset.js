@@ -49,7 +49,7 @@ export default class AccountReset extends WebComponent {
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
                 }
             },
             handleError: (e) => {
@@ -57,26 +57,6 @@ export default class AccountReset extends WebComponent {
             }
         });
 	}
-	
-	handleSubmitting(value) {
-        this.submitter.state.set('submitting', value);
-	}
-	
-	handleError(error) {
-        let errors = Object.entries(error);
-
-        if (errors.length === 0) return;
-
-		for (let [key, value] of errors) {
-			if (key === 'warning') continue;
-
-			let input = this.root.getElementById('input-' + key);
-
-			if (input) {
-				input.state.set('error', value);
-			}
-        }
-    }
 }
 
 customElements.define('account-reset', AccountReset);

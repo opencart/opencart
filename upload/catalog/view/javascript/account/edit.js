@@ -8,14 +8,6 @@ const config = await loader.config('default');
 const language = await loader.language('account/edit');
 
 export default class AccountEdit extends WebComponent {
-    states() {
-        return {
-            submitting: false,
-            success: '',
-            error: []
-        };
-	}
-	
     async render() {
         //if (!customer.isLogged()) return;
 
@@ -40,22 +32,20 @@ export default class AccountEdit extends WebComponent {
 
         await ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
-                this.state.set('submitting', true);
+                this.form.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.state.set('submitting', false);
+                this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                //this.form.state.clear();
-
                 // Display error messages
                 if (json.has('error')) {
-                    this.state.set('error', json.get('error'));
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.state.set('success', json.get('success'));
 
                     this.update();
                 }
@@ -65,26 +55,6 @@ export default class AccountEdit extends WebComponent {
             }
         });
 	}
-    
-	handleSubmitting(value) {
-        this.submitter.state.set('submitting', value);
-	}
-	
-	handleError(error) {
-        let errors = Object.entries(error);
-
-        if (errors.length === 0) return;
-
-		for (let [key, value] of errors) {
-			if (key === 'warning') continue;
-
-			let input = this.root.getElementById('input-' + key);
-
-			if (input) {
-				input.state.set('error', value);
-			}
-        }
-    }
 }
 
 customElements.define('account-edit', AccountEdit);

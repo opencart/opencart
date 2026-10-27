@@ -1,15 +1,17 @@
 <h1>{{ heading_title }}</h1>
 <form-submit @ref="form">
-  <fieldset>
-    <legend>{{ text_password }}</legend>
-    <div class="mb-3">
-      <input-password id="input-password" label="{{ entry_password }}" name="password" value="" />
+  <template>
+    <fieldset>
+      <legend>{{ text_password }}</legend>
+      <div class="mb-3">
+        <input-password id="input-password" label="{{ entry_password }}" name="password" value="" />
+      </div>
+      <div class="mb-3">
+        <input-password id="input-confirm" label="{{ entry_confirm }}" name="confirm" value="" />
+      </div>
+    </fieldset>
+    <div class="text-end">
+      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
     </div>
-    <div class="mb-3">
-      <input-password id="input-confirm" label="{{ entry_confirm }}" name="confirm" value="" />
-    </div>
-  </fieldset>
-  <div class="text-end">
-    <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-  </div>
-  </form>
+  </template>
+</form-submit>

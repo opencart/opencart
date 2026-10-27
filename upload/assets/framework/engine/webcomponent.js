@@ -1,4 +1,5 @@
 import { Binder } from './binder.js';
+import { Global } from './global.js';
 import { State } from './state.js';
 import { stylesheet } from './stylesheet.js';
 
@@ -76,6 +77,9 @@ export class WebComponent extends HTMLElement {
 		
 		//  Binder
 		this.binder = new Binder(this);
+		
+		// Global
+		this.global = Global;
 		
         // Attach Internals
         this.internal = this.attachInternals();

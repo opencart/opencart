@@ -19,11 +19,7 @@ customElements.define('form-submit', class extends WebComponent {
 	getData() {		
 		let form = new FormData();
 
-		for (let input of this.getInputs()) {
-			console.log('Appending input:', input.name, input.value);
-
-			form.append(input.name, input.value);
-		}
+		for (let input of this.getInputs()) form.append(input.name, input.value);
 
 		return form;
 	}
@@ -45,7 +41,10 @@ customElements.define('form-submit', class extends WebComponent {
 
 		console.log('Submitting form');
 
-		console.log(Object.fromEntries(this.getData()));
+
+
+		this.state.set('submitting', true);
+
 	}
 
 	// Handle state changes for the 'submitting' attribute

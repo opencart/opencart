@@ -1,52 +1,54 @@
 <h1>{{ heading_title }}</h1>
 <form-submit @ref="form">
-  <fieldset>
-    <div class="mb-3">
-      <input-text id="input-firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
-    </div>
-    <div class="mb-3 ">
-      <input-text id="input-lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
-    </div>
-    <div class="mb-3">
-      <input-text id="input-company" label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
-    </div>
-    <div class="mb-3">
-      <input-text id="input-address-1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
-    </div>
-    <div class="mb-3">
-      <input-text id="input-address-2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
-    </div>
-    <div class="mb-3">
-      <input-text id="input-city" label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
-    </div>
-    <div class="mb-3">
-      <input-text id="input-postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
-    </div>
-    <div class="mb-3">
-      <input-country id="input-country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" postcode="1" target="input-postcode" required>
-        <option value="0">{{ text_select }}</option>
-      </input-country>
-    </div>
-    <div class="mb-3">
-      <input-zone id="input-zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" target="input-country" required>
-        <option value="0">{{ text_select }}</option>
-      </input-zone>
-    </div>
-    <div class="row mb-3">
-      <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
-      <div class="col-sm-10">
-        <div class="form-check-inline">
-          <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input" {% if default %} checked{% endif %} />
-          <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
-        </div>
-        <div class="form-check-inline">
-          <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input" {% if not default %} checked{% endif %} />
-          <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
+  <template>
+    <fieldset>
+      <div class="mb-3">
+        <input-text id="input-firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
+      </div>
+      <div class="mb-3 ">
+        <input-text id="input-lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
+      </div>
+      <div class="mb-3">
+        <input-text id="input-company" label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
+      </div>
+      <div class="mb-3">
+        <input-text id="input-address-1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
+      </div>
+      <div class="mb-3">
+        <input-text id="input-address-2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
+      </div>
+      <div class="mb-3">
+        <input-text id="input-city" label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
+      </div>
+      <div class="mb-3">
+        <input-text id="input-postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
+      </div>
+      <div class="mb-3">
+        <input-country id="input-country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" postcode="1" target="input-postcode" required>
+          <option value="0">{{ text_select }}</option>
+        </input-country>
+      </div>
+      <div class="mb-3">
+        <input-zone id="input-zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" target="input-country" required>
+          <option value="0">{{ text_select }}</option>
+        </input-zone>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
+        <div class="col-sm-10">
+          <div class="form-check-inline">
+            <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input" {% if default %} checked{% endif %} />
+            <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
+          </div>
+          <div class="form-check-inline">
+            <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input" {% if not default %} checked{% endif %} />
+            <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
+          </div>
         </div>
       </div>
+    </fieldset>
+    <div class="text-end">
+      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
     </div>
-  </fieldset>
-  <div class="text-end">
-    <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-  </div>
+  </template>
 </form-submit>

@@ -12,19 +12,21 @@
   <div class="col mb-3">
     <div class="border rounded p-3 d-flex flex-column h-100">
       <form-submit @ref="form">
-        <h2>{{ text_returning_customer }}</h2>
-        <p><strong>{{ text_i_am_returning_customer }}</strong></p>
-        <div class="mb-3">
-          <input-email label="{{ entry_email }}" name="email" value=""></input-email>
-        </div>
-        <div class="mb-3">
-          <input-password label="{{ entry_password }}" name="password" value="" class="mb-1"></input-password>
-          <a href="account/forgotten.js" :click="link">{{ text_forgotten }}</a>
-        </div>
-        <input type="hidden" name="redirect" value="{{ redirect }}" />
-        <div class="text-end">
-          <button-submit @ref="submitter">{{ button_login }}</button-submit>
-        </div>
+        <template>
+          <h2>{{ text_returning_customer }}</h2>
+          <p><strong>{{ text_i_am_returning_customer }}</strong></p>
+          <div class="mb-3">
+            <input-email label="{{ entry_email }}" name="email" value=""></input-email>
+          </div>
+          <div class="mb-3">
+            <input-password label="{{ entry_password }}" name="password" value="" class="mb-1"></input-password>
+            <a href="account/forgotten.js" :click="link">{{ text_forgotten }}</a>
+          </div>
+          <input type="hidden" name="redirect" value="{{ redirect }}" />
+          <div class="text-end">
+            <button-submit @ref="submitter">{{ button_login }}</button-submit>
+          </div>
+        </template>
       </form-submit>
     </div>
   </div>

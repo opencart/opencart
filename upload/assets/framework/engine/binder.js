@@ -15,26 +15,7 @@ import { Global } from './global.js';
  *                  `preventDefault()`/`stopPropagation()` before running
  *                  the handler. `@click.once="handleClick"` removes
  *                  itself after firing once.
- *   3. Show      — `@show="open"` shows the element while the component's
- *                  state has a true value for `open`, and hides it (with
- *                  the hidden attribute) while it does not.
- *                  `@show="open: true"` is while it is true, `open: false`
- *                  while it is false, and `@show="tab: home|about"` while
- *                  `tab` is home or about (| means "or"). Values are
- *                  compared as text, so `count: 0` works too.
- *
- *                  It is worked out when the element is bound, so it is
- *                  right when the render reaches the page, and after that
- *                  the Binder follows the state and toggles the element
- *                  where it is. A component with an onStateChange does not
- *                  have to render again for it, and what the user has typed
- *                  or opened inside is kept. So `show` is not an event name
- *                  for `@`. It takes no options, and no `:`. The hidden
- *                  attribute does the hiding, so a CSS rule that sets
- *                  `display` on the element wins over it, unless the
- *                  stylesheet has `[hidden] { display: none !important }`
- *                  (Bootstrap's does).
- *   4. Attributes — `@[open]="onToggle"` calls the method when the element's
+ *   3. Attributes — `@[open]="onToggle"` calls the method when the element's
  *                  `open` attribute changes: `<dialog @[open]="onToggle">`.
  *                  Native elements do not announce attribute changes, so the
  *                  Binder watches the attributes that were asked for and
@@ -147,8 +128,6 @@ export class Binder {
 	}
 	
 	#walk(root) {
-		//console.log(root);
-		
         let carries = (node) => node.getAttributeNames().some((name) => name.startsWith('@') || name.startsWith(':'));
 
         const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {

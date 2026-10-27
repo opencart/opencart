@@ -6,21 +6,21 @@
       <div class="card">
         <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
         <div class="card-body">
-          <form-submit @ref="form">
-            <p>{{ text_security }}</p>
-            <p>{{ text_code }}</p>
-            <div class="mb-3">
-              <label for="input-code" class="form-label">{{ entry_code }}</label>
-              <div class="input-group">
-                <input-text name="code" value="" required></input-text>
-                <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_send }}</button>
+          <form-submit @ref="form"><template>
+              <p>{{ text_security }}</p>
+              <p>{{ text_code }}</p>
+              <div class="mb-3">
+                <label for="input-code" class="form-label">{{ entry_code }}</label>
+                <div class="input-group">
+                  <input-text name="code" value="" required></input-text>
+                  <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_send }}</button>
+                </div>
+                <div id="error-code" class="invalid-feedback"></div>
               </div>
-              <div id="error-code" class="invalid-feedback"></div>
-            </div>
-            <input type="hidden" name="redirect" value="{{ redirect }}" />
-            <div class="text-end">
-              <button-submit @ref="submitter" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button-submit>
-            </div>
+              <div class="text-end">
+                <button-submit @ref="submitter" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button-submit>
+              </div>
+            </template>
           </form-submit>
         </div>
       </div>

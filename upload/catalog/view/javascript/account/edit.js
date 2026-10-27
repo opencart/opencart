@@ -26,9 +26,13 @@ export default class AccountEdit extends WebComponent {
 
         //if (!customer.isLogged()) return;
 
+		console.dir(this);
+
 		console.log('handleSubmit called');
 
         let form = this.form.getData();
+
+		console.log(form);
 
         await ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {

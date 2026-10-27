@@ -2,7 +2,7 @@
   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-shipping">{{ heading_title }}</button></h2>
   <div id="collapse-shipping" class="accordion-collapse collapse" data-bs-parent="#accordion">
     <div class="accordion-body">
-      <form id="form-quote">
+      <form-submit @ref="form">
         <p>{{ text_destination }}</p>
         <div class="row mb-3">
           <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
@@ -25,14 +25,14 @@
         <div class="row mb-3">
           <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
           <div class="col-md-8">
-            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" required/>
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" required />
             <div id="error-postcode" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="text-end">
           <button type="submit" id="button-quote" class="btn btn-primary">{{ button_quote }}</button>
         </div>
-      </form>
+      </form-submit>
     </div>
   </div>
   <script src="extension/opencart/view/javascript/shipping.js" type="text/javascript"></script>

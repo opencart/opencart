@@ -20,14 +20,38 @@ customElements.define('input-switch', class extends WebComponent {
             readonly: this.hasAttribute('readonly')
         };
     }
+    
+	get label() {
+        return this.hasAttribute('label') ? this.getAttribute('label') : '';
+    }
 
+    get name() {
+        return this.getAttribute('name');
+    }
+
+    get value() {
+        return this.state.get('value');
+    }
+	
     get checked() {
         return this.hasAttribute('checked');
     }
 
     set checked(value) {
         this.toggleAttribute('checked', value);
+	}
+	
+    get required() {
+        return this.state.get('required');
     }
+
+    get disabled() {
+        return this.state.get('disabled');
+    }
+
+    get readonly() {
+        return this.state.get('readonly');
+	}
 
     render() {
         let html = '<div class="form-switch form-switch-lg">';

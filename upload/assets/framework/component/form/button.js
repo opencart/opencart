@@ -1,7 +1,7 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('button-submit', class extends WebComponent {
-	static shadow = false;
+	static shadow = true;
 	static formAssociated = true;
     static observedAttributes = [
         'submitting',
@@ -12,7 +12,7 @@ customElements.define('button-submit', class extends WebComponent {
     states() {
         return {
             submitting: false,
-            disabled: false
+            disabled: this.hasAttribute('disabled')
         };
     }
 
@@ -20,11 +20,10 @@ customElements.define('button-submit', class extends WebComponent {
 		super();
 
         this.html = this.innerHTML;
-        this.state.set('disabled', this.hasAttribute('disabled'));
 	}
 
     render() {
-        return '<button type="submit" @ref="button" class="btn btn-primary"' + (this.state.get('disabled') ? ' disabled' : '') + '>' + this.html + '</button>';
+        return '<button type="submit" @ref="button" @click="handleClick" class="btn btn-primary"' + (this.state.get('disabled') ? ' disabled' : '') + '>' + this.html + '</button>';
     }
 
 	// Handle state changes for the 'submitting' attribute
@@ -48,6 +47,8 @@ customElements.define('button-submit', class extends WebComponent {
 	}
 
 	handleClick() { 
+		console.log('Button clicked');
+
 		this.internal.form.requestSubmit();
 	}
 }); 

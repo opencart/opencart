@@ -55,9 +55,8 @@ const camel = (name) => name.replace(/^[^a-zA-Z0-9]+/, '').split(/[-_:.\s]+/).fi
 
 export class WebComponent extends HTMLElement {
     static formAssociated = false;
-    static shadow = true;
-
-	#root;
+	static shadow = true;
+	
     #renders = 0;
     // Make sure reactive attributes don't work until after render has been called.
     #rendered = false;
@@ -70,7 +69,7 @@ export class WebComponent extends HTMLElement {
         super();
 
         // Attach Shadow or use light DOM based on the static property
-        this.#root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
+        this.root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
 
         // State
         this.state = new State(this.states(), this.stateChangedCallback.bind(this));
@@ -107,20 +106,20 @@ export class WebComponent extends HTMLElement {
     async #style() {
         if (!this.shadow) return;
 
-        await stylesheet.adopt(this.#root, this.stylesheets());
+        await stylesheet.adopt(this.root, this.stylesheets());
 
         const css = this.styles();
 
-        if (css) await stylesheet.adoptText(this.#root, [css]);
+        if (css) await stylesheet.adoptText(this.root, [css]);
 	}
 	
 	async connectedCallback() {
 		if (typeof this.render !== 'function') return;
 	
 		if (!this.#rendered) {			
-			this.#root.innerHTML = await this.render();
+			this.root.innerHTML = await this.render();
 
-			this.binder.refresh(this.#root);
+			this.binder.refresh(this.root);
 		}
 
         if (typeof this.handleConnect === 'function') {
@@ -133,9 +132,9 @@ export class WebComponent extends HTMLElement {
     async update() {
         if (typeof this.render !== 'function') return;
 		
-		this.#root.innerHTML = await this.render();
+		this.root.innerHTML = await this.render();
 
-		this.binder.refresh(this.#root);
+		this.binder.refresh(this.root);
 	}
 	
     async disconnectedCallback() {

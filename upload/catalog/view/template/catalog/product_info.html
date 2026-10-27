@@ -63,7 +63,7 @@
     </ul>
     {% endif %}
 
-    <form @ref="form">
+    <form-submit @ref="form">
       <div class="btn-group">
         <button type="button" class="btn btn-light btn-lg" @click="addToWishList" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
         <button type="button" class="btn btn-light btn-lg" @click="addToCompare" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
@@ -71,11 +71,11 @@
 
       <input type="hidden" name="product_id" value="{{ product_id }}" />
       <input type="hidden" name="quantity" value="{{ minimum }}" />
-    </form>
+    </form-submit>
 
     <br />
     <div id="product">
-      <form @submit="addToCart">
+      <form-submit @submit="addToCart">
         {% if options %}
         <hr>
         <h3>{{ text_option }}</h3>
@@ -223,7 +223,7 @@
         {% if minimum > 1 %}
         <div class="alert alert-warning"><i class="fa-solid fa-circle-info"></i> {{ text_minimum | replace: '%s', minimum }}</div>
         {% endif %}
-      </form>
+      </form-submit>
     </div>
   </div>
 </div>

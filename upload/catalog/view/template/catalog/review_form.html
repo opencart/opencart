@@ -1,6 +1,7 @@
-<form-submit @submit="handleSubmit">
+<form-submit @ref="form">
   <div id="review">{{ list }}</div>
   <h2>{{ text_write }}</h2>
+
   {% if review_guest %}
   <div class="mb-3">
     <input-text label="{{ entry_author }}" name="author" value="{{ customer }}" required />
@@ -15,9 +16,11 @@
     <div id="error-rating" class="invalid-feedback"></div>
   </div>
   {{ captcha }}
+
   <div class="text-end">
     <button-submit @ref="submitter">{{ button_continue }}</button-submit>
   </div>
+
   {% else %}
   {{ text_login }}
   {% endif %}

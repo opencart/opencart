@@ -7,46 +7,48 @@
       </div>
       <div class="modal-body">
         <p>{{ text_account_already | safe }}</p>
-        <form-submit @ref="form" @submit="handleSubmit">
-          <div @ref="alert"></div>
-          <fieldset>
-            <legend>{{ text_your_details }}</legend>
-            <div class="mb-3">
-              <input-text @ref="firstname" label="{{ entry_firstname }}" name="firstname" value=""></input-text>
-            </div>
-            <div class="mb-3">
-              <input-text @ref="lastname" label="{{ entry_lastname }}" name="lastname" value=""></input-text>
-            </div>
-            <div class="mb-3">
-              <input-email @ref="email" label="{{ entry_email }}" name="email" value="test123@test123.com"></input-email>
-            </div>
-            {% if not config_telephone_status %}
-            <div class="mb-3">
-              <input-tel @ref="telephone" label="{{ entry_telephone }}" name="telephone" value="0123456789" {% if config_telephone_required %} required{% endif %}></input-tel>
-            </div>
+        <form-submit @ref="form">
+          <template>
+            <div @ref="alert"></div>
+            <fieldset>
+              <legend>{{ text_your_details }}</legend>
+              <div class="mb-3">
+                <input-text @ref="firstname" label="{{ entry_firstname }}" name="firstname" value=""></input-text>
+              </div>
+              <div class="mb-3">
+                <input-text @ref="lastname" label="{{ entry_lastname }}" name="lastname" value=""></input-text>
+              </div>
+              <div class="mb-3">
+                <input-email @ref="email" label="{{ entry_email }}" name="email" value="test123@test123.com"></input-email>
+              </div>
+              {% if not config_telephone_status %}
+              <div class="mb-3">
+                <input-tel @ref="telephone" label="{{ entry_telephone }}" name="telephone" value="0123456789" {% if config_telephone_required %} required{% endif %}></input-tel>
+              </div>
+              {% endif %}
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_your_password }}</legend>
+              <div class="mb-3">
+                <input-password @ref="password" label="{{ entry_password }}" name="password" value="1234567890" required></input-password>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_newsletter }}</legend>
+              <div class="mb-3">
+                <input-switch @ref="newsletter" label="{{ entry_newsletter }}" name="newsletter" value="1"></input-switch>
+              </div>
+            </fieldset>
+            {% if config_captcha %}
+            <account-captcha type="{{ config_captcha }}"></account-captcha>
             {% endif %}
-          </fieldset>
-          <fieldset>
-            <legend>{{ text_your_password }}</legend>
-            <div class="mb-3">
-              <input-password @ref="password" label="{{ entry_password }}" name="password" value="1234567890" required></input-password>
+            <div class="text-end">
+              {% if config_account_id %}
+              <input-switch @ref="agree" label="{{ text_agree }}" name="agree" value="1"></input-switch>
+              {% endif %}
+              <button-submit @ref="submitter">{{ button_continue }}</button-submit>
             </div>
-          </fieldset>
-          <fieldset>
-            <legend>{{ text_newsletter }}</legend>
-            <div class="mb-3">
-              <input-switch @ref="newsletter" label="{{ entry_newsletter }}" name="newsletter" value="1"></input-switch>
-            </div>
-          </fieldset>
-          {% if config_captcha %}
-          <account-captcha type="{{ config_captcha }}"></account-captcha>
-          {% endif %}
-          <div class="text-end">
-            {% if config_account_id %}
-            <input-switch @ref="agree" label="{{ text_agree }}" name="agree" value="1"></input-switch>
-            {% endif %}
-            <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-          </div>
+          </template>
         </form-submit>
       </div>
     </div>

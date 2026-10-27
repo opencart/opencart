@@ -3,7 +3,7 @@
 <div class="mb-3" {% if not description %}hidden{% endif %}>{{ description }}</div>
 <hr />
 <h3>{{ text_refine }}</h3>
-<form-submit @submit="handleSubmit">
+<form-submit @ref="form">
   <div class="input-group dropdown mb-3">
     <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control" />
     <select name="topic_id" id="input-topic" class="form-select" @change="handleChange" {% if not topics %} hidden{% endif %}>

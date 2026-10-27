@@ -19,7 +19,7 @@ export default class AccountRegister extends WebComponent {
             return `<ui-toast>${this.state.get('success')}</ui-toast>`;
         }
 
-		return loader.template('account/register', [ this.state.all(), language, config ]);
+		return loader.template('account/register', [ language, config ]);
     }
 
     async handleConnect() {
@@ -29,7 +29,11 @@ export default class AccountRegister extends WebComponent {
 
         if (json.has('token')) {
             this.token = json.get('token');
-        }
+		}
+		
+		console.dir(this);
+
+		this.form.addSubmit(this);
     }
 
     async handleSubmit(e) {
@@ -38,6 +42,9 @@ export default class AccountRegister extends WebComponent {
         //if (customer.isLogged()) return;
 
 		let form = this.form.getData();
+
+		console.log('WORKS');
+		console.log(Object.fromEntries(form));
 
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {

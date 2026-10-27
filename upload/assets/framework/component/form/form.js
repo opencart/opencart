@@ -1,7 +1,6 @@
 import { WebComponent } from '../../engine.js';
 
 customElements.define('form-submit', class extends WebComponent {
-	static shadow = false;
 	static formAssociated = true;
 
 	/* Will only manage states listed here */
@@ -13,26 +12,40 @@ customElements.define('form-submit', class extends WebComponent {
 		};
 	}
 
-	constructor() { 
-		super();
-
-		this.html = this.innerHTML;
-	}
-
 	getInputs() {
-		return this.querySelectorAll('[name]');
+		return this.root.querySelectorAll('[name]');
 	}
 
 	getData() {		
 		let form = new FormData();
-		
-		for (let input of this.getInputs()) form.append(input.name, input.value);
+
+		for (let input of this.getInputs()) {
+			console.log('Appending input:', input.name, input.value);
+
+			form.append(input.name, input.value);
+		}
 
 		return form;
 	}
 
 	render() {
-		return '<form @ref="form">' + this.html + '</form>';
+		let template = this.querySelector('template');
+
+		return '<form @ref="form" @submit="handleSubmit">' + template.innerHTML + '</form>';
+	}
+
+	handleConnect() { 
+		console.log('Connected');
+		console.dir(this);
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+		// Custom submit logic here
+
+		console.log('Submitting form');
+
+		console.log(Object.fromEntries(this.getData()));
 	}
 
 	// Handle state changes for the 'submitting' attribute
@@ -55,6 +68,8 @@ customElements.define('form-submit', class extends WebComponent {
     }
 
 	handleError(error) {
+		console.log(error);
+		
 		if (error.warning) {
 			this.alert.innerHTML = '<ui-alert type="warning">' + error.warning + '</ui-alert>';
 		}

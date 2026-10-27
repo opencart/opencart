@@ -33,7 +33,15 @@ export default class AccountRegister extends WebComponent {
 		
 		console.dir(this);
 
-		this.form.addSubmit(this);
+		this.form.state.subscribe(this.handleState.bind(this));
+	}
+
+	handleState(key, value) {
+		console.log('State changed:', key, value);
+    }
+	
+	handleSubmitting(value) {
+        if (this.submitter) this.submitter.state.set('submitting', value);
     }
 
     async handleSubmit(e) {

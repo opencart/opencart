@@ -1,13 +1,15 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_email }}</p>
 <form-submit @ref="form">
-  <fieldset>
-    <legend>{{ text_your_email }}</legend>
-    <div class="mb-3">
-      <input-email id="input-email" label="{{ entry_email }}" name="email" value="" required></input-email>
+  <template>
+    <fieldset>
+      <legend>{{ text_your_email }}</legend>
+      <div class="mb-3">
+        <input-email id="input-email" label="{{ entry_email }}" name="email" value="" required></input-email>
+      </div>
+    </fieldset>
+    <div class="text-end">
+      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
     </div>
-  </fieldset>
-  <div class="text-end">
-    <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-  </div>
+  </template>
 </form-submit>

@@ -1,11 +1,13 @@
 <h1>{{ heading_title }}</h1>
 <form-submit @ref="form">
-  <fieldset>
-    <div class="row mb-3 mb-0">
-      <div class="col-md-9"><input-switch label="{{ entry_newsletter }}" name="newsletter" value="1" {% if newsletter %} checked{% endif %}></input-switch></div>
+  <template>
+    <fieldset>
+      <div class="row mb-3 mb-0">
+        <div class="col-md-9"><input-switch label="{{ entry_newsletter }}" name="newsletter" value="1" {% if newsletter %} checked{% endif %}></input-switch></div>
+      </div>
+    </fieldset>
+    <div class="text-end">
+      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
     </div>
-  </fieldset>
-  <div class="text-end">
-    <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-  </div>
+  </template>
 </form-submit>

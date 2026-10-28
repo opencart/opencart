@@ -55,7 +55,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$data['ip'] = oc_get_ip();
 
 			$data['store'] = $store_name;
-			$data['store_url'] = $this->config->get('config_store_url');
+			$data['store_url'] = HTTP_CATALOG;
 
 			if ($this->config->get('config_mail_engine')) {
 				$mail_option = [

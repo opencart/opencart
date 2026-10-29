@@ -76,11 +76,12 @@ $(document).ready(function() {
 });
 
 function decodeHTMLEntities(html) {
-    var d = document.createElement('div');
+    // A textarea only holds text, so entities are decoded without parsing or loading any markup
+    var d = document.createElement('textarea');
 
-    d.innerHTML = html;
+    d.innerHTML = html ?? '';
 
-    return d.textContent;
+    return d.value;
 }
 
 // Observe

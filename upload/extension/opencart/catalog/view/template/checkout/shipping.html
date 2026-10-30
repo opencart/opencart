@@ -8,18 +8,18 @@
           <div class="row mb-3">
             <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
             <div class="col-md-8">
-              <x-country name="country_id" value="{{ country_id }}" id="x-country" postcode-required="1" target="input-postcode" input-id="input-country" input-class="form-select" required>
+              <input-country name="country_id" value="{{ country_id }}" postcode-required="1" target="input-postcode" input-id="input-country" input-class="form-select" required>
                 <option value="0">{{ text_select }}</option>
-              </x-country>
+              </input-country>
               <div id="error-country" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">
             <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
             <div class="col-md-8">
-              <x-zone name="zone_id" value="{{ zone_id }}" target="x-country" input-id="input-zone" input-class="form-select" required>
+              <input-zone name="zone_id" value="{{ zone_id }}" target="input-country" input-id="input-zone" input-class="form-select" required>
                 <option value="0">{{ text_select }}</option>
-              </x-zone>
+              </input-zone>
               <div id="error-zone" class="invalid-feedback"></div>
             </div>
           </div>

@@ -22,7 +22,11 @@ customElements.define('shipping-method', class extends WebComponent {
         }
 
         return loader.template('checkout/shipping_method', [ data, language ]);
-    }
+	}
+	
+	handleConnect() {
+		this.form.addListener(this.handleSubmit.bind(this));
+	}
 
     async getMethods(e) {
         e.preventDefault();
@@ -58,7 +62,8 @@ customElements.define('shipping-method', class extends WebComponent {
 
                         if (!json.get('shipping_methods')[i]['error']) {
                             for (let j in json.get('shipping_methods')[i]['quote']) {
-                                let html;
+								let html = '';
+								
                                 html += '<div class="form-check">';
 
                                 var code = i + '-' + j.replaceAll('_', '-');

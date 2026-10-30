@@ -59,35 +59,6 @@ customElements.define('payment-address', class extends WebComponent {
     async setAddress(e) {
         e.preventDefault();
 
-        await ajax.post('action.php?route=checkout/payment_address.address&language=' + local.get('language') + '&customer_token=' + customer.getToken() + '&address_id=' + this.address.value, {
-            handleSend: () => {
-                this.form.state.set('submitting', true);
-            },
-            handleComplete: () => {
-                this.form.state.set('submitting', false);
-            },
-            handleSuccess: (json) => {
-                if (json.has('redirect')) {
-                    location = json.get('redirect');
-                }
-
-                if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
-                }
-
-                if (json.has('success')) {
-                    this.form.state.set('success', json.get('success'));
-
-                    //$('#input-shipping-method').val('');
-                    //$('#input-payment-method').val('');
-
-                    //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
-                }
-            },
-            handleError: (xhr, ajaxOptions, thrownError)=> {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
     }
 
     // New Payment Address

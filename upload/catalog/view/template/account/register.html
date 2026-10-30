@@ -6,10 +6,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <p>{{ text_account_already | safe }}</p>
         <form-submit @ref="form">
           <template>
             <div @ref="alert"></div>
+            <p>{{ text_account_already | safe }}</p>
             <fieldset>
               <legend>{{ text_your_details }}</legend>
               <div class="mb-3">
@@ -30,7 +30,7 @@
             <fieldset>
               <legend>{{ text_your_password }}</legend>
               <div class="mb-3">
-                <input-password @ref="password" label="{{ entry_password }}" name="password" value="1234567890" required></input-password>
+                <input-password @ref="password" label="{{ entry_password }}" name="password" value="abcABC123!@#" required></input-password>
               </div>
             </fieldset>
             <fieldset>

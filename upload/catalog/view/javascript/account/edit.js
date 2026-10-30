@@ -21,18 +21,16 @@ export default class AccountEdit extends WebComponent {
         return loader.template('account/edit', [ data, language, config ]);
     }
 
+	handleConnect() {
+		this.form.addListener(this.handleSubmit.bind(this));
+	}
+
     async handleSubmit(e) {
         e.preventDefault();
 
         //if (!customer.isLogged()) return;
 
-		console.dir(this);
-
-		console.log('handleSubmit called');
-
         let form = this.form.getData();
-
-		console.log(form);
 
         await ajax.post('action.php?route=account/edit.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
@@ -50,8 +48,6 @@ export default class AccountEdit extends WebComponent {
                 // Display success message
                 if (json.has('success')) {
                     this.form.state.set('success', json.get('success'));
-
-                    this.update();
                 }
             },
             handleError: (e) => {

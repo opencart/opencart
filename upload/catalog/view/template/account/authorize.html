@@ -6,7 +6,8 @@
       <div class="card">
         <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
         <div class="card-body">
-          <form-submit @ref="form"><template>
+          <form-submit @ref="form">
+            <template>
               <p>{{ text_security }}</p>
               <p>{{ text_code }}</p>
               <div class="mb-3">

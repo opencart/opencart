@@ -154,7 +154,7 @@ export class Binder {
 			if (key === 'ref') {
 				this.#ref(element, value, is_global);
 			} else {
-                this.#event(element, key, value, options, is_global);
+                this.#addListener(element, key, value, options, is_global);
             }
 
             element.removeAttribute(name);
@@ -187,7 +187,7 @@ export class Binder {
         }
     }
 
-    #event(element, event, method, options, is_global) {
+    #addListener(element, event, method, options, is_global) {
         let handler = is_global ? Global.getListener(method) : this.#host[method];
 
         if (typeof handler !== 'function') {
@@ -208,6 +208,10 @@ export class Binder {
         this.#listeners.push({ element, event, listener, capture: !!option.capture });
     }
     
+	removeListener(element, event, listener, capture = false) {
+        element.removeEventListener(event, listener, capture);
+    }
+
     /** Get a bound element by its data-ref name. */
     get(key) {
         return this.#refs.get(key);

@@ -8,6 +8,8 @@ const config = await loader.config('default');
 const language = await loader.language('account/register');
 
 export default class AccountRegister extends WebComponent {
+	static formAssociated = true;
+
     constructor() {
         super();
 
@@ -31,18 +33,8 @@ export default class AccountRegister extends WebComponent {
             this.token = json.get('token');
 		}
 		
-		console.dir(this);
-
-		this.form.state.subscribe(this.handleState.bind(this));
+		this.form.addListener(this.handleSubmit.bind(this));
 	}
-
-	handleState(key, value) {
-		console.log('State changed:', key, value);
-    }
-	
-	handleSubmitting(value) {
-        if (this.submitter) this.submitter.state.set('submitting', value);
-    }
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -51,19 +43,18 @@ export default class AccountRegister extends WebComponent {
 
 		let form = this.form.getData();
 
-		console.log('WORKS');
-		console.log(Object.fromEntries(form));
-
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
-            handleSend: () => {
+			handleSend: () => {
                 this.form.state.set('submitting', true);
             },
             handleComplete: () => {
                 this.form.state.set('submitting', false);
             },
-			handleSuccess: async (json) => {
+			handleSuccess: (json) => {
+				console.log('onSuccess', json);
+				
                 // Display error messages
-                if (json.has('error')) {
+				if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));
                 }
 

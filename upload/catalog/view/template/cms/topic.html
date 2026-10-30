@@ -4,15 +4,17 @@
 <hr />
 <h3>{{ text_refine }}</h3>
 <form-submit @ref="form">
-  <div class="input-group dropdown mb-3">
-    <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control" />
-    <select name="topic_id" id="input-topic" class="form-select" @change="handleChange" {% if not topics %} hidden{% endif %}>
-      <option value="">{{ text_all }}</option>
-      {% for topic in topics %}
-      <option value="{{ topic.topic_id }}" {% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
-      {% endfor %}
-    </select>
-    <button-submit>{{ button_search }}</button-submit>
-  </div>
+  <template>
+    <div class="input-group dropdown mb-3">
+      <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control" />
+      <select name="topic_id" id="input-topic" class="form-select" @change="handleChange" {% if not topics %} hidden{% endif %}>
+        <option value="">{{ text_all }}</option>
+        {% for topic in topics %}
+        <option value="{{ topic.topic_id }}" {% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
+        {% endfor %}
+      </select>
+      <button-submit>{{ button_search }}</button-submit>
+    </div>
+  </template>
 </form-submit>
 <article-list topic_id="{{ topic_id }}" sort="" order=""></article-list>

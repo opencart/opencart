@@ -8,20 +8,22 @@ const config = await loader.config('default');
 const language = await loader.language('account/address');
 
 export default class AuthorizeReset extends WebComponent {
-    states() {
-        return {
-            submitting: false,
-            success: '',
-            error: []
-        };
-    }
-
     async render() {
         //if (customer.isLogged()) return;
 
         return loader.template('account/authorize_reset', [ language ]);
     }
+    
+	async handleConnect() {
+        let json = await ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
 
+        if (json.has('token')) {
+            this.token = json.get('token');
+		}
+		
+		this.form.addListener(this.handleSubmit.bind(this));
+	}
+	
     async handleSubmit(e) {
         e.preventDefault();
 
@@ -47,8 +49,6 @@ export default class AuthorizeReset extends WebComponent {
 
                 if (json.has('success')) {
                     this.form.state.set('success', json.get('success'));
-
-                    this.update();
                 }
             },
             handleError: (xhr, ajaxOptions, thrownError) => {

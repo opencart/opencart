@@ -7,14 +7,6 @@ const language = await loader.language('account/reset');
 export default class AccountReset extends WebComponent {
     token = '';
 
-    states() {
-        return {
-            submitting: false,
-            success: '',
-            error: []
-        };
-    }
-
     async render() {
         return loader.template('account/reset', [ language ]);
     }
@@ -24,7 +16,9 @@ export default class AccountReset extends WebComponent {
 
         if (json.has('token')) {
             this.token = json.get('token');
-        }
+		}
+		
+		this.form.addListener(this.handleSubmit.bind(this));
     }
 
     async handleSubmit(e) {
@@ -40,8 +34,6 @@ export default class AccountReset extends WebComponent {
                 this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
-                //this.form.state.clear();
-
                 // Display error messages
                 if (json.has('error')) {
                     this.form.state.set('error', json.get('error'));

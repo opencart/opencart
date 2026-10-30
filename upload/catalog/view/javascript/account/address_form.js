@@ -40,6 +40,8 @@ export default class AddressForm extends WebComponent {
 
 	handleConnect() {
 		this.country.state.subscribe(this.zone.handleState.bind(this.zone));
+
+		this.form.addListener(this.handleSubmit.bind(this));
 	}
 
     async handleSubmit(e) {
@@ -63,8 +65,6 @@ export default class AddressForm extends WebComponent {
 
                 if (json.has('success')) {
                     this.form.state.set('success', json.get('success'));
-
-                    this.update();
                 }
             },
             handleError: (e) => {

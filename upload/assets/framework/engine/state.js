@@ -42,17 +42,17 @@ export class State {
 
  		return new Proxy(this, {
             get: (target, key) => {
-				let bound;
+				let data;
 					
                 if (typeof key === 'symbol' || key in target) {
                     const value = Reflect.get(target, key, target);
 
                     if (typeof value !== 'function' || key === 'constructor' || !Object.hasOwn(State.prototype, key)) return value;
 
-                    if (!bound) bound = new Map();
-                    if (!bound.has(key)) bound.set(key, value.bind(target));
+                    if (!data) data = new Map();
+                    if (!data.has(key)) data.set(key, value.bind(target));
 
-                    return bound.get(key);
+                    return data.get(key);
                 }
 
                 return this.#data.get(key);
@@ -106,9 +106,7 @@ export class State {
                 throw new TypeError('State: set(object) takes only the object');
             }
 
-            this.#batch(() => {
-                Object.entries(key).forEach(([k, v]) => this.set(k, v));
-            });
+            this.#batch(() => Object.entries(key).forEach(([k, v]) => this.set(k, v)));
 
             return;
         }
@@ -154,15 +152,15 @@ export class State {
 
             if (!this.#changed.size) return;
 
-            const changed = [...this.#changed];
+            const keys = [...this.#changed];
 
             this.#changed.clear();
 
             const snapshot = this.all();
 
-            this.#listeners.forEach(fn => fn(changed, snapshot));
+            this.#listeners.forEach(listener => listener(keys, snapshot));
 
-            if (this.#onchange) this.#onchange(changed, snapshot);
+            if (this.#onchange) this.#onchange(keys, snapshot);
         });
     }
 

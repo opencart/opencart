@@ -5,7 +5,7 @@
       <p><strong>{{ text_register }}</strong></p>
       <p>{{ text_register_account }}</p>
       <div class="text-end">
-        <a href="account/register.js" :click="link" class="btn btn-primary">{{ button_continue }}</a>
+        <a href="account/register.js" :click="dialog" class="btn btn-primary">{{ button_continue }}</a>
       </div>
     </div>
   </div>
@@ -13,6 +13,7 @@
     <div class="border rounded p-3 d-flex flex-column h-100">
       <form-submit @ref="form">
         <template>
+          <div @ref="alert"></div>
           <h2>{{ text_returning_customer }}</h2>
           <p><strong>{{ text_i_am_returning_customer }}</strong></p>
           <div class="mb-3">
@@ -20,9 +21,8 @@
           </div>
           <div class="mb-3">
             <input-password label="{{ entry_password }}" name="password" value="" class="mb-1"></input-password>
-            <a href="account/forgotten.js" :click="link">{{ text_forgotten }}</a>
+            <a href="account/forgotten.js" :click="dialog">{{ text_forgotten }}</a>
           </div>
-          <input type="hidden" name="redirect" value="{{ redirect }}" />
           <div class="text-end">
             <button-submit @ref="submitter">{{ button_login }}</button-submit>
           </div>

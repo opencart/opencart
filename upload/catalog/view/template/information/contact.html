@@ -69,22 +69,24 @@
   {% endfor %}
 </div>
 {% endif %}
-
 <form-submit @ref="form">
-  <fieldset>
-    <legend>{{ text_contact }}</legend>
-    <div class="mb-3">
-      <input-text label="{{ entry_name }}" name="name" value="{{ name }}" required></input-text>
+  <template>
+    <div @ref="alert"></div>
+    <fieldset>
+      <legend>{{ text_contact }}</legend>
+      <div class="mb-3">
+        <input-text label="{{ entry_name }}" name="name" value="{{ name }}" required></input-text>
+      </div>
+      <div class="mb-3">
+        <input-email label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
+      </div>
+      <div class="mb-3">
+        <input-textarea label="{{ entry_enquiry }}" name="enquiry" rows="10" required></input-textarea>
+      </div>
+      {{ captcha }}
+    </fieldset>
+    <div class="text-end">
+      <button-submit @ref="submitter">{{ button_submit }}</button-submit>
     </div>
-    <div class="mb-3">
-      <input-email label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
-    </div>
-    <div class="mb-3">
-      <input-textarea label="{{ entry_enquiry }}" name="enquiry" rows="10" required></input-textarea>
-    </div>
-    {{ captcha }}
-  </fieldset>
-  <div class="text-end">
-    <button-submit @ref="submitter">{{ button_submit }}</button-submit>
-  </div>
+  </template>
 </form-submit>

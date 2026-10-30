@@ -14,6 +14,16 @@ export default class AuthorizeUnlock extends WebComponent {
         return loader.template('account/authorize_unlock', [ language ]);
     }
 
+    async handleConnect() {
+        let json = await ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
+
+        if (json.has('token')) {
+            this.token = json.get('token');
+		}
+		
+		this.form.addListener(this.handleSubmit.bind(this));
+    }
+
     async handleSubmit(e) {
         e.preventDefault();
 
@@ -39,8 +49,6 @@ export default class AuthorizeUnlock extends WebComponent {
 
                 if (json.has('success')) {
                     this.form.state.set('success', json.get('success'));
-
-                    this.update();
                 }
             },
             handleError: (xhr, ajaxOptions, thrownError) => {

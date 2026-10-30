@@ -2,23 +2,24 @@
 <h2>{{ text_write }}</h2>
 {% if review_guest %}
 <form-submit @ref="form">
-  <div class="mb-3">
-    <input-text label="{{ entry_author }}" name="author" value="{{ customer }}" required />
-  </div>
-  <div class="mb-3">
-    <input-textarea label="{{ entry_review }}" name="text" rows="5" required></input-textarea>
-    <div class="invalid-feedback">{{ text_note }}</div>
-  </div>
-  <div class="row mb-3">
-    <label class="form-label required">{{ entry_rating }}</label>
-    <div id="input-rating">{{ entry_bad }}&nbsp; <input type="radio" name="rating" value="1" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="2" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="3" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="4" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="5" class="form-check-input" /> &nbsp;{{ entry_good }}</div>
-    <div id="error-rating" class="invalid-feedback"></div>
-  </div>
-  {{ captcha }}
-
-  <div class="text-end">
-    <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-  </div>
+  <template>
+    <div class="mb-3">
+      <input-text label="{{ entry_author }}" name="author" value="{{ customer }}" required />
+    </div>
+    <div class="mb-3">
+      <input-textarea label="{{ entry_review }}" name="text" rows="5" required></input-textarea>
+      <div class="invalid-feedback">{{ text_note }}</div>
+    </div>
+    <div class="row mb-3">
+      <label class="form-label required">{{ entry_rating }}</label>
+      <div id="input-rating">{{ entry_bad }}&nbsp; <input type="radio" name="rating" value="1" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="2" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="3" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="4" class="form-check-input" /> &nbsp; <input type="radio" name="rating" value="5" class="form-check-input" /> &nbsp;{{ entry_good }}</div>
+      <div id="error-rating" class="invalid-feedback"></div>
+    </div>
+    {{ captcha }}
+    <div class="text-end">
+      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+    </div>
+  </template>
 </form-submit>
 {% else %}
 {{ text_login }}

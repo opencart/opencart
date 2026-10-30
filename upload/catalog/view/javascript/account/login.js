@@ -28,7 +28,9 @@ export default class AccountLogin extends WebComponent {
 
         if (json.has('token')) {
             this.token = json.get('token');
-        }
+		}
+		
+		this.form.addListener(this.handleSubmit.bind(this));
     }
 
     async handleSubmit(e) {

@@ -5,12 +5,16 @@ import { loader, ajax, customer, local } from '../index.js';
 const language = await loader.language('account/password');
 
 export default class AccountPassword extends WebComponent {
-    render() {
+    async render() {
         //if (!customer.isLogged()) return;
 
         return loader.template('account/password', [ language ]);
     }
 
+	handleConnect() {
+		this.form.addListener(this.handleSubmit.bind(this));
+	}
+	
     async handleSubmit(e) {
         e.preventDefault();
 
@@ -33,8 +37,6 @@ export default class AccountPassword extends WebComponent {
                 // Display success message
                 if (json.has('success')) {
                     this.form.state.set('success', json.get('success'));
-
-                    this.update();
                 }
             },
             handleError: (e) => {

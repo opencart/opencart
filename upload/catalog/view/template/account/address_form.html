@@ -3,33 +3,33 @@
   <template>
     <fieldset>
       <div class="mb-3">
-        <input-text id="input-firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
+        <input-text @ref="firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
       </div>
       <div class="mb-3 ">
-        <input-text id="input-lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
+        <input-text @ref="lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
       </div>
       <div class="mb-3">
-        <input-text id="input-company" label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
+        <input-text @ref="company" label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
       </div>
       <div class="mb-3">
-        <input-text id="input-address-1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
+        <input-text @ref="address-1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
       </div>
       <div class="mb-3">
-        <input-text id="input-address-2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
+        <input-text @ref="address-2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
       </div>
       <div class="mb-3">
-        <input-text id="input-city" label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
+        <input-text @ref="city" label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
       </div>
       <div class="mb-3">
-        <input-text id="input-postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
+        <input-text @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
       </div>
       <div class="mb-3">
-        <input-country id="input-country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" postcode="1" target="input-postcode" required>
+        <input-country @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" postcode="1" target="input-postcode" required>
           <option value="0">{{ text_select }}</option>
         </input-country>
       </div>
       <div class="mb-3">
-        <input-zone id="input-zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" target="input-country" required>
+        <input-zone @ref="zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" target="country" required>
           <option value="0">{{ text_select }}</option>
         </input-zone>
       </div>

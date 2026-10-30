@@ -63,9 +63,9 @@ customElements.define('payment-method', class extends WebComponent {
         return template.parse(html, [ data, language ]);
     }
 
-    handleConnect() {
-
-    }
+	handleConnect() {
+		this.form.addListener(this.handleSubmit.bind(this));
+	}
 
     handleDisconnect() {
 

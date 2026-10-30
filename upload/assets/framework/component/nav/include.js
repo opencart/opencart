@@ -9,10 +9,6 @@ const config = await loader.config('default');
 // extension, so "../" can never reach a script outside the pages folder.
 const path_pattern = /^[\w\/-]+\.js$/;
 
-// Attribute names come from the query string, so only plain names are passed
-// on - and never on* names, which would be event handlers (onclick, ...).
-const attribute_pattern = /^(?!on)[a-z_][\w-]*$/i;
-
 customElements.define('nav-include', class extends WebComponent {
     static observedAttributes = ['src'];
 
@@ -54,9 +50,7 @@ customElements.define('nav-include', class extends WebComponent {
 			if (query === undefined) query = '';
 			
 			for (let [key, value] of (new URLSearchParams(query).entries())) {
-                if (!attribute_pattern.test(key)) continue;
-
-				element.setAttribute(key, value);
+                if (/^(?!on)[a-z_][\w-]*$/i.test(key)) element.setAttribute(key, value);
             }
 
 			console.log('Creating element:', name, 'with attributes:', query);
@@ -68,16 +62,12 @@ customElements.define('nav-include', class extends WebComponent {
             return '<div class="alert alert-danger">The page could not be loaded.</div>';
         }
     }
-
-	handleState(key) {
-		if (key != 'src') return;
-
-		this.update();
+	
+	handleState(keys, state) {
+		this.setAttribute('src', state.src);
 	}
 	
-	handleAttribute(key, value) {
-		if (key != 'src') return;
-
-        this.state.set('src', value);
+	handleAttribute(key, value) {		
+		this.update();
     };
 });

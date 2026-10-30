@@ -2,14 +2,25 @@ import { WebComponent } from '../../engine.js';
 
 customElements.define('form-submit', class extends WebComponent {
 	static formAssociated = true;
-
+	
 	/* Will only manage states listed here */
 	states() {
 		return {
 			submitting: false,
+			success: '',
 			error: [],
 			disabled: false
 		};
+	}
+
+	constructor() {
+		super();
+	
+		this.template = this.querySelector('template');
+	}
+
+	addListener(listener) {
+		this.element.addEventListener('submit', listener);
 	}
 
 	getInputs() {
@@ -25,41 +36,30 @@ customElements.define('form-submit', class extends WebComponent {
 	}
 
 	render() {
-		let template = this.querySelector('template');
-
-		return '<form @ref="form" @submit="handleSubmit">' + template.innerHTML + '</form>';
+		return `<form @ref="element">${this.template.innerHTML}</form>`;
 	}
 
-	handleConnect() { 
-		console.log('Connected');
-		console.dir(this);
+	handleConnect() {
+		if (this.submitter) this.submitter.addListener(this.handleSubmitter.bind(this));
 	}
 
-	handleSubmit(e) {
-		e.preventDefault();
+	handleSubmitter(e) {
 		// Custom submit logic here
-
 		console.log('Submitting form');
 
-
-
-		this.state.set('submitting', true);
-
+		this.element.requestSubmit();
 	}
 
 	// Handle state changes for the 'submitting' attribute
-	handleState(key, value) {
-		switch (key) {
-			case 'submitting':
-				this.handleSubmitting(value);
-				break;
-			case 'error':
-				this.handleError(value);
-				break;
-			case 'disabled':
-				this.handleDisabled(value);
-				break;
-		}
+	handleState(keys, state) {
+		if (keys.includes('submitting')) this.handleSubmitting(state.submitting);
+		if (keys.includes('error')) this.handleError(state.error);
+		if (keys.includes('success')) this.handleSuccess(state.success);
+		if (keys.includes('disabled')) this.handleDisabled(state.disabled);	
+	}
+	
+	handleAttribute() { 
+		this.state.set('disabled', this.hasAttribute('disabled'));
 	}
 
 	handleSubmitting(value) {
@@ -67,8 +67,6 @@ customElements.define('form-submit', class extends WebComponent {
     }
 
 	handleError(error) {
-		console.log(error);
-		
 		if (error.warning) {
 			this.alert.innerHTML = '<ui-alert type="warning">' + error.warning + '</ui-alert>';
 		}
@@ -82,6 +80,10 @@ customElements.define('form-submit', class extends WebComponent {
 				input.state.set('error', '');
 			}
 		}
+	}
+
+	handleSuccess(value) {
+		//if (this.submitter) this.submitter.state.set('success', value);
 	}
 
 	handleDisabled(value) {

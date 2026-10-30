@@ -7,7 +7,8 @@ customElements.define('button-submit', class extends WebComponent {
         'submitting',
         'disabled'
 	];
-	
+	listeners = [];
+
     /* Will only manage states listed here */
     states() {
         return {
@@ -22,33 +23,45 @@ customElements.define('button-submit', class extends WebComponent {
         this.html = this.innerHTML;
 	}
 
+	addListener(listener) {
+		this.listeners.push(listener);
+	}
+
     render() {
-        return '<button type="submit" @ref="button" @click="handleClick" class="btn btn-primary"' + (this.state.get('disabled') ? ' disabled' : '') + '>' + this.html + '</button>';
+        return `<button type="submit" @ref="element" class="btn btn-primary"${this.state.get('disabled') ? ' disabled' : ''}>${this.html}</button>`;
     }
 
+	handleConnect() {
+		for (let listener of this.listeners) this.element.addEventListener('click', listener);
+	}
+
+	handleDisconnect() {
+		for (let listener of this.listeners) this.element.removeEventListener('click', listener);
+	}
+
 	// Handle state changes for the 'submitting' attribute
-	handleState(key, value) {
-		switch (key) {
-			case 'submitting':
-				if (value) {
-					this.button.style.width = this.offsetWidth + 'px';
-					this.button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
-					this.button.toggleAttribute('disabled', true);
-				} else {
-					this.button.style.width = '';
-					this.button.innerHTML = this.html;
-					this.button.toggleAttribute('disabled', false);
-				}
-				break;
-			case 'disabled':
-				this.button.toggleAttribute('disabled', value);
-				break;
+	handleState(keys, state) {
+		if (keys.includes('submitting')) this.handleSubmitting(state.submitting);
+		if (keys.includes('disabled')) this.handleDisabled(state.disabled);
+	}
+
+	handleAttribute() { 
+		this.state.set('disabled', this.hasAttribute('disabled'));
+	}
+
+	handleSubmitting(value) {
+		if (value) {
+			this.element.style.width = this.offsetWidth + 'px';
+			this.element.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+			this.element.toggleAttribute('disabled', true);
+		} else {
+			this.element.style.width = '';
+			this.element.innerHTML = this.html;
+			this.element.toggleAttribute('disabled', false);
 		}
 	}
 
-	handleClick() { 
-		console.log('Button clicked');
-
-		this.internal.form.requestSubmit();
+	handleDisabled(value) {
+		this.element.toggleAttribute('disabled', value);
 	}
 }); 

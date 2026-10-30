@@ -55,8 +55,8 @@ import { stylesheet } from './stylesheet.js';
 const camel = (name) => name.replace(/^[^a-zA-Z0-9]+/, '').split(/[-_:.\s]+/).filter(Boolean).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
 
 export class WebComponent extends HTMLElement {
-    static formAssociated = false;
 	static shadow = true;
+    static formAssociated = false;
 	
     #renders = 0;
     // Make sure reactive attributes don't work until after render has been called.
@@ -82,7 +82,7 @@ export class WebComponent extends HTMLElement {
 		this.global = Global;
 		
         // Attach Internals
-        this.internal = this.attachInternals();
+        if (this.constructor.formAssociated) this.internal = this.attachInternals();
 
         this.#style();
     }
@@ -168,12 +168,10 @@ export class WebComponent extends HTMLElement {
         if (typeof this.handleAttribute == 'function') await this.handleAttribute(name, value_new, value_old);
     }
 
-    async stateChangedCallback(changed, state) {
-        if (!this.#rendered || !changed.length) return;
+    async stateChangedCallback(keys, state) {
+        if (!this.#rendered || !keys.length) return;
 
-        if (typeof this.handleStates == 'function') await this.handleStates(changed, state);
-            
-        // Default handler for state changes
-        if (typeof this.handleState == 'function') changed.forEach(async key => await this.handleState(key, state[key], state));
+		// Call the handleState method if it exists to handle state changes.
+        if (typeof this.handleState == 'function') await this.handleState(keys, state);
 	}
 }

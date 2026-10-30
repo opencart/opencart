@@ -104,17 +104,21 @@ export class InputText extends WebComponent {
         this.state.set('value', e.target.value);
     }
 	
-	handleState(name, value, state) {
-		if (['required', 'disabled', 'readonly'].includes(name)) {
-			this.toggleAttribute(name, value);
+	handleState(keys, state) {
+		for (let key of keys) {
+			let value = state[key];
 
-			if (this.input) this.input.toggleAttribute(name, value);
+			if (['required', 'disabled', 'readonly'].includes(key)) {
+				this.toggleAttribute(key, value);
 
-			return;
+				if (this.input) this.input.toggleAttribute(key, value);
+
+				continue;
+			}
+
+			if (key === 'value') this.handleValue(value);	
+			if (key === 'error') this.handleError(value);
 		}
-
-		if (name === 'value') this.handleValue(value);	
-		if (name === 'error') this.handleError(value);
 	}
 	
 	handleAttribute(name, value) {

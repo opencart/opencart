@@ -114,9 +114,11 @@ Global.addListener('dialog', async (e) => {
 	console.log('Opening modal for href:', href);
 
     let dialog = Global.get('dialog');
-    
-	dialog.innerHTML = '<nav-dialog src="' + href + '"></nav-dialog>';
 	
+	let element = dialog.querySelector('nav-dialog');
+	
+	element.setAttribute('src', href);
+		
 	dialog.show();
 });
 

@@ -1,9 +1,6 @@
 import { WebComponent } from '../index.js';
 import { loader, ajax, customer, local } from '../index.js';
 
-// Config
-const config = await loader.config('default');
-
 // Language
 const language = await loader.language('account/forgotten');
 
@@ -15,7 +12,7 @@ export default class AccountForgotten extends WebComponent {
     }
 
     render() {
-        //if (customer.isLogged()) return;
+        if (customer.isLogged()) return;
 
         return loader.template('account/forgotten', [ language ]);
     }
@@ -25,7 +22,9 @@ export default class AccountForgotten extends WebComponent {
 
         if (json.has('token')) {
             this.token = json.get('token');
-        }
+		}
+		
+		this.form.addListener(this.handleSubmit.bind(this));
     }
 
     async handleSubmit(e) {

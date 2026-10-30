@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, customer, local } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Language
 const language = await loader.language('account/wishlist');
@@ -17,6 +17,10 @@ export default class AccountWishlist extends WebComponent {
        return loader.template('account/wishlist', [ data, language ]);
     }
 
+	onConnect() {
+		this.form.addListener(this.add.bind(this));
+	}
+
     add(e) {
         e.preventDefault();
 
@@ -28,7 +32,7 @@ export default class AccountWishlist extends WebComponent {
 
         let form = this.form.getData();
 
-        await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token={{ customer_token }}', form, {
+        await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
                 this.form.state.set('submitting', true);
             },

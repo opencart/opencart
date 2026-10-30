@@ -63,5 +63,13 @@ customElements.define('nav-dialog', class extends WebComponent {
 
             return '<div class="alert alert-danger">The page could not be loaded.</div>';
         }
-    }
+	}
+	
+	handleState(keys, state) {
+		this.setAttribute('src', state.src);
+	}
+
+	handleAttribute(key, value) {		
+		this.update();
+    };
 });

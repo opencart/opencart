@@ -13,7 +13,11 @@ export default class InformationGdpr extends WebComponent {
 
     async render() {
         return loader.template('information/gdpr', [ language ]);
-    }
+	}
+	
+	handleConnect() {
+		this.form.addListener(this.handleSubmit.bind(this));
+	}
 
     handleChange() {
         if (this.value == 'remove') {

@@ -13,7 +13,11 @@ export default class AccountNewsletter extends WebComponent {
         data.set('newsletter', customer.getNewsletter());
 
         return loader.template('account/newsletter', [data, language]);
-    }
+	}
+	
+	async handleConnect() {
+		this.form.addListener(this.handleSubmit.bind(this));
+	}
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -38,8 +42,6 @@ export default class AccountNewsletter extends WebComponent {
                 // Display success message
                 if (json.has('success')) {
                     this.form.state.set('success', json.get('success'));
-
-                    this.update();
                 }
             },
             handleError: (e) => {

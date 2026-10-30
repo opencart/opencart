@@ -22,42 +22,44 @@
   <br />
   <div id="shipping-new" {% if !addresses %}hidden{% endif %}>
     <form-submit @ref="form">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col mb-3">
-          <input-text label="{{ entry_firstname }}" name="firstname" value="" required></input-text>
+      <template>
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col mb-3">
+            <input-text label="{{ entry_firstname }}" name="firstname" value="" required></input-text>
+          </div>
+          <div class="col mb-3">
+            <input-text label="{{ entry_lastname }}" name="lastname" value="" required></input-text>
+          </div>
+          <div class="col mb-3">
+            <input-text label="{{ entry_company }}" name="company" value=""></input-text>
+          </div>
+          <div class="col mb-3">
+            <input-text label="{{ entry_address_1 }}" name="address_1" value="" required></input-text>
+          </div>
+          <div class="col mb-3">
+            <input-text label="{{ entry_address_2 }}" name="address_2" value=""></input-text>
+          </div>
+          <div class="col mb-3">
+            <input-text label="{{ entry_city }}" name="city" value="" required></input-text>
+          </div>
+          <div class="col mb-3">
+            <input-text label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
+          </div>
+          <div class="col mb-3">
+            <input-country label="{{ entry_country }}" name="country_id" value="{{ country_id }}" id="input-country" postcode="1" target="input-postcode" required>
+              <option value="0">{{ text_select }}</option>
+            </input-country>
+          </div>
+          <div class="col mb-3">
+            <input-zone label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" id="input-zone" required>
+              <option value="0">{{ text_select }}</option>
+            </input-zone>
+          </div>
         </div>
-        <div class="col mb-3">
-          <input-text label="{{ entry_lastname }}" name="lastname" value="" required></input-text>
+        <div class="text-end mb-3">
+          <button-submit @ref="submitter">{{ button_continue }}</button-submit>
         </div>
-        <div class="col mb-3">
-          <input-text label="{{ entry_company }}" name="company" value=""></input-text>
-        </div>
-        <div class="col mb-3">
-          <input-text label="{{ entry_address_1 }}" name="address_1" value="" required></input-text>
-        </div>
-        <div class="col mb-3">
-          <input-text label="{{ entry_address_2 }}" name="address_2" value=""></input-text>
-        </div>
-        <div class="col mb-3">
-          <input-text label="{{ entry_city }}" name="city" value="" required></input-text>
-        </div>
-        <div class="col mb-3">
-          <input-text label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
-        </div>
-        <div class="col mb-3">
-          <input-country label="{{ entry_country }}" name="country_id" value="{{ country_id }}" id="input-country" postcode="1" target="input-postcode" required>
-            <option value="0">{{ text_select }}</option>
-          </input-country>
-        </div>
-        <div class="col mb-3">
-          <input-zone label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" id="input-zone" required>
-            <option value="0">{{ text_select }}</option>
-          </input-zone>
-        </div>
-      </div>
-      <div class="text-end mb-3">
-        <button-submit @ref="submitter">{{ button_continue }}</button-submit>
-      </div>
+      </template>
     </form-submit>
   </div>
 </fieldset>

@@ -66,7 +66,7 @@ $('#ip').on('click', '.pagination a', function(e) {
 
 $('#button-ip-add').on('click', function() {
     $.ajax({
-        url: 'index.php?route=extension/opencart/fraud/ip.addip&user_token={{ user_token }}',
+        url: 'index.php?route=extension/opencart/fraud/ip.addip&user_token={{ user_token|escape('js') }}',
         type: 'post',
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($('#input-ip').val()),
@@ -86,7 +86,7 @@ $('#button-ip-add').on('click', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#ip').load('index.php?route=extension/opencart/fraud/ip.ip&user_token={{ user_token }}');
+                $('#ip').load('index.php?route=extension/opencart/fraud/ip.ip&user_token={{ user_token|escape('js') }}');
 
                 $('#input-ip').val('');
             }
@@ -101,7 +101,7 @@ $('#ip').on('click', 'button', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=extension/opencart/fraud/ip.removeip&user_token={{ user_token }}',
+        url: 'index.php?route=extension/opencart/fraud/ip.removeip&user_token={{ user_token|escape('js') }}',
         type: 'post',
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($(element).val()),
@@ -121,7 +121,7 @@ $('#ip').on('click', 'button', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#ip').load('index.php?route=extension/opencart/fraud/ip.ip&user_token={{ user_token }}');
+                $('#ip').load('index.php?route=extension/opencart/fraud/ip.ip&user_token={{ user_token|escape('js') }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

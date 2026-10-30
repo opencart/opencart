@@ -11,7 +11,7 @@
             <li><button type="submit" form="form-comment" formaction="{{ approve }}" class="dropdown-item"><i class="fa-solid fa-check text-success"></i> {{ button_approve }}</button></li>
             <li><button type="submit" form="form-comment" formaction="{{ spam }}" class="dropdown-item"><i class="fa-solid fa-ban text-danger"></i> {{ button_spam }}</button></li>
             <li><hr class="dropdown-divider"></li>
-            <li><button type="submit" form="form-comment" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+            <li><button type="submit" form="form-comment" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm|escape('js') }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>

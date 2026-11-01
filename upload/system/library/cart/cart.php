@@ -64,6 +64,19 @@ class Cart {
 	}
 
 	/**
+	 * Transfer
+	 *
+	 * Moves the cart rows of a previous session ID to the current one (used after the session ID is regenerated on login).
+	 *
+	 * @param string $session_id previous session ID
+	 *
+	 * @return void
+	 */
+	public function transfer(string $session_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `session_id` = '" . $this->db->escape($this->session->getId()) . "', `date_added` = NOW() WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `session_id` = '" . $this->db->escape($session_id) . "'");
+	}
+
+	/**
 	 * Get Products
 	 *
 	 * @return array<int, array<string, mixed>> product records

@@ -92,6 +92,19 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// New session ID after login, so a session ID known before login cannot be reused
+			$this->session->regenerate();
+
+			$option = [
+				'expires'  => $this->config->get('config_session_expire') ? time() + (int)$this->config->get('config_session_expire') : 0,
+				'path'     => $this->config->get('session_path'),
+				'secure'   => $this->request->server['HTTPS'],
+				'httponly' => true,
+				'samesite' => $this->config->get('config_session_samesite')
+			];
+
+			setcookie($this->config->get('session_name'), $this->session->getId(), $option);
+
 			$this->session->data['user_token'] = oc_token(32);
 
 			// Remove login token so it cannot be used again.

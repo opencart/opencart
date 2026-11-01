@@ -431,7 +431,7 @@ $('#input-customer').autocomplete({
             for (i in item['address']) {
                 var address = item['address'][i];
 
-                html += '<option value="' + address['address_id'] + '">' + decodeHTMLEntities(address['firstname'] + ' ' + address['lastname'] + ', ' + (address['company'] ? address['company'] + ', ' : '') + address['address_1'] + ', ' + address['city'] + ', ' + address['country']) + '</option>';
+                html += $('<option>').val(address['address_id']).text(decodeHTMLEntities(address['firstname'] + ' ' + address['lastname'] + ', ' + (address['company'] ? address['company'] + ', ' : '') + address['address_1'] + ', ' + address['city'] + ', ' + address['country']))[0].outerHTML;
             }
 
             $('#input-payment-address').html(html);

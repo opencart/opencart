@@ -1156,7 +1156,7 @@ $('#input-customer').autocomplete({
         html = '<option value="0">{{ text_none|escape('js') }}</option>';
 
         for (i in item['address']) {
-            html += '<option value="' + item['address'][i]['address_id'] + '">' + decodeHTMLEntities(item['address'][i]['firstname']) + ' ' + decodeHTMLEntities(item['address'][i]['lastname']) + ', ' + (item['address'][i]['company'] ? decodeHTMLEntities(item['address'][i]['company']) + ', ' : '') + decodeHTMLEntities(item['address'][i]['address_1']) + ', ' + decodeHTMLEntities(item['address'][i]['city']) + ', ' + decodeHTMLEntities(item['address'][i]['country']) + '</option>';
+            html += $('<option>').val(item['address'][i]['address_id']).text(decodeHTMLEntities(item['address'][i]['firstname']) + ' ' + decodeHTMLEntities(item['address'][i]['lastname']) + ', ' + (item['address'][i]['company'] ? decodeHTMLEntities(item['address'][i]['company']) + ', ' : '') + decodeHTMLEntities(item['address'][i]['address_1']) + ', ' + decodeHTMLEntities(item['address'][i]['city']) + ', ' + decodeHTMLEntities(item['address'][i]['country']))[0].outerHTML;
         }
 
         $('#input-payment-address').html(html);
@@ -1226,7 +1226,7 @@ $('#form-customer').on('submit', function(e) {
             if (json['success']) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+                $('#output-customer').html($('<a>').attr('href', 'index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + encodeURIComponent($('#input-customer-id').val())).attr('target', '_blank').text($('#input-firstname').val() + ' ' + $('#input-lastname').val()));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

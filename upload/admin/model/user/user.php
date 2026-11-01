@@ -660,6 +660,27 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Authorize Attempts
+	 *
+	 * Sum of failed code entries over all unexpired authorize records of a user.
+	 *
+	 * @param int $user_id primary key of the user record
+	 *
+	 * @return int
+	 *
+	 * @example
+	 *
+	 * $this->load->model('user/user');
+	 *
+	 * $attempts = $this->model_user_user->getAuthorizeAttempts($user_id);
+	 */
+	public function getAuthorizeAttempts(int $user_id): int {
+		$query = $this->db->query("SELECT SUM(`total`) AS `attempts` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `date_expire` > NOW()");
+
+		return (int)$query->row['attempts'];
+	}
+
+	/**
 	 * Get Authorizes
 	 *
 	 * Get the record of the user authorize records in the database.

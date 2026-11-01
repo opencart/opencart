@@ -25,7 +25,14 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
 
-		if ($token_info && $token_info['total'] > 2) {
+		// Failed entries count over all tokens of the user, so a new cookie does not reset the lock
+		if ($token_info) {
+			$attempts = (int)$token_info['attempts'];
+		} else {
+			$attempts = $this->model_user_user->getAuthorizeAttempts($this->user->getId());
+		}
+
+		if ($attempts > 2) {
 			$this->response->redirect($this->url->link('common/authorize.reset', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
@@ -111,7 +118,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if (!$token_info) {
 			$json['redirect'] = $this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true);
 			// If token is valid and total attempts are more than 2, redirect to unlock page.
-		} elseif ($token_info['total'] > 2) {
+		} elseif ($token_info['attempts'] > 2) {
 			$json['redirect'] = $this->url->link('common/authorize.reset', 'user_token=' . $this->session->data['user_token'], true);
 		}
 
@@ -156,7 +163,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		if (!$token_info) {
 			$json['redirect'] = $this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true);
-		} elseif ($token_info['total'] > 2) {
+		} elseif ($token_info['attempts'] > 2) {
 			$json['redirect'] = $this->url->link('common/authorize.reset', 'user_token=' . $this->session->data['user_token'], true);
 		} elseif (!isset($post_info['code']) || !isset($this->session->data['code']) || ($post_info['code'] !== $this->session->data['code'])) {
 			$total = $token_info['total'] + 1;
@@ -213,7 +220,13 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
 
-		if (!$token_info || $token_info['total'] <= 2) {
+		if ($token_info) {
+			$attempts = (int)$token_info['attempts'];
+		} else {
+			$attempts = $this->model_user_user->getAuthorizeAttempts($this->user->getId());
+		}
+
+		if ($attempts <= 2) {
 			// Redirect if already have a valid token.
 			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
 		}
@@ -249,7 +262,13 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
 
-		if (!$token_info || $token_info['total'] <= 2) {
+		if ($token_info) {
+			$attempts = (int)$token_info['attempts'];
+		} else {
+			$attempts = $this->model_user_user->getAuthorizeAttempts($this->user->getId());
+		}
+
+		if ($attempts <= 2) {
 			$json['redirect'] = $this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true);
 		}
 

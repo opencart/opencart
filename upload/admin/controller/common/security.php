@@ -185,9 +185,9 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// Check the chosen directory is not in the public webspace C:/xampp/htdocs
-			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
+			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT']));
 
-			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
+			if (!str_starts_with($root, rtrim($path, '/') . '/')) {
 				$json['error'] = $this->language->get('error_storage_root');
 			}
 

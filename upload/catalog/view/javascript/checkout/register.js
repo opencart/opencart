@@ -20,8 +20,6 @@ customElements.define('checkout-register', class extends WebComponent {
     async render() {
         let data = new Map();
 
-        data.set('token', this.token);
-
         return loader.template('checkout/register', [data, language, config]);
     }
 
@@ -62,23 +60,24 @@ customElements.define('checkout-register', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('redirect')) {
                     location = json.get('redirect');
-                }x
+                }
 
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.form.state.set('success', json.get('success'));
+					this.form.setSuccess(json.get('success'));
+					
                     this.form.state.set('disabled', true);
 
                     if ($('#input-register').prop('checked')) {

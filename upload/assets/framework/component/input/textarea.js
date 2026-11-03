@@ -1,6 +1,6 @@
 import { WebComponent } from '../../engine.js';
 
-class InputTextarea extends WebComponent {
+export class InputTextarea extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
         'value',
@@ -59,7 +59,7 @@ class InputTextarea extends WebComponent {
     render() {
 		return `
 			<label @ref="label" for="input">${this.label}</label>
-			<textarea name="${this.name}" id="input" class="form-control"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @input="onInput" @change="onChange">${this.value}</textarea>
+			<textarea name="${this.name}" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @input="onInput" @change="onChange" class="form-control">${this.value}</textarea>
 			<div @ref="error" class="invalid-feedback"></div>
 		`;
 	}

@@ -35,18 +35,18 @@ customElements.define('review-form', class extends WebComponent {
 
         ajax.post('action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.token + '&product_id=' + this.getAttribute('product_id'), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 if (json.has('success')) {
-                    this.form.state.set('success', json.get('success'));
+                    this.form.setSuccess(json.get('success'));
                 }
             },
             handleError: (xhr, ajaxOptions, thrownError) => {

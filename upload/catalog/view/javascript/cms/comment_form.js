@@ -39,10 +39,10 @@ customElements.define('comment-form', class extends WebComponent {
 
         await ajax.post('action.php?route=cms/comment', form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 console.log(json);

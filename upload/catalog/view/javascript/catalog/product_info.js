@@ -134,20 +134,20 @@ export default class ProductInfo extends WebComponent {
 
         await ajax.post('action.php?route=checkout/cart.add', form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: async (json) => {
                 // Display error messages
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.setSuccess(json.get('success'));
 
                     // Code to use [] with js
                     let option = new Map();

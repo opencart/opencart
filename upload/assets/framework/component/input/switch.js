@@ -3,7 +3,8 @@ import { WebComponent } from '../../engine.js';
 customElements.define('input-switch', class extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
-        'value',
+		'value',
+		'checked',
         'required',
         'disabled',
         'readonly'
@@ -45,21 +46,13 @@ customElements.define('input-switch', class extends WebComponent {
 		`;
     }
 
-    handleChange(e) {
-		this.checked = e.target.checked;
-		
+    handleChange(e) {		
 		this.toggleAttribute('checked', e.target.checked);
-
-		if (this.input) this.input.toggleAttribute('checked', e.target.checked);
     }
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.
-    handleChecked(value) {
-        value = value ?? false;
-
-        this.toggleAttribute('checked', value);
-
-        if (this.input) this.input.toggleAttribute('checked', value);
+    handleChecked(name, value) {
+		this.update();
     }
 
     setError(error) {

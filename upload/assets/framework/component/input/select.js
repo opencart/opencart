@@ -50,30 +50,6 @@ export class InputSelect extends WebComponent {
         `;
     }
 
-    get label() {
-        return this.hasAttribute('label') ? this.getAttribute('label') : '';
-    }
-
-    get name() {
-        return this.hasAttribute('name') ? this.getAttribute('name') : '';
-    }
-
-  	get value() {
-		return this.getAttribute('value');
-	}
-	
-	get required() {
-		return this.hasAttribute('required');
-	}
-
-	get disabled() {
-		return this.hasAttribute('disabled');
-	}
-
-	get readonly() {
-		return this.hasAttribute('readonly');
-	}
-
 	constructor() { 
 		super();
 
@@ -84,23 +60,14 @@ export class InputSelect extends WebComponent {
 		this.#options.push({ text, value });
 	}
 
-	render() {
-		return `
-			<label @ref="label" for="input">${this.label}</label>
-			<select name="${this.name}" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @change="onChange" class="form-control">${this.html}${this.#options.map(item => `<option value="${item.value}"${item.value === this.value ? ' selected' : ''}>${item.text}</option>`).join('')}</select>
-			<div @ref="error" class="invalid-feedback"></div>
-        `;
+	get label() {
+		return this.hasAttribute('label') ? this.getAttribute('label') : '';
 	}
-	
-    handleConnect() {
-        this.internal.setFormValue(this.getAttribute('value'));
+
+	get name() {
+		return this.getAttribute('name');
 	}
-	
-    // A native change event does not leave the shadow root, so send it on.
-    onChange(e) {
-        this.state.set('value', e.target.value);
-	}
-		
+
 	get value() {
 		return this.getAttribute('value');
 	}
@@ -117,11 +84,22 @@ export class InputSelect extends WebComponent {
 		return this.hasAttribute('readonly');
 	}
 
+	render() {
+		return `
+			<label @ref="label" for="input">${this.label}</label>
+			<select name="${this.name}" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @change="onChange" class="form-control">${this.html}${this.#options.map(item => `<option value="${item.value}"${item.value === this.value ? ' selected' : ''}>${item.text}</option>`).join('')}</select>
+			<div @ref="error" class="invalid-feedback"></div>
+        `;
+	}
+		
+    // A native change event does not leave the shadow root, so send it on.
+    onChange(e) {
+        this.setAttribute('value', e.target.value);
+	}
+	
     handleValue(value) {
         this.internal.setFormValue(value);
 
-        this.setAttribute('value', value);
-		
 		this.querySelectorAll('option').forEach(option => option.toggleAttribute('selected', option.value === value));
     
         if (this.input.validity.valid) {

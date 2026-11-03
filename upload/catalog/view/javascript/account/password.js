@@ -12,7 +12,7 @@ export default class AccountPassword extends WebComponent {
     }
 
 	handleConnect() {
-		this.form.addListener(this.handleSubmit.bind(this));
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
 	}
 	
     async handleSubmit(e) {
@@ -24,19 +24,19 @@ export default class AccountPassword extends WebComponent {
 
         await ajax.post('action.php?route=account/password.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.form.state.set('success', json.get('success'));
+                    this.form.setSuccess(json.get('success'));
                 }
             },
             handleError: (e) => {

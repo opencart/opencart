@@ -30,19 +30,19 @@ export default class CheckoutCart extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add&language=' + local.get('language'), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.state.set('success', json.get('success'));
+                    this.form.setSuccess(json.get('success'));
 
                     //console.log(Object.fromEntries(form));
                     for (let product of json['products']) {
@@ -65,10 +65,10 @@ export default class CheckoutCart extends WebComponent {
 
         ajax.post('', {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 console.log(json);
@@ -78,11 +78,11 @@ export default class CheckoutCart extends WebComponent {
                 }
 
                 if (json.has('error')) {
-                    $('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
+                    //$('#alert').prepend('<ui-alert type="danger">' + json['error'] + '</ui-alert>');
                 }
 
                 if (json.has('success')) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
+                   // $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.get('success') + '</ui-alert>');
 
                     //$('#shopping-cart').load('action.php?route=checkout/cart.list&language={{ language }}');
                 }

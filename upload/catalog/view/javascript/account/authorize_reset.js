@@ -21,7 +21,7 @@ export default class AuthorizeReset extends WebComponent {
             this.token = json.get('token');
 		}
 		
-		this.form.addListener(this.handleSubmit.bind(this));
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
 	}
 	
     async handleSubmit(e) {
@@ -33,10 +33,10 @@ export default class AuthorizeReset extends WebComponent {
 
         await ajax.post('action.php?route=account/authorize.send&language=' + local.get('language'), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('redirect')) {
@@ -44,11 +44,11 @@ export default class AuthorizeReset extends WebComponent {
                 }
 
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 if (json.has('success')) {
-                    this.form.state.set('success', json.get('success'));
+                    this.form.setSuccess(json.get('success'));
                 }
             },
             handleError: (xhr, ajaxOptions, thrownError) => {

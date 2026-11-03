@@ -33,22 +33,22 @@ export default class AccountRegister extends WebComponent {
             this.token = json.get('token');
 		}
 
-		this.form.addEventListener('[submit]', (e) => this.handleSubmit(e));
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
 	}
 
 	async handleSubmit(e) {
-		e.preventDefault();
-		
         //if (customer.isLogged()) return;
 
 		let form = this.form.getData();
 
+		console.log('Form data:', Object.fromEntries(form));
+		
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
 			handleSend: () => {
-                this.form.setSubmitting(true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.setSubmitting(false);
+                this.form.toggleAttribute('submitting', false);
             },
 			handleSuccess: (json) => {
 				console.log('onSuccess', json);
@@ -59,8 +59,9 @@ export default class AccountRegister extends WebComponent {
                 }
 
                 // Display success message
-                if (json.has('success')) {
-                    this.form.setSuccess(json.get('success'));
+				if (json.has('success')) {
+					console.log('Success');
+                   //this.form.setSuccess(json.get('success'));
                 }
             },
             handleError: (e) => {

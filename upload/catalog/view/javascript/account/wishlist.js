@@ -18,7 +18,7 @@ export default class AccountWishlist extends WebComponent {
     }
 
 	onConnect() {
-		this.form.addListener(this.add.bind(this));
+		this.form.addEventListener('form-submit', this.add.bind(this));
 	}
 
     add(e) {
@@ -34,10 +34,10 @@ export default class AccountWishlist extends WebComponent {
 
         await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 console.log(json);

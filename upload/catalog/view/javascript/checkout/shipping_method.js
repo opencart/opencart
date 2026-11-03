@@ -25,7 +25,7 @@ customElements.define('shipping-method', class extends WebComponent {
 	}
 	
 	handleConnect() {
-		this.form.addListener(this.handleSubmit.bind(this));
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
 	}
 
     async getMethods(e) {
@@ -35,14 +35,14 @@ customElements.define('shipping-method', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/shipping_method.quote&language=' + local.get('language'), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 if (json.has('shipping_methods')) {
@@ -112,10 +112,10 @@ customElements.define('shipping-method', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/shipping_method.save&language=' + local.get('language'), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: async (json) => {
                 console.log(json);

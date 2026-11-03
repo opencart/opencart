@@ -69,10 +69,10 @@ customElements.define('shipping-address', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/shipping_address.save&language=' + local.get('language'), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('redirect')) {
@@ -80,7 +80,7 @@ customElements.define('shipping-address', class extends WebComponent {
                 }
 
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 if (json.has('success')) {

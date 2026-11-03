@@ -23,14 +23,14 @@ export default class CatalogCompare extends WebComponent {
 
         ajax.post('action.php?route=checkout/cart.add', form, {
             beforeSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: async (json) => {
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message

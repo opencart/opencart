@@ -112,8 +112,6 @@ export class InputText extends WebComponent {
     setError(error) {
         this.input.classList.toggle('is-invalid', !!error);
 
-		console.log('is-invalid', error);
-
         this.error.textContent = error ?? '';
 
 		if (error) {

@@ -45,34 +45,61 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_cms_article->getArticles();
 	 */
 	public function getArticles(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`)";
 
-		if (!empty($data['filter_search'])) {
+		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "article_to_tag` `a2t` ON (`a`.`article_id` = `a2t`.`article_id`) LEFT JOIN `" . DB_PREFIX . "tag` `t` ON (`a2t`.`tag_id` = `t`.`tag_id`)";
+		}
+
+		$sql .= " WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
+
+		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
 			$sql .= " AND (";
 
-			$implode = [];
+			if (!empty($data['filter_search'])) {
+				$implode = [];
 
-			$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
-			$words = array_filter($words);
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+				$words = array_filter($words);
 
-			foreach ($words as $word) {
-				$implode[] = "`ad`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				foreach ($words as $word) {
+					$implode[] = "`ad`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
+
+				if ($implode) {
+					$sql .= " (" . implode(" OR ", $implode) . ")";
+				}
+
+				$sql .= " OR `ad`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+
+				$implode = [];
+
+				foreach ($words as $word) {
+					$implode[] = "`t`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
+
+				if ($implode) {
+					$sql .= " OR (" . implode(" OR ", $implode) . ")";
+				}
 			}
 
-			if ($implode) {
-				$sql .= " (" . implode(" OR ", $implode) . ")";
+			if (!empty($data['filter_search']) && !empty($data['filter_tag'])) {
+				$sql .= " OR ";
 			}
 
-			$sql .= " OR `ad`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+			if (!empty($data['filter_tag'])) {
+				$implode = [];
 
-			$implode = [];
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+				$words = array_filter($words);
 
-			foreach ($words as $word) {
-				$implode[] = "`ad`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
-			}
+				foreach ($words as $word) {
+					$implode[] = "`t`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
 
-			if ($implode) {
-				$sql .= " OR (" . implode(" OR ", $implode) . ")";
+				if ($implode) {
+					$sql .= " (" . implode(" OR ", $implode) . ")";
+				}
 			}
 
 			$sql .= ")";
@@ -85,6 +112,8 @@ class Article extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_author'])) {
 			$sql .= " AND `a`.`author` = '" . $this->db->escape($data['filter_author']) . "'";
 		}
+
+		$sql .= " GROUP BY `a`.`article_id`";
 
 		$sort_data = [
 			'rating',
@@ -166,34 +195,61 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $article_total = $this->model_cms_article->getTotalArticles();
 	 */
 	public function getTotalArticles(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
+		$sql = "SELECT COUNT(DISTINCT `a`.`article_id`) AS `total` FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`)";
 
-		if (!empty($data['filter_search'])) {
+		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "article_to_tag` `a2t` ON (`a`.`article_id` = `a2t`.`article_id`) LEFT JOIN `" . DB_PREFIX . "tag` `t` ON (`a2t`.`tag_id` = `t`.`tag_id`)";
+		}
+
+		$sql .= " WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `a2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `a`.`status` = '1'";
+
+		if (!empty($data['filter_search']) || !empty($data['filter_tag'])) {
 			$sql .= " AND (";
 
-			$implode = [];
+			if (!empty($data['filter_search'])) {
+				$implode = [];
 
-			$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
-			$words = array_filter($words);
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+				$words = array_filter($words);
 
-			foreach ($words as $word) {
-				$implode[] = "`ad`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				foreach ($words as $word) {
+					$implode[] = "`ad`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
+
+				if ($implode) {
+					$sql .= " (" . implode(" OR ", $implode) . ")";
+				}
+
+				$sql .= " OR `ad`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+
+				$implode = [];
+
+				foreach ($words as $word) {
+					$implode[] = "`t`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
+
+				if ($implode) {
+					$sql .= " OR (" . implode(" OR ", $implode) . ")";
+				}
 			}
 
-			if ($implode) {
-				$sql .= " (" . implode(" OR ", $implode) . ")";
+			if (!empty($data['filter_search']) && !empty($data['filter_tag'])) {
+				$sql .= " OR ";
 			}
 
-			$sql .= " OR `ad`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+			if (!empty($data['filter_tag'])) {
+				$implode = [];
 
-			$implode = [];
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+				$words = array_filter($words);
 
-			foreach ($words as $word) {
-				$implode[] = "`ad`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
-			}
+				foreach ($words as $word) {
+					$implode[] = "`t`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+				}
 
-			if ($implode) {
-				$sql .= " OR (" . implode(" OR ", $implode) . ")";
+				if ($implode) {
+					$sql .= " (" . implode(" OR ", $implode) . ")";
+				}
 			}
 
 			$sql .= ")";

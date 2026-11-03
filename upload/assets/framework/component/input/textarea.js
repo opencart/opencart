@@ -3,22 +3,11 @@ import { WebComponent } from '../../engine.js';
 class InputTextarea extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
-        'name',
         'value',
         'required',
         'disabled',
         'readonly'
     ];
-
-    states() {
-        return {
-            value: this.getAttribute('value') ?? '',
-            error: '',
-            required: this.hasAttribute('required'),
-            disabled: this.hasAttribute('disabled'),
-            readonly: this.hasAttribute('readonly')
-        };
-	}
 	
     styles() {
         return `
@@ -52,19 +41,19 @@ class InputTextarea extends WebComponent {
     }
 
     get value() {
-        return this.state.get('value');
+        return this.getAttribute('value');
     }
 
-    get required() {
-        return this.state.get('required');
-    }
+	get required() {
+		return this.hasAttribute('required');
+	}
 
-    get disabled() {
-        return this.state.get('disabled');
-    }
+	get disabled() {
+		return this.hasAttribute('disabled');
+	}
 
-    get readonly() {
-        return this.state.get('readonly');
+	get readonly() {
+		return this.hasAttribute('readonly');
 	}
 	
     render() {
@@ -77,44 +66,20 @@ class InputTextarea extends WebComponent {
 	
     // Handles the input event and updates the component state with the new value.
     onInput(e) {
-        this.state.set('value', e.target.value);
+        this.setAttribute('value', e.target.value);
     }
 
     // A native change event does not leave the shadow root, so send it on.
     onChange(e) {
-        this.state.set('value', e.target.value);
+        this.setAttribute('value', e.target.value);
     }
-	
-	handleState(name, value, state) {
-		if (['required', 'disabled', 'readonly'].includes(name)) {
-			this.toggleAttribute(name, value);
-
-			if (this.input) this.input.toggleAttribute(name, value);
-
-			return;
-		}
-
-		if (name === 'value') this.handleValue(value);	
-		if (name === 'error') this.handleError(value);
-	}
-	
-	handleAttribute(name, value) {
-		if (['required', 'disabled', 'readonly'].includes(name)) {
-			this.state.set(name, value !== null);
-
-			return;
-		}
-
-		if (name === 'name') this.update();
-		if (name === 'value') this.state.set('value', value);
-	}
-
+		
     handleValue(value) {
         this.internal.setFormValue(value);
 
         this.setAttribute('value', value);
 
-        if (this.input) this.input.setAttribute('value', value);
+        if (this.input) this.input.textContent = value;
 
         if (this.input.validity.valid) {
             this.internal.setValidity({});
@@ -123,23 +88,29 @@ class InputTextarea extends WebComponent {
         }
     }
 
-    // Updates the field in place, so nothing the user typed (or focus) is lost.
-    handleError(error) {
-        if (!this.input) return;
+	handleRequired(name, value) {
+		this.update();
+	}
 
+	handleDisabled(name, value) {
+		this.update();
+	}
+
+	handleReadonly(name, value) {
+		this.update();
+	}
+
+    // Updates the field in place, so nothing the user typed (or focus) is lost.
+    setError(error) {
         this.input.classList.toggle('is-invalid', !!error);
 
         this.error.textContent = error ?? '';
 
-        try {
-            if (error) {
-                this.internal.states.add('invalid');
-            } else {
-                this.internal.states.delete('invalid');
-            }
-        } catch (e) {
-            // CustomStateSet not supported; .is-invalid still shows the error.
-        }
+		if (error) {
+			this.internal.states.add('invalid');
+		} else {
+			this.internal.states.delete('invalid');
+		}
     }
 }
 

@@ -17,9 +17,9 @@ export default class AccountRegister extends WebComponent {
     }
 
     async render() {
-        if (this.state.get('success')) {
-            return `<ui-toast>${this.state.get('success')}</ui-toast>`;
-        }
+        //if (this.success) {
+        //   return `<ui-toast>${this.success}</ui-toast>`;
+        //}
 
 		return loader.template('account/register', [ language, config ]);
     }
@@ -32,35 +32,35 @@ export default class AccountRegister extends WebComponent {
         if (json.has('token')) {
             this.token = json.get('token');
 		}
-		
-		this.form.addListener(this.handleSubmit.bind(this));
+
+		this.form.addEventListener('[submit]', (e) => this.handleSubmit(e));
 	}
 
-    async handleSubmit(e) {
-        e.preventDefault();
-
+	async handleSubmit(e) {
+		e.preventDefault();
+		
         //if (customer.isLogged()) return;
 
 		let form = this.form.getData();
 
         await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
 			handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.setSubmitting(true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.setSubmitting(false);
             },
 			handleSuccess: (json) => {
 				console.log('onSuccess', json);
 				
                 // Display error messages
 				if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.form.state.set('success', json.get('success'));
+                    this.form.setSuccess(json.get('success'));
                 }
             },
             handleError: (e) => {
@@ -70,7 +70,7 @@ export default class AccountRegister extends WebComponent {
     }
 
     handleAgree(e) {
-        this.form.state.set('disabled', !e.target.hasAttribute('checked'));
+        this.form.setAttribute('disabled', !e.target.hasAttribute('checked'));
     }
 }
 

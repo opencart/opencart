@@ -19,7 +19,6 @@ import { WebComponent } from '../../engine.js';
 export class InputSelect extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
-        'name',
         'value',
         'required',
         'disabled',
@@ -28,17 +27,7 @@ export class InputSelect extends WebComponent {
 
 	#options = [];
 
-    states() {
-        return {
-            value: this.getAttribute('value') ?? '',
-            error: '',
-            required: this.hasAttribute('required'),
-            disabled: this.hasAttribute('disabled'),
-            readonly: this.hasAttribute('readonly')
-        };
-    }
-
-    styles() {
+	styles() {
         return `
             :host {
                 display: block;
@@ -69,37 +58,36 @@ export class InputSelect extends WebComponent {
         return this.hasAttribute('name') ? this.getAttribute('name') : '';
     }
 
-    get value() {
-        return this.state.get('value');
-    }
+  	get value() {
+		return this.getAttribute('value');
+	}
+	
+	get required() {
+		return this.hasAttribute('required');
+	}
 
-    get required() {
-        return this.state.get('required');
-    }
+	get disabled() {
+		return this.hasAttribute('disabled');
+	}
 
-    get disabled() {
-        return this.state.get('disabled');
-    }
-
-    get readonly() {
-        return this.state.get('readonly');
-    }
+	get readonly() {
+		return this.hasAttribute('readonly');
+	}
 
 	constructor() { 
 		super();
 
-		this.#options = Array.from(this.querySelectorAll('option')).map(option => {
-			return {
-				text: option.outerHTML,
-				value: option.value
-			};
-		});
+		this.html = this.innerHTML;
+	}
+
+	addOption(text, value) {
+		this.#options.push({ text, value });
 	}
 
 	render() {
 		return `
 			<label @ref="label" for="input">${this.label}</label>
-			<select name="${this.name}" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @change="onChange" class="form-control">${this.#options.map(item => `<option value="${item.value}"${item.value === this.value ? ' selected' : ''}>${item.text}</option>`).join('')}</select>
+			<select name="${this.name}" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @change="onChange" class="form-control">${this.html}${this.#options.map(item => `<option value="${item.value}"${item.value === this.value ? ' selected' : ''}>${item.text}</option>`).join('')}</select>
 			<div @ref="error" class="invalid-feedback"></div>
         `;
 	}
@@ -112,29 +100,21 @@ export class InputSelect extends WebComponent {
     onChange(e) {
         this.state.set('value', e.target.value);
 	}
-	
-	handleState(name, value, state) {
-		if (['required', 'disabled', 'readonly'].includes(name)) {
-			this.toggleAttribute(name, value);
-
-			if (this.input) this.input.toggleAttribute(name, value);
-
-			return;
-		}
-
-		if (name === 'value') this.handleValue(value);	
-		if (name === 'error') this.handleError(value);
+		
+	get value() {
+		return this.getAttribute('value');
 	}
 	
-	handleAttribute(name, value) {
-		if (['required', 'disabled', 'readonly'].includes(name)) {
-			this.state.set(name, value !== null);
+	get required() {
+		return this.hasAttribute('required');
+	}
 
-			return;
-		}
+	get disabled() {
+		return this.hasAttribute('disabled');
+	}
 
-		if (name === 'name') this.update();
-		if (name === 'value') this.state.set('value', value);
+	get readonly() {
+		return this.hasAttribute('readonly');
 	}
 
     handleValue(value) {
@@ -152,22 +132,16 @@ export class InputSelect extends WebComponent {
     }
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.
-    handleError(error) {
-        if (!this.input) return;
-
+    setError(error) {
         this.input.classList.toggle('is-invalid', !!error);
 
         this.error.textContent = error ?? '';
 
-        try {
-            if (error) {
-                this.internal.states.add('invalid');
-            } else {
-                this.internal.states.delete('invalid');
-            }
-        } catch (e) {
-            // CustomStateSet not supported; .is-invalid still shows the error.
-        }
+		if (error) {
+			this.internal.states.add('invalid');
+		} else {
+			this.internal.states.delete('invalid');
+		}
     }
 }
 

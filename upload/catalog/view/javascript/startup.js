@@ -104,22 +104,25 @@ Global.addListener('dialog', async (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');
-
+  
     if (!link) return;
 
     let href = link.getAttribute('href');
 
     if (href == null) return;
 
-	console.log('Opening modal for href:', href);
-
     let dialog = Global.get('dialog');
 	
 	let element = dialog.querySelector('nav-dialog');
-	
+
 	element.setAttribute('src', href);
 		
 	dialog.show();
+
+	console.log('Dialog element:', dialog);
+	console.log('Nav-dialog element:', element);
+	console.log('Setting src attribute to:', href);
+
 });
 
 // Start the root path

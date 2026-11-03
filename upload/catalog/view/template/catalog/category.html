@@ -1,15 +1,10 @@
 <h1>{{ name }}</h1>
-
-{% if image || description %}
-<div class="row">
-  <div class="col-3" {% if image %} hidden{% endif %}><img src="image/{{ image }}" alt="{{ name }}" title="{{ name }}" class="img-thumbnail" style="width: 268px" /></div>
-  <div class="col-9" {% if description %} hidden{% endif %}>{{ description }}</div>
+<div class="row" {% if not image && not description %} hidden{% endif %}>
+  <div class="col-3" {% if not image %} hidden{% endif %}><img src="image/{{ image }}" alt="{{ name }}" title="{{ name }}" class="img-thumbnail" style="width: 268px" /></div>
+  <div class="col-9" {% if not description %} hidden{% endif %}>{{ description }}</div>
 </div>
 <hr />
-{% endif %}
-
 {% if categories %}
-
 <h3>{{ text_refine }}</h3>
 {% assign total = categories | length %}
 {% if total <= 5 %}
@@ -24,13 +19,11 @@
 </div>
 {% else %}
 <div class="row row-cols-sm-2 row-cols-lg-4">
-
   {% if total > 20 %}
   {% assign batch = (total / 4) | round %}
   {% else %}
   {% assign batch = 5 %}
   {% endif %}
-
   {% for category in categories | batch: batch %}
   <div class="col">
     <ul>
@@ -40,11 +33,8 @@
     </ul>
   </div>
   {% endfor %}
-
 </div>
 <br />
 {% endif %}
-
 {% endif %}
-
 <product-list path="{{ path }}"></product-list>

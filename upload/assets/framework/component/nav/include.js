@@ -4,19 +4,8 @@ import { loader } from '../../library.js';
 // Config
 const config = await loader.config('default');
 
-// A page is a module such as "account/login.js": folders and file name made of
-// letters, numbers, "_" and "-". There is deliberately no "." other than the
-// extension, so "../" can never reach a script outside the pages folder.
-const path_pattern = /^[\w\/-]+\.js$/;
-
 customElements.define('nav-include', class extends WebComponent {
     static observedAttributes = ['src'];
-
-	state() { 
-        return {
-            src: ''
-        };
-	}
 
     constructor() {
         super();
@@ -28,46 +17,28 @@ customElements.define('nav-include', class extends WebComponent {
         // Get the source HTML to load
         if (!this.hasAttribute('src') || !this.getAttribute('src')) return;
 
-        let [ path, query ] = this.getAttribute('src').split('?');
+		let [ path, query ] = this.getAttribute('src').split('?');
+		
+		if (!this.data.has(path)) {
+			let response = await import(config.get('config_path') + path);
 
-        try {
-            if (!path_pattern.test(path)) {
-                throw new Error('Invalid page path');
-            }
+			this.data.set(path, customElements.getName(response.default));
+		}
 
-            if (!this.data.has(path)) {
-                let response = await import(config.get('config_path') + path);
+		//if (request !== this.request) return;
 
-                this.data.set(path, customElements.getName(response.default));
-            }
+		let name = this.data.get(path);
 
-            //if (request !== this.request) return;
+		let element = document.createElement(name);
 
-            let name = this.data.get(path);
+		if (query === undefined) query = '';
+		
+		for (let [key, value] of (new URLSearchParams(query).entries())) element.setAttribute(key, value);
 
-			let element = document.createElement(name);
-
-			if (query === undefined) query = '';
-			
-			for (let [key, value] of (new URLSearchParams(query).entries())) {
-                if (/^(?!on)[a-z_][\w-]*$/i.test(key)) element.setAttribute(key, value);
-            }
-
-			console.log('Creating element:', name, 'with attributes:', query);
-
-            return element.outerHTML;
-        } catch (error) {
-            console.error('nav-include: could not load "' + this.getAttribute('src') + '"', error);
-
-            return '<div class="alert alert-danger">The page could not be loaded.</div>';
-        }
+		return element.outerHTML;
     }
-	
-	handleState(keys, state) {
-		this.setAttribute('src', state.src);
-	}
-	
-	handleAttribute(key, value) {		
+		
+	handleSrc(name, value) {		
 		this.update();
     };
 });

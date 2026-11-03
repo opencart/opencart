@@ -95,7 +95,13 @@ customElements.define('input-zone', class extends InputSelect {
         html += '</select>';
 
         return html;
-    }
+	}
+	
+	handleState(keys, state) {
+		if (keys.includes('country_id')) this.handleCountryChange(state.country_id);
+		if (keys.includes('error')) this.handleError(state.error);
+		if (keys.includes('disabled')) this.handleDisabled(state.disabled);	
+	}
 
     async handleConnect() {
         this.default = this.innerHTML;
@@ -105,5 +111,12 @@ customElements.define('input-zone', class extends InputSelect {
 		this.value = e.target.value;
 		
 		let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
-    }
+	}
+	
+	async handleCountry(e) {
+		this.setAttribute('country_id', e.target.value);
+
+        let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
+
+	}
 });

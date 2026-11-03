@@ -1,6 +1,5 @@
 import { Binder } from './binder.js';
 import { Global } from './global.js';
-import { State } from './state.js';
 import { stylesheet } from './stylesheet.js';
 
 /**
@@ -57,7 +56,6 @@ const camel = (name) => name.replace(/^[^a-zA-Z0-9]+/, '').split(/[-_:.\s]+/).fi
 export class WebComponent extends HTMLElement {
 	static shadow = true;
     static formAssociated = false;
-	
     #renders = 0;
     // Make sure reactive attributes don't work until after render has been called.
     #rendered = false;
@@ -72,9 +70,6 @@ export class WebComponent extends HTMLElement {
         // Attach Shadow or use light DOM based on the static property
         this.root = this.constructor.shadow ? this.attachShadow({ mode: 'open' }) : this;
 
-        // State
-        this.state = new State(this.states(), this.stateChangedCallback.bind(this));
-		
 		//  Binder
 		this.binder = new Binder(this);
 		
@@ -87,10 +82,6 @@ export class WebComponent extends HTMLElement {
         this.#style();
     }
 	
-    states() {
-        return {};
-    }
-
     /** Override: CSS files to adopt into the shadow root, as names stylesheet.resolve() knows. */
     stylesheets() {
         return [
@@ -141,12 +132,16 @@ export class WebComponent extends HTMLElement {
 		this.binder.refresh(this.root);
 	}
 	
+	emit(event, data = {}) { 
+		this.dispatchEvent(new CustomEvent(event, {
+			detail: { ...data },
+			bubbles: true,
+			composed: true
+		}));
+	}
+	
     async disconnectedCallback() {
         this.#rendered = false;
-
-        if (this.state) {
-            this.state.destroy();
-        }
 
 		if (this.binder) { 
 			this.binder.destroy();
@@ -164,14 +159,12 @@ export class WebComponent extends HTMLElement {
     async attributeChangedCallback(name, value_old, value_new) {
         if (!this.#rendered || value_old === value_new) return;
 
-        // Default handler for attribute changes
-        if (typeof this.handleAttribute == 'function') await this.handleAttribute(name, value_new, value_old);
+		// Default handler for attribute changes
+		let key = 'handle' + name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+	
+		console.log('Attribute changed:', name, 'old value:', value_old, 'new value:', value_new);
+		console.log(key);
+
+		if (typeof this[key] == 'function') await this[key](name, value_new, value_old);
     }
-
-    async stateChangedCallback(keys, state) {
-        if (!this.#rendered || !keys.length) return;
-
-		// Call the handleState method if it exists to handle state changes.
-        if (typeof this.handleState == 'function') await this.handleState(keys, state);
-	}
 }

@@ -3,23 +3,11 @@ import { WebComponent } from '../../engine.js';
 customElements.define('input-switch', class extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
-        'name',
         'value',
         'required',
         'disabled',
         'readonly'
     ];
-
-    states() {
-		return {
-			value: this.getAttribute('value'),
-            error: '',
-            checked: this.hasAttribute('checked'),
-            required: this.hasAttribute('required'),
-            disabled: this.hasAttribute('disabled'),
-            readonly: this.hasAttribute('readonly')
-        };
-    }
     
 	get label() {
         return this.hasAttribute('label') ? this.getAttribute('label') : '';
@@ -30,60 +18,43 @@ customElements.define('input-switch', class extends WebComponent {
     }
 
     get value() {
-        return this.state.get('value');
+        return this.hasAttribute('checked') ? this.getAttribute('value') : '';
     }
 	
     get checked() {
         return this.hasAttribute('checked');
     }
-
-    set checked(value) {
-        this.toggleAttribute('checked', value);
-	}
 	
     get required() {
-        return this.state.get('required');
+        return this.hasAttribute('required');
     }
 
     get disabled() {
-        return this.state.get('disabled');
+        return this.hasAttribute('disabled');
     }
 
     get readonly() {
-        return this.state.get('readonly');
+        return this.hasAttribute('readonly');
 	}
 
     render() {
-        let html = '<div class="form-switch form-switch-lg">';
-
-        html += '<input type="hidden" name="' + this.getAttribute('name') + '" value="" @change="handleChange"/>';
-        html += '<input type="checkbox" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" @change="handleChange" class="form-check-input"';
-
-        if (this.checked) {
-            html += ' checked';
-        }
-
-        if (this.hasAttribute('disabled')) {
-            html += ' disabled';
-        }
-
-        if (this.hasAttribute('readonly')) {
-            html += ' readonly';
-        }
-
-        html += '/>';
-        html += '</div>';
-        html += '<div @ref="error" class="invalid-feedback"></div>';
-
-        return html;
+		return `
+			<label @ref="label" for="input">${this.label}</label>
+			<div class="form-switch form-switch-lg"><input type="hidden" name="${this.name}" value=""/><input type="checkbox" name="${this.name}" value="${this.value}" id="input"${this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''} @ref="input" @change="handleChange" class="form-check-input"/></div>
+			<div @ref="error" class="invalid-feedback"></div>
+		`;
     }
 
     handleChange(e) {
-        this.checked = e.target.checked;
+		this.checked = e.target.checked;
+		
+		this.toggleAttribute('checked', e.target.checked);
+
+		if (this.input) this.input.toggleAttribute('checked', e.target.checked);
     }
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.
-    stateChecked(value) {
+    handleChecked(value) {
         value = value ?? false;
 
         this.toggleAttribute('checked', value);
@@ -91,23 +62,17 @@ customElements.define('input-switch', class extends WebComponent {
         if (this.input) this.input.toggleAttribute('checked', value);
     }
 
-    stateError(error) {
-        if (!this.input) return;
-
+    setError(error) {
         this.input.classList.toggle('is-invalid', !!error);
 
         console.log('is-invalid', error);
 
         this.error.textContent = error ?? '';
 
-        try {
-            if (error) {
-                this.internal.states.add('invalid');
-            } else {
-                this.internal.states.delete('invalid');
-            }
-        } catch (e) {
-            // CustomStateSet not supported; .is-invalid still shows the error.
-        }
+		if (error) {
+			this.internal.states.add('invalid');
+		} else {
+			this.internal.states.delete('invalid');
+		}
     }
 });

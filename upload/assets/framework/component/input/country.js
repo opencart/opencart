@@ -49,9 +49,9 @@ class InputCountry extends InputSelect {
 		
         if (this.postcode) {
             if (this.value in countries && countries[this.value].postcode_required == 1) {
-                this.postcode.setAttribute('required', '');
+                this.postcode.toggleAttribute('required', true);
             } else {
-                this.postcode.removeAttribute('required');
+                this.postcode.toggleAttribute('required', false);
             }
         }
 	}

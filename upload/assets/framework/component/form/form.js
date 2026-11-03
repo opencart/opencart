@@ -2,25 +2,23 @@ import { WebComponent } from '../../engine.js';
 
 customElements.define('form-submit', class extends WebComponent {
 	static formAssociated = true;
+	success = '';
+	error = [];
+	disabled = false;
 	
-	/* Will only manage states listed here */
-	states() {
-		return {
-			submitting: false,
-			success: '',
-			error: [],
-			disabled: false
-		};
-	}
-
 	constructor() {
 		super();
 	
 		this.template = this.querySelector('template');
+		this.disabled = this.hasAttribute('disabled');
 	}
 
-	addListener(listener) {
-		this.element.addEventListener('submit', listener);
+	async render() {
+		return `<form @ref="element" @submit="handleSubmit">${this.template.innerHTML}</form>`;
+	}
+
+	handleConnect() {
+		if (this.submitter) this.submitter.addEventListener('[click]', () => this.submit());
 	}
 
 	getInputs() {
@@ -35,38 +33,27 @@ customElements.define('form-submit', class extends WebComponent {
 		return form;
 	}
 
-	render() {
-		return `<form @ref="element">${this.template.innerHTML}</form>`;
+	async handleSubmit(e) {
+		e.preventDefault();
+
+		console.log('Submitting form with data:', this.getData());
+
+		this.dispatchEvent(new CustomEvent('[submit]', { detail: { form: this.getData() } }));
 	}
 
-	handleConnect() {
-		if (this.submitter) this.submitter.addListener(this.handleSubmitter.bind(this));
-	}
-
-	handleSubmitter(e) {
-		// Custom submit logic here
-		console.log('Submitting form');
-
+	submit() { 
 		this.element.requestSubmit();
 	}
 
-	// Handle state changes for the 'submitting' attribute
-	handleState(keys, state) {
-		if (keys.includes('submitting')) this.handleSubmitting(state.submitting);
-		if (keys.includes('error')) this.handleError(state.error);
-		if (keys.includes('success')) this.handleSuccess(state.success);
-		if (keys.includes('disabled')) this.handleDisabled(state.disabled);	
-	}
-	
-	handleAttribute() { 
-		this.state.set('disabled', this.hasAttribute('disabled'));
-	}
-
-	handleSubmitting(value) {
-        if (this.submitter) this.submitter.state.set('submitting', value);
+	setSubmitting(value) {
+        if (this.submitter) this.submitter.toggleAttribute('submitting', value);
     }
+	
+	setSuccess(handle) { 
+		this.handleSuccess = handle;
+	}
 
-	handleError(error) {
+	setError(error) {
 		if (error.warning) {
 			this.alert.innerHTML = '<ui-alert type="warning">' + error.warning + '</ui-alert>';
 		}
@@ -75,18 +62,14 @@ customElements.define('form-submit', class extends WebComponent {
 
 		for (let input of inputs) {
 			if (input.name in error) { 
-				input.state.set('error', error[input.name]);
+				input.setError(error[input.name]);
 			} else {
-				input.state.set('error', '');
+				input.setError('');
 			}
 		}
 	}
 
-	handleSuccess(value) {
-		//if (this.submitter) this.submitter.state.set('success', value);
-	}
-
 	handleDisabled(value) {
-		if (this.submitter) this.submitter.state.set('disabled', value);
+		if (this.submitter) this.submitter.toggleAttribute('disabled', value !== null);
 	}
 }); 

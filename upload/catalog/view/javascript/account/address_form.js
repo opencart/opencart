@@ -40,8 +40,19 @@ export default class AddressForm extends WebComponent {
 
 	handleConnect() {
 		this.country.state.subscribe(this.zone.handleState.bind(this.zone));
+		this.handleCountryChange = this.handleCountryChange.bind(this);
+		
+		this.form.country.state.subscribe(this.zone.handleCountry.bind(this));
+		
+		this.form.zone.addListener('change', this.zone.handleCountry.bind(this));
 
 		this.form.addListener(this.handleSubmit.bind(this));
+	}
+
+	async handleCountry(e) {
+
+
+		await this.form.zone.state.set('country_id', e.target.value);
 	}
 
     async handleSubmit(e) {

@@ -10,16 +10,6 @@ customElements.define('input-upload', class extends WebComponent {
         'readonly'
     ];
 
-    states() {
-        return {
-            value: '',
-            error: '',
-            required: false,
-            disabled: false,
-            readonly: false
-        };
-    }
-
     get name() {
         return this.getAttribute('name');
     }

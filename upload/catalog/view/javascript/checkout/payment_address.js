@@ -69,10 +69,10 @@ customElements.define('payment-address', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/payment_address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('redirect')) {
@@ -80,7 +80,7 @@ customElements.define('payment-address', class extends WebComponent {
                 }
 
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 if (json.has('success')) {

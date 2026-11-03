@@ -64,7 +64,7 @@ customElements.define('payment-method', class extends WebComponent {
     }
 
 	handleConnect() {
-		this.form.addListener(this.handleSubmit.bind(this));
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
 	}
 
     handleDisconnect() {
@@ -78,14 +78,14 @@ customElements.define('payment-method', class extends WebComponent {
 
         ajax.post('action.php?route=checkout/payment_method&language=' + local.get('language'), form, {
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message

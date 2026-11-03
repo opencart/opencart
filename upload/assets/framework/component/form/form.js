@@ -2,15 +2,23 @@ import { WebComponent } from '../../engine.js';
 
 customElements.define('form-submit', class extends WebComponent {
 	static formAssociated = true;
-	success = '';
-	error = [];
-	disabled = false;
+	static observedAttributes = [
+		'submitting',
+		'disabled'
+	];
+	
+	get submitting() {
+		return this.hasAttribute('submitting');
+	}
+
+	get disabled() {
+		return this.hasAttribute('disabled');
+	}
 	
 	constructor() {
 		super();
 	
 		this.template = this.querySelector('template');
-		this.disabled = this.hasAttribute('disabled');
 	}
 
 	async render() {
@@ -18,7 +26,7 @@ customElements.define('form-submit', class extends WebComponent {
 	}
 
 	handleConnect() {
-		if (this.submitter) this.submitter.addEventListener('[click]', () => this.submit());
+		if (this.submitter) this.submitter.addEventListener('button-submit', this.submit.bind(this));
 	}
 
 	getInputs() {
@@ -33,24 +41,26 @@ customElements.define('form-submit', class extends WebComponent {
 		return form;
 	}
 
-	async handleSubmit(e) {
-		e.preventDefault();
-
-		console.log('Submitting form with data:', this.getData());
-
-		this.dispatchEvent(new CustomEvent('[submit]', { detail: { form: this.getData() } }));
-	}
-
 	submit() { 
 		this.element.requestSubmit();
 	}
 
-	setSubmitting(value) {
-        if (this.submitter) this.submitter.toggleAttribute('submitting', value);
+	handleSubmit(e) {
+		e.preventDefault();
+
+		this.dispatchEvent(new CustomEvent('form-submit'));
+	}
+
+	handleSubmitting(name, value) {
+        if (this.submitter) this.submitter.toggleAttribute('submitting', value !== null);
     }
 	
-	setSuccess(handle) { 
-		this.handleSuccess = handle;
+	handleDisabled(name, value) {
+		if (this.submitter) this.submitter.toggleAttribute('disabled', value !== null);
+	}
+
+	setSuccess(success) { 
+		this.alert.innerHTML = '<ui-alert type="success">' + success + '</ui-alert>';
 	}
 
 	setError(error) {
@@ -67,9 +77,5 @@ customElements.define('form-submit', class extends WebComponent {
 				input.setError('');
 			}
 		}
-	}
-
-	handleDisabled(value) {
-		if (this.submitter) this.submitter.toggleAttribute('disabled', value !== null);
 	}
 }); 

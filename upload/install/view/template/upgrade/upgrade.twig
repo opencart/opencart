@@ -89,7 +89,7 @@ $('#button-continue').on('click', function() {
                     $(element).prop('disabled', false);
                 }
 
-                $('#progress-bar').css('width', Math.round((step / {{ total }}) * 100) + '%');
+                $('#progress-bar').css('width', Math.round((step / {{ total|escape('js') }}) * 100) + '%');
 
                 step++;
 

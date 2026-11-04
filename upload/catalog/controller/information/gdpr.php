@@ -193,7 +193,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			if ($gdpr_info['action'] == 'export') {
 				$data['text_message'] = $this->language->get('text_export');
 			} else {
-				$data['text_message'] = sprintf($this->language->get('text_remove'), $this->config->get('config_gdpr_limit'));
+				$data['text_message'] = $this->language->format('text_remove', $this->config->get('config_gdpr_limit'));
 			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');

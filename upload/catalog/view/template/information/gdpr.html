@@ -1,6 +1,6 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_gdpr | format: store, gdpr, title }}</p>
-<form-submit @ref="form">
+<form-submit @ref="form" @[submit]="handleSubmit">
   <template>
     <fieldset>
       <legend id="account">{{ text_verification }}</legend>
@@ -35,7 +35,7 @@
       </div>
     </fieldset>
     <div class="text-end">
-      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+      <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
     </div>
   </template>
 </form-submit>

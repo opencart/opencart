@@ -1,7 +1,7 @@
 <div id="review">{{ list }}</div>
 <h2>{{ text_write }}</h2>
 {% if review_guest %}
-<form-submit @ref="form">
+<form-submit @ref="form" @[submit]="handleSubmit">
   <template>
     <div class="mb-3">
       <input-text label="{{ entry_author }}" name="author" value="{{ customer }}" required />
@@ -17,7 +17,7 @@
     </div>
     {{ captcha }}
     <div class="text-end">
-      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+      <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
     </div>
   </template>
 </form-submit>

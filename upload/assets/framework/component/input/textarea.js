@@ -41,7 +41,7 @@ export class InputTextarea extends WebComponent {
     }
 
     get value() {
-        return this.getAttribute('value');
+        return this.innerHTML;
     }
 
 	get required() {
@@ -65,21 +65,17 @@ export class InputTextarea extends WebComponent {
 	}
 	
     // Handles the input event and updates the component state with the new value.
-    onInput(e) {
-        this.setAttribute('value', e.target.value);
+	onInput(e) {
+        this.innerHTML = e.target.value;
     }
 
     // A native change event does not leave the shadow root, so send it on.
     onChange(e) {
-        this.setAttribute('value', e.target.value);
+        this.innerHTML = e.target.value;
     }
 		
     handleValue(value) {
-        this.internal.setFormValue(value);
-
-        this.setAttribute('value', value);
-
-        if (this.input) this.input.textContent = value;
+        this.input.value = value;
 
         if (this.input.validity.valid) {
             this.internal.setValidity({});

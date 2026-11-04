@@ -11,7 +11,7 @@
   </div>
   <div class="col mb-3">
     <div class="border rounded p-3 d-flex flex-column h-100">
-      <form-submit @ref="form">
+      <form-submit @ref="form" @[submit]="handleSubmit">
         <template>
           <div @ref="alert"></div>
           <h2>{{ text_returning_customer }}</h2>
@@ -24,7 +24,7 @@
             <a href="account/forgotten.js" :click="dialog">{{ text_forgotten }}</a>
           </div>
           <div class="text-end">
-            <button-submit @ref="submitter">{{ button_login }}</button-submit>
+            <button-submit @ref="submitter" @[click]="submit">{{ button_login }}</button-submit>
           </div>
         </template>
       </form-submit>

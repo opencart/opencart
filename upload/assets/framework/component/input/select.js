@@ -107,7 +107,19 @@ export class InputSelect extends WebComponent {
         } else {
             this.internal.setValidity(this.input.validity, this.input.validationMessage, this.input);
         }
-    }
+	}
+	
+	handleRequired(name, value) {
+		this.update();
+	}
+
+	handleDisabled(name, value) {
+		this.update();
+	}
+
+	handleReadonly(name, value) {
+		this.update();
+	}
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.
     setError(error) {

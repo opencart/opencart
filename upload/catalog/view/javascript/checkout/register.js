@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, customer } from '../index.js';
+import { loader, ajax, customer, local } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -11,11 +11,8 @@ const language = await loader.language('checkout/register');
 const customer_groups = await loader.storage('customer/customer_group');
 
 customElements.define('checkout-register', class extends WebComponent {
-    constructor() {
-        super();
-
-        this.token = '';
-    }
+	static formAssociated = true;
+	#token = '';
 
     async render() {
         let data = new Map();
@@ -29,7 +26,7 @@ customElements.define('checkout-register', class extends WebComponent {
         let json = await ajax.get('action.php?route=checkout/register.token');
 
         if (json.has('token')) {
-            this.token = json.get('token');
+            this.#token = json.get('token');
         }
     }
 
@@ -58,7 +55,7 @@ customElements.define('checkout-register', class extends WebComponent {
 
         let form = this.form.getData();
 
-        await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
+        await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.#token, form, {
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

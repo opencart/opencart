@@ -21,7 +21,7 @@
   </div>
   <br />
   <div id="shipping-new" {% if !addresses %}hidden{% endif %}>
-    <form-submit @ref="form">
+    <form-submit @ref="form" @[submit]="handleSubmit">
       <template>
         <div class="row row-cols-1 row-cols-md-2">
           <div class="col mb-3">
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="text-end mb-3">
-          <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+          <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
         </div>
       </template>
     </form-submit>

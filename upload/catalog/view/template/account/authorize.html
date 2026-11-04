@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
         <div class="card-body">
-          <form-submit @ref="form">
+          <form-submit @ref="form" @[submit]="handleSubmit">
             <template>
               <p>{{ text_security }}</p>
               <p>{{ text_code }}</p>
@@ -19,7 +19,7 @@
                 <div id="error-code" class="invalid-feedback"></div>
               </div>
               <div class="text-end">
-                <button-submit @ref="submitter" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button-submit>
+                <button-submit @ref="submitter" @[click]="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button-submit>
               </div>
             </template>
           </form-submit>

@@ -67,12 +67,12 @@ export default class Customer {
         return this.#data.get('address');
     }
 
-    getToken() {
-        return this.#data.get('token');
+	getWishlist() {
+        return this.#data.get('wishlist');
     }
 
-    isAffiliate() {
-        return this.#data.has('affiliate') ? this.#data.get('affiliate') : false;
+    getToken() {
+        return this.#data.get('token');
     }
 
     getBalance() {

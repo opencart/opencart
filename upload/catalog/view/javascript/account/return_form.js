@@ -8,12 +8,9 @@ const config = await loader.config('default');
 const language = await loader.language('account/returns');
 
 export default class ReturnForm extends WebComponent {
-	constructor() {
-        super();
-
-        this.token = ''; 
-    }
-
+	static formAssociated = true;
+	#token = '';
+	
     async render() {
         //if (!customer.isLogged()) return;
 
@@ -21,13 +18,11 @@ export default class ReturnForm extends WebComponent {
     }
 
     async handleConnect() {
-        let json = await ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
+        let json = await ajax.get('action.php?route=account/return_form.token&language=' + local.get('language'));
 
         if (json.has('token')) {
-            this.token = json.get('token');
+            this.#token = json.get('token');
 		}
-		
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
     }
 
     async handleSubmit(e) {
@@ -35,7 +30,7 @@ export default class ReturnForm extends WebComponent {
 
         let form = this.form.getData();
 
-        await ajax.post('action.php?route=account/return_form&language=' + local.get('language'), form, {
+        await ajax.post('action.php?route=account/return_form&language=' + local.get('language') + '&token=' + this.#token, form, {
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

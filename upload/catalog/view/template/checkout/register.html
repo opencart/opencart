@@ -1,5 +1,5 @@
 <p>{{ text_login }}</p>
-<form-submit @ref="form">
+<form-submit @ref="form" @[submit]="handleSubmit">
   <template>
     <fieldset>
       <legend>{{ heading_title }}</legend>
@@ -47,6 +47,6 @@
       <div><input-switch label="{{ entry_newsletter }}" name="newsletter" value="1"></input-switch></div>
       <div><input-switch label="{{ text_agree }}" name="agree" value="1" {% if not text_agree %} hidden{% endif %}></input-switch></div>
     </div>
-    <button-submit id="button-register" class="mt-2">{{ button_continue }}</button-submit>
+    <button-submit id="button-register" @[click]="submit" class="mt-2">{{ button_continue }}</button-submit>
   </template>
 </form-submit>

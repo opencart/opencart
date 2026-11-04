@@ -26,7 +26,7 @@ customElements.define('button-submit', class extends WebComponent {
     }
 
 	handleClick(e) {
-		this.dispatchEvent(new CustomEvent('button-submit'));
+		this.dispatchEvent(new CustomEvent('[click]'));
 	}
 
 	handleSubmitting(name, value) {

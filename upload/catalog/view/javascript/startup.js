@@ -118,11 +118,6 @@ Global.addListener('dialog', async (e) => {
 	element.setAttribute('src', href);
 		
 	dialog.show();
-
-	console.log('Dialog element:', dialog);
-	console.log('Nav-dialog element:', element);
-	console.log('Setting src attribute to:', href);
-
 });
 
 // Start the root path

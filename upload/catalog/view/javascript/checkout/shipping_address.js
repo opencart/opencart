@@ -42,7 +42,11 @@ customElements.define('shipping-address', class extends WebComponent {
         data.set('zone_id', 0);
 
         return loader.template('checkout/shipping_address', [ data,  language,  config ]);
-    }
+	}
+	
+	handleConnect() {
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
+	}
 
     handleChange(e) {
         e.target
@@ -59,7 +63,7 @@ customElements.define('shipping-address', class extends WebComponent {
     async setAddress(e) {
         e.preventDefault();
 
-       
+    
     }
 
     async handleSubmit(e) {
@@ -69,10 +73,10 @@ customElements.define('shipping-address', class extends WebComponent {
 
         await ajax.post('action.php?route=checkout/shipping_address.save&language=' + local.get('language'), form, {
             handleSend: () => {
-                this.form.toggleAttribute('submitting', true);
+                this.form.state.set('submitting', true);
             },
             handleComplete: () => {
-                this.form.toggleAttribute('submitting', false);
+                this.form.state.set('submitting', false);
             },
             handleSuccess: (json) => {
                 if (json.has('redirect')) {
@@ -80,7 +84,7 @@ customElements.define('shipping-address', class extends WebComponent {
                 }
 
                 if (json.has('error')) {
-                    this.form.setError(json.get('error'));
+                    this.form.state.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {

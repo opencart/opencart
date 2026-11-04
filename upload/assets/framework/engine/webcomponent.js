@@ -51,8 +51,6 @@ import { stylesheet } from './stylesheet.js';
  *
  *   customElements.define('my-counter', MyCounter);
  */
-const camel = (name) => name.replace(/^[^a-zA-Z0-9]+/, '').split(/[-_:.\s]+/).filter(Boolean).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
-
 export class WebComponent extends HTMLElement {
 	static shadow = true;
     static formAssociated = false;
@@ -161,9 +159,6 @@ export class WebComponent extends HTMLElement {
 
 		// Default handler for attribute changes
 		let key = 'handle' + name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
-	
-		console.log('Attribute changed:', name, 'old value:', value_old, 'new value:', value_new);
-		console.log(key);
 
 		if (typeof this[key] == 'function') await this[key](name, value_new, value_old);
     }

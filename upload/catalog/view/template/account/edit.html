@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form-submit @ref="form">
+        <form-submit @ref="form" @[submit]="handleSubmit">
           <template>
             <div @ref="alert"></div>
             <fieldset>
@@ -27,7 +27,7 @@
               {% endif %}
             </fieldset>
             <div class="text-end">
-              <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+              <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
             </div>
           </template>
         </form-submit>

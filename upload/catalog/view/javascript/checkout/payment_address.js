@@ -44,8 +44,12 @@ customElements.define('payment-address', class extends WebComponent {
         return loader.template('checkout/payment_address', [ data, language ]);
     }
 
+	handleConnect() {
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
+	}
+
     handleChange(e) {
-        e.target
+        //e.target
 
         if ($(this).val() == 1) {
             $('#shipping-existing').show();

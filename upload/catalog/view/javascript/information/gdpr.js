@@ -5,18 +5,19 @@ import { loader, ajax, local, customer } from '../index.js';
 const language = await loader.language('information/gdpr');
 
 export default class InformationGdpr extends WebComponent {
-    constructor() {
-        super();
-
-        this.token = '';
-    }
+	static formAssociated = true;
+	#token = '';
 
     async render() {
         return loader.template('information/gdpr', [ language ]);
 	}
 	
-	handleConnect() {
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
+	async handleConnect() {
+		let json = await ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
+
+        if (json.has('token')) {
+            this.#token = json.get('token');
+		}
 	}
 
     handleChange() {

@@ -25,10 +25,6 @@ customElements.define('form-submit', class extends WebComponent {
 		return `<form @ref="element" @submit="handleSubmit">${this.template.innerHTML}</form>`;
 	}
 
-	handleConnect() {
-		if (this.submitter) this.submitter.addEventListener('button-submit', this.submit.bind(this));
-	}
-
 	getInputs() {
 		return this.root.querySelectorAll('[name]');
 	}
@@ -48,7 +44,7 @@ customElements.define('form-submit', class extends WebComponent {
 	handleSubmit(e) {
 		e.preventDefault();
 
-		this.dispatchEvent(new CustomEvent('form-submit'));
+		this.dispatchEvent(new CustomEvent('[submit]'));
 	}
 
 	handleSubmitting(name, value) {
@@ -60,13 +56,11 @@ customElements.define('form-submit', class extends WebComponent {
 	}
 
 	setSuccess(success) { 
-		this.alert.innerHTML = '<ui-alert type="success">' + success + '</ui-alert>';
+		this.alert.innerHTML = `<ui-alert type="success">${success}</ui-alert>`;
 	}
 
 	setError(error) {
-		if (error.warning) {
-			this.alert.innerHTML = '<ui-alert type="warning">' + error.warning + '</ui-alert>';
-		}
+		if (error.warning) this.alert.innerHTML = `<ui-alert type="warning">${error.warning}</ui-alert>`;
 
 		let inputs = this.getInputs();
 

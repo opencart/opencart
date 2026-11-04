@@ -3,7 +3,7 @@
 <div class="mb-3" {% if not description %}hidden{% endif %}>{{ description }}</div>
 <hr />
 <h3>{{ text_refine }}</h3>
-<form-submit @ref="form">
+<form-submit @ref="form" @[submit]="handleSubmit">
   <template>
     <div class="input-group dropdown mb-3">
       <input type="text" name="search" value="{{ search }}" placeholder="{{ entry_search }}" id="input-search" class="form-control" />
@@ -13,7 +13,7 @@
         <option value="{{ topic.topic_id }}" {% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
         {% endfor %}
       </select>
-      <button-submit>{{ button_search }}</button-submit>
+      <button-submit @[click]="submit">{{ button_search }}</button-submit>
     </div>
   </template>
 </form-submit>

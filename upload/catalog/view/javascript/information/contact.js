@@ -11,11 +11,8 @@ const language = await loader.language('information/contact');
 const locations = await loader.storage('localisation/location');
 
 export default class InformationContact extends WebComponent {
-    constructor() {
-        super();
-
-        this.token = '';
-    }
+	static formAssociated = true;
+	#token = '';
 	
     async render() {
         let data = new Map();
@@ -37,10 +34,8 @@ export default class InformationContact extends WebComponent {
         let json = await ajax.get('action.php?route=information/contact.token&language=' + local.get('language'));
 
         if (json.has('token')) {
-            this.token = json.get('token');
+            this.#token = json.get('token');
 		}
-		
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
     }
 
     async handleSubmit(e) {
@@ -48,7 +43,7 @@ export default class InformationContact extends WebComponent {
 
         let form = this.form.getData();
 
-        await ajax.post('action.php?route=information/contact.send&language=' + local.get('language') + '&contact_token=' + this.token, form, {
+        await ajax.post('action.php?route=information/contact.send&language=' + local.get('language') + '&contact_token=' + this.#token, form, {
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

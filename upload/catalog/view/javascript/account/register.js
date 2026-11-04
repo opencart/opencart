@@ -9,13 +9,8 @@ const language = await loader.language('account/register');
 
 export default class AccountRegister extends WebComponent {
 	static formAssociated = true;
-
-    constructor() {
-        super();
-
-        this.token = '';
-    }
-
+	#token = '';
+	
     async render() {
         //if (this.success) {
         //   return `<ui-toast>${this.success}</ui-toast>`;
@@ -30,10 +25,8 @@ export default class AccountRegister extends WebComponent {
         let json = await ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
 
         if (json.has('token')) {
-            this.token = json.get('token');
+            this.#token = json.get('token');
 		}
-
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
 	}
 
 	async handleSubmit(e) {
@@ -43,7 +36,7 @@ export default class AccountRegister extends WebComponent {
 
 		console.log('Form data:', Object.fromEntries(form));
 		
-        await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.token, form, {
+        await ajax.post('action.php?route=account/register.save&language=' + local.get('language') + '&register_token=' + this.#token, form, {
 			handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

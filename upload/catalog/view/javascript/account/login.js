@@ -5,20 +5,13 @@ import { loader, ajax, cart, customer, local } from '../index.js';
 const language = await loader.language('account/login');
 
 export default class AccountLogin extends WebComponent {
-    constructor() {
-        super();
-
-        this.token = '';
-    }
+	static formAssociated = true;
+	#token = '';
 
     async render() {
         //if (customer.isLogged()) return;
 
-        let data = new Map();
-
-        data.set('token', this.token);
-
-        return loader.template('account/login', [ data, language ]);
+        return loader.template('account/login', [ language ]);
     }
 
     async handleConnect() {
@@ -27,10 +20,8 @@ export default class AccountLogin extends WebComponent {
         let json = await ajax.get('action.php?route=account/login.token&language=' + local.get('language'));
 
         if (json.has('token')) {
-            this.token = json.get('token');
+            this.#token = json.get('token');
 		}
-		
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
     }
 
     async handleSubmit(e) {
@@ -40,7 +31,7 @@ export default class AccountLogin extends WebComponent {
 
         let form = this.form.getData();
 
-        await ajax.post('action.php?route=account/login.login&language=' + local.get('language') + '&login_token=' + this.token, form, {
+        await ajax.post('action.php?route=account/login.login&language=' + local.get('language') + '&login_token=' + this.#token, form, {
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

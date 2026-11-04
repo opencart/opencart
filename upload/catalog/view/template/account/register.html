@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form-submit @ref="form">
+        <form-submit @ref="form" @[submit]="handleSubmit">
           <template>
             <div @ref="alert"></div>
             <p>{{ text_account_already | safe }}</p>
@@ -46,7 +46,7 @@
               {% if config_account_id %}
               <input-switch @ref="agree" label="{{ text_agree }}" name="agree" value="1"></input-switch>
               {% endif %}
-              <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+              <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
             </div>
           </template>
         </form-submit>

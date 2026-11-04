@@ -8,12 +8,9 @@ const config = await loader.config('default');
 const language = await loader.language('catalog/review');
 
 customElements.define('review-form', class extends WebComponent {
-    constructor() {
-        super();
-
-        this.token = '';
-    }
-
+	static formAssociated = true;
+	#token = '';
+   
     async render() {
         let data = new Map();
 
@@ -24,8 +21,10 @@ customElements.define('review-form', class extends WebComponent {
         let json = await ajax.get('action.php?route=account/review.token&language=' + local.get('language') + '&customer_token=' + customer.getToken());
 
         if (json.has('token')) {
-            this.token = json.get('token');
-        }
+            this.#token = json.get('token');
+		}
+		
+		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
     }
 
     handleSubmit(e) {
@@ -33,7 +32,7 @@ customElements.define('review-form', class extends WebComponent {
 
         let form = this.form.getData();
 
-        ajax.post('action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.token + '&product_id=' + this.getAttribute('product_id'), form, {
+        ajax.post('action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.#token + '&product_id=' + this.getAttribute('product_id'), form, {
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

@@ -41,7 +41,7 @@ customElements.define('input-switch', class extends WebComponent {
     render() {
 		return `
 			<label @ref="label" for="input">${this.label}</label>
-			<div class="form-switch form-switch-lg"><input type="hidden" name="${this.name}" value=""/><input type="checkbox" name="${this.name}" value="${this.value}" id="input"${this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''} @ref="input" @change="handleChange" class="form-check-input"/></div>
+			<div class="form-switch form-switch-lg"><input type="hidden" name="${this.name}" value=""/><input type="checkbox" name="${this.name}" value="${this.value}" id="input"${this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``} @ref="input" @change="handleChange" class="form-check-input"/></div>
 			<div @ref="error" class="invalid-feedback"></div>
 		`;
     }
@@ -52,13 +52,11 @@ customElements.define('input-switch', class extends WebComponent {
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.
     handleChecked(name, value) {
-		this.update();
+		this.input.toggleAttribute('checked', value !== null);
     }
 
     setError(error) {
         this.input.classList.toggle('is-invalid', !!error);
-
-        console.log('is-invalid', error);
 
         this.error.textContent = error ?? '';
 

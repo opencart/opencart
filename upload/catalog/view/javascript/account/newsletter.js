@@ -15,10 +15,6 @@ export default class AccountNewsletter extends WebComponent {
         return loader.template('account/newsletter', [data, language]);
 	}
 	
-	async handleConnect() {
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
-	}
-
     async handleSubmit(e) {
         e.preventDefault();
 
@@ -26,7 +22,7 @@ export default class AccountNewsletter extends WebComponent {
 
         let form = this.form.getData();
 
-        await ajax.post('action.php?route=account/newsletter.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+        await ajax.post('action.php?route=account/newsletter&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
@@ -34,6 +30,8 @@ export default class AccountNewsletter extends WebComponent {
                 this.form.toggleAttribute('submitting', false);
             },
 			handleSuccess: (json) => {
+				console.log('onSuccess', json);
+				
                 // Display error messages
                 if (json.has('error')) {
                     this.form.setError(json.get('error'));

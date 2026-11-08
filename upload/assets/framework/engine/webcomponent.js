@@ -21,10 +21,6 @@ import { stylesheet } from './stylesheet.js';
  *   class MyCounter extends WebComponent {
  *       static observedAttributes = ['count'];
  *
- *       states() {
- *           return { count: 0 };
- *       }
- *
  *       styles() {
  *           return `
  *              button { font-size: 1rem; }
@@ -76,6 +72,13 @@ export class WebComponent extends HTMLElement {
 		
         // Attach Internals
         if (this.constructor.formAssociated) this.internal = this.attachInternals();
+
+		// Set attribute change handlers for existing attributes
+		for (let attribute of this.attributes) {
+			let key = 'handle' + attribute.name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+
+			if (typeof this[key] === 'function') this.addEventListener('[' + attribute.name + ']', this[key].bind(this));
+		}
 
         this.#style();
     }
@@ -131,10 +134,12 @@ export class WebComponent extends HTMLElement {
 	}
 	
 	emit(event, data = {}) { 
+		// Default handler for attribute changes
 		this.dispatchEvent(new CustomEvent(event, {
 			detail: { ...data },
 			bubbles: true,
-			composed: true
+			composed: true,
+			cancelable: true 
 		}));
 	}
 	
@@ -157,9 +162,9 @@ export class WebComponent extends HTMLElement {
     async attributeChangedCallback(name, value_old, value_new) {
         if (!this.#rendered || value_old === value_new) return;
 
-		// Default handler for attribute changes
-		let key = 'handle' + name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
-
-		if (typeof this[key] == 'function') await this[key](name, value_new, value_old);
+		this.emit('[' + name + ']', {
+			value_old: value_old,
+			value_new: value_new
+		});
     }
 }

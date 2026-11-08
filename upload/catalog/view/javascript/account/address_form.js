@@ -38,12 +38,6 @@ export default class AddressForm extends WebComponent {
         return loader.template('account/address_form', [ data, language, config ]);
     }
 
-	handleConnect() {
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
-
-		this.form.country.addEventListener('[country_id]', this.handleCountry.bind(this));
-	}
-
 	handleCountry(e) {
 		this.form.zone.setAttribute('country_id', this.form.country.value);
 	}

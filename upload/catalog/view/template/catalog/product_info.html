@@ -1,8 +1,8 @@
 <div class="row mb-3">
-  <div class="col-sm" {% if thumb || images %} hidden{% endif %}>
+  <div class="col-sm" {% if not thumb && not images %} hidden{% endif %}>
     <div class="image magnific-popup">
-      <a href="{{ popup }}" title="{{ name }}"><img src="{{ thumb }}" title="{{ name }}" alt="{{ name }}" class="img-thumbnail mb-3" {% if thumb %} hidden{% endif %} /></a>
-      <div {% if images %} hidden{% endif %}>
+      <a href="{{ popup }}" title="{{ name }}"><img src="{{ thumb }}" title="{{ name }}" alt="{{ name }}" class="img-thumbnail mb-3" {% if not thumb %} hidden{% endif %} /></a>
+      <div {% if not images %} hidden{% endif %}>
         {% for image in images %}<a href="{{ image.popup }}" title="{{ name }}"><img src="{{ image.thumb }}" title="{{ name }}" alt="{{ name }}" class="img-thumbnail" style="width: 74px" /></a>{% endfor %}
       </div>
     </div>
@@ -12,10 +12,7 @@
     <h1>{{ name }}</h1>
 
     <ul class="list-unstyled mb-1">
-
-      {% if manufacturer %}
-      <li>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer_info.js?manufacturer_id={{ manufacturer_id }}" :click="link">{{ manufacturer }}</a></strong></li>
-      {% endif %}
+      <li {% if not manufacturer %} hidden{% endif %}>{{ text_manufacturer }}: <strong><a href="catalog/manufacturer_info.js?manufacturer_id={{ manufacturer_id }}" :click="link">{{ manufacturer }}</a></strong></li>
 
       <li>{{ text_model }}: <strong>{{ model }}</strong></li>
 
@@ -75,7 +72,7 @@
 
     <br />
     <div id="product">
-      <form-submit @submit="addToCart">
+      <form-submit @ref="form" @[submit]="addToCart">
         {% if options %}
         <hr>
         <h3>{{ text_option }}</h3>
@@ -83,15 +80,15 @@
           {% for option in options %}
 
           {% if option.type == 'select' %}
-          <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
-              <option value="">{{ text_select }}</option>
-              {% for option_value in option.option_value %}
-              <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}{% if option_value.price %} ({{ option_value.price | tax: tax_class_id, config_tax | currency: currency }}){% endif %}</option>
-              {% endfor %}
-            </select>
-            <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+          <div class="mb-3">
+            <input-select name="option[{{ option.product_option_id }}]" {% if option.required %} required{% endif %}>
+              <template>
+                <option value="">{{ text_select }}</option>
+                {% for option_value in option.option_value %}
+                <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}{% if option_value.price %} ({{ option_value.price | tax: tax_class_id, config_tax | currency: currency }}){% endif %}</option>
+                {% endfor %}
+              </template>
+            </input-select>
           </div>
           {% endif %}
 
@@ -121,7 +118,7 @@
               {% for option_value in option.option_value %}
               <div class="form-check">
                 <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input" />
-                <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label"> {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail" />{% endif %} {{ option_value.name }} {% if option_value.price %}({{ option_value.price | tax: tax_class_id, config_tax | currency: currency }}) {% endif %}</label>
+                <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail" />{% endif %} {{ option_value.name }} {% if option_value.price %}({{ option_value.price | tax: tax_class_id, config_tax | currency: currency }}) {% endif %}</label>
               </div>
               {% endfor %}
 
@@ -132,52 +129,47 @@
           {% endif %}
 
           {% if option.type == 'text' %}
-          <div class="mb-3{% if option.required %} required{% endif %}">
-            <input-text id="input-option-{{ option.product_option_id }}" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" {% if option.required %}required{% endif %}></input-text>
+          <div class="mb-3">
+            <input-text label="{{ option.name }}" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" {% if option.required %}required{% endif %}></input-text>
           </div>
           {% endif %}
 
           {% if option.type == 'textarea' %}
-          <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
-            <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
-          </div>
-          {% endif %}
-
-          {% if option.type == 'file' %}
-          <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="button-upload-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-            <div>
-              <button type="button" id="button-upload-{{ option.product_option_id }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-option-{{ option.product_option_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-light btn-block"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
-              <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option-{{ option.product_option_id }}" />
-            </div>
-            <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+          <div class="mb-3">
+            <input-textarea label="{{ option.name }}" name="option[{{ option.product_option_id }}]" rows="5" {% if option.required %}required{% endif %}>{{ option.value }}</textarea>
           </div>
           {% endif %}
 
           {% if option.type == 'date' %}
-          <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="date" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control" />
-            <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+          <div class="mb-3">
+            <input-date label="{{ option.name }}" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" {% if option.required %}required{% endif %} />
           </div>
           {% endif %}
 
           {% if option.type == 'time' %}
-          <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="time" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control" />
-            <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+          <div class="mb-3">
+            <input-time label="{{ option.name }}" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" {% if option.required %}required{% endif %} />
           </div>
           {% endif %}
 
           {% if option.type == 'datetime' %}
-          <div class="mb-3{% if option.required %} required{% endif %}">
-            <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="datetime-local" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control" />
-            <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+          <div class="mb-3">
+            <input-datetime label="{{ option.name }}" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" {% if option.required %}required{% endif %} />
           </div>
           {% endif %}
 
           {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if option.type == 'file' %}
+        <div class="mb-3{% if option.required %} required{% endif %}">
+          <label for="button-upload-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+          <div>
+            <button type="button" id="button-upload-{{ option.product_option_id }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-option-{{ option.product_option_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-light btn-block"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
+            <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option-{{ option.product_option_id }}" />
+          </div>
+          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
         </div>
         {% endif %}
 
@@ -230,17 +222,13 @@
 
 <ul class="nav nav-tabs">
   <li class="nav-item"><a href="#tab-description" data-bs-toggle="tab" class="nav-link active">{{ tab_description }}</a></li>
-  {% if attribute_groups %}
-  <li class="nav-item"><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
-  {% endif %}
-  {% if config_review_status %}
-  <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review | replace_first: '%s', review_total }}</a></li>
-  {% endif %}
+  <li class="nav-item" {% if not attribute_groups %} hidden{% endif %}><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
+  <li class="nav-item" {% if not config_review_status %} hidden{% endif %}><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review | replace_first: '%s', review_total }}</a></li>
 </ul>
 <div class="tab-content">
   <div id="tab-description" class="tab-pane fade show active mb-4">
     {{ description }}
-    {% if tags %} <p><strong>{{ text_tags }}</strong> {% for tag in tags %} <a href="{{ tag }}">{{ tag }}</a>{% if !loop.last %},{% endif %} {% endfor %}</p>{% endif %}
+    <p {% if not tags %} hidden{% endif %}><strong>{{ text_tags }}</strong> {% for tag in tags %} <a href="{{ tag }}">{{ tag }}</a>{% if !loop.last %},{% endif %} {% endfor %}</p>
   </div>
   {% if attribute_groups %}
   <div id="tab-specification" class="tab-pane fade">
@@ -268,7 +256,6 @@
   {% if config_review_status %}
   <div id="tab-review" class="tab-pane fade mb-4">
     <review-form product_id="{{ product_id }}"></review-form>
-
     <review-list product_id="{{ product_id }}"></review-list>
   </div>
   {% endif %}

@@ -6,28 +6,12 @@ namespace Opencart\Catalog\Controller\Account;
  * @package Opencart\Catalog\Controller\Account
  */
 class Register extends \Opencart\System\Engine\Controller {
-	public function token(): void {
-		$json = [];
-
-		if ($this->customer->isLogged()) {
-
-		}
-
-		// Create form token
-		$this->session->data['register_token'] = oc_token(26);
-
-		$json['token'] = $this->session->data['register_token'];
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	/**
 	 * Register
 	 *
 	 * @return void
 	 */
-	public function save(): void {
+	public function index(): void {
 		$this->load->language('account/register');
 
 		$json = [];
@@ -178,6 +162,24 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''), true);
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function token(): void {
+		$json = [];
+
+		if ($this->customer->isLogged()) {
+			
+		
+			exit();
+		}
+
+		// Create form token
+		$this->session->data['register_token'] = oc_token(26);
+
+		$json['token'] = $this->session->data['register_token'];
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -8,23 +8,12 @@ namespace Opencart\Catalog\Controller\Account;
  * @package Opencart\Catalog\Controller\Account
  */
 class Login extends \Opencart\System\Engine\Controller {
-	public function token(): void {
-		$json = [];
-
-		$this->session->data['login_token'] = oc_token(26);
-
-		$json['token'] = $this->session->data['login_token'];
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	/**
-	 * Login
+	 * Index
 	 *
 	 * @return void
 	 */
-	public function login(): void {
+	public function index(): void {
 		$this->load->language('account/login');
 
 		$json = [];
@@ -132,76 +121,18 @@ class Login extends \Opencart\System\Engine\Controller {
 	 * Token
 	 *
 	 * @return void
-	 */
-	/*
+	 */	
 	public function token(): void {
-		$this->load->language('account/login');
+		$json = [];
 
-		if (isset($this->request->get['email'])) {
-			$email = $this->request->get['email'];
-		} else {
-			$email = '';
-		}
+		$this->session->data['login_token'] = oc_token(26);
 
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
-		} else {
-			$code = '';
-		}
+		$json['token'] = $this->session->data['login_token'];
 
-		// Login override for admin users
-		$this->customer->logout();
-		$this->cart->clear();
-
-		unset($this->session->data['order_id']);
-		unset($this->session->data['payment_address']);
-		unset($this->session->data['payment_method']);
-		unset($this->session->data['payment_methods']);
-		unset($this->session->data['shipping_address']);
-		unset($this->session->data['shipping_method']);
-		unset($this->session->data['shipping_methods']);
-		unset($this->session->data['comment']);
-		unset($this->session->data['coupon']);
-		unset($this->session->data['reward']);
-		unset($this->session->data['customer_token']);
-
-		// Customer
-		$this->load->model('account/customer');
-
-		$customer_info = $this->model_account_customer->getTokenByCode($code);
-
-		if ($customer_info && $customer_info['email'] == $email && $customer_info['type'] == 'login' && $this->customer->login($customer_info['email'], '', true)) {
-			// Add customer details into session
-			$this->session->data['customer'] = $customer_info;
-
-			// Default Address
-			$this->load->model('account/address');
-
-			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->customer->getAddressId());
-
-			if ($address_info) {
-				$this->session->data['shipping_address'] = $address_info;
-			}
-
-			if ($this->config->get('config_tax_customer') && $address_info) {
-				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $address_info;
-			}
-
-			$this->model_account_customer->deleteTokenByCode($code);
-
-			// Create customer token
-			$this->session->data['customer_token'] = oc_token(26);
-
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true));
-		} else {
-			$this->session->data['error'] = $this->language->get('error_login');
-
-			$this->model_account_customer->deleteTokenByCode($code);
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
-		}
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
-    */
+
 	/**
 	 * Validate
 	 *

@@ -12,10 +12,10 @@
         <input-text @ref="company" label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
       </div>
       <div class="mb-3">
-        <input-text @ref="address-1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
+        <input-text @ref="address_1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
       </div>
       <div class="mb-3">
-        <input-text @ref="address-2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
+        <input-text @ref="address_2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
       </div>
       <div class="mb-3">
         <input-text @ref="city" label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
@@ -24,7 +24,7 @@
         <input-text @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
       </div>
       <div class="mb-3">
-        <input-country @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" postcode="1" target="input-postcode" required>
+        <input-country @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" @[change]="handleCountry" required>
           <option value="0">{{ text_select }}</option>
         </input-country>
       </div>
@@ -48,7 +48,7 @@
       </div>
     </fieldset>
     <div class="text-end">
-      <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+      <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
     </div>
   </template>
 </form-submit>

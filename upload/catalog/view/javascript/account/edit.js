@@ -21,10 +21,6 @@ export default class AccountEdit extends WebComponent {
         return loader.template('account/edit', [ data, language, config ]);
     }
 
-	handleConnect() {
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
-	}
-
     async handleSubmit(e) {
         e.preventDefault();
 

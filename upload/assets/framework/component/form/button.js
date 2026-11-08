@@ -21,12 +21,23 @@ customElements.define('button-submit', class extends WebComponent {
         this.html = this.innerHTML;
 	}
 
+	style() {
+		return `
+			:host {
+				display: inline-block;
+			}
+			button[disabled] {
+				cursor: not-allowed;
+			}
+		`;
+	}
+
 	async render() {
         return `<button type="submit" @ref="element" @click="handleClick" class="btn btn-primary"${this.disabled ? ' disabled' : ''}>${this.html}</button>`;
     }
 
 	handleClick(e) {
-		this.dispatchEvent(new CustomEvent('[click]'));
+		this.emit('[click]');
 	}
 
 	handleSubmitting(name, value) {

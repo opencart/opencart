@@ -44,7 +44,7 @@ customElements.define('form-submit', class extends WebComponent {
 	handleSubmit(e) {
 		e.preventDefault();
 
-		this.dispatchEvent(new CustomEvent('[submit]'));
+		this.emit('[submit]');
 	}
 
 	handleSubmitting(name, value) {

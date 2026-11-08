@@ -10,10 +10,6 @@ export default class AccountPassword extends WebComponent {
 
         return loader.template('account/password', [ language ]);
     }
-
-	handleConnect() {
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
-	}
 	
     async handleSubmit(e) {
         e.preventDefault();

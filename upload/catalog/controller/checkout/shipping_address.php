@@ -7,11 +7,11 @@ namespace Opencart\Catalog\Controller\Checkout;
  */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	/**
-	 * Save
+	 * Index
 	 *
 	 * @return void
 	 */
-	public function save(): void {
+	public function index(): void {
 		$this->load->language('checkout/shipping_address');
 
 		$json = [];

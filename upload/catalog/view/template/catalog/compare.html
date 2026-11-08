@@ -16,7 +16,7 @@
     <tr>
       <td>{{ text_image }}</td>
       {% for product in products %}
-      <td class="text-center">{% if product.thumb %} <a href="catalog/product_info.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
+      <td class="text-center">{% if product.thumb %} <a href="catalog/product_info.js?product_id={{ product.product_id }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a>{% endif %}</td>
       {% endfor %}
     </tr>
     <tr>
@@ -43,32 +43,33 @@
       <td>{{ product.availability }}</td>
       {% endfor %}
     </tr>
-    <tr{% if not review_status %} class="d-none"{% endif %}>
+    <tr{% if not review_status %} hidden{% endif %}>
       <td>{{ text_rating }}</td>
       {% for product in products %}
       <td class="rating"><review-rating @ref="rating" rating="{{ rating }}"></review-rating>
-        <br/>
-        {{ product.reviews }}</td>
+        <br />
+        {{ product.reviews }}
+      </td>
       {% endfor %}
-    </tr>
-    <tr>
-      <td>{{ text_summary }}</td>
-      {% for product in products %}
-      <td class="description">{{ product.description }}</td>
-      {% endfor %}
-    </tr>
-    <tr>
-      <td>{{ text_weight }}</td>
-      {% for product in products %}
-      <td>{{ product.weight }}</td>
-      {% endfor %}
-    </tr>
-    <tr>
-      <td>{{ text_dimension }}</td>
-      {% for product in products %}
-      <td>{{ product.length }} x {{ product.width }} x {{ product.height }}</td>
-      {% endfor %}
-    </tr>
+      </tr>
+      <tr>
+        <td>{{ text_summary }}</td>
+        {% for product in products %}
+        <td class="description">{{ product.description }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>{{ text_weight }}</td>
+        {% for product in products %}
+        <td>{{ product.weight }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>{{ text_dimension }}</td>
+        {% for product in products %}
+        <td>{{ product.length }} x {{ product.width }} x {{ product.height }}</td>
+        {% endfor %}
+      </tr>
   </tbody>
   {% for attribute_group in attribute_groups %}
   <thead>
@@ -93,8 +94,8 @@
     <td class="text-center">
       <form action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
         <button type="submit" id="button-confirm" class="btn btn-primary btn-block">{{ button_cart }}</button>
-        <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-        <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
+        <input type="hidden" name="product_id" value="{{ product.product_id }}" />
+        <input type="hidden" name="quantity" value="{{ product.minimum }}" />
         <a href="catalog/compare.js?product_id={{ product.product_id }}" class="btn btn-danger btn-block">{{ button_remove }}</a>
       </form>
     </td>
@@ -105,7 +106,6 @@
 {% else %}
 
 <p>{{ text_no_results }}</p>
-<div class="text-end"><a href="common/home" class="btn btn-primary">{{ button_continue }}</a></div>
+<div class="text-end"><a href="common/home.js" class="btn btn-primary">{{ button_continue }}</a></div>
 
 {% endif %}
-

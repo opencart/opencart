@@ -3,7 +3,7 @@
 <div class="card mb-3">
   <div class="card-body">
     <div class="row">
-      <div class="col-sm-3{% if not config_image %} hidden{% endif %}"><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px" /></div>
+      <div class="col-sm-3" {% if not config_image %} hidden{% endif %}><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px" /></div>
       <div class="col-sm-3"><strong>{{ config_name }}</strong>
         <br />
         <address>{{ config_address }}</address>

@@ -34,9 +34,9 @@ class Success extends \Opencart\System\Engine\Controller {
 		];
 
 		if ($this->customer->isLogged()) {
-			$data['text_message'] = sprintf($this->language->get('text_success'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			$data['text_message'] = $this->language->format('text_success', $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		} else {
-			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			$data['text_message'] = $this->language->format('text_approval', $this->config->get('config_name'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
 
 		if ($this->cart->hasProducts()) {

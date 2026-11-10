@@ -56,6 +56,12 @@ define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+// Autoloader
+$autoloader = new \Opencart\System\Engine\Autoloader();
+$autoloader->register('Opencart\\' . APPLICATION, DIR_APPLICATION);
+$autoloader->register('Opencart\Extension', DIR_EXTENSION);
+$autoloader->register('Opencart\System', DIR_SYSTEM);
+
 // Engine
 require_once(DIR_SYSTEM . 'engine/controller.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
@@ -71,6 +77,7 @@ require_once(DIR_SYSTEM . 'helper/db_schema.php');
 
 // Registry
 $registry = new \Opencart\System\Engine\Registry();
+$registry->set('autoloader', $autoloader);
 
 // Request
 $registry->set('request', new \Opencart\System\Library\Request());

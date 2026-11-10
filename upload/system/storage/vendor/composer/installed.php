@@ -92,9 +92,9 @@
             'dev_requirement' => false,
         ),
         'symfony/filesystem' => array(
-            'pretty_version' => 'v7.4.23',
-            'version' => '7.4.23.0',
-            'reference' => '53d609da66578dad5a39fe290e8f924ec8f05e93',
+            'pretty_version' => 'v6.4.50',
+            'version' => '6.4.50.0',
+            'reference' => '9c54f695d2fcfb0bb21c8003b7a038bc631aa2e9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/filesystem',
             'aliases' => array(),

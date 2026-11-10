@@ -104,7 +104,7 @@ set_exception_handler(function(\Throwable $e) use ($log, $config): void {
 	}
 
 	if ($config->get('error_display')) {
-		echo $output;
+		echo '<pre>' . $output . '</pre>';
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();
@@ -155,7 +155,7 @@ $response->setCompression((int)$config->get('response_compression'));
 
 // Database
 if ($config->get('db_autostart')) {
-	$db = new \Opencart\System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'), $config->get('db_ssl_key'), $config->get('db_ssl_cert'), $config->get('db_ssl_ca'));
+	$db = new \Opencart\System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'), $config->get('db_ssl_key'), $config->get('db_ssl_cert'), $config->get('db_ssl_ca'), $registry);
 	$registry->set('db', $db);
 }
 

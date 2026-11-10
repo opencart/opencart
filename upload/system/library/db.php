@@ -9,6 +9,9 @@
  * @see           https://www.opencart.com
  */
 namespace Opencart\System\Library;
+
+use Opencart\System\Library\Database\Query\QueryConnectionInterface;
+
 /**
  * Class DB Adaptor
  *
@@ -52,6 +55,32 @@ class DB {
 	 */
 	public function query(string $sql) {
 		return $this->adaptor->query($sql);
+	}
+
+	/**
+	 * Execute a prepared query.
+	 */
+	public function executeQuery(string $sql, array $bindings = [], array $types = []): \stdClass {
+		if (!($this->adaptor instanceof QueryConnectionInterface)) {
+			throw new \LogicException(
+				'The configured database adapter does not support prepared query execution'
+			);
+		}
+
+		return $this->adaptor->executeQuery($sql, $bindings, $types);
+	}
+
+	/**
+	 * Execute a prepared statement.
+	 */
+	public function executeStatement(string $sql, array $bindings = [], array $types = []): int {
+		if (!($this->adaptor instanceof QueryConnectionInterface)) {
+			throw new \LogicException(
+				'The configured database adapter does not support prepared query execution'
+			);
+		}
+
+		return $this->adaptor->executeStatement($sql, $bindings, $types);
 	}
 
 	/**

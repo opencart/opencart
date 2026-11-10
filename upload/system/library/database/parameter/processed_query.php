@@ -3,33 +3,45 @@
 namespace Opencart\System\Library\Database\Parameter;
 
 final class ProcessedQuery {
+	public readonly string $sql;
+
+	/** @var list<mixed> */
+	public readonly array $params;
+
+	/** @var list<ParameterType> */
+	public readonly array $types;
+
 	/**
-	 * @param list<mixed> $params
-	 * @param list<ParameterType> $types
+	 * @param array<array-key, mixed> $params
+	 * @param array<array-key, mixed> $types
 	 */
-	public function __construct(
-		public readonly string $sql,
-		public readonly array $params,
-		public readonly array $types
-	) {
-		if (!array_is_list($this->params) || !array_is_list($this->types)) {
+	public function __construct(string $sql, array $params, array $types) {
+		if (!array_is_list($params) || !array_is_list($types)) {
 			throw new \InvalidArgumentException(
 				'Processed query parameters and types must be sequential arrays'
 			);
 		}
 
-		if (count($this->params) !== count($this->types)) {
+		if (count($params) !== count($types)) {
 			throw new \InvalidArgumentException(
 				'Processed query parameters and types count mismatch'
 			);
 		}
 
-		foreach ($this->types as $type) {
+		foreach ($types as $type) {
 			if (!$type instanceof ParameterType) {
 				throw new \InvalidArgumentException(
 					'Processed query contains an invalid parameter type'
 				);
 			}
 		}
+
+		$this->sql = $sql;
+
+		/** @var list<mixed> $params */
+		$this->params = $params;
+
+		/** @var list<ParameterType> $types */
+		$this->types = $types;
 	}
 }

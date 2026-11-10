@@ -1,6 +1,7 @@
 <?php
 namespace Opencart\System\Library\DB;
 
+use Opencart\System\Library\Database\Parameter\ArrayParameterType;
 use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 use Opencart\System\Library\Database\Parameter\ParameterProcessor;
 use Opencart\System\Library\Database\Parameter\ParameterType;
@@ -142,6 +143,10 @@ class MySQLi implements QueryConnectionInterface {
 		return $this->executePrepared($sql, $bindings, $types, false);
 	}
 
+	/**
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 */
 	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): \stdClass|int {
 		$processed = $this->parameterProcessor->process($sql, $bindings, $types);
 
@@ -173,6 +178,10 @@ class MySQLi implements QueryConnectionInterface {
 		}
 	}
 
+	/**
+	 * @param list<mixed> $values
+	 * @param list<ParameterType> $types
+	 */
 	private function bindParameters(\mysqli_stmt $statement, array $values, array $types): void {
 		if (count($values) !== count($types)) {
 			throw new \LogicException('SQL parameters and types count mismatch');

@@ -29,6 +29,9 @@ final class QueryMacroRegistry {
         return isset($this->macros[$queryType][$name]);
     }
 
+	/**
+	 * @param list<mixed> $arguments
+	 */
     public function call(object $query, string $queryType, string $name, array $arguments): mixed {
         $queryType = $this->normalizeQueryType($queryType);
         $name = $this->normalizeMethodName($name);

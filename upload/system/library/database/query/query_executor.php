@@ -128,10 +128,6 @@ final class QueryExecutor {
 			$query->getBindValues()
 		);
 
-		if (!is_int($result)) {
-			throw new \UnexpectedValueException('Statement query must return an integer result');
-		}
-
 		if ($eventName !== null) {
 			$this->triggerEvent($eventName, 'after', $query, $result);
 		}
@@ -167,7 +163,11 @@ final class QueryExecutor {
 	 * before-listener changes from accumulating when a builder is executed
 	 * more than once, while keeping the no-event path allocation-free.
 	 *
-	 * @return array{0: AbstractQuery, 1: string|null}
+	 * @template TQuery of AbstractQuery
+	 *
+	 * @param TQuery $query
+	 *
+	 * @return array{0: TQuery, 1: string|null}
 	 */
 	private function prepareQuery(AbstractQuery $query): array {
 		$eventName = $query instanceof QueryEventAwareInterface

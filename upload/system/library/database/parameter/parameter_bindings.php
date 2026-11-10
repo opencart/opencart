@@ -11,14 +11,33 @@ final class ParameterBindings {
 	private const MODE_POSITIONAL = 'positional';
 
 	private string $mode;
+
+	/**
+	 * @var array<array-key, mixed>
+	 */
 	private array $params;
+
+	/**
+	 * @var array<array-key, ParameterType|ArrayParameterType>
+	 */
 	private array $types;
+
+	/**
+	 * @var array<array-key, true>
+	 */
 	private array $usedParams = [];
+
+	/**
+	 * @var array<array-key, true>
+	 */
 	private array $usedTypes = [];
+
 	private int $position = 0;
 
 	/**
 	 * @param list<array{type: string, value: string}> $tokens
+	 * @param array<array-key, mixed> $params
+	 * @param array<array-key, ParameterType|ArrayParameterType> $types
 	 */
 	public function __construct(array $tokens, array $params, array $types) {
 		$hasNamed = false;
@@ -65,6 +84,9 @@ final class ParameterBindings {
 		$this->validateTypes($this->types);
 	}
 
+	/**
+	 * @param array{type: 'named'|'positional', value: string} $token
+	 */
 	public function resolve(array $token): ParameterBinding {
 		if ($this->mode === self::MODE_NAMED) {
 			if ($token['type'] !== 'named') {
@@ -143,6 +165,10 @@ final class ParameterBindings {
 		return new ParameterBinding($this->params[$position], $type);
 	}
 
+	/**
+	 * @param array<array-key, mixed> $items
+	 * @return array<array-key, mixed>
+	 */
 	private function normalizeNamed(array $items): array {
 		$result = [];
 
@@ -169,6 +195,10 @@ final class ParameterBindings {
 		return $result;
 	}
 
+	/**
+	 * @param list<mixed> $params
+	 * @return list<mixed>
+	 */
 	private function normalizePositional(array $params): array {
 		if (!array_is_list($params)) {
 			throw new \InvalidArgumentException(
@@ -179,6 +209,10 @@ final class ParameterBindings {
 		return $params;
 	}
 
+	/**
+	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 * @return array<int, ParameterType|ArrayParameterType>
+	 */
 	private function validatePositionalTypes(array $types, int $count): array {
 		foreach ($types as $key => $type) {
 			if (!is_int($key) || $key < 0 || $key >= $count) {
@@ -191,6 +225,9 @@ final class ParameterBindings {
 		return $types;
 	}
 
+	/**
+	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 */
 	private function validateTypes(array $types): void {
 		foreach ($types as $key => $type) {
 			if (

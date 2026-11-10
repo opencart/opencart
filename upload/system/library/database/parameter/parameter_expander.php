@@ -27,6 +27,8 @@ final class ParameterExpander {
 	}
 
 	/**
+	 * @param array<array-key, mixed> $values
+	 *
 	 * @return array{sql: string, params: list<mixed>, types: list<ParameterType>}
 	 */
 	private function expandArray(
@@ -71,10 +73,7 @@ final class ParameterExpander {
 	/**
 	 * @return array{sql: string, params: list<mixed>, types: list<ParameterType>}
 	 */
-	private function expandScalar(
-		mixed $value,
-		?ParameterType $type
-	): array {
+	private function expandScalar(mixed $value, ?ParameterType $type): array {
 		if (!is_scalar($value) && $value !== null) {
 			throw new \InvalidArgumentException(
 				'Unsupported SQL binding type: ' . get_debug_type($value)

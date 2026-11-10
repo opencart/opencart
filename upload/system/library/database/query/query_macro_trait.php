@@ -14,6 +14,9 @@ trait QueryMacroTrait {
         $this->macroQueryType = $queryType;
     }
 
+	/**
+	 * @param list<mixed> $arguments
+	 */
     public function __call(string $name, array $arguments): mixed {
         return $this->macroRegistry->call($this, $this->macroQueryType, $name, $arguments);
     }

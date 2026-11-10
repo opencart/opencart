@@ -2,6 +2,11 @@
 
 namespace Opencart\System\Library\Database\Query;
 
+use Aura\SqlQuery\AbstractQuery;
+use Aura\SqlQuery\Common\DeleteInterface;
+use Aura\SqlQuery\Common\InsertInterface;
+use Aura\SqlQuery\Common\SelectInterface;
+use Aura\SqlQuery\Common\UpdateInterface;
 use Aura\SqlQuery\QueryFactory as AuraQueryFactory;
 
 /**
@@ -11,7 +16,9 @@ use Aura\SqlQuery\QueryFactory as AuraQueryFactory;
  * OpenCart query classes and registration methods instead of Aura internals.
  */
 class QueryFactory extends AuraQueryFactory {
-	/** @var array<string, class-string> */
+	/**
+	 * @var array<string, class-string<AbstractQuery>>
+	 */
 	private array $queryClasses = [
 		'Select' => Select::class,
 		'Insert' => Insert::class,
@@ -29,19 +36,19 @@ class QueryFactory extends AuraQueryFactory {
 		$this->macroRegistry = new QueryMacroRegistry();
 	}
 
-	public function select(): Select {
+	public function select(): SelectInterface {
 		return $this->newSelect();
 	}
 
-	public function insert(): Insert {
+	public function insert(): InsertInterface {
 		return $this->newInsert();
 	}
 
-	public function update(): Update {
+	public function update(): UpdateInterface {
 		return $this->newUpdate();
 	}
 
-	public function delete(): Delete {
+	public function delete(): DeleteInterface {
 		return $this->newDelete();
 	}
 
@@ -52,7 +59,7 @@ class QueryFactory extends AuraQueryFactory {
 	 * selected query type. Registration affects subsequently created queries.
 	 *
 	 * @param 'select'|'insert'|'update'|'delete' $queryType
-	 * @param class-string $class
+	 * @param string $class
 	 */
 	public function registerQueryClass(
 		string $queryType,
@@ -79,6 +86,7 @@ class QueryFactory extends AuraQueryFactory {
 			);
 		}
 
+		/** @var class-string<AbstractQuery> $class */
 		$this->queryClasses[$queryType] = $class;
 	}
 
@@ -151,7 +159,10 @@ class QueryFactory extends AuraQueryFactory {
 			'Select' => Select::class,
 			'Insert' => Insert::class,
 			'Update' => Update::class,
-			'Delete' => Delete::class
+			'Delete' => Delete::class,
+			default => throw new \InvalidArgumentException(
+				'Unsupported query type: ' . $queryType
+			)
 		};
 	}
 }

@@ -114,13 +114,19 @@ class PDO implements QueryConnectionInterface {
 			$statement = $this->connection->prepare($processed->sql);
 
 			if (!$statement) {
-				throw new \RuntimeException('Could not prepare SQL statement: ' . $this->connection->error);
+				$error = $this->connection->errorInfo();
+				$message = $error[2] ?? 'Unknown database error';
+
+				throw new \RuntimeException('Could not prepare SQL statement: ' . $message);
 			}
 
 			$this->bindParameters($statement, $processed->params, $processed->types);
 
 			if (!$statement->execute()) {
-				throw new \RuntimeException('Could not execute SQL statement: ' . $statement->error);
+				$error = $statement->errorInfo();
+				$message = $error[2] ?? 'Unknown statement error';
+
+				throw new \RuntimeException('Could not execute SQL statement: ' . $message);
 			}
 
 			if ($fetchResult) {
@@ -136,6 +142,10 @@ class PDO implements QueryConnectionInterface {
 		}
 	}
 
+	/**
+	 * @param list<mixed> $values
+	 * @param list<ParameterType> $types
+	 */
 	private function bindParameters(\PDOStatement $statement, array $values, array $types): void {
 		if (count($values) !== count($types)) {
 			throw new \LogicException(

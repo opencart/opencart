@@ -6,6 +6,11 @@ namespace Opencart\System\Library\Database\Parser;
  * Tokenizes MySQL/MariaDB SQL for placeholder processing.
  *
  * This is a lightweight lexer, not a complete SQL grammar parser.
+ *
+ * @phpstan-type SqlToken array{
+ *      type: 'text'|'named'|'positional',
+ *      value: string
+ *  }
  */
 final class SqlParser {
 	public function __construct(
@@ -14,7 +19,7 @@ final class SqlParser {
 	}
 
 	/**
-	 * @return list<array{type: 'text'|'named'|'positional', value: string}>
+	 * @return list<SqlToken>
 	 */
 	public function tokenize(string $sql): array {
 		$tokens = [];
@@ -152,6 +157,9 @@ final class SqlParser {
 		return substr($sql, $start, $offset - $start);
 	}
 
+	/**
+	 * @return array{type: 'text', value: string}|null
+	 */
 	private function readDashComment(string $sql, int &$offset): ?array {
 		if (substr($sql, $offset, 2) !== '--') {
 			return null;
@@ -170,6 +178,9 @@ final class SqlParser {
 		];
 	}
 
+	/**
+	 * @return array{type: 'text', value: string}|null
+	 */
 	private function readBlockCommentToken(string $sql, int &$offset): ?array {
 		if (substr($sql, $offset, 2) !== '/*') {
 			return null;
@@ -190,6 +201,9 @@ final class SqlParser {
 		];
 	}
 
+	/**
+	 * @return array{type: 'named', value: string}|null
+	 */
 	private function readNamedParameter(string $sql, int &$offset): ?array {
 		$length = strlen($sql);
 
@@ -221,6 +235,9 @@ final class SqlParser {
 		return ctype_alnum($char) || $char === '_';
 	}
 
+	/**
+	 * @return array{type: 'positional', value: '?'}
+	 */
 	private function readPositionalParameter(int &$offset): array {
 		$offset++;
 
@@ -230,6 +247,9 @@ final class SqlParser {
 		];
 	}
 
+	/**
+	 * @param list<SqlToken> $tokens
+	 */
 	private function flushText(array &$tokens, string &$text): void {
 		if ($text === '') {
 			return;

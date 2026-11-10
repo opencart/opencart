@@ -10,14 +10,16 @@
  */
 namespace Opencart\System\Library;
 
+use Aura\SqlQuery\Common\DeleteInterface;
+use Aura\SqlQuery\Common\InsertInterface;
+use Aura\SqlQuery\Common\SelectInterface;
+use Aura\SqlQuery\Common\UpdateInterface;
 use Opencart\System\Engine\Registry;
+use Opencart\System\Library\Database\Parameter\ArrayParameterType;
+use Opencart\System\Library\Database\Parameter\ParameterType;
 use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 use Opencart\System\Library\Database\Query\QueryExecutor;
 use Opencart\System\Library\Database\Query\QueryFactory;
-use Opencart\System\Library\Database\Query\Select;
-use Opencart\System\Library\Database\Query\Insert;
-use Opencart\System\Library\Database\Query\Update;
-use Opencart\System\Library\Database\Query\Delete;
 
 /**
  * Class DB Adaptor
@@ -70,33 +72,37 @@ class DB {
 	/**
 	 * Create SELECT query.
 	 */
-	public function select(): Select {
+	public function select(): SelectInterface {
 		return $this->getQueryFactory()->newSelect();
 	}
 
 	/**
 	 * Create INSERT query.
 	 */
-	public function insert(): Insert {
+	public function insert(): InsertInterface {
 		return $this->getQueryFactory()->newInsert();
 	}
 
 	/**
 	 * Create UPDATE query.
 	 */
-	public function update(): Update {
+	public function update(): UpdateInterface {
 		return $this->getQueryFactory()->newUpdate();
 	}
 
 	/**
 	 * Create DELETE query.
+	 *
 	 */
-	public function delete(): Delete {
+	public function delete(): DeleteInterface {
 		return $this->getQueryFactory()->newDelete();
 	}
 
 	/**
 	 * Execute a prepared query.
+	 *
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, ParameterType|ArrayParameterType> $types
 	 */
 	public function executeQuery(string $sql, array $bindings = [], array $types = []): \stdClass {
 		if (!($this->adaptor instanceof QueryConnectionInterface)) {
@@ -110,6 +116,9 @@ class DB {
 
 	/**
 	 * Execute a prepared statement.
+	 *
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, ParameterType|ArrayParameterType> $types
 	 */
 	public function executeStatement(string $sql, array $bindings = [], array $types = []): int {
 		if (!($this->adaptor instanceof QueryConnectionInterface)) {

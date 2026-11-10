@@ -15,4 +15,5 @@ return array(
     'ScssPhp\\ScssPhp\\' => array($vendorDir . '/scssphp/scssphp/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
     'League\\Uri\\' => array($vendorDir . '/league/uri', $vendorDir . '/league/uri-interfaces'),
+    'Aura\\SqlQuery\\' => array($vendorDir . '/aura/sqlquery/src'),
 );

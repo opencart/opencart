@@ -4,12 +4,12 @@ export default class Config {
     #path = new Map();
     #cache = new Map();
 
-    addPath(namespace, path = '') {
-        if (!path) {
-            this.#directory = namespace;
-        } else {
-            this.#path.set(namespace, path);
-        }
+	setDirectory(directory) {
+        this.#directory = directory;
+    }
+
+    addPath(namespace, path) {
+        this.#path.set(namespace, path);
     }
 
     async fetch(path) {
@@ -27,7 +27,7 @@ export default class Config {
             }
 
             if (this.#path.has(namespace + '/')) {
-                file = this.#path.get(namespace + '/') + path.substr(namespace.length) + '.json'; 
+                file = this.#path.get(namespace + '/') + path.substr(namespace.length + 1) + '.json'; 
             }
         }
 

@@ -130,9 +130,9 @@ export default class ProductInfo extends WebComponent {
     async addToCart(e){
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=checkout/cart.add', form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/cart.add',
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

@@ -4,8 +4,12 @@ export default class Language {
     static #instance = null;
     #directory = '';
     #path = new Map();
-    #cache = new Map();
-
+	#cache = new Map();
+	
+	setDirectory(directory) {
+        this.#directory = directory;
+	}
+	
     addPath(namespace, path = '') {
         if (!path) {
             this.#directory = namespace;
@@ -29,7 +33,7 @@ export default class Language {
             }
 
             if (this.#path.has(namespace + '/')) {
-                file = this.#path.get(namespace + '/') + path.substr(namespace.length) + '.yaml';
+				file = this.#path.get(namespace + '/') + path.substr(namespace.length + 1) + '.yaml';
             }
         }
 

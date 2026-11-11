@@ -20,9 +20,9 @@ export default class AccountNewsletter extends WebComponent {
 
         //if (!customer.isLogged()) return;
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=account/newsletter&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+		await ajax.post({
+			url: 'action.php?route=account/newsletter&language=' + local.get('language') + '&customer_token=' + customer.getToken(),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
@@ -30,8 +30,6 @@ export default class AccountNewsletter extends WebComponent {
                 this.form.toggleAttribute('submitting', false);
             },
 			handleSuccess: (json) => {
-				console.log('onSuccess', json);
-				
                 // Display error messages
                 if (json.has('error')) {
                     this.form.setError(json.get('error'));

@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 import { loader } from '../../library.js';
 
 // Config

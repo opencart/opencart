@@ -2,8 +2,12 @@ export default class Storage {
     static #instance = null;
     #directory = '';
     #path = new Map();
-    #cache = new Map();
-
+	#cache = new Map();
+	
+	setDirectory(directory) {
+        this.#directory = directory;
+	}
+	
     addPath(namespace, path = '') {
         if (!path) {
             this.#directory = namespace;

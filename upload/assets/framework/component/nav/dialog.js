@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 import { loader } from '../../library.js';
 
 // Config
@@ -16,12 +16,14 @@ customElements.define('nav-dialog', class extends WebComponent {
 	async render() {
 		// Get the source HTML to load
 		if (!this.hasAttribute('src') || !this.getAttribute('src')) return;
-				
+			
+		console.log(this.getAttribute('src'));
+		
     	let [ path, query ] = this.getAttribute('src').split('?');
 
 		if (!this.data.has(path)) {
 			let response = await import(config.get('config_path') + path);
-
+			
 			this.data.set(path, customElements.getName(response.default));
 		}
 

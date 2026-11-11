@@ -33,16 +33,20 @@ export default class Ajax {
      *   }
      * });
      */
-    async request(url, options = {}) {
-        url = url.startsWith('http') ? url : `${document.baseURI}${url}`;
+	async request(option = {}) {
+		if (!option.url) {
+			throw new Error('URL is required');
+		};			
+		
+		let url = option.url.startsWith('http') ? option.url : `${document.baseURI}${option.url}`;
 
         // Default Config
-        let config = {
-            method: (options.method || 'GET').toUpperCase(),
-            ...options
+		let config = {
+            method: (option.method || 'GET').toUpperCase(),
+            ...option
         };
 
-        if (typeof options.handleSend === 'function') options.handleSend(config); // you can modify config here
+        if (typeof option.handleSend === 'function') option.handleSend(config); // you can modify config here
 
         // Try to parse JSON (even on error responses)
         let result;
@@ -74,15 +78,15 @@ export default class Ajax {
             }
 
             // ----- onSuccess -----
-            if (typeof options.handleSuccess === 'function') options.handleSuccess(result, response);
+            if (typeof option.handleSuccess === 'function') option.handleSuccess(result, response);
         } catch (e) {
             // ----- onError -----
-            if (typeof options.handleError === 'function') options.handleError(e);
+            if (typeof option.handleError === 'function') option.handleError(e);
 
             throw e;
         } finally {
             // ----- onComplete -----
-            if (typeof options.handleComplete === 'function') options.handleComplete();
+            if (typeof option.handleComplete === 'function') option.handleComplete();
         }
 
         return result;
@@ -90,57 +94,63 @@ export default class Ajax {
 
     /**
      * Sends a GET request, appending `data` to the URL as a query string.
-     * @param {string} url
-     * @param {object} [data] - key/value pairs serialized into the query string
-     * @param {object} [options] - extra request options, same shape as `request()`
+     * @param {object} option
+     * @param {string} option.url
+     * @param {object} [option.data] - key/value pairs serialized into the query string
+     * @param {object} [option.options] - extra request options, same shape as `request()`
      * @return {Promise<*>} resolves with the parsed response body
      */
-    get(url, data = {}, options = {}) {
-        const query = new URLSearchParams(data).toString();
+    get(url, option = {}) {
+        const query = new URLSearchParams(option.data).toString();
 
-        return this.request(query ? `${url}?${query}` : url, {
+        return this.request({
+            url: query ? `${url}?${query}` : url,
             method: 'GET',
-            ...options
+            ...option
         });
     }
 
-    post(url, body = {}, options = {}) {
-        return this.request(url, {
+    post(option = {}) {
+        return this.request({
+            url: option.url,
             method: 'POST',
-            body,
-            ...options
+            body: option.data,
+            ...option
         });
     }
 
-    put(url, body = {}, options = {}) {
-        return this.request(url, {
+    put(option = {}) {
+		return this.request({
+            url: option.url,
             method: 'PUT',
-            body,
-            ...options
+            body: option.data,	
+            ...option
         });
     }
 
-    patch(url, body = {}, options = {}) {
-        return this.request(url, {
+    patch(option = {}) {
+        return this.request({
+            url: option.url,
             method: 'PATCH',
-            body,
-            ...options
+            body: option.data,
+            ...option
         });
     }
 
-    delete(url, options = {}) {
-        return this.request(url, {
+    delete(option = {}) {
+        return this.request({
+            url: option.url,
             method: 'DELETE',
-            ...options
+            ...option
         });
     }
 
     static getInstance() {
-        if (!Ajax.instance) {
-            Ajax.instance = new Ajax();
+        if (!Ajax.#instance) {
+            Ajax.#instance = new Ajax();
         }
 
-        return Ajax.instance;
+        return Ajax.#instance;
     }
 }
 

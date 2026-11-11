@@ -31,9 +31,9 @@ customElements.define('shipping-method', class extends WebComponent {
     async getMethods(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=checkout/shipping_method.quote&language=' + local.get('language'), form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/shipping_method.quote&language=' + local.get('language'),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
@@ -108,9 +108,9 @@ customElements.define('shipping-method', class extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=checkout/shipping_method.save&language=' + local.get('language'), form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/shipping_method.save&language=' + local.get('language'),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

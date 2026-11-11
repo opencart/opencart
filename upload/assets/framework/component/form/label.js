@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 /**
  * <form-group label="First name" help="As it appears on your passport" inline>

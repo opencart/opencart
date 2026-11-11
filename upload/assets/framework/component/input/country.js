@@ -16,37 +16,26 @@ import { InputSelect } from './select.js';
 const countries = await loader.storage('localisation/country');
 
 class InputCountry extends InputSelect {
-	#options = [];
-    target = '';
-
-	constructor() { 
-		super();
-        
-		this.#options = Array.from(this.querySelectorAll('option')).map(option => {
-			return {
-				text: option.outerHTML,
-				value: option.value
-			};
-		});
-
-        for (let country of countries) {
-			this.#options.push({
-				text: country.description[local.get('language')] ? country.description[local.get('language')].name : '',
-				value: country.country_id
-			});
-		}
+	render() {
+		return `
+			<label @ref="label" for="input-country">${this.label}</label>
+			<select name="${this.name}" id="input-country"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @change="onChange" class="form-control">${this.html}${countries.map(country => `<option value="${country.country_id}"${country.country_id === this.value ? ` selected` : ``}>${country.description[local.get('language')] ? country.description[local.get('language')].name : ``}</option>`).join('')}</select>
+			<div @ref="error" class="invalid-feedback"></div>
+        `;
 	}
+	
+    // A native change event does not leave the shadow root, so send it on.
+	onChange(e) {
+		console.log('Country changed', e);
 
-    async handleConnect() {
-        this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
-        this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
-    }
+		this.setAttribute('value', e.target.value);
+		
+		this.emit('[change]');
+	}
 
     async handleChange(e) {
         this.value = e.target.value;
 
-		if (this.target) this.target.setAttribute('country_id', this.value);
-		
         if (this.postcode) {
             if (this.value in countries && countries[this.value].postcode_required == 1) {
                 this.postcode.toggleAttribute('required', true);

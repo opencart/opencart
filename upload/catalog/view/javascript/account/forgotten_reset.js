@@ -4,6 +4,9 @@ import { loader, customer, ajax, local } from '../index.js';
 const language = await loader.language('account/forgotten_reset');
 
 export default class ForgottenReset extends WebComponent {
+	static formAssociated = true;
+	#token = '';
+	
     async render() {
         if (customer.isLogged()) return;
 
@@ -14,10 +17,8 @@ export default class ForgottenReset extends WebComponent {
         let json = await ajax.get('action.php?route=account/reset.token&language=' + local.get('language'));
 
         if (json.has('token')) {
-            this.token = json.get('token');
+            this.#token = json.get('token'); 
 		}
-		
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
 	}
 	
 	async handleSubmit(e) {
@@ -25,9 +26,9 @@ export default class ForgottenReset extends WebComponent {
 
 		//if (customer.isLogged()) return;
 		
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=account/forgotten.reset&language=' + local.get('language') + '&reset_token=' + this.token, form, {
+		await ajax.post({
+			url: 'action.php?route=account/forgotten.reset&language=' + local.get('language') + '&reset_token=' + this.#token,
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

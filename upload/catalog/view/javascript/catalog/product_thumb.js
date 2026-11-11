@@ -43,12 +43,12 @@ customElements.define('product-thumb', class extends WebComponent {
         return await loader.template('catalog/product_thumb', [ product, description, data, language, config ]);
     }
 
-    addToCart(e) {
+    async addToCart(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        ajax.post('action.php?route=checkout/cart.add', form, {
+        await ajax.post({
+            url: 'action.php?route=checkout/cart.add',
+            data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

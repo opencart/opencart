@@ -71,12 +71,12 @@ customElements.define('payment-method', class extends WebComponent {
 
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        ajax.post('action.php?route=checkout/payment_method&language=' + local.get('language'), form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/payment_method&language=' + local.get('language'),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

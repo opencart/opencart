@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 customElements.define('input-upload', class extends WebComponent {
     static formAssociated = true;

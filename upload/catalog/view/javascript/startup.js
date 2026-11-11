@@ -23,15 +23,14 @@
  *      rather than imported statically at the top, for exactly that reason.
  *   3. Components load last, once everything they depend on is ready.
  */
-import { Global, stylesheet } from '../../../assets/framework/engine.js';
-import { loader, config, language, local, storage, template } from '../../../assets/framework/library.js';
+import { loader, config, global, language, local, storage, stylesheet, template } from '../../../assets/framework/library.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
 // ─── Paths ─────────────────────────────────────────────────────────────────
 
 // Config Path
-//config.addPath('catalog/view/' + base.host + '/config/');
+//config.setDirectory('catalog/view/' + base.host + '/config/');
 //config.addPath('shop/' + base.host + '/config/');
 
 // ─── Settings ──────────────────────────────────────────────────────────────
@@ -42,20 +41,21 @@ if (!local.has('language')) local.set('language', setting.get('config_language')
 if (!local.has('currency')) local.set('currency', setting.get('config_currency'));
 
 // Storage Path
-storage.addPath('shop/' + base.host + '/data/');
+storage.setDirectory('shop/' + base.host + '/data/');
 
 // Language Path
+language.setDirectory('catalog/view/language/' + local.get('language') + '/');
 //language.addPath('shop/', 'shop/' + base.host + '/language/' + local.get('language') + '/');
-language.addPath('catalog/view/language/' + local.get('language') + '/');
 
 // Template Path
-//template.addPath('shop/', 'shop/' + base.host + '/template/');
 template.addPath('catalog/view/template/');
+//template.addPath('shop/', 'shop/' + base.host + '/template/');
 
 // Stylesheets
-stylesheet.addPath('shop/', 'shop/' + base.host + '/stylesheet/');
+stylesheet.setDirectory('catalog/view/stylesheet/');
 stylesheet.addPath('catalog/', 'catalog/view/stylesheet/');
-stylesheet.addPath('fontawesome/css/', 'assets/fontawesome/css/'); // namespace → alternate directory
+stylesheet.addPath('shop/', 'shop/' + base.host + '/stylesheet/');
+stylesheet.addPath('fontawesome/css/', base + 'assets/fontawesome/css/'); // namespace → alternate directory
 
 // ─── Libraries + template filters ──────────────────────────────────────────
 const currency = await loader.library('currency');
@@ -83,7 +83,7 @@ const length = await loader.library('length');
 template.addFilter('length', length.format.bind(length));
 
 // Register Global Events
-Global.addListener('link', (e) => {
+global.addListener('link', (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');
@@ -95,12 +95,12 @@ Global.addListener('link', (e) => {
 
     if (href == null) return;
 
-    Global.get('content').setAttribute('src', href);
+    global.get('content').setAttribute('src', href);
 });
 
 // Opens a link's page in a modal instead of the content area:
 // <a href="account/register.js" :click="modal">Register</a>
-Global.addListener('dialog', async (e) => {
+global.addListener('dialog', async (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');
@@ -111,7 +111,7 @@ Global.addListener('dialog', async (e) => {
 
     if (href == null) return;
 
-    let dialog = Global.get('dialog');
+    let dialog = global.get('dialog');
 	
 	let element = dialog.querySelector('nav-dialog');
 

@@ -7,9 +7,13 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/payment_address');
 
-customElements.define('payment-address', class extends WebComponent {
+export default class PaymentAddress extends WebComponent {
     async render() {
         let data = new Map();
+
+		data.set('logged', customer.isLogged());
+
+		data.set('addresses', []);
 
         data.set('firstname', '');
         data.set('lastname', '');
@@ -19,13 +23,12 @@ customElements.define('payment-address', class extends WebComponent {
         data.set('postcode', '');
         data.set('country_id', parseInt(config.get('config_country_id')));
         data.set('zone_id', 0);
-        data.set('addresses', []);
 
-        if (customer.isLogged()) {
-            data.set('logged', true);
+		if (customer.isLogged()) {
+			data.set('addresses', customer.getAddresses());
+
             data.set('firstname', customer.getFirstName());
             data.set('lastname', customer.getLastName());
-            data.set('addresses', customer.getAddresses());
         }
 
         if (session.has('payment_address')) {
@@ -37,16 +40,12 @@ customElements.define('payment-address', class extends WebComponent {
             data.set('address_2', address.address_2);
             data.set('city', address.city);
             data.set('postcode', address.postcode);
-            data.set('country_id', address.country_id);
-            data.set('zone_id', address.zone_id);
+            data.set('country_id', parseInt(address.country_id));
+            data.set('zone_id', parseInt(address.zone_id));
         }
 
         return loader.template('checkout/payment_address', [ data, language ]);
     }
-
-	handleConnect() {
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
-	}
 
     handleChange(e) {
         //e.target
@@ -65,13 +64,12 @@ customElements.define('payment-address', class extends WebComponent {
 
     }
 
-    // New Payment Address
     handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        ajax.post('action.php?route=checkout/payment_address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+		ajax.post({
+			url: 'action.php?route=checkout/payment_address&language=' + local.get('language') + '&customer_token=' + customer.getToken(),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
@@ -88,7 +86,7 @@ customElements.define('payment-address', class extends WebComponent {
                 }
 
                 if (json.has('success')) {
-                    this.form.state.set('success', json.get('success'));
+                    this.form.setSuccess(json.get('success'));
 
                     this.update();
                 }
@@ -140,4 +138,6 @@ customElements.define('payment-address', class extends WebComponent {
             }
         });
     }
-});
+}
+
+customElements.define('payment-address', PaymentAddress);

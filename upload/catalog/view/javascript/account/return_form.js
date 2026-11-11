@@ -28,9 +28,9 @@ export default class ReturnForm extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=account/return_form&language=' + local.get('language') + '&token=' + this.#token, form, {
+		await ajax.post({
+			url: 'action.php?route=account/return_form&language=' + local.get('language') + '&token=' + this.#token,
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

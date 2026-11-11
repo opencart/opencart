@@ -27,12 +27,12 @@ customElements.define('review-form', class extends WebComponent {
 		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        ajax.post('action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.#token + '&product_id=' + this.getAttribute('product_id'), form, {
+        await ajax.post({
+            url: 'action.php?route=catalog/review.write&language=' + local.get('language') + '&review_token=' + this.#token + '&product_id=' + this.getAttribute('product_id'),
+            data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

@@ -29,9 +29,9 @@ export default class AccountLogin extends WebComponent {
 
 		//if (customer.isLogged()) return;
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=account/login.login&language=' + local.get('language') + '&login_token=' + this.#token, form, {
+		await ajax.post({
+			url: 'action.php?route=account/login&language=' + local.get('language') + '&login_token=' + this.#token,
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

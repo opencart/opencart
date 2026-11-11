@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 /*
  * <input-select name="country" id="input-country" value="" required>
@@ -86,8 +86,8 @@ export class InputSelect extends WebComponent {
 
 	render() {
 		return `
-			<label @ref="label" for="input">${this.label}</label>
-			<select name="${this.name}" id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @change="onChange" class="form-control">${this.html}${this.#options.map(item => `<option value="${item.value}"${item.value === this.value ? ' selected' : ''}>${item.text}</option>`).join('')}</select>
+			<label @ref="label" for="input-select">${this.label}</label>
+			<select name="${this.name}" id="input-select"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @change="onChange" class="form-control">${this.html}${this.#options.map(item => `<option value="${item.value}"${item.value === this.value ? ` selected` : ``}>${item.text}</option>`).join('')}</select>
 			<div @ref="error" class="invalid-feedback"></div>
         `;
 	}

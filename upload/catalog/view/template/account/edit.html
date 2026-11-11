@@ -7,29 +7,29 @@
       </div>
       <div class="modal-body">
         <form-submit @ref="form" @[submit]="handleSubmit">
-          <template>
+          <slot @slotchange="handleSlot">
             <div @ref="alert"></div>
             <fieldset>
               <legend>{{ text_your_details }}</legend>
               <div class="mb-3">
-                <input-text @ref="firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
+                <input-text label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
               </div>
               <div class="mb-3">
-                <input-text @ref="lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
+                <input-text label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
               </div>
               <div class="mb-3">
-                <input-email @ref="email" label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
+                <input-email label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
               </div>
               {% if not config_telephone_status %}
               <div class="mb-3">
-                <input-tel @ref="telephone" label="{{ entry_telephone }}" name="telephone" value="{{ telephone }}" {% if config_telephone_required %} required{% endif %}></input-tel>
+                <input-tel label="{{ entry_telephone }}" name="telephone" value="{{ telephone }}" {% if config_telephone_required %} required{% endif %}></input-tel>
               </div>
               {% endif %}
             </fieldset>
             <div class="text-end">
               <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
             </div>
-          </template>
+          </slot>
         </form-submit>
       </div>
     </div>

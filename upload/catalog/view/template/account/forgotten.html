@@ -2,6 +2,7 @@
 <p>{{ text_email }}</p>
 <form-submit @ref="form" @[submit]="handleSubmit">
   <template>
+    <div @ref="alert"></div>
     <fieldset>
       <legend>{{ text_your_email }}</legend>
       <div class="mb-3">

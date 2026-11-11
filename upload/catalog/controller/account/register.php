@@ -170,12 +170,6 @@ class Register extends \Opencart\System\Engine\Controller {
 	public function token(): void {
 		$json = [];
 
-		if ($this->customer->isLogged()) {
-			
-		
-			exit();
-		}
-
 		// Create form token
 		$this->session->data['register_token'] = oc_token(26);
 

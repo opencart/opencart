@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 customElements.define('button-submit', class extends WebComponent {
 	static formAssociated = true;

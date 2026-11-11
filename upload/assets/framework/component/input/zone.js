@@ -16,107 +16,41 @@ const config = await loader.config('default');
  * optional required disabled
  */
 customElements.define('input-zone', class extends InputSelect {
-    static observedAttributes = [
-        'country_id',
-        'required',
-        'disabled',
-        'readonly'
+	static observedAttributes = [
+		'value',
+		'country_id',
+		'required',
+		'disabled',
+		'readonly'
 	];
 	
-	#options = [];
-	
-    default = HTMLInputElement;
+	async render() {
+		let zones = [];
 
-    get value() {
-        return this.getAttribute('value');
-    }
-
-    set value(value) {
-        this.setAttribute('value', value);
-    }
-
-	constructor() { 
-		super();
+		let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
 		
-		this.#options = Array.from(this.querySelectorAll('option')).map(option => {
-			return {
-				text: option.outerHTML,
-				value: option.value
-			};
-		});
-
-		for (let country of config.countries) {
-			this.#options.push({
-				text: country.description[local.get('language')] ? country.description[local.get('language')].name : '',
-				value: country.country_id
-			});
+		if (country instanceof Map) {
+			zones = country['zone'] || [];
 		}
-	}
 
-    async render() {
-        let html = '<select name="' + this.getAttribute('name') + '" id="select" @change="handleChange" class="form-select"';
-
-        if (this.hasAttribute('required')) {
-            html += ' required';
-        }
-
-        if (this.hasAttribute('disabled')) {
-            html += ' disabled';
-        }
-
-        html += '>' + this.default;
-
-        //if () {
-
-        //}
-
-        let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
-
-        console.log(country);
-
-        if (country instanceof Map) {
-            for (let zone of country['zone']) {
-                html += '<option value="' + zone.zone_id + '"';
-
-                if (zone.zone_id == this.value) {
-                    html += ' selected';
-                }
-
-                let name = '';
-
-                if (local.get('language') in zone.description) {
-                    name = zone.description[local.get('language')].name;
-                }
-
-                html += '>' + name + '</option>';
-            }
-        }
-
-        html += '</select>';
-
-        return html;
+		return `
+			<label @ref="label" for="input">${this.label}</label>
+			<select name="${this.name}" id="input"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ''} @ref="input" @change="onChange" class="form-control">${this.html}${zones.map(zone => `<option value="${zone.zone_id}"${zone.zone_id === this.value ? ' selected' : ''}>${zone.description[local.get('language')] ? zone.description[local.get('language')].name : ''}</option>`).join('')}</select>
+			<div @ref="error" class="invalid-feedback"></div>
+		`;
 	}
 	
-	handleState(keys, state) {
-		if (keys.includes('country_id')) this.handleCountryChange(state.country_id);
-		if (keys.includes('error')) this.handleError(state.error);
-		if (keys.includes('disabled')) this.handleDisabled(state.disabled);	
+	// A native change event does not leave the shadow root, so send it on.
+	onChange(e) {
+		this.value = e.target.value;
 	}
 
-    async handleConnect() {
-        this.default = this.innerHTML;
-    }
-
-    async handleChange(e) {
+	async handleChange(e) {
 		this.value = e.target.value;
 		
-		let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
-	}
-	
-	async handleCountry(e) {
-		this.setAttribute('country_id', e.target.value);
+		this.update();
 
-        let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
-
+		//this.form.zone.setAttribute('country_id', this.form.country.value);
+		//this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
 	}
 });

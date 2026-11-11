@@ -24,9 +24,9 @@ customElements.define('checkout-confirm', class extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=checkout/cart.add', form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/cart.add&language=' + local.get('language'),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

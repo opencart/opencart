@@ -5,7 +5,8 @@ import { loader, ajax, customer, local } from '../index.js';
 const language = await loader.language('account/reset');
 
 export default class AccountReset extends WebComponent {
-    token = '';
+	static formAssociated = true;
+	#token = '';
 
     async render() {
         return loader.template('account/reset', [ language ]);
@@ -15,19 +16,17 @@ export default class AccountReset extends WebComponent {
         let json = await ajax.get('action.php?route=account/reset.token&language=' + local.get('language'));
 
         if (json.has('token')) {
-            this.token = json.get('token');
+            this.#token = json.get('token');
 		}
-		
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
     }
 
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=account/reset&language=' + local.get('language') + '&reset_token=' + this.token, form, {
-            handleSend: () => {
+		await ajax.post({
+			url: 'action.php?route=account/reset&language=' + local.get('language') + '&reset_token=' + this.#token,
+			data: this.form.getData(),
+			handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {

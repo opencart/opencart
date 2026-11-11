@@ -23,12 +23,12 @@ export default class CheckoutCart extends WebComponent {
         return loader.template('checkout/cart', [ data, language, config ]);
     }
 
-    editProduct(e) {
+    async editProduct(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        ajax.post('action.php?route=checkout/cart.add&language=' + local.get('language'), form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/cart.add&language=' + local.get('language'),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
@@ -58,13 +58,15 @@ export default class CheckoutCart extends WebComponent {
         });
     }
 
-    deleteProduct(e) {
+    async deleteProduct(e) {
         e.preventDefault();
 
         var element = this;
 
-        ajax.post('', {
-            handleSend: () => {
+		await ajax.post({
+			url: 'action.php?route=checkout/cart.delete&language=' + local.get('language'),
+			data: this.form.getData(),
+			handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
             handleComplete: () => {

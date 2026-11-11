@@ -16,12 +16,12 @@ export default class CatalogCompare extends WebComponent {
         return loader.template('catalog/product_info', [ product, description, data, language, config ]);
     }
 
-    addToCompare() {
+    async addToCompare(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        ajax.post('action.php?route=checkout/cart.add', form, {
+        await ajax.post({
+            url: 'action.php?route=checkout/cart.add',
+            data: this.form.getData(),
             beforeSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

@@ -11,158 +11,9 @@ class Register extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return string
-	 */
-	public function index(): string {
-		$this->load->language('checkout/register');
-
-		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&redirect=' . urlencode($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true))));
-
-		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
-
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
-
-		$data['config_checkout_payment_address'] = $this->config->get('config_checkout_payment_address');
-		$data['config_checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasSubscription());
-		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
-		$data['config_telephone_status'] = $this->config->get('config_telephone_status');
-		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
-
-		$data['shipping_required'] = $this->cart->hasShipping();
-
-		$this->session->data['upload_token'] = oc_token(32);
-
-		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
-
-		// Customer Groups
-		$data['customer_groups'] = [];
-
-		if (is_array($this->config->get('config_customer_group_list'))) {
-			$this->load->model('account/customer_group');
-
-			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
-
-			foreach ($customer_groups as $customer_group) {
-				if (in_array($customer_group['customer_group_id'], (array)$this->config->get('config_customer_group_list'))) {
-					$data['customer_groups'][] = $customer_group;
-				}
-			}
-		}
-
-		if (isset($this->session->data['customer']['customer_id'])) {
-			$data['account'] = $this->session->data['customer']['customer_id'];
-		} else {
-			$data['account'] = 1;
-		}
-
-		if (isset($this->session->data['customer'])) {
-			$data['customer_group_id'] = $this->session->data['customer']['customer_group_id'];
-			$data['firstname'] = $this->session->data['customer']['firstname'];
-			$data['lastname'] = $this->session->data['customer']['lastname'];
-			$data['email'] = $this->session->data['customer']['email'];
-			$data['telephone'] = $this->session->data['customer']['telephone'];
-		} else {
-			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
-			$data['firstname'] = '';
-			$data['lastname'] = '';
-			$data['email'] = '';
-			$data['telephone'] = '';
-		}
-
-		if (isset($this->session->data['payment_address'])) {
-			$data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
-			$data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
-			$data['payment_company'] = $this->session->data['payment_address']['company'];
-			$data['payment_address_1'] = $this->session->data['payment_address']['address_1'];
-			$data['payment_address_2'] = $this->session->data['payment_address']['address_2'];
-			$data['payment_postcode'] = $this->session->data['payment_address']['postcode'];
-			$data['payment_city'] = $this->session->data['payment_address']['city'];
-			$data['payment_country_id'] = (int)$this->session->data['payment_address']['country_id'];
-			$data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
-		} else {
-			$data['payment_firstname'] = '';
-			$data['payment_lastname'] = '';
-			$data['payment_company'] = '';
-			$data['payment_address_1'] = '';
-			$data['payment_address_2'] = '';
-			$data['payment_postcode'] = '';
-			$data['payment_city'] = '';
-			$data['payment_country_id'] = (int)$this->config->get('config_country_id');
-			$data['payment_zone_id'] = 0;
-		}
-
-		if (isset($this->session->data['shipping_address']['address_id'])) {
-			$data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
-			$data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
-			$data['shipping_company'] = $this->session->data['shipping_address']['company'];
-			$data['shipping_address_1'] = $this->session->data['shipping_address']['address_1'];
-			$data['shipping_address_2'] = $this->session->data['shipping_address']['address_2'];
-			$data['shipping_postcode'] = $this->session->data['shipping_address']['postcode'];
-			$data['shipping_city'] = $this->session->data['shipping_address']['city'];
-			$data['shipping_country_id'] = (int)$this->session->data['shipping_address']['country_id'];
-			$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
-		} else {
-			$data['shipping_firstname'] = '';
-			$data['shipping_lastname'] = '';
-			$data['shipping_company'] = '';
-			$data['shipping_address_1'] = '';
-			$data['shipping_address_2'] = '';
-
-			if (isset($this->session->data['shipping_address']['postcode'])) {
-				$data['shipping_postcode'] = $this->session->data['shipping_address']['postcode'];
-			} else {
-				$data['shipping_postcode'] = '';
-			}
-
-			$data['shipping_city'] = '';
-
-			if (isset($this->session->data['shipping_address']['country_id'])) {
-				$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
-			} else {
-				$data['shipping_country_id'] = (int)$this->config->get('config_country_id');
-			}
-
-			if (isset($this->session->data['shipping_address']['zone_id'])) {
-				$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
-			} else {
-				$data['shipping_zone_id'] = 0;
-			}
-		}
-
-
-		// Captcha
-		$this->load->model('setting/extension');
-
-		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
-
-		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$data['captcha'] = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code']);
-		} else {
-			$data['captcha'] = '';
-		}
-
-		// Information
-		$this->load->model('catalog/information');
-
-		$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_account_id'));
-
-		if ($information_info) {
-			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information.info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_account_id')), $information_info['title']);
-		} else {
-			$data['text_agree'] = '';
-		}
-
-		$data['language'] = $this->config->get('config_language');
-
-		return $this->load->view('checkout/register', $data);
-	}
-
-	/**
-	 * Save
-	 *
 	 * @return void
 	 */
-	public function save(): void {
+	public function index(): void {
 		$this->load->language('checkout/register');
 
 		$json = [];
@@ -628,6 +479,18 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($post_info['email']);
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function token(): void {
+		$json = [];
+
+		// Create form token
+		$this->session->data['register_token'] = oc_token(26);
+
+		$json['token'] = $this->session->data['register_token'];
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

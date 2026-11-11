@@ -16,6 +16,7 @@ export default class AddressForm extends WebComponent {
 		if (!this.hasAttribute('address_id')) {
 			data.set('firstname', '');
 			data.set('lastname', '');
+			data.set('company', '');
 			data.set('address_1', '');
 			data.set('address_2', '');
 			data.set('city', '');
@@ -27,6 +28,7 @@ export default class AddressForm extends WebComponent {
 
 			data.set('firstname', address.firstname);
 			data.set('lastname', address.lastname);
+			data.set('company', address.company);
 			data.set('address_1', address.address_1);
 			data.set('address_2', address.address_2);
 			data.set('city', address.city);
@@ -38,18 +40,41 @@ export default class AddressForm extends WebComponent {
         return loader.template('account/address_form', [ data, language, config ]);
     }
 
+    async handleConnect() {
+        //if (customer.isLogged()) return;
+
+		console.dir(this.form.country);
+
+		let inputs = this.form.getInputs();
+		
+		console.dir(inputs);
+		
+		//this.form.country.addEventListener('[change]', this.handleCountry.bind(this));
+		
+		let country = this.form.getInput('country');
+		
+		country.addEventListener('[change]', this.handleCountry.bind(this));
+
+	}
+
 	handleCountry(e) {
-		this.form.zone.setAttribute('country_id', this.form.country.value);
+		console.log('Country changed to', this.form.getInput('country').value);
+
+		this.form.getInput('zone').setAttribute('country_id', this.form.getInput('country').value);
+
+		//this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
 	}
 
     async handleSubmit(e) {
         e.preventDefault();
 
+		console.log(e);
+
         //if (!customer.isLogged()) return;
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=account/address.save&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+		await ajax.post({
+			url: 'action.php?route=account/address&language=' + local.get('language') + '&customer_token=' + customer.getToken(),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

@@ -30,9 +30,9 @@ export default class AccountWishlist extends WebComponent {
     async remove(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token=' + customer.getToken(), form, {
+		await ajax.post({
+			url: 'action.php?route=account/wishlist.list&language=' + local.get('language') + '&customer_token=' + customer.getToken(),
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

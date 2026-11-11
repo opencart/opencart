@@ -1,10 +1,10 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 customElements.define('input-checkbox', class extends WebComponent {
     static formAssociated = true;
 
     render() {
-        return '<input type="checkbox" class="form-check-input" @change="handleChange" data-target="' + this.getAttribute('target') + '"/>';
+        return `<input type="checkbox" class="form-check-input" @change="handleChange" data-target="${this.getAttribute('target')}"/>`;
     }
 
     handleChange(e) {

@@ -41,9 +41,9 @@ export default class InformationContact extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=information/contact.send&language=' + local.get('language') + '&contact_token=' + this.#token, form, {
+		await ajax.post({
+			url: 'action.php?route=information/contact.send&language=' + local.get('language') + '&contact_token=' + this.#token,
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },

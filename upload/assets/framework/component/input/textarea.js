@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 export class InputTextarea extends WebComponent {
     static formAssociated = true;
@@ -59,7 +59,7 @@ export class InputTextarea extends WebComponent {
     render() {
 		return `
 			<label @ref="label" for="input">${this.label}</label>
-			<textarea name="${this.name}"${this.label ? ` placeholder="${this.label}"` : ``}  id="input"${this.disabled ? ' disabled' : ''}${this.readonly ? ' readonly' : ''}${this.required ? ' required' : ''} @ref="input" @input="onInput" @change="onChange" class="form-control">${this.value}</textarea>
+			<textarea name="${this.name}"${this.label ? ` placeholder="${this.label}"` : ``}  id="input"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ''} @ref="input" @input="onInput" @change="onChange" class="form-control">${this.value}</textarea>
 			<div @ref="error" class="invalid-feedback"></div>
 		`;
 	}

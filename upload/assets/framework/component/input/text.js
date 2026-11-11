@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 /*
  * <input-text name="firstname" id="input-firstname" value="" placeholder="First Name" required></input-text>
@@ -69,10 +69,14 @@ export class InputText extends WebComponent {
 		return this.hasAttribute('readonly');
 	}
 
+    get form() {
+        return this.internals.form;
+    }
+
     render() {
         return `
-			<label @ref="label" for="input">${this.label}</label>
-			<input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ``} id="input"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @input="onInput" @change="onChange" class="form-control"/>
+			<label @ref="label" for="input-text">${this.label}</label>
+			<input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ``} id="input-text"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @input="onInput" @change="onChange" class="form-control"/>
 			<div @ref="error" class="invalid-feedback"></div>
 		`;
     }

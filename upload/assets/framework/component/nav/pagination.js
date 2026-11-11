@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 customElements.define('nav-pagination', class extends WebComponent {
     static observedAttributes = [

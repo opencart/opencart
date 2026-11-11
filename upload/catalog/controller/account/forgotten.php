@@ -46,6 +46,22 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Token
+	 *
+	 * @return void
+	 */	
+	public function token(): void {
+		$json = [];
+
+		$this->session->data['forgotten_token'] = oc_token(26);
+
+		$json['token'] = $this->session->data['forgotten_token'];
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Reset
 	 *
 	 * @return void
@@ -222,4 +238,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	
 }

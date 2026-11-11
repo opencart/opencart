@@ -15,7 +15,7 @@ class InputAutocomplete extends InputText {
         html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
 
         if (this.hasAttribute('disabled')) {
-            html += ' disabled';
+            html += ` disabled`;
         }
 
         if (this.hasAttribute('readonly')) {
@@ -23,7 +23,7 @@ class InputAutocomplete extends InputText {
         }
 
         if (this.hasAttribute('required')) {
-            html += ' required';
+            html += ` required`;
         }
 
         html += '/>';

@@ -1,4 +1,4 @@
-import { WebComponent } from '../../engine.js';
+import { WebComponent } from '../../library.js';
 
 customElements.define('ui-alert', class extends WebComponent {
     static observedAttributes = ['type'];

@@ -7,23 +7,23 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/register');
 
-// Storage
-const customer_groups = await loader.storage('customer/customer_group');
-
-customElements.define('checkout-register', class extends WebComponent {
+export default class CheckoutRegister extends WebComponent {
 	static formAssociated = true;
 	#token = '';
 
     async render() {
         let data = new Map();
 
-        return loader.template('checkout/register', [data, language, config]);
+		
+
+
+        return loader.template('checkout/register', [ data, language, config ]);
     }
 
     async handleConnect() {
         //if (customer.isLogged()) return;
 
-        let json = await ajax.get('action.php?route=checkout/register.token');
+        let json = await ajax.get('action.php?route=checkout/register.token&language=' + local.get('language'));
 
         if (json.has('token')) {
             this.#token = json.get('token');
@@ -53,9 +53,9 @@ customElements.define('checkout-register', class extends WebComponent {
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=checkout/register.save&language=' + local.get('language') + '&register_token=' + this.#token, form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/register&language=' + local.get('language') + '&register_token=' + this.#token,
+			data: this.form.getData(),
             handleSend: () => {
                 this.form.toggleAttribute('submitting', true);
             },
@@ -63,10 +63,6 @@ customElements.define('checkout-register', class extends WebComponent {
                 this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
-                if (json.has('redirect')) {
-                    location = json.get('redirect');
-                }
-
                 if (json.has('error')) {
                     this.form.setError(json.get('error'));
                 }
@@ -75,24 +71,31 @@ customElements.define('checkout-register', class extends WebComponent {
                 if (json.has('success')) {
 					this.form.setSuccess(json.get('success'));
 					
-                    this.form.state.set('disabled', true);
+                    this.form.toggleAttribute('disabled', true);
 
                     if ($('#input-register').prop('checked')) {
-                        $('input[name=\'account\']').prop('disabled', true);
-                        $('#input-customer-group').prop('disabled', true);
-                        $('#input-password').prop('disabled', true);
-                        $('#input-captcha').prop('disabled', true);
-                        $('#input-register-agree').prop('disabled', true);
+                        //$('input[name=\'account\']').prop('disabled', true);
+                        //$('#input-customer-group').prop('disabled', true);
+                        //$('#input-password').prop('disabled', true);
+                        //$('#input-captcha').prop('disabled', true);
+                        //$('#input-register-agree').prop('disabled', true);
                     }
 
-                    $('#input-shipping-method').val('');
-                    $('#input-payment-method').val('');
-                }
+                    //$('#input-shipping-method').val('');
+                    //$('#input-payment-method').val('');
+				}
+				
                 //$('#checkout-confirm').load('action.php?route=checkout/confirm.confirm&language={{ language }}');
             },
             handleError: (e) => {
                 console.log('onError', e);
             }
         });
+	}
+	
+	handleAgree(e) {
+    	this.form.setAttribute('disabled', !e.target.hasAttribute('checked'));
     }
-});
+}
+
+customElements.define('checkout-register', CheckoutRegister);

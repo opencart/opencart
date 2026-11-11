@@ -26,7 +26,7 @@ class Newsletter extends \Opencart\System\Engine\Controller {
 			// Customer
 			$this->load->model('account/customer');
 
-			$this->model_account_customer->editNewsletter($this->customer->getId(), !empty($this->request->post['newsletter']));
+			$this->model_account_customer->editNewsletter($this->customer->getId(), !zempty($this->request->post['newsletter']));
 
 			$json['success'] = $this->language->get('text_success');
 		}

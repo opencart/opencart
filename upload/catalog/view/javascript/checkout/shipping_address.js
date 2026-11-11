@@ -1,5 +1,5 @@
 import { WebComponent } from '../index.js';
-import { loader, ajax, cart, customer, local } from '../index.js';
+import { loader, ajax, cart, customer, local, session } from '../index.js';
 
 // Config
 const config = await loader.config('default');
@@ -7,51 +7,54 @@ const config = await loader.config('default');
 // Language
 const language = await loader.language('checkout/shipping_address');
 
-customElements.define('shipping-address', class extends WebComponent {
-    async render()  {
+export default class ShippingAddress extends WebComponent {
+    async render() {
         if (!cart.hasShipping()) return;
 
-        let data = new Map();
+		let data = new Map();
+		
+		data.set('logged', customer.isLogged());
+
+		data.set('addresses', []);
 
         data.set('firstname', '');
         data.set('lastname', '');
-        data.set('address_1', '');
-        data.set('address_2', '');
-        data.set('city', '');
-        data.set('postcode', '');
-        data.set('country_id', parseInt(config.get('config_country_id')));
-        data.set('zone_id', 0);
-        data.set('addresses', []);
+		data.set('address_1', '');
+		data.set('address_2', '');
+		data.set('city', '');
+		data.set('postcode', '');
+		data.set('country_id', parseInt(config.get('config_country_id')));
+		data.set('zone_id', 0);
 
         if (customer.isLogged()) {
-            data.set('logged', true);
+			data.set('addresses', customer.getAddresses());
+
             data.set('firstname', customer.getFirstName());
-            data.set('lastname', customer.getLastName());
-            data.set('addresses', customer.getAddresses());
-        } else {
-            data.set('logged', false);
-            data.set('firstname', '');
-            data.set('lastname', '');
-        }
+			data.set('lastname', customer.getLastName());
+		}
 
-        data.set('address_1', '');
-        data.set('address_2', '');
-        data.set('city', '');
-        data.set('postcode', '');
-        data.set('country_id', parseInt(config.get('config_country_id')));
-        data.set('zone_id', 0);
+		if (session.has('shipping_address')) {
+			let address = session.get('shipping_address');
 
-        return loader.template('checkout/shipping_address', [ data,  language,  config ]);
+			data.set('firstname', address.firstname);
+			data.set('lastname', address.lastname);
+			data.set('address_1', address.address_1);
+			data.set('address_2', address.address_2);
+			data.set('city', address.city);
+			data.set('postcode', address.postcode);
+			data.set('country_id', parseInt(address.country_id));
+			data.set('zone_id', parseInt(address.zone_id));
+		}
+		
+        console.log(data);
+
+        return loader.template('checkout/shipping_address', [ data, language,  config ]);
 	}
 	
-	handleConnect() {
-		this.form.addEventListener('form-submit', this.handleSubmit.bind(this));
-	}
-
     handleChange(e) {
-        e.target
+        //e.target
 
-        if ($(this).val() == 1) {
+        if ($(e.target).val() == 1) {
             $('#shipping-existing').show();
             $('#shipping-new').hide();
         } else {
@@ -63,28 +66,26 @@ customElements.define('shipping-address', class extends WebComponent {
     async setAddress(e) {
         e.preventDefault();
 
-    
+		let shipping_address = session.get('shipping_address');
+
+		
     }
 
     async handleSubmit(e) {
         e.preventDefault();
 
-        let form = this.form.getData();
-
-        await ajax.post('action.php?route=checkout/shipping_address.save&language=' + local.get('language'), form, {
+		await ajax.post({
+			url: 'action.php?route=checkout/shipping_address&language=' + local.get('language') + '&customer_token=' + customer.getToken(),
+			data: this.form.getData(),
             handleSend: () => {
-                this.form.state.set('submitting', true);
+                this.form.set('submitting', true);
             },
             handleComplete: () => {
-                this.form.state.set('submitting', false);
+                this.form.set('submitting', false);
             },
             handleSuccess: (json) => {
-                if (json.has('redirect')) {
-                    location = json.get('redirect');
-                }
-
                 if (json.has('error')) {
-                    this.form.state.set('error', json.get('error'));
+                    this.form.set('error', json.get('error'));
                 }
 
                 if (json.has('success')) {
@@ -133,4 +134,6 @@ customElements.define('shipping-address', class extends WebComponent {
             }
         });
     }
-});
+}
+
+customElements.define('shipping-address', ShippingAddress);

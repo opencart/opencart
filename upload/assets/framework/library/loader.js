@@ -1,6 +1,7 @@
 import { config } from './config.js';
 import { language } from './language.js';
 import { storage } from './storage.js';
+import { stylesheet } from './stylesheet.js';
 import { template } from './template.js';
 
 export default class Loader {
@@ -32,6 +33,10 @@ export default class Loader {
 
     async storage(path) {
         return await storage.fetch(path);
+    }
+
+	async stylesheet(path) {
+        return await stylesheet.fetch(path);
     }
 
     async template(path, data = []) {

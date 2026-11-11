@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\System\Library\DB;
 
-use Opencart\System\Library\Database\Parameter\ArrayParameterType;
 use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 use Opencart\System\Library\Database\Parameter\ParameterProcessor;
 use Opencart\System\Library\Database\Parameter\ParameterType;
@@ -135,17 +134,25 @@ class MySQLi implements QueryConnectionInterface {
 		}
 	}
 
+	/**
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 */
 	public function executeQuery(string $sql, array $bindings = [], array $types = []): \stdClass {
 		return $this->executePrepared($sql, $bindings, $types, true);
 	}
 
+	/**
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 */
 	public function executeStatement(string $sql, array $bindings = [], array $types = []): int {
 		return $this->executePrepared($sql, $bindings, $types, false);
 	}
 
 	/**
 	 * @param array<array-key, mixed> $bindings
-	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 * @param array<array-key, mixed> $types
 	 */
 	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): \stdClass|int {
 		$processed = $this->parameterProcessor->process($sql, $bindings, $types);

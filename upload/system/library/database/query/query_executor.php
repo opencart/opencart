@@ -218,7 +218,7 @@ final class QueryExecutor {
 		if (
 			!isset($result->row) || !is_array($result->row) ||
 			!isset($result->rows) || !is_array($result->rows) ||
-			!isset($result->num_rows) || !is_int($result->num_rows)
+			!isset($result->num_rows)
 		) {
 			throw new \UnexpectedValueException(
 				'Query result must contain array row, array rows and integer num_rows properties'

@@ -97,14 +97,26 @@ class PDO implements QueryConnectionInterface {
 		}
 	}
 
+	/**
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 */
 	public function executeQuery(string $sql, array $bindings = [], array $types = []): \stdClass {
 		return $this->executePrepared($sql, $bindings, $types, true);
 	}
 
+	/**
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 */
 	public function executeStatement(string $sql, array $bindings = [], array $types = []): int {
 		return $this->executePrepared($sql, $bindings, $types, false);
 	}
 
+	/**
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 */
 	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): \stdClass|int {
 		$processed = $this->parameterProcessor->process($sql, $bindings, $types);
 

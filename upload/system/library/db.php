@@ -10,16 +10,16 @@
  */
 namespace Opencart\System\Library;
 
-use Aura\SqlQuery\Common\DeleteInterface;
-use Aura\SqlQuery\Common\InsertInterface;
-use Aura\SqlQuery\Common\SelectInterface;
-use Aura\SqlQuery\Common\UpdateInterface;
 use Opencart\System\Engine\Registry;
 use Opencart\System\Library\Database\Parameter\ArrayParameterType;
 use Opencart\System\Library\Database\Parameter\ParameterType;
 use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 use Opencart\System\Library\Database\Query\QueryExecutor;
 use Opencart\System\Library\Database\Query\QueryFactory;
+use Opencart\System\Library\Database\Query\Delete;
+use Opencart\System\Library\Database\Query\Insert;
+use Opencart\System\Library\Database\Query\Select;
+use Opencart\System\Library\Database\Query\Update;
 
 /**
  * Class DB Adaptor
@@ -72,30 +72,30 @@ class DB {
 	/**
 	 * Create SELECT query.
 	 */
-	public function select(): SelectInterface {
-		return $this->getQueryFactory()->newSelect();
+	public function select(): Select {
+		return $this->getQueryFactory()->select();
 	}
 
 	/**
 	 * Create INSERT query.
 	 */
-	public function insert(): InsertInterface {
-		return $this->getQueryFactory()->newInsert();
+	public function insert(): Insert {
+		return $this->getQueryFactory()->insert();
 	}
 
 	/**
 	 * Create UPDATE query.
 	 */
-	public function update(): UpdateInterface {
-		return $this->getQueryFactory()->newUpdate();
+	public function update(): Update {
+		return $this->getQueryFactory()->update();
 	}
 
 	/**
 	 * Create DELETE query.
 	 *
 	 */
-	public function delete(): DeleteInterface {
-		return $this->getQueryFactory()->newDelete();
+	public function delete(): Delete {
+		return $this->getQueryFactory()->delete();
 	}
 
 	/**

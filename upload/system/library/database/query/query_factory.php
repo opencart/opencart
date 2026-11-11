@@ -36,20 +36,44 @@ class QueryFactory extends AuraQueryFactory {
 		$this->macroRegistry = new QueryMacroRegistry();
 	}
 
-	public function select(): SelectInterface {
-		return $this->newSelect();
+	public function select(): Select {
+		$query = $this->newSelect();
+
+		if (!$query instanceof Select) {
+			throw new \LogicException('Query factory did not create an OpenCart SELECT query');
+		}
+
+		return $query;
 	}
 
-	public function insert(): InsertInterface {
-		return $this->newInsert();
+	public function insert(): Insert {
+		$query = $this->newInsert();
+
+		if (!$query instanceof Insert) {
+			throw new \LogicException('Query factory did not create an OpenCart INSERT query');
+		}
+
+		return $query;
 	}
 
-	public function update(): UpdateInterface {
-		return $this->newUpdate();
+	public function update(): Update {
+		$query = $this->newUpdate();
+
+		if (!$query instanceof Update) {
+			throw new \LogicException('Query factory did not create an OpenCart UPDATE query');
+		}
+
+		return $query;
 	}
 
-	public function delete(): DeleteInterface {
-		return $this->newDelete();
+	public function delete(): Delete {
+		$query = $this->newDelete();
+
+		if (!$query instanceof Delete) {
+			throw new \LogicException('Query factory did not create an OpenCart DELETE query');
+		}
+
+		return $query;
 	}
 
 	/**
@@ -58,7 +82,7 @@ class QueryFactory extends AuraQueryFactory {
 	 * The custom class must extend the current OpenCart query class for the
 	 * selected query type. Registration affects subsequently created queries.
 	 *
-	 * @param 'select'|'insert'|'update'|'delete' $queryType
+	 * @param string $queryType
 	 * @param string $class
 	 */
 	public function registerQueryClass(
@@ -124,6 +148,9 @@ class QueryFactory extends AuraQueryFactory {
 	/**
 	 * Override Aura's query object creation while reusing its dialect-specific
 	 * Quoter and Builder implementations.
+	 *
+	 * @param string $query
+	 * @return DeleteInterface|InsertInterface|SelectInterface|UpdateInterface
 	 */
 	protected function newInstance($query) {
 		if (!isset($this->queryClasses[$query])) {
@@ -133,27 +160,41 @@ class QueryFactory extends AuraQueryFactory {
 		}
 
 		$class = $this->queryClasses[$query];
-
-		return new $class(
+		$instance = new $class(
 			$this->getQuoter(),
 			$this->newBuilder($query),
 			$this->executor,
 			$this->macroRegistry
 		);
-	}
 
-	private function normalizeQueryType(string $queryType): string {
-		$queryType = ucfirst(strtolower($queryType));
-
-		if (!isset($this->queryClasses[$queryType])) {
-			throw new \InvalidArgumentException(
-				'Unsupported query type: ' . $queryType
+		if (
+			!($instance instanceof DeleteInterface) &&
+			!($instance instanceof InsertInterface) &&
+			!($instance instanceof SelectInterface) &&
+			!($instance instanceof UpdateInterface)
+		) {
+			throw new \LogicException(
+				'Query factory created an unsupported query instance: ' . $class
 			);
 		}
 
-		return $queryType;
+		return $instance;
 	}
 
+	/** @return 'Select'|'Insert'|'Update'|'Delete' */
+	private function normalizeQueryType(string $queryType): string {
+		return match (strtolower($queryType)) {
+			'select' => 'Select',
+			'insert' => 'Insert',
+			'update' => 'Update',
+			'delete' => 'Delete',
+			default => throw new \InvalidArgumentException(
+				'Unsupported query type: ' . $queryType
+			)
+		};
+	}
+
+	/** @return class-string<AbstractQuery> */
 	private function getDefaultQueryClass(string $queryType): string {
 		return match ($queryType) {
 			'Select' => Select::class,

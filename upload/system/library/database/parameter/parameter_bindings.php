@@ -35,9 +35,9 @@ final class ParameterBindings {
 	private int $position = 0;
 
 	/**
-	 * @param list<array{type: string, value: string}> $tokens
+	 * @param list<array{type: 'text'|'named'|'positional', value: string}> $tokens
 	 * @param array<array-key, mixed> $params
-	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 * @param array<array-key, mixed> $types
 	 */
 	public function __construct(array $tokens, array $params, array $types) {
 		$hasNamed = false;
@@ -72,16 +72,14 @@ final class ParameterBindings {
 
 		if ($this->mode === self::MODE_NAMED) {
 			$this->params = $this->normalizeNamed($params);
-			$this->types = $this->normalizeNamed($types);
+			$this->types = $this->validateTypes($this->normalizeNamed($types));
 		} else {
 			$this->params = $this->normalizePositional($params);
-			$this->types = $this->validatePositionalTypes(
-				$types,
-				count($this->params)
+			$this->types = $this->validateTypes(
+				$this->validatePositionalTypes($types, count($this->params))
 			);
 		}
 
-		$this->validateTypes($this->types);
 	}
 
 	/**
@@ -196,7 +194,7 @@ final class ParameterBindings {
 	}
 
 	/**
-	 * @param list<mixed> $params
+	 * @param array<array-key, mixed> $params
 	 * @return list<mixed>
 	 */
 	private function normalizePositional(array $params): array {
@@ -206,38 +204,47 @@ final class ParameterBindings {
 			);
 		}
 
+		/** @var list<mixed> $params */
 		return $params;
 	}
 
 	/**
-	 * @param array<array-key, ParameterType|ArrayParameterType> $types
-	 * @return array<int, ParameterType|ArrayParameterType>
+	 * @param array<array-key, mixed> $types
+	 * @return array<int, mixed>
 	 */
 	private function validatePositionalTypes(array $types, int $count): array {
+		$result = [];
+
 		foreach ($types as $key => $type) {
 			if (!is_int($key) || $key < 0 || $key >= $count) {
 				throw new \InvalidArgumentException(
 					'Invalid positional binding type index: ' . (string)$key
 				);
 			}
+
+			$result[$key] = $type;
 		}
 
-		return $types;
+		return $result;
 	}
 
 	/**
-	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 * @param array<array-key, mixed> $types
+	 * @return array<array-key, ParameterType|ArrayParameterType>
 	 */
-	private function validateTypes(array $types): void {
+	private function validateTypes(array $types): array {
+		$result = [];
+
 		foreach ($types as $key => $type) {
-			if (
-				!$type instanceof ParameterType &&
-				!$type instanceof ArrayParameterType
-			) {
+			if (!$type instanceof ParameterType && !$type instanceof ArrayParameterType) {
 				throw new \InvalidArgumentException(
 					'Unsupported SQL parameter type for binding: ' . (string)$key
 				);
 			}
+
+			$result[$key] = $type;
 		}
+
+		return $result;
 	}
 }

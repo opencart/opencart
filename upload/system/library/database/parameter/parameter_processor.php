@@ -21,7 +21,7 @@ final class ParameterProcessor {
 
 	/**
 	 * @param array<array-key, mixed> $params
-	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 * @param array<array-key, mixed> $types
 	 */
 	public function process(string $sql, array $params = [], array $types = []): ProcessedQuery {
 		$tokens = $this->parser->tokenize($sql);

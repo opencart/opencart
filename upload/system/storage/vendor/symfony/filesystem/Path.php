@@ -17,9 +17,10 @@ use Symfony\Component\Filesystem\Exception\RuntimeException;
 /**
  * Contains utility methods for handling path strings.
  *
- * The methods in this class are able to deal with both UNIX and Windows paths
- * with both forward and backward slashes. All methods return normalized parts
- * containing only forward slashes and no excess "." and ".." segments.
+ * The methods in this class are able to deal with both UNIX and Windows paths.
+ * On Windows, backward slashes are normalized to forward slashes. On UNIX,
+ * backward slashes are treated as valid filename characters and are not replaced.
+ * All methods return normalized parts with no excess "." and ".." segments.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Thomas Schulz <mail@king2500.net>
@@ -49,14 +50,11 @@ final class Path
     /**
      * Canonicalizes the given path.
      *
-     * During normalization, all slashes are replaced by forward slashes ("/").
-     * Furthermore, all "." and ".." segments are removed as far as possible.
-     * ".." segments at the beginning of relative paths are not removed.
+     * During normalization, all "." and ".." segments are removed as far as
+     * possible. ".." segments at the beginning of relative paths are not removed.
+     * On Windows, backward slashes are replaced by forward slashes ("/").
      *
      * ```php
-     * echo Path::canonicalize("\symfony\puli\..\css\style.css");
-     * // => /symfony/css/style.css
-     *
      * echo Path::canonicalize("../css/./style.css");
      * // => ../css/style.css
      * ```
@@ -103,17 +101,16 @@ final class Path
     /**
      * Normalizes the given path.
      *
-     * During normalization, all slashes are replaced by forward slashes ("/").
+     * On Windows, backward slashes are replaced by forward slashes ("/").
+     * On UNIX, backward slashes are preserved as they are valid filename characters.
      * Contrary to {@link canonicalize()}, this method does not remove invalid
      * or dot path segments. Consequently, it is much more efficient and should
      * be used whenever the given path is known to be a valid, absolute system
      * path.
-     *
-     * This method is able to deal with both UNIX and Windows paths.
      */
     public static function normalize(string $path): string
     {
-        return str_replace('\\', '/', $path);
+        return '\\' === \DIRECTORY_SEPARATOR ? str_replace('\\', '/', $path) : $path;
     }
 
     /**
@@ -216,17 +213,24 @@ final class Path
         }
 
         // Maintain scheme
-        if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
-            $scheme = substr($path, 0, $schemeSeparatorPosition + 3);
-            $path = substr($path, $schemeSeparatorPosition + 3);
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path, $m)) {
+            $scheme = $m[0];
+            $path = substr($path, \strlen($scheme));
         } else {
             $scheme = '';
         }
 
         $firstCharacter = $path[0];
 
-        // UNIX root "/" or "\" (Windows style)
-        if ('/' === $firstCharacter || '\\' === $firstCharacter) {
+        if ('/' === $firstCharacter) {
+            return $scheme.'/';
+        }
+
+        if ('\\' !== \DIRECTORY_SEPARATOR) {
+            return '';
+        }
+
+        if ('\\' === $firstCharacter) {
             return $scheme.'/';
         }
 
@@ -239,7 +243,7 @@ final class Path
                 return $scheme.$path.'/';
             }
 
-            // Normal case: "C:/ or "C:\"
+            // Normal case: "C:/" or "C:\"
             if ('/' === $path[2] || '\\' === $path[2]) {
                 return $scheme.$firstCharacter.$path[1].'/';
             }
@@ -346,44 +350,52 @@ final class Path
         $extension = ltrim($extension, '.');
 
         // No extension for paths
-        if ('/' === substr($path, -1)) {
+        if (str_ends_with($path, '/')) {
             return $path;
         }
 
         // No actual extension in path
-        if (empty($actualExtension)) {
-            return $path.('.' === substr($path, -1) ? '' : '.').$extension;
+        if (!$actualExtension) {
+            return $path.(str_ends_with($path, '.') ? '' : '.').$extension;
         }
 
         return substr($path, 0, -\strlen($actualExtension)).$extension;
     }
 
+    /**
+     * Returns whether the given path is absolute.
+     */
     public static function isAbsolute(string $path): bool
     {
         if ('' === $path) {
             return false;
         }
 
-        // Strip scheme
-        if (false !== ($schemeSeparatorPosition = strpos($path, '://')) && 1 !== $schemeSeparatorPosition) {
-            $path = substr($path, $schemeSeparatorPosition + 3);
+        // URLs and stream wrappers are considered absolute
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path)) {
+            return true;
         }
 
-        $firstCharacter = $path[0];
+        if ('/' === $path[0]) {
+            return true;
+        }
 
-        // UNIX root "/" or "\" (Windows style)
-        if ('/' === $firstCharacter || '\\' === $firstCharacter) {
+        if ('\\' !== \DIRECTORY_SEPARATOR) {
+            return false;
+        }
+
+        if ('\\' === $path[0]) {
             return true;
         }
 
         // Windows root
-        if (\strlen($path) > 1 && ctype_alpha($firstCharacter) && ':' === $path[1]) {
+        if (\strlen($path) > 1 && ctype_alpha($path[0]) && ':' === $path[1]) {
             // Special case: "C:"
             if (2 === \strlen($path)) {
                 return true;
             }
 
-            // Normal case: "C:/ or "C:\"
+            // Normal case: "C:/" or "C:\"
             if ('/' === $path[2] || '\\' === $path[2]) {
                 return true;
             }
@@ -448,14 +460,14 @@ final class Path
             return self::canonicalize($path);
         }
 
-        if (false !== $schemeSeparatorPosition = strpos($basePath, '://')) {
-            $scheme = substr($basePath, 0, $schemeSeparatorPosition + 3);
-            $basePath = substr($basePath, $schemeSeparatorPosition + 3);
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $basePath, $m)) {
+            $scheme = $m[0];
+            $basePath = substr($basePath, \strlen($scheme));
         } else {
             $scheme = '';
         }
 
-        return $scheme.self::canonicalize(rtrim($basePath, '/\\').'/'.$path);
+        return $scheme.self::canonicalize(rtrim($basePath, '/'.\DIRECTORY_SEPARATOR).'/'.$path);
     }
 
     /**
@@ -522,7 +534,17 @@ final class Path
         if ('' === $root && '' !== $baseRoot) {
             // If base path is already in its root
             if ('' === $relativeBasePath) {
-                $relativePath = ltrim($relativePath, './\\');
+                // The base path is the root directory, so any number of leading
+                // "../" segments resolves to the root itself and "./" prefixes
+                // carry no information. Remove them as segments: a leading dot
+                // that is not one (e.g. ".htaccess") must survive.
+                while (str_starts_with($relativePath, './') || str_starts_with($relativePath, '../')) {
+                    $relativePath = substr($relativePath, str_starts_with($relativePath, '../') ? 3 : 2);
+                }
+
+                if ('..' === $relativePath) {
+                    $relativePath = '';
+                }
             }
 
             return $relativePath;
@@ -571,7 +593,7 @@ final class Path
      */
     public static function isLocal(string $path): bool
     {
-        return '' !== $path && !str_contains($path, '://');
+        return '' !== $path && !preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path);
     }
 
     /**
@@ -667,8 +689,8 @@ final class Path
                 continue;
             }
 
-            // Only add slash if previous part didn't end with '/' or '\'
-            if (!\in_array(substr($finalPath, -1), ['/', '\\'])) {
+            // Only add slash if previous part didn't end with '/' or '\' (Windows)
+            if ('/' !== substr($finalPath, -1) && \DIRECTORY_SEPARATOR !== substr($finalPath, -1)) {
                 $finalPath .= '/';
             }
 
@@ -734,7 +756,7 @@ final class Path
 
             // Collapse ".." with the previous part, if one exists
             // Don't collapse ".." if the previous part is also ".."
-            if ('..' === $part && \count($canonicalParts) > 0 && '..' !== $canonicalParts[\count($canonicalParts) - 1]) {
+            if ('..' === $part && $canonicalParts && '..' !== $canonicalParts[\count($canonicalParts) - 1]) {
                 array_pop($canonicalParts);
 
                 continue;
@@ -773,9 +795,9 @@ final class Path
         }
 
         // Remember scheme as part of the root, if any
-        if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
-            $root = substr($path, 0, $schemeSeparatorPosition + 3);
-            $path = substr($path, $schemeSeparatorPosition + 3);
+        if (preg_match('{^[a-zA-Z0-9+.-]{2,}://}', $path, $m)) {
+            $root = $m[0];
+            $path = substr($path, \strlen($root));
         } else {
             $root = '';
         }
@@ -786,7 +808,7 @@ final class Path
         if (str_starts_with($path, '/')) {
             $root .= '/';
             $path = $length > 1 ? substr($path, 1) : '';
-        } elseif ($length > 1 && ctype_alpha($path[0]) && ':' === $path[1]) {
+        } elseif ('\\' === \DIRECTORY_SEPARATOR && $length > 1 && ctype_alpha($path[0]) && ':' === $path[1]) {
             if (2 === $length) {
                 // Windows special case: "C:"
                 $root .= $path.'/';

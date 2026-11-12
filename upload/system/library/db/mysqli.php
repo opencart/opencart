@@ -1,15 +1,22 @@
 <?php
 namespace Opencart\System\Library\DB;
+
+use Opencart\System\Library\Database\Parameter\ParameterProcessor;
+use Opencart\System\Library\Database\Parameter\ParameterType;
+use Opencart\System\Library\Database\Query\QueryConnectionInterface;
+
 /**
  * Class MySQLi
  *
  * @package Opencart\System\Library\DB
  */
-class MySQLi {
+class MySQLi implements QueryConnectionInterface {
 	/**
 	 * @var ?\mysqli
 	 */
 	private ?\mysqli $connection;
+	private ParameterProcessor $parameterProcessor;
+	private int $affected = 0;
 
 	/**
 	 * Constructor
@@ -65,6 +72,8 @@ class MySQLi {
 			fclose($handle);
 		}
 
+		$this->parameterProcessor = new ParameterProcessor();
+
 		try {
 			$this->connection = mysqli_init() ?: null;
 
@@ -98,6 +107,8 @@ class MySQLi {
 		try {
 			$query = $this->connection->query($sql);
 
+			$this->affected = $this->connection->affected_rows;
+
 			if ($query instanceof \mysqli_result) {
 				$data = [];
 
@@ -124,6 +135,164 @@ class MySQLi {
 	}
 
 	/**
+	 * @param string                  $sql
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 */
+	public function executeQuery(string $sql, array $bindings = [], array $types = []): \stdClass {
+		return $this->executePrepared($sql, $bindings, $types, true);
+	}
+
+	/**
+	 * @param string                  $sql
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 */
+	public function executeStatement(string $sql, array $bindings = [], array $types = []): int {
+		return $this->executePrepared($sql, $bindings, $types, false);
+	}
+
+	/**
+	 * @param string                  $sql
+	 * @param array<array-key, mixed> $bindings
+	 * @param array<array-key, mixed> $types
+	 * @param bool                    $fetchResult
+	 */
+	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): int|\stdClass {
+		$processed = $this->parameterProcessor->process($sql, $bindings, $types);
+
+		$statement = null;
+
+		try {
+			$statement = $this->connection->prepare($processed->sql);
+
+			if (!$statement) {
+				throw new \RuntimeException('Could not prepare SQL statement: ' . $this->connection->error);
+			}
+
+			$this->bindParameters($statement, $processed->params, $processed->types);
+
+			if (!$statement->execute()) {
+				throw new \RuntimeException('Could not execute SQL statement: ' . $statement->error);
+			}
+
+			if ($fetchResult) {
+				return $this->fetchResult($statement);
+			}
+
+			return $this->getAffectedRows($statement);
+
+		} finally {
+			if ($statement instanceof \mysqli_stmt) {
+				$statement->close();
+			}
+		}
+	}
+
+	/**
+	 * @param \mysqli_stmt        $statement
+	 * @param list<mixed>         $values
+	 * @param list<ParameterType> $types
+	 */
+	private function bindParameters(\mysqli_stmt $statement, array $values, array $types): void {
+		if (count($values) !== count($types)) {
+			throw new \LogicException('SQL parameters and types count mismatch');
+		}
+
+		if (!$values) {
+			return;
+		}
+
+		$signature = '';
+
+		foreach ($values as $index => $value) {
+			$type = $types[$index];
+
+			$signature .= match ($type) {
+				ParameterType::BOOLEAN,
+				ParameterType::INTEGER => 'i',
+
+				ParameterType::FLOAT => 'd',
+
+				ParameterType::NULL,
+				ParameterType::STRING => 's'
+			};
+
+			if ($type === ParameterType::BOOLEAN) {
+				$values[$index] = (int)$value;
+			}
+		}
+
+		$arguments = [$signature];
+
+		foreach (array_keys($values) as $index) {
+			$arguments[] = &$values[$index];
+		}
+
+		if (!call_user_func_array([$statement, 'bind_param'], $arguments)) {
+			throw new \RuntimeException('Could not bind SQL parameters: ' . $statement->error);
+		}
+	}
+
+	private function fetchResult(\mysqli_stmt $statement): \stdClass {
+		$metadata = $statement->result_metadata();
+
+		if (!$metadata) {
+			throw new \RuntimeException('SQL statement does not return a result set');
+		}
+
+		$fields = $metadata->fetch_fields();
+
+		$metadata->free();
+
+		$values = array_fill(0, count($fields), null);
+		$references = [];
+
+		foreach (array_keys($values) as $index) {
+			$references[] = &$values[$index];
+		}
+
+		if ($references && !call_user_func_array(
+			[$statement, 'bind_result'],
+			$references
+		)) {
+			throw new \RuntimeException('Could not bind SQL result: ' . $statement->error);
+		}
+
+		$rows = [];
+
+		while (($status = $statement->fetch()) === true) {
+			$row = [];
+
+			foreach ($fields as $index => $field) {
+				$row[$field->name] = $values[$index];
+			}
+
+			$rows[] = $row;
+		}
+
+		if ($status === false) {
+			throw new \RuntimeException('Could not fetch SQL result: ' . $statement->error);
+		}
+
+		$this->affected = 0;
+
+		$result = new \stdClass();
+
+		$result->row = $rows[0] ?? [];
+		$result->rows = $rows;
+		$result->num_rows = count($rows);
+
+		return $result;
+	}
+
+	private function getAffectedRows(\mysqli_stmt $statement): int {
+		$this->affected = (int)$statement->affected_rows;
+
+		return $this->affected;
+	}
+
+	/**
 	 * Escape
 	 *
 	 * @param string $value
@@ -140,7 +309,7 @@ class MySQLi {
 	 * @return int
 	 */
 	public function countAffected(): int {
-		return $this->connection->affected_rows;
+		return $this->affected;
 	}
 
 	/**

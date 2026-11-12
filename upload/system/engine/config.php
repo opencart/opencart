@@ -94,7 +94,7 @@ class Config {
 			}
 
 			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.php';
+				$file = $this->path[$namespace] . substr($filename, strlen($namespace) + 1) . '.php';
 			}
 		}
 

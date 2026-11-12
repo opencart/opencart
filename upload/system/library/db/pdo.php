@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\System\Library\DB;
 
-use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 use Opencart\System\Library\Database\Parameter\ParameterProcessor;
 use Opencart\System\Library\Database\Parameter\ParameterType;
+use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 
 /**
  * Class PDO
@@ -98,6 +98,7 @@ class PDO implements QueryConnectionInterface {
 	}
 
 	/**
+	 * @param string                  $sql
 	 * @param array<array-key, mixed> $bindings
 	 * @param array<array-key, mixed> $types
 	 */
@@ -106,6 +107,7 @@ class PDO implements QueryConnectionInterface {
 	}
 
 	/**
+	 * @param string                  $sql
 	 * @param array<array-key, mixed> $bindings
 	 * @param array<array-key, mixed> $types
 	 */
@@ -114,10 +116,12 @@ class PDO implements QueryConnectionInterface {
 	}
 
 	/**
+	 * @param string                  $sql
 	 * @param array<array-key, mixed> $bindings
 	 * @param array<array-key, mixed> $types
+	 * @param bool                    $fetchResult
 	 */
-	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): \stdClass|int {
+	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): int|\stdClass {
 		$processed = $this->parameterProcessor->process($sql, $bindings, $types);
 
 		$statement = null;
@@ -155,19 +159,18 @@ class PDO implements QueryConnectionInterface {
 	}
 
 	/**
-	 * @param list<mixed> $values
+	 * @param \PDOStatement       $statement
+	 * @param list<mixed>         $values
 	 * @param list<ParameterType> $types
 	 */
 	private function bindParameters(\PDOStatement $statement, array $values, array $types): void {
 		if (count($values) !== count($types)) {
-			throw new \LogicException(
-				'SQL parameters and types count mismatch'
-			);
+			throw new \LogicException('SQL parameters and types count mismatch');
 		}
 
 		foreach ($values as $index => $value) {
 			$type = match ($types[$index]) {
-				ParameterType::NULL => \PDO::PARAM_NULL,
+				ParameterType::NULL    => \PDO::PARAM_NULL,
 				ParameterType::BOOLEAN => \PDO::PARAM_BOOL,
 				ParameterType::INTEGER => \PDO::PARAM_INT,
 				ParameterType::FLOAT,

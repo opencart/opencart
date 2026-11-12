@@ -12,8 +12,8 @@ enum ArrayParameterType: string {
 		return match ($this) {
 			self::BOOLEAN => ParameterType::BOOLEAN,
 			self::INTEGER => ParameterType::INTEGER,
-			self::FLOAT => ParameterType::FLOAT,
-			self::STRING => ParameterType::STRING
+			self::FLOAT   => ParameterType::FLOAT,
+			self::STRING  => ParameterType::STRING
 		};
 	}
 }

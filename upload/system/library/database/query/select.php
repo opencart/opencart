@@ -6,14 +6,14 @@ use Aura\SqlQuery\Common\QuoterInterface;
 use Aura\SqlQuery\Mysql\Select as AuraSelect;
 
 class Select extends AuraSelect implements QueryEventAwareInterface {
-	use QueryMacroTrait;
 	use QueryEventTrait;
+	use QueryMacroTrait;
 
 	protected QueryExecutor $queryExecutor;
 
 	public function __construct(
 		QuoterInterface $quoter,
-		                $builder,
+		$builder,
 		QueryExecutor $executor,
 		QueryMacroRegistry $macroRegistry
 	) {
@@ -46,6 +46,8 @@ class Select extends AuraSelect implements QueryEventAwareInterface {
 
 	/**
 	 * Fetch a value from the first row.
+	 *
+	 * @param string $column
 	 */
 	public function value(string $column): mixed {
 		$row = $this->first();

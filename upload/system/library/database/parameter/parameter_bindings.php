@@ -18,7 +18,7 @@ final class ParameterBindings {
 	private array $params;
 
 	/**
-	 * @var array<array-key, ParameterType|ArrayParameterType>
+	 * @var array<array-key, ArrayParameterType|ParameterType>
 	 */
 	private array $types;
 
@@ -35,9 +35,9 @@ final class ParameterBindings {
 	private int $position = 0;
 
 	/**
-	 * @param list<array{type: 'text'|'named'|'positional', value: string}> $tokens
-	 * @param array<array-key, mixed> $params
-	 * @param array<array-key, mixed> $types
+	 * @param list<array{type: 'named'|'positional'|'text', value: string}> $tokens
+	 * @param array<array-key, mixed>                                       $params
+	 * @param array<array-key, mixed>                                       $types
 	 */
 	public function __construct(array $tokens, array $params, array $types) {
 		$hasNamed = false;
@@ -49,16 +49,12 @@ final class ParameterBindings {
 		}
 
 		if ($hasNamed && $hasPositional) {
-			throw new \InvalidArgumentException(
-				'Mixing named and positional SQL parameters is not supported'
-			);
+			throw new \InvalidArgumentException('Mixing named and positional SQL parameters is not supported');
 		}
 
 		if (!$hasNamed && !$hasPositional) {
 			if ($params !== [] || $types !== []) {
-				throw new \InvalidArgumentException(
-					'SQL statement does not contain placeholders'
-				);
+				throw new \InvalidArgumentException('SQL statement does not contain placeholders');
 			}
 
 			$this->mode = self::MODE_NONE;
@@ -119,12 +115,10 @@ final class ParameterBindings {
 		}
 
 		if (
-			$this->mode === self::MODE_POSITIONAL &&
-			$this->position !== count($this->params)
+			$this->mode === self::MODE_POSITIONAL
+			&& $this->position !== count($this->params)
 		) {
-			throw new \InvalidArgumentException(
-				'Unused positional SQL bindings detected'
-			);
+			throw new \InvalidArgumentException('Unused positional SQL bindings detected');
 		}
 	}
 
@@ -148,9 +142,7 @@ final class ParameterBindings {
 		$position = $this->position++;
 
 		if (!array_key_exists($position, $this->params)) {
-			throw new \InvalidArgumentException(
-				'Missing positional SQL binding at index ' . $position
-			);
+			throw new \InvalidArgumentException('Missing positional SQL binding at index ' . $position);
 		}
 
 		$this->usedParams[$position] = true;
@@ -165,6 +157,7 @@ final class ParameterBindings {
 
 	/**
 	 * @param array<array-key, mixed> $items
+	 *
 	 * @return array<array-key, mixed>
 	 */
 	private function normalizeNamed(array $items): array {
@@ -178,9 +171,7 @@ final class ParameterBindings {
 			}
 
 			if (!preg_match('/^(?:[a-zA-Z_][a-zA-Z0-9_]*|[0-9]+)$/D', $name)) {
-				throw new \InvalidArgumentException(
-					'Invalid SQL binding name: ' . (string)$key
-				);
+				throw new \InvalidArgumentException('Invalid SQL binding name: ' . (string)$key);
 			}
 
 			if (array_key_exists($name, $result)) {
@@ -195,21 +186,22 @@ final class ParameterBindings {
 
 	/**
 	 * @param array<array-key, mixed> $params
+	 *
 	 * @return list<mixed>
 	 */
 	private function normalizePositional(array $params): array {
 		if (!array_is_list($params)) {
-			throw new \InvalidArgumentException(
-				'Positional bindings must be a sequential array'
-			);
+			throw new \InvalidArgumentException('Positional bindings must be a sequential array');
 		}
 
-		/** @var list<mixed> $params */
+		// @var list<mixed> $params
 		return $params;
 	}
 
 	/**
 	 * @param array<array-key, mixed> $types
+	 * @param int                     $count
+	 *
 	 * @return array<int, mixed>
 	 */
 	private function validatePositionalTypes(array $types, int $count): array {
@@ -217,9 +209,7 @@ final class ParameterBindings {
 
 		foreach ($types as $key => $type) {
 			if (!is_int($key) || $key < 0 || $key >= $count) {
-				throw new \InvalidArgumentException(
-					'Invalid positional binding type index: ' . (string)$key
-				);
+				throw new \InvalidArgumentException('Invalid positional binding type index: ' . (string)$key);
 			}
 
 			$result[$key] = $type;
@@ -230,16 +220,15 @@ final class ParameterBindings {
 
 	/**
 	 * @param array<array-key, mixed> $types
-	 * @return array<array-key, ParameterType|ArrayParameterType>
+	 *
+	 * @return array<array-key, ArrayParameterType|ParameterType>
 	 */
 	private function validateTypes(array $types): array {
 		$result = [];
 
 		foreach ($types as $key => $type) {
 			if (!$type instanceof ParameterType && !$type instanceof ArrayParameterType) {
-				throw new \InvalidArgumentException(
-					'Unsupported SQL parameter type for binding: ' . (string)$key
-				);
+				throw new \InvalidArgumentException('Unsupported SQL parameter type for binding: ' . (string)$key);
 			}
 
 			$result[$key] = $type;

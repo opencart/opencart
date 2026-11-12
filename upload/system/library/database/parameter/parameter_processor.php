@@ -20,6 +20,7 @@ final class ParameterProcessor {
 	}
 
 	/**
+	 * @param string                  $sql
 	 * @param array<array-key, mixed> $params
 	 * @param array<array-key, mixed> $types
 	 */

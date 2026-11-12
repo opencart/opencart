@@ -84,6 +84,7 @@ class QueryFactory extends AuraQueryFactory {
 	 *
 	 * @param string $queryType
 	 * @param string $class
+	 * @param bool   $replace
 	 */
 	public function registerQueryClass(
 		string $queryType,
@@ -95,28 +96,25 @@ class QueryFactory extends AuraQueryFactory {
 		$currentClass = $this->queryClasses[$queryType];
 
 		if (!class_exists($class) || !is_subclass_of($class, $defaultClass)) {
-			throw new \InvalidArgumentException(
-				sprintf(
-					'Query class for "%s" must extend %s',
-					strtolower($queryType),
-					$defaultClass
-				)
-			);
+			throw new \InvalidArgumentException(sprintf('Query class for "%s" must extend %s', strtolower($queryType), $defaultClass));
 		}
 
 		if (!$replace && $currentClass !== $defaultClass) {
-			throw new \LogicException(
-				sprintf('A custom class for "%s" is already registered', strtolower($queryType))
-			);
+			throw new \LogicException(sprintf('A custom class for "%s" is already registered', strtolower($queryType)));
 		}
 
-		/** @var class-string<AbstractQuery> $class */
+		// @var class-string<AbstractQuery> $class
 		$this->queryClasses[$queryType] = $class;
 	}
 
 	/**
 	 * Register a macro available on the selected query type.
 	 * Macros add methods; overriding existing methods requires a custom class.
+	 *
+	 * @param string   $queryType
+	 * @param string   $name
+	 * @param \Closure $macro
+	 * @param bool     $replace
 	 */
 	public function registerMacro(
 		string $queryType,
@@ -128,13 +126,7 @@ class QueryFactory extends AuraQueryFactory {
 		$class = $this->queryClasses[$queryType];
 
 		if (method_exists($class, $name)) {
-			throw new \LogicException(
-				sprintf(
-					'Cannot register macro "%s": method already exists on %s',
-					$name,
-					$class
-				)
-			);
+			throw new \LogicException(sprintf('Cannot register macro "%s": method already exists on %s', $name, $class));
 		}
 
 		$this->macroRegistry->register(
@@ -150,13 +142,12 @@ class QueryFactory extends AuraQueryFactory {
 	 * Quoter and Builder implementations.
 	 *
 	 * @param string $query
+	 *
 	 * @return DeleteInterface|InsertInterface|SelectInterface|UpdateInterface
 	 */
 	protected function newInstance($query) {
 		if (!isset($this->queryClasses[$query])) {
-			throw new \InvalidArgumentException(
-				'Unsupported query type: ' . $query
-			);
+			throw new \InvalidArgumentException('Unsupported query type: ' . $query);
 		}
 
 		$class = $this->queryClasses[$query];
@@ -168,42 +159,40 @@ class QueryFactory extends AuraQueryFactory {
 		);
 
 		if (
-			!($instance instanceof DeleteInterface) &&
-			!($instance instanceof InsertInterface) &&
-			!($instance instanceof SelectInterface) &&
-			!($instance instanceof UpdateInterface)
+			!($instance instanceof DeleteInterface)
+			&& !($instance instanceof InsertInterface)
+			&& !($instance instanceof SelectInterface)
+			&& !($instance instanceof UpdateInterface)
 		) {
-			throw new \LogicException(
-				'Query factory created an unsupported query instance: ' . $class
-			);
+			throw new \LogicException('Query factory created an unsupported query instance: ' . $class);
 		}
 
 		return $instance;
 	}
 
-	/** @return 'Select'|'Insert'|'Update'|'Delete' */
+	/**
+	 * @return 'Delete'|'Insert'|'Select'|'Update'
+	 */
 	private function normalizeQueryType(string $queryType): string {
 		return match (strtolower($queryType)) {
 			'select' => 'Select',
 			'insert' => 'Insert',
 			'update' => 'Update',
 			'delete' => 'Delete',
-			default => throw new \InvalidArgumentException(
-				'Unsupported query type: ' . $queryType
-			)
+			default  => throw new \InvalidArgumentException('Unsupported query type: ' . $queryType)
 		};
 	}
 
-	/** @return class-string<AbstractQuery> */
+	/**
+	 * @return class-string<AbstractQuery>
+	 */
 	private function getDefaultQueryClass(string $queryType): string {
 		return match ($queryType) {
 			'Select' => Select::class,
 			'Insert' => Insert::class,
 			'Update' => Update::class,
 			'Delete' => Delete::class,
-			default => throw new \InvalidArgumentException(
-				'Unsupported query type: ' . $queryType
-			)
+			default  => throw new \InvalidArgumentException('Unsupported query type: ' . $queryType)
 		};
 	}
 }

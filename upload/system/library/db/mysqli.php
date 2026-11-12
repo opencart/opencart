@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\System\Library\DB;
 
-use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 use Opencart\System\Library\Database\Parameter\ParameterProcessor;
 use Opencart\System\Library\Database\Parameter\ParameterType;
+use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 
 /**
  * Class MySQLi
@@ -135,6 +135,7 @@ class MySQLi implements QueryConnectionInterface {
 	}
 
 	/**
+	 * @param string                  $sql
 	 * @param array<array-key, mixed> $bindings
 	 * @param array<array-key, mixed> $types
 	 */
@@ -143,6 +144,7 @@ class MySQLi implements QueryConnectionInterface {
 	}
 
 	/**
+	 * @param string                  $sql
 	 * @param array<array-key, mixed> $bindings
 	 * @param array<array-key, mixed> $types
 	 */
@@ -151,10 +153,12 @@ class MySQLi implements QueryConnectionInterface {
 	}
 
 	/**
+	 * @param string                  $sql
 	 * @param array<array-key, mixed> $bindings
 	 * @param array<array-key, mixed> $types
+	 * @param bool                    $fetchResult
 	 */
-	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): \stdClass|int {
+	private function executePrepared(string $sql, array $bindings, array $types, bool $fetchResult): int|\stdClass {
 		$processed = $this->parameterProcessor->process($sql, $bindings, $types);
 
 		$statement = null;
@@ -186,7 +190,8 @@ class MySQLi implements QueryConnectionInterface {
 	}
 
 	/**
-	 * @param list<mixed> $values
+	 * @param \mysqli_stmt        $statement
+	 * @param list<mixed>         $values
 	 * @param list<ParameterType> $types
 	 */
 	private function bindParameters(\mysqli_stmt $statement, array $values, array $types): void {
@@ -248,9 +253,9 @@ class MySQLi implements QueryConnectionInterface {
 		}
 
 		if ($references && !call_user_func_array(
-				[$statement, 'bind_result'],
-				$references
-			)) {
+			[$statement, 'bind_result'],
+			$references
+		)) {
 			throw new \RuntimeException('Could not bind SQL result: ' . $statement->error);
 		}
 

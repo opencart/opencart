@@ -3,7 +3,6 @@
 namespace Opencart\System\Library\Database\Query;
 
 use Aura\SqlQuery\AbstractQuery;
-use Opencart\System\Engine\Config;
 use Opencart\System\Engine\Event;
 use Opencart\System\Engine\Registry;
 
@@ -14,11 +13,12 @@ final class QueryExecutor {
 	public function __construct(
 		private readonly QueryConnectionInterface $connection,
 		private readonly ?Registry $registry = null
-	) {
-	}
+	) {}
 
 	/**
 	 * Fetch all rows returned by a SELECT query.
+	 *
+	 * @param AbstractQuery $query
 	 *
 	 * @return array<int, array<string, mixed>>
 	 */
@@ -28,6 +28,8 @@ final class QueryExecutor {
 
 	/**
 	 * Fetch the first row returned by a SELECT query.
+	 *
+	 * @param AbstractQuery $query
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -40,6 +42,8 @@ final class QueryExecutor {
 	 *
 	 * DISTINCT, GROUP BY, HAVING and UNION are preserved by counting rows
 	 * returned from the original SELECT as a derived table.
+	 *
+	 * @param Select $query
 	 */
 	public function fetchCount(Select $query): int {
 		[$query, $eventName] = $this->prepareQuery($query);
@@ -63,9 +67,7 @@ final class QueryExecutor {
 		$value = $result->row['__oc_count'] ?? null;
 
 		if (!is_numeric($value)) {
-			throw new \UnexpectedValueException(
-				'COUNT query did not return a numeric __oc_count value'
-			);
+			throw new \UnexpectedValueException('COUNT query did not return a numeric __oc_count value');
 		}
 
 		$count = (int)$value;
@@ -80,6 +82,8 @@ final class QueryExecutor {
 	/**
 	 * Check whether the query returns at least one row, ignoring top-level
 	 * pagination. DISTINCT, GROUP BY, HAVING and UNION remain effective.
+	 *
+	 * @param Select $query
 	 */
 	public function fetchExists(Select $query): bool {
 		[$query, $eventName] = $this->prepareQuery($query);
@@ -103,9 +107,7 @@ final class QueryExecutor {
 		$value = $result->row['__oc_exists'] ?? null;
 
 		if (!is_numeric($value)) {
-			throw new \UnexpectedValueException(
-				'EXISTS query did not return a numeric __oc_exists value'
-			);
+			throw new \UnexpectedValueException('EXISTS query did not return a numeric __oc_exists value');
 		}
 
 		$exists = (bool)(int)$value;
@@ -119,6 +121,8 @@ final class QueryExecutor {
 
 	/**
 	 * Execute INSERT, UPDATE or DELETE.
+	 *
+	 * @param AbstractQuery $query
 	 */
 	public function executeStatement(AbstractQuery $query): int {
 		[$query, $eventName] = $this->prepareQuery($query);
@@ -137,6 +141,8 @@ final class QueryExecutor {
 
 	/**
 	 * Execute SELECT and return the DB result object.
+	 *
+	 * @param AbstractQuery $query
 	 */
 	private function executeQuery(AbstractQuery $query): \stdClass {
 		[$query, $eventName] = $this->prepareQuery($query);
@@ -191,6 +197,8 @@ final class QueryExecutor {
 	 * Aura's page(0) clears both LIMIT and OFFSET. ORDER BY and FOR UPDATE
 	 * are irrelevant or invalid for this derived-table use case. The
 	 * SQL_CALC_FOUND_ROWS flag is also disabled for the count/exists query.
+	 *
+	 * @param Select $query
 	 */
 	private function createAggregateSource(Select $query): Select {
 		$source = clone $query;
@@ -206,6 +214,9 @@ final class QueryExecutor {
 
 	/**
 	 * Quote an internal derived-table or result alias using Aura's dialect.
+	 *
+	 * @param Select $query
+	 * @param string $identifier
 	 */
 	private function quoteIdentifier(Select $query, string $identifier): string {
 		return $query->getQuoteNamePrefix() . $identifier . $query->getQuoteNameSuffix();
@@ -213,16 +224,16 @@ final class QueryExecutor {
 
 	/**
 	 * Validate the result shape expected from the OpenCart DB adapter.
+	 *
+	 * @param \stdClass $result
 	 */
 	private function validateResult(\stdClass $result): void {
 		if (
-			!isset($result->row) || !is_array($result->row) ||
-			!isset($result->rows) || !is_array($result->rows) ||
-			!isset($result->num_rows)
+			!isset($result->row) || !is_array($result->row)
+			|| !isset($result->rows) || !is_array($result->rows)
+			|| !isset($result->num_rows)
 		) {
-			throw new \UnexpectedValueException(
-				'Query result must contain array row, array rows and integer num_rows properties'
-			);
+			throw new \UnexpectedValueException('Query result must contain array row, array rows and integer num_rows properties');
 		}
 	}
 
@@ -234,6 +245,11 @@ final class QueryExecutor {
 	 *
 	 * SELECT result objects can be modified by after listeners. Scalar
 	 * count/exists/statement results are provided for inspection.
+	 *
+	 * @param string        $name
+	 * @param string        $stage
+	 * @param AbstractQuery $query
+	 * @param mixed|null    $result
 	 */
 	private function triggerEvent(
 		string $name,

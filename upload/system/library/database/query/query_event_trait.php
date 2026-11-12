@@ -3,24 +3,26 @@
 namespace Opencart\System\Library\Database\Query;
 
 trait QueryEventTrait {
-    private ?string $eventName = null;
+	private ?string $eventName = null;
 
-    /**
-     * Set a logical query event name.
-     *
-     * Example: product.list
-     */
-    public function event(string $name): static {
-        if (!preg_match('/^[a-z][a-z0-9_-]*(?:\\.[a-z][a-z0-9_-]*)*$/D', $name)) {
-            throw new \InvalidArgumentException('Invalid query event name: ' . $name);
-        }
+	/**
+	 * Set a logical query event name.
+	 *
+	 * Example: product.list
+	 *
+	 * @param string $name
+	 */
+	public function event(string $name): static {
+		if (!preg_match('/^[a-z][a-z0-9_-]*(?:\.[a-z][a-z0-9_-]*)*$/D', $name)) {
+			throw new \InvalidArgumentException('Invalid query event name: ' . $name);
+		}
 
-        $this->eventName = $name;
+		$this->eventName = $name;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getEventName(): ?string {
-        return $this->eventName;
-    }
+	public function getEventName(): ?string {
+		return $this->eventName;
+	}
 }

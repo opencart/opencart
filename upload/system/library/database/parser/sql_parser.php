@@ -15,10 +15,11 @@ namespace Opencart\System\Library\Database\Parser;
 final class SqlParser {
 	public function __construct(
 		private readonly bool $backslashEscapes = true
-	) {
-	}
+	) {}
 
 	/**
+	 * @param string $sql
+	 *
 	 * @return list<SqlToken>
 	 */
 	public function tokenize(string $sql): array {
@@ -71,9 +72,7 @@ final class SqlParser {
 		}
 
 		if ($insideExecutableComment) {
-			throw new \InvalidArgumentException(
-				'Unclosed MySQL executable comment'
-			);
+			throw new \InvalidArgumentException('Unclosed MySQL executable comment');
 		}
 
 		$this->flushText($tokens, $text);
@@ -84,22 +83,25 @@ final class SqlParser {
 	/**
 	 * Read one special SQL token at the current offset.
 	 *
-	 * @return array{type: 'text'|'named'|'positional', value: string}|null
+	 * @param string $sql
+	 * @param int    $offset
+	 *
+	 * @return array{type: 'named'|'positional'|'text', value: string}|null
 	 */
 	private function readToken(string $sql, int &$offset): ?array {
 		return match ($sql[$offset]) {
 			"'", '"', '`' => [
-				'type' => 'text',
+				'type'  => 'text',
 				'value' => $this->readQuoted($sql, $offset)
 			],
 			'#' => [
-				'type' => 'text',
+				'type'  => 'text',
 				'value' => $this->readLineComment($sql, $offset)
 			],
-			'-' => $this->readDashComment($sql, $offset),
-			'/' => $this->readBlockCommentToken($sql, $offset),
-			':' => $this->readNamedParameter($sql, $offset),
-			'?' => $this->readPositionalParameter($offset),
+			'-'     => $this->readDashComment($sql, $offset),
+			'/'     => $this->readBlockCommentToken($sql, $offset),
+			':'     => $this->readNamedParameter($sql, $offset),
+			'?'     => $this->readPositionalParameter($offset),
 			default => null
 		};
 	}
@@ -112,10 +114,10 @@ final class SqlParser {
 
 		while ($offset < $length) {
 			if (
-				$quote !== '`' &&
-				$this->backslashEscapes &&
-				$sql[$offset] === '\\' &&
-				$offset + 1 < $length
+				$quote !== '`'
+				&& $this->backslashEscapes
+				&& $sql[$offset] === '\\'
+				&& $offset + 1 < $length
 			) {
 				$offset += 2;
 				continue;
@@ -124,8 +126,8 @@ final class SqlParser {
 			if ($sql[$offset] === $quote) {
 				// SQL escapes a quote by doubling its delimiter.
 				if (
-					$offset + 1 < $length &&
-					$sql[$offset + 1] === $quote
+					$offset + 1 < $length
+					&& $sql[$offset + 1] === $quote
 				) {
 					$offset += 2;
 					continue;
@@ -147,9 +149,9 @@ final class SqlParser {
 		$length = strlen($sql);
 
 		while (
-			$offset < $length &&
-			$sql[$offset] !== "\n" &&
-			$sql[$offset] !== "\r"
+			$offset < $length
+			&& $sql[$offset] !== "\n"
+			&& $sql[$offset] !== "\r"
 		) {
 			$offset++;
 		}
@@ -158,6 +160,9 @@ final class SqlParser {
 	}
 
 	/**
+	 * @param string $sql
+	 * @param int    $offset
+	 *
 	 * @return array{type: 'text', value: string}|null
 	 */
 	private function readDashComment(string $sql, int &$offset): ?array {
@@ -173,12 +178,15 @@ final class SqlParser {
 		}
 
 		return [
-			'type' => 'text',
+			'type'  => 'text',
 			'value' => $this->readLineComment($sql, $offset)
 		];
 	}
 
 	/**
+	 * @param string $sql
+	 * @param int    $offset
+	 *
 	 * @return array{type: 'text', value: string}|null
 	 */
 	private function readBlockCommentToken(string $sql, int &$offset): ?array {
@@ -196,21 +204,24 @@ final class SqlParser {
 		$offset = $end + 2;
 
 		return [
-			'type' => 'text',
+			'type'  => 'text',
 			'value' => substr($sql, $start, $offset - $start)
 		];
 	}
 
 	/**
+	 * @param string $sql
+	 * @param int    $offset
+	 *
 	 * @return array{type: 'named', value: string}|null
 	 */
 	private function readNamedParameter(string $sql, int &$offset): ?array {
 		$length = strlen($sql);
 
 		if (
-			($offset > 0 && $sql[$offset - 1] === ':') ||
-			$offset + 1 >= $length ||
-			!$this->isNameCharacter($sql[$offset + 1])
+			($offset > 0 && $sql[$offset - 1] === ':')
+			|| $offset + 1 >= $length
+			|| !$this->isNameCharacter($sql[$offset + 1])
 		) {
 			return null;
 		}
@@ -226,7 +237,7 @@ final class SqlParser {
 		$offset = $end;
 
 		return [
-			'type' => 'named',
+			'type'  => 'named',
 			'value' => $name
 		];
 	}
@@ -236,19 +247,22 @@ final class SqlParser {
 	}
 
 	/**
+	 * @param int $offset
+	 *
 	 * @return array{type: 'positional', value: '?'}
 	 */
 	private function readPositionalParameter(int &$offset): array {
 		$offset++;
 
 		return [
-			'type' => 'positional',
+			'type'  => 'positional',
 			'value' => '?'
 		];
 	}
 
 	/**
 	 * @param list<SqlToken> $tokens
+	 * @param string         $text
 	 */
 	private function flushText(array &$tokens, string &$text): void {
 		if ($text === '') {
@@ -256,7 +270,7 @@ final class SqlParser {
 		}
 
 		$tokens[] = [
-			'type' => 'text',
+			'type'  => 'text',
 			'value' => $text
 		];
 

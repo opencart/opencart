@@ -13,11 +13,11 @@ namespace Opencart\System\Library;
 use Opencart\System\Engine\Registry;
 use Opencart\System\Library\Database\Parameter\ArrayParameterType;
 use Opencart\System\Library\Database\Parameter\ParameterType;
+use Opencart\System\Library\Database\Query\Delete;
+use Opencart\System\Library\Database\Query\Insert;
 use Opencart\System\Library\Database\Query\QueryConnectionInterface;
 use Opencart\System\Library\Database\Query\QueryExecutor;
 use Opencart\System\Library\Database\Query\QueryFactory;
-use Opencart\System\Library\Database\Query\Delete;
-use Opencart\System\Library\Database\Query\Insert;
 use Opencart\System\Library\Database\Query\Select;
 use Opencart\System\Library\Database\Query\Update;
 
@@ -37,15 +37,16 @@ class DB {
 	/**
 	 * Constructor
 	 *
-	 * @param string $adaptor
-	 * @param string $hostname
-	 * @param string $username
-	 * @param string $password
-	 * @param string $database
-	 * @param string $port
-	 * @param string $ssl_key
-	 * @param string $ssl_cert
-	 * @param string $ssl_ca
+	 * @param string    $adaptor
+	 * @param string    $hostname
+	 * @param string    $username
+	 * @param string    $password
+	 * @param string    $database
+	 * @param string    $port
+	 * @param string    $ssl_key
+	 * @param string    $ssl_cert
+	 * @param string    $ssl_ca
+	 * @param ?Registry $registry
 	 */
 	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '', ?Registry $registry = null) {
 		$this->registry = $registry;
@@ -92,7 +93,6 @@ class DB {
 
 	/**
 	 * Create DELETE query.
-	 *
 	 */
 	public function delete(): Delete {
 		return $this->getQueryFactory()->delete();
@@ -101,14 +101,13 @@ class DB {
 	/**
 	 * Execute a prepared query.
 	 *
-	 * @param array<array-key, mixed> $bindings
-	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 * @param string                                             $sql
+	 * @param array<array-key, mixed>                            $bindings
+	 * @param array<array-key, ArrayParameterType|ParameterType> $types
 	 */
 	public function executeQuery(string $sql, array $bindings = [], array $types = []): \stdClass {
 		if (!($this->adaptor instanceof QueryConnectionInterface)) {
-			throw new \LogicException(
-				'The configured database adapter does not support prepared query execution'
-			);
+			throw new \LogicException('The configured database adapter does not support prepared query execution');
 		}
 
 		return $this->adaptor->executeQuery($sql, $bindings, $types);
@@ -117,14 +116,13 @@ class DB {
 	/**
 	 * Execute a prepared statement.
 	 *
-	 * @param array<array-key, mixed> $bindings
-	 * @param array<array-key, ParameterType|ArrayParameterType> $types
+	 * @param string                                             $sql
+	 * @param array<array-key, mixed>                            $bindings
+	 * @param array<array-key, ArrayParameterType|ParameterType> $types
 	 */
 	public function executeStatement(string $sql, array $bindings = [], array $types = []): int {
 		if (!($this->adaptor instanceof QueryConnectionInterface)) {
-			throw new \LogicException(
-				'The configured database adapter does not support prepared query execution'
-			);
+			throw new \LogicException('The configured database adapter does not support prepared query execution');
 		}
 
 		return $this->adaptor->executeStatement($sql, $bindings, $types);
@@ -185,9 +183,7 @@ class DB {
 	private function getQueryFactory(): QueryFactory {
 		if ($this->queryFactory === null) {
 			if (!($this->adaptor instanceof QueryConnectionInterface)) {
-				throw new \LogicException(
-					'The configured database adapter does not support prepared query execution'
-				);
+				throw new \LogicException('The configured database adapter does not support prepared query execution');
 			}
 
 			$executor = new QueryExecutor($this->adaptor, $this->registry);

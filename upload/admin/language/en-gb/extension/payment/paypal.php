@@ -359,4 +359,4 @@ $_['success_disable_recurring']				= 'Success: Recurring payment was disabled.';
 $_['error_permission']	 					= 'Warning: You do not have permission to modify payment PayPal!';
 $_['error_connect']	 						= 'Warning: Client ID or Secret is incorrect!';
 $_['error_timeout'] 	  					= 'Sorry, PayPal is currently busy. Please try again later!';
-$_['error_agree'] 	  						= 'We discovered that a few countries under sanctions are featured on your website. Please click the button to deactivate them (Cuba, Iran, Syria, North Korea, Crimea, Donetsk, and Lugansk regions of Ukraine).<br /><br /><button type="button" class="button-agree btn btn-danger">Comply with PayPal regulations</button>';
+$_['error_agree'] 	  						= 'We discovered that a few countries under sanctions are featured on your website. Please click the button to deactivate them (Cuba, Iran, North Korea, Crimea, Donetsk, and Lugansk regions of Ukraine).<br /><br /><button type="button" class="button-agree btn btn-danger">Comply with PayPal regulations</button>';

@@ -1,4 +1,7 @@
 {{ header }}
+{% if structured_data %}
+<script type="application/ld+json">{{ structured_data|raw }}</script>
+{% endif %}
 <div id="product-product" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}

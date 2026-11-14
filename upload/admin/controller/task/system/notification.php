@@ -50,7 +50,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'expires'  => time() + 3600 * 24 * 7,
 				'path'     => $this->config->get('session_path'),
 				'secure'   => $this->request->server['HTTPS'],
-				'httponly' => false,
+				'httponly' => true,
 				'SameSite' => $this->config->get('session_samesite')
 			];
 

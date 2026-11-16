@@ -3,6 +3,7 @@
 namespace Opencart\System\Library\Database\Query;
 
 use Aura\SqlQuery\AbstractQuery;
+use Opencart\System\Library\Database\Parameter\ArrayParameterType;
 use Opencart\System\Engine\Event;
 use Opencart\System\Engine\Registry;
 
@@ -60,7 +61,10 @@ final class QueryExecutor {
 			$sourceAlias
 		);
 
-		$result = $this->connection->executeQuery($sql, $source->getBindValues());
+		$bindings = $source->getBindValues();
+		$types = $this->inferBindingTypes($bindings);
+
+		$result = $this->connection->executeQuery($sql, $bindings, $types);
 
 		$this->validateResult($result);
 
@@ -100,7 +104,10 @@ final class QueryExecutor {
 			$existsAlias
 		);
 
-		$result = $this->connection->executeQuery($sql, $source->getBindValues());
+		$bindings = $source->getBindValues();
+		$types = $this->inferBindingTypes($bindings);
+
+		$result = $this->connection->executeQuery($sql, $bindings, $types);
 
 		$this->validateResult($result);
 
@@ -127,9 +134,13 @@ final class QueryExecutor {
 	public function executeStatement(AbstractQuery $query): int {
 		[$query, $eventName] = $this->prepareQuery($query);
 
+		$bindings = $query->getBindValues();
+		$types = $this->inferBindingTypes($bindings);
+
 		$result = $this->connection->executeStatement(
 			$query->getStatement(),
-			$query->getBindValues()
+			$bindings,
+			$types
 		);
 
 		if ($eventName !== null) {
@@ -147,9 +158,13 @@ final class QueryExecutor {
 	private function executeQuery(AbstractQuery $query): \stdClass {
 		[$query, $eventName] = $this->prepareQuery($query);
 
+		$bindings = $query->getBindValues();
+		$types = $this->inferBindingTypes($bindings);
+
 		$result = $this->connection->executeQuery(
 			$query->getStatement(),
-			$query->getBindValues()
+			$bindings,
+			$types
 		);
 
 		$this->validateResult($result);
@@ -160,6 +175,80 @@ final class QueryExecutor {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Infer array parameter types for values supplied through Aura's bindValues().
+	 * Scalar values are typed by ParameterExpander itself. Array values need an
+	 * ArrayParameterType so they can be expanded into a list of placeholders.
+	 *
+	 * @param array<array-key, mixed> $bindings
+	 * @return array<array-key, ArrayParameterType>
+	 */
+	private function inferBindingTypes(array $bindings): array {
+		$types = [];
+
+		foreach ($bindings as $name => $value) {
+			if (is_array($value)) {
+				$types[$name] = $this->inferArrayParameterType($value);
+			}
+		}
+
+		return $types;
+	}
+
+	/**
+	 * Infer a common binding type for an array. NULL values do not affect
+	 * inference because the expander binds them as SQL NULL independently.
+	 * Mixed numeric values are promoted to FLOAT; mixed scalar values that
+	 * include strings are bound as STRING.
+	 *
+	 * @param array<array-key, mixed> $values
+	 */
+	private function inferArrayParameterType(array $values): ArrayParameterType {
+		if ($values === []) {
+			throw new \InvalidArgumentException(
+				'Array SQL binding cannot be empty; handle empty IN/NOT IN conditions before execution'
+			);
+		}
+
+		$hasString = false;
+		$hasFloat = false;
+		$hasInteger = false;
+
+		foreach ($values as $value) {
+			if ($value === null) {
+				continue;
+			}
+
+			if (is_string($value)) {
+				$hasString = true;
+			} elseif (is_float($value)) {
+				$hasFloat = true;
+			} elseif (is_int($value)) {
+				$hasInteger = true;
+			} elseif (is_bool($value)) {
+				continue;
+			} else {
+				throw new \InvalidArgumentException(
+					'Unsupported array SQL binding value: ' . get_debug_type($value)
+				);
+			}
+		}
+
+		if ($hasString) {
+			return ArrayParameterType::STRING;
+		}
+
+		if ($hasFloat) {
+			return ArrayParameterType::FLOAT;
+		}
+
+		if ($hasInteger) {
+			return ArrayParameterType::INTEGER;
+		}
+
+		return ArrayParameterType::BOOLEAN;
 	}
 
 	/**

@@ -17,6 +17,8 @@ namespace Opencart\System\Engine;
  * Class Model
  *
  * @mixin \Opencart\System\Engine\Registry
+ *
+ * @property-read \Opencart\System\Library\DB $db
  */
 class Model {
 	/**

@@ -32,7 +32,9 @@ abstract class AbstractTwigCallable implements TwigCallableInterface
             'needs_environment' => false,
             'needs_context' => false,
             'needs_charset' => false,
+            'needs_is_sandboxed' => false,
             'is_variadic' => false,
+            'always_allowed_in_sandbox' => false,
             'deprecation_info' => null,
             'deprecated' => false,
             'deprecating_package' => '',
@@ -105,6 +107,16 @@ abstract class AbstractTwigCallable implements TwigCallableInterface
     public function needsContext(): bool
     {
         return $this->options['needs_context'];
+    }
+
+    public function needsIsSandboxed(): bool
+    {
+        return $this->options['needs_is_sandboxed'];
+    }
+
+    public function isAlwaysAllowedInSandbox(): bool
+    {
+        return $this->options['always_allowed_in_sandbox'];
     }
 
     /**
@@ -182,6 +194,6 @@ abstract class AbstractTwigCallable implements TwigCallableInterface
 
     public function getMinimalNumberOfRequiredArguments(): int
     {
-        return ($this->options['needs_charset'] ? 1 : 0) + ($this->options['needs_environment'] ? 1 : 0) + ($this->options['needs_context'] ? 1 : 0) + \count($this->arguments);
+        return ($this->options['needs_charset'] ? 1 : 0) + ($this->options['needs_environment'] ? 1 : 0) + ($this->options['needs_context'] ? 1 : 0) + ($this->options['needs_is_sandboxed'] ? 1 : 0) + \count($this->arguments);
     }
 }

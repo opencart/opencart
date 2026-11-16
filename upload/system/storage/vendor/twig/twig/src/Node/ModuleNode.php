@@ -28,15 +28,21 @@ use Twig\Source;
  * @author Fabien Potencier <fabien@symfony.com>
  */
 #[YieldReady]
-final class ModuleNode extends Node
+final class ModuleNode extends Node implements CoercesChildrenToStringInterface
 {
     /**
-     * @param BodyNode $body
+     * @param BodyNode   $body
+     * @param MacrosNode $macros
      */
     public function __construct(Node $body, ?AbstractExpression $parent, Node $blocks, Node $macros, Node $traits, $embeddedTemplates, Source $source)
     {
         if (!$body instanceof BodyNode) {
             trigger_deprecation('twig/twig', '3.12', \sprintf('Not passing a "%s" instance as the "body" argument of the "%s" constructor is deprecated.', BodyNode::class, static::class));
+        }
+        if (!$macros instanceof MacrosNode) {
+            trigger_deprecation('twig/twig', '3.29', \sprintf('Not passing a "%s" instance as the "macros" argument of the "%s" constructor is deprecated.', MacrosNode::class, static::class));
+
+            $macros = new MacrosNode(iterator_to_array($macros));
         }
         if (!$embeddedTemplates instanceof Node) {
             trigger_deprecation('twig/twig', '3.21', \sprintf('Not passing a "%s" instance as the "embedded_templates" argument of the "%s" constructor is deprecated.', Node::class, static::class));
@@ -67,16 +73,15 @@ final class ModuleNode extends Node
         parent::__construct($nodes, [
             'index' => null,
             'embedded_templates' => $embeddedTemplates,
+            'strategy' => false,
+            'escaper' => false,
         ], 1);
 
         // populate the template name of all node children
         $this->setSourceContext($source);
     }
 
-    /**
-     * @return void
-     */
-    public function setIndex($index)
+    public function setIndex($index): void
     {
         $this->setAttribute('index', $index);
     }
@@ -90,10 +95,13 @@ final class ModuleNode extends Node
         }
     }
 
-    /**
-     * @return void
-     */
-    protected function compileTemplate(Compiler $compiler)
+    public function getStringCoercedChildNames(): array
+    {
+        // the parent expression is resolved through the loader, which coerces it to a string
+        return $this->hasNode('parent') ? ['parent'] : [];
+    }
+
+    protected function compileTemplate(Compiler $compiler): void
     {
         if (!$this->getAttribute('index')) {
             $compiler->write('<?php');
@@ -115,6 +123,8 @@ final class ModuleNode extends Node
 
         $this->compileIsTraitable($compiler);
 
+        $this->compileGetDefaultEscapeStrategy($compiler);
+
         $this->compileDebugInfo($compiler);
 
         $this->compileGetSourceContext($compiler);
@@ -122,10 +132,7 @@ final class ModuleNode extends Node
         $this->compileClassFooter($compiler);
     }
 
-    /**
-     * @return void
-     */
-    protected function compileGetParent(Compiler $compiler)
+    protected function compileGetParent(Compiler $compiler): void
     {
         if (!$this->hasNode('parent')) {
             return;
@@ -140,16 +147,17 @@ final class ModuleNode extends Node
         ;
 
         if ($parent instanceof ConstantExpression) {
-            $compiler->subcompile($parent);
-        } else {
-            $compiler
-                ->raw('$this->load(')
-                ->subcompile($parent)
-                ->raw(', ')
-                ->repr($parent->getTemplateLine())
-                ->raw(')')
-            ;
+            // a constant parent never depends on the context, so resolve it once
+            $compiler->raw('$this->parent ??= ');
         }
+
+        $compiler
+            ->raw('$this->load(')
+            ->subcompile($parent)
+            ->raw(', ')
+            ->repr($parent->getTemplateLine())
+            ->raw(')')
+        ;
 
         $compiler
             ->raw(";\n")
@@ -158,10 +166,7 @@ final class ModuleNode extends Node
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function compileClassHeader(Compiler $compiler)
+    protected function compileClassHeader(Compiler $compiler): void
     {
         $compiler
             ->write("\n\n")
@@ -173,11 +178,13 @@ final class ModuleNode extends Node
                 ->write("use Twig\Error\RuntimeError;\n")
                 ->write("use Twig\Extension\CoreExtension;\n")
                 ->write("use Twig\Extension\SandboxExtension;\n")
+                ->write("use Twig\MacroNamespace;\n")
                 ->write("use Twig\Markup;\n")
                 ->write("use Twig\Sandbox\SecurityError;\n")
                 ->write("use Twig\Sandbox\SecurityNotAllowedTagError;\n")
                 ->write("use Twig\Sandbox\SecurityNotAllowedFilterError;\n")
                 ->write("use Twig\Sandbox\SecurityNotAllowedFunctionError;\n")
+                ->write("use Twig\Sandbox\SecurityNotAllowedTestError;\n")
                 ->write("use Twig\Source;\n")
                 ->write("use Twig\Template;\n")
                 ->write("use Twig\TemplateWrapper;\n")
@@ -193,16 +200,19 @@ final class ModuleNode extends Node
             ->indent()
             ->write("private Source \$source;\n")
             ->write("/**\n")
-            ->write(" * @var array<string, Template>\n")
+            ->write(" * @var array<string, MacroNamespace>\n")
             ->write(" */\n")
-            ->write("private array \$macros = [];\n\n")
+            ->write("private array \$macros = [];\n")
         ;
+
+        if ($this->getAttribute('escaper')) {
+            $compiler->write("private \\Twig\\Runtime\\EscaperRuntime \$escaper;\n");
+        }
+
+        $compiler->raw("\n");
     }
 
-    /**
-     * @return void
-     */
-    protected function compileConstructor(Compiler $compiler)
+    protected function compileConstructor(Compiler $compiler): void
     {
         $compiler
             ->write("public function __construct(Environment \$env)\n", "{\n")
@@ -212,6 +222,10 @@ final class ModuleNode extends Node
             ->write("\$this->source = \$this->getSourceContext();\n\n")
         ;
 
+        if ($this->getAttribute('escaper')) {
+            $compiler->write("\$this->escaper = \$env->getRuntime('Twig\\Runtime\\EscaperRuntime');\n\n");
+        }
+
         // parent
         if (!$this->hasNode('parent')) {
             $compiler->write("\$this->parent = false;\n\n");
@@ -219,7 +233,8 @@ final class ModuleNode extends Node
 
         $countTraits = \count($this->getNode('traits'));
         if ($countTraits) {
-            // traits
+            $compiler->write("\$this->ensureTraitsAllowed();\n\n");
+
             foreach ($this->getNode('traits') as $i => $trait) {
                 $node = $trait->getNode('template');
 
@@ -248,11 +263,11 @@ final class ModuleNode extends Node
                         ->string($key)
                         ->raw("])) {\n")
                         ->indent()
-                        ->write("throw new RuntimeError('Block ")
+                        ->write("throw new RuntimeError(sprintf('Block \"%s\" is not defined in trait \"%s\".', ")
                         ->string($key)
-                        ->raw(' is not defined in trait ')
+                        ->raw(', ')
                         ->subcompile($trait->getNode('template'))
-                        ->raw(".', ")
+                        ->raw('), ')
                         ->repr($node->getTemplateLine())
                         ->raw(", \$this->source);\n")
                         ->outdent()
@@ -339,10 +354,7 @@ final class ModuleNode extends Node
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function compileDisplay(Compiler $compiler)
+    protected function compileDisplay(Compiler $compiler): void
     {
         $compiler
             ->write("protected function doDisplay(array \$context, array \$blocks = []): iterable\n", "{\n")
@@ -378,7 +390,7 @@ final class ModuleNode extends Node
         $compiler->subcompile($this->getNode('display_end'));
 
         if (!$this->hasNode('parent')) {
-            $compiler->write("yield from [];\n");
+            $compiler->write("return; yield;\n");
         }
 
         $compiler
@@ -387,10 +399,7 @@ final class ModuleNode extends Node
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function compileClassFooter(Compiler $compiler)
+    protected function compileClassFooter(Compiler $compiler): void
     {
         $compiler
             ->subcompile($this->getNode('class_end'))
@@ -399,18 +408,12 @@ final class ModuleNode extends Node
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function compileMacros(Compiler $compiler)
+    protected function compileMacros(Compiler $compiler): void
     {
         $compiler->subcompile($this->getNode('macros'));
     }
 
-    /**
-     * @return void
-     */
-    protected function compileGetTemplateName(Compiler $compiler)
+    protected function compileGetTemplateName(Compiler $compiler): void
     {
         $compiler
             ->write("/**\n")
@@ -426,10 +429,7 @@ final class ModuleNode extends Node
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function compileIsTraitable(Compiler $compiler)
+    protected function compileIsTraitable(Compiler $compiler): void
     {
         // A template can be used as a trait if:
         //   * it has no parent
@@ -476,10 +476,27 @@ final class ModuleNode extends Node
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function compileDebugInfo(Compiler $compiler)
+    protected function compileGetDefaultEscapeStrategy(Compiler $compiler): void
+    {
+        if (false === $strategy = $this->getAttribute('strategy')) {
+            return;
+        }
+
+        $compiler
+            ->write("/**\n")
+            ->write(" * @codeCoverageIgnore\n")
+            ->write(" */\n")
+            ->write("public function getDefaultEscapeStrategy(): string|false\n", "{\n")
+            ->indent()
+            ->write('return ')
+            ->repr($strategy)
+            ->raw(";\n")
+            ->outdent()
+            ->write("}\n\n")
+        ;
+    }
+
+    protected function compileDebugInfo(Compiler $compiler): void
     {
         $compiler
             ->write("/**\n")
@@ -493,10 +510,7 @@ final class ModuleNode extends Node
         ;
     }
 
-    /**
-     * @return void
-     */
-    protected function compileGetSourceContext(Compiler $compiler)
+    protected function compileGetSourceContext(Compiler $compiler): void
     {
         $compiler
             ->write("public function getSourceContext(): Source\n", "{\n")

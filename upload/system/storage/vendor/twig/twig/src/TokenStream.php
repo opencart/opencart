@@ -39,10 +39,7 @@ final class TokenStream
         return implode("\n", $this->tokens);
     }
 
-    /**
-     * @return void
-     */
-    public function injectTokens(array $tokens)
+    public function injectTokens(array $tokens): void
     {
         $this->tokens = array_merge(\array_slice($this->tokens, 0, $this->current), $tokens, \array_slice($this->tokens, $this->current));
     }
@@ -83,7 +80,8 @@ final class TokenStream
                 $token->getValue() ? \sprintf(' of value "%s"', $token->getValue()) : '',
                 Token::typeToEnglish($type), $value ? \sprintf(' with value "%s"', $value) : ''),
                 $line,
-                $this->source
+                $this->source,
+                columnno: $this->source->getColumn($token->getOffset() ?? -1),
             );
         }
         $this->next();

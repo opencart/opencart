@@ -14,3 +14,7 @@ indent_size = 4
 [*.twig]
 indent_style = space
 indent_size = 2
+
+[*.{svg,xml,yml,json}]
+indent_style = space
+indent_size = 2

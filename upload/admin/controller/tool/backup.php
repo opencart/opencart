@@ -262,7 +262,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			}
 
 			// Allowed file extension types
-			if (str_ends_with(strtolower($filename), '.sql')) {
+			if (!str_ends_with(strtolower($filename), '.sql')) {
 				$json['error'] = $this->language->get('error_file_type');
 			}
 		}

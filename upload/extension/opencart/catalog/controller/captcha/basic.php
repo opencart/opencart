@@ -70,7 +70,7 @@ class Basic extends \Opencart\System\Engine\Controller {
 
 		imagejpeg($image);
 
-		imagedestroy($image);
+		unset($image);
 		exit();
 	}
 }

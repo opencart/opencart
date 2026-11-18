@@ -484,6 +484,13 @@
                         </div>
                       </div>
                       <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_article_count }}</label>
+                        <div class="col-sm-10">
+                          <x-switch name="config_article_count" value="1" checked="{{ config_article_count }}" input-id="input-article-count" input-class="form-switch form-switch-lg"></x-switch>
+                          <div class="form-text">{{ help_article_count }}</div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_comment_status }}</label>
                         <div class="col-sm-10">
                           <x-switch name="config_comment_status" value="1" checked="{{ config_comment_status }}" input-id="input-comment-status" input-class="form-switch form-switch-lg"></x-switch>

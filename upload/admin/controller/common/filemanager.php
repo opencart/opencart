@@ -166,7 +166,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['directory'])) {
-			$data['directory'] = urldecode($this->request->get['directory']);
+			$data['directory'] = $this->request->get['directory'];
 		} else {
 			$data['directory'] = '';
 		}

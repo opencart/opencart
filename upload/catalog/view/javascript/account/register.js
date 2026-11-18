@@ -22,8 +22,6 @@ export default class AccountRegister extends WebComponent {
     async handleConnect() {
         //if (customer.isLogged()) return;
 
-		console.dir(this);
-
         let json = await ajax.get('action.php?route=account/register.token&language=' + local.get('language'));
 
         if (json.has('token')) {
@@ -34,6 +32,8 @@ export default class AccountRegister extends WebComponent {
 	async handleSubmit(e) {
 		e.preventDefault();
 		
+		console.log();
+
         //if (customer.isLogged()) return;
 
 		await ajax.post({
@@ -56,7 +56,9 @@ export default class AccountRegister extends WebComponent {
                 // Display success message
 				if (json.has('success')) {
 					console.log('Success');
-                   //this.form.setSuccess(json.get('success'));
+					//this.form.setSuccess(json.get('success'));
+					
+
                 }
             },
             handleError: (e) => {

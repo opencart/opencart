@@ -1,7 +1,6 @@
 import { config } from './config.js';
 import { language } from './language.js';
 import { storage } from './storage.js';
-import { stylesheet } from './stylesheet.js';
 import { template } from './template.js';
 
 export default class Loader {
@@ -24,21 +23,17 @@ export default class Loader {
     async library(path) {
         if (this.#data.has(path)) return this.#data.get(path);
 
-        let object = await import('../library/' + path + '.js');
+        let library = await import('../library/' + path + '.js');
 
-        this.#data.set(path, object.default.getInstance());
+        this.#data.set(path, library.default.getInstance());
 
         return this.#data.get(path);
     }
 
     async storage(path) {
         return await storage.fetch(path);
-    }
-
-	async stylesheet(path) {
-        return await stylesheet.fetch(path);
-    }
-
+	}
+	
     async template(path, data = []) {
         if (!data instanceof Map && !data instanceof Array) return;
 

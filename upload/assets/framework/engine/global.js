@@ -23,10 +23,9 @@
  *
  *   GlobalBindings.getRef('appHeader'); // → element bound with :ref="appHeader"
  */
-export default class Global {
-	static #instance = null;
-	#refs = new Map();
-	#listeners = new Map();
+export class Global {
+	static refs = new Map();
+	static listeners = new Map();
 
 	/**
 	 * Register one or more global listeners, callable from any component's
@@ -34,50 +33,38 @@ export default class Global {
 	 * @param {string|object} name_or_map - a listener name, or `{ name: fn, ... }`
 	 * @param {Function} [fn] - the function, when `name_or_map` is a string
 	 */
-	addListener(key, listener) {
+	static addListener(key, listener) {
 		if (key == null) return;
 
-		this.#listeners.set(key, listener);
+		Global.listeners.set(key, listener);
 	}
 
-	deleteListener(key) {
-		this.#listeners.delete(key);
+	static deleteListener(key) {
+		Global.listeners.delete(key);
 	}
 
-	getListener(key) {
-		return this.#listeners.get(key);
+	static getListener(key) {
+		return Global.listeners.get(key);
 	}
 
 	/** Read a ref bound anywhere with `:ref="name"`. */
-	get(key) {
-		return this.#refs.get(key);
+	static get(key) {
+		return Global.refs.get(key);
 	}
 
-	set(key, element) {
-		this.#refs.set(key, element);
+	static set(key, element) {
+		Global.refs.set(key, element);
 	}
 
 	/** Clears a ref only if it still points at `el` — avoids one binder's
 	 *  teardown clobbering a ref another binder has since re-registered. */
-	delete(key, element) {
-		if (this.#refs.get(key) === element) this.#refs.delete(key);
+	static delete(key, element) {
+		if (Global.refs.get(key) === element) Global.refs.delete(key);
 	}
 
 	/** Clears all refs and listeners. Mainly useful for tests/hot-reload. */
-	reset() {
-		this.#refs = new Map();
-		this.#listeners = new Map();
-	}
-	
-	static getInstance() {
-		if (!Global.#instance) {
-			Global.#instance = new Global();
-		}
-
-		return Global.#instance;
+	static reset() {
+		Global.refs = new Map();
+		Global.listeners = new Map();
 	}
 }
-
-const global = Global.getInstance();
-
-export { global };

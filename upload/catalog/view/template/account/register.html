@@ -6,8 +6,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form-submit @ref="form" @[submit]="handleSubmit">
-          <template @ref="template">
+        <form-submit @ref="form" @custom-submit="handleSubmit">
+          <template>
             <div @ref="alert"></div>
             <p>{{ text_account_already | safe }}</p>
             <fieldset>
@@ -43,10 +43,8 @@
             <account-captcha type="{{ config_captcha }}"></account-captcha>
             {% endif %}
             <div class="text-end">
-              {% if config_account_id %}
-              <input-switch label="{{ text_agree }}" name="agree" value="1"></input-switch>
-              {% endif %}
-              <button-submit @ref="submitter">{{ button_continue }}</button-submit>
+              <input-switch label="{{ text_agree }}" name="agree" value="1" {% if not config_account_id %}hidden{% endif %}></input-switch>
+              <button-submit @ref="submitter" @custom-click="submit">{{ button_continue }}</button-submit>
             </div>
           </template>
         </form-submit>

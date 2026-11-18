@@ -1,4 +1,4 @@
-import { WebComponent } from '../../library.js';
+import { WebComponent } from '../../framework.js';
 
 customElements.define('form-submit', class extends WebComponent {
 	static formAssociated = true;
@@ -6,7 +6,6 @@ customElements.define('form-submit', class extends WebComponent {
 		'submitting',
 		'disabled'
 	];
-	#inputs = [];
 
 	get submitting() {
 		return this.hasAttribute('submitting');
@@ -15,7 +14,7 @@ customElements.define('form-submit', class extends WebComponent {
 	get disabled() {
 		return this.hasAttribute('disabled');
 	}
-	
+
 	constructor() {
 		super();
 	
@@ -23,31 +22,17 @@ customElements.define('form-submit', class extends WebComponent {
 	}
 
 	async render() {
-		return `<form @ref="element" @submit="handleSubmit"><slot></slot></form>`;
+		return `<form @ref="element" @submit="handleSubmit">${this.template ? this.template.innerHTML : ``}</form>`;
 	}
 
-	handleConnect() {
-		console.dir(this);
-
-		//this.slot = this.root.querySelector('slot');
-
-		let test = this.getInputs();
-
-		console.log('Inputs:', test);
-	}
-
-	handleSlot(e) {
-		console.log('slot changed', e);
-	}
-	
 	getInputs() {
-		return this.slot.assignedElements().flatMap(el => Array.from(el.querySelectorAll('[name]')));
+		return this.root.querySelectorAll('[name]');
 	}
 
 	getInput(name) {
-		return this.binder.get(name);
+		return this.root.querySelector(`[name="${name}"]`);
 	}
-
+	
 	getData() {		
 		let form = new FormData();
 
@@ -63,7 +48,7 @@ customElements.define('form-submit', class extends WebComponent {
 	handleSubmit(e) {
 		e.preventDefault();
 
-		this.emit('[submit]');
+		this.emit('custom-submit');
 	}
 
 	handleSubmitting(name, value) {
@@ -80,7 +65,7 @@ customElements.define('form-submit', class extends WebComponent {
 		let inputs = this.getInputs();
 
 		for (let input of inputs) {
-			input.setError('');
+			//input.setError('');
 		}
 	}
 
@@ -90,7 +75,7 @@ customElements.define('form-submit', class extends WebComponent {
 			
 			let inputs = this.getInputs();
 			
-			for (let input of inputs) input.setError(error);
+			//for (let input of inputs) input.setError(error);
 			
 			return;
 		}

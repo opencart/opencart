@@ -1,11 +1,19 @@
-import { WebComponent } from '../../library.js';
-import { loader } from '../../library.js';
+import { WebComponent } from '../../framework.js';
+import { loader } from '../../framework.js';
 
 // Config
 const config = await loader.config('default');
 
 customElements.define('nav-dialog', class extends WebComponent {
     static observedAttributes = ['src'];
+
+	get src() {
+		return this.getAttribute('src');
+	}
+
+	set src(value) {
+		this.setAttribute('src', value);
+	}
 
     constructor() {
         super();
@@ -17,9 +25,7 @@ customElements.define('nav-dialog', class extends WebComponent {
 		// Get the source HTML to load
 		if (!this.hasAttribute('src') || !this.getAttribute('src')) return;
 			
-		console.log(this.getAttribute('src'));
-		
-    	let [ path, query ] = this.getAttribute('src').split('?');
+    	let [ path, query ] = this.src.split('?');
 
 		if (!this.data.has(path)) {
 			let response = await import(config.get('config_path') + path);
@@ -33,7 +39,7 @@ customElements.define('nav-dialog', class extends WebComponent {
 
 		let element = document.createElement(name);
 
-		for (let [key, value] of (new URLSearchParams(query).entries())) element.setAttribute(key, value);
+		for (let [key, value] of (new URLSearchParams(query ?? '').entries())) element.setAttribute(key, value);
 
 		return element.outerHTML;
 	}

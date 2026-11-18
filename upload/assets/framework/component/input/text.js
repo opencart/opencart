@@ -1,4 +1,4 @@
-import { WebComponent } from '../../library.js';
+import { WebComponent } from '../../framework.js';
 
 /*
  * <input-text name="firstname" id="input-firstname" value="" placeholder="First Name" required></input-text>
@@ -57,21 +57,33 @@ export class InputText extends WebComponent {
 		return this.getAttribute('value');
 	}
 	
+	set value(value) { 
+		this.setAttribute('value', value);
+	}
+
 	get required() {
 		return this.hasAttribute('required');
+	}
+
+	set required(value) { 
+		this.toggleAttribute('required', value == true);
 	}
 
 	get disabled() {
 		return this.hasAttribute('disabled');
 	}
 
+	set disabled(value) { 
+		this.toggleAttribute('disabled', value == true);
+	}
+
 	get readonly() {
 		return this.hasAttribute('readonly');
 	}
 
-    get form() {
-        return this.internals.form;
-    }
+	set readonly(value) { 
+		this.toggleAttribute('required', value == true);
+	}
 
     render() {
         return `
@@ -83,46 +95,61 @@ export class InputText extends WebComponent {
 
     // Handles the input event and updates the component state with the new value.
     onInput(e) {
-		this.setAttribute('value', e.target.value);
+		this.value = e.target.value;
     }
 
     // A native change event does not leave the shadow root, so send it on.
     onChange(e) {
-        this.setAttribute('value', e.target.value);
+		this.value = e.target.value;
     }
 	
 	handleValue(name, value) {
-        this.input.setAttribute('value', value);
-
-        if (this.input.validity.valid) {
-            this.internal.setValidity({});
-        } else {
-            this.internal.setValidity(this.input.validity, this.input.validationMessage, this.input);
-		}
+        this.input.value = value;
+		this.internal.setFormValue(value);
 	}
 
 	handleRequired(name, value) {
-		this.update();
+		this.input.toggleAttribute('required', value !== null);
 	}
 
 	handleDisabled(name, value) {
-		this.update();
+		this.input.toggleAttribute('disabled', value !== null);
 	}
 
 	handleReadonly(name, value) {
-		this.update();
+		this.input.toggleAttribute('readonly', value !== null);
 	}
 
-    setError(error) {
-        this.input.classList.toggle('is-invalid', !!error);
+	setError(error) {
+		console.log(error);
 
-        this.error.textContent = error ?? '';
+		this.input.setCustomValidity(error);
+
+        //this.input.classList.toggle('is-invalid', !!error);
+
+        //this.error.textContent = error ?? '';
 
 		if (error) {
 			this.internal.states.add('invalid');
 		} else {
 			this.internal.states.delete('invalid');
 		}
+	}
+
+	validate() { 
+		if (!this.input.checkValidity()) {
+			this.internals.setValidity(this.input.validity, this.input.validationMessage, this.input);
+		} else {
+			this.internals.setValidity({});
+		}
+	}
+
+	reportValidity() {
+		return this.internal.reportValidity();
+	}
+
+	checkValidity() {
+		return this.internal.checkValidity();
 	}
 }
 

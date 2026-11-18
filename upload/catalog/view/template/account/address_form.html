@@ -1,5 +1,5 @@
 <h1>{{ heading_title }}</h1>
-<form-submit @ref="form" @[submit]="handleSubmit">
+<form-submit @ref="form" @custom-submit="handleSubmit">
   <template>
     <fieldset>
       <div class="mb-3">
@@ -21,7 +21,7 @@
         <input-text label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
       </div>
       <div class="mb-3">
-        <input-text @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}" required></input-text>
+        <input-text @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}"></input-text>
       </div>
       <div class="mb-3">
         <input-country @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" required>
@@ -38,7 +38,7 @@
       </div>
     </fieldset>
     <div class="text-end">
-      <button-submit @ref="submitter" @[click]="submit">{{ button_continue }}</button-submit>
+      <button-submit @ref="submitter" @custom-click="submit">{{ button_continue }}</button-submit>
     </div>
   </template>
 </form-submit>

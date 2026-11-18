@@ -1,4 +1,4 @@
-import { WebComponent } from '../../library.js';
+import { WebComponent } from '../../framework.js';
 
 customElements.define('input-upload', class extends WebComponent {
     static formAssociated = true;
@@ -90,7 +90,7 @@ customElements.define('input-upload', class extends WebComponent {
     }
 
     handleChecked(e) {
-        this.element.checked = e.detail.value_new == 1 ? true : false;
+        this.element.checked = (e.detail.value_new == 1);
     }
 
     download() {

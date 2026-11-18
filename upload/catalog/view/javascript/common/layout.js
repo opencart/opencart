@@ -5,6 +5,10 @@ import './header.js';
 import './footer.js';
 
 export default class CommonLayout extends WebComponent {
+	stylesheets() {
+		return ['stylesheet/stylesheet.css'];
+	}
+
     async render() {
         return loader.template('common/layout');
 	}

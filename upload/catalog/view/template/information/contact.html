@@ -10,7 +10,7 @@
         <a href="" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
       </div>
       <div class="col-sm-3" {% if not config_telephone %} hidden{% endif %}><strong>{{ text_telephone }}</strong>
-        <br /> {{ config_telephone }} <br />
+        <br /> {{ config_telephone }}<br />
         <br />
       </div>
       <div class="col-sm-3">{% if config_open %}
@@ -69,7 +69,8 @@
   {% endfor %}
 </div>
 {% endif %}
-<form-submit @ref="form" @[submit]="handleSubmit">
+
+<form-submit @ref="form" @custom-submit="handleSubmit">
   <template>
     <div @ref="alert"></div>
     <fieldset>
@@ -86,7 +87,7 @@
       {{ captcha }}
     </fieldset>
     <div class="text-end">
-      <button-submit @ref="submitter" @[click]="submit">{{ button_submit }}</button-submit>
+      <button-submit @ref="submitter" @custom-click="submit">{{ button_submit }}</button-submit>
     </div>
   </template>
 </form-submit>

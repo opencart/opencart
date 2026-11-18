@@ -1,4 +1,4 @@
-import { WebComponent } from '../../library.js';
+import { WebComponent } from '../../framework.js';
 
 customElements.define('button-submit', class extends WebComponent {
 	static formAssociated = true;
@@ -6,11 +6,19 @@ customElements.define('button-submit', class extends WebComponent {
         'submitting',
         'disabled'
 	];
+	
+	set submitting(value) {
+		this.toggleAttribute('submitting', value);
+	}
 
 	get submitting() {
 		return this.hasAttribute('submitting');
 	}
 
+	set disabled(value) {
+		this.toggleAttribute('disabled', value);
+	}
+	
 	get disabled() {
 		return this.hasAttribute('disabled');
 	}
@@ -26,6 +34,7 @@ customElements.define('button-submit', class extends WebComponent {
 			:host {
 				display: inline-block;
 			}
+			
 			button[disabled] {
 				cursor: not-allowed;
 			}
@@ -37,7 +46,7 @@ customElements.define('button-submit', class extends WebComponent {
     }
 
 	handleClick(e) {
-		this.emit('[click]');
+		this.emit('custom-click');
 	}
 
 	handleSubmitting(name, value) {

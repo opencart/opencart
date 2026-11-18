@@ -1,55 +1,40 @@
 import { InputText } from './text.js';
 
 class InputAutocomplete extends InputText {
-    async render() {
-        let html = '<slot name="label"></slot>';
+	async render() {
+		return `
+			<label @ref="label" for="input-text">${this.label}</label>
+			<input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ``} id="input-text"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @input="onInput" @change="onChange" @focusin="onFocusin" @focusout="onFocusout" autocomplete="off" class="form-control"/>
+			<div @ref="error" class="invalid-feedback"></div>
+			<ul @ref="dropdown" class="dropdown-menu"></ul>
+		`;
+    }
+	
+	handleConnect() { 
+		//this.internal.setValidity({ valueMissing: true }, "my message");
+		//this.input.setCustomValidity("my message");
+	}
 
-        html += '<input type="text" `name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" placeholder="{{ entry_name }}" autocomplete="off"/>';
+	onInput(e) {
+		this.value = e.target.value;
+	}
 
-        if (this.hasAttribute('placeholder')) {
-            html += ' placeholder="' + this.getAttribute('placeholder') + '"';
-        }
+	onChange(e) { 
+		this.value = e.target.value;
+	}
 
-        let error = this.state.get('error');
-
-        html += ' class="form-control' + (error ? ' is-invalid' : '') + '" @ref="input" @input="handleInput" @change="handleChange"';
-
-        if (this.hasAttribute('disabled')) {
-            html += ` disabled`;
-        }
-
-        if (this.hasAttribute('readonly')) {
-            html += ' readonly';
-        }
-
-        if (this.hasAttribute('required')) {
-            html += ` required`;
-        }
-
-        html += '/>';
-        html += '<ul class="dropdown-menu" @ref="dropdown"></ul>';
-
-        if (error) {
-            html += '<div @ref="feedback" class="invalid-feedback">' + error + '</div>';
-        }
-
-        return html;
+    onFocusin() {
+        this.dropdown.toggleAttribute('hidden', false);
     }
 
-    focusin() {
-        this.request();
+    onFocusout(e) {
+        this.dropdown.toggleAttribute('hidden', false);
     }
-
-    focusout() {
-        if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
-            $dropdown.removeClass('show');
-        }
-    }
-
-    input() {
-
-        element.request();
-    }
+	
+	handleValue(name, value) {
+        this.input.setAttribute('value', value);
+		this.internal.setFormValue(value);
+	}
 
     handleClick() {
         e.preventDefault();

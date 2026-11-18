@@ -1,4 +1,4 @@
-import { WebComponent } from '../../library.js';
+import { WebComponent } from '../../framework.js';
 
 export class InputTextarea extends WebComponent {
     static formAssociated = true;

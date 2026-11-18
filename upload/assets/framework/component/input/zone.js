@@ -1,4 +1,4 @@
-import { loader, local } from '../../library.js';
+import { loader, local } from '../../framework.js';
 import { InputSelect } from './select.js';
 
 // Config
@@ -24,18 +24,26 @@ customElements.define('input-zone', class extends InputSelect {
 		'readonly'
 	];
 	
-	async render() {
+	get country_id() {
+		return this.getAttribute('country_id');
+	}
+
+	set country_id(value) { 
+		this.setAttribute('country_id', value);
+	}
+
+	async render() {		
 		let zones = [];
 
-		let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
+		let country = await loader.storage('localisation/country-' + Number(this.getAttribute('country_id')));
 		
 		if (country instanceof Map) {
-			zones = country['zone'] || [];
+			zones = country.get('zones') || [];
 		}
 
 		return `
-			<label @ref="label" for="input">${this.label}</label>
-			<select name="${this.name}" id="input"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ''} @ref="input" @change="onChange" class="form-control">${this.html}${zones.map(zone => `<option value="${zone.zone_id}"${zone.zone_id === this.value ? ' selected' : ''}>${zone.description[local.get('language')] ? zone.description[local.get('language')].name : ''}</option>`).join('')}</select>
+			<label @ref="label" for="input-zone">${this.label}</label>
+			<select name="${this.name}" id="input-zone"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @change="onChange" class="form-control">${zones.length !== 0 ? this.html : ``}${zones.map(zone => `<option value="${zone.zone_id}"${zone.zone_id === this.value ? ` selected` : ``}>${zone.description[local.get('language')] ? zone.description[local.get('language')].name : ''}</option>`).join('')}</select>
 			<div @ref="error" class="invalid-feedback"></div>
 		`;
 	}
@@ -45,12 +53,11 @@ customElements.define('input-zone', class extends InputSelect {
 		this.value = e.target.value;
 	}
 
-	async handleChange(e) {
-		this.value = e.target.value;
-		
+	handleValue(name, value) {
 		this.update();
+	}
 
-		//this.form.zone.setAttribute('country_id', this.form.country.value);
-		//this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
+	handleCountryId(name, value) {
+		this.update();
 	}
 });

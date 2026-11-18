@@ -1,4 +1,4 @@
-import { WebComponent } from '../../library.js';
+import { WebComponent } from '../../framework.js';
 
 customElements.define('input-markdown', class extends WebComponent {
     element = HTMLInputElement;

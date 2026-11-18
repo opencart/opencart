@@ -24,7 +24,7 @@
   <br />
 
   <div id="payment-new" {% if not addresses %}hidden{% endif %}>
-    <form-submit @ref="form" @[submit]="handleSubmit">
+    <form-submit @ref="form" @custom-submit="handleSubmit">
       <template>
         <div class="row row-cols-1 row-cols-md-2">
           <div class="mb-3">
@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="text-end mb-3">
-          <button-submit @ref="submitter" @[click]="submit" class="btn btn-primary">{{ button_continue }}</button-submit>
+          <button-submit @ref="submitter" @custom-click="submit" class="btn btn-primary">{{ button_continue }}</button-submit>
         </div>
       </template>
     </form-submit>

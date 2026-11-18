@@ -60,7 +60,7 @@
     </ul>
     {% endif %}
 
-    <form-submit @ref="form" @[submit]="handleSubmit">
+    <form-submit @ref="form" @custom-submit="handleSubmit">
       <div class="btn-group">
         <button type="button" class="btn btn-light btn-lg" @click="addToWishList" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
         <button type="button" class="btn btn-light btn-lg" @click="addToCompare" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
@@ -72,7 +72,7 @@
 
     <br />
     <div id="product">
-      <form-submit @ref="form" @[submit]="addToCart">
+      <form-submit @ref="form" @custom-submit="addToCart">
         {% if options %}
         <hr>
         <h3>{{ text_option }}</h3>

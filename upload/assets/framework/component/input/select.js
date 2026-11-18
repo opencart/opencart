@@ -1,4 +1,4 @@
-import { WebComponent } from '../../library.js';
+import { WebComponent } from '../../framework.js';
 
 /*
  * <input-select name="country" id="input-country" value="" required>
@@ -17,15 +17,13 @@ import { WebComponent } from '../../library.js';
  * Attributes: name, value, placeholder, required, disabled, readonly.
  */
 export class InputSelect extends WebComponent {
-    static formAssociated = true;
-    static observedAttributes = [
+	static formAssociated = true;
+	static observedAttributes = [
         'value',
         'required',
         'disabled',
         'readonly'
     ];
-
-	#options = [];
 
 	styles() {
         return `
@@ -53,11 +51,9 @@ export class InputSelect extends WebComponent {
 	constructor() { 
 		super();
 
-		this.html = this.innerHTML;
-	}
+		const template = this.querySelector('template');
 
-	addOption(text, value) {
-		this.#options.push({ text, value });
+		this.html = template ? template.innerHTML : this.innerHTML;
 	}
 
 	get label() {
@@ -72,53 +68,63 @@ export class InputSelect extends WebComponent {
 		return this.getAttribute('value');
 	}
 	
+	set value(value) { 
+		this.setAttribute('value', value);
+	}
+
 	get required() {
 		return this.hasAttribute('required');
+	}
+
+	set required(value) { 
+		this.toggleAttribute('required', value == true);
 	}
 
 	get disabled() {
 		return this.hasAttribute('disabled');
 	}
 
+	set disabled(value) { 
+		this.toggleAttribute('disabled', value == true);
+	}
+
 	get readonly() {
 		return this.hasAttribute('readonly');
+	}
+
+	set readonly(value) { 
+		this.toggleAttribute('required', value == true);
 	}
 
 	render() {
 		return `
 			<label @ref="label" for="input-select">${this.label}</label>
-			<select name="${this.name}" id="input-select"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @change="onChange" class="form-control">${this.html}${this.#options.map(item => `<option value="${item.value}"${item.value === this.value ? ` selected` : ``}>${item.text}</option>`).join('')}</select>
+			<select name="${this.name}" id="input-select"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @change="onChange" class="form-control">${this.html}</select>
 			<div @ref="error" class="invalid-feedback"></div>
         `;
 	}
 		
     // A native change event does not leave the shadow root, so send it on.
     onChange(e) {
-        this.setAttribute('value', e.target.value);
+        this.value = e.target.value;
 	}
 	
-    handleValue(value) {
-        this.internal.setFormValue(value);
+    handleValue(name, value) {
+		this.internal.setFormValue(value);
 
-		this.querySelectorAll('option').forEach(option => option.toggleAttribute('selected', option.value === value));
-    
-        if (this.input.validity.valid) {
-            this.internal.setValidity({});
-        } else {
-            this.internal.setValidity(this.input.validity, this.input.validationMessage, this.input);
-        }
+		if (value !== this.input.value) this.update();
 	}
 	
 	handleRequired(name, value) {
-		this.update();
+		this.input.toggleAttribute('required', value !== null);
 	}
 
 	handleDisabled(name, value) {
-		this.update();
+		this.input.toggleAttribute('disabled', value !== null);
 	}
 
 	handleReadonly(name, value) {
-		this.update();
+		this.input.toggleAttribute('readonly', value !== null);
 	}
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.

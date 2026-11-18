@@ -23,7 +23,8 @@
  *      rather than imported statically at the top, for exactly that reason.
  *   3. Components load last, once everything they depend on is ready.
  */
-import { loader, config, global, language, local, storage, stylesheet, template } from '../../../assets/framework/library.js';
+import { Global, Stylesheet } from '../../../assets/framework/framework.js';
+import { loader, config, language, local, storage, template } from '../../../assets/framework/framework.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
@@ -52,10 +53,10 @@ template.addPath('catalog/view/template/');
 //template.addPath('shop/', 'shop/' + base.host + '/template/');
 
 // Stylesheets
-stylesheet.setDirectory('catalog/view/stylesheet/');
-stylesheet.addPath('catalog/', 'catalog/view/stylesheet/');
-stylesheet.addPath('shop/', 'shop/' + base.host + '/stylesheet/');
-stylesheet.addPath('fontawesome/css/', base + 'assets/fontawesome/css/'); // namespace → alternate directory
+Stylesheet.setDirectory('catalog/view/');
+Stylesheet.addPath('catalog/', 'catalog/view/stylesheet/');
+Stylesheet.addPath('shop/', 'shop/' + base.host + '/stylesheet/');
+Stylesheet.addPath('fontawesome/css/', base + 'assets/fontawesome/css/'); // namespace → alternate directory
 
 // ─── Libraries + template filters ──────────────────────────────────────────
 const currency = await loader.library('currency');
@@ -83,7 +84,7 @@ const length = await loader.library('length');
 template.addFilter('length', length.format.bind(length));
 
 // Register Global Events
-global.addListener('link', (e) => {
+Global.addListener('link', (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');
@@ -95,12 +96,12 @@ global.addListener('link', (e) => {
 
     if (href == null) return;
 
-    global.get('content').setAttribute('src', href);
+    Global.get('content').setAttribute('src', href);
 });
 
 // Opens a link's page in a modal instead of the content area:
 // <a href="account/register.js" :click="modal">Register</a>
-global.addListener('dialog', async (e) => {
+Global.addListener('dialog', async (e) => {
     e.preventDefault();
 
     let link = e.composedPath().find(element => element.tagName === 'A');
@@ -111,7 +112,7 @@ global.addListener('dialog', async (e) => {
 
     if (href == null) return;
 
-    let dialog = global.get('dialog');
+    let dialog = Global.get('dialog');
 	
 	let element = dialog.querySelector('nav-dialog');
 

@@ -27,7 +27,7 @@ export default class CheckoutRegister extends WebComponent {
 
         if (json.has('token')) {
             this.#token = json.get('token');
-        }
+		}
     }
 
     handleChange() {

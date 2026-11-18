@@ -1,7 +1,7 @@
-import { loader, local } from '../../library.js';
+import { loader, local } from '../../framework.js';
 import { InputSelect } from './select.js';
 /**
- * inputCountry
+ * input-country
  *
  * @example <input-country name="" value="" target="" input-id=""></input-country>
  *
@@ -10,8 +10,7 @@ import { InputSelect } from './select.js';
  * @attr   string   name   name of the form element
  *
  * optional required disabled
-*/
-
+ */
 // Storage
 const countries = await loader.storage('localisation/country');
 
@@ -26,23 +25,11 @@ class InputCountry extends InputSelect {
 	
     // A native change event does not leave the shadow root, so send it on.
 	onChange(e) {
-		console.log('Country changed', e);
+		this.value = e.target.value;
 
-		this.setAttribute('value', e.target.value);
-		
-		this.emit('[change]');
-	}
+		this.emit('[change]', e.detail);
 
-    async handleChange(e) {
-        this.value = e.target.value;
-
-        if (this.postcode) {
-            if (this.value in countries && countries[this.value].postcode_required == 1) {
-                this.postcode.toggleAttribute('required', true);
-            } else {
-                this.postcode.toggleAttribute('required', false);
-            }
-        }
+		this.postcode = e.target.postcode || '';
 	}
 }
 

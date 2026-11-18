@@ -23,8 +23,12 @@ export default class AddressForm extends WebComponent {
 			data.set('postcode', '');
 			data.set('country_id', parseInt(config.get('config_country_id')));
 			data.set('zone_id', '');
+
+			data.set('default', !customer.getAddressId() ? true : false);
 		} else { 
-			let address = customer.getAddress(parseInt(this.getAttribute('address_id')));
+			let address_id = parseInt(this.getAttribute('address_id'));
+
+			let address = customer.getAddress(address_id);
 
 			data.set('firstname', address.firstname);
 			data.set('lastname', address.lastname);
@@ -35,40 +39,32 @@ export default class AddressForm extends WebComponent {
 			data.set('postcode', address.postcode);
 			data.set('country_id', address.country_id);
 			data.set('zone_id', address.zone_id);
+
+			data.set('default', customer.getAddressId() == address_id);
 		}
 
         return loader.template('account/address_form', [ data, language, config ]);
     }
 
     async handleConnect() {
-        //if (customer.isLogged()) return;
+		//if (customer.isLogged()) return;
+		
+		// Add event listener for form submit
+		this.form.addEventListener('custom-submit', this.handleSubmit.bind(this));
 
-		console.dir(this.form.country);
-
-		let inputs = this.form.getInputs();
-		
-		console.dir(inputs);
-		
-		//this.form.country.addEventListener('[change]', this.handleCountry.bind(this));
-		
-		let country = this.form.getInput('country');
-		
-		country.addEventListener('[change]', this.handleCountry.bind(this));
-
+		// Add event listener for country change
+		this.form.country.addEventListener('custom-change', this.handleCountry.bind(this));
 	}
 
-	handleCountry(e) {
-		console.log('Country changed to', this.form.getInput('country').value);
+	async handleCountry(e) {
+		console.log(e);
 
-		this.form.getInput('zone').setAttribute('country_id', this.form.getInput('country').value);
-
-		//this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
+		this.form.postcode.toggleAttribute('required', this.form.country.postcode_required == 1);
+		this.form.zone.setAttribute('country_id', e.detail.value_new);
 	}
 
     async handleSubmit(e) {
         e.preventDefault();
-
-		console.log(e);
 
         //if (!customer.isLogged()) return;
 

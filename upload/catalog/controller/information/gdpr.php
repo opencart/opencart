@@ -44,6 +44,11 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['store'] = $this->config->get('config_name');
 			$data['limit'] = $this->config->get('config_gdpr_limit');
 
+			if ($this->config->get('config_gdpr_remove_immediate')) {
+				// Already formatted, so escape any % for the template's format filter
+				$data['text_limit'] = str_replace('%', '%%', sprintf($this->language->get('text_limit_immediate'), (int)$this->config->get('config_gdpr_limit'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language'))));
+			}
+
 			$data['cancel'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -118,26 +123,46 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Added additional check so people are not spamming requests
-			$status = true;
-
+			// Only treat a request as a duplicate if one for the same e-mail and action is still open
 			$this->load->model('account/gdpr');
 
 			$results = $this->model_account_gdpr->getGdprsByEmail($post_info['email']);
 
+			$pending = [];
+			$unverified = [];
+
 			foreach ($results as $result) {
-				if ($result['action'] == $post_info['action']) {
-					$status = false;
+				if ($result['action'] != $post_info['action']) {
+					continue;
+				}
+
+				if (in_array((int)$result['status'], [1, 2])) {
+					$pending = $result;
 
 					break;
 				}
+
+				if ($result['status'] == 0 && !$unverified) {
+					$unverified = $result;
+				}
 			}
 
-			if ($status) {
+			if ($pending) {
+				$json['error']['warning'] = $this->language->get('error_exists');
+			} elseif ($unverified) {
+				// Resend the confirmation e-mail for the existing unverified request
+				$route = 'account/gdpr.addGdpr';
+				$args = [$unverified['code'], $post_info['email'], $post_info['action']];
+				$output = '';
+
+				$this->load->controller('mail/gdpr', $route, $args, $output);
+
+				$json['success'] = $this->language->get('text_exists');
+			} else {
 				$this->model_account_gdpr->addGdpr(oc_token(32), $post_info['email'], $post_info['action']);
-			}
 
-			$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -189,7 +214,11 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			if ($gdpr_info['action'] == 'export') {
 				$data['text_message'] = $this->language->get('text_export');
 			} else {
-				$data['text_message'] = sprintf($this->language->get('text_remove'), $this->config->get('config_gdpr_limit'));
+				if ($this->config->get('config_gdpr_remove_immediate')) {
+					$data['text_message'] = sprintf($this->language->get('text_remove_immediate'), (int)$this->config->get('config_gdpr_limit'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				} else {
+					$data['text_message'] = sprintf($this->language->get('text_remove'), $this->config->get('config_gdpr_limit'));
+				}
 			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');

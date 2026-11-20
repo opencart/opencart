@@ -31,8 +31,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$this->export($gdpr_info);
 			}
 
-			// Approve plus processing
-			if ($gdpr_info['action'] == 'approve' && (int)$args[1] == 2) {
+			// Remove plus processing
+			if ($gdpr_info['action'] == 'remove' && (int)$args[1] == 2) {
 				$this->approve($gdpr_info);
 			}
 
@@ -300,8 +300,15 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['text_hello'] = sprintf($this->language->get('mail_text_hello'), $this->language->get('mail_text_user'));
 		}
 
-		$data['text_gdpr'] = sprintf($this->language->get('mail_text_gdpr'), $this->config->get('config_gdpr_limit'));
-		$data['text_a'] = sprintf($this->language->get('mail_text_a'), $this->config->get('config_gdpr_limit'));
+		if ($this->config->get('config_gdpr_remove_immediate')) {
+			$data['text_gdpr'] = sprintf($this->language->get('mail_text_gdpr_immediate'), $this->config->get('config_gdpr_limit'));
+			$data['text_q'] = $this->language->get('mail_text_q_immediate');
+			$data['text_a'] = sprintf($this->language->get('mail_text_a_immediate'), $this->config->get('config_gdpr_limit'));
+			$data['text_delete'] = $this->language->get('mail_text_delete_immediate');
+		} else {
+			$data['text_gdpr'] = sprintf($this->language->get('mail_text_gdpr'), $this->config->get('config_gdpr_limit'));
+			$data['text_a'] = sprintf($this->language->get('mail_text_a'), $this->config->get('config_gdpr_limit'));
+		}
 
 		$data['store_name'] = $store_name;
 		$data['store_url'] = $store_url;

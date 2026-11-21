@@ -26,7 +26,7 @@ customElements.define('input-zone', class extends InputSelect {
 		return this.getAttribute('country_id');
 	}
 
-	set country_id(value) { 
+	set country_id(value) {
 		this.setAttribute('country_id', value);
 	}
 

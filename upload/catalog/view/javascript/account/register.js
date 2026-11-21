@@ -10,12 +10,15 @@ const language = await loader.language('account/register');
 export default class AccountRegister extends WebComponent {
 	static formAssociated = true;
 	#token = '';
-	
+	success = false;
+
     async render() {
 		let data = new Map();
 
-		data.set('success', customer.isLogged());
-
+		//data.set('success', customer.isLogged());
+		
+		data.set('success', this.success);
+		
 		return loader.template('account/register', [ language, config, data ]);
     }
 
@@ -55,6 +58,8 @@ export default class AccountRegister extends WebComponent {
 				if (json.has('success')) {
 					customer.login(json.get('customer'));
 					
+					this.success = true;
+
 					this.update()
 					
 					this.global.get('header').update();

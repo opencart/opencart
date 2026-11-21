@@ -21,7 +21,6 @@ export class WebComponent extends HTMLElement {
 	static shadow = true;
 	static observedAttributes = [];
 	static formAssociated = false;
-	#global;
 	#renders = 0;
 	#listeners = [];
 
@@ -35,7 +34,7 @@ export class WebComponent extends HTMLElement {
 		this.stylesheet = new Stylesheet(this.root);
 		
 		// Global
-		this.#global = Global;
+		this.global = Global;
 		
 		// Binder
 		this.binder = new Binder(this);
@@ -44,20 +43,17 @@ export class WebComponent extends HTMLElement {
 		if (this.constructor.formAssociated) this.internal = this.attachInternals();
 		
 		let attributes = this.constructor.observedAttributes.filter(attribute => !attribute.startsWith('@') && !attribute.startsWith(':'));
-
+		
 		for (let attribute of attributes) {
-			let name = `[${attribute}]`;
-			let handler = (e) => { 
+			let listener = (e) => {
 				let { name, value_new, value_old } = e.detail;
 
-				let key = 'handle' + attribute.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+				let key = 'handle' + name.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(``);
 				
 				if (typeof this[key] === 'function') this[key](name, value_new, value_old);
 			}
 
-			this.addEventListener(name, handler);
-
-			this.#listeners.push({ name, handler });
+			this.#listeners.push({ attribute, listener });
 		}
 	}
 	
@@ -72,6 +68,12 @@ export class WebComponent extends HTMLElement {
 	}
 	
 	async connectedCallback() {
+		//console.log(this.#listeners);
+
+		for (let { attribute, listener } of this.#listeners) {
+			this.addEventListener(`[${attribute}]`, listener.bind(this));
+		}
+			
 		if (this.constructor.shadow) {
 			this.stylesheet.addStylesheet(this.stylesheets());
 			this.stylesheet.addStyle(this.styles());
@@ -91,6 +93,12 @@ export class WebComponent extends HTMLElement {
 	async disconnectedCallback() {
 		this.#renders = 0;
 		
+		console.log('disconnected');
+
+		for (let { attribute, listener } of this.#listeners) { 
+			this.removeEventListener(`[${attribute}]`, listener.bind(this));
+		}
+
 		this.binder.destroy();
 		
 		if (typeof this.handleDisconnect === 'function') {
@@ -105,8 +113,6 @@ export class WebComponent extends HTMLElement {
 	async attributeChangedCallback(name, value_old, value_new) {
 		if (!(this.#renders) || value_old === value_new) return;
 		
-		console.log(`Attribute changed: ${name}`, { value_old, value_new });
-
 		this.emit(`[${name}]`, {
 			name: name,
 			value_new: value_new,
@@ -127,8 +133,6 @@ export class WebComponent extends HTMLElement {
 	}
 	
 	emit(event, data = {}) {
-		console.log(`Emitting event: ${event}`, data);
-
 		// Default handler for attribute changes
 		this.dispatchEvent(new CustomEvent(event, {
 			detail: { ...data },
@@ -136,9 +140,5 @@ export class WebComponent extends HTMLElement {
 			composed: true,
 			cancelable: true
 		}));
-	}
-
-	destroy() { 
-		this.#listeners.forEach(({ name, handler }) => this.removeEventListener(name, handler));
 	}
 }

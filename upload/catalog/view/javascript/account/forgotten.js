@@ -5,7 +5,6 @@ import { loader, ajax, customer, local } from '../index.js';
 const language = await loader.language('account/forgotten');
 
 export default class AccountForgotten extends WebComponent {
-	static formAssociated = true;
 	#token = '';
 
     render() {

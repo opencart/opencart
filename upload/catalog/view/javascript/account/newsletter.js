@@ -37,7 +37,7 @@ export default class AccountNewsletter extends WebComponent {
 
                 // Display success message
                 if (json.has('success')) {
-                    this.form.setSuccess(json.get('success'));
+                    this.form.alert.prepend(`<alert type="success">${json.get('success')}</alert>`);
                 }
             },
             handleError: (e) => {

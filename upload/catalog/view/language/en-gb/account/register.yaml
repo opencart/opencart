@@ -9,6 +9,7 @@ text_your_details: 'Your Personal Details'
 text_newsletter: 'Newsletter'
 text_your_password: 'Your Password'
 text_agree: 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>'
+text_success: 'Your account has been successfully created.'
 
 # Entry
 entry_customer_group: 'Customer Group'

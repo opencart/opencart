@@ -35,15 +35,17 @@ export default class AccountEdit extends WebComponent {
             handleComplete: () => {
                 this.form.toggleAttribute('submitting', false);
             },
-            handleSuccess: (json) => {
+			handleSuccess: (json) => {
+				this.form.alert.innerHTML = ``;
+
                 // Display error messages
                 if (json.has('error')) {
                     this.form.setError(json.get('error'));
                 }
 
                 // Display success message
-                if (json.has('success')) {
-                    this.form.setSuccess(json.get('success'));
+				if (json.has('success')) {
+					this.form.alert.insertAdjacentHTML('afterbegin', `<alert type="success">${json.get('success')}</alert>`);
                 }
             },
             handleError: (e) => {

@@ -12,11 +12,11 @@ export default class AccountRegister extends WebComponent {
 	#token = '';
 	
     async render() {
-        //if (this.success) {
-        //   return `<ui-toast>${this.success}</ui-toast>`;
-        //}
+		let data = new Map();
 
-		return loader.template('account/register', [ language, config ]);
+		data.set('success', customer.isLogged());
+
+		return loader.template('account/register', [ language, config, data]);
     }
 
     async handleConnect() {
@@ -31,19 +31,19 @@ export default class AccountRegister extends WebComponent {
 
 	async handleSubmit(e) {
 		e.preventDefault();
-		
-		console.log();
-
+	
         //if (customer.isLogged()) return;
 
 		await ajax.post({
 			url: 'action.php?route=account/register&language=' + local.get('language') + '&register_token=' + this.#token,
 			data: this.form.getData(),
 			handleSend: () => {
-                this.form.toggleAttribute('submitting', true);
+                this.form.submitting = true;
             },
-            handleComplete: () => {
-                this.form.toggleAttribute('submitting', false);
+			handleComplete: () => {
+				console.log(this);
+
+                this.form.submitting = false;
             },
 			handleSuccess: (json) => {
 				console.log('onSuccess', json);
@@ -55,10 +55,13 @@ export default class AccountRegister extends WebComponent {
 
                 // Display success message
 				if (json.has('success')) {
-					console.log('Success');
-					//this.form.setSuccess(json.get('success'));
+					customer.login(json.get('customer'));
 					
+					this.update();
 
+					this.global.get('header').update();
+					this.global.get('content').update();
+					this.global.get('footer').update();
                 }
             },
             handleError: (e) => {
@@ -68,7 +71,7 @@ export default class AccountRegister extends WebComponent {
     }
 
     handleAgree(e) {
-        this.form.setAttribute('disabled', !e.target.hasAttribute('checked'));
+        this.form.disabled = !e.target.hasAttribute('checked');
     }
 }
 

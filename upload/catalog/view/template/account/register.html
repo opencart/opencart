@@ -1,54 +1,44 @@
-<div class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>{{ heading_title }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form-submit @ref="form" @custom-submit="handleSubmit">
-          <template>
-            <div @ref="alert"></div>
-            <p>{{ text_account_already | safe }}</p>
-            <fieldset>
-              <legend>{{ text_your_details }}</legend>
-              <div class="mb-3">
-                <input-text label="{{ entry_firstname }}" name="firstname" value=""></input-text>
-              </div>
-              <div class="mb-3">
-                <input-text label="{{ entry_lastname }}" name="lastname" value=""></input-text>
-              </div>
-              <div class="mb-3">
-                <input-email label="{{ entry_email }}" name="email" value="test123@test123.com"></input-email>
-              </div>
-              {% if not config_telephone_status %}
-              <div class="mb-3">
-                <input-tel label="{{ entry_telephone }}" name="telephone" value="0123456789" {% if config_telephone_required %} required{% endif %}></input-tel>
-              </div>
-              {% endif %}
-            </fieldset>
-            <fieldset>
-              <legend>{{ text_your_password }}</legend>
-              <div class="mb-3">
-                <input-password label="{{ entry_password }}" name="password" value="abcABC123!@#" required></input-password>
-              </div>
-            </fieldset>
-            <fieldset>
-              <legend>{{ text_newsletter }}</legend>
-              <div class="mb-3">
-                <input-switch label="{{ entry_newsletter }}" name="newsletter" value="1"></input-switch>
-              </div>
-            </fieldset>
-            {% if config_captcha %}
-            <account-captcha type="{{ config_captcha }}"></account-captcha>
-            {% endif %}
-            <div class="text-end">
-              <input-switch label="{{ text_agree }}" name="agree" value="1" {% if not config_account_id %}hidden{% endif %}></input-switch>
-              <button-submit @ref="submitter" @custom-click="submit">{{ button_continue }}</button-submit>
-            </div>
-          </template>
-        </form-submit>
+<h1>{{ heading_title }}</h1>
+<form-submit @ref="form" @custom-submit="handleSubmit">
+  <template>
+    <div {% if not success %}hidden{% endif %}><i class="fa fa-check-circle"></i> {{ text_success }}</div>
+    <div {% if success %}hidden{% endif %}>
+      <div @ref="alert"></div>
+      <p>{{ text_account_already | safe }}</p>
+      <fieldset>
+        <legend>{{ text_your_details }}</legend>
+        <div class="mb-3">
+          <input-text label="{{ entry_firstname }}" name="firstname" value=""></input-text>
+        </div>
+        <div class="mb-3">
+          <input-text label="{{ entry_lastname }}" name="lastname" value=""></input-text>
+        </div>
+        <div class="mb-3">
+          <input-email label="{{ entry_email }}" name="email" value="test123@test123.com"></input-email>
+        </div>
+        <div class="mb-3" {% if not config_telephone_status %}hidden{% endif %}>
+          <input-tel label="{{ entry_telephone }}" name="telephone" value="0123456789" {% if config_telephone_required %}required{% endif %}></input-tel>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>{{ text_your_password }}</legend>
+        <div class="mb-3">
+          <input-password label="{{ entry_password }}" name="password" value="abcABC123!@#" required></input-password>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>{{ text_newsletter }}</legend>
+        <div class="mb-3">
+          <input-switch label="{{ entry_newsletter }}" name="newsletter" value="1"></input-switch>
+        </div>
+      </fieldset>
+      {% if config_captcha %}
+      <account-captcha type="{{ config_captcha }}"></account-captcha>
+      {% endif %}
+      <div class="text-end">
+        <input-switch label="{{ text_agree }}" name="agree" value="1" {% if not config_account_id %}hidden{% endif %}></input-switch>
+        <button-submit @ref="submitter" @custom-click="submit">{{ button_continue }}</button-submit>
       </div>
     </div>
-  </div>
-</div>
+  </template>
+</form-submit>

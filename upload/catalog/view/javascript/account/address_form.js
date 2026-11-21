@@ -49,18 +49,15 @@ export default class AddressForm extends WebComponent {
     async handleConnect() {
 		//if (customer.isLogged()) return;
 		
-		// Add event listener for form submit
-		this.form.addEventListener('custom-submit', this.handleSubmit.bind(this));
-
 		// Add event listener for country change
-		this.form.country.addEventListener('custom-change', this.handleCountry.bind(this));
+		this.form.country.addEventListener('[value]', this.handleCountry.bind(this));
 	}
 
 	async handleCountry(e) {
 		console.log(e);
 
-		this.form.postcode.toggleAttribute('required', this.form.country.postcode_required == 1);
-		this.form.zone.setAttribute('country_id', e.detail.value_new);
+		this.form.postcode.required = this.form.country.postcode_required == 1;
+		this.form.zone.country_id = e.detail.value_new;
 	}
 
     async handleSubmit(e) {
@@ -72,10 +69,10 @@ export default class AddressForm extends WebComponent {
 			url: 'action.php?route=account/address&language=' + local.get('language') + '&customer_token=' + customer.getToken(),
 			data: this.form.getData(),
             handleSend: () => {
-                this.form.toggleAttribute('submitting', true);
+                this.form.submitting = true;
             },
             handleComplete: () => {
-                this.form.toggleAttribute('submitting', false);
+                this.form.submitting = false;
             },
             handleSuccess: (json) => {
                 if (json.has('error')) {
@@ -83,7 +80,7 @@ export default class AddressForm extends WebComponent {
                 }
 
                 if (json.has('success')) {
-                    this.form.setSuccess(json.get('success'));
+                    this.form.alert.innerHTML = `<alert type="success">${json.get('success')}</alert>`;
                 }
             },
             handleError: (e) => {

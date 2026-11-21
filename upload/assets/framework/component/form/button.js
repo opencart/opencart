@@ -6,23 +6,31 @@ customElements.define('button-submit', class extends WebComponent {
         'submitting',
         'disabled'
 	];
-	
-	set submitting(value) {
-		this.toggleAttribute('submitting', value);
-	}
 
 	get submitting() {
 		return this.hasAttribute('submitting');
 	}
-
-	set disabled(value) {
-		this.toggleAttribute('disabled', value);
-	}
 	
+	set submitting(value) {
+		this.toggleAttribute('submitting', value == true);
+	}
+
 	get disabled() {
 		return this.hasAttribute('disabled');
 	}
 	
+	set disabled(value) {
+		this.toggleAttribute('disabled', value == true);
+	}
+	
+	get hidden() {
+		return this.hasAttribute('hidden');
+	}
+
+	set hidden(value) { 
+		this.toggleAttribute('hidden', value == true);
+	}
+
 	constructor() { 
 		super();
 

@@ -1,6 +1,7 @@
 <h1>{{ heading_title }}</h1>
 <form-submit @ref="form" @custom-submit="handleSubmit">
   <template>
+    <div @ref="alert"></div>
     <fieldset>
       <div class="mb-3">
         <input-text label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>

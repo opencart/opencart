@@ -6,7 +6,8 @@ export class InputTextarea extends WebComponent {
         'value',
         'required',
         'disabled',
-        'readonly'
+        'readonly',
+		'hidden'
     ];
 	
     styles() {
@@ -43,19 +44,43 @@ export class InputTextarea extends WebComponent {
 	get value() {
         return this.innerHTML;
     }
+	
+	set value(value) { 
+		this.setAttribute('value', value);
+	}
 
 	get required() {
 		return this.hasAttribute('required');
+	}
+
+	set required(value) { 
+		this.toggleAttribute('required', value == true);
 	}
 
 	get disabled() {
 		return this.hasAttribute('disabled');
 	}
 
+	set disabled(value) { 
+		this.toggleAttribute('disabled', value == true);
+	}
+
 	get readonly() {
 		return this.hasAttribute('readonly');
 	}
+
+	set readonly(value) { 
+		this.toggleAttribute('readonly', value == true);
+	}
 	
+	get hidden() {
+		return this.hasAttribute('hidden');
+	}
+
+	set hidden(value) { 
+		this.toggleAttribute('hidden', value == true);
+	}
+
     render() {
 		return `
 			<label @ref="label" for="input">${this.label}</label>
@@ -85,17 +110,23 @@ export class InputTextarea extends WebComponent {
     }
 
 	handleRequired(name, value) {
-		this.update();
+		this.input.toggleAttribute('required', value !== null);
 	}
 
 	handleDisabled(name, value) {
-		this.update();
+		this.input.toggleAttribute('disabled', value !== null);
 	}
 
 	handleReadonly(name, value) {
-		this.update();
+		this.input.toggleAttribute('readonly', value !== null);
 	}
 
+	reset() { 
+		this.input.classList.remove('is-invalid');
+
+		this.internal.states.delete('invalid');
+	}
+	
     // Updates the field in place, so nothing the user typed (or focus) is lost.
     setError(error) {
         this.input.classList.toggle('is-invalid', !!error);

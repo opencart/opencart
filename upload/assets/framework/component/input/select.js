@@ -22,7 +22,8 @@ export class InputSelect extends WebComponent {
         'value',
         'required',
         'disabled',
-        'readonly'
+        'readonly',
+		'hidden'
     ];
 
 	styles() {
@@ -93,7 +94,15 @@ export class InputSelect extends WebComponent {
 	}
 
 	set readonly(value) { 
-		this.toggleAttribute('required', value == true);
+		this.toggleAttribute('readonly', value == true);
+	}
+	
+	get hidden() {
+		return this.hasAttribute('hidden');
+	}
+
+	set hidden(value) { 
+		this.toggleAttribute('hidden', value == true);
 	}
 
 	render() {
@@ -127,6 +136,12 @@ export class InputSelect extends WebComponent {
 		this.input.toggleAttribute('readonly', value !== null);
 	}
 
+	reset() { 
+		this.input.classList.remove('is-invalid');
+
+		this.internal.states.delete('invalid');
+	}
+	
     // Updates the field in place, so nothing the user typed (or focus) is lost.
     setError(error) {
         this.input.classList.toggle('is-invalid', !!error);

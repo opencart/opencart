@@ -23,12 +23,12 @@ class InputAutocomplete extends InputText {
 		this.value = e.target.value;
 	}
 
-    onFocusin() {
+    onFocusIn(e) {
         this.dropdown.toggleAttribute('hidden', false);
     }
 
-    onFocusout(e) {
-        this.dropdown.toggleAttribute('hidden', false);
+    onFocusOut(e) {
+        this.dropdown.toggleAttribute('hidden', true);
     }
 	
 	handleValue(name, value) {
@@ -39,12 +39,12 @@ class InputAutocomplete extends InputText {
     handleClick() {
         e.preventDefault();
 
-        var value = $(this).attr('href');
+        var value = e.target.getAttribute('href');
 
-        if (element.items[value] !== undefined) {
-            element.select(element.items[value]);
+        if (this.items[value] !== undefined) {
+            this.select(this.items[value]);
 
-            $dropdown.removeClass('show');
+            this.dropdown.classList.remove('show');
         }
     }
 
@@ -53,14 +53,31 @@ class InputAutocomplete extends InputText {
         this.request = function() {
             clearTimeout(this.timer);
 
-            $('#autocomplete-loading').remove();
+            var loading = this.dropdown.querySelector('#autocomplete-loading');
+            if (loading) loading.remove();
 
-            $dropdown.prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
-            $dropdown.addClass('show');
+            var li = document.createElement('li');
+            li.id = 'autocomplete-loading';
+            li.innerHTML = '<span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span>';
+            this.dropdown.prepend(li);
+            this.dropdown.classList.add('show');
 
+
+
+
+
+			
             this.timer = setTimeout(function(object) {
                 object.source($(object).val(), $.proxy(object.response, object));
-            }, 150, this);
+			}, 150, this);
+			
+
+
+
+
+
+
+
         }
     }
 

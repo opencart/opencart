@@ -15,6 +15,14 @@ import { InputSelect } from './select.js';
 const countries = await loader.storage('localisation/country');
 
 class InputCountry extends InputSelect {
+	handelConnect() { 
+		let country = countries.find(country => country.country_id === this.value);
+
+		if (country) { 
+			this.setAttribute('postcode', country.postcode_required);
+		}
+	}
+
 	render() {
 		return `
 			<label @ref="label" for="input-country">${this.label}</label>
@@ -26,10 +34,16 @@ class InputCountry extends InputSelect {
     // A native change event does not leave the shadow root, so send it on.
 	onChange(e) {
 		this.value = e.target.value;
+	}
 
-		this.emit('[change]', e.detail);
+	handleValue(name, value_new, value_old) {
+		console.log(name);
 
-		this.postcode = e.target.postcode || '';
+		this.emit('custom-change', {
+			name: name,
+			value_new: value_new,
+			value_old: value_old
+		});
 	}
 }
 

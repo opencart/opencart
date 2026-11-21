@@ -25,14 +25,16 @@ export default class AccountPassword extends WebComponent {
             handleComplete: () => {
                 this.form.toggleAttribute('submitting', false);
             },
-            handleSuccess: (json) => {
+			handleSuccess: (json) => {
+				this.form.alert.innerHTML = ``;
+
                 if (json.has('error')) {
-                    this.form.setError(json.get('error'));
+                    this.form.alert.insertAdjacentHTML('afterbegin', `<alert type="error">${json.get('error')}</alert>`);
                 }
 
                 // Display success message
                 if (json.has('success')) {
-                    this.form.setSuccess(json.get('success'));
+                    this.form.alert.insertAdjacentHTML('afterbegin', `<alert type="success">${json.get('success')}</alert>`);
                 }
             },
             handleError: (e) => {

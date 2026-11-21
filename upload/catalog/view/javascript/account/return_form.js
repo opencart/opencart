@@ -14,7 +14,11 @@ export default class ReturnForm extends WebComponent {
     async render() {
         //if (!customer.isLogged()) return;
 
-        return loader.template('account/return_form', [ language ]);
+		let data = new Map();
+
+		data.set('success', !customer.isLogged());
+
+        return loader.template('account/return_form', [ language, data ]);
     }
 
     async handleConnect() {

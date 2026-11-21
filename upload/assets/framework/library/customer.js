@@ -3,20 +3,21 @@ import { session } from './session.js';
 
 const config = await loader.config('default');
 
+// Customer data
+const data = session.has('customer') ? await session.get('customer') : {};
+
 export default class Customer {
     static #instance = null;
     #data = new Map();
-
+	
     constructor() {
-        if (session.has('customer')) {
-            this.#data = new Map(session.get('customer'));
-        }
+        this.#data = new Map(Object.entries(data));
     }
 
     login(data) {
-        this.#data = new Map(data);
+        this.#data = new Map(...this.#data.entries());
 
-        session.set('customer', [...this.#data.entries()]);
+        session.set('customer', this.#data);
     }
 
     logout() {
@@ -55,11 +56,15 @@ export default class Customer {
         return this.#data.get('newsletter');
     }
 
-    getAddressId() {
+	getAddressId() {
+		if (!this.#data.has('address')) return 0;
+		
         return this.#data.get('address').find(address => address.default == 1);
     }
 
-    getAddress(address_id) {
+	getAddress(address_id) {
+		if (!this.#data.has('address')) return [];
+
         return this.#data.get('address').find(address => address.address_id == address_id);
     }
 
@@ -73,14 +78,6 @@ export default class Customer {
 
     getToken() {
         return this.#data.get('token');
-    }
-
-    getBalance() {
-        return this.#data.get('balance');
-    }
-
-    getRewardPoints() {
-        return this.#data.get('reward');
     }
 
     static getInstance() {

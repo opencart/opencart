@@ -1,9 +1,6 @@
 import { loader, local } from '../../framework.js';
 import { InputSelect } from './select.js';
 
-// Config
-const config = await loader.config('default');
-
 /**
  * input-zone
  *
@@ -21,7 +18,8 @@ customElements.define('input-zone', class extends InputSelect {
 		'country_id',
 		'required',
 		'disabled',
-		'readonly'
+		'readonly',
+		'hidden'
 	];
 	
 	get country_id() {
@@ -35,7 +33,7 @@ customElements.define('input-zone', class extends InputSelect {
 	async render() {		
 		let zones = [];
 
-		let country = await loader.storage('localisation/country-' + Number(this.getAttribute('country_id')));
+		let country = await loader.storage('localisation/country-' + Number(this.country_id));
 		
 		if (country instanceof Map) {
 			zones = country.get('zones') || [];

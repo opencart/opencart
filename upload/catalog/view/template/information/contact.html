@@ -1,35 +1,32 @@
 <h1>{{ heading_title }}</h1>
 <h3>{{ text_location }}</h3>
-<div class="card mb-3">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-sm-3" {% if not config_image %} hidden{% endif %}><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px" /></div>
-      <div class="col-sm-3"><strong>{{ config_name }}</strong>
-        <br />
-        <address>{{ config_address }}</address>
-        <a href="" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
-      </div>
-      <div class="col-sm-3" {% if not config_telephone %} hidden{% endif %}><strong>{{ text_telephone }}</strong>
-        <br /> {{ config_telephone }}<br />
-        <br />
-      </div>
-      <div class="col-sm-3">{% if config_open %}
-        <strong>{{ text_open }}</strong>
-        <br />
-        {{ config_open }}<br />
-        <br />
-        {% endif %}
-        {% if config_comment %}
-        <strong>{{ text_comment }}</strong>
-        <br />
-        <br />
-        {{ config_comment }}
-        <br />
-        {% endif %}
-      </div>
-    </div>
+<div class="row">
+  <div class="col-sm-3" {% if not config_image %} hidden{% endif %}><img src="{{ config_image }}" alt="{{ config_name }}" title="{{ config_name }}" class="img-thumbnail" style="width: 268px" /></div>
+  <div class="col-sm-3"><strong>{{ config_name }}</strong>
+    <br />
+    <address>{{ config_address }}</address>
+    <a href="" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
+  </div>
+  <div class="col-sm-3" {% if not config_telephone %} hidden{% endif %}><strong>{{ text_telephone }}</strong>
+    <br /> {{ config_telephone }}<br />
+    <br />
+  </div>
+  <div class="col-sm-3">{% if config_open %}
+    <strong>{{ text_open }}</strong>
+    <br />
+    {{ config_open }}<br />
+    <br />
+    {% endif %}
+    {% if config_comment %}
+    <strong>{{ text_comment }}</strong>
+    <br />
+    <br />
+    {{ config_comment }}
+    <br />
+    {% endif %}
   </div>
 </div>
+
 
 {% if not locations %}
 <h3>{{ text_store }}</h3>
@@ -40,7 +37,7 @@
     <div id="collapse-location-{{ location.location_id }}" class="accordion-collapse collapse" data-bs-parent="#accordion">
       <div class="accordion-body">
         <div class="row">
-          <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" style="width: 268px" {% if not location.image %} hidden{% endif %} /></div>
+          <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" style="width: 268px" {% if not location.image %}hidden{% endif %} /></div>
           <div class="col-sm-3"><strong>{{ location.name }}</strong>
             <br />
             <address>{{ location.address }}</address>

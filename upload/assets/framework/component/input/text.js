@@ -19,7 +19,8 @@ export class InputText extends WebComponent {
         'value',
         'required',
         'disabled',
-        'readonly'
+		'readonly',
+		'hidden'
 	];
 
     styles() {
@@ -82,7 +83,15 @@ export class InputText extends WebComponent {
 	}
 
 	set readonly(value) { 
-		this.toggleAttribute('required', value == true);
+		this.toggleAttribute('readonly', value == true);
+	}
+
+	get hidden() {
+		return this.hasAttribute('hidden');
+	}
+
+	set hidden(value) { 
+		this.toggleAttribute('hidden', value == true);
 	}
 
     render() {
@@ -120,14 +129,18 @@ export class InputText extends WebComponent {
 		this.input.toggleAttribute('readonly', value !== null);
 	}
 
+	reset() { 
+		this.input.classList.remove('is-invalid');
+
+		this.internal.states.delete('invalid');
+	}
+
 	setError(error) {
-		console.log(error);
+		//this.input.setCustomValidity(error);
 
-		this.input.setCustomValidity(error);
+        this.input.classList.toggle('is-invalid', !!error);
 
-        //this.input.classList.toggle('is-invalid', !!error);
-
-        //this.error.textContent = error ?? '';
+        this.error.textContent = error ?? '';
 
 		if (error) {
 			this.internal.states.add('invalid');
@@ -138,9 +151,9 @@ export class InputText extends WebComponent {
 
 	validate() { 
 		if (!this.input.checkValidity()) {
-			this.internals.setValidity(this.input.validity, this.input.validationMessage, this.input);
+			this.internal.setValidity(this.input.validity, this.input.validationMessage, this.input);
 		} else {
-			this.internals.setValidity({});
+			this.internal.setValidity({});
 		}
 	}
 

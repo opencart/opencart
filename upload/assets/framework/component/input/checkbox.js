@@ -4,7 +4,7 @@ customElements.define('input-checkbox', class extends WebComponent {
     static formAssociated = true;
 
     render() {
-        return `<input type="checkbox" class="form-check-input" @change="handleChange" data-target="${this.getAttribute('target')}"/>`;
+        return `<input type="checkbox" class="form-check-input" @change="handleChange"/>`;
     }
 
     handleChange(e) {
@@ -29,5 +29,24 @@ customElements.define('input-checkbox', class extends WebComponent {
                 element.toggleAttribute('checked', !e.target.checked);
             }
         }
-    }
+	}
+	
+	reset() { 
+		this.input.classList.remove('is-invalid');
+
+		this.internal.states.delete('invalid');
+	}
+
+    // Updates the field in place, so nothing the user typed (or focus) is lost.
+    setError(error) {
+        this.input.classList.toggle('is-invalid', !!error);
+
+        this.error.textContent = error ?? '';
+
+		if (error) {
+			this.internal.states.add('invalid');
+		} else {
+			this.internal.states.delete('invalid');
+		}
+    }	
 });

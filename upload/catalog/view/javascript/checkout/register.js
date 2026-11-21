@@ -11,13 +11,10 @@ export default class CheckoutRegister extends WebComponent {
 	static formAssociated = true;
 	#token = '';
 
-    async render() {
-        let data = new Map();
+	async render() {
+		if (customer.isLogged()) return `<ui-toast>${this.success}</ui-toast>`;
 
-		
-
-
-        return loader.template('checkout/register', [ data, language, config ]);
+        return loader.template('checkout/register', [ language, config ]);
     }
 
     async handleConnect() {

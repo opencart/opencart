@@ -51,12 +51,13 @@ export default class InformationContact extends WebComponent {
                 this.form.toggleAttribute('submitting', false);
             },
             handleSuccess: (json) => {
-				if (json.has('error')) {
-                    this.form.setError(json.get('error'));
+                if (json.has('error')) {
+                    this.form.alert.innerHTML = `<alert type="error">${json.get('error')}</alert>`;
                 }
 
+                // Display success message
                 if (json.has('success')) {
-                    this.form.setSuccess(json.get('success'));
+                    this.form.alert.innerHTML = `<alert type="success">${json.get('success')}</alert>`;
                 }
             },
             handleError: (e) => {

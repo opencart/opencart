@@ -22,9 +22,9 @@ export class Binder {
 		let node = walker.nextNode();
 
 		while (node) {
-			let names = node.getAttributeNames().filter((name) => name.startsWith('@') || name.startsWith(':'));
+			let names = node.getAttributeNames().filter(name => name.startsWith('@') || name.startsWith(':'));
 
-			names.forEach((name) => {
+			names.forEach(name => {
 				let is_global = name.startsWith(':');
 				let [ key, ...options ] = name.slice(1).split('.');
 				let value = node.getAttribute(name);

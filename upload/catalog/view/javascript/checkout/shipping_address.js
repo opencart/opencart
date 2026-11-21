@@ -16,7 +16,6 @@ export default class ShippingAddress extends WebComponent {
 		data.set('logged', customer.isLogged());
 
 		data.set('addresses', []);
-
         data.set('firstname', '');
         data.set('lastname', '');
 		data.set('address_1', '');
@@ -28,7 +27,6 @@ export default class ShippingAddress extends WebComponent {
 
         if (customer.isLogged()) {
 			data.set('addresses', customer.getAddresses());
-
             data.set('firstname', customer.getFirstName());
 			data.set('lastname', customer.getLastName());
 		}

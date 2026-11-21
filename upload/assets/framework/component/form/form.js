@@ -11,8 +11,16 @@ customElements.define('form-submit', class extends WebComponent {
 		return this.hasAttribute('submitting');
 	}
 
+	set submitting(value) {
+		this.toggleAttribute('submitting', value == true);
+	}
+
 	get disabled() {
 		return this.hasAttribute('disabled');
+	}
+
+	set disabled(value) {
+		this.toggleAttribute('disabled', value == true);
 	}
 
 	constructor() {
@@ -22,7 +30,13 @@ customElements.define('form-submit', class extends WebComponent {
 	}
 
 	async render() {
-		return `<form @ref="element" @submit="handleSubmit">${this.template ? this.template.innerHTML : ``}</form>`;
+		return `<form @ref="element" @submit="onSubmit">${this.template ? this.template.innerHTML : ``}</form>`;
+	}
+	
+	onSubmit(e) {
+		e.preventDefault();
+
+		this.emit('custom-submit');
 	}
 
 	getInputs() {
@@ -45,22 +59,16 @@ customElements.define('form-submit', class extends WebComponent {
 		this.element.requestSubmit();
 	}
 
-	handleSubmit(e) {
-		e.preventDefault();
-
-		this.emit('custom-submit');
-	}
-
 	handleSubmitting(name, value) {
-        if (this.submitter) this.submitter.toggleAttribute('submitting', value !== null);
+        if (this.submitter) this.submitter.submitting = value !== null;
     }
 	
 	handleDisabled(name, value) {
-		if (this.submitter) this.submitter.toggleAttribute('disabled', value !== null);
+		if (this.submitter) this.submitter.disabled = value !== null;
 	}
 
 	setSuccess(success) { 
-		this.alert.innerHTML = `<ui-alert type="success">${success}</ui-alert>`;
+		this.alert.prepend(`<ui-alert type="success">${success}</ui-alert>`);
 
 		let inputs = this.getInputs();
 
@@ -69,22 +77,34 @@ customElements.define('form-submit', class extends WebComponent {
 		}
 	}
 
+	reset() {
+		let inputs = this.getInputs();
+
+		for (let input of inputs) {
+			input.reset();
+		}
+	}
+
 	setError(error) {
 		if (typeof error === 'string') {
-			this.alert.innerHTML = `<ui-alert type="error">${error}</ui-alert>`;
+			this.alert.prepend(`<ui-alert type="error">${error}</ui-alert>`);
 			
-			let inputs = this.getInputs();
+			//let inputs = this.getInputs();
 			
 			//for (let input of inputs) input.setError(error);
 			
 			return;
 		}
 
-		if (error.warning) this.alert.innerHTML = `<ui-alert type="warning">${error.warning}</ui-alert>`;
+		if (error.warning) this.alert.prepend(`<ui-alert type="warning">${error.warning}</ui-alert>`);
 
 		let inputs = this.getInputs();
 
 		for (let input of inputs) {
+			console.log(`Resetting input: ${input.name}`);
+			
+			input.reset();
+
 			if (input.name in error) {
 				input.setError(error[input.name]);
 			} else {

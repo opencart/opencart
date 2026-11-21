@@ -51,7 +51,11 @@ export default class AccountLogin extends WebComponent {
 
                     if (json.has('products')) {
 
-                    }
+					}
+					
+					this.global.get('header').update();
+					this.global.get('content').update();
+					this.global.get('footer').update();
                 }
             },
             handleError: (e) => {

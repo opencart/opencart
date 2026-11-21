@@ -47,7 +47,7 @@ export default class InformationGdpr extends WebComponent {
 
                 // Display success message
                 if (json.has('success')) {
-                    this.form.setSuccess(json.get('success'));
+                    this.form.alert.innerHTML = `<alert type="success">${json.get('success')}</alert>`;
                 }
             },
             handleError: (e) => {

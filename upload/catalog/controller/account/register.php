@@ -23,7 +23,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			'email'             => '',
 			'telephone'         => '',
 			'password'          => '',
-			'agree'             => 0
+			'agree'             => false
 		];
 
 		$post_info = $this->request->post + $required;
@@ -123,6 +123,14 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Clear old session data
+			unset($this->session->data['order_id']);
+			unset($this->session->data['guest']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+
 			$customer_id = $this->model_account_customer->addCustomer(['customer_group_id' => $customer_group_id] + $post_info);
 
 			// Login if requires approval
@@ -152,15 +160,22 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($post_info['email']);
 
-			// Clear old session data
-			unset($this->session->data['order_id']);
-			unset($this->session->data['guest']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
+			$json['success'] = 'success';
 
-			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''), true);
+			// Return the details of signing up
+			$json['customer'] = [
+				'customer_id'       => $customer_id,
+				'customer_group_id' => $customer_group_id,
+				'firstname'         => $post_info['firstname'],
+				'lastname'          => $post_info['lastname'],
+				'email'             => $post_info['email'],
+				'telephone'         => $post_info['telephone'],
+				'newsletter'        => $post_info['newsletter'],
+				'products'          => $this->cart->getProducts(),
+				'addresses'         => [],
+				'wishlist'          => [],
+				'token'             => $this->session->data['customer_token']
+			];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -7,7 +7,8 @@ customElements.define('input-switch', class extends WebComponent {
 		'checked',
         'required',
         'disabled',
-        'readonly'
+        'readonly',
+		'hidden'
     ];
     
 	get label() {
@@ -41,12 +42,12 @@ customElements.define('input-switch', class extends WebComponent {
     render() {
 		return `
 			<label @ref="label" for="input">${this.label}</label>
-			<div class="form-switch form-switch-lg"><input type="hidden" name="${this.name}" value=""/><input type="checkbox" name="${this.name}" value="${this.value}" id="input"${this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``} @ref="input" @change="handleChange" class="form-check-input"/></div>
+			<div class="form-switch form-switch-lg"><input type="hidden" name="${this.name}" value=""/><input type="checkbox" name="${this.name}" value="${this.value}" id="input"${this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``} @ref="input" @change="onChange" class="form-check-input"/></div>
 			<div @ref="error" class="invalid-feedback"></div>
 		`;
     }
 
-    handleChange(e) {		
+    onChange(e) {		
 		this.toggleAttribute('checked', e.target.checked);
     }
 
@@ -54,6 +55,12 @@ customElements.define('input-switch', class extends WebComponent {
     handleChecked(name, value) {
 		this.input.toggleAttribute('checked', value !== null);
     }
+	
+	reset() { 
+		this.input.classList.remove('is-invalid');
+
+		this.internal.states.delete('invalid');
+	}
 
     setError(error) {
         this.input.classList.toggle('is-invalid', !!error);

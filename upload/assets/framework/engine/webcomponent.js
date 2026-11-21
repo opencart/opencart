@@ -23,6 +23,7 @@ export class WebComponent extends HTMLElement {
 	static formAssociated = false;
 	#global;
 	#renders = 0;
+	#listeners = [];
 
 	constructor() {
 		super();
@@ -41,6 +42,23 @@ export class WebComponent extends HTMLElement {
 
 		// Attach Internals
 		if (this.constructor.formAssociated) this.internal = this.attachInternals();
+		
+		let attributes = this.constructor.observedAttributes.filter(attribute => !attribute.startsWith('@') && !attribute.startsWith(':'));
+
+		for (let attribute of attributes) {
+			let name = `[${attribute}]`;
+			let handler = (e) => { 
+				let { name, value_new, value_old } = e.detail;
+
+				let key = 'handle' + attribute.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+				
+				if (typeof this[key] === 'function') this[key](name, value_new, value_old);
+			}
+
+			this.addEventListener(name, handler);
+
+			this.#listeners.push({ name, handler });
+		}
 	}
 	
 	/** Override: CSS files to adopt into the shadow root, as names stylesheet.resolve() knows. */
@@ -86,10 +104,14 @@ export class WebComponent extends HTMLElement {
 
 	async attributeChangedCallback(name, value_old, value_new) {
 		if (!(this.#renders) || value_old === value_new) return;
-	
-		let key = 'handle' + name.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+		
+		console.log(`Attribute changed: ${name}`, { value_old, value_new });
 
-		if (typeof this[key] === 'function') this[key](name, value_new, value_old);
+		this.emit(`[${name}]`, {
+			name: name,
+			value_new: value_new,
+			value_old: value_old
+		});
 	}
 	
 	async update() {
@@ -105,6 +127,8 @@ export class WebComponent extends HTMLElement {
 	}
 	
 	emit(event, data = {}) {
+		console.log(`Emitting event: ${event}`, data);
+
 		// Default handler for attribute changes
 		this.dispatchEvent(new CustomEvent(event, {
 			detail: { ...data },
@@ -112,5 +136,9 @@ export class WebComponent extends HTMLElement {
 			composed: true,
 			cancelable: true
 		}));
+	}
+
+	destroy() { 
+		this.#listeners.forEach(({ name, handler }) => this.removeEventListener(name, handler));
 	}
 }

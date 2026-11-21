@@ -1,25 +1,4 @@
 <?php
-// Heading
-$_['heading_title']            = 'Konto registrieren';
-
-// Text
-$_['text_account']             = 'Konto';
-$_['text_register']            = 'Registrieren';
-$_['text_account_already']     = 'Wenn Sie bereits ein Konto bei uns haben, melden Sie sich bitte auf der <a href="%s">Anmeldeseite</a>an.';
-$_['text_your_details']        = 'Ihre persönlichen Daten';
-$_['text_newsletter']          = 'Newsletter';
-$_['text_your_password']       = 'Ihr Passwort';
-$_['text_agree']               = 'Ich habe die <a href="%s" class="modal-link"><b>%s</b></a>gelesen und stimme ihnen zu';
-
-// Entry
-$_['entry_customer_group']     = 'Kundengruppe';
-$_['entry_firstname']          = 'Vorname';
-$_['entry_lastname']           = 'Nachname';
-$_['entry_email']              = 'E-Mail';
-$_['entry_telephone']          = 'Telefon';
-$_['entry_newsletter']         = 'Abonnieren';
-$_['entry_password']           = 'Passwort';
-
 // Error
 $_['error_token']              = 'Achtung: Registrierungstoken ungültig!';
 $_['error_exists']             = 'Achtung: E-Mail-Adresse ist bereits registriert!';

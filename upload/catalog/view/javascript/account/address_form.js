@@ -52,6 +52,10 @@ export default class AddressForm extends WebComponent {
 		// Add event listener for country change
 		this.form.country.addEventListener('[value]', this.handleCountry.bind(this));
 	}
+	
+	handleDisconnect() { 
+		this.form.country.removeEventListener('[value]', this.handleCountry.bind(this));
+	}
 
 	async handleCountry(e) {
 		console.log(e);

@@ -16,7 +16,7 @@ export default class AccountRegister extends WebComponent {
 
 		data.set('success', customer.isLogged());
 
-		return loader.template('account/register', [ language, config, data]);
+		return loader.template('account/register', [ language, config, data ]);
     }
 
     async handleConnect() {

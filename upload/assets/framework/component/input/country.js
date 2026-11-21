@@ -15,7 +15,7 @@ import { InputSelect } from './select.js';
 const countries = await loader.storage('localisation/country');
 
 class InputCountry extends InputSelect {
-	handelConnect() { 
+	handleConnect() { 
 		let country = countries.find(country => country.country_id === this.value);
 
 		if (country) { 
@@ -37,13 +37,7 @@ class InputCountry extends InputSelect {
 	}
 
 	handleValue(name, value_new, value_old) {
-		console.log(name);
-
-		this.emit('custom-change', {
-			name: name,
-			value_new: value_new,
-			value_old: value_old
-		});
+		this.update();
 	}
 }
 

@@ -68,8 +68,6 @@ export class WebComponent extends HTMLElement {
 	}
 	
 	async connectedCallback() {
-		//console.log(this.#listeners);
-
 		for (let { attribute, listener } of this.#listeners) {
 			this.addEventListener(`[${attribute}]`, listener.bind(this));
 		}
@@ -140,5 +138,11 @@ export class WebComponent extends HTMLElement {
 			composed: true,
 			cancelable: true
 		}));
+	}
+
+	addListener(name, listener) { 
+		this.addEventListener(name, listener);
+
+		this.#listeners.push({ name, listener });
 	}
 }

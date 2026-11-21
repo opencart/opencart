@@ -41,8 +41,6 @@ export default class AccountRegister extends WebComponent {
                 this.form.submitting = true;
             },
 			handleComplete: () => {
-				console.log(this);
-
                 this.form.submitting = false;
             },
 			handleSuccess: (json) => {
@@ -57,8 +55,8 @@ export default class AccountRegister extends WebComponent {
 				if (json.has('success')) {
 					customer.login(json.get('customer'));
 					
-					this.update();
-
+					this.update()
+					
 					this.global.get('header').update();
 					this.global.get('content').update();
 					this.global.get('footer').update();

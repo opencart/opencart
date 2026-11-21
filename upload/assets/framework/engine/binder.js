@@ -13,7 +13,7 @@ export class Binder {
 
 	walk(root) {
 		// Bind elements with special attributes (@ or :) within the shadow root
-		let carries = (node) => node.getAttributeNames().some((name) => name.startsWith('@') || name.startsWith(':'));
+		let carries = (node) => node.getAttributeNames().some(name => name.startsWith('@') || name.startsWith(':'));
 
 		const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
 			acceptNode: node => carries(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP // skip this node, still walk its children

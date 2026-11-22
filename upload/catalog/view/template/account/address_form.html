@@ -3,39 +3,42 @@
   <template>
     <div @ref="alert"></div>
     <fieldset>
-      <div class="mb-3">
-        <input-text label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
-      </div>
-      <div class="mb-3 ">
-        <input-text label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
-      </div>
-      <div class="mb-3">
-        <input-text label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
-      </div>
-      <div class="mb-3">
-        <input-text label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
-      </div>
-      <div class="mb-3">
-        <input-text label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
-      </div>
-      <div class="mb-3">
-        <input-text label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
-      </div>
-      <div class="mb-3">
-        <input-text @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}"></input-text>
-      </div>
-      <div class="mb-3">
-        <input-country @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" required>
-          <option value="0">{{ text_select }}</option>
-        </input-country>
-      </div>
-      <div class="mb-3">
-        <input-zone @ref="zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" country_id="{{ country_id }}" required>
-          <option value="0">{{ text_select }}</option>
-        </input-zone>
-      </div>
-      <div class="mb-3">
-        <input-switch label="{{ entry_default }}" name="default" value="{{ default }}"></input-switch>
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="mb-3 col">
+          <input-text label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
+        </div>
+        <div class="mb-3 col">
+          <input-text label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
+        </div>
+
+        <div class="mb-3">
+          <input-text label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
+        </div>
+        <div class="mb-3">
+          <input-text label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
+        </div>
+        <div class="mb-3">
+          <input-text label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
+        </div>
+        <div class="mb-3">
+          <input-text label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
+        </div>
+        <div class="mb-3">
+          <input-text @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}"></input-text>
+        </div>
+        <div class="mb-3">
+          <input-country @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" required>
+            <option value="0">{{ text_select }}</option>
+          </input-country>
+        </div>
+        <div class="mb-3">
+          <input-zone @ref="zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" country_id="{{ country_id }}" required>
+            <option value="0">{{ text_select }}</option>
+          </input-zone>
+        </div>
+        <div class="mb-3">
+          <input-switch label="{{ entry_default }}" name="default" value="{{ default }}"></input-switch>
+        </div>
       </div>
     </fieldset>
     <div class="text-end">

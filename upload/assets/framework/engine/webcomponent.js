@@ -44,16 +44,14 @@ export class WebComponent extends HTMLElement {
 		
 		let attributes = this.constructor.observedAttributes.filter(attribute => !attribute.startsWith('@') && !attribute.startsWith(':'));
 		
-		for (let attribute of attributes) {
+		for (let name of attributes) {
 			let listener = (e) => {
-				let { name, value_new, value_old } = e.detail;
-
-				let key = 'handle' + name.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(``);
+				let key = 'handle' + e.detail.name.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(``);
 				
-				if (typeof this[key] === 'function') this[key](name, value_new, value_old);
+				if (typeof this[key] === 'function') this[key](e.detail.name, e.detail.value_new, e.detail.value_old);
 			}
 
-			this.#listeners.push({ attribute, listener });
+			this.#listeners.push({ name, listener });
 		}
 	}
 	
@@ -71,10 +69,10 @@ export class WebComponent extends HTMLElement {
 	}
 	
 	async connectedCallback() {
-		for (let { attribute, listener } of this.#listeners) {
-			this.addEventListener(`[${attribute}]`, listener.bind(this));
+		for (let { name, listener } of this.#listeners) {
+			this.addEventListener(`[${name}]`, listener.bind(this));
 		}
-			
+		
 		if (this.constructor.shadow) {
 			this.stylesheet.addStylesheet(this.stylesheets());
 			this.stylesheet.addStyle(this.styles());
@@ -96,8 +94,8 @@ export class WebComponent extends HTMLElement {
 		
 		console.log('disconnected');
 
-		for (let { attribute, listener } of this.#listeners) { 
-			this.removeEventListener(`[${attribute}]`, listener.bind(this));
+		for (let { name, listener } of this.#listeners) { 
+			this.removeEventListener(`[${name}]`, listener.bind(this));
 		}
 
 		this.binder.destroy();

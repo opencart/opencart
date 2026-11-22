@@ -1,0 +1,68 @@
+import { WebComponent } from '../index.js';
+import { loader, ajax, cart, customer, local } from '../index.js';
+
+// Language
+const language = await loader.language('account/login');
+
+export default class CheckoutLogin extends WebComponent {
+	static formAssociated = true;
+	#token = '';
+
+    async render() {
+        //if (customer.isLogged()) return;
+
+        return loader.template('checkout/login', [ language ]);
+    }
+
+    async handleConnect() {
+        //if (customer.isLogged()) return;
+
+        let json = await ajax.get('action.php?route=account/login.token&language=' + local.get('language'));
+
+        if (json.has('token')) {
+            this.#token = json.get('token');
+		}
+    }
+
+    async handleSubmit(e) {
+        e.preventDefault();
+
+		//if (customer.isLogged()) return;
+
+		await ajax.post({
+			url: 'action.php?route=account/login&language=' + local.get('language') + '&login_token=' + this.#token,
+			data: this.form.getData(),
+            handleSend: () => {
+                this.form.toggleAttribute('submitting', true);
+            },
+            handleComplete: () => {
+                this.form.toggleAttribute('submitting', false);
+            },
+            handleSuccess: (json) => {
+                if (json.has('error')) {
+                    this.form.setError(json.get('error'));
+                }
+
+                // Display success message
+                if (json.has('success')) {
+                    this.form.setSuccess(json.get('success'));
+
+                    customer.login(json.get('customer'));
+
+                    if (json.has('products')) {
+
+					}
+					
+					this.global.get('header').update();
+					this.global.get('content').update();
+					this.global.get('footer').update();
+                }
+            },
+            handleError: (e) => {
+                console.log('onError', e);
+            }
+        });
+	}
+}
+
+customElements.define('checkout-login', CheckoutLogin);

@@ -58,8 +58,6 @@ export default class AddressForm extends WebComponent {
 	}
 
 	async handleCountry(e) {
-		console.log(e);
-
 		this.form.postcode.required = this.form.country.postcode_required == 1;
 		this.form.zone.country_id = e.detail.value_new;
 	}
@@ -78,7 +76,9 @@ export default class AddressForm extends WebComponent {
             handleComplete: () => {
                 this.form.submitting = false;
             },
-            handleSuccess: (json) => {
+			handleSuccess: (json) => {
+				this.form.alert.innerHTML = ``;
+
                 if (json.has('error')) {
                     this.form.setError(json.get('error'));
                 }

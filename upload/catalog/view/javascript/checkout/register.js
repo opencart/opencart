@@ -12,9 +12,17 @@ export default class CheckoutRegister extends WebComponent {
 	#token = '';
 
 	async render() {
-		if (customer.isLogged()) return `<ui-toast>${this.success}</ui-toast>`;
+		let data = new Map();
 
-        return loader.template('checkout/register', [ language, config ]);
+		data.set('firstname', '');
+		data.set('lastname', '');
+		data.set('company', '');
+	    data.set('email', '');
+        data.set('telephone', '');
+
+		data.set('account', this.hasAttribute('account') && this.getAttribute('account') == 'register');
+		
+        return loader.template('checkout/register', [ language, config, data ]);
     }
 
     async handleConnect() {
@@ -22,44 +30,32 @@ export default class CheckoutRegister extends WebComponent {
 
         let json = await ajax.get('action.php?route=checkout/register.token&language=' + local.get('language'));
 
+		console.log(json);
+
         if (json.has('token')) {
             this.#token = json.get('token');
 		}
     }
 
-    handleChange() {
-        $('input[name=\'account\']').on('click', function() {
-            if ($(this).val() == 1) {
-                $('#password').removeClass('d-none');
-            } else {
-                // If guest hide password field
-                $('#password').addClass('d-none');
-            }
-
-            if ($(this).val() == 1) {
-                $('#register-agree').removeClass('d-none');
-            } else {
-                // If guest hide register agree field
-                $('#register-agree').addClass('d-none');
-            }
-        });
-
-        $('input[name=\'account\']:checked').trigger('click');
-    }
-
     async handleSubmit(e) {
-        e.preventDefault();
+		e.preventDefault();
+		
+		//if (customer.isLogged()) return;
+		
+		console.log(e);
 
 		await ajax.post({
 			url: 'action.php?route=checkout/register&language=' + local.get('language') + '&register_token=' + this.#token,
 			data: this.form.getData(),
-            handleSend: () => {
-                this.form.toggleAttribute('submitting', true);
+			handleSend: () => {
+                this.form.submitting = true;
             },
-            handleComplete: () => {
-                this.form.toggleAttribute('submitting', false);
+			handleComplete: () => {
+                this.form.submitting = false;
             },
-            handleSuccess: (json) => {
+			handleSuccess: (json) => {
+				console.log('onSuccess', json);
+
                 if (json.has('error')) {
                     this.form.setError(json.get('error'));
                 }
@@ -70,13 +66,13 @@ export default class CheckoutRegister extends WebComponent {
 					
                     this.form.toggleAttribute('disabled', true);
 
-                    if ($('#input-register').prop('checked')) {
+                    //if ($('#input-register').prop('checked')) {
                         //$('input[name=\'account\']').prop('disabled', true);
                         //$('#input-customer-group').prop('disabled', true);
                         //$('#input-password').prop('disabled', true);
                         //$('#input-captcha').prop('disabled', true);
                         //$('#input-register-agree').prop('disabled', true);
-                    }
+                    //}
 
                     //$('#input-shipping-method').val('');
                     //$('#input-payment-method').val('');

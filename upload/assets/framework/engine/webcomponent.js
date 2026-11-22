@@ -59,7 +59,10 @@ export class WebComponent extends HTMLElement {
 	
 	/** Override: CSS files to adopt into the shadow root, as names stylesheet.resolve() knows. */
 	stylesheets() {
-		//return ['stylesheet/stylesheet.css'];
+		return [
+			'stylesheet/stylesheet.css',
+			'fontawesome/css/all.css'
+		];
 	}
 
 	/** Override: return a CSS string scoped to this component's shadow root. */

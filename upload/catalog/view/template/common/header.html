@@ -32,12 +32,13 @@
           </li>
           <li class="list-inline-item"><a href="account/wishlist.js" :click="link" id="wishlist-total" title="{{ text_wishlist | replace: '%s', wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
           <li class="list-inline-item"><a href="checkout/cart.js" :click="link" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
-          <li class="list-inline-item"><a href="checkout/register.js" :click="dialog" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
+          <li class="list-inline-item"><a href="{% if not logged %}checkout/login.js{% else %}checkout/checkout.js{% endif %}" :click="dialog" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
+
 <header>
   <div class="container">
     <div class="row">
@@ -55,4 +56,5 @@
     </div>
   </div>
 </header>
+
 <common-menu :ref="common-menu"></common-menu>

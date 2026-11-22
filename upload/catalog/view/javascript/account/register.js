@@ -36,7 +36,9 @@ export default class AccountRegister extends WebComponent {
 		e.preventDefault();
 	
         //if (customer.isLogged()) return;
-
+		
+		console.log(e);
+		
 		await ajax.post({
 			url: 'action.php?route=account/register&language=' + local.get('language') + '&register_token=' + this.#token,
 			data: this.form.getData(),

@@ -44,15 +44,17 @@ export default class InformationContact extends WebComponent {
 		await ajax.post({
 			url: 'action.php?route=information/contact.send&language=' + local.get('language') + '&contact_token=' + this.#token,
 			data: this.form.getData(),
-            handleSend: () => {
-                this.form.toggleAttribute('submitting', true);
+			handleSend: () => {
+                this.form.submitting = true;
             },
-            handleComplete: () => {
-                this.form.toggleAttribute('submitting', false);
+			handleComplete: () => {
+                this.form.submitting = false;
             },
-            handleSuccess: (json) => {
+			handleSuccess: (json) => {
+				console.log('onSuccess', json);
+				
                 if (json.has('error')) {
-                    this.form.alert.innerHTML = `<alert type="error">${json.get('error')}</alert>`;
+                    this.form.setError(json.get('error'));
                 }
 
                 // Display success message

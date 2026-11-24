@@ -36,6 +36,10 @@ customElements.define('common-language', class extends WebComponent {
             return;
         }
 
-        local.set('language', code);
+		local.set('language', code);
+		
+		this.global.get('header').update();
+		this.global.get('content').update();
+		this.global.get('footer').update();
     }
 });

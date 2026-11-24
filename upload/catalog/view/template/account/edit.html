@@ -12,17 +12,21 @@
             <fieldset>
               <legend>{{ text_your_details }}</legend>
               <div class="mb-3">
-                <input-text label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
+                <form-label for="input-firstname">{{ entry_firstname }}</form-label>
+                <input-text id="input-firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
               </div>
               <div class="mb-3">
-                <input-text label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
+                <form-label for="input-lastname">{{ entry_lastname }}</form-label>
+                <input-text id="input-lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
               </div>
               <div class="mb-3">
-                <input-email label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
+                <form-label for="input-email">{{ entry_email }}</form-label>
+                <input-email id="input-email" label="{{ entry_email }}" name="email" value="{{ email }}" required></input-email>
               </div>
               {% if not config_telephone_status %}
               <div class="mb-3">
-                <input-tel label="{{ entry_telephone }}" name="telephone" value="{{ telephone }}" {% if config_telephone_required %} required{% endif %}></input-tel>
+                <form-label for="input-telephone">{{ entry_telephone }}</form-label>
+                <input-tel id="input-telephone" label="{{ entry_telephone }}" name="telephone" value="{{ telephone }}" {% if config_telephone_required %} required{% endif %}></input-tel>
               </div>
               {% endif %}
             </fieldset>

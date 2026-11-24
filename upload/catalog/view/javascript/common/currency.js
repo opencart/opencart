@@ -36,6 +36,10 @@ customElements.define('common-currency', class extends WebComponent {
             return;
         }
 
-        local.set('currency', code);
+		local.set('currency', code);
+		
+		this.global.get('header').update();
+		this.global.get('content').update();
+		this.global.get('footer').update();
     }
 });

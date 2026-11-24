@@ -94,7 +94,9 @@ export class InputText extends WebComponent {
 		this.toggleAttribute('hidden', value == true);
 	}
 
-    render() {
+	render() {
+		this.addEventListener('focus', this.handleFocus.bind(this));
+
         return `
 			<label @ref="label" for="input-text">${this.label}</label>
 			<input type="text" name="${this.name}" value="${this.value}"${this.label ? ` placeholder="${this.label}"` : ``} id="input-text"${this.disabled ? ` disabled` : ``}${this.readonly ? ` readonly` : ``}${this.required ? ` required` : ``} @ref="input" @input="onInput" @change="onChange" class="form-control"/>
@@ -111,6 +113,10 @@ export class InputText extends WebComponent {
     onChange(e) {
 		this.value = e.target.value;
     }
+	
+	handleFocus(e) { 
+		this.input.focus();
+	}
 	
 	handleValue(name, value) {
         this.input.value = value;

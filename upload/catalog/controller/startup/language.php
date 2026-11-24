@@ -24,7 +24,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$code = '';
 
-		if (isset($this->request->get['language'])) {
+		if (isset($this->request->get['language']) && is_string($this->request->get['language'])) {
 			$code = $this->request->get['language'];
 		}
 

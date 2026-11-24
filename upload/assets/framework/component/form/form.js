@@ -87,16 +87,12 @@ customElements.define('form-submit', class extends WebComponent {
 
 	setError(error) {
 		if (typeof error === 'string') {
-			this.alert.prepend(`<ui-alert type="error">${error}</ui-alert>`);
-			
-			//let inputs = this.getInputs();
-			
-			//for (let input of inputs) input.setError(error);
-			
+			this.alert.innerHTML = `<ui-alert type="error">${error}</ui-alert>`;
+						
 			return;
 		}
 
-		if (error.warning) this.alert.prepend(`<ui-alert type="warning">${error.warning}</ui-alert>`);
+		if (error.warning) this.alert.innerHTML = `<ui-alert type="warning">${error.warning}</ui-alert>`;
 
 		let inputs = this.getInputs();
 

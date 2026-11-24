@@ -14,14 +14,14 @@ export default class CheckoutRegister extends WebComponent {
 	async render() {
 		let data = new Map();
 
+		data.set('account', this.hasAttribute('account') && this.getAttribute('account') == 'register');
+
 		data.set('firstname', '');
 		data.set('lastname', '');
 		data.set('company', '');
 	    data.set('email', '');
         data.set('telephone', '');
 
-		data.set('account', this.hasAttribute('account') && this.getAttribute('account') == 'register');
-		
         return loader.template('checkout/register', [ language, config, data ]);
     }
 
@@ -65,14 +65,6 @@ export default class CheckoutRegister extends WebComponent {
 					this.form.setSuccess(json.get('success'));
 					
                     this.form.toggleAttribute('disabled', true);
-
-                    //if ($('#input-register').prop('checked')) {
-                        //$('input[name=\'account\']').prop('disabled', true);
-                        //$('#input-customer-group').prop('disabled', true);
-                        //$('#input-password').prop('disabled', true);
-                        //$('#input-captcha').prop('disabled', true);
-                        //$('#input-register-agree').prop('disabled', true);
-                    //}
 
                     //$('#input-shipping-method').val('');
                     //$('#input-payment-method').val('');

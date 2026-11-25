@@ -5,39 +5,48 @@
     <fieldset>
       <div class="row row-cols-1 row-cols-md-2">
         <div class="mb-3 col">
-          <input-text label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
+          <form-label for="input-firstname">{{ entry_firstname }}</form-label>
+          <input-text id="input-firstname" label="{{ entry_firstname }}" name="firstname" value="{{ firstname }}" required></input-text>
         </div>
         <div class="mb-3 col">
-          <input-text label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
+          <form-label for="input-lastname">{{ entry_lastname }}</form-label>
+          <input-text id="input-lastname" label="{{ entry_lastname }}" name="lastname" value="{{ lastname }}" required></input-text>
         </div>
-
-        <div class="mb-3">
-          <input-text label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
-        </div>
-        <div class="mb-3">
-          <input-text label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
+        <div class="mb-3 col">
+          <form-label for="input-company">{{ entry_company }}</form-label>
+          <input-text id="input-company" label="{{ entry_company }}" name="company" value="{{ company }}"></input-text>
         </div>
         <div class="mb-3">
-          <input-text label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
+          <form-label for="input-address-1">{{ entry_address_1 }}</form-label>
+          <input-text id="input-address-1" label="{{ entry_address_1 }}" name="address_1" value="{{ address_1 }}" required></input-text>
         </div>
         <div class="mb-3">
-          <input-text label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
+          <form-label for="input-address-2">{{ entry_address_2 }}</form-label>
+          <input-text id="input-address-2" label="{{ entry_address_2 }}" name="address_2" value="{{ address_2 }}"></input-text>
         </div>
         <div class="mb-3">
-          <input-text @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}"></input-text>
+          <form-label for="input-city">{{ entry_city }}</form-label>
+          <input-text id="input-city" label="{{ entry_city }}" name="city" value="{{ city }}" required></input-text>
         </div>
         <div class="mb-3">
-          <input-country @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" required>
+          <form-label for="input-postcode">{{ entry_postcode }}</form-label>
+          <input-text id="input-postcode" @ref="postcode" label="{{ entry_postcode }}" name="postcode" value="{{ postcode }}"></input-text>
+        </div>
+        <div class="mb-3">
+          <form-label for="input-country">{{ entry_country }}</form-label>
+          <input-country id="input-country" @ref="country" label="{{ entry_country }}" name="country_id" value="{{ country_id }}" required>
             <option value="0">{{ text_select }}</option>
           </input-country>
         </div>
         <div class="mb-3">
-          <input-zone @ref="zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" country_id="{{ country_id }}" required>
+          <form-label for="input-zone">{{ entry_zone }}</form-label>
+          <input-zone id="input-zone" @ref="zone" label="{{ entry_zone }}" name="zone_id" value="{{ zone_id }}" country_id="{{ country_id }}" required>
             <option value="0">{{ text_select }}</option>
           </input-zone>
         </div>
         <div class="mb-3">
-          <input-switch label="{{ entry_default }}" name="default" value="{{ default }}"></input-switch>
+          <form-label for="input-default">{{ entry_default }}</form-label>
+          <input-switch id="input-default" label="{{ entry_default }}" name="default" value="{{ default }}"></input-switch>
         </div>
       </div>
     </fieldset>

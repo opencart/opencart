@@ -30,53 +30,14 @@ import { WebComponent } from '../../framework.js';
  * one with slot="label" and the group leaves it alone.
  */
 customElements.define('form-label', class extends WebComponent {
-    get required() {
-
-    }
-
-    set required(value) {
-
-    }
-
-    get error() {
-        return this.message;
-    }
-
-    set error(message) {
-        this.message = String(message ?? '');
-
-        this.show();
-    }
-
-    get validity() {
-        return this.internal.validity;
-    }
-
-    checkValidity() {
-        return this.internal.checkValidity();
-    }
-
-    reportValidity() {
-        return this.internal.reportValidity();
-    }
-
+	shadow = false;
+	
     render() {
-        //let label = this.slotted('label');
-        //let input = this.slotted('input');
-        //let help = this.slotted('help');
-        //let error = this.slotted('error');
-
-        let html = '<div class="form-group">';
-
-        html += '<slot name="label"></slot>';
-        html += '<slot name="input"></slot>';
-        html += '<div class="text-help"></div>';
-
-        return '<div class="form-group">' + this.innerHTML + '</div>';
+        return `<label for="${this.getAttribute('for')}">${this.innerHTML}</label>`;
     }
 
     handleConnect() {
-
+		//this.addEventListener('click', this.handleFor.bind(this));
     }
 
     // would have given it.

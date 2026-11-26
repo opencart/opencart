@@ -14,8 +14,10 @@ $_['text_warning']      = 'Attention: Vous perdrez l\'accès à votre compte!';
 $_['text_access']       = 'Vous n\'aurez plus accès à votre compte %s.';
 $_['text_history']      = 'Vous n\'aurez plus accès à votre historique de commandes, factures, listes de souhaits ou téléchargements.';
 $_['text_limit']        = 'Les demandes de suppression de compte seront traitées après <strong>%s jours</strong> pour permettre le traitement des détections de fraude, des rétrofacturations ou des remboursements.';
+$_['text_limit_immediate'] = 'Les demandes de suppression de compte seront traitées immédiatement ; toutefois, un délai pouvant aller jusqu’à <strong>%s jours</strong> peut être nécessaire en cas de détection de fraude, de contestations de paiement ou de remboursements à traiter. Veuillez <a href="%s">nous contacter</a> pour toute question relative à des litiges.';
 $_['text_success']      = 'Succès: Un e-mail a été envoyé à votre adresse e-mail!';
-$_['text_cancel']		= 'Annuler';
+$_['text_exists']       = 'Succès : Un e-mail de confirmation a été renvoyé. Veuillez consulter votre messagerie, y compris votre dossier de courriers indésirables.';
+$_['text_cancel']	= 'Annuler';
 
 // Entrée
 $_['entry_email']       = 'E-Mail';
@@ -23,3 +25,4 @@ $_['entry_email']       = 'E-Mail';
 // Erreur
 $_['error_email']       = 'L\'adresse e-mail ne semble pas valide!';
 $_['error_action']      = 'Vous devez sélectionner une action RGPD valide!';
+$_['error_exists']      = 'Attention : une demande est déjà en attente pour cette adresse e-mail. Veuillez consulter votre messagerie, y compris votre dossier de courriers indésirables, si vous devez encore confirmer cette adresse.';

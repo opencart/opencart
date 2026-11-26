@@ -1539,11 +1539,24 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$results = $this->model_customer_customer->getCustomers($filter_data);
 
+			// Customer supplied values must not carry markup into the admin (stored XSS via name or address)
+			$clean = function (&$value): void {
+				if (is_string($value)) {
+					$value = htmlspecialchars(strip_tags(html_entity_decode($value, ENT_QUOTES, 'UTF-8')), ENT_COMPAT, 'UTF-8', false);
+				}
+			};
+
 			foreach ($results as $result) {
-				$json[] = [
+				$customer = [
 					'name'    => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 					'address' => $this->model_customer_customer->getAddresses($result['customer_id'])
 				] + $result;
+
+				array_walk_recursive($customer, $clean);
+
+				$customer['name'] = strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'));
+
+				$json[] = $customer;
 			}
 		}
 

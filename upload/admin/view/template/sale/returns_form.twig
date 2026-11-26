@@ -299,7 +299,7 @@ $('#form-order').on('submit', function(e) {
                 $('#input-email').val(json['email']);
                 $('#input-telephone').val(json['telephone']);
 
-                $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + json['customer_id'] + '" target="_blank">' + json['firstname'] + ' ' + json['lastname'] + '</a>');
+                $('#output-customer').html($('<a>').attr('href', 'index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + encodeURIComponent(json['customer_id'])).attr('target', '_blank').text(decodeHTMLEntities(json['firstname'] + ' ' + json['lastname'])));
 
                 html = '<option value="0">{{ text_select }}</option>';
 
@@ -356,9 +356,9 @@ $('#form-customer').on('submit', function(e) {
     var customer_id = $('#input-customer-id').val();
 
     if (customer_id) {
-        $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + customer_id + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+        $('#output-customer').html($('<a>').attr('href', 'index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + encodeURIComponent(customer_id)).attr('target', '_blank').text($('#input-firstname').val() + ' ' + $('#input-lastname').val()));
     } else {
-        $('#output-customer').html(decodeHTMLEntities($('#input-firstname').val() + ' ' + $('#input-lastname').val()));
+        $('#output-customer').text($('#input-firstname').val() + ' ' + $('#input-lastname').val());
     }
 
     $('#modal-customer').modal('hide');

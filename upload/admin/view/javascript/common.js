@@ -76,11 +76,12 @@ $(document).ready(function() {
 });
 
 function decodeHTMLEntities(html) {
-    var d = document.createElement('div');
+    // A textarea decodes entities without parsing tags, so attacker-supplied markup never runs
+    var d = document.createElement('textarea');
 
     d.innerHTML = html;
 
-    return d.textContent;
+    return d.value;
 }
 
 // Observe

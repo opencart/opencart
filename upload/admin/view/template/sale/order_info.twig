@@ -1139,7 +1139,7 @@ $('#input-customer').autocomplete({
         $('#input-firstname').val(decodeHTMLEntities(item['firstname']));
         $('#input-lastname').val(decodeHTMLEntities(item['lastname']));
         $('#input-email').val(decodeHTMLEntities(item['email']));
-        $('#input-telephone').val(item['telephone']);
+        $('#input-telephone').val(decodeHTMLEntities(item['telephone']));
 
         for (i in item.custom_field) {
             $('#input-custom-field-' + i).val(item.custom_field[i]);
@@ -1153,14 +1153,11 @@ $('#input-customer').autocomplete({
 
         $('#input-customer-group').trigger('change');
 
-        html = '<option value="0">{{ text_none|escape('js') }}</option>';
+        $('#input-payment-address, #input-shipping-address').html('<option value="0">{{ text_none|escape('js') }}</option>');
 
         for (i in item['address']) {
-            html += '<option value="' + item['address'][i]['address_id'] + '">' + decodeHTMLEntities(item['address'][i]['firstname']) + ' ' + decodeHTMLEntities(item['address'][i]['lastname']) + ', ' + (item['address'][i]['company'] ? decodeHTMLEntities(item['address'][i]['company']) + ', ' : '') + decodeHTMLEntities(item['address'][i]['address_1']) + ', ' + decodeHTMLEntities(item['address'][i]['city']) + ', ' + decodeHTMLEntities(item['address'][i]['country']) + '</option>';
+            $('#input-payment-address, #input-shipping-address').append($('<option/>').val(item['address'][i]['address_id']).text(decodeHTMLEntities(item['address'][i]['firstname']) + ' ' + decodeHTMLEntities(item['address'][i]['lastname']) + ', ' + (item['address'][i]['company'] ? decodeHTMLEntities(item['address'][i]['company']) + ', ' : '') + decodeHTMLEntities(item['address'][i]['address_1']) + ', ' + decodeHTMLEntities(item['address'][i]['city']) + ', ' + decodeHTMLEntities(item['address'][i]['country'])));
         }
-
-        $('#input-payment-address').html(html);
-        $('#input-shipping-address').html(html);
     }
 });
 
@@ -1226,7 +1223,7 @@ $('#form-customer').on('submit', function(e) {
             if (json['success']) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+                $('#output-customer').empty().append($('<a/>').attr({href: 'index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(), target: '_blank'}).text($('#input-firstname').val() + ' ' + $('#input-lastname').val()));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1556,13 +1553,13 @@ $('#input-payment-address').on('change', function() {
             $('#form-payment-address select option').not('#input-payment-address').removeAttr('selected');
             $('#form-payment-address input[type=\'checkbox\'], #form-payment-address input[type=\'radio\']').removeAttr('checked');
 
-            $('#input-payment-firstname').val(json['firstname']);
-            $('#input-payment-lastname').val(json['lastname']);
-            $('#input-payment-company').val(json['company']);
-            $('#input-payment-address-1').val(json['address_1']);
-            $('#input-payment-address-2').val(json['address_2']);
-            $('#input-payment-city').val(json['city']);
-            $('#input-payment-postcode').val(json['postcode']);
+            $('#input-payment-firstname').val(decodeHTMLEntities(json['firstname']));
+            $('#input-payment-lastname').val(decodeHTMLEntities(json['lastname']));
+            $('#input-payment-company').val(decodeHTMLEntities(json['company']));
+            $('#input-payment-address-1').val(decodeHTMLEntities(json['address_1']));
+            $('#input-payment-address-2').val(decodeHTMLEntities(json['address_2']));
+            $('#input-payment-city').val(decodeHTMLEntities(json['city']));
+            $('#input-payment-postcode').val(decodeHTMLEntities(json['postcode']));
             $('#input-payment-country').val(json['country_id']);
 
             payment_zone_id = json['zone_id'];
@@ -1622,34 +1619,45 @@ $('#form-payment-address').on('submit', function(e) {
             if (json['success']) {
                 $('#form-payment-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                var address = $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + '<br/>';
+                var address = [];
+
+                address.push($('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val());
 
                 var company = $('#input-payment-company').val();
 
                 if (company) {
-                    address += $('#input-payment-company').val() + '<br/>';
+                    address.push(company);
                 }
 
-                address += $('#input-payment-address-1').val() + '<br/>';
+                address.push($('#input-payment-address-1').val());
 
                 var address_2 = $('#input-payment-address-2').val();
 
                 if (address_2) {
-                    address += $('#input-payment-address-2').val() + '<br/>';
+                    address.push(address_2);
                 }
 
-                address += $('#input-payment-city').val() + '<br/>';
+                address.push($('#input-payment-city').val());
 
                 var postcode = $('#input-payment-postcode').val();
 
                 if (postcode) {
-                    address += postcode + '<br/>';
+                    address.push(postcode);
                 }
 
-                address += $('#input-payment-zone option:selected').text() + '<br/>';
-                address += $('#input-payment-country option:selected').text();
+                address.push($('#input-payment-zone option:selected').text());
+                address.push($('#input-payment-country option:selected').text());
 
-                $('#output-payment-address').html(address);
+                // Add each line as text, not HTML
+                $('#output-payment-address').empty();
+
+                for (i = 0; i < address.length; i++) {
+                    if (i) {
+                        $('#output-payment-address').append('<br/>');
+                    }
+
+                    $('#output-payment-address').append(document.createTextNode(address[i]));
+                }
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1734,13 +1742,13 @@ $('#input-shipping-address').on('change', function() {
             $('#form-shipping-address select option').not('#input-shipping-address').removeAttr('selected');
             $('#form-shipping-address input[type=\'checkbox\'], #form-shipping-address input[type=\'radio\']').removeAttr('checked');
 
-            $('#input-shipping-firstname').val(json['firstname']);
-            $('#input-shipping-lastname').val(json['lastname']);
-            $('#input-shipping-company').val(json['company']);
-            $('#input-shipping-address-1').val(json['address_1']);
-            $('#input-shipping-address-2').val(json['address_2']);
-            $('#input-shipping-city').val(json['city']);
-            $('#input-shipping-postcode').val(json['postcode']);
+            $('#input-shipping-firstname').val(decodeHTMLEntities(json['firstname']));
+            $('#input-shipping-lastname').val(decodeHTMLEntities(json['lastname']));
+            $('#input-shipping-company').val(decodeHTMLEntities(json['company']));
+            $('#input-shipping-address-1').val(decodeHTMLEntities(json['address_1']));
+            $('#input-shipping-address-2').val(decodeHTMLEntities(json['address_2']));
+            $('#input-shipping-city').val(decodeHTMLEntities(json['city']));
+            $('#input-shipping-postcode').val(decodeHTMLEntities(json['postcode']));
             $('#input-shipping-country').val(json['country_id']);
 
             shipping_zone_id = json['zone_id'];
@@ -1801,34 +1809,45 @@ $('#form-shipping-address').on('submit', function(e) {
             if (json['success']) {
                 $('#form-shipping-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                var address = $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + '<br/>';
+                var address = [];
+
+                address.push($('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val());
 
                 var company = $('#input-shipping-company').val();
 
                 if (company) {
-                    address += $('#input-shipping-company').val() + '<br/>';
+                    address.push(company);
                 }
 
-                address += $('#input-shipping-address-1').val() + '<br/>';
+                address.push($('#input-shipping-address-1').val());
 
                 var address_2 = $('#input-shipping-address-2').val();
 
                 if (address_2) {
-                    address += $('#input-shipping-address-2').val() + '<br/>';
+                    address.push(address_2);
                 }
 
-                address += $('#input-shipping-city').val() + '<br/>';
+                address.push($('#input-shipping-city').val());
 
                 var postcode = $('#input-shipping-postcode').val();
 
                 if (postcode) {
-                    address += postcode + '<br/>';
+                    address.push(postcode);
                 }
 
-                address += $('#input-shipping-zone option:selected').text() + '<br/>';
-                address += $('#input-shipping-country option:selected').text();
+                address.push($('#input-shipping-zone option:selected').text());
+                address.push($('#input-shipping-country option:selected').text());
 
-                $('#output-shipping-address').html(address);
+                // Add each line as text, not HTML
+                $('#output-shipping-address').empty();
+
+                for (i = 0; i < address.length; i++) {
+                    if (i) {
+                        $('#output-shipping-address').append('<br/>');
+                    }
+
+                    $('#output-shipping-address').append(document.createTextNode(address[i]));
+                }
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2498,7 +2517,7 @@ $('#form-affiliate').on('submit', function(e) {
                 $('#form-affiliate').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if ($('#input-affiliate-id').val()) {
-                    $('#output-affiliate').html('<a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val() + '" target="_blank">' + $('#input-affiliate').val() + '</a>');
+                    $('#output-affiliate').empty().append($('<a/>').attr({href: 'index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val(), target: '_blank'}).text($('#input-affiliate').val()));
                 } else {
                     $('#output-affiliate').html('');
                 }

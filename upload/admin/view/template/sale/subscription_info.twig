@@ -426,25 +426,19 @@ $('#input-customer').autocomplete({
             $('#input-customer-id').val(item['value']);
             $('#input-customer-group').val(item['customer_group_id']);
 
-            html = '<option value="0">{{ text_none|escape('js') }}</option>';
+            $('#input-payment-address, #input-shipping-address').html('<option value="0">{{ text_none|escape('js') }}</option>');
 
             for (i in item['address']) {
                 var address = item['address'][i];
 
-                html += '<option value="' + address['address_id'] + '">' + decodeHTMLEntities(address['firstname'] + ' ' + address['lastname'] + ', ' + (address['company'] ? address['company'] + ', ' : '') + address['address_1'] + ', ' + address['city'] + ', ' + address['country']) + '</option>';
+                $('#input-payment-address, #input-shipping-address').append($('<option/>').val(address['address_id']).text(decodeHTMLEntities(address['firstname'] + ' ' + address['lastname'] + ', ' + (address['company'] ? address['company'] + ', ' : '') + address['address_1'] + ', ' + address['city'] + ', ' + address['country'])));
             }
-
-            $('#input-payment-address').html(html);
-            $('#input-shipping-address').html(html);
         } else {
             $('#input-customer').val('');
             $('#input-customer-id').val(0);
             $('#input-customer-group').val({{ customer_group_id }});
 
-            html = '<option value="0">{{ text_none|escape('js') }}</option>';
-
-            $('#input-payment-address').html(html);
-            $('#input-shipping-address').html(html);
+            $('#input-payment-address, #input-shipping-address').html('<option value="0">{{ text_none|escape('js') }}</option>');
         }
     }
 });

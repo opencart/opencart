@@ -292,14 +292,14 @@ $('#form-order').on('submit', function(e) {
                 $('#output-order').html('<a href="index.php?route=sale/order.form&user_token={{ user_token }}&order_id=' + json['order_id'] + '" target="_blank">' + json['order_id'] + '</a>');
 
                 $('#input-date-ordered').val(json['date_added']);
-                $('#input-customer').val(json['firstname'] + ' ' + json['lastname']);
+                $('#input-customer').val(decodeHTMLEntities(json['firstname'] + ' ' + json['lastname']));
                 $('#input-customer-id').val(json['customer_id']);
-                $('#input-firstname').val(json['firstname']);
-                $('#input-lastname').val(json['lastname']);
-                $('#input-email').val(json['email']);
-                $('#input-telephone').val(json['telephone']);
+                $('#input-firstname').val(decodeHTMLEntities(json['firstname']));
+                $('#input-lastname').val(decodeHTMLEntities(json['lastname']));
+                $('#input-email').val(decodeHTMLEntities(json['email']));
+                $('#input-telephone').val(decodeHTMLEntities(json['telephone']));
 
-                $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + json['customer_id'] + '" target="_blank">' + json['firstname'] + ' ' + json['lastname'] + '</a>');
+                $('#output-customer').empty().append($('<a/>').attr({href: 'index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + json['customer_id'], target: '_blank'}).text($('#input-customer').val()));
 
                 html = '<option value="0">{{ text_select }}</option>';
 
@@ -354,11 +354,12 @@ $('#form-customer').on('submit', function(e) {
     e.preventDefault();
 
     var customer_id = $('#input-customer-id').val();
+    var customer = $('#input-firstname').val() + ' ' + $('#input-lastname').val();
 
     if (customer_id) {
-        $('#output-customer').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + customer_id + '" target="_blank">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+        $('#output-customer').empty().append($('<a/>').attr({href: 'index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + customer_id, target: '_blank'}).text(customer));
     } else {
-        $('#output-customer').html(decodeHTMLEntities($('#input-firstname').val() + ' ' + $('#input-lastname').val()));
+        $('#output-customer').text(customer);
     }
 
     $('#modal-customer').modal('hide');
@@ -366,27 +367,25 @@ $('#form-customer').on('submit', function(e) {
 
 $('#input-return').on('change', function(e) {
     if (products[this.value]) {
-       $('#input-product').val(products[this.value]['name']);
-       $('#input-model').val(products[this.value]['model']);
+       $('#input-product').val(decodeHTMLEntities(products[this.value]['name']));
+       $('#input-model').val(decodeHTMLEntities(products[this.value]['model']));
     }
 });
 
 $('#form-product').on('submit', function(e) {
     e.preventDefault();
 
-    html  = '<tr>';
+    var row = $('<tr/>');
 
     if ($('#input-return').val()) {
-        html += '<td><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-return').val() + '" target="_blank">' + $('#input-product').val() + '</a></td>';
-        html += '<td>' + $('#input-model').val() + '</td>';
-        html += '<td class="text-end">' + $('#input-quantity').val() + '</td>';
+        row.append($('<td/>').append($('<a/>').attr({href: 'index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + $('#input-return').val(), target: '_blank'}).text($('#input-product').val())));
+        row.append($('<td/>').text($('#input-model').val()));
+        row.append($('<td class="text-end"></td>').text($('#input-quantity').val()));
     } else {
-        html += '<td colspan="3" class="text-center">{{ text_no_results }}</td>';
+        row.append('<td colspan="3" class="text-center">{{ text_no_results }}</td>');
     }
 
-    html += '</tr>';
-
-    $('#return-product').html(html);
+    $('#return-product').empty().append(row);
 
     $('#modal-product').modal('hide');
 });

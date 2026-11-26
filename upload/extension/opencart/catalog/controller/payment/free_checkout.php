@@ -49,6 +49,21 @@ class FreeCheckout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Free checkout is only valid while the order total is still zero
+			$totals = [];
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			$this->load->model('checkout/cart');
+
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+			if ($total > 0.00 || $this->cart->hasSubscription()) {
+				$json['error'] = $this->language->get('error_total');
+			}
+		}
+
+		if (!$json) {
 			// Order
 			$this->load->model('checkout/order');
 

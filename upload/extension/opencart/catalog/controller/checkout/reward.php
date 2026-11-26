@@ -92,6 +92,10 @@ class Reward extends \Opencart\System\Engine\Controller {
 			} else {
 				unset($this->session->data['reward']);
 			}
+
+			// Changing the reward points changes the order total, so the payment method must be chosen again
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -30,7 +30,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		// If GET has language var
-		if (isset($this->request->get['language']) && isset(self::$languages[$this->request->get['language']])) {
+		if (isset($this->request->get['language']) && is_string($this->request->get['language']) && isset(self::$languages[$this->request->get['language']])) {
 			$language_info = self::$languages[$this->request->get['language']];
 		}
 

@@ -45,13 +45,11 @@ export class WebComponent extends HTMLElement {
 		let attributes = this.constructor.observedAttributes.filter(attribute => !attribute.startsWith('@') && !attribute.startsWith(':'));
 		
 		for (let name of attributes) {
-			let listener = (e) => {
-				let key = 'handle' + e.detail.name.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(``);
-				
-				if (typeof this[key] === 'function') this[key](e.detail.name, e.detail.value_new, e.detail.value_old);
-			}
+			let key = 'handle' + name.split(/[_-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(``);
 
-			this.#listeners.push({ name, listener });
+			this.addListener(name, (e) => {	
+				if (typeof this[key] === 'function') this[key](e.detail.name, e.detail.value_new, e.detail.value_old);
+			});
 		}
 	}
 	

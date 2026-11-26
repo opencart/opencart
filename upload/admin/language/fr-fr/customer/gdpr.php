@@ -6,6 +6,7 @@ $_['heading_title']     = 'Approbations RGPD';
 $_['text_success']      = 'Succès: Vous avez modifié les approbations RGPD!';
 $_['text_list']         = 'Liste des Approbations RGPD';
 $_['text_info']         = '<strong>RGPD</strong> Les demandes de suppression de compte seront traitées après <strong>%s jours</strong> pour permettre la détection de fraude, les rétrofacturations ou les remboursements.';
+$_['text_info_immediate'] = 'Les demandes de suppression de compte dans le cadre du <strong>RGPD</strong> sont traitées dès leur approbation : le compte client est supprimé immédiatement. Les commandes et les retours datant des <strong>%s derniers jours</strong> sont conservés sous une forme réduite, à des fins de détection des fraudes, de gestion des contestations de paiement ou de remboursements, puis sont anonymisés une fois ce délai écoulé.';
 $_['text_approve']      = 'Approuver';
 $_['text_deny']         = 'Refuser';
 $_['text_delete']       = 'Supprimer';

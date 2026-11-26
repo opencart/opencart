@@ -17,7 +17,7 @@ $_['text_limit']        = 'Account deletion requests will be processed after <st
 $_['text_limit_immediate'] = 'Account deletion requests will be processed immediately, but may take up to <strong>%s days</strong> if there is any fraud detection, chargebacks or refunds to be processed. Please <a href="%s">contact us</a> about any disputes.';
 $_['text_success']      = 'Success: An email has been sent to your email address!';
 $_['text_exists']       = 'Success: A confirmation email has been sent again. Please check your email, including your spam folder.';
-$_['text_cancel']		= 'Cancel';
+$_['text_cancel']	= 'Cancel';
 
 // Entry
 $_['entry_email']       = 'E-Mail';

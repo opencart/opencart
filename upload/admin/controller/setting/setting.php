@@ -200,6 +200,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_cookie_id'] = $this->config->get('config_cookie_id');
 		$data['config_gdpr_id'] = $this->config->get('config_gdpr_id');
 		$data['config_gdpr_limit'] = $this->config->get('config_gdpr_limit');
+		$data['config_gdpr_remove_immediate'] = $this->config->get('config_gdpr_remove_immediate');
 
 		// Tax
 		$data['config_tax'] = $this->config->get('config_tax');

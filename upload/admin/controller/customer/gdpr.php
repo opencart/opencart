@@ -28,7 +28,11 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/gdpr', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
+		if ($this->config->get('config_gdpr_remove_immediate')) {
+			$data['text_info'] = sprintf($this->language->get('text_info_immediate'), $this->config->get('config_gdpr_limit'));
+		} else {
+			$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
+		}
 
 		$data['approve'] = $this->url->link('customer/gdpr.approve', 'user_token=' . $this->session->data['user_token'], true);
 		$data['deny'] = $this->url->link('customer/gdpr.deny', 'user_token=' . $this->session->data['user_token'], true);
@@ -257,6 +261,11 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 					// to give time for store owners to process orders and refunds.
 					if ($gdpr_info['action'] == 'export') {
 						$this->model_customer_gdpr->editStatus($gdpr_id, 3);
+					} elseif ($this->config->get('config_gdpr_remove_immediate')) {
+						// Only requests the customer has confirmed by e-mail (pending) or that are still processing
+						if (in_array((int)$gdpr_info['status'], [1, 2])) {
+							$this->removeImmediately($gdpr_info);
+						}
 					} else {
 						$this->model_customer_gdpr->editStatus($gdpr_id, 2);
 					}
@@ -268,6 +277,37 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Remove Immediately
+	 *
+	 * Deletes the customer account straight away. Order and return records that
+	 * are still inside the GDPR limit are kept in minimised form (status stays
+	 * processing) and the GDPR cron anonymises them once the limit has passed.
+	 * If nothing has to be kept the request is completed at once.
+	 *
+	 * @param array<string, mixed> $gdpr_info
+	 *
+	 * @return void
+	 */
+	private function removeImmediately(array $gdpr_info): void {
+		$this->load->model('customer/customer');
+
+		$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);
+
+		$customer_id = $customer_info ? (int)$customer_info['customer_id'] : 0;
+
+		$retained = $this->model_customer_gdpr->getTotalRetainedRecords($gdpr_info['email'], $customer_id);
+
+		// Status first so the customer e-mail can still greet the customer by name
+		$this->model_customer_gdpr->editStatus($gdpr_info['gdpr_id'], $retained ? 2 : 3);
+
+		if ($customer_id) {
+			$this->model_customer_customer->deleteCustomer($customer_id);
+		}
+
+		$this->model_customer_gdpr->eraseCustomerData($gdpr_info['email'], $customer_id);
 	}
 
 	/**

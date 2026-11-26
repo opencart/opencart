@@ -18,7 +18,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		$post_info = $this->request->post;
+		$shipping_method = $this->request->post['shipping_method'] ?? [];
 
 		if ($this->cart->hasShipping()) {
 			// 1. Validate customer data exists
@@ -32,19 +32,10 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			// 3. Validate shipping method
-			$keys = [
-				'name',
-				'code',
-				'cost',
-				'tax_class_id'
-			];
-
-			foreach ($keys as $key) {
-				if (empty($post_info['shipping_method'][$key])) {
-					$output['error'] = $this->language->get('error_shipping_method');
-
-					break;
-				}
+			if (empty($shipping_method['name']) || empty($shipping_method['code'])
+				|| !is_numeric($shipping_method['cost'] ?? null) || !is_numeric($shipping_method['tax_class_id'] ?? null)
+			) {
+				$output['error'] = $this->language->get('error_shipping_method');
 			}
 		} else {
 			$output['error'] = $this->language->get('error_shipping');
@@ -52,11 +43,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		if (!$output) {
 			$this->session->data['shipping_method'] = [
-				'name'         => $post_info['shipping_method']['name'],
-				'code'         => $post_info['shipping_method']['code'],
-				'cost'         => (float)$post_info['shipping_method']['cost'],
-				'tax_class_id' => (int)$post_info['shipping_method']['tax_class_id'],
-				'text'         => $this->currency->format($this->tax->calculate((float)$post_info['shipping_method']['cost'], (int)$post_info['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+				'name'         => $shipping_method['name'],
+				'code'         => $shipping_method['code'],
+				'cost'         => (float)$shipping_method['cost'],
+				'tax_class_id' => (int)$shipping_method['tax_class_id'],
+				'text'         => $this->currency->format($this->tax->calculate((float)$shipping_method['cost'], (int)$shipping_method['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 			];
 
 			$output['success'] = $this->language->get('text_success');

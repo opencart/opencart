@@ -271,6 +271,23 @@ class Register extends \Opencart\System\Engine\Controller {
 				// Log the IP info
 				$this->model_account_customer->addLogin($this->customer->getId(), oc_get_ip());
 
+				// New session ID after login, cart rows follow it
+				$session_id = $this->session->getId();
+
+				$this->session->regenerate();
+
+				$this->cart->transfer($session_id);
+
+				$option = [
+					'expires'  => time() + (int)$this->config->get('config_session_expire'),
+					'path'     => $this->config->get('session_path'),
+					'secure'   => $this->request->server['HTTPS'],
+					'httponly' => true,
+					'samesite' => $this->config->get('config_session_samesite')
+				];
+
+				setcookie($this->config->get('session_name'), $this->session->getId(), $option);
+
 				// Create customer token
 				$this->session->data['customer_token'] = oc_token(26);
 			}

@@ -79,6 +79,26 @@ class Session {
 	}
 
 	/**
+	 * Regenerate
+	 *
+	 * Replaces the session ID with a new one and keeps the session data.
+	 * Call it whenever the privilege level changes (login), so a session ID known before login cannot be reused after it.
+	 *
+	 * @return string returns the new session ID
+	 */
+	public function regenerate(): string {
+		$data = $this->data;
+
+		$this->adaptor->destroy($this->session_id);
+
+		$session_id = $this->start();
+
+		$this->data = $data;
+
+		return $session_id;
+	}
+
+	/**
 	 * Close
 	 *
 	 * Writes the session data to storage

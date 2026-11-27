@@ -93,13 +93,33 @@ class Reward extends \Opencart\System\Engine\Model {
 			$points = (float)substr($order_total['title'], $start + 1, $end - ($start + 1));
 		}
 
+		if (!$order_info['customer_id']) {
+			return (int)$this->config->get('config_fraud_status_id');
+		}
+
 		// Reward
 		$this->load->model('account/reward');
 
-		if ($order_info['customer_id'] && $this->model_account_reward->getRewardTotal($order_info['customer_id']) >= $points) {
+		// Hold a lock on the customer's reward points from the balance check to the insert, so that concurrent order confirmations can not spend the same points twice
+		$lock = DB_PREFIX . 'customer_reward_' . (int)$order_info['customer_id'];
+
+		$query = $this->db->query("SELECT GET_LOCK('" . $this->db->escape($lock) . "', 10) AS `lock`");
+
+		if (empty($query->row['lock'])) {
+			return (int)$this->config->get('config_fraud_status_id');
+		}
+
+		// The order total title holds the redeemed points as a negative number
+		$status = ($this->model_account_reward->getRewardTotal($order_info['customer_id']) + $points) >= 0;
+
+		if ($status) {
 			$this->model_account_reward->addReward($order_info['customer_id'], $order_info['order_id'], sprintf($this->language->get('text_order_id'), (int)$order_info['order_id']), (int)$points);
-		} else {
-			return $this->config->get('config_fraud_status_id');
+		}
+
+		$this->db->query("DO RELEASE_LOCK('" . $this->db->escape($lock) . "')");
+
+		if (!$status) {
+			return (int)$this->config->get('config_fraud_status_id');
 		}
 
 		return 0;

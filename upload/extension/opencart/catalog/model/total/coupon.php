@@ -148,28 +148,41 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 			$coupon_info = $this->model_marketing_coupon->getCouponByCode($code);
 
-			if ($coupon_info) {
-				$coupon_total = $this->model_marketing_coupon->getTotalHistories($coupon_info['coupon_id']);
+			if (!$coupon_info) {
+				return (int)$this->config->get('config_fraud_status_id');
+			}
 
-				if ($coupon_info['uses_total'] > 0 && ($coupon_total >= $coupon_info['uses_total'])) {
+			// Hold a lock on the coupon from the usage check to the history insert, so that concurrent order confirmations can not both pass the uses_total and uses_customer checks
+			$lock = DB_PREFIX . 'coupon_' . (int)$coupon_info['coupon_id'];
+
+			$query = $this->db->query("SELECT GET_LOCK('" . $this->db->escape($lock) . "', 10) AS `lock`");
+
+			if (empty($query->row['lock'])) {
+				return (int)$this->config->get('config_fraud_status_id');
+			}
+
+			$coupon_total = $this->model_marketing_coupon->getTotalHistories($coupon_info['coupon_id']);
+
+			if ($coupon_info['uses_total'] > 0 && ($coupon_total >= $coupon_info['uses_total'])) {
+				$status = false;
+			}
+
+			if ($order_info['customer_id']) {
+				$customer_total = $this->model_marketing_coupon->getTotalHistoriesByCustomerId($coupon_info['coupon_id'], $order_info['customer_id']);
+
+				if ($coupon_info['uses_customer'] > 0 && ($customer_total >= $coupon_info['uses_customer'])) {
 					$status = false;
 				}
-
-				if ($order_info['customer_id']) {
-					$customer_total = $this->model_marketing_coupon->getTotalHistoriesByCustomerId($coupon_info['coupon_id'], $order_info['customer_id']);
-
-					if ($coupon_info['uses_customer'] > 0 && ($customer_total >= $coupon_info['uses_customer'])) {
-						$status = false;
-					}
-				}
-			} else {
-				$status = false;
 			}
 
 			if ($status) {
 				$this->model_marketing_coupon->addHistory($coupon_info['coupon_id'], $order_info['order_id'], $order_info['customer_id'], $order_total['value']);
-			} else {
-				return $this->config->get('config_fraud_status_id');
+			}
+
+			$this->db->query("DO RELEASE_LOCK('" . $this->db->escape($lock) . "')");
+
+			if (!$status) {
+				return (int)$this->config->get('config_fraud_status_id');
 			}
 		}
 

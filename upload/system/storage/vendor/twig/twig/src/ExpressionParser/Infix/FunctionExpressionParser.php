@@ -42,8 +42,16 @@ final class FunctionExpressionParser extends AbstractExpressionParser implements
 
         $name = $expr->getAttribute('name');
 
+        // A bare call to a macro imported via "from" is syntactically a function call;
+        // it is resolved through the "function" imported symbol registered by
+        // FromTokenParser, which maps the local alias to the macro name and the
+        // template it comes from.
         if (null !== $alias = $parser->getImportedSymbol('function', $name)) {
-            return new MacroReferenceExpression($alias['node']->getNode('var'), $alias['name'], $this->parseCallableArguments($parser, $line, false), $line);
+            $arguments = $this->parseCallableArguments($parser, $line, false, true);
+            $node = new MacroReferenceExpression($alias['node']->getNode('var'), $alias['name'], $arguments, $line);
+            $node->setHasCallParentheses(true);
+
+            return $node;
         }
 
         $args = $this->parseNamedArguments($parser, false);
@@ -54,7 +62,14 @@ final class FunctionExpressionParser extends AbstractExpressionParser implements
             $fakeNode = new EmptyNode($line);
             $fakeNode->setSourceContext($parser->getStream()->getSourceContext());
 
-            return ($function->getParserCallable())($parser, $fakeNode, $args, $line);
+            $node = ($function->getParserCallable())($parser, $fakeNode, $args, $line);
+            // remember the original function name so the sandbox can enforce
+            // the `allowedFunctions` allow-list even though the parser callable
+            // returned a specialized node (e.g. `parent`, `block`, `attribute`).
+            $node->setAttribute('sandboxed_function_name', $name);
+            $node->setAttribute('sandboxed_function', $function);
+
+            return $node;
         }
 
         if (!isset($this->readyNodes[$class = $function->getNodeClass()])) {

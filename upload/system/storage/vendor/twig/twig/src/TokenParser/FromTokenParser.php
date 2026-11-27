@@ -12,8 +12,8 @@
 namespace Twig\TokenParser;
 
 use Twig\Node\Expression\Variable\AssignContextVariable;
-use Twig\Node\Expression\Variable\AssignTemplateVariable;
-use Twig\Node\Expression\Variable\TemplateVariable;
+use Twig\Node\Expression\Variable\AssignMacroVariable;
+use Twig\Node\Expression\Variable\MacroVariable;
 use Twig\Node\ImportNode;
 use Twig\Node\Node;
 use Twig\Token;
@@ -52,11 +52,16 @@ final class FromTokenParser extends AbstractTokenParser
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        $internalRef = new AssignTemplateVariable(new TemplateVariable(null, $token->getLine()), $this->parser->isMainScope());
+        $internalRef = new AssignMacroVariable(new MacroVariable(null, $token->getLine()), $this->parser->isMainScope());
         $node = new ImportNode($macro, $internalRef, $token->getLine());
 
+        // Each alias is registered as a "function" imported symbol mapping the local name
+        // to the macro name and the internal macro variable: a bare call like "my_macro()"
+        // is syntactically a function call, so FunctionExpressionParser resolves it through
+        // this symbol into a MacroReferenceExpression. From there, "from" and "import" calls
+        // share the same runtime path (MacroNamespace::call()).
         foreach ($targets as $name => $alias) {
-            $this->parser->addImportedSymbol('function', $alias->getAttribute('name'), 'macro_'.$name, $internalRef);
+            $this->parser->addImportedSymbol('function', $alias->getAttribute('name'), $name, $internalRef);
         }
 
         return $node;

@@ -9,6 +9,18 @@
  * @see           https://www.opencart.com
  */
 namespace Opencart\System\Library;
+
+use Opencart\System\Engine\Registry;
+use Opencart\System\Library\Database\Parameter\ArrayParameterType;
+use Opencart\System\Library\Database\Parameter\ParameterType;
+use Opencart\System\Library\Database\Query\Delete;
+use Opencart\System\Library\Database\Query\Insert;
+use Opencart\System\Library\Database\Query\QueryConnectionInterface;
+use Opencart\System\Library\Database\Query\QueryExecutor;
+use Opencart\System\Library\Database\Query\QueryFactory;
+use Opencart\System\Library\Database\Query\Select;
+use Opencart\System\Library\Database\Query\Update;
+
 /**
  * Class DB Adaptor
  *
@@ -19,21 +31,25 @@ class DB {
 	 * @var object
 	 */
 	private object $adaptor;
+	private ?Registry $registry = null;
+	private ?QueryFactory $queryFactory = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $adaptor
-	 * @param string $hostname
-	 * @param string $username
-	 * @param string $password
-	 * @param string $database
-	 * @param string $port
-	 * @param string $ssl_key
-	 * @param string $ssl_cert
-	 * @param string $ssl_ca
+	 * @param string    $adaptor
+	 * @param string    $hostname
+	 * @param string    $username
+	 * @param string    $password
+	 * @param string    $database
+	 * @param string    $port
+	 * @param string    $ssl_key
+	 * @param string    $ssl_cert
+	 * @param string    $ssl_ca
+	 * @param ?Registry $registry
 	 */
-	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
+	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '', ?Registry $registry = null) {
+		$this->registry = $registry;
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
 		if (class_exists($class)) {
@@ -52,6 +68,72 @@ class DB {
 	 */
 	public function query(string $sql) {
 		return $this->adaptor->query($sql);
+	}
+
+	/**
+	 * Create SELECT query.
+	 */
+	public function select(): Select {
+		return $this->getQueryFactory()->select();
+	}
+
+	/**
+	 * Create INSERT query.
+	 */
+	public function insert(): Insert {
+		return $this->getQueryFactory()->insert();
+	}
+
+	/**
+	 * Create UPDATE query.
+	 */
+	public function update(): Update {
+		return $this->getQueryFactory()->update();
+	}
+
+	/**
+	 * Create DELETE query.
+	 */
+	public function delete(): Delete {
+		return $this->getQueryFactory()->delete();
+	}
+
+	/**
+	 * Execute a prepared query.
+	 *
+	 * @param string                                             $sql
+	 * @param array<array-key, mixed>                            $bindings
+	 * @param array<array-key, ArrayParameterType|ParameterType> $types
+	 */
+	public function executeQuery(string $sql, array $bindings = [], array $types = []): \stdClass {
+		if (!($this->adaptor instanceof QueryConnectionInterface)) {
+			throw new \LogicException('The configured database adapter does not support prepared query execution');
+		}
+
+		return $this->adaptor->executeQuery($sql, $bindings, $types);
+	}
+
+	/**
+	 * Execute a prepared statement.
+	 *
+	 * @param string                                             $sql
+	 * @param array<array-key, mixed>                            $bindings
+	 * @param array<array-key, ArrayParameterType|ParameterType> $types
+	 */
+	public function executeStatement(string $sql, array $bindings = [], array $types = []): int {
+		if (!($this->adaptor instanceof QueryConnectionInterface)) {
+			throw new \LogicException('The configured database adapter does not support prepared query execution');
+		}
+
+		return $this->adaptor->executeStatement($sql, $bindings, $types);
+	}
+
+	public function registerQueryClass(string $queryType, string $class, bool $replace = false): void {
+		$this->getQueryFactory()->registerQueryClass($queryType, $class, $replace);
+	}
+
+	public function registerQueryMacro(string $queryType, string $name, \Closure $macro, bool $replace = false): void {
+		$this->getQueryFactory()->registerMacro($queryType, $name, $macro, $replace);
 	}
 
 	/**
@@ -96,5 +178,18 @@ class DB {
 	 */
 	public function isConnected(): bool {
 		return $this->adaptor->isConnected();
+	}
+
+	private function getQueryFactory(): QueryFactory {
+		if ($this->queryFactory === null) {
+			if (!($this->adaptor instanceof QueryConnectionInterface)) {
+				throw new \LogicException('The configured database adapter does not support prepared query execution');
+			}
+
+			$executor = new QueryExecutor($this->adaptor, $this->registry);
+			$this->queryFactory = new QueryFactory($executor);
+		}
+
+		return $this->queryFactory;
 	}
 }

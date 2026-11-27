@@ -38,6 +38,8 @@
 # CSS Files
 /upload/catalog/view/stylesheet/stylesheet.css
 
+/upload/install.lock
+
 # IDE Project files
 /upload/.idea/*
 /.idea/*

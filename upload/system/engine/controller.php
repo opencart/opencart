@@ -13,6 +13,8 @@ namespace Opencart\System\Engine;
  * Class Controller
  *
  * @mixin \Opencart\System\Engine\Registry
+ *
+ * @property-read \Opencart\System\Library\DB $db
  */
 class Controller {
 	/**

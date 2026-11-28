@@ -497,16 +497,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$marketing = [];
-
-			if ($this->user->hasPermission('access', 'marketing/affiliate')) {
-				$marketing[] = [
-					'name'     => $this->language->get('text_affiliate'),
-					'href'     => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
 			// System
 			$system = [];
 

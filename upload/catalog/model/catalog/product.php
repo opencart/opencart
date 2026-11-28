@@ -135,6 +135,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
 		}
 
+		if (!empty($data['filter_tag'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `p2t` ON (`p`.`product_id` = `p2t`.`product_id`) LEFT JOIN `" . DB_PREFIX . "tag` `t` ON (`p2t`.`tag_id` = `t`.`tag_id`)";
+		}
+
 		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category_id'])) {
@@ -190,7 +194,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
-					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					$implode[] = "`t`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
@@ -332,6 +336,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
 		}
 
+		if (!empty($data['filter_tag'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `p2t` ON (`p`.`product_id` = `p2t`.`product_id`) LEFT JOIN `" . DB_PREFIX . "tag` `t` ON (`p2t`.`tag_id` = `t`.`tag_id`)";
+		}
+
 		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category_id'])) {
@@ -387,7 +395,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
-					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					$implode[] = "`t`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
@@ -495,6 +503,33 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT `i`.`code`, `pc`.`value`, `i`.`status` FROM `" . DB_PREFIX . "product_code` `pc` LEFT JOIN `" . DB_PREFIX . "identifier` `i` ON (`pc`.`identifier_id` = `i`.`identifier_id`) WHERE `product_id` = '" . (int)$product_id . "' AND `pc`.`value` != ''");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Get Tags
+	 *
+	 * Get the record of the product tag records in the database.
+	 *
+	 * @param int $product_id primary key of the product record
+	 *
+	 * @return array<int, string> tag records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $tags = $this->model_catalog_product->getTags($product_id);
+	 */
+	public function getTags(int $product_id): array {
+		$product_tag_data = [];
+
+		$query = $this->db->query("SELECT `t`.`tag` FROM `" . DB_PREFIX . "product_to_tag` `p2t` LEFT JOIN `" . DB_PREFIX . "tag` `t` ON (`p2t`.`tag_id` = `t`.`tag_id`) WHERE `p2t`.`product_id` = '" . (int)$product_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_tag_data[] = $result['tag'];
+		}
+
+		return $product_tag_data;
 	}
 
 	/**

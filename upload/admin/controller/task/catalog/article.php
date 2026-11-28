@@ -201,11 +201,11 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$tags = $this->model_cms_article->getTags($article_info['article_id']);
 
-		foreach ($tags as $tag) {
-			$tag_info = $this->model_catalog_tag->getTag($tag['tag_id']);
+		foreach ($tags as $tag_id) {
+			$tag_info = $this->model_catalog_tag->getTag($tag_id);
 
 			if ($tag_info) {
-				$tag_data[] = $tag_info['tag'];
+				$tag_data[] = ['tag' => $tag_info['tag']];
 			}
 		}
 

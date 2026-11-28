@@ -86,6 +86,14 @@ class Smtp {
 	 * @return void
 	 */
 	public function setTo(string|array $to): void {
+		if (is_array($to)) {
+			foreach ($to as $key => $value) {
+				$to[$key] = str_replace(["\r", "\n"], '', $value);
+			}
+		} else {
+			$to = str_replace(["\r", "\n"], '', $to);
+		}
+
 		$this->to = $to;
 	}
 
@@ -97,7 +105,7 @@ class Smtp {
 	 * @return void
 	 */
 	public function setFrom(string $from): void {
-		$this->from = $from;
+		$this->from = str_replace(["\r", "\n"], '', $from);
 	}
 
 	/**
@@ -108,7 +116,7 @@ class Smtp {
 	 * @return void
 	 */
 	public function setSender(string $sender): void {
-		$this->sender = $sender;
+		$this->sender = str_replace(["\r", "\n"], '', $sender);
 	}
 
 	/**
@@ -119,7 +127,7 @@ class Smtp {
 	 * @return void
 	 */
 	public function setReplyTo(string $reply_to): void {
-		$this->reply_to = $reply_to;
+		$this->reply_to = str_replace(["\r", "\n"], '', $reply_to);
 	}
 
 	/**

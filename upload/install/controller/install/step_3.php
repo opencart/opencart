@@ -84,6 +84,11 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Check if OpenCart is already installed so the installer can not be run again on a live store
+		if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php')) {
+			$json['error']['warning'] = $this->language->get('error_installed');
+		}
+
 		if (!$this->request->post['db_hostname']) {
 			$json['error']['db_hostname'] = $this->language->get('error_db_hostname');
 		}

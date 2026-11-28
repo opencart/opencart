@@ -1,0 +1,29 @@
+// The wish list needs an authenticated customer; registration auto-logs them in.
+customer-register-new
+click "Continue"
+check that page contains "Edit your account information"
+
+// Open a seeded product detail page
+enter "iPhone" into "Search"
+press enter
+check that page contains "iPhone"
+click "iPhone"
+check that page contains "iPhone"
+
+// Submit a review
+click "Reviews"
+check that page contains "Write a review"
+// OpenCart caps the review author at 25 characters, so the regex is bounded to 21
+generate by regex "[A-Z][a-z]{2,20}", then enter into "Your Name" and save as "generatedName"
+enter "This is an excellent product and I would happily recommend it to anyone." into "Your Review"
+// The rating radios are unlabelled; the top rating sits immediately left of "Good"
+click on the radio button to the left of "Good"
+click button "Continue"
+check that page contains "Thank you for your review."
+
+// Save the same product to the wish list
+click "Add to Wish List"
+check that page contains "Success: You have added"
+click "Wish List"
+check that page contains "My Wishlist"
+check that page contains "iPhone"

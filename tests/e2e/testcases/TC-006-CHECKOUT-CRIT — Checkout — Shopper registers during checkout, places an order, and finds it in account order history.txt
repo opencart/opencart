@@ -1,0 +1,30 @@
+save "iPhone" as "productName"
+product-add-to-cart
+click "item(s)"
+click "Checkout"
+check that page contains "Checkout"
+
+// The checkout presents the Register Account form by default
+enter "Reg" into "First Name"
+enter "Buyer" into "Last Name"
+generate unique email, then enter into "E-Mail" and save as "customerEmail"
+generate by regex "[A-Z][a-z]{6}[0-9]{2}[!@#]", then enter into "Password" and save as "currentPassword"
+address-fill
+// Here the agree toggle sits to the LEFT of its label, unlike the storefront register page
+click on the checkbox to the left of "I have read and agree to the"
+click "Continue"
+check that page contains "Success: Your account has been created!"
+
+checkout-select-shipping-and-payment
+
+// Place the order
+wait up to 60 seconds until page contains "Confirm Order"
+click "Confirm Order"
+check that page contains "Your order has been placed!"
+
+// The account was created during checkout, so the customer is already authenticated
+click "My Account"
+click "Order History"
+check that page contains "Order History"
+click "View"
+check that page contains "iPhone"

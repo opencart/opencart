@@ -14,7 +14,7 @@
     <select name="address_id" id="input-shipping-address" class="form-select">
       <option value="">{{ text_select }}</option>
       {% for address in addresses %}
-        <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+        <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}{% if address.telephone %}, {{ address.telephone }}{% endif %}</option>
       {% endfor %}
     </select>
     <div id="error-shipping-address" class="invalid-feedback"></div>
@@ -55,6 +55,11 @@
           <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
           <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-telephone" class="form-label">{{ entry_telephone }}</label>
+          <input type="tel" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-shipping-telephone" class="form-control"/>
+          <div id="error-shipping-telephone" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
           <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
@@ -283,7 +288,7 @@ $('#form-shipping-address').on('submit', function(e) {
 
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + (json['addresses'][i]['company'] ? json['addresses'][i]['company'] + ', ' : '') + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + (json['addresses'][i]['company'] ? json['addresses'][i]['company'] + ', ' : '') + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + (json['addresses'][i]['telephone'] ? ', ' + json['addresses'][i]['telephone'] : '') + '</option>';
                         }
                     }
 

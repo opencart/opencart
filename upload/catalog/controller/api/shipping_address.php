@@ -28,6 +28,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				'shipping_address_1'    => '',
 				'shipping_address_2'    => '',
 				'shipping_postcode'     => '',
+				'shipping_telephone'    => '',
 				'shipping_city'         => '',
 				'shipping_zone_id'      => 0,
 				'shipping_country_id'   => 0,
@@ -50,6 +51,10 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			if (!oc_validate_length($post_info['shipping_city'], 2, 128)) {
 				$output['error']['shipping_city'] = $this->language->get('error_city');
+			}
+
+			if ((string)$post_info['shipping_telephone'] !== '' && !oc_validate_regex((string)$post_info['shipping_telephone'], '/^\+?[0-9 ()\-]{3,31}$/')) {
+				$output['error']['shipping_telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Country
@@ -137,6 +142,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				'address_1'      => $post_info['shipping_address_1'],
 				'address_2'      => $post_info['shipping_address_2'],
 				'postcode'       => $post_info['shipping_postcode'],
+				'telephone'      => $post_info['shipping_telephone'],
 				'city'           => $post_info['shipping_city'],
 				'zone_id'        => $post_info['shipping_zone_id'],
 				'zone'           => $zone,

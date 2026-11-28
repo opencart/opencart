@@ -331,6 +331,11 @@
         <input type="text" name="shipping_postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
         <div id="error-shipping-postcode" class="invalid-feedback"></div>
       </div>
+      <div class="col mb-3">
+        <label for="input-shipping-telephone" class="form-label">{{ entry_shipping_telephone }}</label>
+        <input type="tel" name="shipping_telephone" value="{{ shipping_telephone }}" placeholder="{{ entry_shipping_telephone }}" id="input-shipping-telephone" class="form-control"/>
+        <div id="error-shipping-telephone" class="invalid-feedback"></div>
+      </div>
       <div class="col mb-3 required">
         <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
         <select name="shipping_country_id" id="input-shipping-country" class="form-select">

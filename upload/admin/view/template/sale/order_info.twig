@@ -242,6 +242,10 @@
                       {{ shipping_postcode }}
                       <br/>
                     {% endif %}
+                    {% if shipping_telephone %}
+                      {{ shipping_telephone }}
+                      <br/>
+                    {% endif %}
                     {% if shipping_zone %}
                       {{ shipping_zone }}
                       <br/>
@@ -837,6 +841,10 @@
           <div class="mb-3 required">
             <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="shipping_postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
             <div id="error-shipping-postcode" class="invalid-feedback"></div>
+          </div>
+          <div class="mb-3">
+            <label for="input-shipping-telephone" class="form-label">{{ entry_shipping_telephone }}</label> <input type="tel" name="shipping_telephone" value="{{ shipping_telephone }}" placeholder="{{ entry_shipping_telephone }}" id="input-shipping-telephone" class="form-control"/>
+            <div id="error-shipping-telephone" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
             <label for="input-shipping-country" class="form-label">{{ entry_country }}</label> <select name="shipping_country_id" id="input-shipping-country" class="form-select">
@@ -1741,6 +1749,7 @@ $('#input-shipping-address').on('change', function() {
             $('#input-shipping-address-2').val(json['address_2']);
             $('#input-shipping-city').val(json['city']);
             $('#input-shipping-postcode').val(json['postcode']);
+            $('#input-shipping-telephone').val(json['telephone'] ?? '');
             $('#input-shipping-country').val(json['country_id']);
 
             shipping_zone_id = json['zone_id'];
@@ -1823,6 +1832,12 @@ $('#form-shipping-address').on('submit', function(e) {
 
                 if (postcode) {
                     address += postcode + '<br/>';
+                }
+
+                var telephone = $('#input-shipping-telephone').val();
+
+                if (telephone) {
+                    address += $('<div/>').text(telephone).html() + '<br/>';
                 }
 
                 address += $('#input-shipping-zone option:selected').text() + '<br/>';

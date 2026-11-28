@@ -195,6 +195,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'{address_2}',
 			'{city}',
 			'{postcode}',
+			'{telephone}',
 			'{zone}',
 			'{zone_code}',
 			'{country}'
@@ -208,6 +209,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'address_2' => $order_info['payment_address_2'],
 			'city'      => $order_info['payment_city'],
 			'postcode'  => $order_info['payment_postcode'],
+			'telephone' => '',
 			'zone'      => $order_info['payment_zone'],
 			'zone_code' => $order_info['payment_zone_code'],
 			'country'   => $order_info['payment_country']
@@ -234,6 +236,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}
 
+		if (!str_contains($format, '{telephone}')) {
+			$format .= "\n" . '{telephone}';
+		}
+
 		$find = [
 			'{firstname}',
 			'{lastname}',
@@ -242,6 +248,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'{address_2}',
 			'{city}',
 			'{postcode}',
+			'{telephone}',
 			'{zone}',
 			'{zone_code}',
 			'{country}'
@@ -255,6 +262,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'address_2' => $order_info['shipping_address_2'],
 			'city'      => $order_info['shipping_city'],
 			'postcode'  => $order_info['shipping_postcode'],
+			'telephone' => $order_info['shipping_telephone'],
 			'zone'      => $order_info['shipping_zone'],
 			'zone_code' => $order_info['shipping_zone_code'],
 			'country'   => $order_info['shipping_country']

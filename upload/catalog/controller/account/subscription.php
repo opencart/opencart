@@ -211,6 +211,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'{address_2}',
 					'{city}',
 					'{postcode}',
+					'{telephone}',
 					'{zone}',
 					'{zone_code}',
 					'{country}'
@@ -224,6 +225,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'address_2' => $address_info['address_2'],
 					'city'      => $address_info['city'],
 					'postcode'  => $address_info['postcode'],
+					'telephone' => '',
 					'zone'      => $address_info['zone'],
 					'zone_code' => $address_info['zone_code'],
 					'country'   => $address_info['country']
@@ -258,6 +260,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 				}
 
+				if (!str_contains($format, '{telephone}')) {
+					$format .= "\n" . '{telephone}';
+				}
+
 				$find = [
 					'{firstname}',
 					'{lastname}',
@@ -266,6 +272,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'{address_2}',
 					'{city}',
 					'{postcode}',
+					'{telephone}',
 					'{zone}',
 					'{zone_code}',
 					'{country}'
@@ -279,6 +286,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'address_2' => $address_info['address_2'],
 					'city'      => $address_info['city'],
 					'postcode'  => $address_info['postcode'],
+					'telephone' => $address_info['telephone'],
 					'zone'      => $address_info['zone'],
 					'zone_code' => $address_info['zone_code'],
 					'country'   => $address_info['country']

@@ -99,6 +99,7 @@ $_['entry_address_1']            = 'Address 1';
 $_['entry_address_2']            = 'Address 2';
 $_['entry_city']                 = 'City';
 $_['entry_postcode']             = 'Postcode';
+$_['entry_shipping_telephone']   = 'Delivery Telephone';
 $_['entry_country']              = 'Country';
 $_['entry_zone']                 = 'Region / State';
 $_['entry_product']              = 'Choose Product';

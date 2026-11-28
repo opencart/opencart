@@ -178,7 +178,7 @@ $('#input-customer').autocomplete({
     }
 });
 
-$('input[name^=\'selected\']').on('change', function() {
+$('#order').on('change', 'input[name^=\'selected\']', function() {
     $('#button-shipping, #button-invoice').prop('disabled', true);
 
     var selected = $('input[name^=\'selected\']:checked');
@@ -188,7 +188,7 @@ $('input[name^=\'selected\']').on('change', function() {
     }
 
     for (i = 0; i < selected.length; i++) {
-        if ($(selected[i]).parent().find('input[name^=\'shipping_method\']').val()) {
+        if ($(selected[i]).parent().find('input[name^=\'shipping_method\']').val() == '1') {
             $('#button-shipping').prop('disabled', false);
             break;
         }

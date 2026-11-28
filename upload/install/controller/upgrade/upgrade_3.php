@@ -23,6 +23,11 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			$tables = oc_db_schema();
 
+			// Theme edits made before the status column existed were always active
+			$theme_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "theme'");
+
+			$theme_status_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "theme' AND COLUMN_NAME = 'status'");
+
 			// Clear any old db foreign key constraints
 			/*
 			foreach ($tables as $table) {
@@ -174,6 +179,11 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 						$this->db->query($sql);
 					}
 				}
+			}
+
+			// Keep existing theme edits enabled after the status column is added with default 0
+			if ($theme_query->num_rows && !$theme_status_query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "theme` SET `status` = '1'");
 			}
 
 			/*

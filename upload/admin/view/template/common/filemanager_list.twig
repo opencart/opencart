@@ -12,6 +12,10 @@
       <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
       <button type="button" id="button-search" title="{{ button_search }}" class="btn btn-primary"><i class="fa-solid fa-search"></i></button>
     </div>
+      <div class="form-check mt-2">
+        <input type="checkbox" name="match_case" value="1" id="input-match-case" class="form-check-input"{% if filter_case %} checked{% endif %}/>
+        <label class="form-check-label" for="input-match-case">{{ entry_match_case }}</label>
+      </div>
   </div>
 </div>
 <div id="modal-folder" class="row mb-3" style="display: none;">

@@ -207,7 +207,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 					$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->session->data['tracking']);
 
-					if ($affiliate_info) {
+					// Only pay commission to an active affiliate and never to a customer buying through their own tracking code
+					if ($affiliate_info && $affiliate_info['status'] && $affiliate_info['customer_id'] != $this->session->data['customer']['customer_id']) {
 						$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 						$order_data['tracking'] = $this->session->data['tracking'];
